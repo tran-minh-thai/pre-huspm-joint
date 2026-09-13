@@ -34,7 +34,6 @@ results/
 figures/                           generated, one directory per run
 fetch-datasets.ps1 / .sh           fetch and verify the databases
 run.ps1 / run.sh                   build, run scenarios, write the manifest, plot
-run.txt                            operating procedure for the measurement machine
 ```
 
 ## Requirements

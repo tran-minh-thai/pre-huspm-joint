@@ -16,8 +16,8 @@ results_backup/
 *.log
 *.hprof
 
-# ... nhung console log CUA MOT LAN CHAY la bang chung di kem ket qua, phai giu.
-# manifest.json tro toi chung, nen neu bo qua thi lan chay khong tu giai thich duoc.
+# ... except a run's own console logs, which are evidence that goes with its numbers.
+# manifest.json points at them, so dropping them leaves a run unable to explain itself.
 !results/**/*.log
 
 # Databases are not kept in this repository. They are shared across several studies
@@ -25,3 +25,7 @@ results_backup/
 # Fetch them with ./fetch-datasets.ps1 (or .sh); see README.
 datasets/*
 !datasets/.gitkeep
+
+# Machine-specific operating notes, kept outside the repository on purpose.
+# Anything needed to reproduce a result belongs in README instead.
+run.txt
