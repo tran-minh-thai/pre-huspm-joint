@@ -31,7 +31,7 @@ trong `results/SC*.csv`, để đọc/diễn giải chính xác. Mọi độ đo
 | `runtime_ms` | Ý nghĩa |
 |---|---|
 | `≥ 0` | hoàn thành bình thường (ms) |
-| `-2` | OT - vượt timeout 60 phút |
+| `-2` | OT - vượt timeout (mặc định 120 phút, xem `-Dtimeout.min`) |
 | `-1` | thất bại (OOM / budget / exception / skipped) |
 
 `op_type` mang nhãn scenario+pha, có thể kèm hậu tố: `_OT`, `_OOM`, `_BUDGET` (DNF do vượt
@@ -108,3 +108,47 @@ sánh `sft_val` trong PHA GIA TĂNG**.
 | **C3** IUB | `pruned_iub` (+ candidate_count khi ablation `no_IUB`) |
 | **C4** Block-Index | `blocks_read`, `blocks_skipped`, tỉ lệ skip |
 | **C5** Adaptive rescan | `rescan_count`, `cub_val`, `cub_triggered`, `sft_val` (+ runtime khi `C5_off`) |
+
+## Memory measurement columns
+
+Two different quantities are recorded, and they must never be compared with each other.
+
+| Column | Meaning |
+|---|---|
+| `mem_mode` | `used` or `live`; says which quantity the row's memory columns hold |
+| `peak_heap_mb` | **used heap**: peak of `totalMemory - freeMemory` sampled every 50 ms, minus the post-GC baseline. Includes garbage that had not been collected yet. |
+| `mem_live_mb` | **live set**: peak of the used heap read immediately after a forced full collection. Only filled when `mem_mode = live`. |
+| `mem_retained_mb` | live set at the end of the call |
+| `gc_forced` | number of forced collections during the call |
+| `wall_ms_perturbed` | real wall-clock of a live-mode call; void as a performance figure |
+| `allocated_mb` | total bytes the mining thread allocated. Deterministic, independent of GC timing. `-1` when unavailable. |
+
+### Why `peak_heap_mb` is not the memory metric
+
+`peak_heap_mb` counts uncollected garbage, so it measures when the collector happened to
+run rather than what the algorithm needs to hold. Two consequences follow.
+
+It grows with the heap. Same machine, same dataset (SIGN), same algorithm (Pre-HUSPM),
+same threshold (0.025), only `-Xmx` differs:
+
+| `-Xmx` | `peak_heap_mb` | `mem_live_mb` | `allocated_mb` |
+|---|---:|---:|---:|
+| 1g | 338 | 299 | 6909 |
+| 2g | 545 | 299 | 6909 |
+| 3g | 619 | 301 | 6909 |
+
+The used-heap figure nearly doubles for identical work; the live set moves by 0.7 percent
+and the allocation total is identical.
+
+It also depends on what ran before in the same JVM. Project 02 traced a reported 23.3 GB
+peak to a run that followed another arm in the same JVM whose heap had already grown to
+about 23 GB; the sampler read 14 GB at batch 0, one percent into the data. That is why live
+mode runs one JVM per arm and refuses to start otherwise.
+
+### Reading a live-mode row
+
+`runtime_ms` is `-3`. Forcing a collection at every sample point distorts timing, so live
+rows carry no performance information; the real elapsed time is kept in
+`wall_ms_perturbed` for the record only. Timing comes from separate `mem_mode = used`
+runs. `mem_live_mb` is a lower bound on the true peak live set: a peak that appears and
+disappears between two sample points is not seen, and the sampling interval bounds the gap.

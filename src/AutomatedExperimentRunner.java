@@ -59,17 +59,69 @@ public class AutomatedExperimentRunner {
     public static final double DEFAULT_SL_MIN_RATIO = 0.8;
     /** Alias đảm bảo Pre-HUSPM dùng đúng Sl ratio như Adaptive. KHÔNG sửa độc lập. */
     public static final double DEFAULT_PRE_HUSPM_SL_RATIO = DEFAULT_SL_MIN_RATIO;
-    public static final double DEFAULT_ALPHA  = 0.5;
-    public static final double DEFAULT_DELTA0 = 1e-4;
+    /** WP2.5 - bai goi la kappa; ten cu trong code la DEFAULT_KAPPA. Ghi de: -Dkappa=... */
+    public static final double DEFAULT_KAPPA  = Double.parseDouble(System.getProperty("kappa", "0.5"));
+    public static final double DEFAULT_DELTA0 = Double.parseDouble(System.getProperty("delta0", "1e-4"));
+    /** WP2.1 - B_sz, ghi de: -Dblock.size=... */
+    public static final int DEFAULT_BLOCK_SIZE = Integer.getInteger("block.size", 100);
+    /** WP2.3 - so lan lap moi cau hinh de lay do lech chuan (khu nhieu JIT/GC). */
+    public static final int REPEATS = Integer.getInteger("repeats", 3);
+    /** WP2.2 - so seed thuc su duoc dung (<= SEEDS.length). Ghi de: -Dseeds=5 */
+    public static final int SEED_COUNT = Math.min(
+            Integer.getInteger("seeds", 1), 5);
+
+    // === CHE DO DO BO NHO ===
+    //
+    // "used" (mac dinh): dinh used-heap lay mau 50 ms, KE CA rac chua thu. Dai luong nay
+    //   phu thuoc lich GC, phu thuoc -Xmx, va phu thuoc thuat toan nao chay TRUOC trong
+    //   cung JVM. Project 02 da truy ra mot con so 23.3 GB hoan toan la artifact kieu do.
+    //
+    // "live": ep thu gom day du tai cac moc roi doc used-heap ngay sau. Do la tap song
+    //   that su phai giu. Doi lai, ep GC lam hong thoi gian, nen runtime cua lan chay nay
+    //   KHONG duoc dung: no xuat ra -3.
+    //
+    // Ghi de: -Dmem.mode=live -Dmem.interval.ms=1000
+    public static final String MEM_MODE = System.getProperty("mem.mode", "used")
+            .trim().toLowerCase(java.util.Locale.ROOT);
+    public static final boolean MEM_LIVE = "live".equals(MEM_MODE);
+    public static final long MEM_SAMPLE_MS = Long.getLong("mem.interval.ms", 1000L);
+
+    /**
+     * Chi chay MOT thuat toan trong tien trinh nay. Che do do bo nho yeu cau moi arm mot
+     * JVM rieng, vi neu khong thi heap da bi arm truoc nong rong. Ghi de: -Dalgo.only=USpan
+     * Rong = chay tat ca (hanh vi cu).
+     */
+    public static final String ALGO_ONLY = System.getProperty("algo.only", "").trim();
+
+    /** Chi chay MOT dataset. Ghi de: -Ddataset.only=SIGN. Rong = tat ca. */
+    public static final String DATASET_ONLY = System.getProperty("dataset.only", "").trim();
+
+    public static boolean datasetEnabled(String ds) {
+        return DATASET_ONLY.isEmpty() || DATASET_ONLY.equalsIgnoreCase(ds);
+    }
+
+    /** true neu thuat toan nay duoc phep chay trong tien trinh hien tai. */
+    public static boolean algoEnabled(String algo) {
+        return ALGO_ONLY.isEmpty() || ALGO_ONLY.equalsIgnoreCase(algo);
+    }
     public static final double D_INIT_RATIO = 0.5; // 50% init per paper
 
     // === TIMEOUT PER ALGORITHM RUN ===
-    // Mỗi lời gọi measure() bị bao trong ExecutorService timeout (60 phút - cân bằng:
-    // đủ rộng cho Adaptive (<5 phút) + baseline ở Su cao có cơ hội xong, nhưng không
-    // kéo dài quá mức khi baseline OT trên dữ liệu dày/thưa).
-    // Khi timeout: cancel Adaptive flag, future.cancel(true), ghi opType "_OT",
-    // runtime_ms = -2 (phân biệt với -1 = FAILED).
-    public static final long TIMEOUT_MINUTES = Long.getLong("timeout.min", 60);
+    // Mỗi lời gọi measure() bị bao trong ExecutorService timeout. Khi timeout: cancel
+    // Adaptive flag, future.cancel(true), ghi opType "_OT", runtime_ms = -2 (phân biệt
+    // với -1 = FAILED).
+    //
+    // NGÂN SÁCH 120 PHÚT (bản nộp dùng 60). Lý do không phải là nới tay mà là GIỮ NGUYÊN
+    // ngân sách tính toán khi đổi máy đo. Máy đo mới (Dell XPS, i7-10750H, 6 nhân /
+    // 12 luồng, 2.60 GHz, 64 GB, Windows) chậm hơn máy ghi trong bản nộp (Apple M5)
+    // khoảng 2.1x đến 3.5x trên cùng khối lượng khai phá tĩnh - đo bằng
+    // experiments.MachineCalibration. Giữ nguyên 60 phút trên máy chậm hơn 2-3.5 lần
+    // tức là SIẾT ngân sách xuống còn 17 đến 29 phút theo thang máy cũ, làm baseline bị
+    // đánh OT nhiều hơn và vô tình có lợi cho phương pháp đề xuất - đúng thứ phản biện
+    // sẽ bắt. Muốn bảo toàn đúng ngân sách cũ thì cần 126 đến 210 phút; chọn 120 phút
+    // là mức vẫn CHẶT HƠN bản nộp về mặt tính toán mà thời gian chạy còn kiểm soát được.
+    // Giá trị dùng thực tế phải được ghi vào bài và vào manifest của mỗi lần chạy.
+    public static final long TIMEOUT_MINUTES = Long.getLong("timeout.min", 120);
     public static final long TIMEOUT_MS = TIMEOUT_MINUTES * 60_000L;
 
     // ------------------------------------------------------------------
@@ -180,6 +232,31 @@ public class AutomatedExperimentRunner {
     // ENTRY POINT
     // ==================================================================
     public static void main(String[] args) throws IOException {
+        // === PREFLIGHT CHE DO DO BO NHO ===
+        // Ket qua live va ket qua used do HAI DAI LUONG KHAC NHAU va chi khac nhau o mot
+        // cot, nen rat de bi tron rooi so sanh nham. Project 02 giai bang cach bat launcher
+        // ghi vao thu muc rieng; lam y het o day.
+        if (MEM_LIVE) {
+            String rd = RESULTS_DIR.replace('\\', '/').toLowerCase(java.util.Locale.ROOT);
+            if (!rd.contains("mem")) {
+                System.err.println("DUNG: -Dmem.mode=live phai ghi vao thu muc co chua 'mem' "
+                        + "trong ten, vd -Dresults.dir=results/run-xxx/mem/. Thu muc hien tai: "
+                        + RESULTS_DIR);
+                System.exit(2);
+            }
+            if (ALGO_ONLY.isEmpty()) {
+                System.err.println("DUNG: che do live yeu cau MOI ARM MOT JVM RIENG "
+                        + "(-Dalgo.only=<ten>). Chay nhieu arm chung JVM thi heap da bi arm "
+                        + "truoc nong rong - dung loi ma che do live sinh ra de tranh. "
+                        + "Dung run.ps1 -MemMode live de no tu lap qua tung arm.");
+                System.exit(2);
+            }
+            System.out.println("### LIVE HEAP: ep thu gom moi " + MEM_SAMPLE_MS
+                    + " ms | arm = " + ALGO_ONLY);
+            System.out.println("### runtime_ms xuat -3 (GC lam nhieu); gia tri that o "
+                    + "wall_ms_perturbed. KHONG dung lam so hieu nang.");
+        }
+
         new File(RESULTS_DIR).mkdirs();
 
         // Phát hiện cờ TEST trong args → dùng dataset rút gọn (paper, 4 chuỗi, < 1s).
@@ -239,6 +316,7 @@ public class AutomatedExperimentRunner {
         System.out.println("\n--- [SC1] Static baseline on D_init (50%) ---");
         try (ResultCollector col = new ResultCollector(RESULTS_DIR + "SC1_static.csv")) {
             for (DatasetConfig ds : DATASETS) {
+                if (!datasetEnabled(ds.name)) continue;
                 List<Sequence> full = DatasetLoader.loadDataset(DATASET_DIR + ds.name + "_seq.txt",
                                                                 DATASET_DIR + ds.name + "_eui.txt");
                 if (full.isEmpty()) continue;
@@ -267,6 +345,7 @@ public class AutomatedExperimentRunner {
         System.out.println("\n--- [SC2] Incremental sequence (5 batch x 10% UNIFORM) ---");
         try (ResultCollector col = new ResultCollector(RESULTS_DIR + "SC2_incremental.csv")) {
             for (DatasetConfig ds : DATASETS) {
+                if (!datasetEnabled(ds.name)) continue;
                 List<Sequence> full = DatasetLoader.loadDataset(DATASET_DIR + ds.name + "_seq.txt",
                                                                 DATASET_DIR + ds.name + "_eui.txt");
                 if (full.isEmpty()) continue;
@@ -286,6 +365,7 @@ public class AutomatedExperimentRunner {
         try (ResultCollector col = new ResultCollector(RESULTS_DIR + "SC3_su.csv")) {
             String[] algos = {"USpan", "HUSP-ULL", "IncUSP-Miner+", "Pre-HUSPM", "Adaptive-Full"};
             for (DatasetConfig ds : DATASETS) {
+                if (!datasetEnabled(ds.name)) continue;
                 if (!SUBSET_3.contains(ds.name)) continue;
                 List<Sequence> full = DatasetLoader.loadDataset(DATASET_DIR + ds.name + "_seq.txt",
                                                                 DATASET_DIR + ds.name + "_eui.txt");
@@ -312,6 +392,7 @@ public class AutomatedExperimentRunner {
 
         try (ResultCollector col = new ResultCollector(RESULTS_DIR + "SC4_sl_sensitivity.csv")) {
             for (DatasetConfig ds : DATASETS) {
+                if (!datasetEnabled(ds.name)) continue;
                 if (!SUBSET_3.contains(ds.name)) continue;
                 List<Sequence> full = DatasetLoader.loadDataset(DATASET_DIR + ds.name + "_seq.txt",
                                                                 DATASET_DIR + ds.name + "_eui.txt");
@@ -343,7 +424,7 @@ public class AutomatedExperimentRunner {
                     {
                         String tag = "Adaptive[sl=" + slRatio + "]";
                         PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp = new PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo(
-                                ds.defaultSu, DEFAULT_ALPHA, DEFAULT_DELTA0, slRatio,
+                                ds.defaultSu, DEFAULT_KAPPA, DEFAULT_DELTA0, slRatio,
                                 PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.AblationMode.FULL,
                                 ENABLE_PATTERN_EXPORT);
                         announce(tag, ds.name, "SC4", 0);
@@ -378,6 +459,7 @@ public class AutomatedExperimentRunner {
 
         try (ResultCollector col = new ResultCollector(RESULTS_DIR + "SC5_batch_strategy.csv")) {
             for (DatasetConfig ds : DATASETS) {
+                if (!datasetEnabled(ds.name)) continue;
                 if (!SUBSET_3.contains(ds.name)) continue;
                 List<Sequence> full = DatasetLoader.loadDataset(DATASET_DIR + ds.name + "_seq.txt",
                                                                 DATASET_DIR + ds.name + "_eui.txt");
@@ -407,6 +489,7 @@ public class AutomatedExperimentRunner {
         try (ResultCollector col = new ResultCollector(RESULTS_DIR + "SC6_idm_mixed.csv")) {
             Random rnd = new Random(SEEDS[0]);
             for (DatasetConfig ds : DATASETS) {
+                if (!datasetEnabled(ds.name)) continue;
                 if (!SUBSET_3.contains(ds.name)) continue;
                 List<Sequence> full = DatasetLoader.loadDataset(DATASET_DIR + ds.name + "_seq.txt",
                                                                 DATASET_DIR + ds.name + "_eui.txt");
@@ -419,7 +502,7 @@ public class AutomatedExperimentRunner {
                 List<Sequence> rest  = new ArrayList<>(tailFrom(full, dInit.size()));
 
                 PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp = new PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo(
-                        ds.defaultSu, DEFAULT_ALPHA, DEFAULT_DELTA0, DEFAULT_SL_MIN_RATIO,
+                        ds.defaultSu, DEFAULT_KAPPA, DEFAULT_DELTA0, DEFAULT_SL_MIN_RATIO,
                         PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.AblationMode.FULL,
                         ENABLE_PATTERN_EXPORT);
 
@@ -531,6 +614,7 @@ public class AutomatedExperimentRunner {
         System.out.println("\n--- [SC7] Ablation C3(IUB)/C4(Block)/C5(rescan) ---");
         try (ResultCollector col = new ResultCollector(RESULTS_DIR + "SC7_ablation.csv")) {
             for (DatasetConfig ds : DATASETS) {
+                if (!datasetEnabled(ds.name)) continue;
                 List<Sequence> full = DatasetLoader.loadDataset(DATASET_DIR + ds.name + "_seq.txt",
                                                                 DATASET_DIR + ds.name + "_eui.txt");
                 if (full.isEmpty()) continue;
@@ -573,7 +657,7 @@ public class AutomatedExperimentRunner {
                                     double totalUtil, String tag, boolean useBlockIndex,
                                     boolean useIub) {
         PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp = new PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo(
-                ds.defaultSu, DEFAULT_ALPHA, DEFAULT_DELTA0, DEFAULT_SL_MIN_RATIO,
+                ds.defaultSu, DEFAULT_KAPPA, DEFAULT_DELTA0, DEFAULT_SL_MIN_RATIO,
                 PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.AblationMode.FULL,
                 ENABLE_PATTERN_EXPORT);
         adp.useBlockIndex = useBlockIndex; // C4
@@ -601,7 +685,7 @@ public class AutomatedExperimentRunner {
         List<List<Sequence>> batches = splitByWeights(rest, equalWeights(5));
         final double initTotal = sumUtility(dInit);
         PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp = new PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo(
-                ds.defaultSu, DEFAULT_ALPHA, DEFAULT_DELTA0, DEFAULT_SL_MIN_RATIO,
+                ds.defaultSu, DEFAULT_KAPPA, DEFAULT_DELTA0, DEFAULT_SL_MIN_RATIO,
                 PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.AblationMode.FULL,
                 ENABLE_PATTERN_EXPORT);
         adp.useAdaptiveRescan = useAdaptiveRescan; // C5 on/off
@@ -646,7 +730,7 @@ public class AutomatedExperimentRunner {
         final double initTotal = sumUtility(dInit);
 
         // -------- Algorithm 1: IncUSP-Miner+ (isolated scope) --------
-        if (!ADAPTIVE_ONLY) {
+        if (!ADAPTIVE_ONLY && algoEnabled("IncUSP-Miner+")) {
             IncUSPMinerPlusAlgorithm inc = new IncUSPMinerPlusAlgorithm(Su);
             boolean poisoned = false;
             announce("IncUSP-Miner+", dsName, tag + "_INIT", 0);
@@ -688,52 +772,71 @@ public class AutomatedExperimentRunner {
         } // inc out of scope here - GC can reclaim its heap
         forceFullGC();
 
-        // -------- Algorithm 2: Pre-HUSPM (isolated scope) --------
+        // -------- Algorithm 2: Pre-HUSPM, CA HAI BIEN THE (moi cai mot scope rieng) --------
+        // (-Dalgo.only loc o vong lap ben trong vi hai bien the la hai arm rieng)
+        //
+        // Yan et al. dinh nghia hai luat kich hoat rescan va so sanh CA HAI trong bai cua
+        // ho. Ban nop cua ta chi cai bien the SWUmax (Dinh ly 2 cua ho), von KHONG sound.
+        // Chi so sanh voi bien the yeu hon la danh gia thap baseline - dung cao buoc ma
+        // Reviewer #1 neu o comment 3. Tu day chay ca hai:
+        //   Pre-HUSPM      = bien the SWUmax, Dinh ly 2  (giu ten cu de khong vo CSV cu)
+        //   Pre-HUSPM-TSU  = bien the TSU(d), Dinh ly 1, sound
+        // O pha khai pha TINH hai bien the la mot, nen chung chi tach nhau o SC2/SC5.
         if (!ADAPTIVE_ONLY) {
-            PreHUSPMAlgorithm.PreHUSPMAlgo preh = new PreHUSPMAlgorithm.PreHUSPMAlgo(
-                    Su, DEFAULT_PRE_HUSPM_SL_RATIO, ENABLE_PATTERN_EXPORT);
-            boolean poisoned = false;
-            announce("Pre-HUSPM", dsName, tag + "_INIT", 0);
-            ExperimentMetrics m0 = measure("Pre-HUSPM", dsName, 0, tag + "_INIT",
-                    () -> preh.runInitialMining(dInit, initTotal),
-                    () -> preh.candidateCount, () -> preh.patternCount, null, null);
-            attachPreHuspm(m0, preh);
-            col.log(m0);
-            if (m0.runtimeMs < 0) poisoned = true;
+            PreHUSPMAlgorithm.PreHUSPMAlgo.Variant[] variants = {
+                    PreHUSPMAlgorithm.PreHUSPMAlgo.Variant.SWUMAX,
+                    PreHUSPMAlgorithm.PreHUSPMAlgo.Variant.TSU,
+            };
+            for (PreHUSPMAlgorithm.PreHUSPMAlgo.Variant variant : variants) {
+                final String label = (variant == PreHUSPMAlgorithm.PreHUSPMAlgo.Variant.TSU)
+                        ? "Pre-HUSPM-TSU" : "Pre-HUSPM";
+                if (!algoEnabled(label)) continue;
+                final PreHUSPMAlgorithm.PreHUSPMAlgo preh = new PreHUSPMAlgorithm.PreHUSPMAlgo(
+                        Su, DEFAULT_PRE_HUSPM_SL_RATIO, ENABLE_PATTERN_EXPORT, variant);
+                boolean poisoned = false;
+                announce(label, dsName, tag + "_INIT", 0);
+                ExperimentMetrics m0 = measure(label, dsName, 0, tag + "_INIT",
+                        () -> preh.runInitialMining(dInit, initTotal),
+                        () -> preh.candidateCount, () -> preh.patternCount, null, null);
+                attachPreHuspm(m0, preh);
+                col.log(m0);
+                if (m0.runtimeMs < 0) poisoned = true;
 
-            double rolling = initTotal;
-            List<Sequence> dSoFar = new ArrayList<>(dInit);
-            for (int b = 0; b < batches.size(); b++) {
-                List<Sequence> delta = batches.get(b);
-                if (delta.isEmpty()) continue;
-                double newTotal = rolling + sumUtility(delta);
-                int batchIdx = b + 1;
-                // LỚP PHÒNG THỦ 1: check RAM trước batch.
-                if (!poisoned && !memoryGuardOk("Pre-HUSPM", dsName, tag + "_INC")) poisoned = true;
-                if (poisoned) {
-                    col.log(skippedMetric("Pre-HUSPM", dsName, batchIdx, tag + "_INC"));
-                } else {
-                    List<Sequence> snapshot = new ArrayList<>(dSoFar);
-                    snapshot.addAll(delta);
-                    final double finalNewTotal = newTotal;
-                    announce("Pre-HUSPM", dsName, tag + "_INC", batchIdx);
-                    ExperimentMetrics mb = measure("Pre-HUSPM", dsName, batchIdx, tag + "_INC",
-                            () -> preh.runIncrementalMining(delta, snapshot, finalNewTotal),
-                            () -> preh.candidateCount, () -> preh.patternCount, null, null);
-                    attachPreHuspm(mb, preh);
-                    col.log(mb);
-                    if (mb.runtimeMs < 0) poisoned = true;
+                double rolling = initTotal;
+                List<Sequence> dSoFar = new ArrayList<>(dInit);
+                for (int b = 0; b < batches.size(); b++) {
+                    List<Sequence> delta = batches.get(b);
+                    if (delta.isEmpty()) continue;
+                    double newTotal = rolling + sumUtility(delta);
+                    int batchIdx = b + 1;
+                    // LỚP PHÒNG THỦ 1: check RAM trước batch.
+                    if (!poisoned && !memoryGuardOk(label, dsName, tag + "_INC")) poisoned = true;
+                    if (poisoned) {
+                        col.log(skippedMetric(label, dsName, batchIdx, tag + "_INC"));
+                    } else {
+                        List<Sequence> snapshot = new ArrayList<>(dSoFar);
+                        snapshot.addAll(delta);
+                        final double finalNewTotal = newTotal;
+                        announce(label, dsName, tag + "_INC", batchIdx);
+                        ExperimentMetrics mb = measure(label, dsName, batchIdx, tag + "_INC",
+                                () -> preh.runIncrementalMining(delta, snapshot, finalNewTotal),
+                                () -> preh.candidateCount, () -> preh.patternCount, null, null);
+                        attachPreHuspm(mb, preh);
+                        col.log(mb);
+                        if (mb.runtimeMs < 0) poisoned = true;
+                    }
+                    dSoFar.addAll(delta);
+                    rolling = newTotal;
                 }
-                dSoFar.addAll(delta);
-                rolling = newTotal;
+                forceFullGC();
             }
         }
         forceFullGC();
 
         // -------- Algorithm 3: Adaptive-Full (isolated scope) --------
-        {
+        if (algoEnabled("Adaptive-Full")) {
             PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp = new PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo(
-                    Su, DEFAULT_ALPHA, DEFAULT_DELTA0, DEFAULT_SL_MIN_RATIO,
+                    Su, DEFAULT_KAPPA, DEFAULT_DELTA0, DEFAULT_SL_MIN_RATIO,
                     PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.AblationMode.FULL,
                     ENABLE_PATTERN_EXPORT);
             boolean poisoned = false;
@@ -812,11 +915,32 @@ public class AutomatedExperimentRunner {
         m.prelargePatternCount = pre.prelargeCount;
         m.rescanCount          = pre.rescanCount;
         m.sftValue             = pre.safetyBoundF; // cận an toàn pre-large (so với Adaptive)
+        m.cubValue             = pre.bufValue;     // bộ đệm tích luỹ của Pre-HUSPM
+        // WP2.4 - ghi rõ biến thể nào đã sinh ra dòng này.
+        m.triggerRule          = (pre.variant == PreHUSPMAlgorithm.PreHUSPMAlgo.Variant.TSU)
+                                 ? "tsud" : "swumax";
+        m.kappa = 0; m.delta0 = 0; m.blockSize = 0;
+    }
+
+    /**
+     * Tong byte thread da cap phat. Tat dinh (khong phu thuoc lich GC), nen dung de bao
+     * cao ap luc cap phat tach roi khoi tap song. Tra -1 neu JVM khong ho tro.
+     */
+    private static long threadAllocatedBytes(long tid) {
+        try {
+            java.lang.management.ThreadMXBean b = java.lang.management.ManagementFactory.getThreadMXBean();
+            if (b instanceof com.sun.management.ThreadMXBean) {
+                com.sun.management.ThreadMXBean sb = (com.sun.management.ThreadMXBean) b;
+                if (sb.isThreadAllocatedMemorySupported()) return sb.getThreadAllocatedBytes(tid);
+            }
+        } catch (Throwable ignored) {}
+        return -1L;
     }
 
     private static ExperimentMetrics runSingle(String algo, String dsName, List<Sequence> db,
                                                double totalUtil, double su, int iter, String tag) {
         if (ADAPTIVE_ONLY && !algo.equals("Adaptive-Full")) return null; // chỉ chạy lại Adaptive
+        if (!algoEnabled(algo)) return null;   // -Dalgo.only: mot arm mot JVM (che do live)
         announce(algo, dsName, tag, iter);
         try {
             switch (algo) {
@@ -864,7 +988,7 @@ public class AutomatedExperimentRunner {
                 }
                 case "Adaptive-Full": {
                     PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp = new PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo(
-                            su, DEFAULT_ALPHA, DEFAULT_DELTA0, DEFAULT_SL_MIN_RATIO,
+                            su, DEFAULT_KAPPA, DEFAULT_DELTA0, DEFAULT_SL_MIN_RATIO,
                             PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.AblationMode.FULL,
                             ENABLE_PATTERN_EXPORT);
                     ExperimentMetrics m = measure(algo, dsName, iter, tag,
@@ -924,7 +1048,7 @@ public class AutomatedExperimentRunner {
     }
 
     /**
-     * Chạy task trên worker thread riêng với TIMEOUT 90 PHÚT (cấu hình qua TIMEOUT_MINUTES).
+     * Chạy task trên worker thread riêng với TIMEOUT mặc định 60 PHÚT (cấu hình qua -Dtimeout.min).
      *
      * Đường đi:
      *  * Tạo single-thread ExecutorService (daemon → không khoá JVM exit).
@@ -952,29 +1076,57 @@ public class AutomatedExperimentRunner {
         long heapBefore = rt.totalMemory() - rt.freeMemory();
         long start = System.currentTimeMillis();
 
-        // === PEAK HEAP SAMPLER: lấy ĐỈNH heap THẬT trong lúc chạy (thay vì delta cuối,
-        // vốn bỏ sót đỉnh transient đã bị GC thu hồi trước heapAfter). Daemon, poll 50ms,
-        // KHÔNG allocate trong vòng lặp (native mem-read + atomic) → an toàn cả khi heap đầy.
+        // === BO LAY MAU BO NHO ===
+        //
+        // used : dinh used-heap moi 50 ms, KE CA rac chua thu (hanh vi cu).
+        // live : moi MEM_SAMPLE_MS ep MOT lan thu gom day du roi doc used-heap NGAY SAU.
+        //        Dinh cua cac lan doc ay la tap song, khong phu thuoc lich GC hay -Xmx.
+        //        Day la CAN DUOI cua dinh tap song that: mot dinh xuat hien va bien mat
+        //        giua hai moc se khong duoc thay. Khoang lay mau chan sai so do.
+        //
+        // Ca hai deu KHONG cap phat trong vong lap (doc native + atomic) nen an toan ca
+        // khi heap gan day. Neu heap can, thread co the bi nem OOM tai safepoint; nuot im
+        // lang vi in stack-trace se lai cap phat va gay OOM lan hai.
         final java.util.concurrent.atomic.AtomicLong peakUsed =
                 new java.util.concurrent.atomic.AtomicLong(heapBefore);
+        final java.util.concurrent.atomic.AtomicLong peakLive =
+                new java.util.concurrent.atomic.AtomicLong(0);
+        final java.util.concurrent.atomic.AtomicLong lastLive =
+                new java.util.concurrent.atomic.AtomicLong(0);
+        final java.util.concurrent.atomic.AtomicInteger gcCount =
+                new java.util.concurrent.atomic.AtomicInteger(0);
         final java.util.concurrent.atomic.AtomicBoolean sampling =
                 new java.util.concurrent.atomic.AtomicBoolean(true);
         Thread heapSampler = new Thread(() -> {
-            // Bọc toàn bộ: nếu heap cạn, thread này có thể bị ném OOM tại safepoint →
-            // KHÔNG để rơi vào UncaughtExceptionHandler (nó in stack-trace = cấp phát →
-            // OOM lần 2, gây nhiễu "thrown from UncaughtExceptionHandler"). Nuốt im lặng.
             try {
                 Runtime r = Runtime.getRuntime();
                 while (sampling.get()) {
-                    long used = r.totalMemory() - r.freeMemory();
-                    long prev = peakUsed.get();
-                    while (used > prev && !peakUsed.compareAndSet(prev, used)) prev = peakUsed.get();
-                    try { Thread.sleep(50); } catch (InterruptedException e) { break; }
+                    if (MEM_LIVE) {
+                        System.gc();
+                        long live = r.totalMemory() - r.freeMemory();
+                        lastLive.set(live);
+                        gcCount.incrementAndGet();
+                        long prevL = peakLive.get();
+                        while (live > prevL && !peakLive.compareAndSet(prevL, live)) prevL = peakLive.get();
+                        try { Thread.sleep(MEM_SAMPLE_MS); } catch (InterruptedException e) { break; }
+                    } else {
+                        long used = r.totalMemory() - r.freeMemory();
+                        long prev = peakUsed.get();
+                        while (used > prev && !peakUsed.compareAndSet(prev, used)) prev = peakUsed.get();
+                        try { Thread.sleep(50); } catch (InterruptedException e) { break; }
+                    }
                 }
             } catch (Throwable ignored) {}
         }, "heap-sampler-" + algo);
         heapSampler.setDaemon(true);
         heapSampler.start();
+
+        // Byte da cap phat cua thread khai phá. Tat dinh, khong phu thuoc lich GC, nen no
+        // do "thuat toan nay cap phat nhieu hay it" ma khong tron lan voi thoi diem GC.
+        // Phai doc NGAY TRONG worker thread truoc khi no ket thuc: sau shutdownNow thread
+        // da chet va getThreadAllocatedBytes(tid) tra -1.
+        final long[] allocStart = {-1L};
+        final long[] allocEnd   = {-1L};
 
         // Pre-build runId NGAY BÂY GIỜ (heap còn khỏe) để KHỎI phải concat chuỗi lúc
         // dựng metric sau OOM (heap gần đầy do CP-Tree baseline → concat có thể OOM main).
@@ -1008,8 +1160,15 @@ public class AutomatedExperimentRunner {
         });
 
         future = exec.submit(() -> {
+            long tid = Thread.currentThread().getId();
+            allocStart[0] = threadAllocatedBytes(tid);
             try { task.run(); }
             catch (Throwable t) { thrown[0] = t; }
+            finally {
+                // Doc trong finally de van co so khi task bi huy hoac nem loi.
+                long a = threadAllocatedBytes(tid);
+                if (a >= 0) allocEnd[0] = a;
+            }
         });
 
         try {
@@ -1095,10 +1254,33 @@ public class AutomatedExperimentRunner {
         long heapAfter = rt.totalMemory() - rt.freeMemory();
 
         // m đã pre-allocate ở đầu hàm (heap khỏe) → đây chỉ FILL field, KHÔNG cấp phát.
-        m.runtimeMs = timedOut ? -2 : (failed ? -1 : runtime);
+        long realRuntime = timedOut ? -2 : (failed ? -1 : runtime);
+        m.memMode = MEM_MODE;
+        if (MEM_LIVE) {
+            // Ep GC lam hong thoi gian. Xuat -3 de khong ai ve nham no thanh so hieu nang;
+            // gia tri that van duoc giu o wall_ms_perturbed.
+            m.runtimeMs = (realRuntime < 0) ? realRuntime : -3;
+            m.wallMsPerturbed = runtime;
+            // Doc cuoi cung sau khi worker da dung: day moi la tap song thuc su con lai.
+            System.gc();
+            long finalLive = rt.totalMemory() - rt.freeMemory();
+            gcCount.incrementAndGet();
+            long pl = Math.max(peakLive.get(), finalLive);
+            m.memLiveMb     = Math.max(0, pl - heapBefore) / (1024 * 1024);
+            m.memRetainedMb = Math.max(0, finalLive - heapBefore) / (1024 * 1024);
+            m.gcForced      = gcCount.get();
+        } else {
+            m.runtimeMs = realRuntime;
+        }
         // Peak THẬT: max(đỉnh-mẫu, heapAfter) trừ baseline → footprint thật của thuật toán.
+        // CHÚ Ý: ở chế độ "used" đại lượng này gồm cả rác chưa thu - xem ExperimentMetrics.
         long peakHeap = Math.max(peakUsed.get(), heapAfter);
         m.peakHeapMb = Math.max(0, (peakHeap - heapBefore)) / (1024 * 1024);
+        if (allocStart[0] >= 0 && allocEnd[0] >= allocStart[0]) {
+            m.allocatedMb = (allocEnd[0] - allocStart[0]) / (1024 * 1024);
+        } else {
+            m.allocatedMb = -1;   // khong doc duoc (vd worker bi huy giua chung)
+        }
         // Trên TIMEOUT vẫn cố đọc partial counters - int/long read an toàn,
         // worst case là giá trị stale (chấp nhận được).
         boolean readCounters = !failed; // OK hoặc timeout đều có partial state

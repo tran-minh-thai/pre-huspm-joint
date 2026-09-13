@@ -73,6 +73,53 @@ public class ExperimentMetrics {
     public double sigma2;
     public double rho;
 
+    // 10. WP2 - CAU HINH CUA LAN CHAY. Truoc day cac gia tri nay khong duoc ghi ra CSV,
+    //     nen khong the truy nguoc mot dong ket qua ve tham so da sinh ra no. Reviewer #1
+    //     (comment 4a, 4e) va Reviewer #4 (comment 5) deu neu dung diem nay.
+    //     seed        - hat giong sinh lo/thao tac (truoc day co dinh 42, khong ghi ra)
+    //     repeat      - so hieu lan lap cua CUNG mot cau hinh (khu nhieu JIT/GC)
+    //     blockSize   - B_sz cua chi muc nguoc cap do khoi (C4), truoc day la hang so cung
+    //     kappa       - he so thich ung (bai goi kappa, code cu goi alpha)
+    //     delta0      - bien do khoi tao
+    //     triggerRule - luat kich hoat rescan cho pha chen: swumax | cub | iaumax
+    //     iauMax      - max_i A_i cua lo gan nhat (dai luong kich hoat cua luat moi)
+    //     iauTightness- CUB / max_i A_i, he so noi rong kich thuoc lo do duoc
+    // 11. CHẾ ĐỘ ĐO BỘ NHỚ.
+    //
+    //   memMode = "used"  (mặc định): peak_heap_mb là ĐỈNH USED-HEAP lấy mẫu 50 ms, tức
+    //     totalMemory-freeMemory, KỂ CẢ rác chưa được thu. Đại lượng này đo LỊCH GC chứ
+    //     không đo nhu cầu bộ nhớ của thuật toán: nó phụ thuộc -Xmx (heap lớn ⇒ G1 thu
+    //     lười ⇒ đỉnh cao hơn) và phụ thuộc thuật toán nào đã chạy TRƯỚC trong cùng JVM.
+    //     Project 02 (HAUSP/IAUUB) đã truy ra một con số 23.3 GB hoàn toàn là artifact
+    //     kiểu này: lần chạy đó nối sau một arm đã nống heap lên ~23 GB nên đọc được
+    //     14 GB ngay tại batch 0, lúc mới xử lý 1% dữ liệu.
+    //
+    //   memMode = "live": ép một lần thu gom đầy đủ tại các mốc (mỗi giây và cuối mỗi
+    //     lô) rồi đọc used-heap NGAY SAU đó. memLiveMb = đỉnh của các lần đọc ấy,
+    //     memRetainedMb = lần đọc cuối cùng. Đây là tập sống thật sự phải giữ, không
+    //     phụ thuộc lịch GC, không phụ thuộc -Xmx, không phụ thuộc thứ tự arm.
+    //     memLiveMb là CẬN DƯỚI của đỉnh tập sống thật; sai số bị chặn bởi khoảng lấy mẫu.
+    //
+    //   BẮT BUỘC: ép GC làm hỏng thời gian, nên runtime của lần chạy ở chế độ live KHÔNG
+    //   được dùng. runtimeMs xuất ra -3 và giá trị thật đi vào wallMsPerturbed để giữ dấu
+    //   vết mà không thể bị vẽ nhầm thành số hiệu năng.
+    public String memMode = "used";
+    public long memLiveMb;        // đỉnh used-heap đo NGAY SAU khi ép thu gom
+    public long memRetainedMb;    // used-heap sau khi ép thu gom lần cuối
+    public int  gcForced;         // số lần ép thu gom (0 ⇒ chỉ có giá trị cuối)
+    public long wallMsPerturbed;  // thời gian thật của lần chạy live (đã bị GC làm nhiễu)
+    /** Tổng byte thread khai phá đã cấp phát. Tất định, không phụ thuộc lịch GC. */
+    public long allocatedMb;
+
+    public long seed;
+    public int repeat;
+    public int blockSize;
+    public double kappa;
+    public double delta0;
+    public String triggerRule = "";
+    public double iauMax;
+    public double iauTightness;
+
     public String toCsvRow() {
         StringJoiner sj = new StringJoiner(",");
         sj.add(runId).add(timestamp).add(algorithm).add(dataset).add(String.valueOf(iteration));
@@ -102,6 +149,15 @@ public class ExperimentMetrics {
                 .add(String.valueOf(blocksSkipped))   // C4
                 .add(String.valueOf(sigma2))          // C2 (thô, độc lập)
                 .add(String.valueOf(rho));            // C2 (thô, độc lập)
+        // WP2.4 - cấu hình của lần chạy (đặt cuối để giữ tương thích thứ tự cột cũ).
+        sj.add(memMode).add(String.valueOf(memLiveMb)).add(String.valueOf(memRetainedMb))
+                .add(String.valueOf(gcForced)).add(String.valueOf(wallMsPerturbed))
+                .add(String.valueOf(allocatedMb));
+        sj.add(String.valueOf(seed)).add(String.valueOf(repeat))
+                .add(String.valueOf(blockSize))
+                .add(String.valueOf(kappa)).add(String.valueOf(delta0))
+                .add(triggerRule)
+                .add(String.valueOf(iauMax)).add(String.valueOf(iauTightness));
         return sj.toString();
     }
 
@@ -113,6 +169,8 @@ public class ExperimentMetrics {
                 "pruned_value,pruned_iub," +
                 "lut_dyn,cub_val,cub_triggered,op_type," +
                 "prelarge_count,uut_val,sft_val,rescan_count,blocks_read,blocks_skipped," +
-                "sigma2,rho";
+                "sigma2,rho," +
+                "mem_mode,mem_live_mb,mem_retained_mb,gc_forced,wall_ms_perturbed,allocated_mb," +
+                "seed,repeat,block_size,kappa,delta0,trigger_rule,iau_max,iau_tightness";
     }
 }
