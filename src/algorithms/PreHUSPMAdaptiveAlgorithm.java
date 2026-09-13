@@ -341,7 +341,9 @@ public class PreHUSPMAdaptiveAlgorithm {
     public static class PreHUSPMAdaptiveAlgo {
         public enum AblationMode { FULL, VARIANCE_ONLY, RHO_ONLY }
 
-        public double Su, alpha, delta0, Sl_min;
+        // WP2.5 - ky hieu THONG NHAT voi ban thao: kappa (bai) == alpha (code cu).
+        // Truong `alpha` cu da doi ten thanh `kappa`; khong con alias de tranh drift.
+        public double Su, kappa, delta0, Sl_min;
         AblationMode mode;
         boolean writeToFile;
         public int maxDepth = 1000;
@@ -395,6 +397,20 @@ public class PreHUSPMAdaptiveAlgorithm {
         public boolean useAdaptiveRescan = true;
 
         /**
+         * true (mac dinh): thao tac sua tieu ngan sach bang u(old) + u(new) - can tren dung.
+         * false: tai hien hanh vi cua ban nop (chi tieu |u(new) - u(old)|), KHONG sound.
+         */
+        public boolean strictModificationBudget =
+                !"false".equalsIgnoreCase(System.getProperty("adapt.strictModify", "true"));
+
+        /**
+         * WP2.1 - B_sz, kich thuoc khoi cua chi muc nguoc cap do khoi (C4).
+         * Truoc day la hang so cung 100 trong BlockIndex. Ghi de bang -Dblock.size=N.
+         * Gia tri dang dung duoc xuat ra cot CSV block_size.
+         */
+        public int blockSize = Integer.getInteger("block.size", 100);
+
+        /**
          * Xả 50% mẫu YẾU NHẤT (utility thấp) khỏi map. Bỏ theo SỐ LƯỢNG (n/2) nên luôn
          * giảm đúng một nửa bất kể phân bố utility. Giữ nguyên các mẫu utility cao
          * (gồm toàn bộ mẫu Lớn ≥ uut) → an toàn cho output cuối.
@@ -427,6 +443,58 @@ public class PreHUSPMAdaptiveAlgorithm {
         // --- CHỈ SỐ C5 (CUB) VÀ C2 (ADAPTIVE) ---
         public double lutDynValue, deltaDValue, sigmaDSquared, rhoD;
         public double cubValue = 0, sftValue = 0;
+
+        // ====================================================================
+        // WP1 - LUẬT KÍCH HOẠT RESCAN CHO PHA CHÈN
+        // ====================================================================
+        /**
+         * Ba luật kích hoạt rescan cho pha CHÈN, chọn được bằng cờ để phục vụ
+         * kịch bản trục kích thước lô (WP4.1).
+         *
+         * SWUMAX  Luật của bản nộp (Pre-HUSPM gốc, Eq. 9): rescan ⇔ max_{s∈d} u(s) > SFT.
+         *         KHÔNG SOUND. u(s) là utility của MỘT chuỗi, trong khi độ tăng utility của
+         *         một mẫu là TỔNG đóng góp của mọi chuỗi chèn chứa nó. Phản ví dụ của
+         *         Reviewer #1: UUT=0.25, LUT=0.20, TSU=100, u(X)=19, chèn hai chuỗi cùng
+         *         chứa X với u=6 ⇒ SWUmax=6 ≤ 6.67 nên không rescan, nhưng sau cập nhật
+         *         u(X)=31 > 0.25·112=28, tức X đã thành HUSP mà bị bỏ sót.
+         *         Giữ lại CHỈ để đối chiếu lịch sử; không dùng cho kết quả chính.
+         *
+         * CUB     Luật tích luỹ thô: rescan ⇔ Σ_{s∈d chèn từ rescan gần nhất} u(s) > SFT.
+         *         Sound, nhưng lỏng vì giả định toàn bộ utility chèn dồn được vào một mẫu.
+         *
+         * IAUMAX  Luật đề xuất (mặc định): rescan ⇔ max_i A_i > SFT, với
+         *         A_i = Σ_{s chèn từ rescan gần nhất, i ∈ s} u(s).
+         *         Sound và luôn chặt hơn hoặc bằng CUB. Cơ sở: nếu X ⊑ s thì mọi item của
+         *         X đều xuất hiện trong s, nên độ tăng utility của X bị chặn bởi
+         *         min_{i∈X} A_i ≤ max_i A_i. Suy biến về CUB khi tồn tại một item xuất hiện
+         *         trong mọi chuỗi chèn (quan sát được trên KOSARAK).
+         */
+        public enum TriggerRule { SWUMAX, CUB, IAUMAX }
+
+        /** Luật kích hoạt cho pha chèn. Ghi đè bằng -Dadapt.trigger=swumax|cub|iaumax. */
+        public TriggerRule triggerRule = parseTriggerRule(
+                System.getProperty("adapt.trigger", "iaumax"));
+
+        private static TriggerRule parseTriggerRule(String s) {
+            switch (s.trim().toLowerCase(java.util.Locale.ROOT)) {
+                case "swumax": return TriggerRule.SWUMAX;
+                case "cub":    return TriggerRule.CUB;
+                case "iaumax": return TriggerRule.IAUMAX;
+                default: throw new IllegalArgumentException(
+                        "adapt.trigger phải là swumax|cub|iaumax, nhận được: " + s);
+            }
+        }
+
+        /**
+         * A_i - bộ đếm utility chèn tích luỹ THEO TỪNG ITEM kể từ lần rescan gần nhất.
+         * Chỉ mục theo itemId; tăng trưởng theo nhu cầu. Cập nhật một lượt khi nạp lô,
+         * chi phí O(Σ_{s∈d}|s|), không đổi độ phức tạp tiệm cận.
+         */
+        private double[] iau = new double[256];
+        /** max_i A_i, duy trì tăng dần để khỏi quét lại mảng. */
+        public double iauMax = 0;
+        /** Tỷ số CUB/iauMax của lô gần nhất - hệ số nới rộng kích thước lô (xuất CSV). */
+        public double iauTightness = 1.0;
         // Mốc TSU tại lần rescan gần nhất (hoặc init) - dùng tính cận an toàn pre-large
         // F = (Su - Sl_min)/(1 - Su) · tsuAtLastRescan cho QUYẾT ĐỊNH rescan kiểu Pre-HUSPM.
         public double tsuAtLastRescan = 0;
@@ -442,6 +510,28 @@ public class PreHUSPMAdaptiveAlgorithm {
         // → tiết kiệm 3-5× memory khi pattern count lớn (low Su dense data).
         // Conversion sang Pattern chỉ khi exportLargePatterns hoặc incremental update.
         public Map<CompactPattern, Double> largeMap = new HashMap<>();
+
+        /**
+         * WP5 - anh chup TAP MAU lon duoi dang chuoi, de bo kiem chung so sanh tap mau
+         * va utility tung mau voi remine-from-scratch. Ban nop chi so sanh SO LUONG HUSP,
+         * khong du de chung minh Proposition 2.
+         */
+        public java.util.Map<String, Double> exportLargeAsStrings() {
+            java.util.Map<String, Double> out = new java.util.HashMap<>(largeMap.size() * 2);
+            for (Map.Entry<CompactPattern, Double> e : largeMap.entrySet()) {
+                out.put(e.getKey().toPattern().toIntuitiveString(), e.getValue());
+            }
+            return out;
+        }
+
+        /** Anh chup tap TIEN LON, phuc vu chan doan khi tap lon lech nhau. */
+        public java.util.Map<String, Double> exportPrelargeAsStrings() {
+            java.util.Map<String, Double> out = new java.util.HashMap<>(prelargeMap.size() * 2);
+            for (Map.Entry<CompactPattern, Double> e : prelargeMap.entrySet()) {
+                out.put(e.getKey().toPattern().toIntuitiveString(), e.getValue());
+            }
+            return out;
+        }
         Map<CompactPattern, Double> prelargeMap = new HashMap<>();
         // dbLookup được truy cập trong MỌI tracker iteration của recursion.
         // seqId trong DatasetLoader luôn sequential [0..N) → dùng Sequence[] direct
@@ -679,8 +769,8 @@ public class PreHUSPMAdaptiveAlgorithm {
             }
         }
 
-        public PreHUSPMAdaptiveAlgo(double Su, double alpha, double delta0, double SlMinRatio, AblationMode mode, boolean writeToFile) {
-            this.Su = Su; this.alpha = alpha; this.delta0 = delta0; this.Sl_min = SlMinRatio * Su;
+        public PreHUSPMAdaptiveAlgo(double Su, double kappa, double delta0, double SlMinRatio, AblationMode mode, boolean writeToFile) {
+            this.Su = Su; this.kappa = kappa; this.delta0 = delta0; this.Sl_min = SlMinRatio * Su;
             this.mode = mode; this.writeToFile = writeToFile;
         }
 
@@ -694,9 +784,12 @@ public class PreHUSPMAdaptiveAlgorithm {
             candidateCount = 0; exploredNodes = 0; blocksReadCount = 0; numBlocksSkipped = 0;
             prunedValueBound = 0; prunedIub = 0;
             cubValue = 0; cubTriggeredRescan = false;
+            resetIau();
             largeMap.clear(); prelargeMap.clear();
             dbClear();
             globalBlockIndex = new BlockIndex();
+            if (blockSize < 1) throw new IllegalArgumentException("block.size phai >= 1");
+            globalBlockIndex.blockSize = blockSize;   // WP2.1: B_sz tham so hoa
 
             globalBlockIndex.buildFromBatch(dInit);
             for (Sequence s : dInit) {
@@ -744,6 +837,7 @@ public class PreHUSPMAdaptiveAlgorithm {
                 dbPut(s.id, s);
                 batchTotalUtil += s.sequenceUtility;
                 if (s.sequenceUtility > swuMax) swuMax = s.sequenceUtility;
+                accumulateIau(s);          // WP1.1: A_i += u(s) cho mọi item i thuoc s
                 for (QItemset is : s.itemsets) for (QItem it : is.items)
                     if (it.id > maxItemId) maxItemId = it.id;
             }
@@ -757,52 +851,81 @@ public class PreHUSPMAdaptiveAlgorithm {
             this.uutValue = uut_abs; // ngưỡng HUSP tuyệt đối (xuất CSV)
             double lut_min_abs = newTotalUtility * Sl_min;
 
-            // --- ĐÓNG GÓP C2: NGƯỠNG PRE-LARGE THÍCH ỨNG (LUT_dyn) ---
-            // PATCHED (tinhchinhcode5 #9): công thức δ_D NHẠY HƠN (dựa phân tích dữ liệu).
-            // Band [lutDynValue, uut) phải PHỦ mức tăng tối đa của 1 mẫu giữa 2 rescan;
-            // mức tăng đó ≤ lượng utility CHÈN TÍCH LUỸ kể từ rescan (= cubValue). ⇒ đưa
-            // cubValue vào δ_D: band TỰ RỘNG theo lượng chèn (KHÔNG sót mẫu), tự HẸP lại
-            // sau rescan (cubValue=0 → bounded, tránh bùng nổ pre-large). Cộng α·σ²·ρ cho
-            // độ nhạy biến động/độ lệch. Chặn trên = uut-lut_min (không xuống dưới sàn cứng).
-            this.cubValue += batchTotalUtil;       // δτ tích luỹ kể từ rescan gần nhất
+            // WP1.4 - TRINH TU BAT BUOC TRONG MOT LO:
+            //   nap lo -> cap nhat bo dem (CUB, A_i) -> kiem tra kich hoat ->
+            //   neu rescan thi RESET bo dem TRUOC -> roi moi tinh Delta va LUT_dyn.
+            // Ban nop tinh Delta truoc khi reset nen mineAndClassify nhan LUT_dyn cu (da bi
+            // bom phong boi cubValue chua reset), tuc mine lai bang mot nguong khong tuong
+            // ung voi trang thai sau rescan.
+
+            // --- Buoc 1: cap nhat bo dem tich luy ---
+            this.cubValue += batchTotalUtil;       // perturbation tich luy ke tu rescan gan nhat
+            this.iauTightness = (iauMax <= 0) ? 1.0 : (cubValue / iauMax);
             this.sigmaDSquared = calculateVariance(deltaD);
             this.rhoD = (batchTotalUtil == 0) ? 0 : (swuMax / batchTotalUtil);
 
-            double dynamicTerm = 0;
-            switch (this.mode) {
-                case FULL: dynamicTerm = alpha * sigmaDSquared * rhoD; break;
-                case VARIANCE_ONLY: dynamicTerm = alpha * sigmaDSquared; break;
-                case RHO_ONLY: dynamicTerm = alpha * rhoD; break;
+            // --- Buoc 2: kiem tra dieu kien kich hoat (WP1.2) ---
+            // SFT_ins = (UUT - LUT_min)/(1 - UUT) * TSU_ref  (Eq. 15, khong doi).
+            double safetyBoundF = ((Su - Sl_min) / (1.0 - Su)) * tsuAtLastRescan;
+            this.sftValue = safetyBoundF;
+            double triggerQuantity;
+            switch (this.triggerRule) {
+                case SWUMAX: triggerQuantity = swuMax;   break;  // luat cu, KHONG sound
+                case CUB:    triggerQuantity = cubValue; break;
+                case IAUMAX: default: triggerQuantity = iauMax; break;
+            }
+            // C5 ablation: useAdaptiveRescan=false -> rescan MOI LO (bo quyet dinh thich ung)
+            this.cubTriggeredRescan = useAdaptiveRescan ? (triggerQuantity > safetyBoundF) : true;
+
+            // --- Buoc 3: neu rescan thi reset bo dem TRUOC khi tinh Delta ---
+            if (cubTriggeredRescan) {
+                rescanCount++;
+                this.cubValue = 0;                      // Reset bo dem
+                resetIau();                             // Reset A_i
+                this.tsuAtLastRescan = newTotalUtility; // cap nhat moc TSU cho SFT
             }
 
-            this.deltaDValue = Math.min(delta0 * newTotalUtility + dynamicTerm + cubValue, uut_abs - lut_min_abs);
-            this.lutDynValue = uut_abs - deltaDValue; // band floor thích ứng
-            if (!useAdaptiveBand) this.lutDynValue = lut_min_abs; // ablation: band cố định Sl_min
+            // --- Buoc 4: bien do thich ung Delta, nay co CA can duoi (WP1.3) ---
+            // Can duoi bat buoc. Mau bi loai tai LUT_dyn phai KHONG THE thanh HUSP truoc
+            // lan rescan ke tiep. Ngan sach chen con lai la A_max = SFT_ins - (bo dem hien
+            // tai). Voi moi A_future <= A_max ta can u(X,D') + A_future < UUT*(TSU' + A_future);
+            // hieu hai ve tang theo he so (1 - UUT) > 0 nen truong hop xau nhat o
+            // A_future = A_max, cho u(X,D') < UUT*TSU' - (1-UUT)*A_max, tuc
+            //     Delta >= (1 - UUT)*A_max = (UUT - LUT_min)*TSU_ref - (1 - UUT)*(bo dem).
+            // Khi bo dem = 0 (ngay sau rescan) can duoi nay bang dung tran cu, nen LUT_dyn
+            // roi ve san cung LUT_min*TSU_ref - khop pham vi Theorem 3 va 4.
+            // Tran duoc nang tu (UUT - LUT_min)*TSU' len UUT*TSU' de can duoi khong bi cat
+            // cut; LUT_dyn >= 0 luon dung.
+            double consumedIns = cubTriggeredRescan ? 0.0
+                    : (this.triggerRule == TriggerRule.SWUMAX ? cubValue : triggerQuantity);
+            double deltaMinIns = Math.max(0.0,
+                    (Su - Sl_min) * tsuAtLastRescan - (1.0 - Su) * consumedIns);
 
-            // --- ĐÓNG GÓP C5: QUYẾT ĐỊNH RESCAN THEO CẬN AN TOÀN PRE-LARGE ---
-            // PATCHED (tinhchinhcode5 #5): TÍCH HỢP cơ chế quyết định rescan kiểu Pre-HUSPM
-            // (Theorem 2) + giữ pruning chặt C1/C3/C4 của Adaptive.
-            //   Trước: cubValue (tổng utility CẢ lô ~10% TSU) so với δ_D (~0.3% TSU)
-            //          → lô NÀO CŨNG vượt → rescan mỗi lô (re-mine toàn bộ) → vô nghĩa + nổ.
-            //   Nay : rescan CHỈ khi 1 chuỗi chèn đủ lớn đe doạ tính đầy đủ:
-            //          F = (Su - Sl_min)/(1 - Su) · TSU_lastRescan ;  rescan ⇔ swuMax > F.
-            // → rescan HIẾM (như Pre-HUSPM) → nhanh, né re-mine chuỗi bệnh lý (BMS1).
-            //   Tính đầy đủ: dùng ĐÚNG cận của Pre-HUSPM ⇒ số mẫu ≥ Pre-HUSPM.
-            //   C2 (lutDynValue) GIỮ NGUYÊN cho phân loại pre-large; CUB vẫn tích luỹ
-            //   (telemetry + dùng ở pha xoá/sửa).
-            double safetyBoundF = ((Su - Sl_min) / (1.0 - Su)) * tsuAtLastRescan;
-            this.sftValue = safetyBoundF;          // SFT = cận an toàn (ngưỡng CÓ Ý NGHĨA)
-            // (cubValue đã được tích luỹ ở khối C2 phía trên - KHÔNG cộng lại ở đây)
-            // C5 ablation: useAdaptiveRescan=false → rescan MỖI LÔ (bỏ quyết định thích ứng)
-            this.cubTriggeredRescan = useAdaptiveRescan ? (swuMax > safetyBoundF) : true;
+            double dynamicTerm = 0;
+            switch (this.mode) {
+                case FULL: dynamicTerm = kappa * sigmaDSquared * rhoD; break;
+                case VARIANCE_ONLY: dynamicTerm = kappa * sigmaDSquared; break;
+                case RHO_ONLY: dynamicTerm = kappa * rhoD; break;
+            }
+
+            // Tran cua SO HANG HEURISTIC giu nguyen (UUT - LUT_min)*TSU'. Bo tran nay di
+            // thi so hang +CUB (co the toi 10% TSU) se keo LUT_dyn ve 0 va bien toan bo
+            // mau thanh tien-lon - dung loi da quan sat khi chay thu. Can duoi an toan
+            // deltaMin duoc ap SAU tran do va co the vuot no (chi xay ra o pha xoa, khi
+            // TSU' < TSU_ref); clamp cuoi cung tai UUT*TSU' bao dam LUT_dyn >= 0.
+            //
+            // Y nghia: tinh dung dan den TU deltaMin, KHONG tu so hang +CUB. Ban thao
+            // tuyen bo +CUB bao phu duoc muc tang toi da cua mot mau; tuyen bo do khong
+            // dung vi so hang ay bi tran cat cut. deltaMin la dieu kien dung.
+            double heuristicIns = Math.min(delta0 * newTotalUtility + dynamicTerm + cubValue,
+                                           uut_abs - lut_min_abs);
+            this.deltaDValue = Math.min(Math.max(heuristicIns, deltaMinIns), uut_abs);
+            this.lutDynValue = Math.max(0.0, uut_abs - deltaDValue); // band floor thich ung
+            if (!useAdaptiveBand) this.lutDynValue = lut_min_abs; // ablation: band co dinh Sl_min
 
             if (cubTriggeredRescan) {
-                // Cận an toàn vỡ -> Rescan (giữ pruning chặt khi mine lại)
-                rescanCount++;
-                this.cubValue = 0;                 // Reset bộ đệm
-                this.tsuAtLastRescan = newTotalUtility; // cập nhật mốc TSU cho F
-
-                // Giả lập quét lại trên D_SoFar (trong thực tế sẽ dùng BlockIndex để nạp selective)
+                // Can an toan vo -> Rescan (giu pruning chat khi mine lai)
+                // Gia lap quet lai tren D_SoFar (thuc te se dung BlockIndex de nap selective)
                 largeMap.clear(); prelargeMap.clear();
                 mineAndClassify(dSoFar, uut_abs, lutDynValue);
 
@@ -869,30 +992,42 @@ public class PreHUSPMAdaptiveAlgorithm {
             this.rhoD = (deletedTotal == 0) ? 0 : (swuMaxDel / deletedTotal);
             double dynamicTerm = 0;
             switch (this.mode) {
-                case FULL: dynamicTerm = alpha * sigmaDSquared * rhoD; break;
-                case VARIANCE_ONLY: dynamicTerm = alpha * sigmaDSquared; break;
-                case RHO_ONLY: dynamicTerm = alpha * rhoD; break;
+                case FULL: dynamicTerm = kappa * sigmaDSquared * rhoD; break;
+                case VARIANCE_ONLY: dynamicTerm = kappa * sigmaDSquared; break;
+                case RHO_ONLY: dynamicTerm = kappa * rhoD; break;
             }
-            // PATCHED (tinhchinhcode5 #10): ĐỐI XỨNG với pha chèn - cộng cubValue (perturbation
-            // tích luỹ) vào δ_D. Xoá nhiều → TSU giảm → ngưỡng uut giảm → mẫu nhỏ dễ "vượt lên"
-            // thành lớn ⇒ độ bất định tăng ⇒ miệng phễu (band) phải mở rộng tương ứng. cubValue
-            // cập nhật TRƯỚC để δ_D dùng đúng (giống pha chèn dòng #9).
-            this.cubValue += deletedTotal;   // |δτ| tích luỹ kể từ rescan gần nhất
-            this.deltaDValue = Math.min(delta0 * newTotalUtility + dynamicTerm + cubValue, uut_abs - lut_min_abs);
-            this.lutDynValue = uut_abs - deltaDValue; // band floor thích ứng
+            // WP1.4 - cung trinh tu bat buoc nhu pha chen:
+            //   cap nhat bo dem -> kiem tra kich hoat -> reset neu rescan -> roi tinh Delta.
+            // Luat kich hoat cua pha XOA von da dung dang TICH LUY (cubValue) nen VAN SOUND;
+            // chi phai sua thu tu va bo sung can duoi cho Delta.
+            this.cubValue += deletedTotal;   // perturbation tich luy ke tu rescan gan nhat
 
-            // PATCHED (tinhchinhcode5 #7): QUYẾT ĐỊNH rescan cho XOÁ theo cận an toàn pre-large.
-            // Xoá làm GIẢM utility ⇒ mẫu nhỏ chỉ có thể thành lớn khi tổng xoá đủ nhiều:
-            //   F_del = (Su - Sl_min)/Su · TSU_lastRescan  (Hong et al., chiều deletion ≈ 20% TSU).
-            // Vì F_del LỚN nên dùng dạng TÍCH LUỸ (cubValue) vẫn hiếm khi kích hoạt - KHÁC pha
-            // chèn (cận bé → phải dùng swuMax). (cubValue đã cộng ở trên - KHÔNG cộng lại.)
+            // F_del = (Su - Sl_min)/Su * TSU_lastRescan (Hong et al., chieu deletion).
             double safetyBoundDel = ((Su - Sl_min) / Su) * tsuAtLastRescan;
             this.sftValue = safetyBoundDel;
             this.cubTriggeredRescan = useAdaptiveRescan ? (cubValue > safetyBoundDel) : true;
 
             if (cubTriggeredRescan) {
-                rescanCount++; cubValue = 0;
-                this.tsuAtLastRescan = newTotalUtility; // cập nhật mốc TSU cho F
+                rescanCount++;
+                cubValue = 0;
+                resetIau();
+                this.tsuAtLastRescan = newTotalUtility; // cap nhat moc TSU cho F
+            }
+
+            // WP1.3 - can duoi cho Delta, dang DOI XUNG voi pha chen.
+            // Xoa lam TSU giam nen mot mau co the vuot len thanh HUSP ma khong tang utility.
+            // Ngan sach xoa con lai A_max = SFT_del - CUB. Truong hop xau nhat: X khong mat
+            // gi trong khi TSU giam dung A_max, can u(X,D') < UUT*(TSU' - A_max), tuc
+            //     Delta >= UUT*A_max = (UUT - LUT_min)*TSU_ref - UUT*CUB.
+            double deltaMinDel = Math.max(0.0,
+                    (Su - Sl_min) * tsuAtLastRescan - Su * cubValue);
+            double heuristicDel = Math.min(delta0 * newTotalUtility + dynamicTerm + cubValue,
+                                           uut_abs - lut_min_abs);
+            this.deltaDValue = Math.min(Math.max(heuristicDel, deltaMinDel), uut_abs);
+            this.lutDynValue = Math.max(0.0, uut_abs - deltaDValue); // band floor thich ung
+            if (!useAdaptiveBand) this.lutDynValue = lut_min_abs; // ablation: band co dinh Sl_min
+
+            if (cubTriggeredRescan) {
                 largeMap.clear(); prelargeMap.clear();
                 // Loại bỏ các sequence đã xoá khỏi dbLookup để mineAndClassify không truy cập sai
                 for (Sequence s : deletedSeqs) dbRemove(s.id);
@@ -927,19 +1062,31 @@ public class PreHUSPMAdaptiveAlgorithm {
          */
         public void runModification(List<Sequence> oldSeqs, List<Sequence> newSeqs,
                                     List<Sequence> dAfter, double newTotalUtility) {
-            // Mô hình hoá modification = deletion + insertion theo Định lý 5 sub-case 3
-            // Giảm CUB tăng kép tránh đếm 2x: gộp |δ| = |u(new) - u(old)| trực tiếp
+            // Mo hinh hoa modification = deletion + insertion.
+            //
+            // WP1 - LO HONG THU TU BON (phan bien chua neu, cung loai voi A1).
+            // Ban nop ghi de bo dem bang cubValue = cubBefore + |u(new) - u(old)|, tuc lay
+            // do lech utility RONG lam luong perturbation da tieu. Dai luong nay KHONG chan
+            // duoc do bien dong cua tap mau: mot thao tac sua giu nguyen utility nhung doi
+            // toan bo item cho |delta| = 0, tuc khong tieu ngan sach nao, trong khi tap mau
+            // co the doi hoan toan. Day dung la loi ma Reviewer #1 chi ra o Eq. (9): lay mot
+            // dai luong khong chan duoc thu can chan.
+            //
+            // Cach dung: de nguyen phan tich luy ma hai pha con da cong, tuc
+            //     CUB += u(old) + u(new),
+            // vi mot thao tac sua vua rut u(old) khoi CSDL vua bom u(new) vao, va ca hai deu
+            // co the day mot mau qua nguong. Day la can tren dung cua perturbation.
+            // Dat strictModificationBudget=false de tai hien hanh vi cu (chi de doi chieu).
             double delta = 0;
             int n = Math.min(oldSeqs.size(), newSeqs.size());
             for (int i = 0; i < n; i++) delta += Math.abs(newSeqs.get(i).sequenceUtility - oldSeqs.get(i).sequenceUtility);
-            // Thực thi qua deletion rồi insertion để bảo toàn correctness; trừ CUB phần tăng dư
             double cubBefore = this.cubValue;
-            runDeletion(oldSeqs, /* tạm: dAfter trước insertion */ subtract(dAfter, newSeqs), totalUtilityOf(subtract(dAfter, newSeqs)));
+            runDeletion(oldSeqs, subtract(dAfter, newSeqs), totalUtilityOf(subtract(dAfter, newSeqs)));
             runIncrementalMining(newSeqs, dAfter, newTotalUtility);
-            // Điều chỉnh CUB về đúng |delta| thay vì u(old)+u(new)
-            double cubAfter = this.cubValue;
-            this.cubValue = cubBefore + delta;
-            // Không reset triggeredRescan vì hai pha trên đã xử lý đúng.
+            if (!strictModificationBudget) {
+                this.cubValue = cubBefore + delta;   // hanh vi cu, KHONG sound
+            }
+            // Khong reset triggeredRescan vi hai pha tren da xu ly dung.
         }
 
         private List<Sequence> subtract(List<Sequence> all, List<Sequence> remove) {
@@ -953,6 +1100,47 @@ public class PreHUSPMAdaptiveAlgorithm {
         private double totalUtilityOf(List<Sequence> seqs) {
             double t = 0; for (Sequence s : seqs) t += s.sequenceUtility; return t;
         }
+
+        /** Đặt lại toàn bộ bộ đếm A_i (gọi tại init và tại mỗi lần rescan). */
+        private void resetIau() {
+            java.util.Arrays.fill(iau, 0.0);
+            iauMax = 0;
+        }
+
+        private void ensureIauCapacity(int item) {
+            if (item < iau.length) return;
+            iau = java.util.Arrays.copyOf(iau, Math.max(item + 1, iau.length * 2));
+        }
+
+        /**
+         * Cộng u(s) vào A_i cho mọi item PHÂN BIỆT i xuất hiện trong s, và cập nhật iauMax.
+         * Dùng scratchIauSeen làm cờ chống cộng trùng khi item lặp lại trong cùng chuỗi
+         * (cộng trùng vẫn sound vì chỉ nới cận lên, nhưng làm luật lỏng đi vô cớ).
+         */
+        private void accumulateIau(Sequence s) {
+            final double u = s.sequenceUtility;
+            if (u == 0) return;
+            for (QItemset is : s.itemsets) {
+                for (QItem it : is.items) {
+                    int id = it.id;
+                    ensureIauCapacity(id);
+                    if (scratchIauSeen == null || scratchIauSeen.length <= id) {
+                        scratchIauSeen = java.util.Arrays.copyOf(
+                                scratchIauSeen == null ? new int[256] : scratchIauSeen,
+                                Math.max(id + 1, (scratchIauSeen == null ? 256 : scratchIauSeen.length) * 2));
+                    }
+                    if (scratchIauSeen[id] == iauStamp) continue;   // đã cộng cho chuỗi này
+                    scratchIauSeen[id] = iauStamp;
+                    double v = iau[id] + u;
+                    iau[id] = v;
+                    if (v > iauMax) iauMax = v;
+                }
+            }
+            iauStamp++;
+        }
+
+        private transient int[] scratchIauSeen = new int[256];
+        private int iauStamp = 1;
 
         /** Cấp phát mảng scratch double[] cho Pass-1 nhanh (tránh HashMap mỗi tracker). */
         private void allocateScratch(int sz) {
