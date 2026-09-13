@@ -13,7 +13,7 @@ cd "$(dirname "$0")"
 
 HEAP="${HEAP:-24g}"
 STACK="${STACK:-64m}"
-TIMEOUT_MIN="${TIMEOUT_MIN:-60}"
+TIMEOUT_MIN="${TIMEOUT_MIN:-120}"
 SCENARIOS=("$@")
 [ ${#SCENARIOS[@]} -eq 0 ] && SCENARIOS=(ALL)
 

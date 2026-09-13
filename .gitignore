@@ -15,3 +15,7 @@ out/
 results_backup/
 *.log
 *.hprof
+
+# ... nhung console log CUA MOT LAN CHAY la bang chung di kem ket qua, phai giu.
+# manifest.json tro toi chung, nen neu bo qua thi lan chay khong tu giai thich duoc.
+!results/**/*.log

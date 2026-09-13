@@ -1,0 +1,332 @@
+===============================================================================
+ run.txt - LENH CHAY THUC NGHIEM TREN MAY DO
+ Du an: Pre-HUSPM-Adaptive (ban thao PR-D-26-08311, dang sua sau reject)
+ Repo : https://github.com/tran-minh-thai/pre-huspm-adaptive
+ May do: Dell XPS - Intel Core i7-10750H (6 nhan/12 luong, 2.60 GHz) - 64 GB RAM
+         Windows - ten may: Admin-PC
+===============================================================================
+
+ CACH DUNG FILE NAY
+   PHAN A  chi lam MOT LAN dau tien tren may do.
+   PHAN B  lam MOI LAN chay: pull -> compile -> chay -> push.
+   PHAN C  checklist truoc moi dot chay dai.
+   PHAN D  chia dot cho luoi day du.
+
+ Moi khoi lenh chay trong PowerShell. Khoi nao can quyen Administrator deu co
+ ghi chu (A) o dau.
+
+ QUY TAC KHONG DUOC PHA:
+   1. Chi chay MOT job do tai mot thoi diem. Hai JVM cung chay lam hong ca
+      runtime lan bo nho.
+   2. Thu muc lam viec phai nam tren O CUC BO, khong nam trong Google Drive.
+      Drive dong bo file trong luc chay se tranh I/O va lam nhieu phep do.
+   3. Heap 24 GB can may 64 GB. run.ps1 tu tu choi neu khong du.
+   4. Ket qua che do live KHONG dung lam so thoi gian (runtime_ms = -3).
+
+
+===============================================================================
+ PHAN A - THIET LAP MAY DO (CHI LAM MOT LAN)
+===============================================================================
+
+--- A1. Cho phep PowerShell chay script -------------------------------------
+
+  Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned -Force
+  Get-ExecutionPolicy -List
+
+  Ket qua mong doi: dong CurrentUser hien RemoteSigned.
+
+
+--- A2. Cai cong cu (A - can Administrator) ----------------------------------
+
+  # JDK 17 LTS. Ghim ban 17 de moi lan chay dung cung mot runtime; doi JDK giua
+  # chung dot chay la doi dieu kien do.
+  winget install --id EclipseAdoptium.Temurin.17.JDK -e --accept-package-agreements --accept-source-agreements
+  winget install --id Git.Git            -e --accept-package-agreements --accept-source-agreements
+  winget install --id GitHub.cli         -e --accept-package-agreements --accept-source-agreements
+  winget install --id Python.Python.3.12 -e --accept-package-agreements --accept-source-agreements
+
+  # Dong roi mo lai PowerShell de PATH duoc nap lai, roi kiem tra:
+  java -version
+  javac -version
+  git --version
+  gh --version
+  python --version
+
+  Ket qua mong doi: java va javac deu bao 17.x va TRUNG NHAU.
+  Neu may co nhieu JDK, chot mot cai:
+     [Environment]::SetEnvironmentVariable('JAVA_HOME','C:\Program Files\Eclipse Adoptium\jdk-17...','User')
+
+
+--- A3. Dang nhap GitHub -----------------------------------------------------
+
+  # Lenh nay tu mo trinh duyet va tu luu thong tin dang nhap. KHONG go token
+  # hay mat khau vao dong lenh, va khong luu chung vao bat ky file nao.
+  gh auth login
+
+     Chon:  GitHub.com  ->  HTTPS  ->  Yes (authenticate Git with GitHub credentials)
+            ->  Login with a web browser  ->  lam theo huong dan tren trinh duyet.
+
+  gh auth status
+  gh auth setup-git          # de git dung thong tin dang nhap cua gh
+
+  # Danh tinh cho commit (thay bang thong tin cua ban):
+  git config --global user.name  "Minh-Thai Tran"
+  git config --global user.email "thaitm@huflit.edu.vn"
+
+
+--- A4. Clone repo ve O CUC BO -----------------------------------------------
+
+  # KHONG clone vao G:\My Drive. Google Drive dong bo trong luc chay se tranh
+  # I/O, va no da tung lam mat thu muc .git cua ban sao lam viec.
+  New-Item -ItemType Directory -Force -Path C:\husp | Out-Null
+  Set-Location C:\husp
+  git clone https://github.com/tran-minh-thai/pre-huspm-adaptive.git
+  Set-Location C:\husp\pre-huspm-adaptive
+  git status
+
+
+--- A5. Chuan bi may cho phep do (A - can Administrator) ---------------------
+
+  # Nguon dien va power plan. CPU dong H tut xung khi chay tai lien tuc nhieu
+  # gio, va do bom thang vao do lech chuan ma phan bien yeu cau.
+  powercfg /setactive SCHEME_MIN          # High performance
+  powercfg /change standby-timeout-ac 0
+  powercfg /change hibernate-timeout-ac 0
+  powercfg /change monitor-timeout-ac 0
+  powercfg /getactivescheme
+
+  # Loai thu muc khoi quet thoi gian thuc cua Defender.
+  Add-MpPreference -ExclusionPath 'C:\husp'
+  Get-MpPreference | Select-Object -ExpandProperty ExclusionPath
+
+  # Paging file. Heap 24 GB tren may 64 GB van co the sap neu paging file qua
+  # nho: JVM khong bao loi ngay ma thrashing roi chet bang native allocation
+  # failure. De he thong tu quan ly, hoac dat toi thieu 32 GB.
+  Get-CimInstance Win32_PageFileUsage | Select-Object Name, AllocatedBaseSize, CurrentUsage
+  Get-CimInstance Win32_ComputerSystem | Select-Object AutomaticManagedPagefile
+
+  # Ghi lai ten may de dung cho -ExpectMachine o PHAN B.
+  (Get-CimInstance Win32_ComputerSystem).Name
+
+
+--- A6. Kiem tra tinh dung dan TRUOC khi do bat ky so nao --------------------
+
+  Set-Location C:\husp\pre-huspm-adaptive
+
+  # Bien dich thu (run.ps1 cung tu bien dich, day chi de kiem tra nhanh).
+  Remove-Item build\* -Recurse -Force -ErrorAction SilentlyContinue
+  New-Item -ItemType Directory -Force -Path build | Out-Null
+  $src = Get-ChildItem src -Recurse -Filter *.java | ForEach-Object { '"' + ($_.FullName.Replace([char]92,[char]47)) + '"' }
+  [System.IO.File]::WriteAllLines("$env:TEMP\husp-src.txt", $src, (New-Object System.Text.UTF8Encoding($false)))
+  javac -encoding UTF-8 -d build "@$env:TEMP\husp-src.txt"
+
+  # 15 test nghiem thu WP1. PHAI ra "15 dat, 0 hong".
+  java -cp build verify.WP1AcceptanceTest
+
+  # Kiem chung tap mau so voi remine-from-scratch tren mot dataset re.
+  java -Xmx24g -Xss64m -cp build verify.CorrectnessVerifier LEVIATHAN --rule iaumax --batches 5 --out results\verify
+  # PHAI ra missing=0 extra=0 o moi thao tac.
+
+  # He so quy doi may (k). Con so nay quyet dinh timeout dung bao nhieu phut.
+  java -Xmx24g -Xss64m -cp build experiments.MachineCalibration
+
+
+===============================================================================
+ PHAN B - MOI LAN CHAY
+===============================================================================
+
+--- B1. Cap nhat ma nguon ----------------------------------------------------
+
+  Set-Location C:\husp\pre-huspm-adaptive
+  git pull --ff-only
+  git log --oneline -3
+  git status --short          # phai SACH truoc khi chay
+
+
+--- B2. Dot do THOI GIAN (mem_mode = used) -----------------------------------
+
+  # run.ps1 tu bien dich, tu ghi manifest, tu kiem tra may va heap truoc khi chay.
+  # -ExpectMachine bat script tu choi neu lo chay nham may khac.
+  .\run.ps1 -Heap 24g -Stack 64m -TimeoutMin 120 -ExpectMachine 'Admin-PC' SC1 SC2 SC3 SC4 SC5 SC6 SC7
+
+  # Ket qua vao  results\run-<thoi diem>-<commit>\
+  # Hinh     vao  figures\run-<thoi diem>-<commit>\
+
+
+--- B3. Dot do BO NHO (mem_mode = live) --------------------------------------
+
+  # Chay RIENG, sau khi B2 xong han. Che do live ep thu gom nen thoi gian cua
+  # dot nay vo nghia (runtime_ms = -3) - no chi de lay bo nho.
+  # Launcher tu lap qua tung thuat toan, MOI THUAT TOAN MOT JVM RIENG.
+  .\run.ps1 -Heap 24g -Stack 64m -TimeoutMin 120 -MemMode live -MemIntervalMs 1000 -ExpectMachine 'Admin-PC' SC1 SC2 SC3 SC4 SC5 SC6 SC7
+
+  # Ket qua vao  results\run-<thoi diem>-<commit>\mem\
+
+
+--- B4. Kiem tra ket qua truoc khi push --------------------------------------
+
+  $run = Get-ChildItem results -Directory -Filter 'run-*' | Sort-Object Name | Select-Object -Last 1
+  $run.FullName
+  Get-ChildItem $run.FullName -Recurse -File | Select-Object Name, Length
+
+  # Manifest phai ghi dung may va dung heap:
+  Get-Content "$($run.FullName)\manifest.json" | ConvertFrom-Json |
+      Select-Object machine_name, ram_gb, cpu, jvm_flags, timeout_minutes, mem_mode, java_version
+
+  # Dem so dong va so ca that bai cua tung file ket qua:
+  Get-ChildItem $run.FullName -Recurse -Filter *.csv | ForEach-Object {
+      $rows = Import-Csv $_.FullName
+      [PSCustomObject]@{
+          File = $_.Name
+          Rows = $rows.Count
+          OT   = ($rows | Where-Object { $_.op_type -like '*_OT*'  }).Count
+          OOM  = ($rows | Where-Object { $_.op_type -like '*_OOM*' }).Count
+          Fail = ($rows | Where-Object { $_.op_type -like '*_FAILED*' }).Count
+      }
+  } | Format-Table -AutoSize
+
+
+--- B5. Day ket qua len GitHub -----------------------------------------------
+
+  git add results figures
+  git status --short
+
+  # Thong diep commit nen ghi ro may, che do do, va kich ban da chay.
+  git commit -m "results: Admin-PC, mem_mode=used+live, SC1-SC7, timeout 120min"
+
+  git pull --rebase --autostash
+  git push
+
+  # Neu push bi tu choi vi khac nhanh:
+  #   git branch --show-current
+  #   git push -u origin (git branch --show-current)
+
+
+===============================================================================
+ PHAN C - CHECKLIST TRUOC MOI DOT CHAY DAI
+===============================================================================
+
+  [ ] May cam dien, power plan High performance, khong ngu, khong hibernate
+  [ ] Dong het ung dung khac. Khong co java.exe nao dang chay:
+          Get-Process java -ErrorAction SilentlyContinue
+      (run.ps1 tu tu choi neu con, tru khi truyen -AllowConcurrent)
+  [ ] Thu muc lam viec o C:\husp, KHONG o Google Drive
+  [ ] Google Drive / OneDrive khong dong bo thu muc nay
+  [ ] git status --short SACH
+  [ ] java -version bao dung 17.x
+  [ ] Con it nhat 20 GB trong o C:
+          Get-PSDrive C | Select-Object Used, Free
+  [ ] Paging file du lon (xem A5)
+  [ ] Da chay lai verify.WP1AcceptanceTest: 15 dat, 0 hong
+
+
+===============================================================================
+ PHAN D - CHIA DOT CHO LUOI DAY DU
+===============================================================================
+
+  Luoi day du la SC1 den SC7, hai che do do, tren sau dataset. Chua co uoc
+  luong thoi gian dang tin cay vi moi so do cu deu do tren may khac. Vi vay:
+
+  D1. Chay SC1 truoc, ca hai che do, roi doc thoi gian thuc te tu console log.
+      Lay do lam co so uoc luong cho phan con lai.
+
+        .\run.ps1 -Heap 24g -ExpectMachine 'Admin-PC' SC1
+        .\run.ps1 -Heap 24g -MemMode live -ExpectMachine 'Admin-PC' SC1
+
+  D2. Cac kich ban gia tang (SC2, SC5, SC6) nang hon nhieu vi luat kich hoat
+      rescan da duoc sua cho dung: o lo 10% thi gan nhu MOI LO deu rescan.
+      Chay rieng tung kich ban, dung gop.
+
+        .\run.ps1 -Heap 24g -ExpectMachine 'Admin-PC' SC2
+        .\run.ps1 -Heap 24g -ExpectMachine 'Admin-PC' SC5
+        .\run.ps1 -Heap 24g -ExpectMachine 'Admin-PC' SC6
+
+  D3. Loc theo thuat toan hoac theo dataset khi can cat nho hon nua:
+
+        # mot thuat toan
+        .\run.ps1 -Heap 24g -ExpectMachine 'Admin-PC' -MemMode live -MemArms @('Adaptive-Full') SC2
+
+        # mot dataset (truyen thang cho JVM)
+        $env:JAVA_TOOL_OPTIONS = '-Ddataset.only=SIGN'
+        .\run.ps1 -Heap 24g -ExpectMachine 'Admin-PC' SC2
+        Remove-Item Env:\JAVA_TOOL_OPTIONS
+
+  D4. Kich ban rieng, chay truc tiep bang java (khong qua run.ps1):
+
+        # Truc kich thuoc lo - quyet dinh kich thuoc lo cho SC2/SC5/SC6
+        java -Xmx24g -Xss64m -cp build experiments.BatchSizeSweep ALL --out results\sweep
+
+        # Doi chieu hai bien the cua baseline Pre-HUSPM theo giao thuc goc cua ho
+        java -Xmx24g -Xss64m -cp build experiments.PreHuspmVariantCompare ALL --out results\variants
+
+        # Kiem chung tap mau tren toan bo dataset
+        java -Xmx24g -Xss64m -cp build verify.CorrectnessVerifier ALL --rule iaumax --out results\verify
+
+        # Bang chung cho viec doi chi so bo nho: cung may, cung viec, doi -Xmx
+        foreach ($h in '4g','8g','16g','24g') {
+            java "-Xmx$h" -Xss64m -Dalgo.only=Pre-HUSPM -Ddataset.only=SIGN -Dresults.dir="results/heapdemo/used_$h/" -cp build AutomatedExperimentRunner SC1
+            java "-Xmx$h" -Xss64m -Dmem.mode=live -Dalgo.only=Pre-HUSPM -Ddataset.only=SIGN -Dresults.dir="results/heapdemo/mem_$h/" -cp build AutomatedExperimentRunner SC1
+        }
+
+  D5. Sau moi dot: chay B4 roi B5. Dung doi den cuoi moi push - mat dien giua
+      chung se mat het.
+
+
+===============================================================================
+ PHU LUC - CAC CO CO THE TRUYEN
+===============================================================================
+
+  run.ps1
+    -Heap 24g              kich thuoc heap; script tu choi neu lon hon RAM - 4 GB
+    -Stack 64m             stack moi thread (de quy sau can cai nay)
+    -TimeoutMin 120        gioi han moi loi goi, phut
+    -MemMode used|live     used = do thoi gian; live = do tap song
+    -MemIntervalMs 1000    khoang ep thu gom o che do live
+    -MemArms @('...')      danh sach thuat toan cho che do live
+    -ExpectMachine 'Ten'   tu choi neu chay nham may
+    -AllowConcurrent       bo qua kiem tra "da co java dang chay" (chi dung khi
+                           KHONG phai lan chay do)
+
+  Thuoc tinh JVM (truyen bang -D... khi goi java truc tiep)
+    -Dtimeout.min=120         gioi han moi loi goi
+    -Dmem.mode=live           che do do bo nho
+    -Dmem.interval.ms=1000    khoang ep thu gom
+    -Dalgo.only=Adaptive-Full chi chay mot thuat toan
+    -Ddataset.only=SIGN       chi chay mot dataset
+    -Dadapt.trigger=iaumax    luat kich hoat rescan: swumax | cub | iaumax
+    -Dblock.size=100          B_sz cua chi muc nguoc cap do khoi
+    -Dkappa=0.5               he so thich ung
+    -Ddelta0=1e-4             bien do khoi tao
+    -Drepeats=3               so lan lap moi cau hinh
+    -Dseeds=5                 so seed
+    -Dresults.dir=...         thu muc ket qua (che do live bat buoc co 'mem')
+
+  Ten thuat toan dung cho -MemArms va -Dalgo.only
+    USpan | HUSP-ULL | IncUSP-Miner+ | Pre-HUSPM | Pre-HUSPM-TSU | Adaptive-Full
+
+
+===============================================================================
+ XU LY SU CO
+===============================================================================
+
+  "Heap 24g does not fit in ... GB of RAM"
+      Dang chay nham may. Kiem tra (Get-CimInstance Win32_ComputerSystem).Name
+
+  "java process(es) already running"
+      Con JVM cua dot truoc. Doi no xong, hoac:
+          Get-Process java | Stop-Process -Force
+
+  "-Dmem.mode=live phai ghi vao thu muc co chua 'mem'"
+      Dang goi java truc tiep o che do live. Dung run.ps1 -MemMode live, hoac
+      them 'mem' vao -Dresults.dir.
+
+  "che do live yeu cau MOI ARM MOT JVM RIENG"
+      Thieu -Dalgo.only. Dung run.ps1 -MemMode live de no tu lap.
+
+  javac bao "invalid flag"
+      Argfile bi ghi kem BOM. run.ps1 da xu ly; neu tu go tay thi phai dung
+      UTF8Encoding($false) nhu o muc A6.
+
+  Chay giua chung bi mat dien
+      Ket qua da ghi den dau con den do (CSV duoc flush theo tung dong). Chay
+      lai kich ban con thieu, moi lan chay vao mot thu muc rieng nen khong de.
