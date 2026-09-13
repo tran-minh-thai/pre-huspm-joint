@@ -129,11 +129,21 @@ public final class ThresholdScan {
      */
     private static long levelBudgetMs = 900_000L;
 
+    /**
+     * Budget for one database, all levels together. Without it an overnight run cannot be
+     * planned: four levels at their own budget, each able to widen and retry at three times
+     * that, means the worst case is sixteen times the level budget rather than four. When
+     * this is spent the remaining levels are reported as not attempted, which is a fact
+     * worth recording rather than a run that silently overshot into the morning.
+     */
+    private static long totalBudgetMs = Long.MAX_VALUE;
+    private static long runDeadline = Long.MAX_VALUE;
+
     public static void main(String[] args) throws IOException {
         if (args.length == 0) {
             System.out.println("usage: ThresholdScan <DATASET|ALL> [--target N | --grid a,b,c] "
-                    + "[--full] [--budget-sec N] [--level-budget-sec N] [--max-candidates N] "
-                    + "[--out DIR]");
+                    + "[--full] [--budget-sec N] [--level-budget-sec N] "
+                    + "[--total-budget-sec N] [--max-candidates N] [--out DIR]");
             System.out.println("databases: SIGN LEVIATHAN FIFA BIBLE BMS1 KOSARAK "
                     + "C8T1S5I8N5K ONLINE_RETAIL_II_ALL ONLINE_RETAIL_II_QTY");
             return;
@@ -154,6 +164,7 @@ public final class ThresholdScan {
                 case "--full":           full = true; break;
                 case "--budget-sec":     budgetMs = Long.parseLong(args[++i]) * 1000L; break;
                 case "--level-budget-sec": levelBudgetMs = Long.parseLong(args[++i]) * 1000L; break;
+                case "--total-budget-sec": totalBudgetMs = Long.parseLong(args[++i]) * 1000L; break;
                 case "--max-candidates": maxCandidates = Long.parseLong(args[++i]); break;
                 case "--target":         single = Integer.parseInt(args[++i]); break;
                 case "--targets":        break;                 // the default; accepted for clarity
@@ -169,8 +180,10 @@ public final class ThresholdScan {
         // deliberate step, not an accident of whoever pushed last.
         Path csv = outDir.resolve("thresholds-" + hostTag() + ".csv");
         boolean fresh = !Files.exists(csv);
-        System.out.printf("budgets: %,d candidates and %d s per probe, %d s per level%n",
-                maxCandidates, budgetMs / 1000, levelBudgetMs / 1000);
+        System.out.printf("budgets: %,d candidates, %d s per probe, %d s per level%s%n",
+                maxCandidates, budgetMs / 1000, levelBudgetMs / 1000,
+                totalBudgetMs == Long.MAX_VALUE ? ""
+                        : String.format(", %d s per database", totalBudgetMs / 1000));
 
         try (PrintWriter w = new PrintWriter(Files.newBufferedWriter(csv, StandardCharsets.UTF_8,
                 java.nio.file.StandardOpenOption.CREATE, java.nio.file.StandardOpenOption.APPEND))) {
@@ -196,6 +209,8 @@ public final class ThresholdScan {
         String scope = full ? "full" : "D_init";
 
         System.out.printf("%n=== %s | %s | |D|=%,d | TSU=%,.0f ===%n", name, scope, db.size(), tsu);
+        runDeadline = (totalBudgetMs == Long.MAX_VALUE) ? Long.MAX_VALUE
+                : System.nanoTime() + totalBudgetMs * 1_000_000L;
 
         if (grid != null) {
             System.out.printf("%10s %12s %10s  %s%n", "uut", "patterns", "ms", "status");
@@ -237,6 +252,13 @@ public final class ThresholdScan {
         Result[] found = new Result[targets.length];
 
         for (int i = targets.length - 1; i >= 0; i--) {
+            if (System.nanoTime() >= runDeadline) {
+                Result skipped = new Result();
+                skipped.status = "not-attempted-database-budget-spent";
+                found[i] = skipped;
+                System.out.printf("%8s %10d  %s%n", levels[i], targets[i], skipped.status);
+                continue;
+            }
             Result r = search(db, tsu, targets[i], seed, LO, hi);
 
             // Nothing measured at all means the budgets were the binding constraint, not
@@ -246,7 +268,7 @@ public final class ThresholdScan {
             // reason. Finishing is not succeeding: a probe at a threshold high enough to be
             // cheap can complete and be wildly off, which reads as a result while telling
             // you nothing.
-            if (!r.ok() || (!r.onTarget() && r.hitBudget)) {
+            if ((!r.ok() || (!r.onTarget() && r.hitBudget)) && System.nanoTime() < runDeadline) {
                 long oldC = maxCandidates, oldB = budgetMs, oldL = levelBudgetMs;
                 maxCandidates *= 10;
                 budgetMs *= 3;
@@ -384,7 +406,7 @@ public final class ThresholdScan {
         note(best, u, p, target);
 
         boolean tooMany = p.abandoned || p.patterns > target;
-        for (int i = 0; i < 14 && !bracketed && System.nanoTime() < deadline; i++) {
+        for (int i = 0; i < 14 && !bracketed && System.nanoTime() < deadline && System.nanoTime() < runDeadline; i++) {
             if (tooMany) {
                 lo = u;
                 if (u >= hi) break;
@@ -409,7 +431,7 @@ public final class ThresholdScan {
             }
         }
 
-        for (int i = 0; i < MAX_STEPS && hi / lo > 1.002 && System.nanoTime() < deadline; i++) {
+        for (int i = 0; i < MAX_STEPS && hi / lo > 1.002 && System.nanoTime() < deadline && System.nanoTime() < runDeadline; i++) {
             double mid = Math.sqrt(lo * hi);
             Probe q = mine(db, tsu, mid);
             probes++; ms += q.ms;
