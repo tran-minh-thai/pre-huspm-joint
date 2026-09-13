@@ -111,7 +111,15 @@ Calibrated so far, on `D_init`, written to `results/thresholds/thresholds.csv`:
 | SIGN | 0.020 0.025 0.030 0.032 | **0.04499 0.06215 0.07634 0.08585** | 3288 612 167 76 |
 | LEVIATHAN | 0.055 0.060 0.065 0.070 | **0.01428 0.01528 0.01636 0.01811** | 152 115 91 62 |
 | BIBLE | 0.020 0.025 0.030 0.035 | **0.01976 0.02428 0.02982 0.03557** | 357 194 104 54 |
-| BMS1, FIFA, KOSARAK | | pending | |
+| BMS1 | 0.013 0.014 0.015 0.016 | **0.01421 0.01442 0.01575 0.01771** | 20 18 16 14 |
+| FIFA, KOSARAK | | pending | |
+| C8T1S5I8N5K, ONLINE_RETAIL_II_ALL, ONLINE_RETAIL_II_QTY | none to inherit | pending | |
+
+All nine databases of the release are listed in the runner. A database whose thresholds
+have not been measured against this release is **skipped** with a message naming the
+command to calibrate it, rather than measured at an operating point chosen for different
+data; `-Duncalibrated=true` overrides that for exploration. Listing only the ready ones
+would have made "every database was calibrated" true-looking and false.
 
 The shift has no common direction: SIGN needs thresholds about 2.5 times higher, LEVIATHAN
 about 4 times lower, and BIBLE barely moves — BIBLE is one of the two databases whose bytes

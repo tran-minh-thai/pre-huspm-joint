@@ -208,9 +208,37 @@ public class AutomatedExperimentRunner {
         final String name;
         final double defaultSu;
         final double[] suSweep;
+        /** Whether these thresholds were measured against the pinned release. */
+        final boolean calibrated;
+        /** Pattern counts the sweep produced, or why there are none yet. */
+        final String note;
+
         DatasetConfig(String name, double defaultSu, double[] suSweep) {
-            this.name = name; this.defaultSu = defaultSu; this.suSweep = suSweep;
+            this(name, defaultSu, suSweep, true, "");
         }
+
+        DatasetConfig(String name, double defaultSu, double[] suSweep,
+                      boolean calibrated, String note) {
+            this.name = name; this.defaultSu = defaultSu; this.suSweep = suSweep;
+            this.calibrated = calibrated; this.note = note;
+        }
+    }
+
+    /**
+     * Measuring at a threshold chosen for different data is not a rerun of anything: the
+     * pattern counts, and with them the amount of work, are simply different. Rather than
+     * let that happen quietly, an uncalibrated database is skipped with a message saying
+     * what to run. Override with -Duncalibrated=true when the point is to explore.
+     */
+    public static final boolean ALLOW_UNCALIBRATED = Boolean.getBoolean("uncalibrated");
+
+    private static boolean calibrationOk(DatasetConfig ds) {
+        if (ds.calibrated || ALLOW_UNCALIBRATED) return true;
+        System.out.println(">> skipping " + ds.name + ": thresholds not calibrated for the "
+                + "pinned release (" + ds.note + ").");
+        System.out.println("   java -cp build experiments.ThresholdScan " + ds.name
+                + " --out results/thresholds     (or -Duncalibrated=true to run anyway)");
+        return false;
     }
 
     /**
@@ -224,30 +252,54 @@ public class AutomatedExperimentRunner {
      *
      * Bật/tắt từng dataset theo nhu cầu (commit-out với "//") - không cần xoá.
      */
+    /**
+     * Every database of the pinned release, with the thresholds each one is measured at.
+     *
+     * The list must name every database that will be run, not just the ones already set
+     * up. A table that quietly lags behind the data makes "all databases were calibrated"
+     * false while looking complete, so entries that are not ready are present and marked
+     * rather than absent.
+     *
+     * Thresholds are ratios of total utility. They stay well defined across releases but
+     * not comparable: the pinned release changed the shape of the utility distribution, so
+     * the same ratio selects a different number of patterns. Each sweep below was re-chosen
+     * with experiments.ThresholdScan to reproduce the pattern counts of the submitted
+     * experiments, so the runs pose comparable work; the raw search output is in
+     * results/thresholds/thresholds.csv.
+     */
     private static final List<DatasetConfig> DATASETS_PRODUCTION = List.of(
-            new DatasetConfig("SIGN",       0.025,  new double[]{0.02, 0.025, 0.030, 0.032}),
-            // BMS1 cực thưa (~48k item, avg 2.4 itemset/chuỗi). Đo Adaptive/D_init:
-            // 0.014→4s/20pat, 0.013→27s/23pat, 0.012→>180s (cand 92M), 0.011→>180s.
-            // Candidate bùng nổ ~7× mỗi bước 0.001. Default 0.014 để SC2/SC5 incremental
-            // (lặp nhiều call) không quá lâu; 0.013 là điểm baseline bắt đầu OT.
-            new DatasetConfig("BMS1",       0.014, new double[]{0.013, 0.014, 0.015, 0.016}),
-            // BIBLE (text, ~10.7k item, avg 22 itemset/chuỗi) - rất "ngoan": candidate
-            // gần như phẳng. Đo Adaptive/D_init: 0.045→17pat/1s, 0.03→103pat/1s,
-            // 0.02→343pat/2s. Hạ ngưỡng để mẫu phong phú hơn mà vẫn <2s.
-            new DatasetConfig("BIBLE",      0.025, new double[]{0.020, 0.025, 0.030, 0.035}),
-            new DatasetConfig("LEVIATHAN",  0.060,  new double[]{0.055, 0.060, 0.065, 0.070}),
-            // FIFA CỰC DÀY (avg 36.7 itemset/chuỗi → đệ quy sâu). Mẫu HUSP rất hiếm:
-            // Su≥0.06 chỉ cho 0-1 large (vô nghĩa). Đo Adaptive/D_init vùng có mẫu:
-            // 0.060→1 large/122s, 0.055→5/159s, 0.050→18/222s, 0.045→41 large/305s.
-            // Candidate tăng tuyến tính (~6k/s) → mọi Su xong trong <90 phút. Chọn
-            // {0.045..0.06} để large pattern THỰC SỰ có nghĩa (1→5→18→41).
-            new DatasetConfig("FIFA",       0.05,  new double[]{0.045, 0.050, 0.055, 0.060}),
-            // KOSARAK siêu thưa (~41k item, 495k chuỗi/D_init). Đo thực tế: Adaptive
-            // 0.05→9s, 0.04→18s, 0.03→34s, 0.025→58s, 0.02→>120s. Baseline chậm hơn
-            // 10-100×. Su≥0.025 để toàn bộ thuật toán hoàn thành/so sánh hợp lý;
-            // 0.025 là điểm baseline bắt đầu OT (minh chứng ưu thế scaling).
-            new DatasetConfig("KOSARAK",    0.03, new double[]{0.025, 0.030, 0.040, 0.050})
+            // Calibrated on D_init. Patterns obtained, lowest threshold first.
+            new DatasetConfig("SIGN",      0.06215, new double[]{0.04499, 0.06215, 0.07634, 0.08585},
+                    true,  "3288 612 167 76"),
+            new DatasetConfig("LEVIATHAN", 0.01553, new double[]{0.01465, 0.01553, 0.01647, 0.01799},
+                    true,  "133 107 88 63"),
+            new DatasetConfig("BIBLE",     0.02428, new double[]{0.01976, 0.02428, 0.02982, 0.03557},
+                    true,  "357 194 104 54"),
+            new DatasetConfig("BMS1",      0.01442, new double[]{0.01421, 0.01442, 0.01575, 0.01771},
+                    true,  "20 18 16 14"),
 
+            // Not calibrated yet: too expensive for the development machine, so the search
+            // runs on the measurement machine. The values below are the ones inherited from
+            // the previous databases and are known to be wrong for these; they are kept only
+            // so the entry is complete. runSingle refuses to measure an uncalibrated
+            // database unless -Duncalibrated=true.
+            new DatasetConfig("FIFA",      0.05,  new double[]{0.045, 0.050, 0.055, 0.060},
+                    false, "inherited, not measured on this release"),
+            new DatasetConfig("KOSARAK",   0.03,  new double[]{0.025, 0.030, 0.040, 0.050},
+                    false, "inherited, not measured on this release"),
+
+            // Added by the pinned release. These are the only databases here that reach
+            // within-event extension (C8T1S5I8N5K at 7.97 items per event,
+            // ONLINE_RETAIL_II_ALL at 22.78); the other seven hold exactly one item per
+            // event and exercise across-event extension alone. ONLINE_RETAIL_II_QTY is the
+            // only one whose internal utility is measured rather than generated, which is
+            // what a reviewer asking about synthetic utilities actually wants to see.
+            new DatasetConfig("C8T1S5I8N5K",          0.02, new double[]{0.01, 0.02, 0.03, 0.04},
+                    false, "no inherited value; ladder chosen, not measured"),
+            new DatasetConfig("ONLINE_RETAIL_II_ALL", 0.02, new double[]{0.01, 0.02, 0.03, 0.04},
+                    false, "no inherited value; ladder chosen, not measured"),
+            new DatasetConfig("ONLINE_RETAIL_II_QTY", 0.02, new double[]{0.01, 0.02, 0.03, 0.04},
+                    false, "no inherited value; ladder chosen, not measured")
     );
 
     /** Dataset rút gọn cho smoke-test (paper = 4 chuỗi, < 1s). */
@@ -363,6 +415,7 @@ public class AutomatedExperimentRunner {
         try (ResultCollector col = new ResultCollector(RESULTS_DIR + "SC1_static.csv")) {
             for (DatasetConfig ds : DATASETS) {
                 if (!datasetEnabled(ds.name)) continue;
+                if (!calibrationOk(ds)) continue;
                 List<Sequence> full = DatasetLoader.loadDataset(datasetDir + ds.name + "_seq.txt",
                                                                 datasetDir + ds.name + "_eui.txt");
                 if (full.isEmpty()) continue;
@@ -397,6 +450,7 @@ public class AutomatedExperimentRunner {
         try (ResultCollector col = new ResultCollector(RESULTS_DIR + "SC2_incremental.csv")) {
             for (DatasetConfig ds : DATASETS) {
                 if (!datasetEnabled(ds.name)) continue;
+                if (!calibrationOk(ds)) continue;
                 List<Sequence> full = DatasetLoader.loadDataset(datasetDir + ds.name + "_seq.txt",
                                                                 datasetDir + ds.name + "_eui.txt");
                 if (full.isEmpty()) continue;
@@ -437,6 +491,7 @@ public class AutomatedExperimentRunner {
             String[] algos = {"USpan", "HUSP-ULL", "HUSP-SP", "IncUSP-Miner+", "Pre-HUSPM", "Adaptive-Full"};
             for (DatasetConfig ds : DATASETS) {
                 if (!datasetEnabled(ds.name)) continue;
+                if (!calibrationOk(ds)) continue;
                 if (!SUBSET_3.contains(ds.name)) continue;
                 List<Sequence> full = DatasetLoader.loadDataset(datasetDir + ds.name + "_seq.txt",
                                                                 datasetDir + ds.name + "_eui.txt");
@@ -468,6 +523,7 @@ public class AutomatedExperimentRunner {
         try (ResultCollector col = new ResultCollector(RESULTS_DIR + "SC4_sl_sensitivity.csv")) {
             for (DatasetConfig ds : DATASETS) {
                 if (!datasetEnabled(ds.name)) continue;
+                if (!calibrationOk(ds)) continue;
                 if (!SUBSET_3.contains(ds.name)) continue;
                 List<Sequence> full = DatasetLoader.loadDataset(datasetDir + ds.name + "_seq.txt",
                                                                 datasetDir + ds.name + "_eui.txt");
@@ -539,6 +595,7 @@ public class AutomatedExperimentRunner {
         try (ResultCollector col = new ResultCollector(RESULTS_DIR + "SC5_batch_strategy.csv")) {
             for (DatasetConfig ds : DATASETS) {
                 if (!datasetEnabled(ds.name)) continue;
+                if (!calibrationOk(ds)) continue;
                 if (!SUBSET_3.contains(ds.name)) continue;
                 List<Sequence> full = DatasetLoader.loadDataset(datasetDir + ds.name + "_seq.txt",
                                                                 datasetDir + ds.name + "_eui.txt");
@@ -658,6 +715,7 @@ public class AutomatedExperimentRunner {
         try (ResultCollector col = new ResultCollector(RESULTS_DIR + "SC6_idm_mixed.csv")) {
             for (DatasetConfig ds : DATASETS) {
                 if (!datasetEnabled(ds.name)) continue;
+                if (!calibrationOk(ds)) continue;
                 if (!SUBSET_3.contains(ds.name)) continue;
                 List<Sequence> full = DatasetLoader.loadDataset(datasetDir + ds.name + "_seq.txt",
                                                                 datasetDir + ds.name + "_eui.txt");
@@ -799,6 +857,7 @@ public class AutomatedExperimentRunner {
         try (ResultCollector col = new ResultCollector(RESULTS_DIR + "SC7_ablation.csv")) {
             for (DatasetConfig ds : DATASETS) {
                 if (!datasetEnabled(ds.name)) continue;
+                if (!calibrationOk(ds)) continue;
                 List<Sequence> full = DatasetLoader.loadDataset(datasetDir + ds.name + "_seq.txt",
                                                                 datasetDir + ds.name + "_eui.txt");
                 if (full.isEmpty()) continue;
