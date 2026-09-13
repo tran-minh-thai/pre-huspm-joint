@@ -96,9 +96,30 @@ Total utility differs by only 7.7 percent there, so the change comes from the sh
 utility distribution rather than its scale.
 
 A run at these defaults is therefore not a rerun of the submitted experiment, and a pattern
-set that large is not a useful operating point. The defaults must be re-chosen per database
-so that pattern counts land in a comparable range, and the chosen values recorded here,
-before any campaign is measured.
+set that large is not a useful operating point. `experiments.ThresholdScan` re-chooses them,
+searching for the threshold that yields the pattern count the submitted experiments produced
+so the new runs pose comparable work:
+
+```bash
+java -Xmx24g -Xss64m -cp build experiments.ThresholdScan ALL --out results/thresholds
+```
+
+Calibrated so far, on `D_init`, written to `results/thresholds/thresholds.csv`:
+
+| Database | Old sweep | Calibrated sweep | Patterns obtained |
+|---|---|---|---|
+| SIGN | 0.020 0.025 0.030 0.032 | **0.04499 0.06215 0.07634 0.08585** | 3288 612 167 76 |
+| LEVIATHAN | 0.055 0.060 0.065 0.070 | **0.01428 0.01528 0.01636 0.01811** | 152 115 91 62 |
+| BIBLE | 0.020 0.025 0.030 0.035 | **0.01976 0.02428 0.02982 0.03557** | 357 194 104 54 |
+| BMS1, FIFA, KOSARAK | | pending | |
+
+The shift has no common direction: SIGN needs thresholds about 2.5 times higher, LEVIATHAN
+about 4 times lower, and BIBLE barely moves — BIBLE is one of the two databases whose bytes
+were unchanged between the old files and the release, which is a useful consistency check on
+the procedure. No single factor could have been applied by hand.
+
+Pattern counts do not depend on the machine, so calibration can be run anywhere. The
+runtimes `ThresholdScan` prints are for impatience only and are not reportable.
 
 ## Build and run
 
@@ -123,6 +144,7 @@ java -Xmx24g -Xss64m -cp build AutomatedExperimentRunner SC1
 Verify correctness before measuring anything:
 
 ```bash
+.etch-datasets.ps1 -VerifyOnly                          # databases still intact
 java -cp build verify.WP1AcceptanceTest                   # must report 15 passed, 0 failed
 java -cp build verify.BaselineAgreement SIGN              # static baselines must agree exactly
 java -Xmx24g -cp build verify.CorrectnessVerifier LEVIATHAN --rule iaumax

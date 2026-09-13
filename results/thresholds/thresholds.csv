@@ -1,0 +1,13 @@
+dataset,scope,level,target_patterns,uut,patterns,mine_ms
+LEVIATHAN,D_init,low,146,0.014280,152,9126
+LEVIATHAN,D_init,default,113,0.015284,115,6606
+LEVIATHAN,D_init,high,89,0.016359,91,7333
+LEVIATHAN,D_init,highest,66,0.018115,62,8866
+BIBLE,D_init,low,343,0.019764,357,15699
+BIBLE,D_init,default,177,0.024276,194,28248
+BIBLE,D_init,high,103,0.029818,104,15753
+BIBLE,D_init,highest,56,0.035566,54,11666
+SIGN,D_init,low,3030,0.044987,3288,12005
+SIGN,D_init,default,641,0.062147,612,11758
+SIGN,D_init,high,152,0.076335,167,9818
+SIGN,D_init,highest,83,0.085853,76,9467
