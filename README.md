@@ -12,7 +12,8 @@ build the figures and summary tables.
 
 ```
 .
-├── run.sh                  single entry point: build, run, plot
+├── run.sh                  entry point on macOS and Linux: build, run, plot
+├── run.ps1                 the same on Windows
 ├── src/                    Java sources
 │   ├── AutomatedExperimentRunner.java   defines scenarios SC1 to SC7
 │   ├── ExperimentMetrics.java           per-run measurement record
@@ -42,6 +43,8 @@ build the figures and summary tables.
 
 ## Running from a clean clone
 
+On macOS and Linux:
+
 ```bash
 git clone <repository url>
 cd pre-huspm-adaptive
@@ -51,6 +54,19 @@ cd pre-huspm-adaptive
 ./run.sh SC1,SC7               # comma syntax also works
 HEAP=8g ./run.sh TEST SC1      # reduced grid, finishes in minutes
 ```
+
+On Windows, in PowerShell:
+
+```powershell
+git clone <repository url>
+cd pre-huspm-adaptive
+
+.\run.ps1                      # every scenario, default settings
+.\run.ps1 SC1 SC2              # selected scenarios
+.\run.ps1 -Heap 8g TEST SC1    # reduced grid, finishes in minutes
+```
+
+The two scripts are equivalent and write the same directory layout.
 
 Each run writes to `results/run-<timestamp>-<commit>/` together with a `manifest.json`
 recording the commit, the JDK, the JVM flags, the machine, the timeout, and the SHA-256 of
@@ -62,6 +78,11 @@ Useful switches:
 ```bash
 TIMEOUT_MIN=120 ./run.sh SC1          # raise the per-call wall-clock limit
 HEAP=48g STACK=128m ./run.sh          # larger machine
+```
+
+```powershell
+.\run.ps1 -TimeoutMin 120 SC1
+.\run.ps1 -Heap 48g -Stack 128m
 ```
 
 ## Data format

@@ -114,7 +114,34 @@ table rather than folded into the main results.
 Results are reported as mean plus or minus standard deviation. Overtime and out-of-memory
 calls are excluded from the means and reported separately as resource-limit evidence.
 
-## 7. Provenance
+## 7. Measurement machine
+
+All numbers in a given table come from one machine, and every algorithm in that table is
+run on it under identical JVM settings. Numbers measured on different machines are never
+compared against each other.
+
+The machine used for the revised experiments is a Windows laptop with an Intel Core
+i7-10750H, six cores and twelve threads at 2.60 GHz, and 64 GB of RAM. The mining task
+runs on a single worker thread, so single-core sustained clock is what matters; the
+discrete GPU is irrelevant to this workload.
+
+Two properties of this machine affect the protocol:
+
+* **Sustained load and thermal behaviour.** An H-series laptop processor reduces its clock
+  under a multi-hour load, which inflates the variance of runtime measurements. Runs are
+  done with the machine on mains power, the Windows power plan set to high performance,
+  sleep and hibernation disabled, and the repository folder excluded from real-time
+  antivirus scanning. The active power plan is recorded in each manifest.
+* **Memory.** 64 GB of RAM would allow a much larger heap, but the heap stays at 24 GB.
+  Out-of-memory outcomes are evidence in the comparison, so raising the heap would change
+  what the failures mean rather than remove a limitation.
+
+The wall-clock limit per call stays at 60 minutes. This machine is slower per core than
+the one used for the first submission, so more calls are expected to end in overtime;
+overtime is reported rather than hidden, and the affected calls are excluded from the
+means.
+
+## 8. Provenance
 
 `run.sh` writes each run into `results/run-<timestamp>-<commit>/` together with a
 `manifest.json` recording the commit, whether the working tree was clean, the JDK, the JVM
