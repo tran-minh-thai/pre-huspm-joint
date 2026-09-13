@@ -458,6 +458,17 @@ public class AutomatedExperimentRunner {
         DATASETS = inCostOrder(testMode ? DATASETS_TEST : DATASETS_PRODUCTION);
         datasetDir = testMode ? EXAMPLE_DIR : DATASET_DIR;
 
+        // STATUS answers "what is ready to run" without depending on any result file.
+        // The calibrated thresholds live in the code, not in results/thresholds/, so a
+        // machine that has just cloned is not missing anything by having no CSV yet.
+        if (args != null) {
+            for (String a : args) {
+                for (String t : a.split("[,\s]+")) {
+                    if (t.equalsIgnoreCase("STATUS")) { printStatus(); return; }
+                }
+            }
+        }
+
         Set<String> scenarios = parseScenarios(args);
         System.out.println("=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===");
         System.out.println("Mode: " + (testMode ? "TEST (paper dataset)" : "PRODUCTION")
@@ -474,6 +485,32 @@ public class AutomatedExperimentRunner {
         if (scenarios.contains("SC7")) runSC7_Ablation();
         System.out.printf("=== ALL SCENARIOS DONE (%.1fs) ===%n",
                 (System.currentTimeMillis() - t0) / 1000.0);
+    }
+
+    /** Print each database, its thresholds, and whether they were measured on this data. */
+    private static void printStatus() {
+        System.out.printf("%-22s %-12s %-34s %s%n", "database", "calibrated", "thresholds", "note");
+        System.out.println("-".repeat(110));
+        int ready = 0;
+        for (DatasetConfig ds : DATASETS_PRODUCTION) {
+            StringBuilder sw = new StringBuilder();
+            for (int i = 0; i < ds.suSweep.length; i++) {
+                if (i > 0) sw.append(' ');
+                sw.append(String.format("%.5f", ds.suSweep[i]));
+            }
+            if (ds.calibrated) ready++;
+            System.out.printf("%-22s %-12s %-34s %s%n",
+                    ds.name, ds.calibrated ? "yes" : "NO", sw, ds.note);
+        }
+        System.out.println("-".repeat(110));
+        System.out.printf("%d of %d ready. Uncalibrated databases are skipped by every "
+                        + "scenario; calibrate with:%n", ready, DATASETS_PRODUCTION.size());
+        for (DatasetConfig ds : DATASETS_PRODUCTION) {
+            if (!ds.calibrated) {
+                System.out.println("  java -cp build experiments.ThresholdScan " + ds.name
+                        + " --out results/thresholds");
+            }
+        }
     }
 
     private static Set<String> parseScenarios(String[] args) {
