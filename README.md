@@ -87,7 +87,19 @@ remaining databases are the ones that reach within-event extension, and
 `ONLINE_RETAIL_II_QTY` is the only one whose internal utility is measured rather than
 generated. Select any of them with `-Ddataset.only=NAME`.
 
-Thresholds are ratios of total utility, so they carry across releases unchanged.
+### The default thresholds need recalibrating
+
+Thresholds are ratios of total utility, so they remain *well defined* across releases. They
+do not remain *comparable*. The defaults in the table were tuned against a different draw of
+the utilities, and on the pinned release they select far more patterns: SIGN at 0.025
+returned 641 patterns on the previously vendored files and returns 36,582 on this release.
+Total utility differs by only 7.7 percent there, so the change comes from the shape of the
+utility distribution rather than its scale.
+
+A run at these defaults is therefore not a rerun of the submitted experiment, and a pattern
+set that large is not a useful operating point. The defaults must be re-chosen per database
+so that pattern counts land in a comparable range, and the chosen values recorded here,
+before any campaign is measured.
 
 ## Build and run
 
