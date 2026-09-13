@@ -24,6 +24,10 @@ param(
     # 'live' forces a full collection at every sample point and reads the used heap right
     # after, which is the live set. It runs one JVM per arm, writes into <run>\mem\, and
     # its runtimes are void (runtime_ms = -3).
+    # Compile and stop. Needed after every pull before invoking a class directly with
+    # java -cp build: run.ps1 is what compiles, so a pull leaves build/ holding the
+    # previous checkout and a newly added class appears to be missing.
+    [switch]$BuildOnly,
     [ValidateSet('used','live')][string]$MemMode = 'used',
     [int]$MemIntervalMs = 1000,
     # Arms swept in live mode, one JVM each.
@@ -84,7 +88,7 @@ if ($heapGb -gt ($ramGb - 4)) {
 }
 
 $otherJava = @(Get-Process java -ErrorAction SilentlyContinue)
-if ($otherJava.Count -gt 0 -and -not $AllowConcurrent) {
+if ($otherJava.Count -gt 0 -and -not $AllowConcurrent -and -not $BuildOnly) {
     throw ("$($otherJava.Count) java process(es) already running (PID " +
            ($otherJava.Id -join ', ') + "). Concurrent runs compete for cores, memory " +
            "bandwidth, and page cache, which corrupts runtime and peak heap. Stop them " +
@@ -126,6 +130,11 @@ $quoted = $sources | ForEach-Object { '"' + ($_.Replace([char]92, [char]47)) + '
 Invoke-Native { javac -encoding UTF-8 -d build "@$argFile" }
 if ($LASTEXITCODE -ne 0) { throw "javac failed" }
 Remove-Item $argFile -Force
+
+if ($BuildOnly) {
+    Write-Host "==> build only; nothing measured"
+    exit 0
+}
 
 Write-Host "==> writing manifest"
 $cpu = (Get-CimInstance Win32_Processor | Select-Object -First 1)
