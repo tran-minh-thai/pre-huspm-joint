@@ -93,6 +93,9 @@ public class AutomatedExperimentRunner {
      */
     public static final String ALGO_ONLY = System.getProperty("algo.only", "").trim();
 
+    /** Luat kich hoat rescan dang dung, ghi vao CSV de truy nguoc. */
+    public static final String ADAPT_TRIGGER = System.getProperty("adapt.trigger", "iaumax");
+
     /** Chi chay MOT dataset. Ghi de: -Ddataset.only=SIGN. Rong = tat ca. */
     public static final String DATASET_ONLY = System.getProperty("dataset.only", "").trim();
 
@@ -103,6 +106,33 @@ public class AutomatedExperimentRunner {
     /** true neu thuat toan nay duoc phep chay trong tien trinh hien tai. */
     public static boolean algoEnabled(String algo) {
         return ALGO_ONLY.isEmpty() || ALGO_ONLY.equalsIgnoreCase(algo);
+    }
+
+    // === NGU CANH CUA MOT LAN DO ===
+    //
+    // Truoc day khong dong ket qua nao ghi lai seed hay so hieu lan lap da sinh ra
+    // no, nen khong the tinh trung binh va do lech chuan, va cung khong the truy
+    // nguoc mot dong ve cau hinh cua no. Ca hai phan bien deu yeu cau dieu nay.
+    //
+    // Hai nguon bien thien KHAC NHAU, khong duoc gop:
+    //   seed   doi CAU HINH: lo nao chua chuoi nao, thao tac nao xay ra khi nao.
+    //          Chi co tac dung o noi that su co ngau nhien (xem ghi chu tung kich ban).
+    //   repeat lap lai DUNG cung mot cau hinh de do nhieu cua JIT va GC.
+    // Do lech chuan bao cao trong bai la cua repeat; seed dung de kiem tra ket luan
+    // khong phu thuoc mot cach chia lo cu the.
+    private static long currentSeed = SEEDS[0];
+    private static int currentRepeat = 0;
+
+    private static void setRunContext(long seed, int repeat) {
+        currentSeed = seed;
+        currentRepeat = repeat;
+    }
+
+    /** Cac seed thuc su duoc dung trong lan chay nay. */
+    private static long[] activeSeeds() {
+        long[] out = new long[SEED_COUNT];
+        System.arraycopy(SEEDS, 0, out, 0, SEED_COUNT);
+        return out;
     }
     public static final double D_INIT_RATIO = 0.5; // 50% init per paper
 
@@ -323,7 +353,11 @@ public class AutomatedExperimentRunner {
                 List<Sequence> dInit = headPercent(full, D_INIT_RATIO);
                 double totalUtil = sumUtility(dInit);
                 String[] algos = {"USpan", "HUSP-ULL", "HUSP-SP", "IncUSP-Miner+", "Pre-HUSPM", "Adaptive-Full"};
+                // SC1 khong co ngau nhien nao: khong chia lo, khong sinh thao tac. Seed
+                // khong doi duoc gi, nen chi lap lai cung cau hinh de do nhieu JIT/GC.
                 for (double su : ds.suSweep) {
+                    for (int r = 0; r < REPEATS; r++) {
+                    setRunContext(SEEDS[0], r);
                     for (String algo : algos) {
                         ExperimentMetrics m = runSingle(algo, ds.name, dInit, totalUtil, su, 0, "SC1_su=" + su);
                         if (m != null) col.log(m);
@@ -332,6 +366,7 @@ public class AutomatedExperimentRunner {
                         // trước khi algo sau cấp phát; nếu thuật toán trước OOM,
                         // forceFullGC() đảm bảo budget heap "sạch" cho thuật toán sau.
                         forceFullGC();
+                    }
                     }
                 }
             }
@@ -351,8 +386,28 @@ public class AutomatedExperimentRunner {
                 if (full.isEmpty()) continue;
                 List<Sequence> dInit = headPercent(full, D_INIT_RATIO);
                 List<Sequence> rest = tailFrom(full, dInit.size());
-                List<List<Sequence>> batches = splitByWeights(rest, equalWeights(5));
-                runIncrementalScenario(ds.name, ds.defaultSu, dInit, batches, col, "SC2");
+
+                // SC2 chia lo DEU va TUAN TU theo thu tu file, tuc hoan toan tat dinh:
+                // voi mot seed thi nam seed cho ra dung mot cach chia, va "chay nam seed"
+                // se chi la lap lai mot cau hinh - do nhieu do dac chu khong do bien thien
+                // cua cach chia lo. Neu muon bien thien that thi phai hoan vi dong du lieu
+                // gia tang, va do la mot kich ban KHAC voi kich ban mo ta trong bai.
+                //
+                // Vi vay: mot seed giu nguyen dinh nghia cu; tu hai seed tro len thi dong
+                // gia tang duoc hoan vi theo seed, va dieu do phai duoc noi ro trong bai.
+                long[] seeds = activeSeeds();
+                for (long seed : seeds) {
+                    List<Sequence> stream = rest;
+                    if (seeds.length > 1) {
+                        stream = new ArrayList<>(rest);
+                        Collections.shuffle(stream, new Random(seed));
+                    }
+                    List<List<Sequence>> batches = splitByWeights(stream, equalWeights(5));
+                    for (int r = 0; r < REPEATS; r++) {
+                        setRunContext(seed, r);
+                        runIncrementalScenario(ds.name, ds.defaultSu, dInit, batches, col, "SC2");
+                    }
+                }
             }
         }
     }
@@ -371,11 +426,15 @@ public class AutomatedExperimentRunner {
                                                                 DATASET_DIR + ds.name + "_eui.txt");
                 if (full.isEmpty()) continue;
                 double totalUtil = sumUtility(full);
+                // Nhu SC1: khong co ngau nhien, chi lap lai de do nhieu do dac.
                 for (double su : ds.suSweep) {
-                    for (String algo : algos) {
-                        ExperimentMetrics m = runSingle(algo, ds.name, full, totalUtil, su, 0, "SC3_su=" + su);
-                        if (m != null) col.log(m);
-                        forceFullGC(); // Cleanup heap giữa các thuật toán
+                    for (int r = 0; r < REPEATS; r++) {
+                        setRunContext(SEEDS[0], r);
+                        for (String algo : algos) {
+                            ExperimentMetrics m = runSingle(algo, ds.name, full, totalUtil, su, 0, "SC3_su=" + su);
+                            if (m != null) col.log(m);
+                            forceFullGC(); // Cleanup heap giữa các thuật toán
+                        }
                     }
                 }
             }
@@ -406,7 +465,10 @@ public class AutomatedExperimentRunner {
                 //
                 //     Mỗi instance được scope-hẹp trong block → ra khỏi block là
                 //     unreachable; forceFullGC() ngay sau thu hồi heap.
+                // Khong co ngau nhien; chi lap lai de do nhieu JIT/GC.
                 for (double slRatio : slRatios) {
+                  for (int r = 0; r < REPEATS; r++) {
+                    setRunContext(SEEDS[0], r);
                     // --- Pre-HUSPM @ slRatio ---
                     if (!ADAPTIVE_ONLY) {
                         String tag = "Pre-HUSPM[sl=" + slRatio + "]";
@@ -438,6 +500,7 @@ public class AutomatedExperimentRunner {
                         col.log(m);
                         forceFullGC();
                     }
+                  }
                 }
 
                 // (b) ĐÃ BỎ sweep (delta0, alpha): chạy trên runInitialMining nên 2 tham số
@@ -467,15 +530,26 @@ public class AutomatedExperimentRunner {
                 List<Sequence> dInit = headPercent(full, D_INIT_RATIO);
                 List<Sequence> rest = tailFrom(full, dInit.size());
 
+                // Trong bon chien luoc thi chi BURST dung den seed; EVEN, INCREASING va
+                // DECREASING deu tat dinh. Vong seed vi vay chi sinh cau hinh khac nhau o
+                // BURST - voi ba chien luoc kia no tro thanh lap lai, nen ta bo qua de
+                // khong nhan ba lan khoi luong ma khong thu duoc thong tin nao.
                 for (int k : kList) for (BatchSplitMode strat : strategies) {
-                    long seed = SEEDS[0];
-                    BatchSplitSpec spec = new BatchSplitSpec(strat, k, null, seed);
-                    double[] weights = computeWeights(spec);
-                    List<List<Sequence>> batches = splitByWeights(rest, weights);
-                    String tag = "SC5_K=" + k + "_strat=" + strat.name();
-                    System.out.println(">> [SC5] " + ds.name + " " + tag
-                            + " -> sizes=" + batchSizes(batches));
-                    runIncrementalScenario(ds.name, ds.defaultSu, dInit, batches, col, tag);
+                    boolean seedMatters = (strat == BatchSplitMode.BURST
+                                        || strat == BatchSplitMode.RANDOM);
+                    long[] seeds = seedMatters ? activeSeeds() : new long[]{SEEDS[0]};
+                    for (long seed : seeds) {
+                        BatchSplitSpec spec = new BatchSplitSpec(strat, k, null, seed);
+                        double[] weights = computeWeights(spec);
+                        List<List<Sequence>> batches = splitByWeights(rest, weights);
+                        String tag = "SC5_K=" + k + "_strat=" + strat.name();
+                        System.out.println(">> [SC5] " + ds.name + " " + tag
+                                + " seed=" + seed + " -> sizes=" + batchSizes(batches));
+                        for (int r = 0; r < REPEATS; r++) {
+                            setRunContext(seed, r);
+                            runIncrementalScenario(ds.name, ds.defaultSu, dInit, batches, col, tag);
+                        }
+                    }
                 }
             }
         }
@@ -582,16 +656,25 @@ public class AutomatedExperimentRunner {
 
                 int opCount = 10;
                 int opSize = Math.max(1, rest.size() / (opCount * 2));
-                // Mot seed rieng cho tung dataset, de chuoi thao tac cua dataset nay khong
-                // phu thuoc vao viec dataset nao da chay truoc no.
-                Random rnd = new Random(SEEDS[0] + ds.name.hashCode());
-                List<Op> plan = buildSC6Plan(dInit, rest, opCount, opSize, rnd);
-                System.out.println(">> [SC6] " + ds.name + " opSize=" + opSize
-                        + " plan=" + planSummary(plan));
 
-                if (algoEnabled("Adaptive-Full"))       runSC6Arm(ds, dInit, initTotalUtil, plan, col, false);
-                if (algoEnabled("Remine-from-scratch")) runSC6Arm(ds, dInit, initTotalUtil, plan, col, true);
-                forceFullGC();
+                // Day la kich ban ma seed thuc su quan trong: no quyet dinh thao tac nao
+                // xay ra khi nao va tren chuoi nao. Ket luan cua SC6 khong duoc phu thuoc
+                // vao mot chuoi thao tac may man.
+                for (long seed : activeSeeds()) {
+                    // Seed rieng cho tung dataset, de chuoi thao tac cua dataset nay khong
+                    // phu thuoc vao viec dataset nao da chay truoc no.
+                    Random rnd = new Random(seed + ds.name.hashCode());
+                    List<Op> plan = buildSC6Plan(dInit, rest, opCount, opSize, rnd);
+                    System.out.println(">> [SC6] " + ds.name + " seed=" + seed
+                            + " opSize=" + opSize + " plan=" + planSummary(plan));
+
+                    for (int r = 0; r < REPEATS; r++) {
+                        setRunContext(seed, r);
+                        if (algoEnabled("Adaptive-Full"))       runSC6Arm(ds, dInit, initTotalUtil, plan, col, false);
+                        if (algoEnabled("Remine-from-scratch")) runSC6Arm(ds, dInit, initTotalUtil, plan, col, true);
+                    }
+                    forceFullGC();
+                }
             }
         }
     }
@@ -705,6 +788,10 @@ public class AutomatedExperimentRunner {
                 if (full.isEmpty()) continue;
                 double totalUtil = sumUtility(full);
 
+                // Ablation khong co ngau nhien; chi lap lai de do nhieu JIT/GC.
+                for (int r = 0; r < REPEATS; r++) {
+                setRunContext(SEEDS[0], r);
+
                 // --- Ablation cận tỉa (single full-mine): C1 (cận PEU áp trước materialize) là
                 //     CỐ HỮU; ablation đo C3 (IUB) và C4 (Block-Index). ---
                 logAblation(col, ds, full, totalUtil, "proposed_full", true, true);        // đề xuất đầy đủ
@@ -733,6 +820,8 @@ public class AutomatedExperimentRunner {
                 attachPreHuspm(m, pre);
                 col.log(m);
                 }
+                }   // het vong lap repeats
+
                 forceFullGC();
             }
         }
@@ -1435,6 +1524,14 @@ public class AutomatedExperimentRunner {
 
         // m đã pre-allocate ở đầu hàm (heap khỏe) → đây chỉ FILL field, KHÔNG cấp phát.
         long realRuntime = timedOut ? -2 : (failed ? -1 : runtime);
+        // Cau hinh cua lan do nay. attachPreHuspm ghi de mot so cot cho baseline
+        // khong co khai niem tuong ung.
+        m.seed = currentSeed;
+        m.repeat = currentRepeat;
+        m.blockSize = DEFAULT_BLOCK_SIZE;
+        m.kappa = DEFAULT_KAPPA;
+        m.delta0 = DEFAULT_DELTA0;
+        m.triggerRule = ADAPT_TRIGGER;
         m.memMode = MEM_MODE;
         if (MEM_LIVE) {
             // Ep GC lam hong thoi gian. Xuat -3 de khong ai ve nham no thanh so hieu nang;

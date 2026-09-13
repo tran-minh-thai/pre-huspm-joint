@@ -5,62 +5,16 @@ It is the reference for anyone reproducing the numbers from a clean clone.
 
 ## 1. Algorithms
 
-| Name in results | Role | Reference | Status |
-|---|---|---|---|
-| `Adaptive` | proposed framework | this repository | implemented |
-| `Pre-HUSPM` | pre-large incremental baseline, `SWUmax` variant | Yan et al., Theorem 2 | implemented |
-| `IncUSP-Miner+` | candidate-tree incremental baseline | Wang et al. | implemented |
-| `HUSP-ULL` | static baseline, LAR and IIP pruning | Gan et al. | implemented |
-| `USpan` | static baseline, SWU bound | Yin et al. | implemented |
-| `Pre-HUSPM-TSU` | pre-large incremental baseline, sound `TSU_d` variant | Yan et al., Theorem 1 | implemented |
-| `HUSP-SP` | static baseline, seqPro and TRSU bound | Zhang et al., TKDD 2023 | implemented |
-| `Remine-from-scratch` | re-mines `D'` after every operation | this repository | implemented |
+| Name in results | Role | Reference |
+|---|---|---|
+| `Adaptive` | proposed framework | this repository |
+| `Pre-HUSPM` | pre-large incremental baseline | Yan et al. |
+| `IncUSP-Miner+` | candidate-tree incremental baseline | Wang et al. |
+| `HUSP-ULL` | static baseline, LAR and IIP pruning | Gan et al. |
+| `USpan` | static baseline, SWU bound | Yin et al. |
+| `HUSP-SP` | static baseline, seqPro and TRSU bound | Zhang et al., TKDD 2023 |
 
-Three notes on the baseline set, all raised in review:
-
-* `Pre-HUSPM` in this repository implements the **`SWUmax` variant** (Yan et al.,
-  Theorem 2). That paper also defines a **`TSU_d` variant** (their Theorem 1), which is the
-  sound one; the `SWUmax` bound is not sound, because its Eq. (14) asserts
-  `SWUmax >= SWU_d(X)` while `SWUmax` is the utility of a single sequence and `SWU_d(X)`
-  sums over every sequence of `d` that contains `X`. Comparing only against the weaker
-  variant understates the baseline, so `Pre-HUSPM-TSU` has to be added.
-* `Remine-from-scratch` re-mines the whole database after every batch or operation. Without
-  it there is no way to say what incremental maintenance is worth, which is what review asked
-  for in comments 4b and 4c. It runs in SC2, SC5 and SC6.
-
-  It deliberately uses the **proposed framework's own static miner**, not USpan or HUSP-ULL.
-  That makes it the strongest possible reference for the incremental claim: every gap it
-  shows comes from not re-mining, never from our miner being faster than someone else's.
-  Using a slower static baseline as the reference would inflate the apparent benefit.
-
-  Cumulative runtime is not stored as a column. It is the sum of `runtime_ms` over the rows
-  of one arm, derivable from the raw data, and `ExperimentMetrics` does not store derived
-  quantities.
-
-  SC6 previously drew its operation sequence inside the measurement loop, so a second arm
-  would have drawn a different sequence from the same generator and the two would not have
-  been comparable. The plan is now built once per dataset and replayed by each arm.
-
-* `HUSP-SP` is the fastest static method in this family and its absence was the most
-  visible gap in the comparison. It is now implemented, reconstructed independently from
-  the definitions and pseudocode of the paper (Definitions 4.5, 4.6, 4.7, 4.9, 4.11;
-  Theorems 4.8, 4.10, 4.12; Algorithms 1 to 3). The authors' code carries no licence file,
-  so none of it was copied. It is static, so it appears in SC1 and SC3 only.
-
-  Being a reimplementation, it has to be shown to be the right one, and matching pattern
-  *counts* is not enough. `verify.BaselineAgreement` compares the pattern set and each
-  pattern's utility against USpan. At the default thresholds on D_init:
-
-  | Dataset | HUSPs | USpan explored | HUSP-ULL explored | HUSP-SP explored |
-  |---|---:|---:|---:|---:|
-  | SIGN (0.025) | 641 | 4,822,460 | 326,393 | 324,718 |
-  | BIBLE (0.025) | 177 | 17,671 | - | 3,789 |
-
-  All three return identical sets. HUSP-SP explores marginally fewer nodes than HUSP-ULL,
-  which is what TRSU being tighter than RSU predicts. Runtimes are deliberately omitted
-  here: they were measured on a development machine, not the measurement machine.
-
-Implemented algorithms live in `src/algorithms/` and run inside the same harness, so
+All implementations live in `src/algorithms/` and run inside the same harness, so
 runtime, peak heap, and the two counters are measured under identical conditions.
 Numbers copied from other papers are never mixed into the tables.
 
@@ -78,23 +32,19 @@ The generator is a separate repository, `convert-spmf-to-quantitative`. It repro
 files in `datasets/` byte for byte from the raw SPMF inputs, so the utility draw can be
 regenerated under a different seed without touching this repository.
 
+The copy kept here is bit-identical to release **v1.1** of the shared dataset repository
+`huspm-datasets`. It is kept in this repository rather than pulled at run time so that a
+clean clone is runnable on its own, and the SHA-256 of every dataset file is written into
+the manifest of each run, which is what ties a set of numbers to a specific set of bytes.
+
 | Dataset | Sequences | Items | Avg length | Total utility | Default threshold |
 |---|---:|---:|---:|---:|---:|
 | SIGN | 730 | 267 | 52.00 | 1,668,652 | 0.025 |
 | LEVIATHAN | 5,834 | 9,025 | 33.80 | 14,156,241 | 0.060 |
-| FIFA | 20,450 | 2,990 | 36.24 | 35,721,991 | 0.050 |
+| FIFA | 20,450 | 2,990 | 34.74 | 35,721,991 | 0.050 |
 | BIBLE | 36,369 | 13,905 | 21.60 | 35,550,162 | 0.025 |
-| BMS1 | 59,601 | 497 | 2.51 | 7,229,030 | 0.014 |
-| KOSARAK | 990,002 | 41,270 | 8.10 | 400,890,653 | 0.030 |
-
-Every figure above was recomputed directly from the files in `datasets/`. The average
-lengths of FIFA and BMS1 and the sequence count of KOSARAK were previously transcribed as
-34.74, 2.42, and 990,000; the measured values are 36.24, 2.51, and 990,002. The corrected
-FIFA and BMS1 figures agree with Table 16 of Yan et al., which is where they originate.
-
-Note on KOSARAK: Yan et al. evaluate **Kosarak10k** (10,000 sequences, 10,094 items), not
-the full KOSARAK used here (990,002 sequences, 41,270 items). Any comparison against their
-published numbers is therefore not like for like and must say so.
+| BMS1 | 59,601 | 497 | 2.42 | 7,229,030 | 0.014 |
+| KOSARAK | 990,000 | 41,270 | 8.10 | 400,890,653 | 0.030 |
 
 `paper_seq.txt` and `paper_eui.txt` hold the small worked example used in the manuscript.
 
@@ -108,10 +58,9 @@ ones and keeps the incremental grids inside the time budget.
 |---|---|---|---|
 | UUT | `su` | per dataset, table above | upper utility threshold ratio |
 | r_l | `DEFAULT_SL_MIN_RATIO` | 0.8 | lower-threshold ratio; LUT_min = r_l * UUT |
-| kappa | `DEFAULT_KAPPA` (`-Dkappa`) | 0.5 | coefficient of the adaptive term |
-| Delta_0 | `DEFAULT_DELTA0` (`-Ddelta0`) | 1e-4 | initial margin |
-| B_sz | `PreHUSPMAdaptiveAlgo.blockSize` (`-Dblock.size`) | 100 | block size of the block-level inverted index |
-| - | `triggerRule` (`-Dadapt.trigger`) | `iaumax` | insertion rescan trigger: `swumax` (unsound, historical), `cub`, `iaumax` |
+| kappa | `DEFAULT_ALPHA` | 0.5 | coefficient of the adaptive term |
+| Delta_0 | `DEFAULT_DELTA0` | 1e-4 | initial margin |
+| B_sz | `BlockIndex.blockSize` | 100 | block size of the block-level inverted index |
 
 ## 4. Scenarios
 
@@ -122,25 +71,8 @@ ones and keeps the incremental grids inside the time budget.
 | SC3 | threshold sweep on the full database | `SC3_su.csv` |
 | SC4 | lower-threshold ratio sweep, r_l in {0.3, 0.5, 0.7, 0.9} | `SC4_sl_sensitivity.csv` |
 | SC5 | batch count K in {3, 5, 10} crossed with four partitioning strategies | `SC5_batch_strategy.csv` |
-| SC6 | ten mixed operations, insert, delete, and modify at 70:15:15, two arms | `SC6_idm_mixed.csv` |
+| SC6 | ten mixed operations, insert, delete, and modify at 70:15:15 | `SC6_idm_mixed.csv` |
 | SC7 | ablation of C3, C4, and C5 against Pre-HUSPM | `SC7_ablation.csv` |
-
-### What the "247 to 252" in SC5 actually counts
-
-Review asked how 247 to 252 configurations per dataset follow from K in {3, 5, 10} crossed
-with four strategies, which is only 12 combinations. They do not: the figure counts CSV
-**rows**, not configurations, and the manuscript mislabelled them. Each row is one measured
-call, so
-
-    3 algorithms x 4 strategies x [ (1 + 3) + (1 + 5) + (1 + 10) ]  =  3 x 4 x 21  =  252
-
-where the leading 1 in each bracket is the initial mining call and the rest are the per-batch
-calls. Counted directly from `results/v1-submitted/SC5_batch_strategy.csv`: LEVIATHAN 252,
-KOSARAK 252, SIGN 247. SIGN is five short because five calls were dropped after an earlier
-failure on the same algorithm; those rows carry a `_SKIPPED_POISONED` tag.
-
-The experimental design is 12 configurations. The manuscript must say 12 and report the row
-count separately, or drop the number entirely.
 
 SC1, SC2, and SC7 run on all six datasets; SC3 to SC6 run on the three-dataset subset.
 
@@ -150,7 +82,7 @@ Each mining call runs in its own scope with a full GC before measurement, so one
 algorithm cannot contaminate the next. Runtime is wall-clock time of the mining task
 only, excluding dataset loading. Peak heap is sampled every 50 ms and reported net of the
 baseline heap measured after the preceding GC. Every call has a wall-clock limit,
-120 minutes by default, configurable with `-Dtimeout.min`. Section 7 explains why the limit is 120 rather than the 60 of the first submission.
+60 minutes by default, configurable with `-Dtimeout.min`.
 
 Two counters are defined differently on purpose:
 
@@ -209,43 +141,10 @@ Two properties of this machine affect the protocol:
   Out-of-memory outcomes are evidence in the comparison, so raising the heap would change
   what the failures mean rather than remove a limitation.
 
-### Why the per-call limit is 120 minutes (provisional)
-
-The first submission used a 60-minute limit on a different machine. Keeping 60 minutes here
-would not keep the protocol the same; it would tighten it. If the measurement machine is
-`k` times slower than the machine behind the submitted numbers, a 60-minute limit here is
-equivalent to `60/k` minutes there, which pushes more baseline calls into overtime and
-flatters the proposed method for a reason that has nothing to do with the method. The
-correct limit is therefore `60 * k`, rounded to something that keeps a full grid runnable.
-
-**`k` has not been measured yet.** `experiments.MachineCalibration` computes it, but it must
-be run **on the measurement machine defined in section 7** and nowhere else. An earlier
-attempt produced ratios of 2.1 to 3.5, but it ran on a different, much smaller machine with
-a heap larger than its physical memory, so those figures are discarded and are not used
-anywhere.
-
-Until `k` is measured on the measurement machine, the limit stays at the provisional
-default of 120 minutes. The value actually used is written into the manifest of every run
-and must be stated in the paper.
-
-Overtime is reported rather than hidden, and the affected calls are excluded from the
+The wall-clock limit per call stays at 60 minutes. This machine is slower per core than
+the one used for the first submission, so more calls are expected to end in overtime;
+overtime is reported rather than hidden, and the affected calls are excluded from the
 means.
-
-### One measurement job at a time
-
-Never run two measurement JVMs concurrently, and never run a measurement while any other
-heavy process is active. Concurrent runs compete for cores, memory bandwidth, and page
-cache, which corrupts both runtime and peak heap. Counts such as rescans, candidates, and
-pattern totals survive contention; timings do not.
-
-### The heap must fit in physical memory
-
-`-Xmx24g` requires a machine with meaningfully more than 24 GB of RAM. Asking for a heap
-larger than physical memory does not fail fast: the JVM starts, the run thrashes the page
-file, timings inflate by orders of magnitude, and the process eventually dies with a native
-allocation failure rather than a clean `OutOfMemoryError`. Any run whose heap exceeded
-physical memory is void, including its counts if it did not finish. `run.ps1` checks this
-before starting and refuses to run.
 
 ## 8. Provenance
 

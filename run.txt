@@ -153,7 +153,13 @@
 
   # run.ps1 tu bien dich, tu ghi manifest, tu kiem tra may va heap truoc khi chay.
   # -ExpectMachine bat script tu choi neu lo chay nham may khac.
+  # -Dseeds va -Drepeats truyen qua JAVA_TOOL_OPTIONS vi run.ps1 khong co co rieng.
+  #   repeats = so lan lap CUNG mot cau hinh, de lay do lech chuan (nhieu JIT/GC)
+  #   seeds   = so cau hinh khac nhau (cach chia lo, chuoi thao tac)
+  # Luoi day du la seeds=5, repeats=3.
+  $env:JAVA_TOOL_OPTIONS = '-Dseeds=5 -Drepeats=3'
   .\run.ps1 -Heap 24g -Stack 64m -TimeoutMin 120 -ExpectMachine 'Admin-PC' SC1 SC2 SC3 SC4 SC5 SC6 SC7
+  Remove-Item Env:\JAVA_TOOL_OPTIONS
 
   # Ket qua vao  results\run-<thoi diem>-<commit>\
   # Hinh     vao  figures\run-<thoi diem>-<commit>\
@@ -164,7 +170,12 @@
   # Chay RIENG, sau khi B2 xong han. Che do live ep thu gom nen thoi gian cua
   # dot nay vo nghia (runtime_ms = -3) - no chi de lay bo nho.
   # Launcher tu lap qua tung thuat toan, MOI THUAT TOAN MOT JVM RIENG.
+  # repeats=1 o dot bo nho: tap song gan nhu tat dinh nen lap lai khong thu duoc
+  # them thong tin, trong khi ep GC da lam dot nay dat hon dot do thoi gian nhieu.
+  # Seed van giu day du vi no doi CAU HINH chu khong phai do nhieu.
+  $env:JAVA_TOOL_OPTIONS = '-Dseeds=5 -Drepeats=1'
   .\run.ps1 -Heap 24g -Stack 64m -TimeoutMin 120 -MemMode live -MemIntervalMs 1000 -ExpectMachine 'Admin-PC' SC1 SC2 SC3 SC4 SC5 SC6 SC7
+  Remove-Item Env:\JAVA_TOOL_OPTIONS
 
   # Ket qua vao  results\run-<thoi diem>-<commit>\mem\
 
@@ -178,6 +189,9 @@
   # Manifest phai ghi dung may va dung heap:
   Get-Content "$($run.FullName)\manifest.json" | ConvertFrom-Json |
       Select-Object machine_name, ram_gb, cpu, jvm_flags, timeout_minutes, mem_mode, java_version
+
+  # Trung binh va do lech chuan tren cac lan lap:
+  python analysis\aggregate.py $run.FullName --csv "$($run.FullName)\aggregate.csv"
 
   # Dem so dong va so ca that bai cua tung file ket qua:
   Get-ChildItem $run.FullName -Recurse -Filter *.csv | ForEach-Object {
@@ -303,8 +317,9 @@
     -Dblock.size=100          B_sz cua chi muc nguoc cap do khoi
     -Dkappa=0.5               he so thich ung
     -Ddelta0=1e-4             bien do khoi tao
-    -Drepeats=3               so lan lap moi cau hinh
-    -Dseeds=5                 so seed
+    -Drepeats=3               so lan lap CUNG mot cau hinh (do nhieu JIT/GC)
+    -Dseeds=5                 so cau hinh khac nhau. Chi co tac dung o SC2 (khi >1),
+                              SC5 chien luoc BURST, va SC6. Con lai tat dinh.
     -Dresults.dir=...         thu muc ket qua (che do live bat buoc co 'mem')
 
   Ten thuat toan dung cho -MemArms va -Dalgo.only
