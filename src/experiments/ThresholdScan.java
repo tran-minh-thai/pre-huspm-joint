@@ -110,7 +110,14 @@ public final class ThresholdScan {
      * fast the machine is. The wall-clock budget is a safety net for the cases the counter
      * does not catch, such as an allocation storm.
      */
-    private static long maxCandidates = Long.getLong("scan.maxCandidates", 300_000_000L);
+    // Three billion, not three hundred million. The cap exists to catch a probe that has
+    // fallen off the cliff below the useful threshold, not to interrupt normal work, and
+    // normal work varies by two orders of magnitude between databases: one finishes a
+    // useful probe in fourteen million candidates, another needs 1.7 billion at the
+    // threshold that yields forty patterns. A cap set from the first aborts every probe
+    // on the second, at every threshold, so nothing is ever measured and the tool reports
+    // the level unreachable while the real limit is a number it chose itself.
+    private static long maxCandidates = Long.getLong("scan.maxCandidates", 3_000_000_000L);
     private static long budgetMs = 180_000L;
 
     /**
@@ -231,6 +238,35 @@ public final class ThresholdScan {
 
         for (int i = targets.length - 1; i >= 0; i--) {
             Result r = search(db, tsu, targets[i], seed, LO, hi);
+
+            // Nothing measured at all means the budgets were the binding constraint, not
+            // the data. Guessing flags and re-running by hand is what a tool should spare
+            // its user, so widen once and try again before giving up.
+            // Widen when the search did not reach the target AND budgets were part of the
+            // reason. Finishing is not succeeding: a probe at a threshold high enough to be
+            // cheap can complete and be wildly off, which reads as a result while telling
+            // you nothing.
+            if (!r.ok() || (!r.onTarget() && r.hitBudget)) {
+                long oldC = maxCandidates, oldB = budgetMs, oldL = levelBudgetMs;
+                maxCandidates *= 10;
+                budgetMs *= 3;
+                levelBudgetMs *= 3;
+                System.out.printf("%8s %10d  %s; retrying with %,d candidates, %d s per probe%n",
+                        levels[i], targets[i],
+                        r.ok() ? "target missed and probes were cut short" : "nothing measured",
+                        maxCandidates, budgetMs / 1000);
+                Result r2 = search(db, tsu, targets[i], seed, LO, hi);
+                r2.probes += r.probes;
+                r2.ms += r.ms;
+                if (r2.ok()) r2.status += "-after-widening";
+                // Keep whichever attempt landed closer to the target.
+                boolean keepOld = r.ok() && (!r2.ok()
+                        || Math.abs(r.patterns - targets[i]) < Math.abs(r2.patterns - targets[i]));
+                if (keepOld) { r.probes += r2.probes; r.ms += r2.ms; }
+                else         { r2.probes += r.probes; r2.ms += r.ms; r = r2; }
+                maxCandidates = oldC; budgetMs = oldB; levelBudgetMs = oldL;
+            }
+
             found[i] = r;
             if (r.ok()) {
                 hi = r.uut;                   // a lower level needs a lower threshold
@@ -265,7 +301,11 @@ public final class ThresholdScan {
         int probes;
         long ms;
         String status = "not-found";
+        /** At least one probe was cut short by a budget rather than by the data. */
+        boolean hitBudget;
         boolean ok() { return patterns >= 0; }
+        /** Reached the target, as opposed to merely finishing. */
+        boolean onTarget() { return status.startsWith("ok"); }
         String show() { return ok() ? Integer.toString(patterns) : "-"; }
     }
 
@@ -340,6 +380,7 @@ public final class ThresholdScan {
         boolean bracketed = false;
         Probe p = mine(db, tsu, u);
         probes++; ms += p.ms;
+        best.hitBudget |= p.abandoned;
         note(best, u, p, target);
 
         boolean tooMany = p.abandoned || p.patterns > target;
@@ -355,6 +396,7 @@ public final class ThresholdScan {
             }
             Probe q = mine(db, tsu, u);
             probes++; ms += q.ms;
+            best.hitBudget |= q.abandoned;
             note(best, u, q, target);
             boolean qTooMany = q.abandoned || q.patterns > target;
             if (qTooMany != tooMany) {                 // crossed the target
@@ -371,6 +413,7 @@ public final class ThresholdScan {
             double mid = Math.sqrt(lo * hi);
             Probe q = mine(db, tsu, mid);
             probes++; ms += q.ms;
+            best.hitBudget |= q.abandoned;
             note(best, mid, q, target);
             if (!q.abandoned && Math.abs(q.patterns - target) <= Math.max(1, target * 0.10)) break;
             if (q.abandoned || q.patterns > target) lo = mid; else hi = mid;
