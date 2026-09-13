@@ -22,8 +22,26 @@ import java.util.*;
  *   * Pre-large PSWU (Đ.n 12): Sl·TSU ≤ SWU_proj(X) < Su·TSU.
  *   * Bộ đệm = LSWU ∪ PSWU = mọi ứng viên SWU_proj ≥ Sl·TSU, lưu (SWU_proj, su).
  *
- * CƠ CHẾ GIA TĂNG (Định lý 2 - Pre-HUSPM-SWUmax):
- *   f = ((Su-Sl)/(1-Su))·TSU_lastRescan; trigger rescan: buf + SWUmax(lô) > f.
+ * CƠ CHẾ GIA TĂNG - HAI BIẾN THỂ, đúng như bài gốc trình bày:
+ *
+ *   Ngân sách chung: f = ((Su-Sl)/(1-Su))·TSU_lastRescan.
+ *
+ *   Variant.TSU (Định lý 1 của Yan et al.) - Pre-HUSPM-TSU:
+ *     đại lượng so sánh là TSU(d) = Σ_{s∈d} u(s), tổng utility của lô.
+ *     ĐÚNG ĐẮN. Mức tăng utility của một mẫu X trên lô là tổng đóng góp của mọi
+ *     chuỗi chèn chứa X, và tổng đó bị chặn bởi TSU(d).
+ *
+ *   Variant.SWUMAX (Định lý 2 của Yan et al.) - Pre-HUSPM-SWUmax:
+ *     đại lượng so sánh là SWUmax(d) = max_{s∈d} u(s), utility của MỘT chuỗi.
+ *     KHÔNG ĐÚNG ĐẮN. Chứng minh của họ, Eq. (14), đi qua bước
+ *         TSU_d ≥ SWUmax ≥ SWU_d(X),
+ *     nhưng SWUmax là utility của một chuỗi trong khi SWU_d(X) cộng trên MỌI chuỗi
+ *     của d có chứa X, nên bất đẳng thức thứ hai sai. Phản ví dụ: Su=0.25, Sl=0.20,
+ *     TSU(D)=100, u(X,D)=19; chèn hai chuỗi cùng chứa X với u=6 cho SWUmax=6 ≤ f=6.67
+ *     nên không rescan, trong khi u(X,D')=31 > 0.25·112=28, tức X đã thành HUSP.
+ *
+ *   Cả hai biến thể ở đây đều dùng dạng TÍCH LUỸ (buf), tức đã chặt hơn bản gốc vốn
+ *   chỉ so sánh trên từng lô riêng lẻ.
  *
  * ───────────────────────────────────────────────────────────────────────────
  * ZERO-ALLOCATION (KHÔNG đổi logic toán học - chỉ đổi cách CẤP PHÁT bộ nhớ):
@@ -87,8 +105,22 @@ public class PreHUSPMAlgorithm {
     // ========================================================================
     public static class PreHUSPMAlgo {
 
+        /** Hai biến thể của cơ chế gia tăng trong bài gốc. Xem chú thích đầu lớp. */
+        public enum Variant {
+            /** Định lý 1: so sánh TSU(d). Đúng đắn. */
+            TSU,
+            /** Định lý 2: so sánh SWUmax(d). Không đúng đắn; giữ để đối chiếu. */
+            SWUMAX
+        }
+
         public double Su, Sl;
+        /** Mặc định SWUMAX để giữ nguyên hành vi của các kết quả đã công bố. */
+        public Variant variant = Variant.SWUMAX;
         public double safetyBoundF = 0;
+        /** Đại lượng đã dùng để so với f ở lô gần nhất (xuất CSV/chẩn đoán). */
+        public double lastTriggerQuantity = 0;
+        /** buf sau khi cập nhật ở lô gần nhất. */
+        public double bufValue = 0;
         public int maxDepth = 1000;
 
         public Map<Pattern, Double> largeMap = new HashMap<>();      // HUSP: su ≥ Su·TSU
@@ -105,6 +137,11 @@ public class PreHUSPMAlgorithm {
         private boolean writeToFile;
 
         public PreHUSPMAlgo(double Su, double SlRatio, boolean writeToFile) {
+            this(Su, SlRatio, writeToFile, Variant.SWUMAX);
+        }
+
+        public PreHUSPMAlgo(double Su, double SlRatio, boolean writeToFile, Variant variant) {
+            this.variant = variant;
             this.Su = Su;
             this.Sl = SlRatio * Su;
             this.writeToFile = writeToFile;
@@ -210,10 +247,19 @@ public class PreHUSPMAlgorithm {
             // Reset MỖI LÔ (nhất quán Adaptive) → candidate/explored/prunedPEU phản ánh ĐÚNG lô này
             // (lô safe-update không mine → 0; lô rescan → số của lần re-mine đó).
             candidateCount = 0; exploredNodes = 0; prunedPEU = 0;
-            double swuMax = 0;
-            for (Sequence seq : deltaD) if (seq.sequenceUtility > swuMax) swuMax = seq.sequenceUtility;
 
-            if (buf + swuMax > safetyBoundF) {
+            // Đại lượng so sánh phụ thuộc biến thể (xem chú thích đầu lớp).
+            //   TSU    : TSU(d) = Σ_{s∈d} u(s)      - Định lý 1, đúng đắn
+            //   SWUMAX : max_{s∈d} u(s)             - Định lý 2, không đúng đắn
+            double swuMax = 0, tsuD = 0;
+            for (Sequence seq : deltaD) {
+                tsuD += seq.sequenceUtility;
+                if (seq.sequenceUtility > swuMax) swuMax = seq.sequenceUtility;
+            }
+            double trigger = (variant == Variant.TSU) ? tsuD : swuMax;
+            this.lastTriggerQuantity = trigger;
+
+            if (buf + trigger > safetyBoundF) {
                 executeRescanAndRebuild(dSoFar, newTotalUtility, false);
                 buf = 0.0;
             } else {
@@ -234,8 +280,9 @@ public class PreHUSPMAlgorithm {
                 }
                 swuBuffer = updated;
                 deriveMaps(newAbsSu, newAbsSl);
-                buf += swuMax;
+                buf += trigger;
             }
+            this.bufValue = buf;
             this.patternCount = largeMap.size();
             this.prelargeCount = prelargeMap.size();
         }
