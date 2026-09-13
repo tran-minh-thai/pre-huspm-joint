@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+title: Pre-HUSPM-Adaptive
+message: If you use this software, please cite the accompanying paper.
+type: software
+authors:
+  - family-names: Tran
+    given-names: Minh-Thai
+    email: thaitm@huflit.edu.vn
+    affiliation: Ho Chi Minh City University of Foreign Languages and Information Technology
+  - family-names: Trinh
+    given-names: Cuong
+    affiliation: Ton Duc Thang University
+  - family-names: Huynh
+    given-names: Bao
+license: MIT
+repository-code: https://github.com/tran-minh-thai/pre-huspm-adaptive

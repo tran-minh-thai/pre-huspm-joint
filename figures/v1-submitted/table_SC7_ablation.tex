@@ -1,0 +1,35 @@
+\begin{table}[t]
+\centering
+\caption{Ablation (SC7, single full-mine). Runtime\,(s) and explored nodes; \textbf{OT}=overtime, \textbf{OOM}=out-of-memory.}
+\label{tab:sc7_ablation}
+\begin{tabular}{llrr}
+\toprule
+Dataset & Variant & Runtime (s) & Explored \\
+\midrule
+BIBLE & Full & 1.57 & 17,970 \\
+ & -IUB(C3) & 1.56 & 17,970 \\
+ & -Block(C4) & 1.51 & 17,970 \\
+ & Pre-HUSPM & 28.68 & 10,040,047 \\
+BMS1 & Full & OT & OT \\
+ & -IUB(C3) & OT & OT \\
+ & -Block(C4) & OT & OT \\
+ & Pre-HUSPM & OOM & OOM \\
+FIFA & Full & 190.86 & 1,287,526 \\
+ & -IUB(C3) & 191.47 & 1,287,526 \\
+ & -Block(C4) & 189.97 & 1,287,526 \\
+ & Pre-HUSPM & 838.80 & 1,135,046,161 \\
+KOSARAK & Full & 31.23 & 44,606 \\
+ & -IUB(C3) & 37.08 & 44,606 \\
+ & -Block(C4) & 32.99 & 44,606 \\
+ & Pre-HUSPM & 40.77 & 36,619,139 \\
+LEVIATHAN & Full & 0.29 & 11,103 \\
+ & -IUB(C3) & 0.30 & 11,103 \\
+ & -Block(C4) & 0.29 & 11,103 \\
+ & Pre-HUSPM & 4.20 & 4,166,831 \\
+SIGN & Full & 2.20 & 413,120 \\
+ & -IUB(C3) & 2.44 & 413,120 \\
+ & -Block(C4) & 2.23 & 413,120 \\
+ & Pre-HUSPM & 8.52 & 67,227,632 \\
+\bottomrule
+\end{tabular}
+\end{table}

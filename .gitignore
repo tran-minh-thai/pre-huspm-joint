@@ -1,0 +1,17 @@
+# build output
+build/
+bin/
+out/
+*.class
+*.jar
+
+# IDE and editor
+.idea/
+*.iml
+.vscode/
+.DS_Store
+
+# local scratch
+results_backup/
+*.log
+*.hprof
