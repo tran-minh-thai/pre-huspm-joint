@@ -123,10 +123,14 @@ runtimes `ThresholdScan` prints are for impatience only and are not reportable.
 
 ## Build and run
 
-`run.ps1` and `run.sh` compile, write a manifest, run the scenarios, and plot. There is no
-separate build step.
+`run.ps1` and `run.sh` compile, write a manifest, run the scenarios, and plot.
+
+**Rebuild after every pull.** These scripts are what compiles, so a pull leaves `build/`
+holding the previous checkout, and a class added by that pull reports `could not find or
+load main class` when invoked directly.
 
 ```powershell
+.\run.ps1 -BuildOnly                                     # compile and stop
 .\run.ps1                                                # every scenario
 .\run.ps1 SC1 SC2                                        # selected scenarios
 .\run.ps1 TEST SC1                                       # smoke test on examples/, minutes
@@ -134,8 +138,12 @@ separate build step.
 .\run.ps1 -MemMode live                                  # the memory campaign
 ```
 
-To compile and run a single class directly:
+To run a single class directly, compile first:
 
+```powershell
+.\run.ps1 -BuildOnly
+java -Xmx24g -Xss64m -cp build AutomatedExperimentRunner SC1
+```
 ```bash
 javac -encoding UTF-8 -d build $(find src -name '*.java')
 java -Xmx24g -Xss64m -cp build AutomatedExperimentRunner SC1
