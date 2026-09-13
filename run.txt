@@ -136,7 +136,13 @@
   # He so quy doi may (k). Con so nay quyet dinh timeout dung bao nhieu phut.
   java -Xmx24g -Xss64m -cp build experiments.MachineCalibration
 
-
+dataset         UUT    may nay    do lech    may cu    ty le      HUSP
+SIGN         0.0250      3736ms       509ms   1670ms    2.24x       641
+LEVIATHAN    0.0600       538ms        93ms    126ms    4.27x       113
+FIFA         0.0500    277647ms     14255ms        -        -        18
+BIBLE        0.0250      2922ms        71ms        -        -       177
+BMS1         0.0140      7812ms        99ms   3095ms    2.52x        20
+KOSARAK      0.0300     23666ms       359ms        -        -         6
 ===============================================================================
  PHAN B - MOI LAN CHAY
 ===============================================================================

@@ -32,10 +32,13 @@ The generator is a separate repository, `convert-spmf-to-quantitative`. It repro
 files in `datasets/` byte for byte from the raw SPMF inputs, so the utility draw can be
 regenerated under a different seed without touching this repository.
 
-The copy kept here is bit-identical to release **v1.1** of the shared dataset repository
-`huspm-datasets`. It is kept in this repository rather than pulled at run time so that a
-clean clone is runnable on its own, and the SHA-256 of every dataset file is written into
-the manifest of each run, which is what ties a set of numbers to a specific set of bytes.
+The datasets are **not** tracked in this repository. They are published as release assets
+of the shared repository `huspm-datasets` and fetched at run time, pinned to one exact
+release tag, then verified against the `MANIFEST.sha256` of that same release. The release
+tag and the per-file checksums are recorded in the manifest of every run, which is what
+ties a set of numbers to a specific set of bytes. The only data files kept here are
+`paper_seq.txt` and `paper_eui.txt`, the small worked example, which are specific to this
+paper and are not part of the shared collection.
 
 | Dataset | Sequences | Items | Avg length | Total utility | Default threshold |
 |---|---:|---:|---:|---:|---:|

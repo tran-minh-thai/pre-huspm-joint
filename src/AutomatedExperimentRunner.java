@@ -44,7 +44,20 @@ public class AutomatedExperimentRunner {
     // ------------------------------------------------------------------
     // GENERAL CONFIG
     // ------------------------------------------------------------------
+    /**
+     * Where the shared databases live. They are not kept in this repository; fetch
+     * them with fetch-datasets.ps1 (or .sh), which pins a release of
+     * github.com/tran-minh-thai/huspm-datasets and verifies every file against its
+     * SHA-256 manifest.
+     */
     public static final String DATASET_DIR = "datasets/";
+
+    /**
+     * The worked example from the manuscript. Four short sequences, used by TEST mode
+     * as a smoke test. It belongs to this study rather than to the shared collection,
+     * so it stays in the repository.
+     */
+    public static final String EXAMPLE_DIR = "examples/";
     public static final String RESULTS_DIR = System.getProperty("results.dir", "results/");
     public static final boolean ENABLE_PATTERN_EXPORT = false; // disable for bulk runs
     /** Chế độ chạy lại CHỈ biến thể Adaptive (bỏ baseline) - dùng khi chỉ runtime Adaptive đổi
@@ -244,6 +257,8 @@ public class AutomatedExperimentRunner {
 
     /** Chọn dataset thực tế: TEST mode hay PRODUCTION mode. */
     private static List<DatasetConfig> DATASETS = DATASETS_PRODUCTION;
+    /** Resolved at start-up: examples/ in TEST mode, datasets/ otherwise. */
+    private static String datasetDir = DATASET_DIR;
 
     /**
      * Subset 3 dataset cho SC3, SC4, SC6 (theo paper Mục 4.6.3-4.6.6).
@@ -298,6 +313,7 @@ public class AutomatedExperimentRunner {
             }
         }
         DATASETS = testMode ? DATASETS_TEST : DATASETS_PRODUCTION;
+        datasetDir = testMode ? EXAMPLE_DIR : DATASET_DIR;
 
         Set<String> scenarios = parseScenarios(args);
         System.out.println("=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===");
@@ -347,8 +363,8 @@ public class AutomatedExperimentRunner {
         try (ResultCollector col = new ResultCollector(RESULTS_DIR + "SC1_static.csv")) {
             for (DatasetConfig ds : DATASETS) {
                 if (!datasetEnabled(ds.name)) continue;
-                List<Sequence> full = DatasetLoader.loadDataset(DATASET_DIR + ds.name + "_seq.txt",
-                                                                DATASET_DIR + ds.name + "_eui.txt");
+                List<Sequence> full = DatasetLoader.loadDataset(datasetDir + ds.name + "_seq.txt",
+                                                                datasetDir + ds.name + "_eui.txt");
                 if (full.isEmpty()) continue;
                 List<Sequence> dInit = headPercent(full, D_INIT_RATIO);
                 double totalUtil = sumUtility(dInit);
@@ -381,8 +397,8 @@ public class AutomatedExperimentRunner {
         try (ResultCollector col = new ResultCollector(RESULTS_DIR + "SC2_incremental.csv")) {
             for (DatasetConfig ds : DATASETS) {
                 if (!datasetEnabled(ds.name)) continue;
-                List<Sequence> full = DatasetLoader.loadDataset(DATASET_DIR + ds.name + "_seq.txt",
-                                                                DATASET_DIR + ds.name + "_eui.txt");
+                List<Sequence> full = DatasetLoader.loadDataset(datasetDir + ds.name + "_seq.txt",
+                                                                datasetDir + ds.name + "_eui.txt");
                 if (full.isEmpty()) continue;
                 List<Sequence> dInit = headPercent(full, D_INIT_RATIO);
                 List<Sequence> rest = tailFrom(full, dInit.size());
@@ -422,8 +438,8 @@ public class AutomatedExperimentRunner {
             for (DatasetConfig ds : DATASETS) {
                 if (!datasetEnabled(ds.name)) continue;
                 if (!SUBSET_3.contains(ds.name)) continue;
-                List<Sequence> full = DatasetLoader.loadDataset(DATASET_DIR + ds.name + "_seq.txt",
-                                                                DATASET_DIR + ds.name + "_eui.txt");
+                List<Sequence> full = DatasetLoader.loadDataset(datasetDir + ds.name + "_seq.txt",
+                                                                datasetDir + ds.name + "_eui.txt");
                 if (full.isEmpty()) continue;
                 double totalUtil = sumUtility(full);
                 // Nhu SC1: khong co ngau nhien, chi lap lai de do nhieu do dac.
@@ -453,8 +469,8 @@ public class AutomatedExperimentRunner {
             for (DatasetConfig ds : DATASETS) {
                 if (!datasetEnabled(ds.name)) continue;
                 if (!SUBSET_3.contains(ds.name)) continue;
-                List<Sequence> full = DatasetLoader.loadDataset(DATASET_DIR + ds.name + "_seq.txt",
-                                                                DATASET_DIR + ds.name + "_eui.txt");
+                List<Sequence> full = DatasetLoader.loadDataset(datasetDir + ds.name + "_seq.txt",
+                                                                datasetDir + ds.name + "_eui.txt");
                 if (full.isEmpty()) continue;
                 double totalUtil = sumUtility(full);
 
@@ -524,8 +540,8 @@ public class AutomatedExperimentRunner {
             for (DatasetConfig ds : DATASETS) {
                 if (!datasetEnabled(ds.name)) continue;
                 if (!SUBSET_3.contains(ds.name)) continue;
-                List<Sequence> full = DatasetLoader.loadDataset(DATASET_DIR + ds.name + "_seq.txt",
-                                                                DATASET_DIR + ds.name + "_eui.txt");
+                List<Sequence> full = DatasetLoader.loadDataset(datasetDir + ds.name + "_seq.txt",
+                                                                datasetDir + ds.name + "_eui.txt");
                 if (full.isEmpty()) continue;
                 List<Sequence> dInit = headPercent(full, D_INIT_RATIO);
                 List<Sequence> rest = tailFrom(full, dInit.size());
@@ -643,8 +659,8 @@ public class AutomatedExperimentRunner {
             for (DatasetConfig ds : DATASETS) {
                 if (!datasetEnabled(ds.name)) continue;
                 if (!SUBSET_3.contains(ds.name)) continue;
-                List<Sequence> full = DatasetLoader.loadDataset(DATASET_DIR + ds.name + "_seq.txt",
-                                                                DATASET_DIR + ds.name + "_eui.txt");
+                List<Sequence> full = DatasetLoader.loadDataset(datasetDir + ds.name + "_seq.txt",
+                                                                datasetDir + ds.name + "_eui.txt");
                 if (full.size() < 20) {
                     System.out.println(">> [SC6] skipping " + ds.name + " (only " + full.size() + " sequences)");
                     continue;
@@ -783,8 +799,8 @@ public class AutomatedExperimentRunner {
         try (ResultCollector col = new ResultCollector(RESULTS_DIR + "SC7_ablation.csv")) {
             for (DatasetConfig ds : DATASETS) {
                 if (!datasetEnabled(ds.name)) continue;
-                List<Sequence> full = DatasetLoader.loadDataset(DATASET_DIR + ds.name + "_seq.txt",
-                                                                DATASET_DIR + ds.name + "_eui.txt");
+                List<Sequence> full = DatasetLoader.loadDataset(datasetDir + ds.name + "_seq.txt",
+                                                                datasetDir + ds.name + "_eui.txt");
                 if (full.isEmpty()) continue;
                 double totalUtil = sumUtility(full);
 

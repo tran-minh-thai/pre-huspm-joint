@@ -19,3 +19,9 @@ results_backup/
 # ... nhung console log CUA MOT LAN CHAY la bang chung di kem ket qua, phai giu.
 # manifest.json tro toi chung, nen neu bo qua thi lan chay khong tu giai thich duoc.
 !results/**/*.log
+
+# Databases are not kept in this repository. They are shared across several studies
+# and are pinned to a release of https://github.com/tran-minh-thai/huspm-datasets.
+# Fetch them with ./fetch-datasets.ps1 (or .sh); see README.
+datasets/*
+!datasets/.gitkeep
