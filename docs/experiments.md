@@ -13,7 +13,7 @@ It is the reference for anyone reproducing the numbers from a clean clone.
 | `HUSP-ULL` | static baseline, LAR and IIP pruning | Gan et al. | implemented |
 | `USpan` | static baseline, SWU bound | Yin et al. | implemented |
 | `Pre-HUSPM-TSU` | pre-large incremental baseline, sound `TSU_d` variant | Yan et al., Theorem 1 | **planned, not implemented** |
-| `HUSP-SP` | static baseline, seqPro and TRSU bound | Zhang et al., TKDD 2023 | **planned, not implemented** |
+| `HUSP-SP` | static baseline, seqPro and TRSU bound | Zhang et al., TKDD 2023 | implemented |
 | `Remine-from-scratch` | re-mines `D'` after every operation | this repository | **planned, not implemented** |
 
 Rows marked *planned* are not in `src/algorithms/` yet and appear in no result file. They
@@ -28,8 +28,24 @@ Two notes on the baseline set, both raised in review:
   `SWUmax >= SWU_d(X)` while `SWUmax` is the utility of a single sequence and `SWU_d(X)`
   sums over every sequence of `d` that contains `X`. Comparing only against the weaker
   variant understates the baseline, so `Pre-HUSPM-TSU` has to be added.
-* `HUSP-SP` is the fastest static method in this family. Its absence is the single most
-  visible gap in the comparison and must be closed before resubmission.
+* `HUSP-SP` is the fastest static method in this family and its absence was the most
+  visible gap in the comparison. It is now implemented, reconstructed independently from
+  the definitions and pseudocode of the paper (Definitions 4.5, 4.6, 4.7, 4.9, 4.11;
+  Theorems 4.8, 4.10, 4.12; Algorithms 1 to 3). The authors' code carries no licence file,
+  so none of it was copied. It is static, so it appears in SC1 and SC3 only.
+
+  Being a reimplementation, it has to be shown to be the right one, and matching pattern
+  *counts* is not enough. `verify.BaselineAgreement` compares the pattern set and each
+  pattern's utility against USpan. At the default thresholds on D_init:
+
+  | Dataset | HUSPs | USpan explored | HUSP-ULL explored | HUSP-SP explored |
+  |---|---:|---:|---:|---:|
+  | SIGN (0.025) | 641 | 4,822,460 | 326,393 | 324,718 |
+  | BIBLE (0.025) | 177 | 17,671 | - | 3,789 |
+
+  All three return identical sets. HUSP-SP explores marginally fewer nodes than HUSP-ULL,
+  which is what TRSU being tighter than RSU predicts. Runtimes are deliberately omitted
+  here: they were measured on a development machine, not the measurement machine.
 
 Implemented algorithms live in `src/algorithms/` and run inside the same harness, so
 runtime, peak heap, and the two counters are measured under identical conditions.

@@ -78,10 +78,9 @@
 
   # KHONG clone vao G:\My Drive. Google Drive dong bo trong luc chay se tranh
   # I/O, va no da tung lam mat thu muc .git cua ban sao lam viec.
-  New-Item -ItemType Directory -Force -Path C:\husp | Out-Null
-  Set-Location C:\husp
+  Set-Location D:\
   git clone https://github.com/tran-minh-thai/pre-huspm-adaptive.git
-  Set-Location C:\husp\pre-huspm-adaptive
+  Set-Location D:\pre-huspm-adaptive
   git status
 
 
@@ -96,7 +95,7 @@
   powercfg /getactivescheme
 
   # Loai thu muc khoi quet thoi gian thuc cua Defender.
-  Add-MpPreference -ExclusionPath 'C:\husp'
+  Add-MpPreference -ExclusionPath 'D:\pre-huspm-adaptive'
   Get-MpPreference | Select-Object -ExpandProperty ExclusionPath
 
   # Paging file. Heap 24 GB tren may 64 GB van co the sap neu paging file qua
@@ -111,7 +110,7 @@
 
 --- A6. Kiem tra tinh dung dan TRUOC khi do bat ky so nao --------------------
 
-  Set-Location C:\husp\pre-huspm-adaptive
+  Set-Location D:\pre-huspm-adaptive
 
   # Bien dich thu (run.ps1 cung tu bien dich, day chi de kiem tra nhanh).
   Remove-Item build\* -Recurse -Force -ErrorAction SilentlyContinue
@@ -127,6 +126,13 @@
   java -Xmx24g -Xss64m -cp build verify.CorrectnessVerifier LEVIATHAN --rule iaumax --batches 5 --out results\verify
   # PHAI ra missing=0 extra=0 o moi thao tac.
 
+  # Nghiem thu baseline tinh: HUSP-SP duoc cai lai doc lap tu pseudocode nen phai
+  # chung minh la cai dung. Tap HUSP cua no PHAI trung khit USpan, khong chi trung
+  # so luong. Chay tren SIGN va BIBLE o nguong mac dinh.
+  java -Xmx24g -Xss64m -cp build verify.BaselineAgreement SIGN
+  java -Xmx24g -Xss64m -cp build verify.BaselineAgreement BIBLE
+  # PHAI ra "khop USpan tuyet doi" cho ca HUSP-SP lan HUSP-ULL.
+
   # He so quy doi may (k). Con so nay quyet dinh timeout dung bao nhieu phut.
   java -Xmx24g -Xss64m -cp build experiments.MachineCalibration
 
@@ -137,7 +143,7 @@
 
 --- B1. Cap nhat ma nguon ----------------------------------------------------
 
-  Set-Location C:\husp\pre-huspm-adaptive
+  Set-Location D:\pre-huspm-adaptive
   git pull --ff-only
   git log --oneline -3
   git status --short          # phai SACH truoc khi chay
@@ -210,12 +216,12 @@
   [ ] Dong het ung dung khac. Khong co java.exe nao dang chay:
           Get-Process java -ErrorAction SilentlyContinue
       (run.ps1 tu tu choi neu con, tru khi truyen -AllowConcurrent)
-  [ ] Thu muc lam viec o C:\husp, KHONG o Google Drive
+  [ ] Thu muc lam viec o D:\pre-huspm-adaptive, KHONG o Google Drive
   [ ] Google Drive / OneDrive khong dong bo thu muc nay
   [ ] git status --short SACH
   [ ] java -version bao dung 17.x
-  [ ] Con it nhat 20 GB trong o C:
-          Get-PSDrive C | Select-Object Used, Free
+  [ ] Con it nhat 20 GB trong o D:
+          Get-PSDrive D | Select-Object Used, Free
   [ ] Paging file du lon (xem A5)
   [ ] Da chay lai verify.WP1AcceptanceTest: 15 dat, 0 hong
 
@@ -302,7 +308,10 @@
     -Dresults.dir=...         thu muc ket qua (che do live bat buoc co 'mem')
 
   Ten thuat toan dung cho -MemArms va -Dalgo.only
-    USpan | HUSP-ULL | IncUSP-Miner+ | Pre-HUSPM | Pre-HUSPM-TSU | Adaptive-Full
+    USpan | HUSP-ULL | HUSP-SP | IncUSP-Miner+ | Pre-HUSPM | Pre-HUSPM-TSU | Adaptive-Full
+
+    HUSP-SP la thuat toan TINH, chi co mat o SC1 va SC3. Dua no vao -MemArms cho
+    cac kich ban gia tang se chi sinh ra file rong.
 
 
 ===============================================================================

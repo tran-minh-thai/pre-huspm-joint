@@ -322,7 +322,7 @@ public class AutomatedExperimentRunner {
                 if (full.isEmpty()) continue;
                 List<Sequence> dInit = headPercent(full, D_INIT_RATIO);
                 double totalUtil = sumUtility(dInit);
-                String[] algos = {"USpan", "HUSP-ULL", "IncUSP-Miner+", "Pre-HUSPM", "Adaptive-Full"};
+                String[] algos = {"USpan", "HUSP-ULL", "HUSP-SP", "IncUSP-Miner+", "Pre-HUSPM", "Adaptive-Full"};
                 for (double su : ds.suSweep) {
                     for (String algo : algos) {
                         ExperimentMetrics m = runSingle(algo, ds.name, dInit, totalUtil, su, 0, "SC1_su=" + su);
@@ -363,7 +363,7 @@ public class AutomatedExperimentRunner {
     private static void runSC3_SensitivitySu() throws IOException {
         System.out.println("\n--- [SC3] Su sensitivity ---");
         try (ResultCollector col = new ResultCollector(RESULTS_DIR + "SC3_su.csv")) {
-            String[] algos = {"USpan", "HUSP-ULL", "IncUSP-Miner+", "Pre-HUSPM", "Adaptive-Full"};
+            String[] algos = {"USpan", "HUSP-ULL", "HUSP-SP", "IncUSP-Miner+", "Pre-HUSPM", "Adaptive-Full"};
             for (DatasetConfig ds : DATASETS) {
                 if (!datasetEnabled(ds.name)) continue;
                 if (!SUBSET_3.contains(ds.name)) continue;
@@ -953,6 +953,24 @@ public class AutomatedExperimentRunner {
                         m.prunedSwu = u.prunedSWU;
                         m.prunedDepth = u.prunedDepth;
                         m.exploredNodes = u.exploredNodes;
+                    }
+                    return m;
+                }
+                case "HUSP-SP": {
+                    // Thuat toan TINH, khong xu ly cap nhat gia tang, nen chi co mat o
+                    // SC1 va SC3. Dem giong het cac baseline khac: candidate_count truoc
+                    // moi phep tia, explored_nodes tai diem vao de quy.
+                    HUSPSPAlgorithm sp = new HUSPSPAlgorithm(totalUtil * su);
+                    ExperimentMetrics m = measure(algo, dsName, iter, tag,
+                            () -> sp.run(db),
+                            () -> sp.candidateCount, () -> sp.patternCount, null, null,
+                            null, null, null, null, null, null, sp::cancel);
+                    if (m != null && m.runtimeMs != -1) {
+                        m.prunedSwu = sp.prunedSWU;
+                        m.prunedIip = sp.prunedIIP;      // IIP theo RSU
+                        m.prunedPeu = sp.prunedPEU;      // nhanh dung boi can PEU
+                        m.prunedLar = sp.prunedEP;       // EP theo TRSU, dong gop rieng cua bai
+                        m.exploredNodes = sp.exploredNodes;
                     }
                     return m;
                 }
