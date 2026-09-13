@@ -484,10 +484,88 @@ public class AutomatedExperimentRunner {
     // ==================================================================
     // SC6 - MIXED I/D/M 70:15:15 (Adaptive self-compare)
     // ==================================================================
+    /** Mot thao tac trong chuoi hon hop cua SC6. */
+    private enum OpKind { INS, DEL, MOD }
+
+    private static final class Op {
+        final OpKind kind;
+        final int iter;
+        final List<Sequence> a;   // INS: lo chen | DEL: chuoi bi xoa | MOD: chuoi cu
+        final List<Sequence> b;   // MOD: chuoi moi
+        Op(OpKind kind, int iter, List<Sequence> a, List<Sequence> b) {
+            this.kind = kind; this.iter = iter; this.a = a; this.b = b;
+        }
+        String tag() {
+            switch (kind) {
+                case INS: return "SC6_INS";
+                case DEL: return "SC6_DEL";
+                default:  return "SC6_MOD";
+            }
+        }
+    }
+
+    /**
+     * Sinh chuoi thao tac hon hop MOT LAN, de moi arm phat lai DUNG chuoi do.
+     *
+     * Truoc day chuoi thao tac duoc sinh truc tiep trong vong lap do, nen khong the
+     * them arm thu hai: arm sau se rut ra mot chuoi thao tac khac tu cung bo sinh
+     * ngau nhien, va hai arm khong con so sanh duoc voi nhau.
+     */
+    private static List<Op> buildSC6Plan(List<Sequence> dInit, List<Sequence> rest,
+                                         int opCount, int opSize, Random rnd) {
+        List<Op> plan = new ArrayList<>();
+        List<Sequence> pool = new ArrayList<>(rest);
+        List<Sequence> cur = new ArrayList<>(dInit);
+        for (int i = 0; i < opCount; i++) {
+            double roll = rnd.nextDouble();
+            int iter = i + 1;
+            if (roll < 0.70) {
+                List<Sequence> delta = new ArrayList<>();
+                for (int j = 0; j < opSize && !pool.isEmpty(); j++) delta.add(pool.remove(0));
+                if (delta.isEmpty()) break;
+                plan.add(new Op(OpKind.INS, iter, delta, null));
+                cur.addAll(delta);
+            } else if (roll < 0.85) {
+                if (cur.size() < opSize + 1) continue;
+                List<Sequence> toDel = pickRandom(cur, opSize, rnd);
+                plan.add(new Op(OpKind.DEL, iter, toDel, null));
+                cur.removeAll(toDel);
+            } else {
+                if (cur.size() < opSize + 1 || pool.size() < opSize) continue;
+                List<Sequence> oldSeqs = pickRandom(cur, opSize, rnd);
+                List<Sequence> newSeqs = new ArrayList<>();
+                for (int j = 0; j < opSize && !pool.isEmpty(); j++) newSeqs.add(pool.remove(0));
+                plan.add(new Op(OpKind.MOD, iter, oldSeqs, newSeqs));
+                cur.removeAll(oldSeqs);
+                cur.addAll(newSeqs);
+            }
+        }
+        return plan;
+    }
+
+    // ==================================================================
+    // SC6 - MIXED I/D/M 70:15:15
+    // ==================================================================
+    /**
+     * Chuoi thao tac hon hop chen / xoa / sua theo ty le 70:15:15.
+     *
+     * Ban nop chi bao cao phuong phap de xuat o kich ban nay, khong co moc so sanh
+     * nao, nen khong the dinh luong duoc loi ich thuc te cua co che duy tri nhieu
+     * thao tac (review, comment 4c). Nay chay HAI arm tren CUNG mot chuoi thao tac:
+     *
+     *   Adaptive-Full        duy tri gia tang
+     *   Remine-from-scratch  mine lai tu dau sau MOI thao tac
+     *
+     * Moc so sanh dung chinh bo khai pha tinh cua khung de xuat, nen moi khoang cach
+     * do duoc deu den tu viec khong phai mine lai chu khong den tu viec bo mine cua ta
+     * nhanh hon cua nguoi khac.
+     *
+     * Runtime cong don khong luu thanh cot rieng: no la tong runtime_ms tren cac dong
+     * cung arm cung dataset, tinh duoc tu du lieu tho.
+     */
     private static void runSC6_InsertDeleteModify() throws IOException {
-        System.out.println("\n--- [SC6] Mixed I/D/M 70:15:15 (Adaptive) ---");
+        System.out.println("\n--- [SC6] Mixed I/D/M 70:15:15 (Adaptive vs Remine-from-scratch) ---");
         try (ResultCollector col = new ResultCollector(RESULTS_DIR + "SC6_idm_mixed.csv")) {
-            Random rnd = new Random(SEEDS[0]);
             for (DatasetConfig ds : DATASETS) {
                 if (!datasetEnabled(ds.name)) continue;
                 if (!SUBSET_3.contains(ds.name)) continue;
@@ -500,111 +578,118 @@ public class AutomatedExperimentRunner {
 
                 List<Sequence> dInit = new ArrayList<>(headPercent(full, D_INIT_RATIO));
                 List<Sequence> rest  = new ArrayList<>(tailFrom(full, dInit.size()));
-
-                PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp = new PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo(
-                        ds.defaultSu, DEFAULT_KAPPA, DEFAULT_DELTA0, DEFAULT_SL_MIN_RATIO,
-                        PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.AblationMode.FULL,
-                        ENABLE_PATTERN_EXPORT);
-
                 double initTotalUtil = sumUtility(dInit);
-                boolean poisoned;
-                announce("Adaptive-Full", ds.name, "SC6_INIT", 0);
-                ExperimentMetrics mInit = measure("Adaptive-Full", ds.name, 0, "SC6_INIT",
-                        () -> adp.runInitialMining(dInit, initTotalUtil),
-                        () -> adp.candidateCount, () -> adp.patternCount,
-                        () -> adp.lutDynValue, () -> adp.cubValue, () -> adp.cubTriggeredRescan,
-                        null, () -> adp.prunedValueBound,
-                            () -> adp.prelargeCount, () -> adp.uutValue, () -> adp.sftValue, adp::cancel);
-                attachAdaptive(mInit, adp);
-                col.log(mInit);
-                poisoned = (mInit.runtimeMs < 0);
 
                 int opCount = 10;
                 int opSize = Math.max(1, rest.size() / (opCount * 2));
-                List<Sequence> dSoFar = new ArrayList<>(dInit);
-                double[] totalUtilBox = {initTotalUtil};
+                // Mot seed rieng cho tung dataset, de chuoi thao tac cua dataset nay khong
+                // phu thuoc vao viec dataset nao da chay truoc no.
+                Random rnd = new Random(SEEDS[0] + ds.name.hashCode());
+                List<Op> plan = buildSC6Plan(dInit, rest, opCount, opSize, rnd);
+                System.out.println(">> [SC6] " + ds.name + " opSize=" + opSize
+                        + " plan=" + planSummary(plan));
 
-                for (int i = 0; i < opCount; i++) {
-                    double roll = rnd.nextDouble();
-                    int iter = i + 1;
-                    if (roll < 0.70) {
-                        // Insertion
-                        List<Sequence> delta = new ArrayList<>();
-                        for (int j = 0; j < opSize && !rest.isEmpty(); j++) delta.add(rest.remove(0));
-                        if (delta.isEmpty()) break;
-                        double newTotal = totalUtilBox[0] + sumUtility(delta);
-                        List<Sequence> snapshot = new ArrayList<>(dSoFar); snapshot.addAll(delta);
-                        if (poisoned) {
-                            col.log(skippedMetric("Adaptive-Full", ds.name, iter, "SC6_INS"));
-                        } else {
-                            announce("Adaptive-Full", ds.name, "SC6_INS", iter);
-                            ExperimentMetrics m = measure("Adaptive-Full", ds.name, iter, "SC6_INS",
-                                    () -> adp.runIncrementalMining(delta, snapshot, newTotal),
-                                    () -> adp.candidateCount, () -> adp.patternCount,
-                                    () -> adp.lutDynValue, () -> adp.cubValue, () -> adp.cubTriggeredRescan,
-                                    null, () -> adp.prunedValueBound,
-                            () -> adp.prelargeCount, () -> adp.uutValue, () -> adp.sftValue, adp::cancel);
-                            attachAdaptive(m, adp);
-                            col.log(m);
-                            if (m.runtimeMs < 0) poisoned = true;   // -1 = FAILED, -2 = OT - đều poison
-                        }
-                        dSoFar.addAll(delta);
-                        totalUtilBox[0] = newTotal;
-                    } else if (roll < 0.85) {
-                        // Deletion
-                        if (dSoFar.size() < opSize + 1) continue;
-                        List<Sequence> toDel = pickRandom(dSoFar, opSize, rnd);
-                        List<Sequence> dAfter = new ArrayList<>(dSoFar);
-                        dAfter.removeAll(toDel);
-                        double newTotal = sumUtility(dAfter);
-                        if (poisoned) {
-                            col.log(skippedMetric("Adaptive-Full", ds.name, iter, "SC6_DEL"));
-                        } else {
-                            announce("Adaptive-Full", ds.name, "SC6_DEL", iter);
-                            ExperimentMetrics m = measure("Adaptive-Full", ds.name, iter, "SC6_DEL",
-                                    () -> adp.runDeletion(toDel, dAfter, newTotal),
-                                    () -> adp.candidateCount, () -> adp.patternCount,
-                                    () -> adp.lutDynValue, () -> adp.cubValue, () -> adp.cubTriggeredRescan,
-                                    null, () -> adp.prunedValueBound,
-                            () -> adp.prelargeCount, () -> adp.uutValue, () -> adp.sftValue, adp::cancel);
-                            attachAdaptive(m, adp);
-                            col.log(m);
-                            if (m.runtimeMs < 0) poisoned = true;   // -1 = FAILED, -2 = OT - đều poison
-                        }
-                        dSoFar = dAfter;
-                        totalUtilBox[0] = newTotal;
-                    } else {
-                        // Modification
-                        if (dSoFar.size() < opSize + 1 || rest.size() < opSize) continue;
-                        List<Sequence> oldSeqs = pickRandom(dSoFar, opSize, rnd);
-                        List<Sequence> newSeqs = new ArrayList<>();
-                        for (int j = 0; j < opSize && !rest.isEmpty(); j++) newSeqs.add(rest.remove(0));
-                        List<Sequence> dAfter = new ArrayList<>(dSoFar);
-                        dAfter.removeAll(oldSeqs);
-                        dAfter.addAll(newSeqs);
-                        double newTotal = sumUtility(dAfter);
-                        if (poisoned) {
-                            col.log(skippedMetric("Adaptive-Full", ds.name, iter, "SC6_MOD"));
-                        } else {
-                            announce("Adaptive-Full", ds.name, "SC6_MOD", iter);
-                            ExperimentMetrics m = measure("Adaptive-Full", ds.name, iter, "SC6_MOD",
-                                    () -> adp.runModification(oldSeqs, newSeqs, dAfter, newTotal),
-                                    () -> adp.candidateCount, () -> adp.patternCount,
-                                    () -> adp.lutDynValue, () -> adp.cubValue, () -> adp.cubTriggeredRescan,
-                                    null, () -> adp.prunedValueBound,
-                            () -> adp.prelargeCount, () -> adp.uutValue, () -> adp.sftValue, adp::cancel);
-                            attachAdaptive(m, adp);
-                            col.log(m);
-                            if (m.runtimeMs < 0) poisoned = true;   // -1 = FAILED, -2 = OT - đều poison
-                        }
-                        dSoFar = dAfter;
-                        totalUtilBox[0] = newTotal;
-                    }
-                }
-                // Hết dataset → drop adp (out of scope) + forceFullGC trước dataset kế.
+                if (algoEnabled("Adaptive-Full"))       runSC6Arm(ds, dInit, initTotalUtil, plan, col, false);
+                if (algoEnabled("Remine-from-scratch")) runSC6Arm(ds, dInit, initTotalUtil, plan, col, true);
+                forceFullGC();
             }
+        }
+    }
+
+    private static String planSummary(List<Op> plan) {
+        int i = 0, d = 0, m = 0;
+        for (Op o : plan) {
+            if (o.kind == OpKind.INS) i++;
+            else if (o.kind == OpKind.DEL) d++;
+            else m++;
+        }
+        return plan.size() + " thao tac (" + i + " chen, " + d + " xoa, " + m + " sua)";
+    }
+
+    /** Phat lai ke hoach thao tac cho mot arm. remine=true nghia la mine lai tu dau moi thao tac. */
+    private static void runSC6Arm(DatasetConfig ds, List<Sequence> dInit, double initTotalUtil,
+                                  List<Op> plan, ResultCollector col, boolean remine) throws IOException {
+        final String label = remine ? "Remine-from-scratch" : "Adaptive-Full";
+
+        PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp = newAdaptive(ds.defaultSu);
+        announce(label, ds.name, "SC6_INIT", 0);
+        ExperimentMetrics mInit = measureAdaptive(adp, label, ds.name, 0, "SC6_INIT",
+                () -> adp.runInitialMining(dInit, initTotalUtil));
+        col.log(mInit);
+        boolean poisoned = (mInit.runtimeMs < 0);
+        forceFullGC();
+
+        List<Sequence> cur = new ArrayList<>(dInit);
+        double total = initTotalUtil;
+
+        for (Op op : plan) {
+            // Trang thai CSDL tien trien giong het nhau o ca hai arm, vi ke hoach da co dinh.
+            List<Sequence> after = new ArrayList<>(cur);
+            switch (op.kind) {
+                case INS: after.addAll(op.a); break;
+                case DEL: after.removeAll(op.a); break;
+                default:  after.removeAll(op.a); after.addAll(op.b); break;
+            }
+            final double newTotal = (op.kind == OpKind.INS) ? total + sumUtility(op.a) : sumUtility(after);
+
+            if (poisoned) {
+                col.log(skippedMetric(label, ds.name, op.iter, op.tag()));
+                cur = after; total = newTotal;
+                continue;
+            }
+
+            ExperimentMetrics m;
+            if (remine) {
+                // Mine lai tu dau: instance MOI, khong giu bat cu trang thai nao.
+                final List<Sequence> snapshot = new ArrayList<>(after);
+                PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo rm = newAdaptive(ds.defaultSu);
+                announce(label, ds.name, op.tag(), op.iter);
+                m = measureAdaptive(rm, label, ds.name, op.iter, op.tag(),
+                        () -> rm.runInitialMining(snapshot, newTotal));
+                m.rescanCount = 0;   // khong co khai niem rescan gia tang o moc nay
+            } else {
+                final List<Sequence> snapshot = new ArrayList<>(after);
+                announce(label, ds.name, op.tag(), op.iter);
+                switch (op.kind) {
+                    case INS:
+                        m = measureAdaptive(adp, label, ds.name, op.iter, op.tag(),
+                                () -> adp.runIncrementalMining(op.a, snapshot, newTotal));
+                        break;
+                    case DEL:
+                        m = measureAdaptive(adp, label, ds.name, op.iter, op.tag(),
+                                () -> adp.runDeletion(op.a, snapshot, newTotal));
+                        break;
+                    default:
+                        m = measureAdaptive(adp, label, ds.name, op.iter, op.tag(),
+                                () -> adp.runModification(op.a, op.b, snapshot, newTotal));
+                        break;
+                }
+            }
+            col.log(m);
+            if (m.runtimeMs < 0) poisoned = true;
+            cur = after; total = newTotal;
             forceFullGC();
         }
+    }
+
+    private static PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo newAdaptive(double su) {
+        return new PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo(
+                su, DEFAULT_KAPPA, DEFAULT_DELTA0, DEFAULT_SL_MIN_RATIO,
+                PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.AblationMode.FULL,
+                ENABLE_PATTERN_EXPORT);
+    }
+
+    /** Goi measure() voi day du cac supplier cua Adaptive; gom lai de khoi lap 11 doi so. */
+    private static ExperimentMetrics measureAdaptive(
+            PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo a,
+            String label, String dsName, int iter, String tag, Task task) {
+        ExperimentMetrics m = measure(label, dsName, iter, tag, task,
+                () -> a.candidateCount, () -> a.patternCount,
+                () -> a.lutDynValue, () -> a.cubValue, () -> a.cubTriggeredRescan,
+                null, () -> a.prunedValueBound,
+                () -> a.prelargeCount, () -> a.uutValue, () -> a.sftValue, a::cancel);
+        attachAdaptive(m, a);
+        return m;
     }
 
     // ==================================================================
@@ -828,6 +913,83 @@ public class AutomatedExperimentRunner {
                     dSoFar.addAll(delta);
                     rolling = newTotal;
                 }
+                forceFullGC();
+            }
+        }
+        forceFullGC();
+
+        // -------- Moc so sanh: Remine-from-scratch (isolated scope) --------
+        //
+        // Tra loi cau hoi ma review neu o comment 4b: duy tri gia tang re hon bao nhieu
+        // so voi don gian mine lai tu dau sau moi lo. Neu khong co moc nay thi khong the
+        // dinh luong duoc loi ich cua toan bo co che gia tang.
+        //
+        // Moc nay dung CHINH bo khai pha tinh cua khung de xuat, khong dung USpan hay
+        // HUSP-ULL. Do la lua chon co chu y: no khien Remine tro thanh doi thu MANH NHAT
+        // co the cho tuyen bo gia tang, vi moi khoang cach do duoc deu den tu viec KHONG
+        // phai mine lai, chu khong den tu viec bo mine cua ta nhanh hon bo mine cua nguoi
+        // khac. Lay mot baseline tinh cham hon lam moc se thoi phong loi ich len.
+        //
+        // Runtime cong don khong luu thanh cot rieng: no la tong cua cot runtime_ms tren
+        // cac dong cung mot lan chay, tinh duoc tu du lieu tho, dung quy uoc chung cua
+        // ExperimentMetrics la khong luu dai luong dan xuat.
+        if (algoEnabled("Remine-from-scratch")) {
+            boolean poisoned = false;
+            double rolling = initTotal;
+            List<Sequence> dSoFar = new ArrayList<>(dInit);
+
+            PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo rm0 =
+                    new PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo(
+                            Su, DEFAULT_KAPPA, DEFAULT_DELTA0, DEFAULT_SL_MIN_RATIO,
+                            PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.AblationMode.FULL,
+                            ENABLE_PATTERN_EXPORT);
+            announce("Remine-from-scratch", dsName, tag + "_INIT", 0);
+            ExperimentMetrics m0 = measure("Remine-from-scratch", dsName, 0, tag + "_INIT",
+                    () -> rm0.runInitialMining(dInit, initTotal),
+                    () -> rm0.candidateCount, () -> rm0.patternCount,
+                    () -> rm0.lutDynValue, () -> rm0.cubValue, () -> rm0.cubTriggeredRescan,
+                    null, () -> rm0.prunedValueBound,
+                    () -> rm0.prelargeCount, () -> rm0.uutValue, () -> rm0.sftValue, rm0::cancel);
+            attachAdaptive(m0, rm0);
+            col.log(m0);
+            if (m0.runtimeMs < 0) poisoned = true;
+            forceFullGC();
+
+            for (int b = 0; b < batches.size(); b++) {
+                List<Sequence> delta = batches.get(b);
+                if (delta.isEmpty()) continue;
+                double newTotal = rolling + sumUtility(delta);
+                int batchIdx = b + 1;
+                dSoFar.addAll(delta);
+                rolling = newTotal;
+
+                if (!poisoned && !memoryGuardOk("Remine-from-scratch", dsName, tag + "_INC")) poisoned = true;
+                if (poisoned) {
+                    col.log(skippedMetric("Remine-from-scratch", dsName, batchIdx, tag + "_INC"));
+                    continue;
+                }
+                // Moi lo mot instance moi: mine lai tu dau nghia la KHONG giu bat cu trang
+                // thai nao cua lo truoc.
+                final List<Sequence> snapshot = new ArrayList<>(dSoFar);
+                final double finalTotal = newTotal;
+                PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo rm =
+                        new PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo(
+                                Su, DEFAULT_KAPPA, DEFAULT_DELTA0, DEFAULT_SL_MIN_RATIO,
+                                PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.AblationMode.FULL,
+                                ENABLE_PATTERN_EXPORT);
+                announce("Remine-from-scratch", dsName, tag + "_INC", batchIdx);
+                ExperimentMetrics mb = measure("Remine-from-scratch", dsName, batchIdx, tag + "_INC",
+                        () -> rm.runInitialMining(snapshot, finalTotal),
+                        () -> rm.candidateCount, () -> rm.patternCount,
+                        () -> rm.lutDynValue, () -> rm.cubValue, () -> rm.cubTriggeredRescan,
+                        null, () -> rm.prunedValueBound,
+                        () -> rm.prelargeCount, () -> rm.uutValue, () -> rm.sftValue, rm::cancel);
+                attachAdaptive(mb, rm);
+                // Mine lai tu dau khong co khai niem rescan gia tang; de 0 thay vi 1 de
+                // cot rescan_count khong bi doc nham thanh "moc nay cung rescan moi lo".
+                mb.rescanCount = 0;
+                col.log(mb);
+                if (mb.runtimeMs < 0) poisoned = true;
                 forceFullGC();
             }
         }

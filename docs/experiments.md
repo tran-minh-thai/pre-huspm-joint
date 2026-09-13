@@ -12,15 +12,11 @@ It is the reference for anyone reproducing the numbers from a clean clone.
 | `IncUSP-Miner+` | candidate-tree incremental baseline | Wang et al. | implemented |
 | `HUSP-ULL` | static baseline, LAR and IIP pruning | Gan et al. | implemented |
 | `USpan` | static baseline, SWU bound | Yin et al. | implemented |
-| `Pre-HUSPM-TSU` | pre-large incremental baseline, sound `TSU_d` variant | Yan et al., Theorem 1 | **planned, not implemented** |
+| `Pre-HUSPM-TSU` | pre-large incremental baseline, sound `TSU_d` variant | Yan et al., Theorem 1 | implemented |
 | `HUSP-SP` | static baseline, seqPro and TRSU bound | Zhang et al., TKDD 2023 | implemented |
-| `Remine-from-scratch` | re-mines `D'` after every operation | this repository | **planned, not implemented** |
+| `Remine-from-scratch` | re-mines `D'` after every operation | this repository | implemented |
 
-Rows marked *planned* are not in `src/algorithms/` yet and appear in no result file. They
-are listed here so the intended comparison set is on record, not to imply that numbers for
-them exist.
-
-Two notes on the baseline set, both raised in review:
+Three notes on the baseline set, all raised in review:
 
 * `Pre-HUSPM` in this repository implements the **`SWUmax` variant** (Yan et al.,
   Theorem 2). That paper also defines a **`TSU_d` variant** (their Theorem 1), which is the
@@ -28,6 +24,23 @@ Two notes on the baseline set, both raised in review:
   `SWUmax >= SWU_d(X)` while `SWUmax` is the utility of a single sequence and `SWU_d(X)`
   sums over every sequence of `d` that contains `X`. Comparing only against the weaker
   variant understates the baseline, so `Pre-HUSPM-TSU` has to be added.
+* `Remine-from-scratch` re-mines the whole database after every batch or operation. Without
+  it there is no way to say what incremental maintenance is worth, which is what review asked
+  for in comments 4b and 4c. It runs in SC2, SC5 and SC6.
+
+  It deliberately uses the **proposed framework's own static miner**, not USpan or HUSP-ULL.
+  That makes it the strongest possible reference for the incremental claim: every gap it
+  shows comes from not re-mining, never from our miner being faster than someone else's.
+  Using a slower static baseline as the reference would inflate the apparent benefit.
+
+  Cumulative runtime is not stored as a column. It is the sum of `runtime_ms` over the rows
+  of one arm, derivable from the raw data, and `ExperimentMetrics` does not store derived
+  quantities.
+
+  SC6 previously drew its operation sequence inside the measurement loop, so a second arm
+  would have drawn a different sequence from the same generator and the two would not have
+  been comparable. The plan is now built once per dataset and replayed by each arm.
+
 * `HUSP-SP` is the fastest static method in this family and its absence was the most
   visible gap in the comparison. It is now implemented, reconstructed independently from
   the definitions and pseudocode of the paper (Definitions 4.5, 4.6, 4.7, 4.9, 4.11;
@@ -109,7 +122,7 @@ ones and keeps the incremental grids inside the time budget.
 | SC3 | threshold sweep on the full database | `SC3_su.csv` |
 | SC4 | lower-threshold ratio sweep, r_l in {0.3, 0.5, 0.7, 0.9} | `SC4_sl_sensitivity.csv` |
 | SC5 | batch count K in {3, 5, 10} crossed with four partitioning strategies | `SC5_batch_strategy.csv` |
-| SC6 | ten mixed operations, insert, delete, and modify at 70:15:15 | `SC6_idm_mixed.csv` |
+| SC6 | ten mixed operations, insert, delete, and modify at 70:15:15, two arms | `SC6_idm_mixed.csv` |
 | SC7 | ablation of C3, C4, and C5 against Pre-HUSPM | `SC7_ablation.csv` |
 
 ### What the "247 to 252" in SC5 actually counts
