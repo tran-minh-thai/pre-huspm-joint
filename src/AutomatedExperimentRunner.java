@@ -232,6 +232,87 @@ public class AutomatedExperimentRunner {
      */
     public static final boolean ALLOW_UNCALIBRATED = Boolean.getBoolean("uncalibrated");
 
+    // ================================================================
+    //  SPENDING THE MEASUREMENT BUDGET
+    // ================================================================
+    //
+    // Covering every database in every scenario is not negotiable: review asked why some
+    // databases appear and others do not, and the honest answer is to measure them. The
+    // grid is datasets x scenarios x algorithms x thresholds x seeds x repeats, so the
+    // question is where to stop paying without losing anything.
+    //
+    // Three places, each cutting a different kind of waste.
+    //
+    //   1. A configuration that failed is not measured again. Overtime and out-of-memory
+    //      are properties of the configuration, not samples of a distribution; repeating
+    //      one buys nothing and costs the full timeout every time. On the submitted
+    //      results this alone is hours: the failures cluster on the expensive databases.
+    //
+    //   2. Repeats are for measurement noise, and noise matters in proportion to the
+    //      measurement. A call of a second repeated three times costs three seconds; a
+    //      call of eight minutes repeated three times costs twenty-four. The long call is
+    //      also the one where JIT and GC noise is proportionally smallest. So repeats stop
+    //      once a configuration has shown it is slow, and the row records how many
+    //      actually ran so nothing is reported as an average of three that was not.
+    //
+    //   3. Cheap databases run first, so an interrupted campaign leaves whole databases
+    //      finished rather than every database half done.
+
+    /** Above this, a configuration is measured once rather than repeated. */
+    public static final long REPEAT_MAX_MS = Long.getLong("repeat.maxms", 60_000L);
+
+    /** Configurations already seen to fail: algorithm|dataset|opType. */
+    private static final Set<String> FAILED_ONCE = new HashSet<>();
+    /** Configurations already seen to be slow enough that repeating is not worth it. */
+    private static final Set<String> TOO_SLOW = new HashSet<>();
+
+    private static String cfgKey(String algo, String dataset, String opType) {
+        return algo + "|" + dataset + "|" + opType;
+    }
+
+    /** True when this repeat should be skipped. Repeat 0 always runs. */
+    private static boolean skipRepeat(String algo, String dataset, String opType, int repeat) {
+        if (repeat == 0) return false;
+        String k = cfgKey(algo, dataset, opType);
+        if (FAILED_ONCE.contains(k)) {
+            System.out.println("   skip repeat " + repeat + " of " + k
+                    + ": the configuration already failed, and a failure is not a sample");
+            return true;
+        }
+        if (TOO_SLOW.contains(k)) {
+            System.out.println("   skip repeat " + repeat + " of " + k
+                    + ": first call over " + (REPEAT_MAX_MS / 1000) + "s");
+            return true;
+        }
+        return false;
+    }
+
+    /** Record what the call turned out to be, so later repeats can be skipped. */
+    private static void noteOutcome(ExperimentMetrics m) {
+        if (m == null) return;
+        String k = cfgKey(m.algorithm, m.dataset, m.opType.replaceAll("_(OT|OOM|BUDGET|FAILED|SKIPPED_POISONED)$", ""));
+        if (m.runtimeMs < 0) FAILED_ONCE.add(k);
+        else if (m.runtimeMs > REPEAT_MAX_MS) TOO_SLOW.add(k);
+    }
+
+    /**
+     * Databases ordered cheapest first, by measured cost per call on the submitted
+     * results. An interrupted campaign then leaves whole databases complete. FIFA is last
+     * on purpose: at 450 s per call it costs more than the other five together.
+     */
+    private static final List<String> COST_ORDER = List.of(
+            "LEVIATHAN", "SIGN", "BMS1", "KOSARAK", "BIBLE",
+            "C8T1S5I8N5K", "ONLINE_RETAIL_II_QTY", "ONLINE_RETAIL_II_ALL", "FIFA");
+
+    private static List<DatasetConfig> inCostOrder(List<DatasetConfig> in) {
+        List<DatasetConfig> out = new ArrayList<>(in);
+        out.sort((a, b) -> {
+            int ia = COST_ORDER.indexOf(a.name), ib = COST_ORDER.indexOf(b.name);
+            return Integer.compare(ia < 0 ? 99 : ia, ib < 0 ? 99 : ib);
+        });
+        return out;
+    }
+
     private static boolean calibrationOk(DatasetConfig ds) {
         if (ds.calibrated || ALLOW_UNCALIBRATED) return true;
         System.out.println(">> skipping " + ds.name + ": thresholds not calibrated for the "
@@ -374,7 +455,7 @@ public class AutomatedExperimentRunner {
                 if (t.equalsIgnoreCase("TEST") || t.equalsIgnoreCase("SMOKE")) { testMode = true; break; }
             }
         }
-        DATASETS = testMode ? DATASETS_TEST : DATASETS_PRODUCTION;
+        DATASETS = inCostOrder(testMode ? DATASETS_TEST : DATASETS_PRODUCTION);
         datasetDir = testMode ? EXAMPLE_DIR : DATASET_DIR;
 
         Set<String> scenarios = parseScenarios(args);
@@ -1273,10 +1354,17 @@ public class AutomatedExperimentRunner {
         return -1L;
     }
 
+    /** Wrap a scenario call so its outcome feeds the repeat decisions. */
+    private static ExperimentMetrics logged(ExperimentMetrics m) {
+        noteOutcome(m);
+        return m;
+    }
+
     private static ExperimentMetrics runSingle(String algo, String dsName, List<Sequence> db,
                                                double totalUtil, double su, int iter, String tag) {
         if (ADAPTIVE_ONLY && !algo.equals("Adaptive-Full")) return null; // chỉ chạy lại Adaptive
         if (!algoEnabled(algo)) return null;   // -Dalgo.only: mot arm mot JVM (che do live)
+        if (skipRepeat(algo, dsName, tag, currentRepeat)) return null;
         announce(algo, dsName, tag, iter);
         try {
             switch (algo) {
@@ -1290,7 +1378,7 @@ public class AutomatedExperimentRunner {
                         m.prunedDepth = u.prunedDepth;
                         m.exploredNodes = u.exploredNodes;
                     }
-                    return m;
+                    return logged(m);
                 }
                 case "HUSP-SP": {
                     // Thuat toan TINH, khong xu ly cap nhat gia tang, nen chi co mat o
@@ -1308,7 +1396,7 @@ public class AutomatedExperimentRunner {
                         m.prunedLar = sp.prunedEP;       // EP theo TRSU, dong gop rieng cua bai
                         m.exploredNodes = sp.exploredNodes;
                     }
-                    return m;
+                    return logged(m);
                 }
                 case "HUSP-ULL": {
                     HUSPULLAlgorithm h = new HUSPULLAlgorithm(totalUtil * su);
@@ -1321,7 +1409,7 @@ public class AutomatedExperimentRunner {
                         m.prunedIip = h.prunedIIP;
                         m.exploredNodes = h.exploredNodes;
                     }
-                    return m;
+                    return logged(m);
                 }
                 case "IncUSP-Miner+": {
                     IncUSPMinerPlusAlgorithm inc = new IncUSPMinerPlusAlgorithm(su);
@@ -1329,7 +1417,7 @@ public class AutomatedExperimentRunner {
                             () -> inc.runInitialMining(db, totalUtil),
                             () -> inc.candidateCount, () -> inc.patternCount, null, null);
                     if (m != null && m.runtimeMs != -1) { m.prunedTsu = inc.prunedTSU; m.exploredNodes = inc.exploredNodes; }
-                    return m;
+                    return logged(m);
                 }
                 case "Pre-HUSPM": {
                     PreHUSPMAlgorithm.PreHUSPMAlgo pre = new PreHUSPMAlgorithm.PreHUSPMAlgo(
@@ -1338,7 +1426,7 @@ public class AutomatedExperimentRunner {
                             () -> pre.runInitialMining(db, totalUtil),
                             () -> pre.candidateCount, () -> pre.patternCount, null, null);
                     attachPreHuspm(m, pre);
-                    return m;
+                    return logged(m);
                 }
                 case "Adaptive-Full": {
                     PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp = new PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo(
@@ -1352,7 +1440,7 @@ public class AutomatedExperimentRunner {
                             null, () -> adp.prunedValueBound,
                             () -> adp.prelargeCount, () -> adp.uutValue, () -> adp.sftValue, adp::cancel);
                     attachAdaptive(m, adp);
-                    return m;
+                    return logged(m);
                 }
                 default: return null;
             }
