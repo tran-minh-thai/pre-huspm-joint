@@ -156,7 +156,11 @@ public final class ThresholdScan {
         }
 
         Files.createDirectories(outDir);
-        Path csv = outDir.resolve("thresholds.csv");
+        // One file per machine. Two machines appending to one tracked path collide on the
+        // next pull: git refuses to overwrite an untracked file, and if it is tracked the
+        // two sets of rows conflict. Each machine owns its own file; merging them is a
+        // deliberate step, not an accident of whoever pushed last.
+        Path csv = outDir.resolve("thresholds-" + hostTag() + ".csv");
         boolean fresh = !Files.exists(csv);
         System.out.printf("budgets: %,d candidates and %d s per probe, %d s per level%n",
                 maxCandidates, budgetMs / 1000, levelBudgetMs / 1000);
@@ -375,7 +379,14 @@ public final class ThresholdScan {
         best.probes = probes;
         best.ms = ms;
         boolean spent = System.nanoTime() >= deadline;
-        if (best.ok()) {
+        if (best.ok() && best.patterns == 0 && target > 0) {
+            // Every threshold that finished returned nothing, and every threshold low
+            // enough to return something was abandoned. Reporting the highest one as the
+            // "closest" would read as a calibrated value; it is the opposite, a threshold
+            // known to be useless. Say that, and leave the threshold out.
+            best.uut = 0;
+            best.status = "no-patterns-within-budget";
+        } else if (best.ok()) {
             best.status = (Math.abs(best.patterns - target) <= Math.max(1, target * 0.10))
                     ? "ok" : (spent ? "closest-budget-spent" : "closest");
         } else {
@@ -394,6 +405,17 @@ public final class ThresholdScan {
             best.uut = uut;
             best.patterns = p.patterns;
         }
+    }
+
+    /** Machine name, reduced to something safe for a file name. */
+    private static String hostTag() {
+        String h = System.getenv("COMPUTERNAME");
+        if (h == null || h.isEmpty()) h = System.getenv("HOSTNAME");
+        if (h == null || h.isEmpty()) {
+            try { h = java.net.InetAddress.getLocalHost().getHostName(); }
+            catch (Exception ignored) { h = "unknown"; }
+        }
+        return h.toLowerCase(Locale.ROOT).replaceAll("[^a-z0-9._-]", "-");
     }
 
     static {

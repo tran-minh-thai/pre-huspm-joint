@@ -294,12 +294,22 @@ public class AutomatedExperimentRunner {
             // event and exercise across-event extension alone. ONLINE_RETAIL_II_QTY is the
             // only one whose internal utility is measured rather than generated, which is
             // what a reviewer asking about synthetic utilities actually wants to see.
-            new DatasetConfig("C8T1S5I8N5K",          0.02, new double[]{0.01, 0.02, 0.03, 0.04},
-                    false, "no inherited value; ladder chosen, not measured"),
+            new DatasetConfig("C8T1S5I8N5K",          0.00152,
+                    new double[]{0.00149, 0.00152, 0.00155, 0.00158},
+                    true,  "313 153 79 38; note how narrow the band is, six percent of "
+                         + "threshold separates 313 patterns from 38"),
+            // Calibration found no usable operating point within the budgets available on
+            // the development machine: every threshold that finished returned no patterns,
+            // and every threshold low enough to return some was abandoned. Sequences here
+            // are long, averaging 122 and 140 items against 2 to 52 elsewhere, so the cliff
+            // between nothing and an explosion is steep. Retry on the measurement machine
+            // with wider budgets before concluding the databases are unusable.
             new DatasetConfig("ONLINE_RETAIL_II_ALL", 0.02, new double[]{0.01, 0.02, 0.03, 0.04},
-                    false, "no inherited value; ladder chosen, not measured"),
+                    false, "no usable threshold found within budget; retry with "
+                         + "--budget-sec 600 --level-budget-sec 3600"),
             new DatasetConfig("ONLINE_RETAIL_II_QTY", 0.02, new double[]{0.01, 0.02, 0.03, 0.04},
-                    false, "no inherited value; ladder chosen, not measured")
+                    false, "no usable threshold found within budget; retry with "
+                         + "--budget-sec 600 --level-budget-sec 3600")
     );
 
     /** Dataset rút gọn cho smoke-test (paper = 4 chuỗi, < 1s). */
