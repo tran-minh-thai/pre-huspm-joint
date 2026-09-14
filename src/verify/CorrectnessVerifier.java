@@ -37,11 +37,11 @@ public final class CorrectnessVerifier {
 
     private static final String DATASET_DIR = "datasets";
 
-    /** Nguong mac dinh theo Table 1 cua ban thao. */
-    private static final String[][] DEFAULTS = {
-            {"SIGN", "0.025"}, {"LEVIATHAN", "0.060"}, {"FIFA", "0.050"},
-            {"BIBLE", "0.025"}, {"BMS1", "0.014"}, {"KOSARAK", "0.030"},
-    };
+    // Thresholds come from common.Datasets, the same table the runner measures at. This
+    // class used to carry its own copy of the pre-release values, so every artefact it
+    // produced verified correctness at an operating point the study had stopped using -
+    // LEVIATHAN at 0.060 where the calibrated threshold is 0.01553 - and nothing reported
+    // it, because a threshold that is merely wrong still runs perfectly well.
 
     private static final double RL = 0.8, KAPPA = 0.5, DELTA0 = 1e-4;
 
@@ -49,6 +49,7 @@ public final class CorrectnessVerifier {
         if (args.length == 0) {
             System.out.println("dung: verify.CorrectnessVerifier <DATASET|ALL> [UUT] "
                     + "[--rule swumax|cub|iaumax] [--batches K] [--mixed] [--out DIR]");
+            System.out.println("databases: " + common.Datasets.names());
             return;
         }
 
@@ -82,10 +83,17 @@ public final class CorrectnessVerifier {
                 w.println("dataset,uut,trigger_rule,batches,op_index,op_type,"
                         + "ref_husp,got_husp,missing,extra,max_utility_gap,rescans,clean");
             }
-            for (String[] d : DEFAULTS) {
-                if (!"ALL".equalsIgnoreCase(target) && !d[0].equalsIgnoreCase(target)) continue;
-                double uut = (uutArg != null) ? uutArg : Double.parseDouble(d[1]);
-                totalViolations += verifyDataset(d[0], uut, rule, batches, mixed, w);
+            boolean ran = false;
+            for (common.Datasets.Entry e : common.Datasets.all()) {
+                if (!"ALL".equalsIgnoreCase(target) && !e.name.equalsIgnoreCase(target)) continue;
+                double uut = (uutArg != null) ? uutArg : e.defaultUut;
+                totalViolations += verifyDataset(e.name, uut, rule, batches, mixed, w);
+                ran = true;
+            }
+            if (!ran) {
+                System.out.println("khong co database nao ten " + target
+                        + "; co the chon: " + common.Datasets.names());
+                return;
             }
         }
 

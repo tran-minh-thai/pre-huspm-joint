@@ -349,58 +349,20 @@ public class AutomatedExperimentRunner {
      * experiments, so the runs pose comparable work; the raw search output is in
      * results/thresholds/thresholds.csv.
      */
-    private static final List<DatasetConfig> DATASETS_PRODUCTION = List.of(
-            // Calibrated on D_init. Patterns obtained, lowest threshold first.
-            new DatasetConfig("SIGN",      0.06215, new double[]{0.04499, 0.06215, 0.07634, 0.08585},
-                    true,  "3288 612 167 76"),
-            new DatasetConfig("LEVIATHAN", 0.01553, new double[]{0.01465, 0.01553, 0.01647, 0.01799},
-                    true,  "133 107 88 63"),
-            new DatasetConfig("BIBLE",     0.02428, new double[]{0.01976, 0.02428, 0.02982, 0.03557},
-                    true,  "357 194 104 54"),
-            new DatasetConfig("BMS1",      0.01442, new double[]{0.01421, 0.01442, 0.01575, 0.01771},
-                    true,  "20 18 16 14"),
+    private static final List<DatasetConfig> DATASETS_PRODUCTION = buildProduction();
 
-            new DatasetConfig("FIFA",      0.059637,
-                    new double[]{0.056234, 0.059637, 0.067073, 0.076000},
-                    true,  "40 17 5 1"),
-
-            // The submitted counts {12, 6, 5, 5} are unusable on this release: 6 and 5 both
-            // land at 0.030, so three levels share one threshold and the sweep shows two
-            // operating points wearing four labels. Re-chosen for the widest spread the
-            // database allows; 0.019 already exceeds three billion candidates, so twelve
-            // patterns is the ceiling rather than a preference.
-            new DatasetConfig("KOSARAK",   0.025,
-                    new double[]{0.020, 0.025, 0.028, 0.030},
-                    true,  "12 9 7 5; re-chosen, the submitted ladder collapses to two "
-                         + "distinct thresholds on this release"),
-
-            // Added by the pinned release. The one database here that reaches within-event
-            // extension, at 7.97 items per event; the other seven hold exactly one item per
-            // event and exercise across-event extension alone.
-            new DatasetConfig("C8T1S5I8N5K",          0.00152,
-                    new double[]{0.00149, 0.00152, 0.00155, 0.00158},
-                    true,  "313 153 79 38; note how narrow the band is, six percent of "
-                         + "threshold separates 313 patterns from 38"),
-
-            // The only database whose utilities are measured on both sides: quantities from
-            // Ta-Feng's AMOUNT, profits from SALES_PRICE / AMOUNT. It is also the one a
-            // compared algorithm already measured on, so including it is not a dataset
-            // chosen to suit this work. Every probe in the sweep finishes in under a second.
-            new DatasetConfig("TAFENG",               0.0035,
-                    new double[]{0.0029, 0.0035, 0.0045, 0.0050},
-                    true,  "10 6 5 4; ten is the ceiling, 0.0028 exceeds the budget")
-
-            // ONLINE_RETAIL_II_ALL and ONLINE_RETAIL_II_QTY were measured and dropped, not
-            // forgotten. QTY gives each invoice line its own event, so its sequences average
-            // 139.66 events against 2.5 to 36 elsewhere: every threshold that completes
-            // returns nothing and every threshold low enough to return a pattern exceeds
-            // three billion candidates, with the two bracketing 0.15 and 0.16. Rebuilding it
-            // per customer-month cut that to 32.28 events and made the last computable
-            // threshold six hundred times cheaper, and it still returned nothing. ALL carries
-            // generated utilities like seven of the nine and its within-event extension is
-            // already covered by C8T1S5I8N5K, so it brought nothing the suite lacked. Both
-            // stay in the dataset release; they are simply not measured here.
-    );
+    /**
+     * The table itself lives in common.Datasets so that verify.CorrectnessVerifier reads the
+     * same thresholds this runner measures at. It used to keep its own copy, which went
+     * stale without anyone noticing.
+     */
+    private static List<DatasetConfig> buildProduction() {
+        List<DatasetConfig> out = new ArrayList<>();
+        for (common.Datasets.Entry e : common.Datasets.all()) {
+            out.add(new DatasetConfig(e.name, e.defaultUut, e.sweep, e.calibrated, e.note));
+        }
+        return List.copyOf(out);
+    }
 
     /** Dataset rút gọn cho smoke-test (paper = 4 chuỗi, < 1s). */
     private static final List<DatasetConfig> DATASETS_TEST = List.of(
