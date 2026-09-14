@@ -78,9 +78,11 @@ public final class Datasets {
         // Ta-Feng's AMOUNT, profits from SALES_PRICE / AMOUNT. It is also the one a
         // compared algorithm already measured on, so including it is not a dataset
         // chosen to suit this work. Every probe in the sweep finishes in under a second.
-        new Entry("TAFENG",               0.0035,
-                new double[]{0.0029, 0.0035, 0.0045, 0.0050},
-                true,  "10 6 5 4; ten is the ceiling, 0.0028 exceeds the budget")
+        new Entry("TAFENG",               0.003557,
+                new double[]{0.003162, 0.003557, 0.004000, 0.005060},
+                true,  "9 6 5 4; these are what ThresholdScan itself converges to, so "
+                     + "re-running it reproduces this row. Ten patterns is the ceiling, "
+                     + "reached at 0.0029; 0.0028 exceeds the budget")
 
         // ONLINE_RETAIL_II_ALL and ONLINE_RETAIL_II_QTY were measured and dropped, not
         // forgotten. QTY gives each invoice line its own event, so its sequences average

@@ -77,7 +77,7 @@ every result; re-run everything after changing it, and record the tag beside the
 | BMS1 | 59,601 | 497 | 2.51 | 1.00 | 7,229,030 | generated | 0.01442 |
 | KOSARAK | 990,002 | 41,270 | 8.10 | 1.00 | 385,921,994 | generated | 0.025 |
 | C8T1S5I8N5K | 47,132 | 68,240 | 18.83 | 7.97 | 47,416,411 | generated | 0.00152 |
-| TAFENG | 60,665 | 23,812 | 13.40 | 1.00 | 106,638,996 | **measured** | 0.0035 |
+| TAFENG | 60,665 | 23,812 | 13.40 | 1.00 | 106,638,996 | **measured** | 0.003557 |
 
 All eight are measured. Two columns carry most of the weight here.
 
@@ -110,7 +110,7 @@ Get `ta_feng_all_months_merged.csv` — 817,741 rows, November 2000 to February 
 
 ```bash
 python tafeng/build_tafeng.py --zip archive.zip --out-dir datasets --name TAFENG
-sha256sum -c tafeng/TAFENG.sha256          # Windows: .etch-datasets.ps1 -VerifyOnly
+sha256sum -c tafeng/TAFENG.sha256          # Windows: .\fetch-datasets.ps1 -VerifyOnly
 ```
 
 What the build does, and why each part is not a detail:
@@ -157,7 +157,7 @@ Calibrated on `D_init`, with the search output kept per machine in
 | FIFA | 0.045 0.050 0.055 0.060 | **0.056234 0.059637 0.067073 0.076000** | 40 17 5 1 |
 | KOSARAK | 0.025 0.030 0.040 0.050 | **0.020 0.025 0.028 0.030** | 12 9 7 5 |
 | C8T1S5I8N5K | none to inherit | **0.00149 0.00152 0.00155 0.00158** | 313 153 79 38 |
-| TAFENG | none to inherit | **0.0029 0.0035 0.0045 0.0050** | 10 6 5 4 |
+| TAFENG | none to inherit | **0.003162 0.003557 0.004000 0.005060** | 9 6 5 4 |
 
 Two of these are chosen rather than reproduced, and the difference is worth stating.
 `C8T1S5I8N5K` and `TAFENG` have no submitted counts to inherit. `KOSARAK` has them —
@@ -165,7 +165,10 @@ Two of these are chosen rather than reproduced, and the difference is worth stat
 three of the four levels share one threshold and the sweep would show two operating points
 wearing four labels. Its ladder was re-chosen for the widest spread the database allows;
 0.019 already exceeds three billion candidates, so twelve patterns is a ceiling rather than
-a preference. The same holds for `TAFENG` at ten.
+a preference. The same holds for `TAFENG`, where ten patterns at 0.0029 is the most the
+database yields before 0.0028 exceeds the budget; the sweep sits just above that, at the
+values `ThresholdScan` converges to on its own, so re-running the tool reproduces this
+row rather than standing a second ladder beside it.
 
 Every database the runner names is calibrated. One that is not would be **skipped** with a
 message naming the command to calibrate it, rather than measured at an operating point
@@ -210,7 +213,7 @@ java -Xmx24g -Xss64m -cp build AutomatedExperimentRunner SC1
 Verify correctness before measuring anything:
 
 ```bash
-.etch-datasets.ps1 -VerifyOnly                          # databases still intact
+.\fetch-datasets.ps1 -VerifyOnly                          # databases still intact
 java -cp build verify.WP1AcceptanceTest                   # must report 15 passed, 0 failed
 java -cp build verify.BaselineAgreement SIGN              # static baselines must agree exactly
 java -Xmx24g -cp build verify.CorrectnessVerifier LEVIATHAN --rule iaumax
