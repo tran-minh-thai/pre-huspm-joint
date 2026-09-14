@@ -302,7 +302,10 @@ public class AutomatedExperimentRunner {
      */
     private static final List<String> COST_ORDER = List.of(
             "LEVIATHAN", "SIGN", "BMS1", "KOSARAK", "BIBLE",
-            "C8T1S5I8N5K", "ONLINE_RETAIL_II_QTY", "ONLINE_RETAIL_II_ALL", "FIFA");
+            // TAFENG has no submitted results to take a cost from. Placed here on the only
+            // evidence there is, its calibration probes, which finish in under a second at
+            // every threshold of its sweep. Move it once a run has measured it.
+            "TAFENG", "C8T1S5I8N5K", "FIFA");
 
     private static List<DatasetConfig> inCostOrder(List<DatasetConfig> in) {
         List<DatasetConfig> out = new ArrayList<>(in);
@@ -323,15 +326,13 @@ public class AutomatedExperimentRunner {
     }
 
     /**
-     * Datasets to run - PRODUCTION SET (mapping draftPaper.pdf Table 4):
-     *   - SIGN, LEVIATHAN, FIFA: dense / very-long-sequence datasets.
-     *   - KOSARAK, ONLINE_RETAIL_II_BEST, E_SHOP: sparse / short-sequence datasets.
-     * "paper" dataset (4 chuỗi) chỉ dùng để smoke-test trong TEST mode.
+     * Datasets to run - PRODUCTION SET.
+     *   - SIGN, LEVIATHAN, FIFA: dense, long sequences.
+     *   - BMS1, KOSARAK, TAFENG: sparse or short sequences.
+     *   - C8T1S5I8N5K: the only one with more than one item per event.
+     * The "paper" dataset (4 sequences) is for the TEST-mode smoke test only.
      *
-     * Su mỗi dataset theo Table 4 + Mục 4.6.3 (KB3 sweep S_u ∈ {0.05, 0.1, 0.2, 0.5}%).
-     * Heap: với LEVIATHAN/SIGN dùng VM options "-Xmx8g" trở lên.
-     *
-     * Bật/tắt từng dataset theo nhu cầu (commit-out với "//") - không cần xoá.
+     * Heap: LEVIATHAN and SIGN need -Xmx8g or more.
      */
     /**
      * Every database of the pinned release, with the thresholds each one is measured at.
@@ -359,38 +360,46 @@ public class AutomatedExperimentRunner {
             new DatasetConfig("BMS1",      0.01442, new double[]{0.01421, 0.01442, 0.01575, 0.01771},
                     true,  "20 18 16 14"),
 
-            // Not calibrated yet: too expensive for the development machine, so the search
-            // runs on the measurement machine. The values below are the ones inherited from
-            // the previous databases and are known to be wrong for these; they are kept only
-            // so the entry is complete. runSingle refuses to measure an uncalibrated
-            // database unless -Duncalibrated=true.
-            new DatasetConfig("FIFA",      0.05,  new double[]{0.045, 0.050, 0.055, 0.060},
-                    false, "inherited, not measured on this release"),
-            new DatasetConfig("KOSARAK",   0.03,  new double[]{0.025, 0.030, 0.040, 0.050},
-                    false, "inherited, not measured on this release"),
+            new DatasetConfig("FIFA",      0.059637,
+                    new double[]{0.056234, 0.059637, 0.067073, 0.076000},
+                    true,  "40 17 5 1"),
 
-            // Added by the pinned release. These are the only databases here that reach
-            // within-event extension (C8T1S5I8N5K at 7.97 items per event,
-            // ONLINE_RETAIL_II_ALL at 22.78); the other seven hold exactly one item per
-            // event and exercise across-event extension alone. ONLINE_RETAIL_II_QTY is the
-            // only one whose internal utility is measured rather than generated, which is
-            // what a reviewer asking about synthetic utilities actually wants to see.
+            // The submitted counts {12, 6, 5, 5} are unusable on this release: 6 and 5 both
+            // land at 0.030, so three levels share one threshold and the sweep shows two
+            // operating points wearing four labels. Re-chosen for the widest spread the
+            // database allows; 0.019 already exceeds three billion candidates, so twelve
+            // patterns is the ceiling rather than a preference.
+            new DatasetConfig("KOSARAK",   0.025,
+                    new double[]{0.020, 0.025, 0.028, 0.030},
+                    true,  "12 9 7 5; re-chosen, the submitted ladder collapses to two "
+                         + "distinct thresholds on this release"),
+
+            // Added by the pinned release. The one database here that reaches within-event
+            // extension, at 7.97 items per event; the other seven hold exactly one item per
+            // event and exercise across-event extension alone.
             new DatasetConfig("C8T1S5I8N5K",          0.00152,
                     new double[]{0.00149, 0.00152, 0.00155, 0.00158},
                     true,  "313 153 79 38; note how narrow the band is, six percent of "
                          + "threshold separates 313 patterns from 38"),
-            // Calibration found no usable operating point within the budgets available on
-            // the development machine: every threshold that finished returned no patterns,
-            // and every threshold low enough to return some was abandoned. Sequences here
-            // are long, averaging 122 and 140 items against 2 to 52 elsewhere, so the cliff
-            // between nothing and an explosion is steep. Retry on the measurement machine
-            // with wider budgets before concluding the databases are unusable.
-            new DatasetConfig("ONLINE_RETAIL_II_ALL", 0.02, new double[]{0.01, 0.02, 0.03, 0.04},
-                    false, "no usable threshold found within budget; retry with "
-                         + "--budget-sec 600 --level-budget-sec 3600"),
-            new DatasetConfig("ONLINE_RETAIL_II_QTY", 0.02, new double[]{0.01, 0.02, 0.03, 0.04},
-                    false, "no usable threshold found within budget; retry with "
-                         + "--budget-sec 600 --level-budget-sec 3600")
+
+            // The only database whose utilities are measured on both sides: quantities from
+            // Ta-Feng's AMOUNT, profits from SALES_PRICE / AMOUNT. It is also the one a
+            // compared algorithm already measured on, so including it is not a dataset
+            // chosen to suit this work. Every probe in the sweep finishes in under a second.
+            new DatasetConfig("TAFENG",               0.0035,
+                    new double[]{0.0029, 0.0035, 0.0045, 0.0050},
+                    true,  "10 6 5 4; ten is the ceiling, 0.0028 exceeds the budget")
+
+            // ONLINE_RETAIL_II_ALL and ONLINE_RETAIL_II_QTY were measured and dropped, not
+            // forgotten. QTY gives each invoice line its own event, so its sequences average
+            // 139.66 events against 2.5 to 36 elsewhere: every threshold that completes
+            // returns nothing and every threshold low enough to return a pattern exceeds
+            // three billion candidates, with the two bracketing 0.15 and 0.16. Rebuilding it
+            // per customer-month cut that to 32.28 events and made the last computable
+            // threshold six hundred times cheaper, and it still returned nothing. ALL carries
+            // generated utilities like seven of the nine and its within-event extension is
+            // already covered by C8T1S5I8N5K, so it brought nothing the suite lacked. Both
+            // stay in the dataset release; they are simply not measured here.
     );
 
     /** Dataset rút gọn cho smoke-test (paper = 4 chuỗi, < 1s). */

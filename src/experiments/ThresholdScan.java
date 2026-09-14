@@ -62,18 +62,23 @@ public final class ThresholdScan {
             {"FIFA",      new int[]{41, 18, 5, 1}},
             {"BIBLE",     new int[]{343, 177, 103, 56}},
             {"BMS1",      new int[]{23, 20, 17, 15}},
-            {"KOSARAK",   new int[]{12, 6, 5, 5}},
+            // Re-chosen rather than inherited. The submitted counts {12, 6, 5, 5} collapse
+            // on this release: 6 and 5 both land at 0.030, so three of the four levels share
+            // one threshold and the sweep has two operating points wearing four labels. The
+            // counts below were measured on D_init and are the widest spread the database
+            // allows - 0.019 already exceeds three billion candidates, so twelve is the
+            // ceiling.
+            {"KOSARAK",   new int[]{12, 9, 7, 5}},
 
-            // The three databases added by the pinned release have no submitted counts to
-            // inherit, so their ladder is chosen rather than reproduced: four levels inside
-            // the range the other databases occupy, which is enough to see a trend without
-            // the highest level collapsing to a handful of patterns. Adjust once measured.
-            // These are also the only databases that reach within-event extension
-            // (C8T1S5I8N5K, ONLINE_RETAIL_II_ALL) or carry measured rather than generated
-            // quantities (ONLINE_RETAIL_II_QTY).
+            // Added by the pinned release with no submitted counts to inherit, so the ladder
+            // is chosen rather than reproduced. C8T1S5I8N5K is the one database here that
+            // reaches within-event extension.
             {"C8T1S5I8N5K",          new int[]{300, 150, 80, 40}},
-            {"ONLINE_RETAIL_II_ALL", new int[]{300, 150, 80, 40}},
-            {"ONLINE_RETAIL_II_QTY", new int[]{300, 150, 80, 40}},
+
+            // Ta-Feng is the only database whose utilities are measured on both sides:
+            // quantities from AMOUNT, profits from SALES_PRICE / AMOUNT. Ten is the ceiling,
+            // 0.0029 yields ten patterns in under a second and 0.0028 exceeds the budget.
+            {"TAFENG",               new int[]{10, 6, 5, 4}},
     };
 
     /** Where the search starts: the default threshold of the submitted experiments. */
@@ -84,11 +89,10 @@ public final class ThresholdScan {
             case "FIFA":      return 0.050;
             case "BIBLE":     return 0.025;
             case "BMS1":      return 0.014;
-            case "KOSARAK":   return 0.030;
-            // No inherited default for these; start in the middle of the observed range.
+            case "KOSARAK":   return 0.025;
+            // No inherited default for these; start in the middle of the measured range.
             case "C8T1S5I8N5K":          return 0.02;
-            case "ONLINE_RETAIL_II_ALL": return 0.02;
-            case "ONLINE_RETAIL_II_QTY": return 0.02;
+            case "TAFENG":               return 0.004;
             default:          return 0.02;
         }
     }
@@ -145,7 +149,7 @@ public final class ThresholdScan {
                     + "[--full] [--budget-sec N] [--level-budget-sec N] "
                     + "[--total-budget-sec N] [--max-candidates N] [--out DIR]");
             System.out.println("databases: SIGN LEVIATHAN FIFA BIBLE BMS1 KOSARAK "
-                    + "C8T1S5I8N5K ONLINE_RETAIL_II_ALL ONLINE_RETAIL_II_QTY");
+                    + "C8T1S5I8N5K TAFENG");
             return;
         }
         String target = args[0];
@@ -290,7 +294,13 @@ public final class ThresholdScan {
             }
 
             found[i] = r;
-            if (r.ok()) {
+            // Only a level that actually measured a threshold can bound the next one.
+            // ok() is merely "a probe finished", and both no-patterns-within-budget and
+            // unreachable-within-budget deliberately set uut to zero to say "no usable
+            // threshold". Carrying that down as the upper bound makes every level below
+            // probe at threshold zero, which explodes, and the run reports them unreachable
+            // after one or two probes while nothing was ever measured.
+            if (r.ok() && r.uut > 0) {
                 hi = r.uut;                   // a lower level needs a lower threshold
                 seed = r.uut;                 // and starts from here
             }
@@ -437,7 +447,14 @@ public final class ThresholdScan {
             probes++; ms += q.ms;
             best.hitBudget |= q.abandoned;
             note(best, mid, q, target);
-            if (!q.abandoned && Math.abs(q.patterns - target) <= Math.max(1, target * 0.10)) break;
+            // A probe returning nothing is never on target when one pattern was asked for.
+            // The band is max(1, target/10), so for target 1 it spans [0, 2] and an empty
+            // probe satisfies it; the search then stops at the first threshold high enough
+            // to return nothing, and the guard below throws that same result away as
+            // useless. Accepting only non-empty probes keeps the bisection going into the
+            // interval that actually holds the answer.
+            if (!q.abandoned && q.patterns > 0
+                    && Math.abs(q.patterns - target) <= Math.max(1, target * 0.10)) break;
             if (q.abandoned || q.patterns > target) lo = mid; else hi = mid;
         }
 

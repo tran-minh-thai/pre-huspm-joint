@@ -14,6 +14,11 @@
       .\fetch-datasets.ps1 -Release v1.1.1-seed42-lognormal  a different one
       .\fetch-datasets.ps1 -Force                            re-download
       .\fetch-datasets.ps1 -VerifyOnly                       check what is there
+
+  TAFENG is not part of the release and is not downloaded. Ta-Feng is redistributed
+  under terms this project does not rely on, so the database is built locally from the
+  raw file and pinned by checksum instead; see tafeng\ and the README. This script
+  reports whether it is present and correct, and -VerifyOnly fails if it is not.
 #>
 
 [CmdletBinding()]
@@ -69,15 +74,42 @@ function Test-Datasets {
     return @{ missing = $missing; wrong = $wrong; total = $expected.Count }
 }
 
+# TAFENG is built locally rather than downloaded, so its checksums live in this
+# repository rather than in the release manifest: the study that consumes the data is
+# what pins its version. Returns $true when both files are present and correct.
+function Test-Tafeng {
+    $sums = Join-Path $PSScriptRoot 'tafeng/TAFENG.sha256'
+    if (-not (Test-Path $sums)) { return $true }        # no recipe here, nothing claimed
+    $bad = @()
+    foreach ($line in Get-Content $sums) {
+        if ($line -notmatch '^\s*([0-9a-fA-F]{64})\s+(\S.*)$') { continue }
+        $name = $Matches[2].Trim(); $want = $Matches[1].ToLower()
+        $path = Join-Path $Dir $name
+        if (-not (Test-Path $path)) { $bad += "$name missing"; continue }
+        if ((Get-FileHash $path -Algorithm SHA256).Hash.ToLower() -ne $want) {
+            $bad += "$name does not match"
+        }
+    }
+    if ($bad.Count -eq 0) { Write-Host '==> TAFENG present and verified'; return $true }
+    Write-Host "==> TAFENG not ready: $($bad -join ', ')"
+    Write-Host '    Ta-Feng is not redistributed here. Get ta_feng_all_months_merged.csv'
+    Write-Host '    (Kaggle: chiranjivdas09/ta-feng-grocery-dataset), then build it:'
+    Write-Host "        python tafeng/build_tafeng.py --zip <archive.zip> --out-dir $Dir --name TAFENG"
+    Write-Host '    The build is deterministic; tafeng/TAFENG.sha256 pins the result.'
+    return $false
+}
+
 $state = Test-Datasets
 if (-not $Force -and -not $VerifyOnly -and $state.missing -eq 0 -and $state.wrong -eq 0) {
     Write-Host "==> $($state.total) files already present and verified; nothing to do"
+    if (-not (Test-Tafeng)) { exit 1 }
     exit 0
 }
 if ($VerifyOnly) {
     Write-Host ("==> {0} files: {1} verified, {2} missing, {3} corrupt" -f
                 $state.total, ($state.total - $state.missing - $state.wrong), $state.missing, $state.wrong)
-    if ($state.missing -gt 0 -or $state.wrong -gt 0) { exit 1 }
+    $tafengOk = Test-Tafeng
+    if ($state.missing -gt 0 -or $state.wrong -gt 0 -or -not $tafengOk) { exit 1 }
     exit 0
 }
 
@@ -109,4 +141,5 @@ if ($state.missing -gt 0 -or $state.wrong -gt 0) {
           "Do not measure on these files."
 }
 Write-Host ("==> {0} files verified against the manifest of {1}" -f $state.total, $Release)
+Test-Tafeng | Out-Null
 Write-Host "==> record this release tag alongside any results measured on it"
