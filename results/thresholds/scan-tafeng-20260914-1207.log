@@ -1,0 +1,10 @@
+budgets: 3,000,000,000 candidates, 900 s per probe, 2700 s per level
+
+=== TAFENG | D_init | |D|=30,332 | TSU=55,680,127 ===
+   level     target         uut     patterns  probes        ms  status
+ highest          4     0.00506            4       3      1350  ok
+    high          5     0.00400            5       3       684  ok
+ default          6     0.00356            6       4    901088  ok
+     low         10     0.00316            9       4   1800945  ok
+
+-> D:\pre-huspm-adaptive\results\thresholds\thresholds-admin-pc.csv

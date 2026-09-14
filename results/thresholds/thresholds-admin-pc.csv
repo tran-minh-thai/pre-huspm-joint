@@ -28,3 +28,7 @@ FIFA,D_init,grid,,0.075000,1,1,55724,ok
 FIFA,D_init,grid,,0.077000,1,1,51025,ok
 FIFA,D_init,grid,,0.079000,0,1,47436,ok
 FIFA,D_init,grid,,0.076000,1,1,54871,ok
+TAFENG,D_init,low,10,0.003162,9,4,1800945,ok
+TAFENG,D_init,default,6,0.003557,6,4,901088,ok
+TAFENG,D_init,high,5,0.004000,5,3,684,ok
+TAFENG,D_init,highest,4,0.005060,4,3,1350,ok
