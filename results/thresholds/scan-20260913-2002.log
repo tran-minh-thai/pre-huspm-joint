@@ -1,0 +1,50 @@
+==== KOSARAK  bat dau 20:02:06 ====
+budgets: 3,000,000,000 candidates, 600 s per probe, 1800 s per level, 7200 s per database
+
+=== KOSARAK | D_init | |D|=495,001 | TSU=193,542,126 ===
+   level     target         uut     patterns  probes        ms  status
+ highest          5     0.03000            5       6    586457  ok
+    high          5     0.03000            5       6    564149  ok
+ default          6     0.03000            5       5    544780  ok
+     low         12     0.02109           12       4    624523  ok
+
+-> D:\pre-huspm-adaptive\results\thresholds\thresholds-admin-pc.csv
+==== FIFA  bat dau 20:40:57 ====
+budgets: 3,000,000,000 candidates, 900 s per probe, 2700 s per level, 10800 s per database
+
+=== FIFA | D_init | |D|=10,225 | TSU=21,636,666 ===
+   level     target         uut     patterns  probes        ms  status
+ highest          1     0.00000            0       4    422609  no-patterns-within-budget
+    high          5  nothing measured; retrying with 30,000,000,000 candidates, 2700 s per probe
+    high          5     0.00000            -       3   4500028  unreachable-within-budget
+ default         18  nothing measured; retrying with 30,000,000,000 candidates, 2700 s per probe
+ default         18     0.00000            -       3   4500019  unreachable-within-budget
+     low         41  nothing measured; retrying with 30,000,000,000 candidates, 2700 s per probe
+     low         41     0.00000            -       3   4500091  unreachable-within-budget
+
+-> D:\pre-huspm-adaptive\results\thresholds\thresholds-admin-pc.csv
+==== ONLINE_RETAIL_II_QTY  bat dau 23:48:01 ====
+budgets: 3,000,000,000 candidates, 900 s per probe, 1800 s per level, 7200 s per database
+
+=== ONLINE_RETAIL_II_QTY | D_init | |D|=2,883 | TSU=10,757,136 ===
+   level     target         uut     patterns  probes        ms  status
+ highest         40  target missed and probes were cut short; retrying with 30,000,000,000 candidates, 2700 s per probe
+ highest         40     0.00000            0      19  11370093  no-patterns-within-budget
+    high         80  not-attempted-database-budget-spent
+ default        150  not-attempted-database-budget-spent
+     low        300  not-attempted-database-budget-spent
+
+-> D:\pre-huspm-adaptive\results\thresholds\thresholds-admin-pc.csv
+==== ONLINE_RETAIL_II_ALL  bat dau 02:19:20 ====
+budgets: 3,000,000,000 candidates, 900 s per probe, 1800 s per level, 7200 s per database
+
+=== ONLINE_RETAIL_II_ALL | D_init | |D|=2,191 | TSU=15,097,163 ===
+   level     target         uut     patterns  probes        ms  status
+ highest         40  target missed and probes were cut short; retrying with 30,000,000,000 candidates, 2700 s per probe
+ highest         40     0.00000            0      13  11616779  no-patterns-within-budget
+    high         80  not-attempted-database-budget-spent
+ default        150  not-attempted-database-budget-spent
+     low        300  not-attempted-database-budget-spent
+
+-> D:\pre-huspm-adaptive\results\thresholds\thresholds-admin-pc.csv
+==== xong 04:58:30 ====

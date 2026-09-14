@@ -1,0 +1,21 @@
+Coarse grid on FIFA D_init, run before the per-level calibration to locate the
+useful band. Written by experiments.ThresholdScan --grid. The two runs below were
+stopped once the band was bracketed, so the last few listed thresholds have no row.
+
+---- pass 1: downward from 0.05 (wrong direction, stopped after one point) ----
+budgets: 3,000,000,000 candidates, 300 s per probe, 900 s per level
+
+=== FIFA | D_init | |D|=10,225 | TSU=21,636,666 ===
+       uut     patterns         ms  status
+   0.05000          143     251813  ok
+
+---- pass 2: upward from 0.05 (the useful direction) ----
+budgets: 3,000,000,000 candidates, 600 s per probe, 900 s per level
+
+=== FIFA | D_init | |D|=10,225 | TSU=21,636,666 ===
+       uut     patterns         ms  status
+   0.06000           16     135104  ok
+   0.07000            3      70876  ok
+   0.08000            0      44033  ok
+   0.09000            0      28807  ok
+   0.10000            0      19985  ok

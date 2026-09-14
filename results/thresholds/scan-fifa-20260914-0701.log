@@ -1,0 +1,50 @@
+==== FIFA per-level calibration  bat dau 07:01:34 ====
+grid da do truoc do (D_init): 0.05->143  0.06->16  0.07->3  0.08->0  0.09->0
+moi muc chay rieng mot tien trinh: seed tro lai 0.05, hi tro lai 0.95
+
+---- target 41 patterns  07:01:34 ----
+budgets: 3,000,000,000 candidates, 900 s per probe, 5400 s per level
+
+=== FIFA | D_init | |D|=10,225 | TSU=21,636,666 ===
+   level     target         uut     patterns  probes        ms  status
+  target         41     0.05623           40       4    523228  ok
+
+-> D:\pre-huspm-adaptive\results\thresholds\thresholds-admin-pc.csv
+---- target 18 patterns  07:10:18 ----
+budgets: 3,000,000,000 candidates, 900 s per probe, 5400 s per level
+
+=== FIFA | D_init | |D|=10,225 | TSU=21,636,666 ===
+   level     target         uut     patterns  probes        ms  status
+  target         18     0.05964           17       5    664051  ok
+
+-> D:\pre-huspm-adaptive\results\thresholds\thresholds-admin-pc.csv
+---- target 5 patterns  07:21:24 ----
+budgets: 3,000,000,000 candidates, 900 s per probe, 5400 s per level
+
+=== FIFA | D_init | |D|=10,225 | TSU=21,636,666 ===
+   level     target         uut     patterns  probes        ms  status
+  target          5     0.06707            5       5    509575  ok
+
+-> D:\pre-huspm-adaptive\results\thresholds\thresholds-admin-pc.csv
+
+---- highest (target 1): luoi min 0.071..0.079  07:29:54 ----
+budgets: 3,000,000,000 candidates, 900 s per probe, 900 s per level
+
+=== FIFA | D_init | |D|=10,225 | TSU=21,636,666 ===
+       uut     patterns         ms  status
+   0.07100            2      70562  ok
+   0.07300            2      61692  ok
+   0.07500            1      55724  ok
+   0.07700            1      51025  ok
+   0.07900            0      47436  ok
+
+-> D:\pre-huspm-adaptive\results\thresholds\thresholds-admin-pc.csv
+
+==== xong 07:34:42 ====
+budgets: 3,000,000,000 candidates, 900 s per probe, 900 s per level
+
+=== FIFA | D_init | |D|=10,225 | TSU=21,636,666 ===
+       uut     patterns         ms  status
+   0.07600            1      54871  ok
+
+-> D:\pre-huspm-adaptive\results\thresholds\thresholds-admin-pc.csv
