@@ -1,0 +1,19 @@
+Threshold curve for KOSARAK on D_init, measured 2026-09-14 on ADMIN-PC with
+experiments.ThresholdScan --grid. The submitted ladder {12, 6, 5, 5} is unusable on
+this release: 6 and 5 both land at 0.030, so three of its four levels share one
+threshold. These probes located the range the database actually separates over, and
+the sweep 0.020 0.025 0.028 0.030 was chosen from them for 12 9 7 5 patterns.
+
+0.019 is the wall, and it is the candidate cap rather than the clock, so it falls in
+the same place on any machine. Twelve patterns is therefore a ceiling, not a choice.
+
+       uut     patterns         ms  status
+   0.02800            7      41255  ok
+   0.02700            8      45341  ok
+   0.02600            8      61913  ok
+   0.02500            9      83591  ok
+   0.02300           10     138946  ok
+   0.02200           10     231205  ok
+   0.02000           12     221690  ok
+   0.01900      >budget     382814  abandoned:patternbudgetexceeded
+   0.01500      >budget     375249  abandoned:patternbudgetexceeded
