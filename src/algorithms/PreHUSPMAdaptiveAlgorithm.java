@@ -395,6 +395,15 @@ public class PreHUSPMAdaptiveAlgorithm {
         public double repetition = 0;
         /** So lan phai nang san vi mot luot rescan vuot tran ung vien. */
         public int rescanRetries = 0;
+        /**
+         * iauMax DUNG TAI THOI DIEM quyet dinh rescan, chup truoc khi resetIau() xoa no.
+         *
+         * Doc thang adp.iauMax sau mot lo co rescan luon cho 0: khoi rescan goi resetIau()
+         * ngay sau phep so sanh, nen dai luong quyet dinh bien mat truoc khi ai kip ghi lai.
+         * Cot iau_max vi the da nam trong CSV tu lau ma moi hang deu la 0.0, con sft_val -
+         * ve KIA cua phep so sanh - thi co ghi. Quyet dinh rescan do do khong hau kiem duoc.
+         */
+        public double iauMaxAtDecision = 0;
 
         /** Tang 1: chon san khoi dau theo do lap. -Dadapt.densityFloor=true */
         public boolean useDensityFloor = Boolean.getBoolean("adapt.densityFloor");
@@ -404,6 +413,26 @@ public class PreHUSPMAdaptiveAlgorithm {
          * -Dadapt.rescanBudget=3000000000
          */
         public long rescanCandidateBudget = Long.getLong("adapt.rescanBudget", 0L);
+
+        /**
+         * Luoi an toan DONG HO cho mot luot khai thac. 0 = tat.
+         *
+         * Tran dem la gioi han chinh vi no tat dinh: cung mot luot bi cat o cung cho tren
+         * moi may. Nhung no chi bat duoc chi phi ti le voi SO ung vien. Do tren BMS1 INC#4:
+         * 798 trieu ung vien trong hon 35 phut, tuc 0,38 trieu moi giay, trong khi INC#3 cua
+         * chinh no chay 28,2 trieu moi giay - cham hon 74 lan tren MOI ung vien. Nut that o
+         * do khong phai sinh ung vien, nen mot tran tinh bang ung vien khong the bat duoc.
+         *
+         * ThresholdScan da ghi san bai hoc nay trong chu thich cua no; co che tran dem duoc
+         * sao chep sang day ma bo mat luoi an toan di kem.
+         *
+         * -Dadapt.rescanMillis=600000
+         */
+        public long rescanMillisBudget = Long.getLong("adapt.rescanMillis", 0L);
+        /** Han chot tuyet doi cua luot khai thac hien tai; 0 = khong co. */
+        private long mineDeadlineNanos = 0;
+        /** Dem thua de khong goi nanoTime() tren moi ung vien. */
+        private int deadlineTick = 0;
 
         private static final double SL_RATIO_CAP = 0.98;   // tren nua thi dai tien-lon coi nhu khong con
         private static final double SL_RATIO_STEP = 0.05;
@@ -922,6 +951,7 @@ public class PreHUSPMAdaptiveAlgorithm {
             }
             // C5 ablation: useAdaptiveRescan=false -> rescan MOI LO (bo quyet dinh thich ung)
             this.cubTriggeredRescan = useAdaptiveRescan ? (triggerQuantity > safetyBoundF) : true;
+            this.iauMaxAtDecision = triggerQuantity;   // chup TRUOC resetIau() o buoc ke tiep
 
             // --- Buoc 3: neu rescan thi reset bo dem TRUOC khi tinh Delta ---
             if (cubTriggeredRescan) {
@@ -1617,6 +1647,13 @@ public class PreHUSPMAdaptiveAlgorithm {
             candidateCount += (scratchUsedICount + scratchUsedSCount);
             // Circuit-breaker (dời từ entry): ngắt nhánh runaway khi vượt ngân sách ứng viên.
             if (candidateCount > maxCandidatesBudget) throw new PatternBudgetExceeded(candidateCount);
+            // Luoi an toan dong ho. Kiem thua thot vi goi nanoTime() tren moi ung vien se tu
+            // no thanh chi phi dang ke; 4096 ung vien mot lan la du day de bat mot luot chay
+            // hang chuc phut ma bo dem khong thay gi.
+            if (mineDeadlineNanos != 0 && (++deadlineTick & 0xFFF) == 0
+                    && System.nanoTime() > mineDeadlineNanos) {
+                throw new PatternBudgetExceeded(candidateCount);
+            }
 
             // FILTER bằng CẬN GIÁ TRỊ PEU GỘP (đóng góp C1): áp cận TRƯỚC khi materialize con
             // ⇒ chỉ con sống sót mới được hiện thực hoá (explored ≪ candidate). prunedValueBound
@@ -1943,11 +1980,23 @@ public class PreHUSPMAdaptiveAlgorithm {
          * kha thi nen bao duoc dieu do; chay den khi OOM thi nguoi doc khong biet vi sao.
          */
         private void mineWithBudget(List<Sequence> db, double uut, double tsuRef) {
-            if (rescanCandidateBudget <= 0) { mineAndClassify(db, uut, lutDynValue); return; }
+            if (rescanCandidateBudget <= 0 && rescanMillisBudget <= 0) {
+                mineAndClassify(db, uut, lutDynValue); return;
+            }
+            long candBudget = rescanCandidateBudget > 0 ? rescanCandidateBudget : Long.MAX_VALUE;
             long saved = maxCandidatesBudget;
             try {
                 for (int attempt = 0; ; attempt++) {
-                    maxCandidatesBudget = rescanCandidateBudget;
+                    // Tran GIAM NUA moi lan thu lai. Mot lan that bai la cong bo di hoan toan
+                    // - khai thac bat dau lai tu dau tren cung du lieu - nen tran co dinh bien
+                    // ngan sach thanh boi so cua so lan thu. Do tren BMS1 INC#4: hai lan thu
+                    // voi tran co dinh ba ty da dot 6,8 ty ung vien TRUOC khi lan co co hoi
+                    // bat dau, nhieu hon ca luot khong bat co che nay. Giam nua thi tong phi
+                    // khong bao gio vuot hai lan tran ban dau.
+                    maxCandidatesBudget = candBudget == Long.MAX_VALUE
+                            ? Long.MAX_VALUE : Math.max(1L, candBudget >> attempt);
+                    mineDeadlineNanos = (rescanMillisBudget > 0)
+                            ? System.nanoTime() + (rescanMillisBudget >> attempt) * 1_000_000L : 0;
                     try {
                         mineAndClassify(db, uut, lutDynValue);
                         return;
@@ -1961,7 +2010,7 @@ public class PreHUSPMAdaptiveAlgorithm {
                         candidateCount = 0;
                     }
                 }
-            } finally { maxCandidatesBudget = saved; }
+            } finally { maxCandidatesBudget = saved; mineDeadlineNanos = 0; }
         }
 
         private void mineAndClassify(List<Sequence> db, double uut, double lut) {

@@ -1330,7 +1330,7 @@ public class AutomatedExperimentRunner {
         // cot nay ton tai ma khong ai dien: moi hang tu truoc den nay deu la 0.0, nen quyet
         // dinh rescan khong hau kiem duoc tu ho so. sft_val co ghi, nhung no la ve kia cua
         // phep so sanh chu khong phai dai luong duoc so.
-        m.iauMax        = adp.iauMax;
+        m.iauMax        = adp.iauMaxAtDecision;   // gia tri TAI diem quyet dinh, truoc resetIau()
         m.iauTightness  = adp.iauTightness;
         m.repetition    = adp.repetition;
         m.slMinEff      = adp.slMinRatioEff;
