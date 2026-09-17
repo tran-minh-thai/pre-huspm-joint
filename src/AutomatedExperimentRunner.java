@@ -1326,6 +1326,15 @@ public class AutomatedExperimentRunner {
         m.blocksSkipped = adp.numBlocksSkipped; // C4
         m.sigma2        = adp.sigmaDSquared;    // C2 (phương sai lô - thô, độc lập)
         m.rho           = adp.rhoD;             // C2 (độ lệch - thô, độc lập)
+        // iau_max la dai luong QUYET DINH rescan (triggerQuantity > safetyBoundF), nhung
+        // cot nay ton tai ma khong ai dien: moi hang tu truoc den nay deu la 0.0, nen quyet
+        // dinh rescan khong hau kiem duoc tu ho so. sft_val co ghi, nhung no la ve kia cua
+        // phep so sanh chu khong phai dai luong duoc so.
+        m.iauMax        = adp.iauMax;
+        m.iauTightness  = adp.iauTightness;
+        m.repetition    = adp.repetition;
+        m.slMinEff      = adp.slMinRatioEff;
+        m.rescanRetries = adp.rescanRetries;
         // δ_D KHÔNG lưu (dẫn xuất = uut_val - lut_dyn)
     }
 

@@ -120,6 +120,15 @@ public class ExperimentMetrics {
     public double iauMax;
     public double iauTightness;
 
+    // Thich nghi theo CONG thay vi theo loi ich. repetition la do lap cua CSDL
+    // (so lan xuat hien tren mot item phan biet), dai luong cau truc duy nhat tach duoc
+    // cac bo re khoi cac bo dat tren tam bo cua nghien cuu nay. sl_min_eff cho biet san
+    // da bi nang len bao nhieu so voi ti le cau hinh, va rescan_retries dem so lan phai
+    // nang - bang 0 nghia la co che khong phai can thiep.
+    public double repetition;
+    public double slMinEff;
+    public int rescanRetries;
+
     public String toCsvRow() {
         StringJoiner sj = new StringJoiner(",");
         sj.add(runId).add(timestamp).add(algorithm).add(dataset).add(String.valueOf(iteration));
@@ -157,7 +166,9 @@ public class ExperimentMetrics {
                 .add(String.valueOf(blockSize))
                 .add(String.valueOf(kappa)).add(String.valueOf(delta0))
                 .add(triggerRule)
-                .add(String.valueOf(iauMax)).add(String.valueOf(iauTightness));
+                .add(String.valueOf(iauMax)).add(String.valueOf(iauTightness))
+                .add(String.valueOf(repetition)).add(String.valueOf(slMinEff))
+                .add(String.valueOf(rescanRetries));
         return sj.toString();
     }
 
@@ -171,6 +182,7 @@ public class ExperimentMetrics {
                 "prelarge_count,uut_val,sft_val,rescan_count,blocks_read,blocks_skipped," +
                 "sigma2,rho," +
                 "mem_mode,mem_live_mb,mem_retained_mb,gc_forced,wall_ms_perturbed,allocated_mb," +
-                "seed,repeat,block_size,kappa,delta0,trigger_rule,iau_max,iau_tightness";
+                "seed,repeat,block_size,kappa,delta0,trigger_rule,iau_max,iau_tightness," +
+                "repetition,sl_min_eff,rescan_retries";
     }
 }

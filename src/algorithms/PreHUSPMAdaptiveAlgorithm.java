@@ -372,6 +372,43 @@ public class PreHUSPMAdaptiveAlgorithm {
          */
         public long maxCandidatesBudget = Long.MAX_VALUE;
 
+        // ---- Thich nghi theo CONG, khong theo loi ich (tuy chon, mac dinh TAT) ----
+        //
+        // Moi tin hieu dieu khien khac o day la mot dai luong LOI ICH: cubValue, swuMax,
+        // iauMax. Chung tra loi "da co bao nhieu loi ich di vao", dung cho tinh dung dan.
+        // Khong cai nao tra loi "luot khai thac toi se ton bao nhieu cong", ma do moi la
+        // thu no ra. Do duoc tren tam bo: BMS1 co loi ich nho nhat va chuoi ngan nhat, ma
+        // mot lan rescan cua no vuot ba ty ung vien.
+        //
+        // Hai co che duoi day dong khoang trong do. Ca hai deu KHONG dung toi luat kich
+        // hoat rescan lan can duoi LUT_dyn, nen khong no nghia vu chung minh nao: nang san
+        // Sl_min chi thu hep dai tien-lon, va Theorem 3-4 dung voi moi ti le trong (0,1).
+        //
+        // Mac dinh tat de moi ket qua cu van tai lap duoc; bat bang co de do duoc ca hai
+        // chieu, dung kieu cac ablation khac trong lop nay.
+
+        /** Ti le san da cau hinh, giu nguyen de biet da lech bao nhieu. */
+        public double slMinRatioCfg;
+        /** Ti le san DANG dung. Chi tang, khong bao gio giam. */
+        public double slMinRatioEff;
+        /** Do lap cua CSDL: so lan xuat hien tren mot item phan biet. 0 khi chua do. */
+        public double repetition = 0;
+        /** So lan phai nang san vi mot luot rescan vuot tran ung vien. */
+        public int rescanRetries = 0;
+
+        /** Tang 1: chon san khoi dau theo do lap. -Dadapt.densityFloor=true */
+        public boolean useDensityFloor = Boolean.getBoolean("adapt.densityFloor");
+        /**
+         * Tang 2: tran ung vien cho MOT luot khai thac khi rescan. 0 = tat.
+         * Vuot tran thi nang san roi thu lai, thay vi chay den khi het bo nho hoac het gio.
+         * -Dadapt.rescanBudget=3000000000
+         */
+        public long rescanCandidateBudget = Long.getLong("adapt.rescanBudget", 0L);
+
+        private static final double SL_RATIO_CAP = 0.98;   // tren nua thi dai tien-lon coi nhu khong con
+        private static final double SL_RATIO_STEP = 0.05;
+        private static final int    SL_MAX_RETRIES = 6;
+
         /**
          * Nhánh AN TOÀN (không rescan) có mine LẠI mỗi lô (mineBatchWithIUB trên deltaD)
          * hay KHÔNG. Mặc định FALSE = kiến trúc Pre-HUSPM đúng chuẩn pre-large:
@@ -771,6 +808,7 @@ public class PreHUSPMAdaptiveAlgorithm {
 
         public PreHUSPMAdaptiveAlgo(double Su, double kappa, double delta0, double SlMinRatio, AblationMode mode, boolean writeToFile) {
             this.Su = Su; this.kappa = kappa; this.delta0 = delta0; this.Sl_min = SlMinRatio * Su;
+            this.slMinRatioCfg = SlMinRatio; this.slMinRatioEff = SlMinRatio;
             this.mode = mode; this.writeToFile = writeToFile;
         }
 
@@ -807,6 +845,14 @@ public class PreHUSPMAdaptiveAlgorithm {
             trackerPool.warmup(POOL_WARMUP_TRACKERS);
             trackerListPool.warmup(POOL_WARMUP_TRACKER_LISTS);
 
+            // Tang 1: do do lap cua CSDL roi chon san khoi dau. Chi nang, khong ha, nen
+            // mot CSDL trong hien de van giu nguyen ti le da cau hinh.
+            this.repetition = common.Density.repetition(dInit);
+            if (useDensityFloor) {
+                double suggested = common.Density.suggestFloor(slMinRatioCfg, repetition);
+                if (suggested > slMinRatioEff) { slMinRatioEff = suggested; Sl_min = slMinRatioEff * Su; }
+            }
+
             // Tính toán LUT_dyn và SFT ban đầu
             double uut_abs = currentTotalUtility * Su;
             this.uutValue = uut_abs; // ngưỡng HUSP tuyệt đối (xuất CSV)
@@ -815,7 +861,7 @@ public class PreHUSPMAdaptiveAlgorithm {
             // và ngưỡng tiền-lớn động (lutDynValue). Cùng thứ nguyên với cubValue.
             this.sftValue = uut_abs - this.lutDynValue;
 
-            mineAndClassify(dInit, uut_abs, lutDynValue);
+            mineWithBudget(dInit, uut_abs, currentTotalUtility);
             this.tsuAtLastRescan = currentTotalUtility; // mốc TSU cho cận an toàn F
         }
 
@@ -927,7 +973,7 @@ public class PreHUSPMAdaptiveAlgorithm {
                 // Can an toan vo -> Rescan (giu pruning chat khi mine lai)
                 // Gia lap quet lai tren D_SoFar (thuc te se dung BlockIndex de nap selective)
                 largeMap.clear(); prelargeMap.clear();
-                mineAndClassify(dSoFar, uut_abs, lutDynValue);
+                mineWithBudget(dSoFar, uut_abs, newTotalUtility);
 
             } else {
                 // An toàn -> Cập nhật trực tiếp trên Lớn và Tiền Lớn (CompactPattern)
@@ -1031,7 +1077,7 @@ public class PreHUSPMAdaptiveAlgorithm {
                 largeMap.clear(); prelargeMap.clear();
                 // Loại bỏ các sequence đã xoá khỏi dbLookup để mineAndClassify không truy cập sai
                 for (Sequence s : deletedSeqs) dbRemove(s.id);
-                mineAndClassify(dAfter, uut_abs, lutDynValue);
+                mineWithBudget(dAfter, uut_abs, newTotalUtility);
             } else {
                 // Cập nhật trực tiếp: trừ utility do chuỗi bị xoá đóng góp (CompactPattern)
                 List<CompactPattern> tracked = new ArrayList<>();
@@ -1882,6 +1928,40 @@ public class PreHUSPMAdaptiveAlgorithm {
                 }
             }
             } // end else (fallback lazy)
+        }
+
+        /**
+         * Khai thac mot lan, co tran cong. Vuot tran thi nang san Sl_min roi thu lai tren
+         * cung du lieu do.
+         *
+         * Vi sao phan ung thay vi du doan: chi phi la so ung vien, va khong dai luong cau
+         * truc nao do duoc truoc khi chay du tin cay de dat mot hang so. Do lap tach duoc
+         * tam bo cua nghien cuu nay, nhung tam diem va mot nguong la co so mong. Con tran
+         * ung vien thi do dung thu can do.
+         *
+         * Het cach thi NEM ra thay vi chay khong tran. Mot bo du lieu khong co diem van hanh
+         * kha thi nen bao duoc dieu do; chay den khi OOM thi nguoi doc khong biet vi sao.
+         */
+        private void mineWithBudget(List<Sequence> db, double uut, double tsuRef) {
+            if (rescanCandidateBudget <= 0) { mineAndClassify(db, uut, lutDynValue); return; }
+            long saved = maxCandidatesBudget;
+            try {
+                for (int attempt = 0; ; attempt++) {
+                    maxCandidatesBudget = rescanCandidateBudget;
+                    try {
+                        mineAndClassify(db, uut, lutDynValue);
+                        return;
+                    } catch (PatternBudgetExceeded e) {
+                        if (slMinRatioEff >= SL_RATIO_CAP || attempt >= SL_MAX_RETRIES) throw e;
+                        slMinRatioEff = Math.min(SL_RATIO_CAP, slMinRatioEff + SL_RATIO_STEP);
+                        Sl_min = slMinRatioEff * Su;
+                        lutDynValue = Math.max(lutDynValue, tsuRef * Sl_min);
+                        rescanRetries++;
+                        largeMap.clear(); prelargeMap.clear();   // bo ket qua do dang
+                        candidateCount = 0;
+                    }
+                }
+            } finally { maxCandidatesBudget = saved; }
         }
 
         private void mineAndClassify(List<Sequence> db, double uut, double lut) {
