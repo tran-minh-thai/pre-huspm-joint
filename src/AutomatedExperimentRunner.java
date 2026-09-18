@@ -212,6 +212,8 @@ public class AutomatedExperimentRunner {
         final boolean calibrated;
         /** Pattern counts the sweep produced, or why there are none yet. */
         final String note;
+        /** Whether it can be measured on the whole database, not only on D_init. */
+        boolean fullScopeOk = true;
 
         DatasetConfig(String name, double defaultSu, double[] suSweep) {
             this(name, defaultSu, suSweep, true, "");
@@ -316,6 +318,20 @@ public class AutomatedExperimentRunner {
         return out;
     }
 
+    /**
+     * Whether a scenario that reaches beyond D_init may run on this database.
+     *
+     * Only SC1 stays on D_init. SC3 and SC4 begin on the whole database and SC2, SC5 and SC6
+     * grow to it, so a database that cannot be mined there produces a table of timeouts rather
+     * than a measurement. Skipping it says so once, at the start, instead.
+     */
+    private static boolean scopeOk(DatasetConfig ds, String scenario) {
+        if (ds.fullScopeOk || "SC1".equals(scenario)) return true;
+        System.out.println(">> skipping " + ds.name + " for " + scenario
+                + ": measurable on D_init only (" + ds.note + ").");
+        return false;
+    }
+
     private static boolean calibrationOk(DatasetConfig ds) {
         if (ds.calibrated || ALLOW_UNCALIBRATED) return true;
         System.out.println(">> skipping " + ds.name + ": thresholds not calibrated for the "
@@ -359,7 +375,9 @@ public class AutomatedExperimentRunner {
     private static List<DatasetConfig> buildProduction() {
         List<DatasetConfig> out = new ArrayList<>();
         for (common.Datasets.Entry e : common.Datasets.all()) {
-            out.add(new DatasetConfig(e.name, e.defaultUut, e.sweep, e.calibrated, e.note));
+            DatasetConfig c = new DatasetConfig(e.name, e.defaultUut, e.sweep, e.calibrated, e.note);
+            c.fullScopeOk = e.fullScopeOk;
+            out.add(c);
         }
         return List.copyOf(out);
     }
@@ -550,6 +568,7 @@ public class AutomatedExperimentRunner {
             for (DatasetConfig ds : DATASETS) {
                 if (!datasetEnabled(ds.name)) continue;
                 if (!calibrationOk(ds)) continue;
+                if (!scopeOk(ds, "SC2")) continue;
                 List<Sequence> full = DatasetLoader.loadDataset(datasetDir + ds.name + "_seq.txt",
                                                                 datasetDir + ds.name + "_eui.txt");
                 if (full.isEmpty()) continue;
@@ -591,6 +610,7 @@ public class AutomatedExperimentRunner {
             for (DatasetConfig ds : DATASETS) {
                 if (!datasetEnabled(ds.name)) continue;
                 if (!calibrationOk(ds)) continue;
+                if (!scopeOk(ds, "SC3")) continue;
                 if (!SUBSET_3.contains(ds.name)) continue;
                 List<Sequence> full = DatasetLoader.loadDataset(datasetDir + ds.name + "_seq.txt",
                                                                 datasetDir + ds.name + "_eui.txt");
@@ -623,6 +643,7 @@ public class AutomatedExperimentRunner {
             for (DatasetConfig ds : DATASETS) {
                 if (!datasetEnabled(ds.name)) continue;
                 if (!calibrationOk(ds)) continue;
+                if (!scopeOk(ds, "SC4")) continue;
                 if (!SUBSET_3.contains(ds.name)) continue;
                 List<Sequence> full = DatasetLoader.loadDataset(datasetDir + ds.name + "_seq.txt",
                                                                 datasetDir + ds.name + "_eui.txt");
@@ -695,6 +716,7 @@ public class AutomatedExperimentRunner {
             for (DatasetConfig ds : DATASETS) {
                 if (!datasetEnabled(ds.name)) continue;
                 if (!calibrationOk(ds)) continue;
+                if (!scopeOk(ds, "SC5")) continue;
                 if (!SUBSET_3.contains(ds.name)) continue;
                 List<Sequence> full = DatasetLoader.loadDataset(datasetDir + ds.name + "_seq.txt",
                                                                 datasetDir + ds.name + "_eui.txt");
@@ -815,6 +837,7 @@ public class AutomatedExperimentRunner {
             for (DatasetConfig ds : DATASETS) {
                 if (!datasetEnabled(ds.name)) continue;
                 if (!calibrationOk(ds)) continue;
+                if (!scopeOk(ds, "SC6")) continue;
                 if (!SUBSET_3.contains(ds.name)) continue;
                 List<Sequence> full = DatasetLoader.loadDataset(datasetDir + ds.name + "_seq.txt",
                                                                 datasetDir + ds.name + "_eui.txt");
@@ -957,6 +980,7 @@ public class AutomatedExperimentRunner {
             for (DatasetConfig ds : DATASETS) {
                 if (!datasetEnabled(ds.name)) continue;
                 if (!calibrationOk(ds)) continue;
+                if (!scopeOk(ds, "SC7")) continue;
                 List<Sequence> full = DatasetLoader.loadDataset(datasetDir + ds.name + "_seq.txt",
                                                                 datasetDir + ds.name + "_eui.txt");
                 if (full.isEmpty()) continue;

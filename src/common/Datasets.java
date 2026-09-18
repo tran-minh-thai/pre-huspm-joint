@@ -34,10 +34,33 @@ public final class Datasets {
         public final boolean calibrated;
         /** Pattern counts the sweep produced, or why there are none yet. */
         public final String note;
+        /**
+         * Whether this database can be measured on the WHOLE of itself, not only on D_init.
+         *
+         * SC1 is the only scenario that stays on D_init. SC3 and SC4 start on the whole
+         * database and SC2, SC5 and SC6 grow to it, so a database that cannot be mined there
+         * is measurable in SC1 alone however well it behaves on the half.
+         *
+         * BMS1 is that case and it is not a near miss. On D_init it returns 18 patterns in
+         * 3.5 s; on the whole database no threshold works at all. 0.030 exceeds three billion
+         * candidates and 0.032 returns the empty set in 1.8 s, so the region that holds
+         * patterns lies entirely behind the wall - the shape that removed ONLINE_RETAIL_II
+         * from the study. Unlike those, BMS1 is perfectly well behaved at half the data, so it
+         * keeps SC1 rather than leaving.
+         *
+         * The submitted SC3 already covers only KOSARAK, LEVIATHAN and SIGN, omitting BIBLE,
+         * BMS1 and FIFA without saying why. This makes that decision explicit and checkable.
+         */
+        public final boolean fullScopeOk;
 
         Entry(String name, double defaultUut, double[] sweep, boolean calibrated, String note) {
+            this(name, defaultUut, sweep, calibrated, note, true);
+        }
+
+        Entry(String name, double defaultUut, double[] sweep, boolean calibrated, String note,
+              boolean fullScopeOk) {
             this.name = name; this.defaultUut = defaultUut; this.sweep = sweep;
-            this.calibrated = calibrated; this.note = note;
+            this.calibrated = calibrated; this.note = note; this.fullScopeOk = fullScopeOk;
         }
     }
 
@@ -50,7 +73,7 @@ public final class Datasets {
         new Entry("BIBLE",     0.02428, new double[]{0.01976, 0.02428, 0.02982, 0.03557},
                 true,  "357 194 104 54"),
         new Entry("BMS1",      0.01442, new double[]{0.01421, 0.01442, 0.01575, 0.01771},
-                true,  "20 18 16 14"),
+                true,  "20 18 16 14; SC1 only, unmineable on the whole database", false),
 
         new Entry("FIFA",      0.059637,
                 new double[]{0.056234, 0.059637, 0.067073, 0.076000},
@@ -69,10 +92,15 @@ public final class Datasets {
         // Added by the pinned release. The one database here that reaches within-event
         // extension, at 7.97 items per event; the other seven hold exactly one item per
         // event and exercise across-event extension alone.
-        new Entry("C8T1S5I8N5K",          0.00152,
-                new double[]{0.00149, 0.00152, 0.00155, 0.00158},
-                true,  "313 153 79 38; note how narrow the band is, six percent of "
-                     + "threshold separates 313 patterns from 38"),
+        // Moved down. The old sweep matched its targets on D_init and collapsed on the whole
+        // database: 0.00152 returns 153 patterns on the half and 1 on the whole, so SC2, SC5
+        // and SC6 were comparing algorithms against an answer of one pattern. Every level here
+        // keeps at least 23% of its D_init count. The band stays narrow - six percent of
+        // threshold still separates 313 patterns from 38 - which is why the sweep spans only
+        // 2.3x rather than the 43x SIGN manages: anything above 0.00130 collapses again.
+        new Entry("C8T1S5I8N5K",          0.00120,
+                new double[]{0.00115, 0.00120, 0.00125, 0.00130},
+                true,  "6337 4894 3695 2741 on D_init; 3036 2110 1241 640 on the whole"),
 
         // The only database whose utilities are measured on both sides: quantities from
         // Ta-Feng's AMOUNT, profits from SALES_PRICE / AMOUNT. It is also the one a
