@@ -1318,7 +1318,18 @@ public class AutomatedExperimentRunner {
      * Bỏ qua nếu metric null hoặc lần chạy thất bại (runtimeMs == -1).
      */
     private static void attachAdaptive(ExperimentMetrics m, PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp) {
-        if (m == null || m.runtimeMs == -1) return;
+        if (m == null) return;
+        // Trang thai thich nghi duoc ghi KE CA tren mot luot that bai. Hang that bai la hang
+        // dang doc nhat trong ca bang, va day la ba cot noi duoc VI SAO no that bai: do lap
+        // cua CSDL, san da bi day len toi dau, va co phai nang may lan moi chiu dung. Truoc
+        // day chung bi bo qua cung voi tat ca metric khac, nen mot hang BUDGET hay OOM khong
+        // mang theo chan doan nao - dung luc no can nhat.
+        m.repetition    = adp.repetition;
+        m.slMinEff      = adp.slMinRatioEff;
+        m.rescanRetries = adp.rescanRetries;
+        // Bo dem CONG thi khong: mot luot vo giua chung de lai so lieu do dang, va mot con
+        // so do dang lot vao ho so con te hon la khong co.
+        if (m.runtimeMs == -1) return;
         m.exploredNodes = adp.exploredNodes;    // mẫu khai triển thật (sau cận PEU)
         m.prunedIub     = adp.prunedIub;        // C3
         m.rescanCount   = adp.rescanCount;      // C5
