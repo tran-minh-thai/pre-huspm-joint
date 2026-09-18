@@ -240,7 +240,11 @@ public final class ThresholdScan {
         List<Sequence> all = DatasetLoader.loadDataset(
                 Paths.get(DIR, name + "_seq.txt").toString(),
                 Paths.get(DIR, name + "_eui.txt").toString());
-        List<Sequence> db = full ? all : new ArrayList<>(all.subList(0, all.size() / 2));
+        // D_init is Yan et al.'s OD.Num for this database, not half of it. Calibration has
+        // to cut the database where the scenarios cut it, or the thresholds are chosen on a
+        // different database from the one they are used on.
+        int initN = common.Datasets.dInitCount(name, all.size());
+        List<Sequence> db = full ? all : new ArrayList<>(all.subList(0, initN));
         double tsu = 0;
         for (Sequence s : db) tsu += s.sequenceUtility;
         String scope = full ? "full" : "D_init";

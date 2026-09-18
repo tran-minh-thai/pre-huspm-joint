@@ -25,11 +25,11 @@ import java.util.concurrent.*;
  * PRODUCTION mode dùng 6 dataset chuẩn (Table 4 paper): SIGN, LEVIATHAN, FIFA,
  *   KOSARAK, BMS1, BIBLE. paper dataset KHÔNG dùng cho thực nghiệm.
  *
- * SC1 - Static baseline on D_init (50%) sweeping Su.
- * SC2 - Incremental: D_init=50% + 5 batches x 10% UNIFORM.
+ * SC1 - Static baseline on D_init (Yan et al. Table 16 OD.Num) sweeping Su.
+ * SC2 - Incremental: D_init per Yan et al. Table 16 + 100 EVEN batches.
  * SC3 - Su sensitivity on a 3-dataset subset.
  * SC4 - LUT_dyn sensitivity (Sl/Su for Pre-HUSPM; Delta0, alpha for Adaptive).
- * SC5 - Batch strategy grid (K x strategy in {EVEN, INC, DEC, BURST}).
+ * SC5 - Batch strategy grid (K in {100,67,50,25} x strategy in {EVEN, INC, DEC, BURST}).
  * SC6 - Mixed Insert/Delete/Modify 70:15:15 (Adaptive self-compare).
  * SC7 - Ablation: proposed_full vs no_block_index vs no_IUB vs Pre-HUSPM ref.
  *
@@ -147,7 +147,14 @@ public class AutomatedExperimentRunner {
         System.arraycopy(SEEDS, 0, out, 0, SEED_COUNT);
         return out;
     }
-    public static final double D_INIT_RATIO = 0.5; // 50% init per paper
+    /**
+     * Superseded by common.Datasets.dInitCount, which carries Yan et al. Table 16's OD.Num
+     * per database. Kept only as the fallback for a database not in that table.
+     */
+    public static final double D_INIT_RATIO = 0.5;
+
+    /** Increments per incremental scenario; -Dbatch.count overrides for cost probes. */
+    public static final int BATCH_COUNT = Integer.getInteger("batch.count", common.Datasets.BATCH_COUNT);
 
     // === TIMEOUT PER ALGORITHM RUN ===
     // Mỗi lời gọi measure() bị bao trong ExecutorService timeout. Khi timeout: cancel
@@ -214,6 +221,8 @@ public class AutomatedExperimentRunner {
         final String note;
         /** Whether it can be measured on the whole database, not only on D_init. */
         boolean fullScopeOk = true;
+        /** Sequences in D_init, from Yan et al. Table 16 where the database is theirs. */
+        int dInitCount = -1;
 
         DatasetConfig(String name, double defaultSu, double[] suSweep) {
             this(name, defaultSu, suSweep, true, "");
@@ -377,6 +386,7 @@ public class AutomatedExperimentRunner {
         for (common.Datasets.Entry e : common.Datasets.all()) {
             DatasetConfig c = new DatasetConfig(e.name, e.defaultUut, e.sweep, e.calibrated, e.note);
             c.fullScopeOk = e.fullScopeOk;
+            c.dInitCount = e.dInitCount;
             out.add(c);
         }
         return List.copyOf(out);
@@ -478,7 +488,7 @@ public class AutomatedExperimentRunner {
 
     /** Print each database, its thresholds, and whether they were measured on this data. */
     private static void printStatus() {
-        System.out.printf("%-22s %-12s %-34s %s%n", "database", "calibrated", "thresholds", "note");
+        System.out.printf("%-14s %-9s %9s %-34s %s%n", "database", "calibrated", "D_init", "thresholds", "note");
         System.out.println("-".repeat(110));
         int ready = 0;
         for (DatasetConfig ds : DATASETS_PRODUCTION) {
@@ -488,8 +498,10 @@ public class AutomatedExperimentRunner {
                 sw.append(String.format("%.5f", ds.suSweep[i]));
             }
             if (ds.calibrated) ready++;
-            System.out.printf("%-22s %-12s %-34s %s%n",
-                    ds.name, ds.calibrated ? "yes" : "NO", sw, ds.note);
+            System.out.printf("%-14s %-9s %9s %-34s %s%n",
+                    ds.name, ds.calibrated ? "yes" : "NO",
+                    ds.dInitCount > 0 ? String.format("%,d", ds.dInitCount) : "half",
+                    sw, ds.note);
         }
         System.out.println("-".repeat(110));
         System.out.printf("%d of %d ready. Uncalibrated databases are skipped by every "
@@ -536,7 +548,7 @@ public class AutomatedExperimentRunner {
                 List<Sequence> full = DatasetLoader.loadDataset(datasetDir + ds.name + "_seq.txt",
                                                                 datasetDir + ds.name + "_eui.txt");
                 if (full.isEmpty()) continue;
-                List<Sequence> dInit = headPercent(full, D_INIT_RATIO);
+                List<Sequence> dInit = dInitFor(ds, full);
                 double totalUtil = sumUtility(dInit);
                 String[] algos = {"USpan", "HUSP-ULL", "HUSP-SP", "IncUSP-Miner+", "Pre-HUSPM", "Adaptive-Full"};
                 // SC1 khong co ngau nhien nao: khong chia lo, khong sinh thao tac. Seed
@@ -563,7 +575,7 @@ public class AutomatedExperimentRunner {
     // SC2 - INCREMENTAL SEQUENCE: D_init=50% + 5 batch x 10% UNIFORM
     // ==================================================================
     private static void runSC2_IncrementalSequence() throws IOException {
-        System.out.println("\n--- [SC2] Incremental sequence (5 batch x 10% UNIFORM) ---");
+        System.out.println("\n--- [SC2] Incremental sequence (" + BATCH_COUNT + " batches, EVEN; D_init per Yan et al. Table 16) ---");
         try (ResultCollector col = new ResultCollector(RESULTS_DIR + "SC2_incremental.csv")) {
             for (DatasetConfig ds : DATASETS) {
                 if (!datasetEnabled(ds.name)) continue;
@@ -572,7 +584,7 @@ public class AutomatedExperimentRunner {
                 List<Sequence> full = DatasetLoader.loadDataset(datasetDir + ds.name + "_seq.txt",
                                                                 datasetDir + ds.name + "_eui.txt");
                 if (full.isEmpty()) continue;
-                List<Sequence> dInit = headPercent(full, D_INIT_RATIO);
+                List<Sequence> dInit = dInitFor(ds, full);
                 List<Sequence> rest = tailFrom(full, dInit.size());
 
                 // SC2 chia lo DEU va TUAN TU theo thu tu file, tuc hoan toan tat dinh:
@@ -590,7 +602,7 @@ public class AutomatedExperimentRunner {
                         stream = new ArrayList<>(rest);
                         Collections.shuffle(stream, new Random(seed));
                     }
-                    List<List<Sequence>> batches = splitByWeights(stream, equalWeights(5));
+                    List<List<Sequence>> batches = splitByWeights(stream, equalWeights(BATCH_COUNT));
                     for (int r = 0; r < REPEATS; r++) {
                         setRunContext(seed, r);
                         runIncrementalScenario(ds.name, ds.defaultSu, dInit, batches, col, "SC2");
@@ -708,7 +720,7 @@ public class AutomatedExperimentRunner {
     // ==================================================================
     private static void runSC5_BatchStrategyGrid() throws IOException {
         System.out.println("\n--- [SC5] Batch strategy grid ---");
-        int[] kList = {3, 5, 10};
+        int[] kList = common.Datasets.BATCH_COUNT_SWEEP;
         BatchSplitMode[] strategies = {BatchSplitMode.EVEN, BatchSplitMode.INCREASING,
                                         BatchSplitMode.DECREASING, BatchSplitMode.BURST};
 
@@ -721,7 +733,7 @@ public class AutomatedExperimentRunner {
                 List<Sequence> full = DatasetLoader.loadDataset(datasetDir + ds.name + "_seq.txt",
                                                                 datasetDir + ds.name + "_eui.txt");
                 if (full.isEmpty()) continue;
-                List<Sequence> dInit = headPercent(full, D_INIT_RATIO);
+                List<Sequence> dInit = dInitFor(ds, full);
                 List<Sequence> rest = tailFrom(full, dInit.size());
 
                 // Trong bon chien luoc thi chi BURST dung den seed; EVEN, INCREASING va
@@ -846,7 +858,7 @@ public class AutomatedExperimentRunner {
                     continue;
                 }
 
-                List<Sequence> dInit = new ArrayList<>(headPercent(full, D_INIT_RATIO));
+                List<Sequence> dInit = dInitFor(ds, full);
                 List<Sequence> rest  = new ArrayList<>(tailFrom(full, dInit.size()));
                 double initTotalUtil = sumUtility(dInit);
 
@@ -1046,15 +1058,15 @@ public class AutomatedExperimentRunner {
     }
 
     /**
-     * Ablation C5 (incremental): chạy Adaptive qua D_init(50%) + 5 lô; đo TỔNG thời gian,
+     * Ablation C5 (incremental): chạy Adaptive qua D_init + BATCH_COUNT lô; đo TỔNG thời gian,
      * rescanCount và completeness. useAdaptiveRescan=false ⇒ rescan MỖI LÔ (naive) → minh
      * hoạ giá trị C5 (rescan thích ứng): ít rescan + nhanh + không treo, vẫn đầy đủ.
      */
     private static void logC5Ablation(ResultCollector col, DatasetConfig ds, List<Sequence> full,
                                       boolean useAdaptiveRescan, String tag) {
-        List<Sequence> dInit = headPercent(full, D_INIT_RATIO);
+        List<Sequence> dInit = dInitFor(ds, full);
         List<Sequence> rest = tailFrom(full, dInit.size());
-        List<List<Sequence>> batches = splitByWeights(rest, equalWeights(5));
+        List<List<Sequence>> batches = splitByWeights(rest, equalWeights(BATCH_COUNT));
         final double initTotal = sumUtility(dInit);
         PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp = new PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo(
                 ds.defaultSu, DEFAULT_KAPPA, DEFAULT_DELTA0, DEFAULT_SL_MIN_RATIO,
@@ -1903,6 +1915,20 @@ public class AutomatedExperimentRunner {
     // ==================================================================
     private static double sumUtility(List<Sequence> db) {
         double s = 0; for (Sequence sq : db) s += sq.sequenceUtility; return s;
+    }
+
+    /**
+     * D_init for a database: an absolute count from Yan et al. Table 16, not a fraction.
+     *
+     * Every scenario takes D_init from here, so SC1, SC2, SC5, SC6 and SC7 all cut the
+     * database at the same place. A reviewer comparing two of our figures sees one
+     * definition; the batching study in SC5 varies only how finely the rest is delivered.
+     */
+    private static List<Sequence> dInitFor(DatasetConfig ds, List<Sequence> all) {
+        if (all.isEmpty()) return Collections.emptyList();
+        int n = (ds.dInitCount > 0) ? Math.min(ds.dInitCount, all.size())
+                                    : Math.max(1, (int) Math.round(all.size() * D_INIT_RATIO));
+        return new ArrayList<>(all.subList(0, n));
     }
 
     private static List<Sequence> headPercent(List<Sequence> all, double ratio) {
