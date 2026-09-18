@@ -140,6 +140,27 @@ public final class ThresholdScan {
      * this is spent the remaining levels are reported as not attempted, which is a fact
      * worth recording rather than a run that silently overshot into the morning.
      */
+    /**
+     * Sau khi tim duoc dai, kiem no o hai cho ma dich so mau KHONG nhin thay. Tat bang
+     * --no-check.
+     *
+     * Dich so mau tren D_init la tieu chi duy nhat tu truoc den nay, va no bo sot hai thu,
+     * ca hai deu da gay thiet hai that:
+     *
+     *  - Nguong khai thac THAT khong phai UUT ma la r_l x UUT. Sau moi rescan LUT_dyn roi ve
+     *    san do. BMS1 tai UUT cho 18 mau trong 3,5 giay; tai san no vuot ba ty ung vien.
+     *
+     *  - D_init khong phai CSDL lon nhat duoc do. SC2, SC5, SC6 chay tren du lieu lon dan va
+     *    SC3 chay thang tren toan bo. BMS1 tai chinh nguong da hieu chinh cua no khong khai
+     *    thac noi tren toan bo CSDL, va C8T1S5I8N5K tut tu 152 mau xuong con 1.
+     *
+     * Hai bo do deu qua tieu chi cu ma khong ai thay gi, cho den khi mot chien dich do dem
+     * bao cao chung bang OOM va het gio.
+     */
+    private static boolean runChecks = true;
+    /** So mau toi thieu con lai tren toan bo CSDL de dai con dang do. */
+    private static final int TRAJECTORY_MIN_PATTERNS = 10;
+
     private static long totalBudgetMs = Long.MAX_VALUE;
     private static long runDeadline = Long.MAX_VALUE;
 
@@ -147,7 +168,7 @@ public final class ThresholdScan {
         if (args.length == 0) {
             System.out.println("usage: ThresholdScan <DATASET|ALL> [--target N | --grid a,b,c] "
                     + "[--full] [--budget-sec N] [--level-budget-sec N] "
-                    + "[--total-budget-sec N] [--max-candidates N] [--out DIR]");
+                    + "[--total-budget-sec N] [--max-candidates N] [--no-check] [--out DIR]");
             System.out.println("databases: SIGN LEVIATHAN FIFA BIBLE BMS1 KOSARAK "
                     + "C8T1S5I8N5K TAFENG");
             return;
@@ -172,6 +193,7 @@ public final class ThresholdScan {
                 case "--max-candidates": maxCandidates = Long.parseLong(args[++i]); break;
                 case "--target":         single = Integer.parseInt(args[++i]); break;
                 case "--targets":        break;                 // the default; accepted for clarity
+                case "--no-check":       runChecks = false; break;
                 case "--out":            outDir = Paths.get(args[++i]); break;
                 default: throw new IllegalArgumentException("unknown option: " + args[i]);
             }
@@ -227,7 +249,11 @@ public final class ThresholdScan {
             }
             return;
         }
-        searchAll(name, scope, db, tsu, targets, w);
+        Result[] found = searchAll(name, scope, db, tsu, targets, w);
+        if (runChecks && targets.length == 4 && !full) {
+            checkGates(name, all, found,
+                    new String[]{"low", "default", "high", "highest"}, w);
+        }
     }
 
     /**
@@ -243,7 +269,7 @@ public final class ThresholdScan {
      * lowest threshold: the most patterns, the most expensive probe, and on BMS1 an hour
      * with nothing to show.
      */
-    private static void searchAll(String name, String scope, List<Sequence> db, double tsu,
+    private static Result[] searchAll(String name, String scope, List<Sequence> db, double tsu,
                                   int[] targets, PrintWriter w) {
         String[] levels = (targets.length == 4)
                 ? new String[]{"low", "default", "high", "highest"} : new String[]{"target"};
@@ -314,6 +340,52 @@ public final class ThresholdScan {
                     r.uut, r.ok() ? r.patterns : -1, r.probes, r.ms, r.status);
             w.flush();
         }
+        return found;
+    }
+
+    /**
+     * Hai cua kiem, chay tren toan bo CSDL vi do moi la pham vi lon nhat cac kich ban dung.
+     *
+     * Cua chi phi kiem muc THAP NHAT, vi nguong thap nhat sinh nhieu ung vien nhat. Cua quy
+     * dao kiem muc CAO NHAT, vi nguong cao nhat de sup ve rong nhat. Hai truong hop xau nhat
+     * nguoc chieu nhau nen chi ton hai probe chu khong phai tam.
+     */
+    private static void checkGates(String name, List<Sequence> all, Result[] found,
+                                   String[] levels, PrintWriter w) {
+        double tsuAll = 0;
+        for (Sequence s : all) tsuAll += s.sequenceUtility;
+        Result lowest = found[0], highest = found[found.length - 1];
+        System.out.printf("%n--- kiem tra dai, tren toan bo CSDL |D|=%,d TSU=%,.0f ---%n",
+                all.size(), tsuAll);
+
+        if (lowest.ok() && lowest.uut > 0) {
+            double lut = RL * lowest.uut;
+            Probe p = mine(all, tsuAll, lut);
+            boolean pass = !p.abandoned;
+            System.out.printf("  chi phi   r_l x UUT = %.6f (muc %s)  ->  %s  %s%n",
+                    lut, levels[0], p.abandoned ? "khong khai thac noi: " + p.why
+                                                : p.patterns + " mau trong " + p.ms + " ms",
+                    pass ? "DAT" : "KHONG DAT");
+            w.printf("%s,full,gate-cost,,%.6f,%d,1,%d,%s%n", name, lut,
+                    p.abandoned ? -1 : p.patterns, p.ms, pass ? "ok" : "gate-failed:" + p.why);
+            w.flush();
+        }
+
+        if (highest.ok() && highest.uut > 0) {
+            Probe p = mine(all, tsuAll, highest.uut);
+            int floorBy5pc = Math.max(1, highest.patterns / 20);
+            int floor = Math.max(TRAJECTORY_MIN_PATTERNS, floorBy5pc);
+            boolean pass = !p.abandoned && p.patterns >= floor;
+            System.out.printf("  quy dao   UUT = %.6f (muc %s)  ->  %s, can >= %d  %s%n",
+                    highest.uut, levels[levels.length - 1],
+                    p.abandoned ? "khong khai thac noi" : p.patterns + " mau",
+                    floor, pass ? "DAT" : "KHONG DAT");
+            w.printf("%s,full,gate-trajectory,%d,%.6f,%d,1,%d,%s%n", name, floor, highest.uut,
+                    p.abandoned ? -1 : p.patterns, p.ms, pass ? "ok" : "gate-failed:collapsed");
+            w.flush();
+        }
+        System.out.println("  (mot cua khong dat nghia la dai con dung tren D_init nhung khong "
+                + "dung o pham vi cac kich ban thuc su do)");
     }
 
     // ---------------------------------------------------------------- probing
