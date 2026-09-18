@@ -30,8 +30,18 @@ import java.util.List;
  */
 public final class Density {
 
-    /** Above this, mining at the usual floor stops being affordable on the measured suite. */
-    public static final double REPETITION_HIGH = 150.0;
+    /**
+     * Above this, mining at the usual floor stops being affordable on the measured suite.
+     *
+     * Measured on D_init, which is what this class sees and therefore the only scale the
+     * constant may be stated on. The first version of it was 150, read off the same eight
+     * databases measured over their whole extent instead, and the two scales are not
+     * interchangeable: the ratio between them runs from 0.53 to 0.71 across the suite, so no
+     * conversion factor exists. The effect was that the floor rose on BMS1 alone while FIFA
+     * and KOSARAK, at 137.5 and 112.9 here against 247.9 and 194.3 over the whole database,
+     * fell below the line and were left at the configured floor.
+     */
+    public static final double REPETITION_HIGH = 90.0;
 
     private Density() { }
 
@@ -60,9 +70,13 @@ public final class Density {
      */
     public static double suggestFloor(double configured, double repetition) {
         if (repetition <= REPETITION_HIGH) return configured;
-        // Past the measured boundary, step the floor up with repetition rather than jumping:
-        // BMS1 at 301 needed 0.95, TAFENG at 34 needed nothing.
-        double raised = 0.90 + 0.05 * Math.min(1.0, (repetition - REPETITION_HIGH) / 150.0);
+        // One point on this line is measured rather than chosen: BMS1, at 202.5 here, mines
+        // at 0.92 in 57 s where 0.80 exceeds three billion candidates without finishing. The
+        // boundary is the middle of the gap the suite leaves between 74.7 and 112.9. Between
+        // and beyond them the line is straight because nothing measured argues for any other
+        // shape - which is the whole reason the candidate and clock budgets exist, to catch
+        // the databases this guess places wrongly.
+        double raised = 0.85 + 0.07 * Math.min(1.0, (repetition - REPETITION_HIGH) / 120.0);
         return Math.max(configured, Math.min(0.95, raised));
     }
 }
