@@ -158,8 +158,19 @@ public final class ThresholdScan {
      * bao cao chung bang OOM va het gio.
      */
     private static boolean runChecks = true;
-    /** So mau toi thieu con lai tren toan bo CSDL de dai con dang do. */
-    private static final int TRAJECTORY_MIN_PATTERNS = 10;
+    /**
+     * Ti le toi thieu con lai tren toan bo CSDL so voi D_init.
+     *
+     * Tuyet doi chu KHONG duoc, va lan dau viet cua nay dat san tuyet doi 10 mau nen no bao
+     * truot ba bo hoan toan lanh: FIFA o muc cao nhat co DUNG 1 mau tren D_init - chinh la
+     * dich da hieu chinh cua no, {41, 18, 5, 1} - va giu nguyen 1 mau tren toan bo. Doi no
+     * con 10 la doi mot thu no chua bao gio co. KOSARAK 5 -> 5 va TAFENG 4 -> 3 cung vay.
+     *
+     * Thu can do la SUP DO TUONG DOI. Do duoc tren tam bo: bay bo on dinh nam o 34% den 129%,
+     * con C8T1S5I8N5K tut xuong 2,6%. Khoang trong giua 34% va 2,6% rong den muc nguong dat o
+     * dau trong do cung tach dung.
+     */
+    private static final double TRAJECTORY_MIN_RATIO = 0.20;
 
     private static long totalBudgetMs = Long.MAX_VALUE;
     private static long runDeadline = Long.MAX_VALUE;
@@ -251,7 +262,7 @@ public final class ThresholdScan {
         }
         Result[] found = searchAll(name, scope, db, tsu, targets, w);
         if (runChecks && targets.length == 4 && !full) {
-            checkGates(name, all, found,
+            checkGates(name, all, db, tsu, found,
                     new String[]{"low", "default", "high", "highest"}, w);
         }
     }
@@ -350,42 +361,56 @@ public final class ThresholdScan {
      * dao kiem muc CAO NHAT, vi nguong cao nhat de sup ve rong nhat. Hai truong hop xau nhat
      * nguoc chieu nhau nen chi ton hai probe chu khong phai tam.
      */
-    private static void checkGates(String name, List<Sequence> all, Result[] found,
+    private static void checkGates(String name, List<Sequence> all, List<Sequence> dInit,
+                                   double tsuInit, Result[] found,
                                    String[] levels, PrintWriter w) {
         double tsuAll = 0;
         for (Sequence s : all) tsuAll += s.sequenceUtility;
         Result lowest = found[0], highest = found[found.length - 1];
-        System.out.printf("%n--- kiem tra dai, tren toan bo CSDL |D|=%,d TSU=%,.0f ---%n",
-                all.size(), tsuAll);
+        System.out.printf("%n--- kiem tra dai --- D_init |D|=%,d  |  toan bo |D|=%,d%n",
+                dInit.size(), all.size());
 
+        // Cua chi phi, o CA HAI pham vi. Nguong la mot TI LE, nen cung mot ti le tren toan bo
+        // CSDL la mot nguong tuyet doi cao hon - TSU lon hon - va co the re hon han tren
+        // D_init. TAFENG la vi du: 0.002528 vuot 600 giay tren D_init va cho 21 mau trong 0,7
+        // giay tren toan bo. Mot cua chi chay o pham vi lon nhat se bo lot dieu do, ma SC1
+        // chay dung tren D_init.
         if (lowest.ok() && lowest.uut > 0) {
             double lut = RL * lowest.uut;
-            Probe p = mine(all, tsuAll, lut);
-            boolean pass = !p.abandoned;
-            System.out.printf("  chi phi   r_l x UUT = %.6f (muc %s)  ->  %s  %s%n",
-                    lut, levels[0], p.abandoned ? "khong khai thac noi: " + p.why
-                                                : p.patterns + " mau trong " + p.ms + " ms",
-                    pass ? "DAT" : "KHONG DAT");
-            w.printf("%s,full,gate-cost,,%.6f,%d,1,%d,%s%n", name, lut,
-                    p.abandoned ? -1 : p.patterns, p.ms, pass ? "ok" : "gate-failed:" + p.why);
-            w.flush();
+            costGate(name, "D_init", dInit, tsuInit, lut, levels[0], w);
+            costGate(name, "full",   all,   tsuAll,  lut, levels[0], w);
         }
 
+        // Cua quy dao: so mau tren toan bo so voi tren D_init, thuan ti le.
         if (highest.ok() && highest.uut > 0) {
             Probe p = mine(all, tsuAll, highest.uut);
-            int floorBy5pc = Math.max(1, highest.patterns / 20);
-            int floor = Math.max(TRAJECTORY_MIN_PATTERNS, floorBy5pc);
-            boolean pass = !p.abandoned && p.patterns >= floor;
-            System.out.printf("  quy dao   UUT = %.6f (muc %s)  ->  %s, can >= %d  %s%n",
-                    highest.uut, levels[levels.length - 1],
+            int need = Math.max(1, (int) Math.ceil(TRAJECTORY_MIN_RATIO * highest.patterns));
+            boolean pass = !p.abandoned && p.patterns >= need;
+            System.out.printf("  quy dao  UUT=%.6f (%s)  %d mau tren D_init -> %s, can >= %d  %s%n",
+                    highest.uut, levels[levels.length - 1], highest.patterns,
                     p.abandoned ? "khong khai thac noi" : p.patterns + " mau",
-                    floor, pass ? "DAT" : "KHONG DAT");
-            w.printf("%s,full,gate-trajectory,%d,%.6f,%d,1,%d,%s%n", name, floor, highest.uut,
+                    need, pass ? "DAT" : "KHONG DAT");
+            w.printf("%s,full,gate-trajectory,%d,%.6f,%d,1,%d,%s%n", name, need, highest.uut,
                     p.abandoned ? -1 : p.patterns, p.ms, pass ? "ok" : "gate-failed:collapsed");
             w.flush();
         }
-        System.out.println("  (mot cua khong dat nghia la dai con dung tren D_init nhung khong "
-                + "dung o pham vi cac kich ban thuc su do)");
+        System.out.println("  (khong dat nghia la dai dung tren D_init nhung sai o pham vi ma "
+                + "kich ban that su do: SC1 tren D_init, SC2/SC5/SC6 lon dan, SC3 toan bo)");
+    }
+
+    /** Mot lan kiem chi phi tai LUT, tren mot pham vi. */
+    private static void costGate(String name, String scope, List<Sequence> db, double tsu,
+                                 double lut, String level, PrintWriter w) {
+        Probe p = mine(db, tsu, lut);
+        boolean pass = !p.abandoned;
+        System.out.printf("  chi phi  r_l x UUT=%.6f (%s) tren %-6s ->  %-34s %s%n",
+                lut, level, scope,
+                p.abandoned ? "khong khai thac noi: " + p.why
+                            : p.patterns + " mau trong " + p.ms + " ms",
+                pass ? "DAT" : "KHONG DAT");
+        w.printf("%s,%s,gate-cost,,%.6f,%d,1,%d,%s%n", name, scope, lut,
+                p.abandoned ? -1 : p.patterns, p.ms, pass ? "ok" : "gate-failed:" + p.why);
+        w.flush();
     }
 
     // ---------------------------------------------------------------- probing
