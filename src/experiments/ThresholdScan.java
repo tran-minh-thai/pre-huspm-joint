@@ -73,7 +73,14 @@ public final class ThresholdScan {
             // Added by the pinned release with no submitted counts to inherit, so the ladder
             // is chosen rather than reproduced. C8T1S5I8N5K is the one database here that
             // reaches within-event extension.
-            {"C8T1S5I8N5K",          new int[]{300, 150, 80, 40}},
+            //
+            // Raised from {300, 150, 80, 40}, which are the counts the FIRST calibration
+            // aimed at and hit. They were wrong: thresholds that give 300 patterns on D_init
+            // give 1 on the whole database, so SC2, SC5 and SC6 would have compared five
+            // algorithms against an answer of one pattern. The trajectory gate now refuses
+            // that, and these counts are what the replacement band measured - every level
+            // keeps at least 23% of its D_init count when the database grows.
+            {"C8T1S5I8N5K",          new int[]{6337, 4894, 3695, 2741}},
 
             // Ta-Feng is the only database whose utilities are measured on both sides:
             // quantities from AMOUNT, profits from SALES_PRICE / AMOUNT. Ten is the ceiling,
@@ -81,8 +88,21 @@ public final class ThresholdScan {
             {"TAFENG",               new int[]{10, 6, 5, 4}},
     };
 
-    /** Where the search starts: the default threshold of the submitted experiments. */
+    /**
+     * Where the search starts.
+     *
+     * The calibrated default from common.Datasets when there is one, because it is the
+     * closest known threshold and a search seeded near the answer spends its budget
+     * bisecting rather than travelling. This is only a starting point - the bracket still
+     * has to earn the result - so seeding from the table the scan will overwrite costs
+     * nothing in independence and saves probes on the expensive databases.
+     *
+     * The literals below are the submitted defaults, kept for anything not in the table.
+     */
     private static double startFrom(String name) {
+        for (common.Datasets.Entry e : common.Datasets.all()) {
+            if (e.name.equals(name) && e.calibrated && e.defaultUut > 0) return e.defaultUut;
+        }
         switch (name) {
             case "SIGN":      return 0.025;
             case "LEVIATHAN": return 0.060;
