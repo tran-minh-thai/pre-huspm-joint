@@ -31,7 +31,10 @@ param(
     [switch]   $List,
     [switch]   $NoGit
 )
-$ErrorActionPreference = 'Stop'
+# 'Continue', not 'Stop'. Native tools write progress to stderr - java -version does, git
+# does - and under 'Stop' PowerShell turns every such line into a terminating error. The
+# checks that matter are explicit below: the JDK version, the compile, each exit code.
+$ErrorActionPreference = 'Continue'
 $host_ = $env:COMPUTERNAME
 if (-not $host_) { $host_ = 'unknown' }
 
@@ -88,7 +91,7 @@ function Get-NextArm {
 # ---- java, data, build -------------------------------------------------------
 $java = if ($env:JAVA_HOME) { Join-Path $env:JAVA_HOME 'bin\java.exe' } else { $null }
 if (-not ($java -and (Test-Path $java))) { $java = (Get-Command java).Source }
-$ver = & $java -version 2>&1 | Select-Object -First 1
+$ver = (& $java -version 2>&1 | Select-Object -First 1 | Out-String).Trim()
 if ($ver -notmatch '"21\.') { throw "This study is pinned to JDK 21. Found: $ver" }
 
 if ($List) {
