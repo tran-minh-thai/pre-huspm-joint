@@ -1,0 +1,208 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC2]
+Heap max: 24576 MB
+
+--- [SC2] Incremental sequence (100 batches, EVEN; D_init per Yan et al. Table 16) ---
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INIT#0  (heap free=119MB / total=160MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INIT#0] OK t=1586ms cand=16362407 pat=107 heapDelta=48MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#1  (heap free=169MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#1] OK t=1067ms cand=16465356 pat=107 heapDelta=36MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#2  (heap free=168MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#2] OK t=1080ms cand=16383490 pat=108 heapDelta=33MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#3  (heap free=168MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#3] OK t=1097ms cand=16267966 pat=106 heapDelta=33MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#4  (heap free=168MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#4] OK t=1109ms cand=16232921 pat=108 heapDelta=33MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#5  (heap free=168MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#5] OK t=1101ms cand=16314881 pat=107 heapDelta=33MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#6  (heap free=168MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#6] OK t=1049ms cand=16255338 pat=107 heapDelta=33MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#7  (heap free=167MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#7] OK t=1073ms cand=16514588 pat=109 heapDelta=35MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#8  (heap free=167MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#8] OK t=1149ms cand=16691458 pat=109 heapDelta=36MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#9  (heap free=166MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#9] OK t=1128ms cand=16900033 pat=110 heapDelta=36MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#10  (heap free=166MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#10] OK t=1121ms cand=17045789 pat=108 heapDelta=36MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#11  (heap free=165MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#11] OK t=1202ms cand=17204181 pat=109 heapDelta=36MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#12  (heap free=165MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#12] OK t=1132ms cand=17159894 pat=111 heapDelta=36MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#13  (heap free=165MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#13] OK t=1140ms cand=17586326 pat=112 heapDelta=38MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#14  (heap free=165MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#14] OK t=1240ms cand=18400468 pat=112 heapDelta=40MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#15  (heap free=165MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#15] OK t=1288ms cand=18603260 pat=115 heapDelta=40MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#16  (heap free=164MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#16] OK t=1250ms cand=18854049 pat=113 heapDelta=40MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#17  (heap free=164MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#17] OK t=1293ms cand=19126648 pat=115 heapDelta=41MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#18  (heap free=163MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#18] OK t=1327ms cand=19074723 pat=113 heapDelta=41MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#19  (heap free=163MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#19] OK t=1305ms cand=19174573 pat=113 heapDelta=41MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#20  (heap free=163MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#20] OK t=1321ms cand=19611905 pat=113 heapDelta=43MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#21  (heap free=162MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#21] OK t=1332ms cand=19459300 pat=113 heapDelta=43MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#22  (heap free=162MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#22] OK t=1373ms cand=19761877 pat=112 heapDelta=44MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#23  (heap free=162MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#23] OK t=1369ms cand=19942577 pat=114 heapDelta=44MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#24  (heap free=161MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#24] OK t=1424ms cand=20122914 pat=114 heapDelta=44MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#25  (heap free=161MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#25] OK t=1390ms cand=20129843 pat=115 heapDelta=44MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#26  (heap free=161MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#26] OK t=1427ms cand=20345891 pat=117 heapDelta=46MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#27  (heap free=160MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#27] OK t=1508ms cand=20984867 pat=119 heapDelta=48MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#28  (heap free=160MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#28] OK t=1449ms cand=21128264 pat=119 heapDelta=48MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#29  (heap free=159MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#29] OK t=1499ms cand=21185023 pat=119 heapDelta=49MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#30  (heap free=159MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#30] OK t=1499ms cand=21136240 pat=118 heapDelta=50MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#31  (heap free=159MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#31] OK t=1498ms cand=21097056 pat=122 heapDelta=49MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#32  (heap free=159MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#32] OK t=1563ms cand=20959219 pat=122 heapDelta=49MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#33  (heap free=159MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#33] OK t=1520ms cand=20934616 pat=122 heapDelta=49MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#34  (heap free=159MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#34] OK t=1524ms cand=20958258 pat=123 heapDelta=49MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#35  (heap free=158MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#35] OK t=1572ms cand=21173550 pat=125 heapDelta=50MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#36  (heap free=158MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#36] OK t=1497ms cand=21200372 pat=125 heapDelta=50MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#37  (heap free=158MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#37] OK t=1557ms cand=21347587 pat=129 heapDelta=51MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#38  (heap free=158MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#38] OK t=1540ms cand=21454323 pat=127 heapDelta=51MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#39  (heap free=158MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#39] OK t=1620ms cand=21441994 pat=126 heapDelta=53MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#40  (heap free=158MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#40] OK t=1596ms cand=21781117 pat=128 heapDelta=53MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#41  (heap free=157MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#41] OK t=1635ms cand=21758438 pat=128 heapDelta=53MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#42  (heap free=157MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#42] OK t=1640ms cand=21910748 pat=126 heapDelta=54MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#43  (heap free=157MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#43] OK t=1611ms cand=21840447 pat=124 heapDelta=54MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#44  (heap free=157MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#44] OK t=1662ms cand=21920026 pat=126 heapDelta=54MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#45  (heap free=158MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#45] OK t=1589ms cand=21842332 pat=126 heapDelta=54MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#46  (heap free=157MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#46] OK t=1716ms cand=22514345 pat=129 heapDelta=56MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#47  (heap free=157MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#47] OK t=1702ms cand=22626583 pat=128 heapDelta=56MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#48  (heap free=157MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#48] OK t=1711ms cand=22534027 pat=130 heapDelta=56MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#49  (heap free=156MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#49] OK t=1670ms cand=22688767 pat=130 heapDelta=58MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#50  (heap free=156MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#50] OK t=1743ms cand=22960682 pat=128 heapDelta=59MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#51  (heap free=156MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#51] OK t=1761ms cand=23341120 pat=128 heapDelta=60MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#52  (heap free=155MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#52] OK t=1698ms cand=23345583 pat=127 heapDelta=60MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#53  (heap free=155MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#53] OK t=1804ms cand=23275784 pat=125 heapDelta=60MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#54  (heap free=155MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#54] OK t=1800ms cand=23554008 pat=124 heapDelta=60MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#55  (heap free=154MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#55] OK t=2176ms cand=23554637 pat=125 heapDelta=60MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#56  (heap free=154MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#56] OK t=1821ms cand=23639251 pat=124 heapDelta=62MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#57  (heap free=154MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#57] OK t=1851ms cand=23616652 pat=124 heapDelta=60MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#58  (heap free=153MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#58] OK t=1844ms cand=23544265 pat=124 heapDelta=60MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#59  (heap free=153MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#59] OK t=1895ms cand=23555407 pat=124 heapDelta=60MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#60  (heap free=153MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#60] OK t=1896ms cand=23559390 pat=125 heapDelta=62MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#61  (heap free=153MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#61] OK t=1894ms cand=23604195 pat=123 heapDelta=62MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#62  (heap free=152MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#62] OK t=1864ms cand=23731272 pat=126 heapDelta=63MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#63  (heap free=152MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#63] OK t=1915ms cand=23685981 pat=127 heapDelta=63MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#64  (heap free=152MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#64] OK t=1798ms cand=23598049 pat=125 heapDelta=63MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#65  (heap free=152MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#65] OK t=1902ms cand=23516419 pat=123 heapDelta=62MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#66  (heap free=152MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#66] OK t=1936ms cand=23712337 pat=125 heapDelta=64MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#67  (heap free=152MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#67] OK t=1949ms cand=23858453 pat=132 heapDelta=64MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#68  (heap free=151MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#68] OK t=1925ms cand=23767424 pat=128 heapDelta=64MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#69  (heap free=151MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#69] OK t=1976ms cand=23656680 pat=131 heapDelta=64MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#70  (heap free=151MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#70] OK t=1967ms cand=23906822 pat=133 heapDelta=65MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#71  (heap free=150MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#71] OK t=1999ms cand=24201447 pat=133 heapDelta=65MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#72  (heap free=150MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#72] OK t=2015ms cand=24759458 pat=136 heapDelta=67MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#73  (heap free=151MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#73] OK t=2102ms cand=25108944 pat=139 heapDelta=68MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#74  (heap free=150MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#74] OK t=2088ms cand=25682351 pat=138 heapDelta=70MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#75  (heap free=149MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#75] OK t=2159ms cand=25800075 pat=136 heapDelta=72MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#76  (heap free=149MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#76] OK t=2129ms cand=26332868 pat=137 heapDelta=73MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#77  (heap free=148MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#77] OK t=2216ms cand=26428503 pat=137 heapDelta=73MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#78  (heap free=149MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#78] OK t=2171ms cand=26658314 pat=136 heapDelta=75MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#79  (heap free=148MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#79] OK t=2263ms cand=26805928 pat=136 heapDelta=75MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#80  (heap free=148MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#80] OK t=2264ms cand=26810414 pat=136 heapDelta=75MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#81  (heap free=148MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#81] OK t=2243ms cand=26742433 pat=137 heapDelta=75MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#82  (heap free=148MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#82] OK t=2218ms cand=26987278 pat=137 heapDelta=76MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#83  (heap free=148MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#83] OK t=11ms cand=0 pat=135 heapDelta=1MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#84  (heap free=148MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#84] OK t=2255ms cand=27017834 pat=135 heapDelta=76MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#85  (heap free=147MB / total=224MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#85] OK t=2304ms cand=27229728 pat=136 heapDelta=78MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#86  (heap free=195MB / total=272MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#86] OK t=2273ms cand=27457526 pat=137 heapDelta=79MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#87  (heap free=194MB / total=272MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#87] OK t=2322ms cand=27568664 pat=135 heapDelta=79MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#88  (heap free=194MB / total=272MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#88] OK t=2248ms cand=27609230 pat=135 heapDelta=79MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#89  (heap free=194MB / total=272MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#89] OK t=2339ms cand=27737392 pat=135 heapDelta=79MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#90  (heap free=193MB / total=272MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#90] OK t=2406ms cand=27925511 pat=134 heapDelta=80MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#91  (heap free=193MB / total=272MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#91] OK t=2353ms cand=28149673 pat=134 heapDelta=81MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#92  (heap free=193MB / total=272MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#92] OK t=2447ms cand=28175438 pat=133 heapDelta=81MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#93  (heap free=192MB / total=272MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#93] OK t=2388ms cand=28427869 pat=133 heapDelta=81MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#94  (heap free=192MB / total=272MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#94] OK t=2485ms cand=28742437 pat=134 heapDelta=83MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#95  (heap free=191MB / total=272MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#95] OK t=2488ms cand=29181599 pat=136 heapDelta=85MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#96  (heap free=191MB / total=272MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#96] OK t=2458ms cand=29089848 pat=136 heapDelta=85MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#97  (heap free=191MB / total=272MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#97] OK t=10ms cand=0 pat=134 heapDelta=1MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#98  (heap free=190MB / total=272MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#98] OK t=2556ms cand=29215884 pat=135 heapDelta=85MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#99  (heap free=191MB / total=272MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#99] OK t=2573ms cand=29322161 pat=136 heapDelta=85MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC2_INC#100  (heap free=190MB / total=272MB / max=24576MB)
+[Adaptive-Full/LEVIATHAN/SC2_INC#100] OK t=2543ms cand=29437666 pat=135 heapDelta=87MB
+=== ALL SCENARIOS DONE (241.2s) ===

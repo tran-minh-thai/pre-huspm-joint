@@ -1,0 +1,9 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC2]
+Heap max: 24576 MB
+
+--- [SC2] Incremental sequence (100 batches, EVEN; D_init per Yan et al. Table 16) ---
+>> RUNNING Pre-HUSPM-TSU/LEVIATHAN/SC2_INIT#0  (heap free=119MB / total=160MB / max=24576MB)
+[Pre-HUSPM-TSU/LEVIATHAN/SC2_INIT] OOM
+[Pre-HUSPM-TSU/LEVIATHAN/SC2_INIT#0] FAILED after 27950ms (OOM)
+=== ALL SCENARIOS DONE (31.3s) ===

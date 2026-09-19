@@ -1,0 +1,71 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC2]
+Heap max: 24576 MB
+
+--- [SC2] Incremental sequence (100 batches, EVEN; D_init per Yan et al. Table 16) ---
+>> RUNNING IncUSP-Miner+/LEVIATHAN/SC2_INIT#0  (heap free=965MB / total=1024MB / max=24576MB)
+[IncUSP-Miner+/LEVIATHAN/SC2_INIT#0] OK t=43305ms cand=16335732 pat=107 heapDelta=13315MB
+>> RUNNING IncUSP-Miner+/LEVIATHAN/SC2_INC#1  (heap free=9300MB / total=13232MB / max=24576MB)
+[IncUSP-Miner+/LEVIATHAN/SC2_INC#1] OK t=5775ms cand=343334 pat=107 heapDelta=7552MB
+>> RUNNING IncUSP-Miner+/LEVIATHAN/SC2_INC#2  (heap free=7612MB / total=14912MB / max=24576MB)
+[IncUSP-Miner+/LEVIATHAN/SC2_INC#2] OK t=333ms cand=223513 pat=108 heapDelta=360MB
+>> RUNNING IncUSP-Miner+/LEVIATHAN/SC2_INC#3  (heap free=7405MB / total=14912MB / max=24576MB)
+[IncUSP-Miner+/LEVIATHAN/SC2_INC#3] OK t=286ms cand=86122 pat=106 heapDelta=160MB
+>> RUNNING IncUSP-Miner+/LEVIATHAN/SC2_INC#4  (heap free=7334MB / total=14912MB / max=24576MB)
+[IncUSP-Miner+/LEVIATHAN/SC2_INC#4] OK t=386ms cand=208676 pat=108 heapDelta=336MB
+>> RUNNING IncUSP-Miner+/LEVIATHAN/SC2_INC#5  (heap free=7154MB / total=14912MB / max=24576MB)
+[IncUSP-Miner+/LEVIATHAN/SC2_INC#5] OK t=614ms cand=402773 pat=107 heapDelta=648MB
+>> RUNNING IncUSP-Miner+/LEVIATHAN/SC2_INC#6  (heap free=6786MB / total=14912MB / max=24576MB)
+[IncUSP-Miner+/LEVIATHAN/SC2_INC#6] OK t=545ms cand=202828 pat=107 heapDelta=352MB
+>> RUNNING IncUSP-Miner+/LEVIATHAN/SC2_INC#7  (heap free=6619MB / total=14912MB / max=24576MB)
+[IncUSP-Miner+/LEVIATHAN/SC2_INC#7] OK t=3584ms cand=484628 pat=109 heapDelta=2424MB
+>> RUNNING IncUSP-Miner+/LEVIATHAN/SC2_INC#8  (heap free=8774MB / total=18784MB / max=24576MB)
+[IncUSP-Miner+/LEVIATHAN/SC2_INC#8] OK t=3631ms cand=340656 pat=109 heapDelta=2082MB
+>> RUNNING IncUSP-Miner+/LEVIATHAN/SC2_INC#9  (heap free=9393MB / total=21104MB / max=24576MB)
+[IncUSP-Miner+/LEVIATHAN/SC2_INC#9] OK t=1206ms cand=465840 pat=110 heapDelta=984MB
+>> RUNNING IncUSP-Miner+/LEVIATHAN/SC2_INC#10  (heap free=8910MB / total=21104MB / max=24576MB)
+[IncUSP-Miner+/LEVIATHAN/SC2_INC#10] OK t=1886ms cand=375226 pat=108 heapDelta=1144MB
+>> RUNNING IncUSP-Miner+/LEVIATHAN/SC2_INC#11  (heap free=8755MB / total=21632MB / max=24576MB)
+[IncUSP-Miner+/LEVIATHAN/SC2_INC#11] OK t=1278ms cand=449743 pat=109 heapDelta=744MB
+>> RUNNING IncUSP-Miner+/LEVIATHAN/SC2_INC#12  (heap free=8956MB / total=22192MB / max=24576MB)
+[IncUSP-Miner+/LEVIATHAN/SC2_INC#12] OK t=1201ms cand=230873 pat=111 heapDelta=496MB
+>> RUNNING IncUSP-Miner+/LEVIATHAN/SC2_INC#13  (heap free=9086MB / total=22512MB / max=24576MB)
+[IncUSP-Miner+/LEVIATHAN/SC2_INC#13] OK t=2163ms cand=683654 pat=112 heapDelta=1104MB
+>> RUNNING IncUSP-Miner+/LEVIATHAN/SC2_INC#14  (heap free=9593MB / total=23744MB / max=24576MB)
+[IncUSP-Miner+/LEVIATHAN/SC2_INC#14] OK t=3289ms cand=948019 pat=112 heapDelta=1607MB
+>> RUNNING IncUSP-Miner+/LEVIATHAN/SC2_INC#15  (heap free=9297MB / total=24576MB / max=24576MB)
+[IncUSP-Miner+/LEVIATHAN/SC2_INC#15] OK t=1831ms cand=451408 pat=115 heapDelta=848MB
+>> RUNNING IncUSP-Miner+/LEVIATHAN/SC2_INC#16  (heap free=8949MB / total=24576MB / max=24576MB)
+[IncUSP-Miner+/LEVIATHAN/SC2_INC#16] OK t=1990ms cand=489250 pat=112 heapDelta=1128MB
+>> RUNNING IncUSP-Miner+/LEVIATHAN/SC2_INC#17  (heap free=8472MB / total=24576MB / max=24576MB)
+[IncUSP-Miner+/LEVIATHAN/SC2_INC#17] OK t=2547ms cand=397727 pat=114 heapDelta=1200MB
+>> RUNNING IncUSP-Miner+/LEVIATHAN/SC2_INC#18  (heap free=7922MB / total=24576MB / max=24576MB)
+[IncUSP-Miner+/LEVIATHAN/SC2_INC#18] OK t=1844ms cand=273170 pat=112 heapDelta=616MB
+>> RUNNING IncUSP-Miner+/LEVIATHAN/SC2_INC#19  (heap free=7734MB / total=24576MB / max=24576MB)
+[IncUSP-Miner+/LEVIATHAN/SC2_INC#19] OK t=2008ms cand=419509 pat=110 heapDelta=776MB
+>> RUNNING IncUSP-Miner+/LEVIATHAN/SC2_INC#20  (heap free=7445MB / total=24576MB / max=24576MB)
+[IncUSP-Miner+/LEVIATHAN/SC2_INC#20] OK t=2708ms cand=479529 pat=110 heapDelta=1216MB
+>> RUNNING IncUSP-Miner+/LEVIATHAN/SC2_INC#21  (heap free=6898MB / total=24576MB / max=24576MB)
+[IncUSP-Miner+/LEVIATHAN/SC2_INC#21] OK t=1984ms cand=102388 pat=109 heapDelta=424MB
+>> RUNNING IncUSP-Miner+/LEVIATHAN/SC2_INC#22  (heap free=6842MB / total=24576MB / max=24576MB)
+[IncUSP-Miner+/LEVIATHAN/SC2_INC#22] OK t=3262ms cand=468893 pat=108 heapDelta=1358MB
+>> RUNNING IncUSP-Miner+/LEVIATHAN/SC2_INC#23  (heap free=6013MB / total=24576MB / max=24576MB)
+[IncUSP-Miner+/LEVIATHAN/SC2_INC#23] OK t=2445ms cand=482511 pat=109 heapDelta=1056MB
+>> RUNNING IncUSP-Miner+/LEVIATHAN/SC2_INC#24  (heap free=5629MB / total=24576MB / max=24576MB)
+[IncUSP-Miner+/LEVIATHAN/SC2_INC#24] OK t=2587ms cand=472433 pat=110 heapDelta=1184MB
+>> RUNNING IncUSP-Miner+/LEVIATHAN/SC2_INC#25  (heap free=5194MB / total=24576MB / max=24576MB)
+[IncUSP-Miner+/LEVIATHAN/SC2_INC#25] OK t=2335ms cand=253977 pat=110 heapDelta=664MB
+>> RUNNING IncUSP-Miner+/LEVIATHAN/SC2_INC#26  (heap free=5027MB / total=24576MB / max=24576MB)
+[IncUSP-Miner+/LEVIATHAN/SC2_INC#26] OK t=2596ms cand=435910 pat=112 heapDelta=1056MB
+>> RUNNING IncUSP-Miner+/LEVIATHAN/SC2_INC#27  (heap free=4668MB / total=24576MB / max=24576MB)
+[IncUSP-Miner+/LEVIATHAN/SC2_INC#27] OK t=4221ms cand=709459 pat=113 heapDelta=1596MB
+>> RUNNING IncUSP-Miner+/LEVIATHAN/SC2_INC#28  (heap free=3703MB / total=24576MB / max=24576MB)
+[IncUSP-Miner+/LEVIATHAN/SC2_INC#28] OK t=2899ms cand=434082 pat=113 heapDelta=1064MB
+>> RUNNING IncUSP-Miner+/LEVIATHAN/SC2_INC#29  (heap free=3365MB / total=24576MB / max=24576MB)
+[IncUSP-Miner+/LEVIATHAN/SC2_INC#29] OK t=3241ms cand=263980 pat=113 heapDelta=1208MB
+>> RUNNING IncUSP-Miner+/LEVIATHAN/SC2_INC#30  (heap free=2952MB / total=24576MB / max=24576MB)
+[IncUSP-Miner+/LEVIATHAN/SC2_INC#30] OK t=2799ms cand=278373 pat=113 heapDelta=800MB
+>> RUNNING IncUSP-Miner+/LEVIATHAN/SC2_INC#31  (heap free=2753MB / total=24576MB / max=24576MB)
+[IncUSP-Miner+/LEVIATHAN/SC2_INC#31] OK t=4154ms cand=291077 pat=114 heapDelta=1384MB
+OOM Warning: B? qua lô này ?? b?o v? Main Thread [IncUSP-Miner+/LEVIATHAN/SC2_INC] availableMB=2048
+=== ALL SCENARIOS DONE (590.6s) ===
