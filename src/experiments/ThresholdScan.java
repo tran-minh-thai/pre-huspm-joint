@@ -49,7 +49,22 @@ import java.util.concurrent.TimeoutException;
 public final class ThresholdScan {
 
     private static final String DIR = "datasets";
-    private static final double RL = 0.8, KAPPA = 0.5, DELTA0 = 1e-4;
+    private static final double KAPPA = 0.5, DELTA0 = 1e-4;
+
+    /**
+     * The pre-large floor the gate probes at, which has to be the one the database is
+     * measured at or the gate is testing a threshold nothing ever mines. KOSARAK is 0.85.
+     */
+    private static double rl(String name) { return common.Datasets.slMinRatio(name); }
+
+    /**
+     * The floor for the database being scanned, set once per run.
+     *
+     * mine() builds the algorithm and does not know which database it is on, so the value
+     * is parked here rather than threaded through every probe. One database per process,
+     * one thread doing the mining, so there is nothing for it to race with.
+     */
+    private static double currentRl = common.Datasets.DEFAULT_SL_MIN_RATIO;
 
     /**
      * Pattern counts the submitted experiments produced on D_init, used as the targets.
@@ -263,6 +278,7 @@ public final class ThresholdScan {
         // D_init is Yan et al.'s OD.Num for this database, not half of it. Calibration has
         // to cut the database where the scenarios cut it, or the thresholds are chosen on a
         // different database from the one they are used on.
+        currentRl = rl(name);
         int initN = common.Datasets.dInitCount(name, all.size());
         List<Sequence> db = full ? all : new ArrayList<>(all.subList(0, initN));
         double tsu = 0;
@@ -400,7 +416,7 @@ public final class ThresholdScan {
         // giay tren toan bo. Mot cua chi chay o pham vi lon nhat se bo lot dieu do, ma SC1
         // chay dung tren D_init.
         if (lowest.ok() && lowest.uut > 0) {
-            double lut = RL * lowest.uut;
+            double lut = rl(name) * lowest.uut;
             costGate(name, "D_init", dInit, tsuInit, lut, levels[0], w);
             costGate(name, "full",   all,   tsuAll,  lut, levels[0], w);
         }
@@ -470,7 +486,7 @@ public final class ThresholdScan {
     private static Probe mine(List<Sequence> db, double tsu, double uut) {
         Probe p = new Probe();
         PreHUSPMAdaptiveAlgo a = new PreHUSPMAdaptiveAlgo(
-                uut, KAPPA, DELTA0, RL, AblationMode.FULL, false);
+                uut, KAPPA, DELTA0, currentRl, AblationMode.FULL, false);
         a.maxCandidatesBudget = maxCandidates;
 
         ExecutorService ex = Executors.newSingleThreadExecutor(r -> {

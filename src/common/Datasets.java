@@ -75,44 +75,80 @@ public final class Datasets {
          * Yan used for BMS at almost exactly TAFENG's size.
          */
         public final int dInitCount;
+        /**
+         * The pre-large floor for this database, as a fraction of Su.
+         *
+         * Sl_min = slMinRatio * Su is the lowest LUT_dyn may fall to, so it is the threshold
+         * the algorithm actually mines at once the adaptive lower bound has settled. 0.8
+         * everywhere it works, which is seven of the eight.
+         *
+         * KOSARAK needs 0.85 and the cliff is sheer: 0.8 x its lowest threshold is 0.017783,
+         * which exceeds three billion candidates and is abandoned after 103 s, while 0.85 x
+         * the same threshold is 0.018896 and returns 16 patterns in 29 s. Nothing structural
+         * predicts this. KOSARAK's item alphabet is 22790 against TAFENG's 22779 and TAFENG
+         * is fine at 0.8; C8T1S5I8N5K has 64054 and is fine; repetition puts KOSARAK at 31.8,
+         * below the 90 at which Density raises the floor by itself. It is a local property of
+         * the cost curve and only a measurement finds it.
+         *
+         * 0.85 rather than more because a higher floor is not free: it thins the pre-large
+         * buffer and buys rescans, which is what Yan et al. warn of when they write that too
+         * large an Sl "will waste a lot of time by rescanning the database too many times".
+         * Their section 6.3.1 treats Sl as a per-database choice throughout, so carrying one
+         * value per database here follows their method rather than departing from it.
+         *
+         * PreHUSPMAdaptiveAlgorithm would reach 0.85 unaided - it raises the floor by 0.05
+         * whenever a mining attempt exceeds its budget - but only after paying for the
+         * attempt that fails. This starts it where that retry would have landed.
+         */
+        public final double slMinRatio;
 
         Entry(String name, int dInitCount, double defaultUut, double[] sweep,
               boolean calibrated, String note) {
-            this(name, dInitCount, defaultUut, sweep, calibrated, note, true);
+            this(name, dInitCount, defaultUut, sweep, calibrated, note, true, DEFAULT_SL_MIN_RATIO);
         }
 
         Entry(String name, int dInitCount, double defaultUut, double[] sweep,
               boolean calibrated, String note, boolean fullScopeOk) {
+            this(name, dInitCount, defaultUut, sweep, calibrated, note, fullScopeOk,
+                 DEFAULT_SL_MIN_RATIO);
+        }
+
+        Entry(String name, int dInitCount, double defaultUut, double[] sweep,
+              boolean calibrated, String note, boolean fullScopeOk, double slMinRatio) {
             this.name = name; this.dInitCount = dInitCount;
             this.defaultUut = defaultUut; this.sweep = sweep;
             this.calibrated = calibrated; this.note = note; this.fullScopeOk = fullScopeOk;
+            this.slMinRatio = slMinRatio;
         }
     }
 
+    /** The pre-large floor used wherever a database does not need its own. */
+    public static final double DEFAULT_SL_MIN_RATIO = 0.8;
+
     private static final List<Entry> ALL = List.of(
         // Calibrated on D_init. Patterns obtained, lowest threshold first.
-        new Entry("SIGN",      230, 0.06215, new double[]{0.04499, 0.06215, 0.07634, 0.08585},
-                true,  "3288 612 167 76"),
-        new Entry("LEVIATHAN", 2834, 0.01553, new double[]{0.01465, 0.01553, 0.01647, 0.01799},
-                true,  "133 107 88 63"),
-        new Entry("BIBLE",     21369, 0.02428, new double[]{0.01976, 0.02428, 0.02982, 0.03557},
-                true,  "357 194 104 54"),
-        new Entry("BMS1",      39601, 0.01442, new double[]{0.01421, 0.01442, 0.01575, 0.01771},
-                true,  "20 18 16 14; SC1 only, unmineable on the whole database", false),
+        new Entry("SIGN",      230, 0.065911, new double[]{0.049134, 0.065911, 0.083371, 0.091052},
+                true,  "2814 583 140 79"),
+        new Entry("LEVIATHAN", 2834, 0.015530, new double[]{0.014644, 0.015530, 0.016470, 0.017987},
+                true,  "136 107 89 63"),
+        new Entry("BIBLE",     21369, 0.022895, new double[]{0.018100, 0.022895, 0.028960, 0.032570},
+                true,  "376 192 96 58"),
+        new Entry("BMS1",      39601, 0.013597, new double[]{0.012821, 0.013597, 0.015293, 0.016218},
+                true,  "22 21 18 15; SC1 only, unmineable on the whole database", false),
 
         new Entry("FIFA",      10450, 0.059637,
-                new double[]{0.056234, 0.059637, 0.067073, 0.076000},
-                true,  "40 17 5 1"),
+                new double[]{0.056234, 0.059637, 0.067073, 0.075436},
+                true,  "42 18 5 1"),
 
         // The submitted counts {12, 6, 5, 5} are unusable on this release: 6 and 5 both
         // land at 0.030, so three levels share one threshold and the sweep shows two
         // operating points wearing four labels. Re-chosen for the widest spread the
         // database allows; 0.019 already exceeds three billion candidates, so twelve
         // patterns is the ceiling rather than a preference.
-        new Entry("KOSARAK",   90002, 0.025,
-                new double[]{0.020, 0.025, 0.028, 0.030},
-                true,  "12 9 7 5; re-chosen, the submitted ladder collapses to two "
-                     + "distinct thresholds on this release"),
+        new Entry("KOSARAK",   90002, 0.025000,
+                new double[]{0.022228, 0.025000, 0.028117, 0.031623},
+                true,  "11 10 7 5; r_l is 0.85 here, not 0.8 - see slMinRatio",
+                true, 0.85),
 
         // Added by the pinned release. The one database here that reaches within-event
         // extension, at 7.97 items per event; the other seven hold exactly one item per
@@ -123,19 +159,19 @@ public final class Datasets {
         // keeps at least 23% of its D_init count. The band stays narrow - six percent of
         // threshold still separates 313 patterns from 38 - which is why the sweep spans only
         // 2.3x rather than the 43x SIGN manages: anything above 0.00130 collapses again.
-        new Entry("C8T1S5I8N5K",          27133, 0.00120,
-                new double[]{0.00115, 0.00120, 0.00125, 0.00130},
-                true,  "6337 4894 3695 2741 on D_init; 3036 2110 1241 640 on the whole"),
+        new Entry("C8T1S5I8N5K",          27133, 0.001132,
+                new double[]{0.001099, 0.001132, 0.001200, 0.001236},
+                true,  "6101 5082 3427 2726 on D_init; the highest level keeps 1485 of its "
+                     + "2726 when the database grows"),
 
         // The only database whose utilities are measured on both sides: quantities from
         // Ta-Feng's AMOUNT, profits from SALES_PRICE / AMOUNT. It is also the one a
         // compared algorithm already measured on, so including it is not a dataset
         // chosen to suit this work. Every probe in the sweep finishes in under a second.
         new Entry("TAFENG",               40665, 0.003557,
-                new double[]{0.003162, 0.003557, 0.004000, 0.005060},
-                true,  "9 6 5 4; these are what ThresholdScan itself converges to, so "
-                     + "re-running it reproduces this row. Ten patterns is the ceiling, "
-                     + "reached at 0.0029; 0.0028 exceeds the budget")
+                new double[]{0.002812, 0.003557, 0.004499, 0.005691},
+                true,  "10 6 5 3; the D_init cost gate passes here - 17 patterns in "
+                     + "309 ms - where it failed at the old half-database D_init")
 
         // ONLINE_RETAIL_II_ALL and ONLINE_RETAIL_II_QTY were measured and dropped, not
         // forgotten. QTY gives each invoice line its own event, so its sequences average
@@ -184,6 +220,12 @@ public final class Datasets {
      * Clamped to the database: a count larger than the data would otherwise leave the
      * incremental stream empty and turn SC2 into a second copy of SC1 without saying so.
      */
+    /** The pre-large floor for a database, as a fraction of Su. */
+    public static double slMinRatio(String name) {
+        for (Entry e : ALL) if (e.name.equals(name)) return e.slMinRatio;
+        return DEFAULT_SL_MIN_RATIO;
+    }
+
     public static int dInitCount(String name, int dbSize) {
         for (Entry e : ALL) {
             if (e.name.equals(name)) return Math.max(1, Math.min(e.dInitCount, dbSize));

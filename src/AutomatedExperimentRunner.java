@@ -69,7 +69,7 @@ public class AutomatedExperimentRunner {
     // Default algorithm parameters
     // QUAN TRỌNG: Pre-HUSPM (Sl/Su) và Adaptive (Sl_min/Su) chia SẺ chung tỉ lệ Sl
     // → BẮT BUỘC dùng cùng 1 constant để tránh drift gây so sánh bất công bằng.
-    public static final double DEFAULT_SL_MIN_RATIO = 0.8;
+    public static final double DEFAULT_SL_MIN_RATIO = common.Datasets.DEFAULT_SL_MIN_RATIO;
     /** Alias đảm bảo Pre-HUSPM dùng đúng Sl ratio như Adaptive. KHÔNG sửa độc lập. */
     public static final double DEFAULT_PRE_HUSPM_SL_RATIO = DEFAULT_SL_MIN_RATIO;
     /** WP2.5 - bai goi la kappa; ten cu trong code la DEFAULT_KAPPA. Ghi de: -Dkappa=... */
@@ -488,7 +488,7 @@ public class AutomatedExperimentRunner {
 
     /** Print each database, its thresholds, and whether they were measured on this data. */
     private static void printStatus() {
-        System.out.printf("%-14s %-9s %9s %-34s %s%n", "database", "calibrated", "D_init", "thresholds", "note");
+        System.out.printf("%-14s %-9s %9s %5s %-34s %s%n", "database", "calibrated", "D_init", "r_l", "thresholds", "note");
         System.out.println("-".repeat(110));
         int ready = 0;
         for (DatasetConfig ds : DATASETS_PRODUCTION) {
@@ -498,10 +498,10 @@ public class AutomatedExperimentRunner {
                 sw.append(String.format("%.5f", ds.suSweep[i]));
             }
             if (ds.calibrated) ready++;
-            System.out.printf("%-14s %-9s %9s %-34s %s%n",
+            System.out.printf("%-14s %-9s %9s %5.2f %-34s %s%n",
                     ds.name, ds.calibrated ? "yes" : "NO",
                     ds.dInitCount > 0 ? String.format("%,d", ds.dInitCount) : "half",
-                    sw, ds.note);
+                    slRatioFor(ds.name), sw, ds.note);
         }
         System.out.println("-".repeat(110));
         System.out.printf("%d of %d ready. Uncalibrated databases are skipped by every "
@@ -902,7 +902,7 @@ public class AutomatedExperimentRunner {
                                   List<Op> plan, ResultCollector col, boolean remine) throws IOException {
         final String label = remine ? "Remine-from-scratch" : "Adaptive-Full";
 
-        PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp = newAdaptive(ds.defaultSu);
+        PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp = newAdaptive(ds.name, ds.defaultSu);
         announce(label, ds.name, "SC6_INIT", 0);
         ExperimentMetrics mInit = measureAdaptive(adp, label, ds.name, 0, "SC6_INIT",
                 () -> adp.runInitialMining(dInit, initTotalUtil));
@@ -933,7 +933,7 @@ public class AutomatedExperimentRunner {
             if (remine) {
                 // Mine lai tu dau: instance MOI, khong giu bat cu trang thai nao.
                 final List<Sequence> snapshot = new ArrayList<>(after);
-                PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo rm = newAdaptive(ds.defaultSu);
+                PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo rm = newAdaptive(ds.name, ds.defaultSu);
                 announce(label, ds.name, op.tag(), op.iter);
                 m = measureAdaptive(rm, label, ds.name, op.iter, op.tag(),
                         () -> rm.runInitialMining(snapshot, newTotal));
@@ -963,9 +963,21 @@ public class AutomatedExperimentRunner {
         }
     }
 
-    private static PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo newAdaptive(double su) {
+    /**
+     * The pre-large floor this database is measured at.
+     *
+     * Seven of the eight use 0.8; KOSARAK needs 0.85 because 0.8 times its lowest threshold
+     * exceeds the candidate budget outright. Both the proposal and the Pre-HUSPM baseline
+     * read it from here, because giving one of them a floor the other cannot use would not
+     * be a comparison.
+     */
+    private static double slRatioFor(String dsName) {
+        return common.Datasets.slMinRatio(dsName);
+    }
+
+    private static PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo newAdaptive(String dsName, double su) {
         return new PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo(
-                su, DEFAULT_KAPPA, DEFAULT_DELTA0, DEFAULT_SL_MIN_RATIO,
+                su, DEFAULT_KAPPA, DEFAULT_DELTA0, slRatioFor(dsName),
                 PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.AblationMode.FULL,
                 ENABLE_PATTERN_EXPORT);
     }
@@ -1023,7 +1035,7 @@ public class AutomatedExperimentRunner {
                 if (!ADAPTIVE_ONLY) {
                 announce("Pre-HUSPM", ds.name, "SC7_ref", 0);
                 PreHUSPMAlgorithm.PreHUSPMAlgo pre = new PreHUSPMAlgorithm.PreHUSPMAlgo(
-                        ds.defaultSu, DEFAULT_PRE_HUSPM_SL_RATIO, ENABLE_PATTERN_EXPORT);
+                        ds.defaultSu, slRatioFor(ds.name), ENABLE_PATTERN_EXPORT);
                 ExperimentMetrics m = measure("Pre-HUSPM", ds.name, 0, "SC7_ref",
                         () -> pre.runInitialMining(full, totalUtil),
                         () -> pre.candidateCount, () -> pre.patternCount, null, null);
@@ -1041,7 +1053,7 @@ public class AutomatedExperimentRunner {
                                     double totalUtil, String tag, boolean useBlockIndex,
                                     boolean useIub) {
         PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp = new PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo(
-                ds.defaultSu, DEFAULT_KAPPA, DEFAULT_DELTA0, DEFAULT_SL_MIN_RATIO,
+                ds.defaultSu, DEFAULT_KAPPA, DEFAULT_DELTA0, slRatioFor(ds.name),
                 PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.AblationMode.FULL,
                 ENABLE_PATTERN_EXPORT);
         adp.useBlockIndex = useBlockIndex; // C4
@@ -1069,7 +1081,7 @@ public class AutomatedExperimentRunner {
         List<List<Sequence>> batches = splitByWeights(rest, equalWeights(BATCH_COUNT));
         final double initTotal = sumUtility(dInit);
         PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp = new PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo(
-                ds.defaultSu, DEFAULT_KAPPA, DEFAULT_DELTA0, DEFAULT_SL_MIN_RATIO,
+                ds.defaultSu, DEFAULT_KAPPA, DEFAULT_DELTA0, slRatioFor(ds.name),
                 PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.AblationMode.FULL,
                 ENABLE_PATTERN_EXPORT);
         adp.useAdaptiveRescan = useAdaptiveRescan; // C5 on/off
@@ -1176,7 +1188,7 @@ public class AutomatedExperimentRunner {
                         ? "Pre-HUSPM-TSU" : "Pre-HUSPM";
                 if (!algoEnabled(label)) continue;
                 final PreHUSPMAlgorithm.PreHUSPMAlgo preh = new PreHUSPMAlgorithm.PreHUSPMAlgo(
-                        Su, DEFAULT_PRE_HUSPM_SL_RATIO, ENABLE_PATTERN_EXPORT, variant);
+                        Su, slRatioFor(dsName), ENABLE_PATTERN_EXPORT, variant);
                 boolean poisoned = false;
                 announce(label, dsName, tag + "_INIT", 0);
                 ExperimentMetrics m0 = measure(label, dsName, 0, tag + "_INIT",
@@ -1239,7 +1251,7 @@ public class AutomatedExperimentRunner {
 
             PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo rm0 =
                     new PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo(
-                            Su, DEFAULT_KAPPA, DEFAULT_DELTA0, DEFAULT_SL_MIN_RATIO,
+                            Su, DEFAULT_KAPPA, DEFAULT_DELTA0, slRatioFor(dsName),
                             PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.AblationMode.FULL,
                             ENABLE_PATTERN_EXPORT);
             announce("Remine-from-scratch", dsName, tag + "_INIT", 0);
@@ -1273,7 +1285,7 @@ public class AutomatedExperimentRunner {
                 final double finalTotal = newTotal;
                 PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo rm =
                         new PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo(
-                                Su, DEFAULT_KAPPA, DEFAULT_DELTA0, DEFAULT_SL_MIN_RATIO,
+                                Su, DEFAULT_KAPPA, DEFAULT_DELTA0, slRatioFor(dsName),
                                 PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.AblationMode.FULL,
                                 ENABLE_PATTERN_EXPORT);
                 announce("Remine-from-scratch", dsName, tag + "_INC", batchIdx);
@@ -1297,7 +1309,7 @@ public class AutomatedExperimentRunner {
         // -------- Algorithm 3: Adaptive-Full (isolated scope) --------
         if (algoEnabled("Adaptive-Full")) {
             PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp = new PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo(
-                    Su, DEFAULT_KAPPA, DEFAULT_DELTA0, DEFAULT_SL_MIN_RATIO,
+                    Su, DEFAULT_KAPPA, DEFAULT_DELTA0, slRatioFor(dsName),
                     PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.AblationMode.FULL,
                     ENABLE_PATTERN_EXPORT);
             boolean poisoned = false;
@@ -1485,7 +1497,7 @@ public class AutomatedExperimentRunner {
                 }
                 case "Pre-HUSPM": {
                     PreHUSPMAlgorithm.PreHUSPMAlgo pre = new PreHUSPMAlgorithm.PreHUSPMAlgo(
-                            su, DEFAULT_PRE_HUSPM_SL_RATIO, ENABLE_PATTERN_EXPORT);
+                            su, slRatioFor(dsName), ENABLE_PATTERN_EXPORT);
                     ExperimentMetrics m = measure(algo, dsName, iter, tag,
                             () -> pre.runInitialMining(db, totalUtil),
                             () -> pre.candidateCount, () -> pre.patternCount, null, null);
@@ -1494,7 +1506,7 @@ public class AutomatedExperimentRunner {
                 }
                 case "Adaptive-Full": {
                     PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp = new PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo(
-                            su, DEFAULT_KAPPA, DEFAULT_DELTA0, DEFAULT_SL_MIN_RATIO,
+                            su, DEFAULT_KAPPA, DEFAULT_DELTA0, slRatioFor(dsName),
                             PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.AblationMode.FULL,
                             ENABLE_PATTERN_EXPORT);
                     ExperimentMetrics m = measure(algo, dsName, iter, tag,
