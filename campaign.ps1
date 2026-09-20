@@ -124,6 +124,12 @@ while ($true) {
     if (-not $arm) { Write-Host "======== nothing left in $Scenario ========"; break }
     $d = $arm.d; $a = $arm.a; $dir = $arm.dir
     New-Item -ItemType Directory -Force $dir | Out-Null
+    # Clear anything a previous attempt left. ResultCollector APPENDS to its CSV, so an arm
+    # that is retried writes its new batches after the old ones: FIFA/Pre-HUSPM-TSU ended up
+    # with 143 rows and 48 duplicated iteration numbers from two runs, which no analysis
+    # could read correctly and nothing flagged. The run log is overwritten and so hid it.
+    Get-ChildItem $dir -File -ErrorAction SilentlyContinue |
+        Where-Object { $_.Name -ne 'DONE' } | Remove-Item -Force
     "$host_ $(Get-Date -f 'yyyy-MM-dd HH:mm:ss')" | Set-Content "$dir/CLAIM"
     [void](Publish "Claim $Scenario/$d/$a on $host_")
 
