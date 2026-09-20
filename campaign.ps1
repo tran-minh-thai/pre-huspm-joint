@@ -77,6 +77,10 @@ function Get-NextArm {
     foreach ($d in $Datasets) { foreach ($a in $Algorithms) {
         $dir = "$root/$d/$a"
         if (Test-Path "$dir/DONE") { continue }
+        # An arm set aside on purpose. It is not failure and not success: the measurement is
+        # real but too expensive to finish right now, and the file says what was learned and
+        # what to try. Delete the file to put the arm back in the queue.
+        if (Test-Path "$dir/DEFERRED") { continue }
         $c = "$dir/CLAIM"
         if (Test-Path $c) {
             $age = (Get-Date) - (Get-Item $c).LastWriteTime
@@ -96,15 +100,20 @@ if ($ver -notmatch '"21\.') { throw "This study is pinned to JDK 21. Found: $ver
 
 if ($List) {
     Sync-Repo
-    $todo = @(); $done = 0; $held = 0
+    $todo = @(); $defer = @(); $done = 0; $held = 0
     foreach ($d in $Datasets) { foreach ($a in $Algorithms) {
         $dir = "$root/$d/$a"
         if (Test-Path "$dir/DONE") { $done++ }
+        elseif (Test-Path "$dir/DEFERRED") { $defer += "$d/$a" }
         elseif (Test-Path "$dir/CLAIM") { $held++; $todo += "$d/$a (claimed: $(Get-Content "$dir/CLAIM" -Raw))".Trim() }
         else { $todo += "$d/$a" }
     } }
-    Write-Host "$Scenario : $done done, $held claimed, $($todo.Count) left"
+    Write-Host "$Scenario : $done done, $held claimed, $($todo.Count) left, $($defer.Count) deferred"
     $todo | ForEach-Object { Write-Host "  $_" }
+    if ($defer.Count) {
+        Write-Host "deferred (delete the DEFERRED file to requeue):"
+        $defer | ForEach-Object { Write-Host "  $_" }
+    }
     return
 }
 
