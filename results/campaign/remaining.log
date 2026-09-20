@@ -1,0 +1,10 @@
+host=ADMIN-PC  java=java.exe : openjdk version "21.0.12.1" 2026-08-18 LTS
+At D:\pre-huspm-adaptive\campaign.ps1:98 char:9
++ $ver = (& $java -version 2>&1 | Select-Object -First 1 | Out-String). ...
++         ~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (openjdk version... 2026-08-18 LTS:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+compiling...
+Note: D:\pre-huspm-adaptive\src\AutomatedExperimentRunner.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+=== SC2 campaign on ADMIN-PC - 2026-09-21 06:55:20 ===
