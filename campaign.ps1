@@ -49,6 +49,22 @@ if (-not $Datasets) {
     }
 }
 
+# Check the names before anything uses them. Passed through -File, PowerShell hands an
+# array parameter the whole comma-joined string, so -Algorithms A,B arrives as one name
+# "A,B". Unchecked, that name matched no algorithm: the runner produced an empty CSV in
+# seconds and the script wrote DONE for it, leaving one junk arm per database and looking
+# like it had worked. Use -Command "& { .\campaign.ps1 -Algorithms 'A','B' }" instead.
+$knownAlgos = @('Adaptive-Full','Pre-HUSPM','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+')
+$knownSets  = @('SIGN','LEVIATHAN','TAFENG','BIBLE','BMS1','C8T1S5I8N5K','KOSARAK','FIFA')
+foreach ($a in $Algorithms) {
+    if ($knownAlgos -notcontains $a) {
+        throw "Unknown algorithm '$a'. Known: $($knownAlgos -join ', '). If you passed a comma-separated list through -File, PowerShell made it one string; use -Command \"& { .\campaign.ps1 -Algorithms 'A','B' }\" instead."
+    }
+}
+foreach ($d in $Datasets) {
+    if ($knownSets -notcontains $d) { throw "Unknown database '$d'. Known: $($knownSets -join ', ')." }
+}
+
 function Sync-Repo {
     if ($NoGit) { return }
     try { git pull --rebase --autostash -q 2>&1 | Out-Null } catch { Write-Host "  (pull failed, carrying on)" }
