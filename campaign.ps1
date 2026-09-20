@@ -58,7 +58,9 @@ $knownAlgos = @('Adaptive-Full','Pre-HUSPM','Pre-HUSPM-TSU','Remine-from-scratch
 $knownSets  = @('SIGN','LEVIATHAN','TAFENG','BIBLE','BMS1','C8T1S5I8N5K','KOSARAK','FIFA')
 foreach ($a in $Algorithms) {
     if ($knownAlgos -notcontains $a) {
-        throw "Unknown algorithm '$a'. Known: $($knownAlgos -join ', '). If you passed a comma-separated list through -File, PowerShell made it one string; use -Command \"& { .\campaign.ps1 -Algorithms 'A','B' }\" instead."
+        throw ("Unknown algorithm '$a'. Known: " + ($knownAlgos -join ', ') +
+               ". A comma-separated list passed through -File arrives as one string; " +
+               "invoke with -Command instead, quoting each name separately.")
     }
 }
 foreach ($d in $Datasets) {
