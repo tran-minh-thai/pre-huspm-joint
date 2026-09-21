@@ -28,11 +28,18 @@ param(
     [string[]] $Datasets,
     [string[]] $Algorithms = @('Adaptive-Full','Pre-HUSPM','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+'),
     [int]      $CapSeconds = 28800,
-    # Heap for each arm. 24 was chosen before anyone looked at the machine, which has 64 GB,
-    # and six arms died of it: Pre-HUSPM on LEVIATHAN at INIT, IncUSP-Miner+ on four
-    # databases. A baseline reported as exhausting memory under a cap set below the hardware
-    # is not a finding about the baseline.
-    [int]      $HeapGb = 24,
+    # Heap for every arm, one value for the whole campaign. -Xmx is a ceiling, not a
+    # reservation: an arm that needs 800 MB takes 800 MB whatever this says, so there is
+    # nothing to gain by tuning it per database and something to lose - the number decides
+    # results, and a table whose rows were measured under different ceilings compares the
+    # ceilings as much as the algorithms.
+    #
+    # 48 on a 64 GB machine, leaving the operating system the rest. It was 24, chosen before
+    # anyone looked at the hardware, and six arms died of it. Raising it to 48 did not rescue
+    # them but moved every one: IncUSP-Miner+ reached batch 75 instead of 32 on LEVIATHAN, 41
+    # instead of 15 on BIBLE, 12 instead of 7 on KOSARAK. That is why the figure has to be
+    # fixed for the whole campaign and reported with the results.
+    [int]      $HeapGb = 48,
     [switch]   $List,
     [switch]   $NoGit
 )
