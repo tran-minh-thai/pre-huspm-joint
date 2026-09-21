@@ -403,11 +403,26 @@ public class AutomatedExperimentRunner {
     private static String datasetDir = DATASET_DIR;
 
     /**
-     * Subset 3 dataset cho SC3, SC4, SC6 (theo paper Mục 4.6.3-4.6.6).
-     * Chọn 3 dataset dày + thưa đại diện. paper KHÔNG bao giờ thuộc subset này.
+     * The three databases SC3, SC4, SC5 and SC6 are measured on.
+     *
+     * KOSARAK was the third and is now C8T1S5I8N5K. The reason is SC5, which measures a grid
+     * of four increment counts by four arrival strategies. Measured on SIGN, that grid costs
+     * 10.5 times what SC2 costs for the same arm: halving K saves only 24% rather than 50%,
+     * because each batch carries a fixed cost and the rescans do not thin out in proportion.
+     * Multiplying KOSARAK's SC2 time by 10.5 gives about fifty hours for its four working
+     * arms, and over eighty for Pre-HUSPM-TSU alone, which already fails to finish SC2.
+     *
+     * The replacement is not a concession. KOSARAK and BMS1 are both sparse click-streams, so
+     * the old three covered dense-dense-sparse; SIGN, LEVIATHAN and C8T1S5I8N5K cover small
+     * and dense, medium, and large - and C8T1S5I8N5K is the only database here that reaches
+     * within-event extension, at 7.97 items per event where the other seven hold exactly one.
+     * Losing it from these four scenarios would have left that case measured only in SC1,
+     * SC2 and SC7.
+     *
+     * KOSARAK stays in SC1, SC2 and SC7, which is where its size earns its keep.
      */
     private static final Set<String> SUBSET_3 = new HashSet<>(Arrays.asList(
-            "SIGN", "LEVIATHAN", "KOSARAK"));
+            "SIGN", "LEVIATHAN", "C8T1S5I8N5K"));
 
     /**
      * Tập đại diện cho ABLATION C5 (incremental, nặng) trong SC7.
