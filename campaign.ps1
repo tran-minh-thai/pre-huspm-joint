@@ -26,7 +26,9 @@
 param(
     [string]   $Scenario   = 'SC2',
     [string[]] $Datasets,
-    [string[]] $Algorithms = @('Adaptive-Full','Pre-HUSPM','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+'),
+    # SC7's arms are the ablations, not the algorithms, so it gets its own list below unless
+    # one is given explicitly.
+    [string[]] $Algorithms,
     [int]      $CapSeconds = 28800,
     # Heap for every arm, one value for the whole campaign. -Xmx is a ceiling, not a
     # reservation: an arm that needs 800 MB takes 800 MB whatever this says, so there is
@@ -53,6 +55,15 @@ if (-not $host_) { $host_ = 'unknown' }
 # BMS1 is absent from every scenario that grows past D_init: it cannot be mined on the whole
 # database at any threshold that returns patterns. The runner skips it and says so; leaving
 # it out here keeps the work list honest about what there is to do.
+if (-not $Algorithms) {
+    $Algorithms = if ($Scenario -eq 'SC7') {
+        @('proposed_full','proposed_no_block_index','proposed_no_IUB',
+          'proposed_C5_on','proposed_C5_off','Pre-HUSPM')
+    } else {
+        @('Adaptive-Full','Pre-HUSPM','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+')
+    }
+}
+
 if (-not $Datasets) {
     $Datasets = if ($Scenario -eq 'SC1') {
         @('SIGN','LEVIATHAN','TAFENG','BIBLE','BMS1','C8T1S5I8N5K','KOSARAK','FIFA')
@@ -66,7 +77,9 @@ if (-not $Datasets) {
 # "A,B". Unchecked, that name matched no algorithm: the runner produced an empty CSV in
 # seconds and the script wrote DONE for it, leaving one junk arm per database and looking
 # like it had worked. Use -Command "& { .\campaign.ps1 -Algorithms 'A','B' }" instead.
-$knownAlgos = @('Adaptive-Full','Pre-HUSPM','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+')
+$knownAlgos = @('Adaptive-Full','Pre-HUSPM','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+',
+                'proposed_full','proposed_no_block_index','proposed_no_IUB',
+                'proposed_C5_on','proposed_C5_off')
 $knownSets  = @('SIGN','LEVIATHAN','TAFENG','BIBLE','BMS1','C8T1S5I8N5K','KOSARAK','FIFA')
 foreach ($a in $Algorithms) {
     if ($knownAlgos -notcontains $a) {

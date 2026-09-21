@@ -1083,6 +1083,11 @@ public class AutomatedExperimentRunner {
     private static void logAblation(ResultCollector col, DatasetConfig ds, List<Sequence> full,
                                     double totalUtil, String tag, boolean useBlockIndex,
                                     boolean useIub) {
+        // SC7's arms carry their own names - proposed_full, proposed_no_IUB and the rest -
+        // and until now nothing here consulted -Dalgo.only. campaign.ps1 gives each arm its
+        // own JVM, so running SC7 through it repeated every ablation once per name in the
+        // algorithm list: five times the work, five copies of each row.
+        if (!algoEnabled(tag)) return;
         PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp = new PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo(
                 ds.defaultSu, DEFAULT_KAPPA, DEFAULT_DELTA0, slRatioFor(ds.name),
                 PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.AblationMode.FULL,
@@ -1107,6 +1112,7 @@ public class AutomatedExperimentRunner {
      */
     private static void logC5Ablation(ResultCollector col, DatasetConfig ds, List<Sequence> full,
                                       boolean useAdaptiveRescan, String tag) {
+        if (!algoEnabled(tag)) return;
         List<Sequence> dInit = dInitFor(ds, full);
         List<Sequence> rest = tailFrom(full, dInit.size());
         List<List<Sequence>> batches = splitByWeights(rest, equalWeights(BATCH_COUNT));
