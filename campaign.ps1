@@ -5,6 +5,13 @@
         .\campaign.ps1 -List        # say what is left without running anything
         .\campaign.ps1 -Scenario SC1
         .\campaign.ps1 -Datasets FIFA
+        .\campaign.ps1 -SessionHours 8   # one sitting; run it again tomorrow to continue
+
+    Sessions. The campaign is tens of hours, so it is meant to be run in sittings rather
+    than in one go. -SessionHours stops the loop taking new arms once the budget is spent
+    and prints what is left; running the same command again continues, because an arm is
+    the unit of progress and every finished arm is already committed. Nothing is lost by
+    stopping and nothing is repeated by starting again.
 
     The campaign is a list of (database, algorithm) arms. Each arm records a DONE file when
     it finishes and a CLAIM file while it runs, both committed and pushed, so a machine
@@ -42,6 +49,17 @@ param(
     # instead of 15 on BIBLE, 12 instead of 7 on KOSARAK. That is why the figure has to be
     # fixed for the whole campaign and reported with the results.
     [int]      $HeapGb = 48,
+    # Stop taking new arms once the session has run this long. 0 means run until the
+    # scenario is finished, which is the old behaviour.
+    #
+    # The session stops BETWEEN arms, never inside one. An arm killed at a wall-clock
+    # boundary is not a measurement: how far it got would depend on when the session
+    # happened to start, so the row would be neither a runtime nor an honest failure.
+    # A session therefore overruns by however long its last arm takes, bounded by
+    # CapSeconds. Budget 8 hours to land inside 10 with CapSeconds at its default 8;
+    # the arms known to run past 4 hours are FIFA/Remine-from-scratch and the two
+    # Pre-HUSPM-TSU arms already marked DEFERRED.
+    [double]   $SessionHours = 0,
     [switch]   $List,
     [switch]   $NoGit
 )
@@ -177,9 +195,36 @@ if ($LASTEXITCODE -ne 0) { throw "compile failed" }
 
 # ---- the loop ---------------------------------------------------------------
 Write-Host "=== $Scenario campaign on $host_ - $(Get-Date -f 'yyyy-MM-dd HH:mm:ss') ==="
+$sessionStart = Get-Date
+$armsThisSession = 0
+if ($SessionHours -gt 0) {
+    Write-Host ("session budget $SessionHours h - no new arm starts after " +
+                "$($sessionStart.AddHours($SessionHours).ToString('HH:mm:ss'))")
+}
+
+function Stop-Session($reason) {
+    $h = ((Get-Date) - $sessionStart).TotalHours
+    Write-Host ("======== session over: $reason ========")
+    Write-Host ("  {0} arm(s) in {1:N2} h on $host_" -f $armsThisSession, $h)
+    $left = 0; $done = 0
+    foreach ($d in $Datasets) { foreach ($a in $Algorithms) {
+        if (Test-Path "$root/$d/$a/DONE") { $done++ }
+        elseif (-not (Test-Path "$root/$d/$a/DEFERRED")) { $left++ }
+    } }
+    Write-Host "  $Scenario now: $done done, $left left. Same command again to continue."
+}
+
 while ($true) {
+    if ($SessionHours -gt 0 -and ((Get-Date) - $sessionStart).TotalHours -ge $SessionHours) {
+        Stop-Session "budget of $SessionHours h spent"
+        break
+    }
     $arm = Get-NextArm
-    if (-not $arm) { Write-Host "======== nothing left in $Scenario ========"; break }
+    if (-not $arm) {
+        if ($SessionHours -gt 0) { Stop-Session "nothing left in $Scenario" }
+        else { Write-Host "======== nothing left in $Scenario ========" }
+        break
+    }
     $d = $arm.d; $a = $arm.a; $dir = $arm.dir
     New-Item -ItemType Directory -Force $dir | Out-Null
     # Clear anything a previous attempt left. ResultCollector APPENDS to its CSV, so an arm
@@ -207,6 +252,7 @@ while ($true) {
     "host=$host_ finished=$(Get-Date -f 'yyyy-MM-dd HH:mm:ss') seconds=$secs rc=$($p.ExitCode) rows=$rows capped=$capped" |
         Set-Content "$dir/DONE"
     Remove-Item "$dir/CLAIM" -ErrorAction SilentlyContinue
+    $armsThisSession++
     Write-Host "#### $d / $a done $(Get-Date -f HH:mm:ss)  ${secs}s  rc=$($p.ExitCode)  rows=$rows$(if($capped){'  CAPPED'})"
     if (-not (Publish "$Scenario/$d/$a on $host_ ($secs s, $rows rows)")) {
         Write-Host "  (could not push results; they are committed locally)"

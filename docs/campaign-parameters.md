@@ -22,6 +22,42 @@ Start from an empty `results/campaign`. The earlier arms are archived under
 JDK 21, so none of them can go in a table beside the ones measured now. They are kept for
 the cost figures below and for the failure modes, not as results.
 
+## Running it in sessions
+
+The campaign is tens of hours, so it runs in sittings of eight to ten:
+
+    .\campaign.ps1 -Scenario SC2 -SessionHours 8
+
+The loop stops taking new arms once the budget is spent, prints how many arms it finished
+and how many are left, and exits. The same command tomorrow continues where it stopped: an
+arm is the unit of progress, every finished arm is already committed and pushed, and an arm
+interrupted mid-run leaves only its `CLAIM`, which is offered again after `CapSeconds` plus
+an hour.
+
+The session stops between arms, never inside one. An arm killed on a wall-clock boundary is
+not a measurement - how far it got would depend on when the sitting began - so a session
+overruns by however long its last arm takes, bounded by `CapSeconds`. Eight hours of budget
+with the default eight-hour cap therefore lands inside ten in every case seen so far, where
+the longest arm that finishes is FIFA/Remine-from-scratch at 4.9 h.
+
+Order, heaviest first, so the numbers the paper leans on exist before the cheap ones:
+
+| sitting | command | measured on the laptop |
+|---|---|---|
+| 1-3 | `-Scenario SC2 -SessionHours 8` | ~41 h, three quarters of the campaign |
+| 4 | `-Scenario SC5 -SessionHours 8` | ~7.3 h |
+| 5 | `-Scenario SC1 -SessionHours 8` | 7 h and up; FIFA is the part that hurts |
+| 6 | `-Scenario SC3`, then SC4, SC6, SC7 | ~2.6 h together |
+
+On a desktop Zen 5 expect roughly half of each figure, and less again when two machines take
+arms from the same queue.
+
+Two arms are known not to finish: FIFA/Pre-HUSPM-TSU and KOSARAK/Pre-HUSPM-TSU, which reached
+95 and 89 of 101 batches in 13.1 h and 8 h. Left in the queue they spend `CapSeconds` each
+proving it again, which is a whole sitting. Their `DEFERRED` files are in
+`results/campaign-jdk21`; copy them into the new tree before the first SC2 sitting to keep
+them out, or leave them queued if the point is to confirm the behaviour under this JDK.
+
 ## Settled parameters
 
 | parameter | value | why |
