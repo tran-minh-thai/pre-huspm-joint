@@ -1,0 +1,11 @@
+budgets: 3,000,000,000 candidates, 900 s per probe, 900 s per level
+
+=== KOSARAK | D_init | |D|=90,002 | TSU=34,956,968 ===
+       uut     patterns         ms  status
+   0.01778      >budget     102904  abandoned:patternbudgetexceeded
+   0.01890           16      29136  ok
+   0.02001           14      20939  ok
+   0.02112           13      18303  ok
+   0.02223           11      12557  ok
+
+-> D:\pre-huspm-adaptive\results\kosarak-rl\thresholds-admin-pc.csv

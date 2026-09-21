@@ -1,0 +1,54 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC1]
+Heap max: 49152 MB
+
+--- [SC1] Static baseline on D_init (50%) ---
+>> RUNNING USpan/SIGN/SC1_su=0.049134#0  (heap free=1009MB / total=1024MB / max=49152MB)
+[USpan/SIGN/SC1_su=0.049134#0] OK t=12442ms cand=11582204 pat=2814 heapDelta=352MB
+>> RUNNING HUSP-ULL/SIGN/SC1_su=0.049134#0  (heap free=115MB / total=128MB / max=49152MB)
+[HUSP-ULL/SIGN/SC1_su=0.049134#0] OK t=4593ms cand=11582204 pat=2814 heapDelta=450MB
+>> RUNNING HUSP-SP/SIGN/SC1_su=0.049134#0  (heap free=115MB / total=128MB / max=49152MB)
+[HUSP-SP/SIGN/SC1_su=0.049134#0] OK t=5969ms cand=11532253 pat=2814 heapDelta=290MB
+>> RUNNING IncUSP-Miner+/SIGN/SC1_su=0.049134#0  (heap free=115MB / total=128MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC1_su=0.049134#0] OK t=7591ms cand=11582204 pat=2814 heapDelta=2552MB
+>> RUNNING Pre-HUSPM/SIGN/SC1_su=0.049134#0  (heap free=115MB / total=128MB / max=49152MB)
+[Pre-HUSPM/SIGN/SC1_su=0.049134#0] OK t=3977ms cand=22212590 pat=2814 heapDelta=514MB
+>> RUNNING Adaptive-Full/SIGN/SC1_su=0.049134#0  (heap free=115MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC1_su=0.049134#0] OK t=1791ms cand=22212590 pat=2814 heapDelta=35MB
+>> RUNNING USpan/SIGN/SC1_su=0.065911#0  (heap free=115MB / total=128MB / max=49152MB)
+[USpan/SIGN/SC1_su=0.065911#0] OK t=6116ms cand=4811015 pat=583 heapDelta=288MB
+>> RUNNING HUSP-ULL/SIGN/SC1_su=0.065911#0  (heap free=115MB / total=128MB / max=49152MB)
+[HUSP-ULL/SIGN/SC1_su=0.065911#0] OK t=2255ms cand=4811015 pat=583 heapDelta=478MB
+>> RUNNING HUSP-SP/SIGN/SC1_su=0.065911#0  (heap free=115MB / total=128MB / max=49152MB)
+[HUSP-SP/SIGN/SC1_su=0.065911#0] OK t=3127ms cand=4789358 pat=583 heapDelta=285MB
+>> RUNNING IncUSP-Miner+/SIGN/SC1_su=0.065911#0  (heap free=115MB / total=128MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC1_su=0.065911#0] OK t=3927ms cand=4811015 pat=583 heapDelta=1299MB
+>> RUNNING Pre-HUSPM/SIGN/SC1_su=0.065911#0  (heap free=115MB / total=128MB / max=49152MB)
+[Pre-HUSPM/SIGN/SC1_su=0.065911#0] OK t=1781ms cand=9425036 pat=583 heapDelta=312MB
+>> RUNNING Adaptive-Full/SIGN/SC1_su=0.065911#0  (heap free=115MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC1_su=0.065911#0] OK t=459ms cand=9425036 pat=583 heapDelta=19MB
+>> RUNNING USpan/SIGN/SC1_su=0.083371#0  (heap free=115MB / total=128MB / max=49152MB)
+[USpan/SIGN/SC1_su=0.083371#0] OK t=3502ms cand=2316235 pat=140 heapDelta=289MB
+>> RUNNING HUSP-ULL/SIGN/SC1_su=0.083371#0  (heap free=115MB / total=128MB / max=49152MB)
+[HUSP-ULL/SIGN/SC1_su=0.083371#0] OK t=1331ms cand=2316235 pat=140 heapDelta=394MB
+>> RUNNING HUSP-SP/SIGN/SC1_su=0.083371#0  (heap free=115MB / total=128MB / max=49152MB)
+[HUSP-SP/SIGN/SC1_su=0.083371#0] OK t=1852ms cand=2308014 pat=140 heapDelta=274MB
+>> RUNNING IncUSP-Miner+/SIGN/SC1_su=0.083371#0  (heap free=115MB / total=128MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC1_su=0.083371#0] OK t=2321ms cand=2316235 pat=140 heapDelta=1128MB
+>> RUNNING Pre-HUSPM/SIGN/SC1_su=0.083371#0  (heap free=115MB / total=128MB / max=49152MB)
+[Pre-HUSPM/SIGN/SC1_su=0.083371#0] OK t=1106ms cand=4639688 pat=140 heapDelta=276MB
+>> RUNNING Adaptive-Full/SIGN/SC1_su=0.083371#0  (heap free=115MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC1_su=0.083371#0] OK t=258ms cand=4639688 pat=140 heapDelta=12MB
+>> RUNNING USpan/SIGN/SC1_su=0.091052#0  (heap free=115MB / total=128MB / max=49152MB)
+[USpan/SIGN/SC1_su=0.091052#0] OK t=2794ms cand=1736803 pat=79 heapDelta=285MB
+>> RUNNING HUSP-ULL/SIGN/SC1_su=0.091052#0  (heap free=115MB / total=128MB / max=49152MB)
+[HUSP-ULL/SIGN/SC1_su=0.091052#0] OK t=1087ms cand=1736803 pat=79 heapDelta=289MB
+>> RUNNING HUSP-SP/SIGN/SC1_su=0.091052#0  (heap free=115MB / total=128MB / max=49152MB)
+[HUSP-SP/SIGN/SC1_su=0.091052#0] OK t=1616ms cand=1730828 pat=79 heapDelta=286MB
+>> RUNNING IncUSP-Miner+/SIGN/SC1_su=0.091052#0  (heap free=115MB / total=128MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC1_su=0.091052#0] OK t=2390ms cand=1736803 pat=79 heapDelta=635MB
+>> RUNNING Pre-HUSPM/SIGN/SC1_su=0.091052#0  (heap free=115MB / total=128MB / max=49152MB)
+[Pre-HUSPM/SIGN/SC1_su=0.091052#0] OK t=976ms cand=3534133 pat=79 heapDelta=294MB
+>> RUNNING Adaptive-Full/SIGN/SC1_su=0.091052#0  (heap free=115MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC1_su=0.091052#0] OK t=230ms cand=3534133 pat=79 heapDelta=11MB
+=== ALL SCENARIOS DONE (82.0s) ===

@@ -1,0 +1,6 @@
+dataset,scope,level,target_patterns,uut,patterns,probes,mine_ms,status
+KOSARAK,D_init,grid,,0.017783,-1,1,102904,abandoned:patternbudgetexceeded
+KOSARAK,D_init,grid,,0.018896,16,1,29136,ok
+KOSARAK,D_init,grid,,0.020007,14,1,20939,ok
+KOSARAK,D_init,grid,,0.021119,13,1,18303,ok
+KOSARAK,D_init,grid,,0.022230,11,1,12557,ok

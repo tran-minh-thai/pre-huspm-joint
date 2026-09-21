@@ -1,0 +1,28 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC1]
+Heap max: 49152 MB
+
+--- [SC1] Static baseline on D_init (50%) ---
+>> RUNNING USpan/FIFA/SC1_su=0.056234#0  (heap free=5096MB / total=5376MB / max=49152MB)
+[USpan/FIFA/SC1_su=0.056234#0] OK t=1899048ms cand=225776770 pat=42 heapDelta=576MB
+>> RUNNING HUSP-ULL/FIFA/SC1_su=0.056234#0  (heap free=563MB / total=768MB / max=49152MB)
+[HUSP-ULL/FIFA/SC1_su=0.056234#0] OK t=893061ms cand=225776770 pat=42 heapDelta=1174MB
+>> RUNNING HUSP-SP/FIFA/SC1_su=0.056234#0  (heap free=566MB / total=768MB / max=49152MB)
+[HUSP-SP/FIFA/SC1_su=0.056234#0] OK t=877365ms cand=220960082 pat=42 heapDelta=608MB
+>> RUNNING IncUSP-Miner+/FIFA/SC1_su=0.056234#0  (heap free=662MB / total=864MB / max=49152MB)
+[IncUSP-Miner+/FIFA/SC1_su=0.056234] OOM
+[IncUSP-Miner+/FIFA/SC1_su=0.056234#0] FAILED after 2630016ms (OOM)
+>> RUNNING Pre-HUSPM/FIFA/SC1_su=0.056234#0  (heap free=662MB / total=864MB / max=49152MB)
+[Pre-HUSPM/FIFA/SC1_su=0.056234#0] OK t=1134133ms cand=559127153 pat=42 heapDelta=1377MB
+>> RUNNING Adaptive-Full/FIFA/SC1_su=0.056234#0  (heap free=654MB / total=864MB / max=49152MB)
+[Adaptive-Full/FIFA/SC1_su=0.056234#0] OK t=147600ms cand=559127153 pat=42 heapDelta=480MB
+>> RUNNING USpan/FIFA/SC1_su=0.059637#0  (heap free=655MB / total=864MB / max=49152MB)
+[USpan/FIFA/SC1_su=0.059637#0] OK t=1588697ms cand=175918193 pat=18 heapDelta=861MB
+>> RUNNING HUSP-ULL/FIFA/SC1_su=0.059637#0  (heap free=655MB / total=864MB / max=49152MB)
+[HUSP-ULL/FIFA/SC1_su=0.059637#0] OK t=736628ms cand=175918193 pat=18 heapDelta=1132MB
+>> RUNNING HUSP-SP/FIFA/SC1_su=0.059637#0  (heap free=559MB / total=768MB / max=49152MB)
+[HUSP-SP/FIFA/SC1_su=0.059637#0] OK t=701039ms cand=172319088 pat=18 heapDelta=708MB
+>> RUNNING IncUSP-Miner+/FIFA/SC1_su=0.059637#0  (heap free=655MB / total=864MB / max=49152MB)
+[IncUSP-Miner+/FIFA/SC1_su=0.059637] OOM
+[IncUSP-Miner+/FIFA/SC1_su=0.059637#0] FAILED after 2594761ms (OOM)
+>> RUNNING Pre-HUSPM/FIFA/SC1_su=0.059637#0  (heap free=655MB / total=864MB / max=49152MB)

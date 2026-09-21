@@ -1,0 +1,8 @@
+dataset,scope,level,target_patterns,uut,patterns,probes,mine_ms,status
+KOSARAK,D_init,low,12,0.022228,11,4,138685,ok
+KOSARAK,D_init,default,9,0.025000,10,4,49231,ok
+KOSARAK,D_init,high,7,0.028117,7,4,25481,ok
+KOSARAK,D_init,highest,5,0.031623,5,3,5728,ok
+KOSARAK,D_init,gate-cost,,0.018894,16,1,20008,ok
+KOSARAK,full,gate-cost,,0.018894,14,1,438706,ok
+KOSARAK,full,gate-trajectory,1,0.031623,4,1,47673,ok

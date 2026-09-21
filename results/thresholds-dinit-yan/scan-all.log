@@ -1,0 +1,145 @@
+######## SIGN bat dau 20:42:10 ########
+budgets: 3,000,000,000 candidates, 900 s per probe, 2700 s per level
+
+=== SIGN | D_init | |D|=230 | TSU=572,074 ===
+   level     target         uut     patterns  probes        ms  status
+ highest         83     0.09105           79       6      2387  ok
+    high        152     0.08337          140       6      2027  ok
+ default        641     0.06591          583       3      1522  ok
+     low       3030     0.04913         2814       5      4752  ok
+
+--- kiem tra dai --- D_init |D|=230  |  toan bo |D|=730
+  chi phi  r_l x UUT=0.039307 (low) tren D_init ->  7610 mau trong 1574 ms             DAT
+  chi phi  r_l x UUT=0.039307 (low) tren full   ->  2389 mau trong 2556 ms             DAT
+  quy dao  UUT=0.091052 (highest)  79 mau tren D_init -> 16 mau, can >= 16  DAT
+  (khong dat nghia la dai dung tren D_init nhung sai o pham vi ma kich ban that su do: SC1 tren D_init, SC2/SC5/SC6 lon dan, SC3 toan bo)
+
+-> D:\pre-huspm-adaptive\results\thresholds-dinit-yan\thresholds-admin-pc.csv
+######## SIGN xong 20:42:27 ########
+######## LEVIATHAN bat dau 20:42:27 ########
+budgets: 3,000,000,000 candidates, 900 s per probe, 2700 s per level
+
+=== LEVIATHAN | D_init | |D|=2,834 | TSU=4,960,437 ===
+   level     target         uut     patterns  probes        ms  status
+ highest         66     0.01799           63       6      6034  ok
+    high         89     0.01647           89       6      6433  ok
+ default        113     0.01553          107       5      6143  ok
+     low        146     0.01464          136       5      6687  ok
+
+--- kiem tra dai --- D_init |D|=2,834  |  toan bo |D|=5,834
+  chi phi  r_l x UUT=0.011715 (low) tren D_init ->  339 mau trong 1586 ms              DAT
+  chi phi  r_l x UUT=0.011715 (low) tren full   ->  384 mau trong 3707 ms              DAT
+  quy dao  UUT=0.017987 (highest)  63 mau tren D_init -> 81 mau, can >= 13  DAT
+  (khong dat nghia la dai dung tren D_init nhung sai o pham vi ma kich ban that su do: SC1 tren D_init, SC2/SC5/SC6 lon dan, SC3 toan bo)
+
+-> D:\pre-huspm-adaptive\results\thresholds-dinit-yan\thresholds-admin-pc.csv
+######## LEVIATHAN xong 20:43:02 ########
+######## TAFENG bat dau 20:43:02 ########
+budgets: 3,000,000,000 candidates, 900 s per probe, 2700 s per level
+
+=== TAFENG | D_init | |D|=40,665 | TSU=73,902,451 ===
+   level     target         uut     patterns  probes        ms  status
+ highest          4     0.00569            3       3      1382  ok
+    high          5     0.00450            5       3       956  ok
+ default          6     0.00356            6       3       852  ok
+     low         10     0.00281           10       3       908  ok
+
+--- kiem tra dai --- D_init |D|=40,665  |  toan bo |D|=60,665
+  chi phi  r_l x UUT=0.002250 (low) tren D_init ->  17 mau trong 309 ms                DAT
+  chi phi  r_l x UUT=0.002250 (low) tren full   ->  26 mau trong 487 ms                DAT
+  quy dao  UUT=0.005691 (highest)  3 mau tren D_init -> 1 mau, can >= 1  DAT
+  (khong dat nghia la dai dung tren D_init nhung sai o pham vi ma kich ban that su do: SC1 tren D_init, SC2/SC5/SC6 lon dan, SC3 toan bo)
+
+-> D:\pre-huspm-adaptive\results\thresholds-dinit-yan\thresholds-admin-pc.csv
+######## TAFENG xong 20:43:10 ########
+######## BIBLE bat dau 20:43:10 ########
+budgets: 3,000,000,000 candidates, 900 s per probe, 2700 s per level
+
+=== BIBLE | D_init | |D|=21,369 | TSU=20,857,125 ===
+   level     target         uut     patterns  probes        ms  status
+ highest         56     0.03257           58       5      9629  ok
+    high        103     0.02896           96       4      8828  ok
+ default        177     0.02289          192       3      7667  ok
+     low        343     0.01810          376       3     10047  ok
+
+--- kiem tra dai --- D_init |D|=21,369  |  toan bo |D|=36,369
+  chi phi  r_l x UUT=0.014480 (low) tren D_init ->  697 mau trong 4114 ms              DAT
+  chi phi  r_l x UUT=0.014480 (low) tren full   ->  495 mau trong 6076 ms              DAT
+  quy dao  UUT=0.032570 (highest)  58 mau tren D_init -> 44 mau, can >= 12  DAT
+  (khong dat nghia la dai dung tren D_init nhung sai o pham vi ma kich ban that su do: SC1 tren D_init, SC2/SC5/SC6 lon dan, SC3 toan bo)
+
+-> D:\pre-huspm-adaptive\results\thresholds-dinit-yan\thresholds-admin-pc.csv
+######## BIBLE xong 20:44:02 ########
+######## BMS1 bat dau 20:44:02 ########
+budgets: 3,000,000,000 candidates, 900 s per probe, 2700 s per level
+
+=== BMS1 | D_init | |D|=39,601 | TSU=4,615,708 ===
+   level     target         uut     patterns  probes        ms  status
+ highest         15     0.01622           15       4       736  ok
+    high         17     0.01529           18       5     16219  ok
+ default         20     0.01360           21       4     50677  ok
+     low         23     0.01282           22       5     48166  ok
+
+--- kiem tra dai --- D_init |D|=39,601  |  toan bo |D|=59,601
+  chi phi  r_l x UUT=0.010257 (low) tren D_init ->  38 mau trong 11645 ms              DAT
+  chi phi  r_l x UUT=0.010257 (low) tren full   ->  khong khai thac noi: time          KHONG DAT
+  quy dao  UUT=0.016218 (highest)  15 mau tren D_init -> khong khai thac noi, can >= 3  KHONG DAT
+  (khong dat nghia la dai dung tren D_init nhung sai o pham vi ma kich ban that su do: SC1 tren D_init, SC2/SC5/SC6 lon dan, SC3 toan bo)
+
+-> D:\pre-huspm-adaptive\results\thresholds-dinit-yan\thresholds-admin-pc.csv
+######## BMS1 xong 21:16:12 ########
+######## C8T1S5I8N5K bat dau 21:16:12 ########
+budgets: 3,000,000,000 candidates, 900 s per probe, 2700 s per level
+
+=== C8T1S5I8N5K | D_init | |D|=27,133 | TSU=27,378,519 ===
+   level     target         uut     patterns  probes        ms  status
+ highest       2741     0.00124         2726       6      9531  ok
+    high       3695     0.00120         3427       6    179554  ok
+ default       4894     0.00113         5082       5    222148  ok
+     low       6337     0.00110         6101       6    251167  ok
+
+--- kiem tra dai --- D_init |D|=27,133  |  toan bo |D|=47,132
+  chi phi  r_l x UUT=0.000879 (low) tren D_init ->  17981 mau trong 24017 ms           DAT
+  chi phi  r_l x UUT=0.000879 (low) tren full   ->  14598 mau trong 24817 ms           DAT
+  quy dao  UUT=0.001236 (highest)  2726 mau tren D_init -> 1485 mau, can >= 546  DAT
+  (khong dat nghia la dai dung tren D_init nhung sai o pham vi ma kich ban that su do: SC1 tren D_init, SC2/SC5/SC6 lon dan, SC3 toan bo)
+
+-> D:\pre-huspm-adaptive\results\thresholds-dinit-yan\thresholds-admin-pc.csv
+######## C8T1S5I8N5K xong 21:28:08 ########
+######## KOSARAK bat dau 21:28:08 ########
+budgets: 3,000,000,000 candidates, 900 s per probe, 2700 s per level
+
+=== KOSARAK | D_init | |D|=90,002 | TSU=34,956,968 ===
+   level     target         uut     patterns  probes        ms  status
+ highest          5     0.03162            5       3      7293  ok
+    high          7     0.02812            7       4     28151  ok
+ default          9     0.02500           10       4    119208  ok
+     low         12     0.02223           11       4    127374  ok
+
+--- kiem tra dai --- D_init |D|=90,002  |  toan bo |D|=990,002
+  chi phi  r_l x UUT=0.017783 (low) tren D_init ->  khong khai thac noi: patternbudgetexceeded KHONG DAT
+  chi phi  r_l x UUT=0.017783 (low) tren full   ->  khong khai thac noi: patternbudgetexceeded KHONG DAT
+  quy dao  UUT=0.031623 (highest)  5 mau tren D_init -> 4 mau, can >= 1  DAT
+  (khong dat nghia la dai dung tren D_init nhung sai o pham vi ma kich ban that su do: SC1 tren D_init, SC2/SC5/SC6 lon dan, SC3 toan bo)
+
+-> D:\pre-huspm-adaptive\results\thresholds-dinit-yan\thresholds-admin-pc.csv
+######## KOSARAK xong 21:44:07 ########
+######## FIFA bat dau 21:44:07 ########
+budgets: 3,000,000,000 candidates, 900 s per probe, 2700 s per level
+
+=== FIFA | D_init | |D|=10,450 | TSU=22,085,287 ===
+   level     target         uut     patterns  probes        ms  status
+ highest          1     0.07544            1       3    199756  ok
+    high          5     0.06707            5       4    511684  ok
+ default         18     0.05964           18       4    754443  ok
+     low         41     0.05623           42       5   1236693  ok
+
+--- kiem tra dai --- D_init |D|=10,450  |  toan bo |D|=20,450
+  chi phi  r_l x UUT=0.044987 (low) tren D_init ->  371 mau trong 305025 ms            DAT
+  chi phi  r_l x UUT=0.044987 (low) tren full   ->  312 mau trong 528050 ms            DAT
+  quy dao  UUT=0.075436 (highest)  1 mau tren D_init -> 1 mau, can >= 1  DAT
+  (khong dat nghia la dai dung tren D_init nhung sai o pham vi ma kich ban that su do: SC1 tren D_init, SC2/SC5/SC6 lon dan, SC3 toan bo)
+
+-> D:\pre-huspm-adaptive\results\thresholds-dinit-yan\thresholds-admin-pc.csv
+######## FIFA xong 22:44:50 ########
+======== TAT CA XONG 22:44:50 ========
