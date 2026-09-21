@@ -425,10 +425,26 @@ public class AutomatedExperimentRunner {
             "SIGN", "LEVIATHAN", "C8T1S5I8N5K"));
 
     /**
-     * Tập đại diện cho ABLATION C5 (incremental, nặng) trong SC7.
+     * Databases that also get the C5 ablation, the incremental half of SC7.
+     *
+     * The other three SC7 arms are one full mine each and cost seconds. This one is not:
+     * proposed_C5_off rescans on EVERY batch by design, so at BATCH_COUNT=100 it mines from
+     * scratch a hundred times. Its cost is therefore a hundred times a full mine, and that
+     * is what decides who can be in this set.
+     *
+     * KOSARAK was here and is now C8T1S5I8N5K. A full-scope mine of KOSARAK takes 438 s, so
+     * proposed_C5_off alone would be of the order of twelve hours - for one arm, of one
+     * scenario, on one database. C8T1S5I8N5K also replaced it in SUBSET_3, for the same kind
+     * of reason, so the two sets now name the same databases and a reader does not have to
+     * hold two different threes in mind.
+     *
+     * BMS1 stays listed although SC7 does not currently reach it: scopeOk filters it out
+     * because SC7 mines the whole database and BMS1 cannot be mined there. If that ever
+     * changes the ablation should cover it again, which is why the name is left rather than
+     * deleted. Today this set delivers SIGN and C8T1S5I8N5K.
      */
     private static final Set<String> C5_ABLATION_SET = new HashSet<>(Arrays.asList(
-            "BMS1", "SIGN", "KOSARAK"));
+            "BMS1", "SIGN", "C8T1S5I8N5K"));
 
     // ==================================================================
     // ENTRY POINT
