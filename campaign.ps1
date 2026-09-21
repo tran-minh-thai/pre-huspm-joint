@@ -28,6 +28,11 @@ param(
     [string[]] $Datasets,
     [string[]] $Algorithms = @('Adaptive-Full','Pre-HUSPM','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+'),
     [int]      $CapSeconds = 28800,
+    # Heap for each arm. 24 was chosen before anyone looked at the machine, which has 64 GB,
+    # and six arms died of it: Pre-HUSPM on LEVIATHAN at INIT, IncUSP-Miner+ on four
+    # databases. A baseline reported as exhausting memory under a cap set below the hardware
+    # is not a finding about the baseline.
+    [int]      $HeapGb = 24,
     [switch]   $List,
     [switch]   $NoGit
 )
@@ -164,7 +169,7 @@ while ($true) {
     Write-Host "#### $d / $a start $(Get-Date -f HH:mm:ss)"
     $p = Start-Process -FilePath $java -PassThru -NoNewWindow `
          -RedirectStandardOutput "$dir/run.log" -RedirectStandardError "$dir/run.err" `
-         -ArgumentList @('-Xmx24g','-Xss64m','-cp','build',
+         -ArgumentList @("-Xmx${HeapGb}g",'-Xss64m','-cp','build',
              "-Ddataset.only=$d", "-Dalgo.only=$a", '-Drepeats=1',
              "-Dresults.dir=$dir/", 'AutomatedExperimentRunner', $Scenario)
     $capped = $false
