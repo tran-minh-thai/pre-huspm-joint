@@ -40,7 +40,7 @@ run.ps1 / run.sh                   build, run scenarios, write the manifest, plo
 
 | | |
 |---|---|
-| JDK | 17 or later. Pin one version for a measurement campaign; changing it changes the conditions. |
+| JDK | **25**. The code builds on 17 or later, but a measurement campaign is pinned to one version because runtimes from two versions do not belong in one table; `campaign.ps1` refuses to run on anything else. |
 | Python | 3.9 or later, for `analysis/`. `matplotlib` and `pandas` for figures; `aggregate.py` needs only the standard library. |
 | Disk | about 1 GB: 100 MB of databases, the rest results. |
 | Memory | the heap must fit in physical RAM. `run.ps1` refuses to start otherwise, because a heap larger than RAM does not fail fast — it thrashes the page file, inflates every timing, and eventually dies with a native allocation failure. |

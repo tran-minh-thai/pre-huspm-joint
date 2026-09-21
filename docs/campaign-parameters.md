@@ -17,13 +17,16 @@ committed and pushed, so several machines can run the same command and divide th
 without being told who does what. `DEFERRED` marks an arm set aside on purpose; deleting
 the file requeues it.
 
-Start from an empty `results/campaign`. The measurements on this machine mix 24 GB and
-48 GB ceilings and cannot be mixed into one table.
+Start from an empty `results/campaign`. The earlier arms are archived under
+`results/campaign-jdk21`: they mix 24 GB and 48 GB heap ceilings and were measured on
+JDK 21, so none of them can go in a table beside the ones measured now. They are kept for
+the cost figures below and for the failure modes, not as results.
 
 ## Settled parameters
 
 | parameter | value | why |
 |---|---|---|
+| JDK | **25** | One version for the whole campaign, checked by `campaign.ps1` before it measures anything. The source uses no API removed since 17, so this is about comparability rather than compilation: the arms are spread over several machines, and runtimes from two JVM versions do not belong in one table. Changing the number invalidates every arm already measured. |
 | heap | `-Xmx48g` | One ceiling for the whole campaign. It decides results: IncUSP-Miner+ reaches batch 7 on KOSARAK at 24 GB and batch 12 at 48. 48 leaves the OS 16 GB of 64. |
 | `D_init` | per database, `Datasets.Entry.dInitCount` | Yan et al. Table 16 OD.Num, verbatim for the five shared databases. A flat 50% had left rescan_count at zero in 15 of 18 cells. |
 | increments | `K = 100` | Yan et al. section 6.1. At the K=5 this study used, Adaptive and Pre-HUSPM do not separate. |

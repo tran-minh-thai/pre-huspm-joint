@@ -139,7 +139,13 @@ function Get-NextArm {
 $java = if ($env:JAVA_HOME) { Join-Path $env:JAVA_HOME 'bin\java.exe' } else { $null }
 if (-not ($java -and (Test-Path $java))) { $java = (Get-Command java).Source }
 $ver = (& $java -version 2>&1 | Select-Object -First 1 | Out-String).Trim()
-if ($ver -notmatch '"21\.') { throw "This study is pinned to JDK 21. Found: $ver" }
+# One JVM version for the whole campaign, checked here rather than trusted. Runtimes from
+# two versions do not belong in one table, and the arms are spread over several machines, so
+# nothing else would catch a machine that upgraded its JDK between arms. The source uses no
+# API removed since 21, so the pin is about comparability, not compilation. Changing this
+# number invalidates every arm already measured: clear results/campaign so they are queued
+# again instead of being mixed with the new ones.
+if ($ver -notmatch '"25\.') { throw "This study is pinned to JDK 25. Found: $ver" }
 
 if ($List) {
     Sync-Repo
