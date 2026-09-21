@@ -38,15 +38,17 @@ import java.util.List;
 public final class BatchSizeSweep {
 
     private static final String DATASET_DIR = "datasets/";
-    private static final double RL = 0.8, KAPPA = 0.5, DELTA0 = 1e-4;
+    private static final double KAPPA = 0.5, DELTA0 = 1e-4;
 
-    /** Kich thuoc lo tinh theo phan tram TONG UTILITY cua CSDL ban dau. */
+    /**
+     * Kich thuoc lo tinh theo phan tram TONG UTILITY cua CSDL ban dau.
+     *
+     * Truc nay do theo UTILITY chu khong theo so lo, nen no bo tro cho SC5 thay vi trung:
+     * SC5 quet so lo (common.Datasets.BATCH_COUNT_SWEEP) tren cung mot dong du lieu, con
+     * day quet kich thuoc mot lo so voi NGAN SACH AN TOAN, vi ngan sach do la mot ty le
+     * cua tong utility chu khong phai cua so chuoi.
+     */
     private static final double[] BATCH_PCT = {0.1, 0.25, 0.5, 1.0, 2.0, 5.0, 10.0};
-
-    private static final String[][] DEFAULTS = {
-            {"SIGN", "0.025"}, {"LEVIATHAN", "0.060"}, {"FIFA", "0.050"},
-            {"BIBLE", "0.025"}, {"BMS1", "0.014"}, {"KOSARAK", "0.030"},
-    };
 
     public static void main(String[] args) throws IOException {
         String target = args.length > 0 ? args[0] : "ALL";
@@ -54,16 +56,21 @@ public final class BatchSizeSweep {
         for (int i = 1; i < args.length; i++) {
             if ("--out".equals(args[i])) outDir = Paths.get(args[++i]);
         }
+        if (!"ALL".equalsIgnoreCase(target) && common.Datasets.byName(target) == null) {
+            System.out.println("khong co CSDL " + target + "; co the chon: "
+                    + common.Datasets.names());
+            System.exit(2);
+        }
         Files.createDirectories(outDir);
         Path csv = outDir.resolve("SC_batchsize.csv");
 
         try (PrintWriter w = new PrintWriter(Files.newBufferedWriter(csv, StandardCharsets.UTF_8))) {
-            w.println("dataset,uut,trigger_rule,batch_pct,batch_seqs,n_batches,"
+            w.println("dataset,uut,r_l,d_init,trigger_rule,batch_pct,batch_seqs,n_batches,"
                     + "rescans,rescan_ratio,runtime_ms,husp_count,prelarge_count,"
                     + "cub_final,iau_max_final,iau_tightness,sft_ins,tsu_final");
-            for (String[] d : DEFAULTS) {
-                if (!"ALL".equalsIgnoreCase(target) && !d[0].equalsIgnoreCase(target)) continue;
-                sweep(d[0], Double.parseDouble(d[1]), w);
+            for (common.Datasets.Entry e : common.Datasets.all()) {
+                if (!"ALL".equalsIgnoreCase(target) && !e.name.equalsIgnoreCase(target)) continue;
+                sweep(e.name, e.defaultUut, w);
             }
         }
         System.out.println("\n-> " + csv.toAbsolutePath());
@@ -72,11 +79,15 @@ public final class BatchSizeSweep {
     private static void sweep(String name, double uut, PrintWriter w) throws IOException {
         List<Sequence> all = DatasetLoader.loadDataset(
                 DATASET_DIR + name + "_seq.txt", DATASET_DIR + name + "_eui.txt");
-        int half = all.size() / 2;
-        List<Sequence> init = new ArrayList<>(all.subList(0, half));
-        List<Sequence> stream = new ArrayList<>(all.subList(half, all.size()));
+        // D_init va r_l lay tu common.Datasets: nguong duoc hieu chinh tren dung pham vi
+        // nay, va KOSARAK dung r_l = 0.85 chu khong 0.8 - dung mot nua CSDL hay mot r_l
+        // chung se do o diem van hanh khong ai chon.
+        double rl = common.Datasets.slMinRatio(name);
+        int dInit = common.Datasets.dInitCount(name, all.size());
+        List<Sequence> init = new ArrayList<>(all.subList(0, dInit));
+        List<Sequence> stream = new ArrayList<>(all.subList(dInit, all.size()));
         double tsuInit = tsu(init);
-        double sftIns = ((uut - RL * uut) / (1.0 - uut)) * tsuInit;
+        double sftIns = ((uut - rl * uut) / (1.0 - uut)) * tsuInit;
 
         System.out.printf("%n=== %s | UUT=%.4f | TSU(D_init)=%.0f | SFT_ins=%.0f (%.3f%% TSU) ===%n",
                 name, uut, tsuInit, sftIns, 100 * sftIns / tsuInit);
@@ -100,7 +111,7 @@ public final class BatchSizeSweep {
             TriggerRule[] rules = {TriggerRule.SWUMAX, TriggerRule.CUB, TriggerRule.IAUMAX};
             for (int r = 0; r < rules.length; r++) {
                 PreHUSPMAdaptiveAlgo algo = new PreHUSPMAdaptiveAlgo(
-                        uut, KAPPA, DELTA0, RL, AblationMode.FULL, false);
+                        uut, KAPPA, DELTA0, rl, AblationMode.FULL, false);
                 algo.triggerRule = rules[r];
 
                 List<Sequence> current = new ArrayList<>(init);
@@ -123,8 +134,8 @@ public final class BatchSizeSweep {
                 tsuF[r] = tsu(current);
                 if (rules[r] == TriggerRule.IAUMAX) tightness = algo.iauTightness;
 
-                w.printf("%s,%.6f,%s,%.4f,%d,%d,%d,%.6f,%d,%d,%d,%.3f,%.3f,%.4f,%.3f,%.3f%n",
-                        name, uut, rules[r], pct, perBatch, nBatches,
+                w.printf("%s,%.6f,%.2f,%d,%s,%.4f,%d,%d,%d,%.6f,%d,%d,%d,%.3f,%.3f,%.4f,%.3f,%.3f%n",
+                        name, uut, rl, dInit, rules[r], pct, perBatch, nBatches,
                         rescans[r], nBatches == 0 ? 0.0 : (double) rescans[r] / nBatches,
                         runtimes[r], husp[r], prelarge[r],
                         cubF[r], iauF[r], tightness, sftIns, tsuF[r]);

@@ -1,11 +1,11 @@
-# Pre-HUSPM-Adaptive
+﻿# Pre-HUSPM-Adaptive
 
 Incremental high-utility sequential pattern mining over evolving databases: a framework
 that maintains the pattern set under insertion, deletion and modification instead of
 re-mining, together with the baselines and the harness used to measure it.
 
 This repository holds code, the experiment harness, and results. It does not hold the
-manuscript, and it does not hold the databases — those are shared across several studies
+manuscript, and it does not hold the databases â€” those are shared across several studies
 and are fetched from a pinned release (see [Databases](#databases)).
 
 ## Layout
@@ -29,7 +29,7 @@ docs/
   result-columns.md                every CSV column, column by column
   figures.md                       which figure comes from which file
 results/
-  v1-submitted/                    results of the submitted version; never overwritten
+  v1-submitted/                    archived, read-only; no number in it enters this study
   run-<timestamp>-<commit>/        one directory per run, each with its own manifest
 figures/                           generated, one directory per run
 fetch-datasets.ps1 / .sh           fetch and verify the databases
@@ -43,7 +43,7 @@ run.ps1 / run.sh                   build, run scenarios, write the manifest, plo
 | JDK | **25**. The code builds on 17 or later, but a measurement campaign is pinned to one version because runtimes from two versions do not belong in one table; `campaign.ps1` refuses to run on anything else. |
 | Python | 3.9 or later, for `analysis/`. `matplotlib` and `pandas` for figures; `aggregate.py` needs only the standard library. |
 | Disk | about 1 GB: 100 MB of databases, the rest results. |
-| Memory | the heap must fit in physical RAM. `run.ps1` refuses to start otherwise, because a heap larger than RAM does not fail fast — it thrashes the page file, inflates every timing, and eventually dies with a native allocation failure. |
+| Memory | the heap must fit in physical RAM. `run.ps1` refuses to start otherwise, because a heap larger than RAM does not fail fast â€” it thrashes the page file, inflates every timing, and eventually dies with a native allocation failure. |
 | OS | Windows through `run.ps1`, Linux and macOS through `run.sh`. |
 
 ## Databases
@@ -68,24 +68,41 @@ with `-VerifyOnly` (`VERIFY_ONLY=1` for the shell script).
 **Pinned release: `v1.2.1-measured-quantity`.** Changing it changes the data and therefore
 every result; re-run everything after changing it, and record the tag beside the numbers.
 
-| Database | Sequences | Items | Avg. length | Items/event | Total utility | Utilities | Default UUT |
-|---|---:|---:|---:|---:|---:|---|---:|
-| SIGN | 730 | 267 | 52.00 | 1.00 | 1,796,483 | generated | 0.06215 |
-| LEVIATHAN | 5,834 | 9,025 | 33.81 | 1.00 | 10,502,159 | generated | 0.01553 |
-| FIFA | 20,450 | 2,990 | 36.24 | 1.00 | 42,781,841 | generated | 0.059637 |
-| BIBLE | 36,369 | 13,905 | 21.64 | 1.00 | 35,550,162 | generated | 0.02428 |
-| BMS1 | 59,601 | 497 | 2.51 | 1.00 | 7,229,030 | generated | 0.01442 |
-| KOSARAK | 990,002 | 41,270 | 8.10 | 1.00 | 385,921,994 | generated | 0.025 |
-| C8T1S5I8N5K | 47,132 | 68,240 | 18.83 | 7.97 | 47,416,411 | generated | 0.00152 |
-| TAFENG | 60,665 | 23,812 | 13.40 | 1.00 | 106,638,996 | **measured** | 0.003557 |
+| Database | Sequences | Items | Avg. length | Items/event | Total utility | Utilities | `D_init` | `r_l` | Default UUT |
+|---|---:|---:|---:|---:|---:|---|---:|---:|---:|
+| SIGN | 730 | 267 | 52.00 | 1.00 | 1,796,483 | generated | 230 | 0.80 | 0.065911 |
+| LEVIATHAN | 5,834 | 9,025 | 33.81 | 1.00 | 10,502,159 | generated | 2,834 | 0.80 | 0.015530 |
+| FIFA | 20,450 | 2,990 | 36.24 | 1.00 | 42,781,841 | generated | 10,450 | 0.80 | 0.059637 |
+| BIBLE | 36,369 | 13,905 | 21.64 | 1.00 | 35,550,162 | generated | 21,369 | 0.80 | 0.022895 |
+| BMS1 | 59,601 | 497 | 2.51 | 1.00 | 7,229,030 | generated | 39,601 | 0.80 | 0.013597 |
+| KOSARAK | 990,002 | 41,270 | 8.10 | 1.00 | 385,921,994 | generated | 90,002 | **0.85** | 0.025000 |
+| C8T1S5I8N5K | 47,132 | 68,240 | 18.83 | 7.97 | 47,416,411 | generated | 27,133 | 0.80 | 0.001132 |
+| TAFENG | 60,665 | 23,812 | 13.40 | 1.00 | 106,638,996 | **measured** | 40,665 | 0.80 | 0.003557 |
 
-All eight are measured. Two columns carry most of the weight here.
+The table is a copy for reading. `common.Datasets` is the single place these values live, and
+`java -cp build AutomatedExperimentRunner STATUS` prints them from there; a tool that needs a
+threshold, a `D_init` or an `r_l` reads that class rather than carrying its own table.
+
+`D_init` is a count of sequences, not a fraction, and comes from Yan et al. (J Supercomputing
+2025, 81:81) Table 16 `OD.Num` for the five databases shared with them â€” 230 of SIGN's 730,
+not half of anything. The incremental stream is the remainder, always a round number. A flat
+50 percent instead makes every database merely double, and on KOSARAK it turns a tenfold
+growth into a twofold one, which is enough to leave `rescan_count` at zero across most of the
+grid; a quantity that is zero almost everywhere is not being measured.
+
+`r_l` sets the pre-large floor, `LUT_min = r_l * UUT`. It is 0.80 for seven of the eight.
+KOSARAK needs 0.85: at 0.80 its lowest threshold exceeds three billion candidates and is
+abandoned after 103 s, while 0.85 returns 16 patterns in 29 s. Yan et al. treat `Sl` as a
+per-database choice throughout their section 6.3.1, and both the proposal and the baseline
+read the same value here.
+
+All eight are measured. Two more columns carry most of the weight here.
 
 Items per event: seven of the eight hold a single item, so they exercise across-event
 extension only; `C8T1S5I8N5K` alone reaches within-event extension, at 7.97 items per event.
 
 Utilities: seven are generated by the shared converter (`log-normal, seed 42`), and only
-`TAFENG` is measured on both sides — quantities are Ta-Feng's `AMOUNT`, profits its
+`TAFENG` is measured on both sides â€” quantities are Ta-Feng's `AMOUNT`, profits its
 `SALES_PRICE / AMOUNT`. A suite drawn from generated utilities alone cannot answer whether
 internal utility matters at all, which is why one measured database is worth the trouble.
 `TAFENG` is also the one database here that a compared algorithm, IncUSP-Miner+, already
@@ -105,7 +122,7 @@ two files land on the same bytes on any machine, and `tafeng/TAFENG.sha256` pins
 as the release manifest pins the other eighteen. `fetch-datasets` checks them and
 `-VerifyOnly` fails if they are missing or wrong.
 
-Get `ta_feng_all_months_merged.csv` — 817,741 rows, November 2000 to February 2001 — from
+Get `ta_feng_all_months_merged.csv` â€” 817,741 rows, November 2000 to February 2001 â€” from
 [Kaggle](https://www.kaggle.com/datasets/chiranjivdas09/ta-feng-grocery-dataset), then:
 
 ```bash
@@ -127,60 +144,57 @@ What the build does, and why each part is not a detail:
   product id. Both are what make the output reproducible rather than dependent on row order.
 - Sequences shorter than two events are dropped; they cannot contribute a sequential pattern.
 
-### The default thresholds need recalibrating
+### Thresholds are calibrated per release, on `D_init`
 
 Thresholds are ratios of total utility, so they remain *well defined* across releases. They
-do not remain *comparable*. The defaults in the table were tuned against a different draw of
-the utilities, and on the pinned release they select far more patterns: SIGN at 0.025
-returned 641 patterns on the previously vendored files and returns 36,582 on this release.
-Total utility differs by only 7.7 percent there, so the change comes from the shape of the
-utility distribution rather than its scale.
+do not remain *comparable*: the same ratio selects a different number of patterns once the
+shape of the utility distribution changes, and the shift has no common direction. On this
+release SIGN needs thresholds about 2.5 times higher than LEVIATHAN needs lower, and BIBLE
+barely moves â€” BIBLE being one database whose bytes the release left unchanged, which is a
+useful check on the procedure itself. No single factor could have been applied by hand.
 
-A run at these defaults is therefore not a rerun of the submitted experiment, and a pattern
-set that large is not a useful operating point. `experiments.ThresholdScan` re-chooses them,
-searching for the threshold that yields the pattern count the submitted experiments produced
-so the new runs pose comparable work:
+`experiments.ThresholdScan` chooses them. It searches for a level that is a usable operating
+point: enough patterns that the answer is not trivial, cheap enough that a scenario grid
+fits in the measurement budget.
 
 ```bash
-java -Xmx24g -Xss64m -cp build experiments.ThresholdScan ALL --out results/thresholds
+java -Xmx48g -Xss64m -cp build experiments.ThresholdScan ALL --out results/thresholds
 ```
 
 Calibrated on `D_init`, with the search output kept per machine in
-`results/thresholds/thresholds-<host>.csv`:
+`results/thresholds/thresholds-<host>.csv`. Pattern counts do not depend on the machine, so
+this can be run anywhere; the runtimes the tool prints are for impatience only and are not
+reportable.
 
-| Database | Old sweep | Calibrated sweep | Patterns obtained |
-|---|---|---|---|
-| SIGN | 0.020 0.025 0.030 0.032 | **0.04499 0.06215 0.07634 0.08585** | 3288 612 167 76 |
-| LEVIATHAN | 0.055 0.060 0.065 0.070 | **0.01465 0.01553 0.01647 0.01799** | 133 107 88 63 |
-| BIBLE | 0.020 0.025 0.030 0.035 | **0.01976 0.02428 0.02982 0.03557** | 357 194 104 54 |
-| BMS1 | 0.013 0.014 0.015 0.016 | **0.01421 0.01442 0.01575 0.01771** | 20 18 16 14 |
-| FIFA | 0.045 0.050 0.055 0.060 | **0.056234 0.059637 0.067073 0.076000** | 40 17 5 1 |
-| KOSARAK | 0.025 0.030 0.040 0.050 | **0.020 0.025 0.028 0.030** | 12 9 7 5 |
-| C8T1S5I8N5K | none to inherit | **0.00149 0.00152 0.00155 0.00158** | 313 153 79 38 |
-| TAFENG | none to inherit | **0.003162 0.003557 0.004000 0.005060** | 9 6 5 4 |
+| Database | Calibrated sweep | Patterns obtained on `D_init` |
+|---|---|---|
+| SIGN | **0.049134 0.065911 0.083371 0.091052** | 2814 583 140 79 |
+| LEVIATHAN | **0.014644 0.015530 0.016470 0.017987** | 136 107 89 63 |
+| BIBLE | **0.018100 0.022895 0.028960 0.032570** | 376 192 96 58 |
+| BMS1 | **0.012821 0.013597 0.015293 0.016218** | 22 21 18 15 |
+| FIFA | **0.056234 0.059637 0.067073 0.075436** | 42 18 5 1 |
+| KOSARAK | **0.022228 0.025000 0.028117 0.031623** | 11 10 7 5 |
+| C8T1S5I8N5K | **0.001099 0.001132 0.001200 0.001236** | 6101 5082 3427 2726 |
+| TAFENG | **0.002812 0.003557 0.004499 0.005691** | 10 6 5 3 |
 
-Two of these are chosen rather than reproduced, and the difference is worth stating.
-`C8T1S5I8N5K` and `TAFENG` have no submitted counts to inherit. `KOSARAK` has them —
-{12, 6, 5, 5} — but they no longer separate on this release: 6 and 5 both land at 0.030, so
-three of the four levels share one threshold and the sweep would show two operating points
-wearing four labels. Its ladder was re-chosen for the widest spread the database allows;
-0.019 already exceeds three billion candidates, so twelve patterns is a ceiling rather than
-a preference. The same holds for `TAFENG`, where ten patterns at 0.0029 is the most the
-database yields before 0.0028 exceeds the budget; the sweep sits just above that, at the
-values `ThresholdScan` converges to on its own, so re-running the tool reproduces this
-row rather than standing a second ladder beside it.
+A level has to hold up on the whole database as well as on `D_init`, because SC1 is the only
+scenario that stays on `D_init`. C8T1S5I8N5K shows why: an earlier sweep matched its targets
+on the half and collapsed on the whole, 153 patterns becoming 1, so three scenarios would
+have been comparing algorithms against an answer of one pattern. Every level above keeps at
+least 23 percent of its `D_init` count when the database grows. BMS1 fails this outright â€” no
+threshold mines the whole database, 0.030 exceeding three billion candidates while 0.032
+returns the empty set â€” so it carries `fullScopeOk = false` and appears in SC1 alone.
+
+Two databases are bounded from below rather than freely chosen, and the difference is worth
+stating. KOSARAK's ladder is the widest spread it allows: 0.019 already exceeds three billion
+candidates, so eleven patterns is a ceiling and not a preference. TAFENG is the same shape â€”
+ten patterns at 0.0029 is the most it yields before 0.0028 exceeds the budget â€” and its sweep
+sits just above that, at the values `ThresholdScan` converges to on its own, so re-running the
+tool reproduces the row rather than standing a second ladder beside it.
 
 Every database the runner names is calibrated. One that is not would be **skipped** with a
 message naming the command to calibrate it, rather than measured at an operating point
 chosen for different data; `-Duncalibrated=true` overrides that for exploration.
-
-The shift has no common direction: SIGN needs thresholds about 2.5 times higher, LEVIATHAN
-about 4 times lower, and BIBLE barely moves — BIBLE is one of the two databases whose bytes
-were unchanged between the old files and the release, which is a useful consistency check on
-the procedure. No single factor could have been applied by hand.
-
-Pattern counts do not depend on the machine, so calibration can be run anywhere. The
-runtimes `ThresholdScan` prints are for impatience only and are not reportable.
 
 ## Build and run
 
@@ -195,7 +209,7 @@ load main class` when invoked directly.
 .\run.ps1                                                # every scenario
 .\run.ps1 SC1 SC2                                        # selected scenarios
 .\run.ps1 TEST SC1                                       # smoke test on examples/, minutes
-.\run.ps1 -Heap 24g -TimeoutMin 120 -ExpectMachine 'PC'  # a measurement run
+.\run.ps1 -Heap 48g -TimeoutMin 120 -ExpectMachine 'PC'  # a measurement run
 .\run.ps1 -MemMode live                                  # the memory campaign
 ```
 
@@ -203,11 +217,11 @@ To run a single class directly, compile first:
 
 ```powershell
 .\run.ps1 -BuildOnly
-java -Xmx24g -Xss64m -cp build AutomatedExperimentRunner SC1
+java -Xmx48g -Xss64m -cp build AutomatedExperimentRunner SC1
 ```
 ```bash
 javac -encoding UTF-8 -d build $(find src -name '*.java')
-java -Xmx24g -Xss64m -cp build AutomatedExperimentRunner SC1
+java -Xmx48g -Xss64m -cp build AutomatedExperimentRunner SC1
 ```
 
 Verify correctness before measuring anything:
@@ -216,20 +230,34 @@ Verify correctness before measuring anything:
 .\fetch-datasets.ps1 -VerifyOnly                          # databases still intact
 java -cp build verify.WP1AcceptanceTest                   # must report 15 passed, 0 failed
 java -cp build verify.BaselineAgreement SIGN              # static baselines must agree exactly
-java -Xmx24g -cp build verify.CorrectnessVerifier LEVIATHAN --rule iaumax
+java -Xmx48g -cp build verify.CorrectnessVerifier LEVIATHAN --rule iaumax
 ```
 
 ### Scenarios
 
 | Scenario | What it does | Output |
 |---|---|---|
-| SC1 | static mining on `D_init`, the first 50 percent, over four thresholds | `SC1_static.csv` |
-| SC2 | `D_init` plus five equal batches of 10 percent | `SC2_incremental.csv` |
+| SC1 | static mining on `D_init`, over four thresholds | `SC1_static.csv` |
+| SC2 | `D_init` plus **100 equal increments** of the remainder | `SC2_incremental.csv` |
 | SC3 | threshold sweep on the full database | `SC3_su.csv` |
 | SC4 | lower-threshold ratio sweep, `r_l` in {0.3, 0.5, 0.7, 0.9} | `SC4_sl_sensitivity.csv` |
-| SC5 | batch count `K` in {3, 5, 10} crossed with four partitioning strategies | `SC5_batch_strategy.csv` |
+| SC5 | increment count `K` in **{100, 67, 50, 25}** crossed with four partitioning strategies | `SC5_batch_strategy.csv` |
 | SC6 | ten mixed operations at 70:15:15, incremental against remine-from-scratch | `SC6_idm_mixed.csv` |
 | SC7 | ablation of C3, C4 and C5 against Pre-HUSPM | `SC7_ablation.csv` |
+
+One hundred increments, not a handful. Yan et al. section 6.1 divide each database into "an
+original dataset and 100 new datasets", and their section 6.3.1 confirms the arithmetic:
+SIGN's 500 incremental sequences arrive as "5 sequences per increment". Their Fig. 7f reads
+rescans straight off the curve â€” "each inflection point on the curve corresponds to a
+database rescan" â€” which needs a curve with enough points to have inflections.
+
+The count is also what makes the comparison say anything. Coarse increments hide the
+mechanism: on SIGN, the one database that rescans at all, `K=3` gives 5 rescans against the
+baseline's 5, `K=5` gives 10 against 11, and `K=10` gives 17 against 25. The separation opens
+with `K`, so at a handful of increments there is nothing to see. `common.Datasets.BATCH_COUNT`
+holds the 100 and `-Dbatch.count` overrides it for cost probes; `BATCH_COUNT_SWEEP` holds
+SC5's ladder, which keeps the total incremental data fixed and varies only how it is cut,
+as in their Figs. 5-7.
 
 Standalone studies, run directly rather than through `run.ps1`:
 
@@ -272,17 +300,17 @@ Everything below changes results. Defaults are what the scenarios use unless ove
 | kappa | `-Dkappa` | 0.5 | coefficient of the adaptive term |
 | Delta_0 | `-Ddelta0` | 1e-4 | initial margin |
 | B_sz | `-Dblock.size` | 100 | block size of the block-level inverted index |
-| — | `-Dadapt.trigger` | `iaumax` | insertion rescan trigger: `swumax` (the unsound bound of the original method, kept for reference), `cub`, `iaumax` |
-| — | `-Dadapt.strictModify` | `true` | a modification spends `u(old) + u(new)` of the safety budget; `false` reproduces the earlier, unsound accounting |
-| — | `-Dtimeout.min` | 120 | wall-clock limit per call, in minutes |
-| — | `-Drepeats` | 3 | reruns of an identical configuration, for the standard deviation |
-| — | `-Dseeds` | 1 | how many entries of `SEEDS` to sweep; only SC2 (above 1), SC5 `BURST` and SC6 are affected |
-| — | `-Dmem.mode` | `used` | `live` measures the live set instead of used heap |
-| — | `-Dmem.interval.ms` | 1000 | forced-collection interval in live mode |
-| — | `-Dalgo.only` | all | run one algorithm only; required in live mode |
-| — | `-Ddataset.only` | all | run one database only |
-| — | `-Dresults.dir` | `results/` | where CSVs are written |
-| — | `-Xmx`, `-Xss` | `24g`, `64m` | heap and thread stack; deep recursion needs the stack |
+| â€” | `-Dadapt.trigger` | `iaumax` | insertion rescan trigger: `swumax` (the unsound bound of the original method, kept for reference), `cub`, `iaumax` |
+| â€” | `-Dadapt.strictModify` | `true` | a modification spends `u(old) + u(new)` of the safety budget; `false` reproduces the earlier, unsound accounting |
+| â€” | `-Dtimeout.min` | 120 | wall-clock limit per call, in minutes |
+| â€” | `-Drepeats` | 3 | reruns of an identical configuration, for the standard deviation |
+| â€” | `-Dseeds` | 1 | how many entries of `SEEDS` to sweep; only SC2 (above 1), SC5 `BURST` and SC6 are affected |
+| â€” | `-Dmem.mode` | `used` | `live` measures the live set instead of used heap |
+| â€” | `-Dmem.interval.ms` | 1000 | forced-collection interval in live mode |
+| â€” | `-Dalgo.only` | all | run one algorithm only; required in live mode |
+| â€” | `-Ddataset.only` | all | run one database only |
+| â€” | `-Dresults.dir` | `results/` | where CSVs are written |
+| â€” | `-Xmx`, `-Xss` | `24g`, `64m` | heap and thread stack; deep recursion needs the stack |
 
 Algorithm names for `-Dalgo.only` and `-MemArms`: `USpan`, `HUSP-ULL`, `HUSP-SP`,
 `IncUSP-Miner+`, `Pre-HUSPM`, `Pre-HUSPM-TSU`, `Adaptive-Full`, `Remine-from-scratch`.
@@ -307,7 +335,10 @@ the working tree was clean, the JDK, the JVM flags, the machine and its RAM, the
 memory mode, the power plan, and the SHA-256 of every database file. Numbers without a
 manifest are not used.
 
-`results/v1-submitted/` holds the results of the submitted version and is never overwritten.
+`results/v1-submitted/` is an archived directory kept read-only. No number in it belongs to
+this study and none of its rows enters a table or a figure. `results/campaign-jdk21/` is the
+same: arms measured under an earlier JDK and mixed heap ceilings, kept for their cost figures
+and failure modes.
 
 ## License
 

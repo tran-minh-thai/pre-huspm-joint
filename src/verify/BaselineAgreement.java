@@ -22,9 +22,15 @@ import java.util.Map;
  * nen phai chung minh la cai dung, va cach chung minh la doi chieu tap mau voi
  * USpan chu khong phai chi doi chieu SO LUONG mau.
  *
+ * Nguong va D_init lay tu common.Datasets, cung bang ma runner do. Lop nay tung giu
+ * bang nguong RIENG va bang do da cu, nen bang chung "cac baseline tinh khop nhau"
+ * duoc sinh o mot diem van hanh nghien cuu khong con dung - va khop nhau o nguong nao
+ * cung dung, nen khong co gi bao loi. Truyen nguong tay chi de tham do.
+ *
  * Chay:
- *   java -Xmx24g -Xss64m -cp build verify.BaselineAgreement SIGN 0.025
- *   java -Xmx24g -Xss64m -cp build verify.BaselineAgreement ALL
+ *   java -Xmx48g -Xss64m -cp build verify.BaselineAgreement SIGN
+ *   java -Xmx48g -Xss64m -cp build verify.BaselineAgreement SIGN 0.08337   (mot muc khac cua sweep)
+ *   java -Xmx48g -Xss64m -cp build verify.BaselineAgreement ALL
  *
  * Thoat 0 neu moi thuat toan khop nhau, 1 neu co sai lech.
  */
@@ -32,20 +38,21 @@ public final class BaselineAgreement {
 
     private static final String DIR = "datasets";
 
-    private static final String[][] DEFAULTS = {
-            {"SIGN", "0.025"}, {"LEVIATHAN", "0.060"}, {"FIFA", "0.050"},
-            {"BIBLE", "0.025"}, {"BMS1", "0.014"}, {"KOSARAK", "0.030"},
-    };
-
     public static void main(String[] args) throws IOException {
         String target = args.length > 0 ? args[0] : "ALL";
         Double uutArg = (args.length > 1) ? Double.parseDouble(args[1]) : null;
         boolean halfOnly = System.getProperty("half", "true").equalsIgnoreCase("true");
 
+        if (!"ALL".equalsIgnoreCase(target) && common.Datasets.byName(target) == null) {
+            System.out.println("khong co CSDL " + target + "; co the chon: "
+                    + common.Datasets.names());
+            System.exit(2);
+        }
+
         int bad = 0;
-        for (String[] d : DEFAULTS) {
-            if (!"ALL".equalsIgnoreCase(target) && !d[0].equalsIgnoreCase(target)) continue;
-            bad += check(d[0], uutArg != null ? uutArg : Double.parseDouble(d[1]), halfOnly);
+        for (common.Datasets.Entry e : common.Datasets.all()) {
+            if (!"ALL".equalsIgnoreCase(target) && !e.name.equalsIgnoreCase(target)) continue;
+            bad += check(e.name, uutArg != null ? uutArg : e.defaultUut, halfOnly);
         }
         System.out.println();
         System.out.println(bad == 0
@@ -58,8 +65,11 @@ public final class BaselineAgreement {
         List<Sequence> all = DatasetLoader.loadDataset(
                 Paths.get(DIR, name + "_seq.txt").toString(),
                 Paths.get(DIR, name + "_eui.txt").toString());
-        // Mac dinh dung D_init (50% dau) cho khop voi SC1; -Dhalf=false de chay toan bo.
-        List<Sequence> db = halfOnly ? new ArrayList<>(all.subList(0, all.size() / 2)) : all;
+        // Mac dinh dung DUNG D_init cua CSDL do - so chuoi lay tu Datasets, khong phai mot
+        // nua - cho khop SC1, vi nguong duoc hieu chinh tren chinh pham vi ay. -Dhalf=false
+        // de chay toan bo.
+        int dInit = common.Datasets.dInitCount(name, all.size());
+        List<Sequence> db = halfOnly ? new ArrayList<>(all.subList(0, dInit)) : all;
         double tsu = 0;
         for (Sequence s : db) tsu += s.sequenceUtility;
         double minUtil = tsu * uut;
