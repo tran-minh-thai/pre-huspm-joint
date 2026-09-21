@@ -1062,8 +1062,10 @@ public class AutomatedExperimentRunner {
                     forceFullGC();
                 }
 
-                // Pre-HUSPM reference
-                if (!ADAPTIVE_ONLY) {
+                // Pre-HUSPM reference. algoEnabled as well as ADAPTIVE_ONLY: campaign.ps1
+                // runs one arm per JVM, so without it this reference repeats once for every
+                // ablation in the list and the CSV carries six copies of one measurement.
+                if (!ADAPTIVE_ONLY && algoEnabled("Pre-HUSPM")) {
                 announce("Pre-HUSPM", ds.name, "SC7_ref", 0);
                 PreHUSPMAlgorithm.PreHUSPMAlgo pre = new PreHUSPMAlgorithm.PreHUSPMAlgo(
                         ds.defaultSu, slRatioFor(ds.name), ENABLE_PATTERN_EXPORT);
