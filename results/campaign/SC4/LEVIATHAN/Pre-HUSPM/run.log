@@ -1,0 +1,22 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC4]
+Heap max: 49152 MB
+
+--- [SC4] Pre-large threshold (Sl) sensitivity: Pre-HUSPM vs Adaptive ---
+>> RUNNING Pre-HUSPM[sl=0.3]/LEVIATHAN/SC4#0  (heap free=844MB / total=1024MB / max=49152MB)
+[Pre-HUSPM[sl=0.3]/LEVIATHAN/SC4#0] FAILED after 25186ms (OOM)
+>> RUNNING Adaptive[sl=0.3]/LEVIATHAN/SC4#0  (heap free=317MB / total=49152MB / max=49152MB)
+[Adaptive[sl=0.3]/LEVIATHAN/SC4#0] OK t=5555ms cand=140191683 pat=135 heapDelta=382MB
+>> RUNNING Pre-HUSPM[sl=0.5]/LEVIATHAN/SC4#0  (heap free=238MB / total=320MB / max=49152MB)
+[Pre-HUSPM[sl=0.5]/LEVIATHAN/SC4#0] FAILED after 23881ms (OOM)
+>> RUNNING Adaptive[sl=0.5]/LEVIATHAN/SC4#0  (heap free=320MB / total=49152MB / max=49152MB)
+[Adaptive[sl=0.5]/LEVIATHAN/SC4#0] OK t=2586ms cand=62775550 pat=135 heapDelta=160MB
+>> RUNNING Pre-HUSPM[sl=0.7]/LEVIATHAN/SC4#0  (heap free=240MB / total=320MB / max=49152MB)
+[Pre-HUSPM[sl=0.7]/LEVIATHAN/SC4#0] OK t=20870ms cand=36592944 pat=135 heapDelta=8776MB
+>> RUNNING Adaptive[sl=0.7]/LEVIATHAN/SC4#0  (heap free=887MB / total=1184MB / max=49152MB)
+[Adaptive[sl=0.7]/LEVIATHAN/SC4#0] OK t=1625ms cand=36592944 pat=135 heapDelta=128MB
+>> RUNNING Pre-HUSPM[sl=0.9]/LEVIATHAN/SC4#0  (heap free=241MB / total=320MB / max=49152MB)
+[Pre-HUSPM[sl=0.9]/LEVIATHAN/SC4#0] OK t=12847ms cand=24240364 pat=135 heapDelta=3668MB
+>> RUNNING Adaptive[sl=0.9]/LEVIATHAN/SC4#0  (heap free=702MB / total=960MB / max=49152MB)
+[Adaptive[sl=0.9]/LEVIATHAN/SC4#0] OK t=1145ms cand=24240364 pat=135 heapDelta=110MB
+=== ALL SCENARIOS DONE (98.2s) ===
