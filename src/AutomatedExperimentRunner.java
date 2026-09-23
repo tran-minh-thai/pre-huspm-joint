@@ -504,6 +504,10 @@ public class AutomatedExperimentRunner {
         System.out.println("Mode: " + (testMode ? "TEST (paper dataset)" : "PRODUCTION")
                 + " | Datasets: " + DATASETS.size() + " | Scenarios: " + scenarios);
         System.out.println("Heap max: " + (Runtime.getRuntime().maxMemory() / (1024 * 1024)) + " MB");
+        if (SL_RATIO_OVERRIDE > 0) {
+            System.out.println("### PROBE: r_l = " + SL_RATIO_OVERRIDE + " for every database, "
+                    + "overriding common.Datasets. Not a campaign measurement.");
+        }
 
         long t0 = System.currentTimeMillis();
         if (scenarios.contains("SC1")) runSC1_StaticBaseline();
@@ -1006,7 +1010,35 @@ public class AutomatedExperimentRunner {
      * be a comparison.
      */
     private static double slRatioFor(String dsName) {
+        if (SL_RATIO_OVERRIDE > 0) return SL_RATIO_OVERRIDE;
         return common.Datasets.slMinRatio(dsName);
+    }
+
+    /**
+     * -Dsl.ratio=0.5 replaces r_l for every database and every arm in this run.
+     *
+     * For probes of the floor/budget trade-off only. The insertion budget is proportional to
+     * 1 - r_l, so lowering the floor widens it; SC4 shows what the lower floor costs to hold,
+     * and this is how SC2 is re-run to see what it buys. Both algorithms read the same value,
+     * as they do from common.Datasets, and every row records it in sl_min_eff.
+     *
+     * Refused when results.dir points into results/campaign: a campaign table holds one r_l
+     * per database, the one in common.Datasets, and a probe written there would sit beside
+     * the real arms looking like one of them.
+     */
+    private static final double SL_RATIO_OVERRIDE = parseSlOverride();
+
+    private static double parseSlOverride() {
+        String v = System.getProperty("sl.ratio", "").trim();
+        if (v.isEmpty()) return -1;
+        double r = Double.parseDouble(v);
+        if (!(r > 0 && r < 1)) throw new IllegalArgumentException("sl.ratio must lie in (0, 1): " + v);
+        String rd = System.getProperty("results.dir", "results/").replace(java.io.File.separatorChar, '/');
+        if (rd.contains("results/campaign")) {
+            throw new IllegalArgumentException("sl.ratio is for probes; refusing to write into "
+                    + rd + ". Use -Dresults.dir=results/probe-rl/...");
+        }
+        return r;
     }
 
     private static PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo newAdaptive(String dsName, double su) {
@@ -1455,6 +1487,9 @@ public class AutomatedExperimentRunner {
         m.triggerRule          = (pre.variant == PreHUSPMAlgorithm.PreHUSPMAlgo.Variant.TSU)
                                  ? "tsud" : "swumax";
         m.kappa = 0; m.delta0 = 0; m.blockSize = 0;
+        // The floor this row was measured at, as the proposal's rows already record it.
+        // Without it a Pre-HUSPM row cannot say which r_l it belongs to.
+        m.slMinEff = (pre.Su > 0) ? pre.Sl / pre.Su : 0;
     }
 
     /**
