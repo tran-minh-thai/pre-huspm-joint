@@ -1,0 +1,14 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC1]
+Heap max: 49152 MB
+
+--- [SC1] Static baseline on D_init (50%) ---
+>> RUNNING HUSP-SP/LEVIATHAN/SC1_su=0.014644#0  (heap free=168MB / total=224MB / max=49152MB)
+[HUSP-SP/LEVIATHAN/SC1_su=0.014644#0] OK t=3685ms cand=12370034 pat=136 heapDelta=556MB
+>> RUNNING HUSP-SP/LEVIATHAN/SC1_su=0.01553#0  (heap free=166MB / total=224MB / max=49152MB)
+[HUSP-SP/LEVIATHAN/SC1_su=0.01553#0] OK t=3307ms cand=11210849 pat=107 heapDelta=447MB
+>> RUNNING HUSP-SP/LEVIATHAN/SC1_su=0.01647#0  (heap free=167MB / total=224MB / max=49152MB)
+[HUSP-SP/LEVIATHAN/SC1_su=0.01647#0] OK t=3057ms cand=10163623 pat=89 heapDelta=526MB
+>> RUNNING HUSP-SP/LEVIATHAN/SC1_su=0.017987#0  (heap free=168MB / total=224MB / max=49152MB)
+[HUSP-SP/LEVIATHAN/SC1_su=0.017987#0] OK t=2684ms cand=8797466 pat=63 heapDelta=422MB
+=== ALL SCENARIOS DONE (22.1s) ===
