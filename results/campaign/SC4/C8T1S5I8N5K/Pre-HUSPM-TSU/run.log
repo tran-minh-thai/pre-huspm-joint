@@ -1,0 +1,22 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC4]
+Heap max: 49152 MB
+
+--- [SC4] Pre-large threshold (Sl) sensitivity: Pre-HUSPM vs Adaptive ---
+>> RUNNING Pre-HUSPM[sl=0.3]/C8T1S5I8N5K/SC4#0  (heap free=837MB / total=1024MB / max=49152MB)
+[Pre-HUSPM[sl=0.3]/C8T1S5I8N5K/SC4#0] FAILED after 534598ms (OOM)
+>> RUNNING Adaptive[sl=0.3]/C8T1S5I8N5K/SC4#0  (heap free=960MB / total=1280MB / max=49152MB)
+[Adaptive[sl=0.3]/C8T1S5I8N5K/SC4#0] OK t=2707730ms cand=82273595512 pat=3438 heapDelta=2913MB
+>> RUNNING Pre-HUSPM[sl=0.5]/C8T1S5I8N5K/SC4#0  (heap free=1805MB / total=3360MB / max=49152MB)
+[Pre-HUSPM[sl=0.5]/C8T1S5I8N5K/SC4#0] FAILED after 515765ms (OOM)
+>> RUNNING Adaptive[sl=0.5]/C8T1S5I8N5K/SC4#0  (heap free=957MB / total=1280MB / max=49152MB)
+[Adaptive[sl=0.5]/C8T1S5I8N5K/SC4#0] OK t=199380ms cand=4575615738 pat=3438 heapDelta=1874MB
+>> RUNNING Pre-HUSPM[sl=0.7]/C8T1S5I8N5K/SC4#0  (heap free=1583MB / total=3104MB / max=49152MB)
+[Pre-HUSPM[sl=0.7]/C8T1S5I8N5K/SC4#0] OK t=6086ms cand=50887795 pat=3438 heapDelta=1644MB
+>> RUNNING Adaptive[sl=0.7]/C8T1S5I8N5K/SC4#0  (heap free=1498MB / total=2144MB / max=49152MB)
+[Adaptive[sl=0.7]/C8T1S5I8N5K/SC4#0] OK t=1873ms cand=50887795 pat=3438 heapDelta=1507MB
+>> RUNNING Pre-HUSPM[sl=0.9]/C8T1S5I8N5K/SC4#0  (heap free=1761MB / total=3072MB / max=49152MB)
+[Pre-HUSPM[sl=0.9]/C8T1S5I8N5K/SC4#0] OK t=2318ms cand=22527857 pat=3438 heapDelta=1196MB
+>> RUNNING Adaptive[sl=0.9]/C8T1S5I8N5K/SC4#0  (heap free=1024MB / total=1408MB / max=49152MB)
+[Adaptive[sl=0.9]/C8T1S5I8N5K/SC4#0] OK t=942ms cand=22527857 pat=3438 heapDelta=1467MB
+=== ALL SCENARIOS DONE (3973.5s) ===
