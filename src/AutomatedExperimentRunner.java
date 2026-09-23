@@ -2103,11 +2103,44 @@ public class AutomatedExperimentRunner {
         if (n == 0) { out.add(new ArrayList<>()); return out; }
         if (weights == null || weights.length == 0) { out.add(new ArrayList<>(all)); return out; }
         int k = weights.length;
+        // Every batch gets one sequence first, then the rest is shared out by weight, with the
+        // units left over by rounding going to the largest fractional parts (ties to the lower
+        // index).
+        //
+        // The previous rule floored every share and handed the remainder out from the front.
+        // That treats the two ends of the stream differently: INCREASING has its small batches
+        // at the front, where the remainder lands, and DECREASING has them at the back, where
+        // it does not. On SIGN at K = 100, DECREASING left ten batches empty and INCREASING
+        // none, and the arms skip an empty batch without a word, so "DECREASING, K = 100" was
+        // ninety increments against a hundred - a difference in K passed off as a difference
+        // in strategy, in the one scenario built to compare strategies.
+        //
+        // EVEN splits come out exactly as they did before, batch for batch, on every database
+        // the campaign measures, so SC2 and SC7 are unaffected.
         int[] sizes = new int[k];
-        int allocated = 0;
-        for (int i = 0; i < k; i++) { sizes[i] = (int) Math.floor(weights[i] * n); allocated += sizes[i]; }
-        int remaining = n - allocated;
-        for (int i = 0; remaining > 0 && i < k; i++, remaining--) sizes[i]++;
+        if (n >= k) {
+            int m = n - k;
+            double[] frac = new double[k];
+            int allocated = 0;
+            for (int i = 0; i < k; i++) {
+                double raw = weights[i] * m;
+                int f = (int) Math.floor(raw);
+                sizes[i] = f; frac[i] = raw - f; allocated += f;
+            }
+            Integer[] order = new Integer[k];
+            for (int i = 0; i < k; i++) order[i] = i;
+            Arrays.sort(order, (a, b) -> frac[a] != frac[b] ? Double.compare(frac[b], frac[a])
+                                                            : Integer.compare(a, b));
+            for (int r = 0; r < m - allocated; r++) sizes[order[r]]++;
+            for (int i = 0; i < k; i++) sizes[i]++;
+        } else {
+            // Fewer sequences than batches: some batch must be empty whatever the rule.
+            System.out.println("   ! " + k + " batches over " + n + " sequences: "
+                    + (k - n) + " will be empty and skipped");
+            int allocated = 0;
+            for (int i = 0; i < k; i++) { sizes[i] = (int) Math.floor(weights[i] * n); allocated += sizes[i]; }
+            for (int i = 0, rem = n - allocated; rem > 0 && i < k; i++, rem--) sizes[i]++;
+        }
         int idx = 0;
         for (int i = 0; i < k; i++) {
             int end = Math.min(n, idx + sizes[i]);
