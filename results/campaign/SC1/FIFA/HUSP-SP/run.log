@@ -1,0 +1,14 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC1]
+Heap max: 49152 MB
+
+--- [SC1] Static baseline on D_init (50%) ---
+>> RUNNING HUSP-SP/FIFA/SC1_su=0.056234#0  (heap free=563MB / total=768MB / max=49152MB)
+[HUSP-SP/FIFA/SC1_su=0.056234#0] OK t=445856ms cand=220960082 pat=42 heapDelta=1056MB
+>> RUNNING HUSP-SP/FIFA/SC1_su=0.059637#0  (heap free=563MB / total=768MB / max=49152MB)
+[HUSP-SP/FIFA/SC1_su=0.059637#0] OK t=364335ms cand=172319088 pat=18 heapDelta=609MB
+>> RUNNING HUSP-SP/FIFA/SC1_su=0.067073#0  (heap free=565MB / total=768MB / max=49152MB)
+[HUSP-SP/FIFA/SC1_su=0.067073#0] OK t=238937ms cand=104080534 pat=5 heapDelta=597MB
+>> RUNNING HUSP-SP/FIFA/SC1_su=0.075436#0  (heap free=566MB / total=768MB / max=49152MB)
+[HUSP-SP/FIFA/SC1_su=0.075436#0] OK t=154530ms cand=61964520 pat=1 heapDelta=584MB
+=== ALL SCENARIOS DONE (1215.9s) ===
