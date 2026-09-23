@@ -1,0 +1,14 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC1]
+Heap max: 49152 MB
+
+--- [SC1] Static baseline on D_init (50%) ---
+>> RUNNING IncUSP-Miner+/BIBLE/SC1_su=0.0181#0  (heap free=642MB / total=864MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC1_su=0.0181#0] OK t=160674ms cand=13718846 pat=376 heapDelta=44848MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC1_su=0.022895#0  (heap free=644MB / total=864MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC1_su=0.022895#0] OK t=96240ms cand=9314873 pat=192 heapDelta=26261MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC1_su=0.02896#0  (heap free=645MB / total=864MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC1_su=0.02896#0] OK t=56628ms cand=6284099 pat=96 heapDelta=16110MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC1_su=0.03257#0  (heap free=645MB / total=864MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC1_su=0.03257#0] OK t=42442ms cand=5162506 pat=58 heapDelta=12732MB
+=== ALL SCENARIOS DONE (368.4s) ===
