@@ -1,0 +1,14 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC1]
+Heap max: 49152 MB
+
+--- [SC1] Static baseline on D_init (50%) ---
+>> RUNNING IncUSP-Miner+/TAFENG/SC1_su=0.002812#0  (heap free=630MB / total=864MB / max=49152MB)
+[IncUSP-Miner+/TAFENG/SC1_su=0.002812#0] OK t=925ms cand=2023192 pat=10 heapDelta=1031MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC1_su=0.003557#0  (heap free=630MB / total=864MB / max=49152MB)
+[IncUSP-Miner+/TAFENG/SC1_su=0.003557#0] OK t=683ms cand=1623255 pat=6 heapDelta=421MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC1_su=0.004499#0  (heap free=631MB / total=864MB / max=49152MB)
+[IncUSP-Miner+/TAFENG/SC1_su=0.004499#0] OK t=516ms cand=1243228 pat=5 heapDelta=458MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC1_su=0.005691#0  (heap free=633MB / total=864MB / max=49152MB)
+[IncUSP-Miner+/TAFENG/SC1_su=0.005691#0] OK t=478ms cand=957284 pat=3 heapDelta=534MB
+=== ALL SCENARIOS DONE (15.5s) ===
