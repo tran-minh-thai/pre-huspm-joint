@@ -704,8 +704,11 @@ public class AutomatedExperimentRunner {
                 for (double slRatio : slRatios) {
                   for (int r = 0; r < REPEATS; r++) {
                     setRunContext(SEEDS[0], r);
+                    // Each block answers to -Dalgo.only. Without the gates every arm of this scenario
+                    // ran both algorithms at all four levels, so campaign.ps1 measured the whole of SC4
+                    // once per arm name - five copies of the same eight rows.
                     // --- Pre-HUSPM @ slRatio ---
-                    if (!ADAPTIVE_ONLY) {
+                    if (!ADAPTIVE_ONLY && algoEnabled("Pre-HUSPM")) {
                         String tag = "Pre-HUSPM[sl=" + slRatio + "]";
                         PreHUSPMAlgorithm.PreHUSPMAlgo pre = new PreHUSPMAlgorithm.PreHUSPMAlgo(
                                 ds.defaultSu, slRatio, ENABLE_PATTERN_EXPORT);
@@ -718,7 +721,7 @@ public class AutomatedExperimentRunner {
                         forceFullGC();
                     }
                     // --- Adaptive @ SAME slRatio (giữ default alpha+delta0) ---
-                    {
+                    if (algoEnabled("Adaptive-Full")) {
                         String tag = "Adaptive[sl=" + slRatio + "]";
                         PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp = new PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo(
                                 ds.defaultSu, DEFAULT_KAPPA, DEFAULT_DELTA0, slRatio,

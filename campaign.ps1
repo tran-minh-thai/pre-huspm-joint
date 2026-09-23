@@ -73,20 +73,41 @@ if (-not $host_) { $host_ = 'unknown' }
 # BMS1 is absent from every scenario that grows past D_init: it cannot be mined on the whole
 # database at any threshold that returns patterns. The runner skips it and says so; leaving
 # it out here keeps the work list honest about what there is to do.
+# Each scenario has its own arms and its own databases, and the defaults below must say so.
+# A single list for everything was right for SC2 only. SC1 and SC3 measure the static
+# baselines, which that list did not contain, so asking for them was refused and running the
+# scenario silently left them out; SC4 has two arms, not five; SC6 has two; and SC3 to SC6 run
+# on SUBSET_3 alone, so the other four databases produced arms with no rows in them.
+#
+# SUBSET_3 below repeats AutomatedExperimentRunner.SUBSET_3. The two can drift apart, and
+# when they do the arm that should not exist comes out with no rows - which is now recorded
+# as EMPTY and reported by -List rather than written down as DONE.
+$all7    = @('SIGN','LEVIATHAN','TAFENG','BIBLE','C8T1S5I8N5K','KOSARAK','FIFA')
+$all8    = @('SIGN','LEVIATHAN','TAFENG','BIBLE','BMS1','C8T1S5I8N5K','KOSARAK','FIFA')
+$subset3 = @('SIGN','LEVIATHAN','C8T1S5I8N5K')
+$static  = @('USpan','HUSP-ULL','HUSP-SP','IncUSP-Miner+','Pre-HUSPM','Adaptive-Full')
+$incr    = @('Adaptive-Full','Pre-HUSPM','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+')
+
 if (-not $Algorithms) {
-    $Algorithms = if ($Scenario -eq 'SC7') {
-        @('proposed_full','proposed_no_block_index','proposed_no_IUB',
-          'proposed_C5_on','proposed_C5_off','Pre-HUSPM')
-    } else {
-        @('Adaptive-Full','Pre-HUSPM','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+')
+    $Algorithms = switch ($Scenario) {
+        'SC1'   { $static }
+        'SC3'   { $static }
+        'SC4'   { @('Pre-HUSPM','Adaptive-Full') }
+        'SC6'   { @('Adaptive-Full','Remine-from-scratch') }
+        'SC7'   { @('proposed_full','proposed_no_block_index','proposed_no_IUB',
+                    'proposed_C5_on','proposed_C5_off','Pre-HUSPM') }
+        default { $incr }                          # SC2, SC5
     }
 }
 
 if (-not $Datasets) {
-    $Datasets = if ($Scenario -eq 'SC1') {
-        @('SIGN','LEVIATHAN','TAFENG','BIBLE','BMS1','C8T1S5I8N5K','KOSARAK','FIFA')
-    } else {
-        @('SIGN','LEVIATHAN','TAFENG','BIBLE','C8T1S5I8N5K','KOSARAK','FIFA')
+    $Datasets = switch ($Scenario) {
+        'SC1'   { $all8 }                          # the one scenario BMS1 can take part in
+        'SC3'   { $subset3 }
+        'SC4'   { $subset3 }
+        'SC5'   { $subset3 }
+        'SC6'   { $subset3 }
+        default { $all7 }                          # SC2, SC7
     }
 }
 
@@ -96,6 +117,7 @@ if (-not $Datasets) {
 # seconds and the script wrote DONE for it, leaving one junk arm per database and looking
 # like it had worked. Use -Command "& { .\campaign.ps1 -Algorithms 'A','B' }" instead.
 $knownAlgos = @('Adaptive-Full','Pre-HUSPM','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+',
+                'USpan','HUSP-ULL','HUSP-SP',
                 'proposed_full','proposed_no_block_index','proposed_no_IUB',
                 'proposed_C5_on','proposed_C5_off')
 $knownSets  = @('SIGN','LEVIATHAN','TAFENG','BIBLE','BMS1','C8T1S5I8N5K','KOSARAK','FIFA')
@@ -142,6 +164,10 @@ function Get-NextArm {
         # real but too expensive to finish right now, and the file says what was learned and
         # what to try. Delete the file to put the arm back in the queue.
         if (Test-Path "$dir/DEFERRED") { continue }
+        # An arm that ran and produced no rows. Not a measurement and not a failure of the
+        # algorithm - the scenario has no such arm on this database. Skipped so the loop does
+        # not offer it forever; -List names it so the list above can be corrected.
+        if (Test-Path "$dir/EMPTY") { continue }
         $c = "$dir/CLAIM"
         if (Test-Path $c) {
             $age = (Get-Date) - (Get-Item $c).LastWriteTime
@@ -167,11 +193,12 @@ if ($ver -notmatch '"25\.') { throw "This study is pinned to JDK 25. Found: $ver
 
 if ($List) {
     Sync-Repo
-    $todo = @(); $defer = @(); $done = 0; $held = 0
+    $todo = @(); $defer = @(); $empty = @(); $done = 0; $held = 0
     foreach ($d in $Datasets) { foreach ($a in $Algorithms) {
         $dir = "$root/$d/$a"
         if (Test-Path "$dir/DONE") { $done++ }
         elseif (Test-Path "$dir/DEFERRED") { $defer += "$d/$a" }
+        elseif (Test-Path "$dir/EMPTY") { $empty += "$d/$a" }
         elseif (Test-Path "$dir/CLAIM") { $held++; $todo += "$d/$a (claimed: $(Get-Content "$dir/CLAIM" -Raw))".Trim() }
         else { $todo += "$d/$a" }
     } }
@@ -180,6 +207,10 @@ if ($List) {
     if ($defer.Count) {
         Write-Host "deferred (delete the DEFERRED file to requeue):"
         $defer | ForEach-Object { Write-Host "  $_" }
+    }
+    if ($empty.Count) {
+        Write-Host "EMPTY - ran and produced no rows; the arm list is wrong for this scenario:"
+        $empty | ForEach-Object { Write-Host "  $_" }
     }
     return
 }
@@ -209,7 +240,8 @@ function Stop-Session($reason) {
     $left = 0; $done = 0
     foreach ($d in $Datasets) { foreach ($a in $Algorithms) {
         if (Test-Path "$root/$d/$a/DONE") { $done++ }
-        elseif (-not (Test-Path "$root/$d/$a/DEFERRED")) { $left++ }
+        elseif (-not (Test-Path "$root/$d/$a/DEFERRED") -and
+                -not (Test-Path "$root/$d/$a/EMPTY")) { $left++ }
     } }
     Write-Host "  $Scenario now: $done done, $left left. Same command again to continue."
 }
@@ -249,8 +281,19 @@ while ($true) {
 
     $csv  = Get-ChildItem "$dir" -Filter '*.csv' | Select-Object -First 1
     $rows = if ($csv) { (Get-Content $csv.FullName | Measure-Object -Line).Lines - 1 } else { 0 }
-    "host=$host_ finished=$(Get-Date -f 'yyyy-MM-dd HH:mm:ss') seconds=$secs rc=$($p.ExitCode) rows=$rows capped=$capped" |
-        Set-Content "$dir/DONE"
+    $line = "host=$host_ finished=$(Get-Date -f 'yyyy-MM-dd HH:mm:ss') seconds=$secs rc=$($p.ExitCode) rows=$rows capped=$capped"
+    # No rows and not capped means the runner had nothing to do for this arm: the scenario
+    # does not run this algorithm, or not on this database. That is not a measurement, and
+    # DONE would say it was - twenty such arms once sat in SC4 looking finished. A capped arm
+    # with no rows is different: it is an arm that did not get through D_init inside the cap,
+    # which is a result, so it keeps DONE and says capped=True.
+    if ($rows -le 0 -and -not $capped) {
+        ($line + [Environment]::NewLine +
+         "No rows: $Scenario has no arm '$a' on $d. Not a measurement. Delete this file once " +
+         "the arm lists in campaign.ps1 are right.") | Set-Content "$dir/EMPTY"
+    } else {
+        $line | Set-Content "$dir/DONE"
+    }
     Remove-Item "$dir/CLAIM" -ErrorAction SilentlyContinue
     $armsThisSession++
     Write-Host "#### $d / $a done $(Get-Date -f HH:mm:ss)  ${secs}s  rc=$($p.ExitCode)  rows=$rows$(if($capped){'  CAPPED'})"
