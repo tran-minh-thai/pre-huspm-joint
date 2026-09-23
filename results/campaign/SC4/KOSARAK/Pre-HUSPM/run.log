@@ -1,0 +1,6 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC4]
+Heap max: 49152 MB
+
+--- [SC4] Pre-large threshold (Sl) sensitivity: Pre-HUSPM vs Adaptive ---
+=== ALL SCENARIOS DONE (0.0s) ===
