@@ -1,0 +1,14 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC1]
+Heap max: 49152 MB
+
+--- [SC1] Static baseline on D_init (50%) ---
+>> RUNNING USpan/SIGN/SC1_su=0.049134#0  (heap free=1009MB / total=1024MB / max=49152MB)
+[USpan/SIGN/SC1_su=0.049134#0] OK t=5512ms cand=11582204 pat=2814 heapDelta=321MB
+>> RUNNING USpan/SIGN/SC1_su=0.065911#0  (heap free=114MB / total=128MB / max=49152MB)
+[USpan/SIGN/SC1_su=0.065911#0] OK t=2679ms cand=4811015 pat=583 heapDelta=285MB
+>> RUNNING USpan/SIGN/SC1_su=0.083371#0  (heap free=114MB / total=128MB / max=49152MB)
+[USpan/SIGN/SC1_su=0.083371#0] OK t=1533ms cand=2316235 pat=140 heapDelta=288MB
+>> RUNNING USpan/SIGN/SC1_su=0.091052#0  (heap free=115MB / total=128MB / max=49152MB)
+[USpan/SIGN/SC1_su=0.091052#0] OK t=1247ms cand=1736803 pat=79 heapDelta=284MB
+=== ALL SCENARIOS DONE (17.8s) ===
