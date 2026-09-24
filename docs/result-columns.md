@@ -152,3 +152,20 @@ rows carry no performance information; the real elapsed time is kept in
 `wall_ms_perturbed` for the record only. Timing comes from separate `mem_mode = used`
 runs. `mem_live_mb` is a lower bound on the true peak live set: a peak that appears and
 disappears between two sample points is not seen, and the sampling interval bounds the gap.
+
+The interval is not fixed. After each forced collection the sampler waits the larger of
+`mem.interval.ms`, 20 ms by default, and four times what that collection took. A small live
+set is collected in milliseconds and sampled densely; a large one takes seconds to collect
+and is sampled less often, so collection never takes much more than a fifth of the wall
+time. `gc_forced` is the number of samples a row's figure rests on, and it belongs beside
+the figure: a row with two samples was read only at its start and its end.
+
+A fixed interval of a second, the earlier default, sampled every run shorter than a second
+exactly twice, before it had allocated anything and after its working set had become
+garbage, so the reported peak was what the run kept. Most of the proposal's static runs are
+that short and most baselines are not, which made the bias favour the proposal.
+
+In the incremental scenarios each increment is its own row, and an update that does not
+rescan takes a few milliseconds, less than one collection. No sampler sees a peak inside
+it. What those rows measure is the state held between increments - the pattern set, the
+pre-large set, the index - which is `mem_retained_mb`, and the peak of that over the stream.

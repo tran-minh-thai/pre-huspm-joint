@@ -58,6 +58,22 @@ proving it again, which is a whole sitting. Their `DEFERRED` files are in
 `results/campaign-jdk21`; copy them into the new tree before the first SC2 sitting to keep
 them out, or leave them queued if the point is to confirm the behaviour under this JDK.
 
+## The memory campaign
+
+    .\campaign.ps1 -Scenario SC1 -MemMode live -SessionHours 8
+
+A separate campaign, run after the timing campaign and never alongside it. The runner forces
+a full collection at every sample and reads the heap right after, so its runtimes are void
+and recorded as -3; what it measures is the live set. It writes to its own tree,
+`results/campaign-mem`, with its own DONE and CLAIM files and the same arms per scenario, so
+timing rows and memory rows never share a directory.
+
+The sampling interval stretches with the size of the live set - see
+`docs/result-columns.md` - and every row records how many samples it rests on in
+`gc_forced`. SC1 first: it is the static table the memory comparison rests on, and it took
+2.9 hours in timing mode on the measurement machine. SC2 took 8.9 hours in timing mode;
+decide on it once SC1 shows what live mode costs.
+
 ## Settled parameters
 
 | parameter | value | why |

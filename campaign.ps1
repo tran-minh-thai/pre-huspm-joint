@@ -6,6 +6,13 @@
         .\campaign.ps1 -Scenario SC1
         .\campaign.ps1 -Datasets FIFA
         .\campaign.ps1 -SessionHours 8   # one sitting; run it again tomorrow to continue
+        .\campaign.ps1 -Scenario SC1 -MemMode live   # the memory campaign
+
+    Memory. -MemMode live measures the live set instead of timing: the runner forces a full
+    collection at every sample and reads the heap right after, so its runtimes are void and
+    written as -3. It is a separate campaign with its own tree, results/campaign-mem, its own
+    DONE and CLAIM files and the same arms, so a timing arm and a memory arm never share a
+    directory or a row, and either can be resumed without the other.
 
     Sessions. The campaign is tens of hours, so it is meant to be run in sittings rather
     than in one go. -SessionHours stops the loop taking new arms once the budget is spent
@@ -60,6 +67,11 @@ param(
     # the arms known to run past 4 hours are FIFA/Remine-from-scratch and the two
     # Pre-HUSPM-TSU arms already marked DEFERRED.
     [double]   $SessionHours = 0,
+    # 'used' is the timing campaign. 'live' is the memory campaign; see the header.
+    [ValidateSet('used','live')][string] $MemMode = 'used',
+    # Shortest wait between forced collections in live mode. The runner stretches it to four
+    # times the last collection, so a large live set is sampled less often than a small one.
+    [int]      $MemIntervalMs = 20,
     [switch]   $List,
     [switch]   $NoGit
 )
@@ -154,7 +166,7 @@ function Publish($msg) {
     if ($NoGit) { return $true }
     for ($i = 0; $i -lt 2; $i++) {
         try {
-            git add results/campaign 2>&1 | Out-Null
+            git add $top 2>&1 | Out-Null
             git diff --cached --quiet 2>$null
             if ($LASTEXITCODE -eq 0) { return $true }   # nothing new to say
             git commit -q -m $msg 2>&1 | Out-Null
@@ -166,7 +178,12 @@ function Publish($msg) {
     return $false
 }
 
-$root  = "results/campaign/$Scenario"
+# The memory campaign keeps its own tree. The runner refuses live mode unless results.dir
+# names a directory with "mem" in it, which is what keeps the two kinds of row apart.
+$top   = if ($MemMode -eq 'live') { 'results/campaign-mem' } else { 'results/campaign' }
+$label = if ($MemMode -eq 'live') { "mem $Scenario" } else { $Scenario }
+$root  = "$top/$Scenario"
+$memArgs = if ($MemMode -eq 'live') { @('-Dmem.mode=live', "-Dmem.interval.ms=$MemIntervalMs") } else { @() }
 $stale = (New-TimeSpan -Seconds ($CapSeconds + 3600))
 
 function Get-NextArm {
@@ -283,15 +300,15 @@ while ($true) {
     Get-ChildItem $dir -File -ErrorAction SilentlyContinue |
         Where-Object { $_.Name -ne 'DONE' } | Remove-Item -Force
     "$host_ $(Get-Date -f 'yyyy-MM-dd HH:mm:ss')" | Set-Content "$dir/CLAIM"
-    [void](Publish "Claim $Scenario/$d/$a on $host_")
+    [void](Publish "Claim $label/$d/$a on $host_")
 
     $start = Get-Date
     Write-Host "#### $d / $a start $(Get-Date -f HH:mm:ss)"
     $p = Start-Process -FilePath $java -PassThru -NoNewWindow `
          -RedirectStandardOutput "$dir/run.log" -RedirectStandardError "$dir/run.err" `
-         -ArgumentList @("-Xmx${HeapGb}g",'-Xss64m','-cp','build',
+         -ArgumentList (@("-Xmx${HeapGb}g",'-Xss64m','-cp','build',
              "-Ddataset.only=$d", "-Dalgo.only=$a", '-Drepeats=1',
-             "-Dresults.dir=$dir/", 'AutomatedExperimentRunner', $Scenario)
+             "-Dresults.dir=$dir/") + $memArgs + @('AutomatedExperimentRunner', $Scenario))
     $capped = $false
     if (-not $p.WaitForExit($CapSeconds * 1000)) { $capped = $true; $p.Kill(); $p.WaitForExit() }
     $secs = [int]((Get-Date) - $start).TotalSeconds
@@ -314,7 +331,7 @@ while ($true) {
     Remove-Item "$dir/CLAIM" -ErrorAction SilentlyContinue
     $armsThisSession++
     Write-Host "#### $d / $a done $(Get-Date -f HH:mm:ss)  ${secs}s  rc=$($p.ExitCode)  rows=$rows$(if($capped){'  CAPPED'})"
-    if (-not (Publish "$Scenario/$d/$a on $host_ ($secs s, $rows rows)")) {
+    if (-not (Publish "$label/$d/$a on $host_ ($secs s, $rows rows)")) {
         Write-Host "  (could not push results; they are committed locally)"
     }
 }

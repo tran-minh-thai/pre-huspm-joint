@@ -97,7 +97,18 @@ public class AutomatedExperimentRunner {
     public static final String MEM_MODE = System.getProperty("mem.mode", "used")
             .trim().toLowerCase(java.util.Locale.ROOT);
     public static final boolean MEM_LIVE = "live".equals(MEM_MODE);
-    public static final long MEM_SAMPLE_MS = Long.getLong("mem.interval.ms", 1000L);
+    /**
+     * Shortest wait between two forced collections in live mode. The actual wait is the larger
+     * of this and four times the last collection's duration - see the sampler in measure().
+     *
+     * It was a fixed 1000 ms. Two thirds of the proposal's SC1 cells finish in under a second,
+     * and a run shorter than the interval is sampled only at its start, before it has allocated
+     * anything, and after it ends, when its working set is already garbage. What was reported
+     * as its peak was what it kept, while a slower baseline was sampled throughout and credited
+     * with its true peak: a bias toward whichever algorithm is faster, which here is the one
+     * being proposed.
+     */
+    public static final long MEM_SAMPLE_MS = Long.getLong("mem.interval.ms", 20L);
 
     /**
      * Chi chay MOT thuat toan trong tien trinh nay. Che do do bo nho yeu cau moi arm mot
@@ -1719,7 +1730,8 @@ public class AutomatedExperimentRunner {
         // === BO LAY MAU BO NHO ===
         //
         // used : dinh used-heap moi 50 ms, KE CA rac chua thu (hanh vi cu).
-        // live : moi MEM_SAMPLE_MS ep MOT lan thu gom day du roi doc used-heap NGAY SAU.
+        // live : ep MOT lan thu gom day du roi doc used-heap NGAY SAU, cach nhau
+        //        max(MEM_SAMPLE_MS, 4 x thoi gian lan thu gom truoc).
         //        Dinh cua cac lan doc ay la tap song, khong phu thuoc lich GC hay -Xmx.
         //        Day la CAN DUOI cua dinh tap song that: mot dinh xuat hien va bien mat
         //        giua hai moc se khong duoc thay. Khoang lay mau chan sai so do.
@@ -1742,13 +1754,23 @@ public class AutomatedExperimentRunner {
                 Runtime r = Runtime.getRuntime();
                 while (sampling.get()) {
                     if (MEM_LIVE) {
+                        long gcStart = System.nanoTime();
                         System.gc();
+                        long gcMs = (System.nanoTime() - gcStart) / 1_000_000L;
                         long live = r.totalMemory() - r.freeMemory();
                         lastLive.set(live);
                         gcCount.incrementAndGet();
                         long prevL = peakLive.get();
                         while (live > prevL && !peakLive.compareAndSet(prevL, live)) prevL = peakLive.get();
-                        try { Thread.sleep(MEM_SAMPLE_MS); } catch (InterruptedException e) { break; }
+                        // Dense for a small live set, sparse for a large one. A full collection
+                        // costs roughly the size of what is live: milliseconds for the proposal
+                        // on SIGN, seconds for IncUSP-Miner+ holding tens of gigabytes. A fixed
+                        // short interval would spend a large run almost entirely collecting; a
+                        // fixed long one misses every peak of a short run. Waiting four times the
+                        // last collection keeps collection under a fifth of the wall time, and
+                        // gc_forced on the row records how many samples its figure rests on.
+                        long waitMs = Math.max(MEM_SAMPLE_MS, 4 * gcMs);
+                        try { Thread.sleep(waitMs); } catch (InterruptedException e) { break; }
                     } else {
                         long used = r.totalMemory() - r.freeMemory();
                         long prev = peakUsed.get();

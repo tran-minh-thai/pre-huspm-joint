@@ -210,7 +210,7 @@ load main class` when invoked directly.
 .\run.ps1 SC1 SC2                                        # selected scenarios
 .\run.ps1 TEST SC1                                       # smoke test on examples/, minutes
 .\run.ps1 -Heap 48g -TimeoutMin 120 -ExpectMachine 'PC'  # a measurement run
-.\run.ps1 -MemMode live                                  # the memory campaign
+.\campaign.ps1 -Scenario SC1 -MemMode live            # the memory campaign
 ```
 
 To run a single class directly, compile first:
@@ -308,7 +308,7 @@ Everything below changes results. Defaults are what the scenarios use unless ove
 | — | `-Drepeats` | 3 | reruns of an identical configuration, for the standard deviation |
 | — | `-Dseeds` | 1 | how many entries of `SEEDS` to sweep; only SC2 (above 1), SC5 `BURST` and SC6 are affected |
 | — | `-Dmem.mode` | `used` | `live` measures the live set instead of used heap |
-| — | `-Dmem.interval.ms` | 1000 | forced-collection interval in live mode |
+| — | `-Dmem.interval.ms` | 20 | shortest wait between forced collections in live mode; stretched to four times the last collection |
 | — | `-Dalgo.only` | all | run one algorithm only; required in live mode |
 | — | `-Ddataset.only` | all | run one database only |
 | — | `-Dresults.dir` | `results/` | where CSVs are written |
