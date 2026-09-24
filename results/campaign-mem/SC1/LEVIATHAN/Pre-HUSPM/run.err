@@ -1,0 +1,5 @@
+
+Exception: java.lang.OutOfMemoryError thrown from the UncaughtExceptionHandler in thread "algo-Pre-HUSPM-LEVIATHAN"
+[Pre-HUSPM/LEVIATHAN] ERROR: Java heap space
+[Pre-HUSPM/LEVIATHAN/SC1_su=0.01553] OOM
+[Pre-HUSPM/LEVIATHAN/SC1_su=0.01647] OOM
