@@ -1,0 +1,14 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC3]
+Heap max: 49152 MB
+
+--- [SC3] Su sensitivity ---
+>> RUNNING Pre-HUSPM/SIGN/SC3_su=0.049134#0  (heap free=116MB / total=128MB / max=49152MB)
+[Pre-HUSPM/SIGN/SC3_su=0.049134#0] OK t=2878ms cand=16968276 pat=793 heapDelta=329MB
+>> RUNNING Pre-HUSPM/SIGN/SC3_su=0.065911#0  (heap free=114MB / total=128MB / max=49152MB)
+[Pre-HUSPM/SIGN/SC3_su=0.065911#0] OK t=1447ms cand=7294276 pat=141 heapDelta=317MB
+>> RUNNING Pre-HUSPM/SIGN/SC3_su=0.083371#0  (heap free=114MB / total=128MB / max=49152MB)
+[Pre-HUSPM/SIGN/SC3_su=0.083371#0] OK t=881ms cand=3618329 pat=31 heapDelta=308MB
+>> RUNNING Pre-HUSPM/SIGN/SC3_su=0.091052#0  (heap free=114MB / total=128MB / max=49152MB)
+[Pre-HUSPM/SIGN/SC3_su=0.091052#0] OK t=723ms cand=2751696 pat=16 heapDelta=286MB
+=== ALL SCENARIOS DONE (12.7s) ===
