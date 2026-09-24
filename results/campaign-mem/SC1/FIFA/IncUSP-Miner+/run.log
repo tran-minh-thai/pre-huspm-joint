@@ -1,0 +1,16 @@
+### LIVE HEAP: ep thu gom moi 20 ms | arm = IncUSP-Miner+
+### runtime_ms xuat -3 (GC lam nhieu); gia tri that o wall_ms_perturbed. KHONG dung lam so hieu nang.
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC1]
+Heap max: 49152 MB
+
+--- [SC1] Static baseline on D_init (50%) ---
+>> RUNNING IncUSP-Miner+/FIFA/SC1_su=0.056234#0  (heap free=563MB / total=768MB / max=49152MB)
+[IncUSP-Miner+/FIFA/SC1_su=0.056234#0] FAILED after 1065810ms (OOM)
+>> RUNNING IncUSP-Miner+/FIFA/SC1_su=0.059637#0  (heap free=561MB / total=768MB / max=49152MB)
+[IncUSP-Miner+/FIFA/SC1_su=0.059637#0] FAILED after 1039519ms (OOM)
+>> RUNNING IncUSP-Miner+/FIFA/SC1_su=0.067073#0  (heap free=561MB / total=768MB / max=49152MB)
+[IncUSP-Miner+/FIFA/SC1_su=0.067073#0] OK t=530786ms cand=109295642 pat=5 heapDelta=35295MB
+>> RUNNING IncUSP-Miner+/FIFA/SC1_su=0.075436#0  (heap free=561MB / total=768MB / max=49152MB)
+[IncUSP-Miner+/FIFA/SC1_su=0.075436#0] OK t=349756ms cand=65202971 pat=1 heapDelta=35171MB
+=== ALL SCENARIOS DONE (3029.9s) ===
