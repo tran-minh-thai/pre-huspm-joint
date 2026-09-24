@@ -1,0 +1,16 @@
+### LIVE HEAP: ep thu gom moi 20 ms | arm = Adaptive-Full
+### runtime_ms xuat -3 (GC lam nhieu); gia tri that o wall_ms_perturbed. KHONG dung lam so hieu nang.
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC1]
+Heap max: 49152 MB
+
+--- [SC1] Static baseline on D_init (50%) ---
+>> RUNNING Adaptive-Full/FIFA/SC1_su=0.056234#0  (heap free=563MB / total=768MB / max=49152MB)
+[Adaptive-Full/FIFA/SC1_su=0.056234#0] OK t=81159ms cand=559127153 pat=42 heapDelta=60MB
+>> RUNNING Adaptive-Full/FIFA/SC1_su=0.059637#0  (heap free=555MB / total=768MB / max=49152MB)
+[Adaptive-Full/FIFA/SC1_su=0.059637#0] OK t=66575ms cand=441827778 pat=18 heapDelta=44MB
+>> RUNNING Adaptive-Full/FIFA/SC1_su=0.067073#0  (heap free=555MB / total=768MB / max=49152MB)
+[Adaptive-Full/FIFA/SC1_su=0.067073#0] OK t=44983ms cand=274424981 pat=5 heapDelta=51MB
+>> RUNNING Adaptive-Full/FIFA/SC1_su=0.075436#0  (heap free=555MB / total=768MB / max=49152MB)
+[Adaptive-Full/FIFA/SC1_su=0.075436#0] OK t=29835ms cand=167186373 pat=1 heapDelta=52MB
+=== ALL SCENARIOS DONE (235.2s) ===
