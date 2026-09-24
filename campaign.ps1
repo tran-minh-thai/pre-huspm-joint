@@ -88,6 +88,20 @@ $subset3 = @('SIGN','LEVIATHAN','C8T1S5I8N5K')
 $static  = @('USpan','HUSP-ULL','HUSP-SP','IncUSP-Miner+','Pre-HUSPM','Adaptive-Full')
 $incr    = @('Adaptive-Full','Pre-HUSPM','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+')
 
+# Arms that exist on some databases only. SC7's incremental ablations - C4, the block index,
+# and C5, the adaptive rescan - run in the runner on C5_ABLATION_SET, which is SIGN and
+# C8T1S5I8N5K once BMS1 is filtered out by scope. Queued on any other database they come out
+# with no rows. This list repeats that set; if the two drift apart the stray arm is recorded as
+# EMPTY and named by -List, not written down as DONE.
+$sc7Incremental = @('proposed_C5_on','proposed_C5_off','proposed_no_block_index')
+$sc7IncSets     = @('SIGN','C8T1S5I8N5K')
+function Test-Arm($d, $a) {
+    if ($Scenario -eq 'SC7' -and $sc7Incremental -contains $a -and $sc7IncSets -notcontains $d) {
+        return $false
+    }
+    return $true
+}
+
 if (-not $Algorithms) {
     $Algorithms = switch ($Scenario) {
         'SC1'   { $static }
@@ -158,6 +172,7 @@ $stale = (New-TimeSpan -Seconds ($CapSeconds + 3600))
 function Get-NextArm {
     Sync-Repo
     foreach ($d in $Datasets) { foreach ($a in $Algorithms) {
+        if (-not (Test-Arm $d $a)) { continue }
         $dir = "$root/$d/$a"
         if (Test-Path "$dir/DONE") { continue }
         # An arm set aside on purpose. It is not failure and not success: the measurement is
@@ -195,6 +210,7 @@ if ($List) {
     Sync-Repo
     $todo = @(); $defer = @(); $empty = @(); $done = 0; $held = 0
     foreach ($d in $Datasets) { foreach ($a in $Algorithms) {
+        if (-not (Test-Arm $d $a)) { continue }
         $dir = "$root/$d/$a"
         if (Test-Path "$dir/DONE") { $done++ }
         elseif (Test-Path "$dir/DEFERRED") { $defer += "$d/$a" }
@@ -239,6 +255,7 @@ function Stop-Session($reason) {
     Write-Host ("  {0} arm(s) in {1:N2} h on $host_" -f $armsThisSession, $h)
     $left = 0; $done = 0
     foreach ($d in $Datasets) { foreach ($a in $Algorithms) {
+        if (-not (Test-Arm $d $a)) { continue }
         if (Test-Path "$root/$d/$a/DONE") { $done++ }
         elseif (-not (Test-Path "$root/$d/$a/DEFERRED") -and
                 -not (Test-Path "$root/$d/$a/EMPTY")) { $left++ }

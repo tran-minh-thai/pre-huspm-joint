@@ -1087,7 +1087,8 @@ public class AutomatedExperimentRunner {
     }
 
     // ==================================================================
-    // SC7 - ABLATION ĐÓNG GÓP: C3 (IUB) / C4 (Block-Index) / C5 (Adaptive rescan). C1 (cận PEU áp trước materialize) là cố hữu.
+    // SC7 - ABLATION: C3 (IUB) on a static mine; C4 (block index) and C5 (adaptive rescan) on
+    // the incremental stream, where they act. C1 (the PEU bound before materialising) is inherent.
     // ==================================================================
     private static void runSC7_Ablation() throws IOException {
         System.out.println("\n--- [SC7] Ablation C3(IUB)/C4(Block)/C5(rescan) ---");
@@ -1105,20 +1106,22 @@ public class AutomatedExperimentRunner {
                 for (int r = 0; r < REPEATS; r++) {
                 setRunContext(SEEDS[0], r);
 
-                // --- Ablation cận tỉa (single full-mine): C1 (cận PEU áp trước materialize) là
-                //     CỐ HỮU; ablation đo C3 (IUB) và C4 (Block-Index). ---
+                // --- Static ablation (one mine of the whole database): C3, the IUB bound, acts
+                //     inside the miner, so a single mine is where it shows. C1 is inherent. ---
                 logAblation(col, ds, full, totalUtil, "proposed_full", true, true);        // đề xuất đầy đủ
-                forceFullGC();
-                logAblation(col, ds, full, totalUtil, "proposed_no_block_index", false, true); // -C4
                 forceFullGC();
                 logAblation(col, ds, full, totalUtil, "proposed_no_IUB", true, false);     // -C3
                 forceFullGC();
 
-                // --- Ablation C5 (incremental, NẶNG): chỉ chạy trên TẬP ĐẠI DIỆN ---
+                // --- Incremental ablations, on the representative set: C5 (adaptive rescan)
+                //     and C4 (block index) act only while the database grows. proposed_C5_on is
+                //     the full proposal on that stream and the reference for both. ---
                 if (C5_ABLATION_SET.contains(ds.name)) {
-                    logC5Ablation(col, ds, full, true,  "proposed_C5_on");   // C5 đầy đủ
+                    logIncrementalAblation(col, ds, full, "proposed_C5_on",  "SC7_C5", true,  true);
                     forceFullGC();
-                    logC5Ablation(col, ds, full, false, "proposed_C5_off");  // -C5: rescan mỗi lô (naive)
+                    logIncrementalAblation(col, ds, full, "proposed_C5_off", "SC7_C5", false, true);  // -C5
+                    forceFullGC();
+                    logIncrementalAblation(col, ds, full, "proposed_no_block_index", "SC7_C4", true, false); // -C4
                     forceFullGC();
                 }
 
@@ -1168,12 +1171,20 @@ public class AutomatedExperimentRunner {
     }
 
     /**
-     * Ablation C5 (incremental): chạy Adaptive qua D_init + BATCH_COUNT lô; đo TỔNG thời gian,
-     * rescanCount và completeness. useAdaptiveRescan=false ⇒ rescan MỖI LÔ (naive) → minh
-     * hoạ giá trị C5 (rescan thích ứng): ít rescan + nhanh + không treo, vẫn đầy đủ.
+     * The incremental ablations: D_init, then BATCH_COUNT equal increments, one row per
+     * increment as SC2 records them.
+     *
+     * C5 (adaptive rescan) and C4 (block index) act only while the database grows. C4 in
+     * particular is read nowhere but on an increment that does not rescan -
+     * evaluatePatternUtilityWithIndex has a single caller - so the static mine this ablation
+     * used to run with the index off did exactly the work of one with it on, and would have
+     * reported C4 as contributing nothing. Per-increment rows are what let its effect be read
+     * off the increments where it can have one, those with cub_triggered = false; a single
+     * total would bury it under the rescans, which carry almost all of the time.
      */
-    private static void logC5Ablation(ResultCollector col, DatasetConfig ds, List<Sequence> full,
-                                      boolean useAdaptiveRescan, String tag) {
+    private static void logIncrementalAblation(ResultCollector col, DatasetConfig ds, List<Sequence> full,
+                                               String tag, String opTag,
+                                               boolean useAdaptiveRescan, boolean useBlockIndex) {
         if (!algoEnabled(tag)) return;
         List<Sequence> dInit = dInitFor(ds, full);
         List<Sequence> rest = tailFrom(full, dInit.size());
@@ -1184,28 +1195,37 @@ public class AutomatedExperimentRunner {
                 PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.AblationMode.FULL,
                 ENABLE_PATTERN_EXPORT);
         adp.useAdaptiveRescan = useAdaptiveRescan; // C5 on/off
-        announce(tag, ds.name, "SC7_C5", 0);
-        ExperimentMetrics m = measure(tag, ds.name, 0, "SC7_C5",
-                () -> {
-                    adp.runInitialMining(dInit, initTotal);
-                    double rolling = initTotal;
-                    List<Sequence> dSoFar = new ArrayList<>(dInit);
-                    for (List<Sequence> delta : batches) {
-                        if (delta.isEmpty()) continue;
-                        double newTotal = rolling + sumUtility(delta);
-                        List<Sequence> snap = new ArrayList<>(dSoFar);
-                        snap.addAll(delta);
-                        adp.runIncrementalMining(delta, snap, newTotal);
-                        dSoFar.addAll(delta);
-                        rolling = newTotal;
-                    }
-                },
-                () -> adp.candidateCount, () -> adp.patternCount,
-                () -> adp.lutDynValue, () -> adp.cubValue, () -> adp.cubTriggeredRescan,
-                null, () -> adp.prunedValueBound,
-                () -> adp.prelargeCount, () -> adp.uutValue, () -> adp.sftValue, adp::cancel);
-        attachAdaptive(m, adp);
-        col.log(m);
+        adp.useBlockIndex = useBlockIndex;         // C4 on/off
+
+        announce(tag, ds.name, opTag + "_INIT", 0);
+        ExperimentMetrics m0 = measureAdaptive(adp, tag, ds.name, 0, opTag + "_INIT",
+                () -> adp.runInitialMining(dInit, initTotal));
+        col.log(m0);
+        boolean poisoned = m0.runtimeMs < 0;
+
+        double rolling = initTotal;
+        List<Sequence> dSoFar = new ArrayList<>(dInit);
+        for (int b = 0; b < batches.size(); b++) {
+            List<Sequence> delta = batches.get(b);
+            if (delta.isEmpty()) continue;
+            int batchIdx = b + 1;
+            double newTotal = rolling + sumUtility(delta);
+            if (!poisoned && !memoryGuardOk(tag, ds.name, opTag + "_INC")) poisoned = true;
+            if (poisoned) {
+                col.log(skippedMetric(tag, ds.name, batchIdx, opTag + "_INC"));
+            } else {
+                List<Sequence> snap = new ArrayList<>(dSoFar);
+                snap.addAll(delta);
+                final double nt = newTotal;
+                announce(tag, ds.name, opTag + "_INC", batchIdx);
+                ExperimentMetrics mb = measureAdaptive(adp, tag, ds.name, batchIdx, opTag + "_INC",
+                        () -> adp.runIncrementalMining(delta, snap, nt));
+                col.log(mb);
+                if (mb.runtimeMs < 0) poisoned = true;
+            }
+            dSoFar.addAll(delta);
+            rolling = newTotal;
+        }
     }
 
     // ==================================================================

@@ -75,7 +75,7 @@ ones and keeps the incremental grids inside the time budget.
 | SC4 | lower-threshold ratio sweep, r_l in {0.3, 0.5, 0.7, 0.9} | `SC4_sl_sensitivity.csv` |
 | SC5 | batch count K in {3, 5, 10} crossed with four partitioning strategies | `SC5_batch_strategy.csv` |
 | SC6 | twenty mixed operations, exactly 14 insertions, 3 deletions and 3 modifications in a seeded order, each one hundredth of the incremental stream | `SC6_idm_mixed.csv` |
-| SC7 | ablation of C3, C4, and C5 against Pre-HUSPM | `SC7_ablation.csv` |
+| SC7 | ablation: C3 (IUB) on one mine of the whole database, against Pre-HUSPM; C4 (block index) and C5 (adaptive rescan) on `D_init` plus 100 increments, one row per increment, on SIGN and C8T1S5I8N5K, where they act | `SC7_ablation.csv` |
 
 SC1, SC2, and SC7 run on all six datasets; SC3 to SC6 run on the three-dataset subset.
 

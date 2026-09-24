@@ -243,7 +243,7 @@ java -Xmx48g -cp build verify.CorrectnessVerifier LEVIATHAN --rule iaumax
 | SC4 | lower-threshold ratio sweep, `r_l` in {0.3, 0.5, 0.7, 0.9} | `SC4_sl_sensitivity.csv` |
 | SC5 | increment count `K` in **{100, 67, 50, 25}** crossed with four partitioning strategies | `SC5_batch_strategy.csv` |
 | SC6 | twenty mixed operations, exactly 14 insertions, 3 deletions and 3 modifications in a seeded order, each one hundredth of the stream, incremental against remine-from-scratch | `SC6_idm_mixed.csv` |
-| SC7 | ablation of C3, C4 and C5 against Pre-HUSPM | `SC7_ablation.csv` |
+| SC7 | ablation: C3 on one mine of the whole database, against Pre-HUSPM; C4 and C5 on `D_init` plus 100 increments, one row per increment, on SIGN and C8T1S5I8N5K | `SC7_ablation.csv` |
 
 One hundred increments, not a handful. Yan et al. section 6.1 divide each database into "an
 original dataset and 100 new datasets", and their section 6.3.1 confirms the arithmetic:
