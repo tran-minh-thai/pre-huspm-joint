@@ -1,0 +1,16 @@
+### LIVE HEAP: ep thu gom moi 20 ms | arm = Pre-HUSPM
+### runtime_ms xuat -3 (GC lam nhieu); gia tri that o wall_ms_perturbed. KHONG dung lam so hieu nang.
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC1]
+Heap max: 49152 MB
+
+--- [SC1] Static baseline on D_init (50%) ---
+>> RUNNING Pre-HUSPM/KOSARAK/SC1_su=0.022228#0  (heap free=4247MB / total=6624MB / max=49152MB)
+[Pre-HUSPM/KOSARAK/SC1_su=0.022228#0] OK t=27712ms cand=183739261 pat=11 heapDelta=710MB
+>> RUNNING Pre-HUSPM/KOSARAK/SC1_su=0.025#0  (heap free=4225MB / total=6624MB / max=49152MB)
+[Pre-HUSPM/KOSARAK/SC1_su=0.025#0] OK t=6855ms cand=37941354 pat=10 heapDelta=1302MB
+>> RUNNING Pre-HUSPM/KOSARAK/SC1_su=0.028117#0  (heap free=4225MB / total=6624MB / max=49152MB)
+[Pre-HUSPM/KOSARAK/SC1_su=0.028117#0] OK t=4165ms cand=18883091 pat=7 heapDelta=649MB
+>> RUNNING Pre-HUSPM/KOSARAK/SC1_su=0.031623#0  (heap free=4229MB / total=6624MB / max=49152MB)
+[Pre-HUSPM/KOSARAK/SC1_su=0.031623#0] OK t=3004ms cand=11918510 pat=5 heapDelta=744MB
+=== ALL SCENARIOS DONE (66.2s) ===
