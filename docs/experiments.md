@@ -74,7 +74,7 @@ ones and keeps the incremental grids inside the time budget.
 | SC3 | threshold sweep on the full database | `SC3_su.csv` |
 | SC4 | lower-threshold ratio sweep, r_l in {0.3, 0.5, 0.7, 0.9} | `SC4_sl_sensitivity.csv` |
 | SC5 | batch count K in {3, 5, 10} crossed with four partitioning strategies | `SC5_batch_strategy.csv` |
-| SC6 | ten mixed operations, insert, delete, and modify at 70:15:15 | `SC6_idm_mixed.csv` |
+| SC6 | twenty mixed operations, exactly 14 insertions, 3 deletions and 3 modifications in a seeded order, each one hundredth of the incremental stream | `SC6_idm_mixed.csv` |
 | SC7 | ablation of C3, C4, and C5 against Pre-HUSPM | `SC7_ablation.csv` |
 
 SC1, SC2, and SC7 run on all six datasets; SC3 to SC6 run on the three-dataset subset.

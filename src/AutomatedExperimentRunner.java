@@ -829,30 +829,52 @@ public class AutomatedExperimentRunner {
      * them arm thu hai: arm sau se rut ra mot chuoi thao tac khac tu cung bo sinh
      * ngau nhien, va hai arm khong con so sanh duoc voi nhau.
      */
+    /**
+     * SC6's schedule: 70:15:15 as exact counts, not as probabilities.
+     *
+     * Drawing each operation independently at 70:15:15 gave ten operations whose mix depended
+     * on the seed and the database: SIGN drew three deletions and no modification, LEVIATHAN
+     * no deletion and two modifications, C8T1S5I8N5K one deletion. A deletion costs a few
+     * milliseconds where an insertion costs a remine, so each database's total followed its
+     * draw and the three could not be compared (results/sc6-random-draw). Every database now
+     * gets the same operations; only their order depends on the seed.
+     */
+    static final int SC6_INSERTS = 14, SC6_DELETES = 3, SC6_MODIFIES = 3;
+
     private static List<Op> buildSC6Plan(List<Sequence> dInit, List<Sequence> rest,
-                                         int opCount, int opSize, Random rnd) {
+                                         int opSize, Random rnd) {
+        List<OpKind> kinds = new ArrayList<>();
+        for (int i = 0; i < SC6_INSERTS; i++)  kinds.add(OpKind.INS);
+        for (int i = 0; i < SC6_DELETES; i++)  kinds.add(OpKind.DEL);
+        for (int i = 0; i < SC6_MODIFIES; i++) kinds.add(OpKind.MOD);
+        Collections.shuffle(kinds, rnd);
+
         List<Op> plan = new ArrayList<>();
         List<Sequence> pool = new ArrayList<>(rest);
         List<Sequence> cur = new ArrayList<>(dInit);
-        for (int i = 0; i < opCount; i++) {
-            double roll = rnd.nextDouble();
+        for (int i = 0; i < kinds.size(); i++) {
             int iter = i + 1;
-            if (roll < 0.70) {
-                List<Sequence> delta = new ArrayList<>();
-                for (int j = 0; j < opSize && !pool.isEmpty(); j++) delta.add(pool.remove(0));
-                if (delta.isEmpty()) break;
+            OpKind kind = kinds.get(i);
+            // An operation that cannot be built is refused rather than skipped: a plan
+            // quietly shorter than its schedule is the problem this schedule exists to remove.
+            boolean needsPool = (kind != OpKind.DEL);
+            if ((needsPool && pool.size() < opSize) || (kind != OpKind.INS && cur.size() <= opSize)) {
+                throw new IllegalStateException("SC6: cannot build operation " + iter + " (" + kind
+                        + ") with opSize=" + opSize + ", pool=" + pool.size() + ", current=" + cur.size());
+            }
+            if (kind == OpKind.INS) {
+                List<Sequence> delta = new ArrayList<>(pool.subList(0, opSize));
+                pool.subList(0, opSize).clear();
                 plan.add(new Op(OpKind.INS, iter, delta, null));
                 cur.addAll(delta);
-            } else if (roll < 0.85) {
-                if (cur.size() < opSize + 1) continue;
+            } else if (kind == OpKind.DEL) {
                 List<Sequence> toDel = pickRandom(cur, opSize, rnd);
                 plan.add(new Op(OpKind.DEL, iter, toDel, null));
                 cur.removeAll(toDel);
             } else {
-                if (cur.size() < opSize + 1 || pool.size() < opSize) continue;
                 List<Sequence> oldSeqs = pickRandom(cur, opSize, rnd);
-                List<Sequence> newSeqs = new ArrayList<>();
-                for (int j = 0; j < opSize && !pool.isEmpty(); j++) newSeqs.add(pool.remove(0));
+                List<Sequence> newSeqs = new ArrayList<>(pool.subList(0, opSize));
+                pool.subList(0, opSize).clear();
                 plan.add(new Op(OpKind.MOD, iter, oldSeqs, newSeqs));
                 cur.removeAll(oldSeqs);
                 cur.addAll(newSeqs);
@@ -882,7 +904,8 @@ public class AutomatedExperimentRunner {
      * cung arm cung dataset, tinh duoc tu du lieu tho.
      */
     private static void runSC6_InsertDeleteModify() throws IOException {
-        System.out.println("\n--- [SC6] Mixed I/D/M 70:15:15 (Adaptive vs Remine-from-scratch) ---");
+        System.out.println("\n--- [SC6] Mixed I/D/M, exactly " + SC6_INSERTS + ":" + SC6_DELETES + ":"
+                + SC6_MODIFIES + " (Adaptive vs Remine-from-scratch) ---");
         try (ResultCollector col = new ResultCollector(RESULTS_DIR + "SC6_idm_mixed.csv")) {
             for (DatasetConfig ds : DATASETS) {
                 if (!datasetEnabled(ds.name)) continue;
@@ -900,8 +923,10 @@ public class AutomatedExperimentRunner {
                 List<Sequence> rest  = new ArrayList<>(tailFrom(full, dInit.size()));
                 double initTotalUtil = sumUtility(dInit);
 
-                int opCount = 10;
-                int opSize = Math.max(1, rest.size() / (opCount * 2));
+                // One hundredth of the stream, the size of an SC2 increment. At a twentieth every
+                // insertion exceeded the insertion budget and rescanned, 24 of 24, which measured
+                // the regime SC5 already shows converging to remine rather than the one SC2 runs in.
+                int opSize = Math.max(1, rest.size() / common.Datasets.BATCH_COUNT);
 
                 // Day la kich ban ma seed thuc su quan trong: no quyet dinh thao tac nao
                 // xay ra khi nao va tren chuoi nao. Ket luan cua SC6 khong duoc phu thuoc
@@ -910,7 +935,7 @@ public class AutomatedExperimentRunner {
                     // Seed rieng cho tung dataset, de chuoi thao tac cua dataset nay khong
                     // phu thuoc vao viec dataset nao da chay truoc no.
                     Random rnd = new Random(seed + ds.name.hashCode());
-                    List<Op> plan = buildSC6Plan(dInit, rest, opCount, opSize, rnd);
+                    List<Op> plan = buildSC6Plan(dInit, rest, opSize, rnd);
                     System.out.println(">> [SC6] " + ds.name + " seed=" + seed
                             + " opSize=" + opSize + " plan=" + planSummary(plan));
 

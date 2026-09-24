@@ -242,7 +242,7 @@ java -Xmx48g -cp build verify.CorrectnessVerifier LEVIATHAN --rule iaumax
 | SC3 | threshold sweep on the full database | `SC3_su.csv` |
 | SC4 | lower-threshold ratio sweep, `r_l` in {0.3, 0.5, 0.7, 0.9} | `SC4_sl_sensitivity.csv` |
 | SC5 | increment count `K` in **{100, 67, 50, 25}** crossed with four partitioning strategies | `SC5_batch_strategy.csv` |
-| SC6 | ten mixed operations at 70:15:15, incremental against remine-from-scratch | `SC6_idm_mixed.csv` |
+| SC6 | twenty mixed operations, exactly 14 insertions, 3 deletions and 3 modifications in a seeded order, each one hundredth of the stream, incremental against remine-from-scratch | `SC6_idm_mixed.csv` |
 | SC7 | ablation of C3, C4 and C5 against Pre-HUSPM | `SC7_ablation.csv` |
 
 One hundred increments, not a handful. Yan et al. section 6.1 divide each database into "an

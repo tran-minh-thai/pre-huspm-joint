@@ -1,4 +1,13 @@
-# SC6, insertion, deletion and modification mixed
+# SC6 as first designed, archived
+
+This is the scenario before commit that replaced independent draws with an exact schedule.
+It is kept because it is what showed the design had to change: ten operations drawn at
+70:15:15 gave each database a different mix, and a deletion costs milliseconds where an
+insertion costs a remine, so each total followed its draw. None of these rows is a campaign
+result. SC6 is now measured under `results/campaign/SC6` with 14 insertions, 3 deletions and
+3 modifications on every database, each one hundredth of the stream.
+
+## The original run
 
 Ten operations drawn at 70:15:15 insert:delete:modify, each touching one twentieth of the
 incremental stream (`opSize = rest / 20`): 25 sequences on SIGN, 150 on LEVIATHAN, 999 on
