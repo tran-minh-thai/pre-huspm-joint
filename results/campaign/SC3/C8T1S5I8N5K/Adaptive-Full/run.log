@@ -1,0 +1,14 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC3]
+Heap max: 49152 MB
+
+--- [SC3] Su sensitivity ---
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC3_su=0.001099#0  (heap free=231MB / total=320MB / max=49152MB)
+[Adaptive-Full/C8T1S5I8N5K/SC3_su=0.001099#0] OK t=2410ms cand=35269483 pat=4256 heapDelta=1498MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC3_su=0.001132#0  (heap free=337MB / total=448MB / max=49152MB)
+[Adaptive-Full/C8T1S5I8N5K/SC3_su=0.001132#0] OK t=1306ms cand=32211305 pat=3438 heapDelta=1494MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC3_su=0.0012#0  (heap free=338MB / total=448MB / max=49152MB)
+[Adaptive-Full/C8T1S5I8N5K/SC3_su=0.0012#0] OK t=1105ms cand=27104465 pat=2110 heapDelta=1504MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC3_su=0.001236#0  (heap free=338MB / total=448MB / max=49152MB)
+[Adaptive-Full/C8T1S5I8N5K/SC3_su=0.001236#0] OK t=1017ms cand=24782472 pat=1484 heapDelta=1486MB
+=== ALL SCENARIOS DONE (18.5s) ===
