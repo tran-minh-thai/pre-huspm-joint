@@ -194,10 +194,16 @@ public final class Datasets {
      * straight off the curve, "each inflection point on the curve corresponds to a database
      * rescan", which only works when the curve has enough points to have inflections.
      *
-     * This study used 5. That is twenty times coarser, and it is why the separation between
-     * Adaptive and Pre-HUSPM never appeared: on SIGN, the one database that rescans at all,
-     * K=3 gives 5 against 5, K=5 gives 10 against 11, and K=10 gives 17 against 25. The gap
-     * opens with K. At the K this study used, there was nothing to see.
+     * A coarse cut hides the mechanism. An increment inside the insertion safety budget needs
+     * no rescan, and a finer cut puts more increments inside it. SC5 measures this directly:
+     * on SIGN the share of increments that rescan falls from 96 percent at K=25 to 52 percent
+     * at K=100, and the proposal's time falls from 0.97 of remine-from-scratch's to 0.50. At a
+     * handful of increments every one rescans and the proposal is a remine.
+     *
+     * What opens with K is the gap to remining, not a gap in rescan counts: the proposal
+     * rescans more often than Pre-HUSPM at every K, 52 against 19 on SIGN at K=100, because
+     * Pre-HUSPM's SWUmax trigger under-counts the perturbation - the unsoundness
+     * results/verify-swumax measures. It is still faster, because each of its rescans is cheaper.
      */
     public static final int BATCH_COUNT = 100;
 
