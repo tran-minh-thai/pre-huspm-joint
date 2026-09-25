@@ -1574,6 +1574,22 @@ public class AutomatedExperimentRunner {
         if (ADAPTIVE_ONLY && !algo.equals("Adaptive-Full")) return null; // chỉ chạy lại Adaptive
         if (!algoEnabled(algo)) return null;   // -Dalgo.only: mot arm mot JVM (che do live)
         if (skipRepeat(algo, dsName, tag, currentRepeat)) return null;
+
+        // Built before anything is measured, while there is memory to build it. If anything
+        // below throws, this row is what gets logged, so a run that started always leaves one.
+        //
+        // This used to return null, and SC1 and SC3 log only non-null rows. Pre-HUSPM on
+        // LEVIATHAN in the memory campaign reached the 120-minute limit; it has no cooperative
+        // cancel, so its worker kept running and kept the heap full, measure() returned an
+        // overtime row, and the first allocation after it - recording the outcome - threw
+        // OutOfMemoryError into this catch. The row vanished and nothing but a line on stderr
+        // said so.
+        final ExperimentMetrics failure = skippedMetric(algo, dsName, iter, tag);
+        final String opOom = tag + "_OOM", opFailed = tag + "_FAILED";
+        failure.seed = currentSeed;
+        failure.repeat = currentRepeat;
+        failure.memMode = MEM_MODE;
+
         announce(algo, dsName, tag, iter);
         try {
             switch (algo) {
@@ -1654,8 +1670,12 @@ public class AutomatedExperimentRunner {
                 default: return null;
             }
         } catch (Throwable t) {
-            System.err.println("[" + algo + "/" + dsName + "] ERROR: " + t.getMessage());
-            return null;
+            // No allocation before the row is ready: the heap may be full.
+            failure.opType = (t instanceof OutOfMemoryError) ? opOom : opFailed;
+            try { System.err.println("[" + algo + "/" + dsName + "/" + tag + "] ERROR after the run began: " + t); }
+            catch (Throwable ignored) { }
+            try { noteOutcome(failure); } catch (Throwable ignored) { }
+            return failure;
         }
     }
 

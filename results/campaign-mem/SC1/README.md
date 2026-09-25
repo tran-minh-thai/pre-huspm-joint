@@ -17,11 +17,18 @@ reports the same HUSP count.
 | LEVIATHAN | Pre-HUSPM | out of memory at 0.01553 and 0.01647 |
 | LEVIATHAN | Pre-HUSPM | **no row at 0.014644** |
 
-The missing cell ran out of memory as well - in timing mode it is recorded as such - but here
-the error was thrown inside the worker thread's own exception handler, so the harness never
-learned the call had failed. It waited out the 120-minute limit and moved on without writing a
-row. That is a harness defect, not a result: a run must always leave a row. It is recorded
-here as out of memory by inference, not by measurement.
+In timing mode this cell runs out of memory within seconds. Here the run lasted the full
+120-minute limit and then left no row at all. That is a harness defect, not a result: a run must
+always leave a row. Until it is measured again it counts as out of memory by inference, not by
+measurement.
+
+The cause was in `runSingle`, which SC1 and SC3 call: any exception after a run began was caught
+and answered with null, and those scenarios log only non-null rows. Pre-HUSPM has no cooperative
+cancel, so at the time limit its worker kept running and kept the heap full; the overtime row
+came back from `measure()`, and the first allocation after it - recording the outcome - threw
+`OutOfMemoryError` into that catch. `runSingle` now builds a failure row before it measures and
+returns it from the catch, so a run that started always leaves a row. The arm is queued again
+so that this cell is measured rather than inferred.
 
 ## How many samples a figure rests on
 
