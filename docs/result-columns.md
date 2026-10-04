@@ -165,7 +165,10 @@ exactly twice, before it had allocated anything and after its working set had be
 garbage, so the reported peak was what the run kept. Most of the proposal's static runs are
 that short and most baselines are not, which made the bias favour the proposal.
 
-In the incremental scenarios each increment is its own row, and an update that does not
-rescan takes a few milliseconds, less than one collection. No sampler sees a peak inside
-it. What those rows measure is the state held between increments - the pattern set, the
-pre-large set, the index - which is `mem_retained_mb`, and the peak of that over the stream.
+In the incremental scenarios each increment is its own row, and the memory columns of a row
+are measured against the heap at the start of that increment. That heap already holds
+everything the algorithm kept from earlier increments, so an increment's `mem_live_mb` and
+`mem_retained_mb` are what that increment added, not what the algorithm holds: on SIGN they
+stay under one megabyte for all 100 increments and round to zero. The columns cannot be summed
+back into the state held either, since each is truncated to whole megabytes and floored at
+zero. The state an incremental method keeps across the stream is not recorded by these columns.

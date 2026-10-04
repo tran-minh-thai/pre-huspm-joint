@@ -309,11 +309,24 @@ public class AutomatedExperimentRunner {
         return false;
     }
 
+    /**
+     * Whether a measured call failed: -1 (failed, out of memory, over budget) or -2 (overtime).
+     *
+     * A negative runtime is not by itself a failure. In live memory mode a call that completed
+     * records -3, because the collections forced at every sample make its timing meaningless.
+     * Every incremental pipeline used to test runtimeMs < 0, so in live mode the initial mine
+     * of every arm counted as failed and all 100 increments were skipped as poisoned: the first
+     * SC2 memory campaign measured nothing but the initial mines.
+     */
+    private static boolean failedRun(ExperimentMetrics m) {
+        return m == null || m.runtimeMs == -1 || m.runtimeMs == -2;
+    }
+
     /** Record what the call turned out to be, so later repeats can be skipped. */
     private static void noteOutcome(ExperimentMetrics m) {
         if (m == null) return;
         String k = cfgKey(m.algorithm, m.dataset, m.opType.replaceAll("_(OT|OOM|BUDGET|FAILED|SKIPPED_POISONED)$", ""));
-        if (m.runtimeMs < 0) FAILED_ONCE.add(k);
+        if (failedRun(m)) FAILED_ONCE.add(k);
         else if (m.runtimeMs > REPEAT_MAX_MS) TOO_SLOW.add(k);
     }
 
@@ -981,7 +994,7 @@ public class AutomatedExperimentRunner {
         ExperimentMetrics mInit = measureAdaptive(adp, label, ds.name, 0, "SC6_INIT",
                 () -> adp.runInitialMining(dInit, initTotalUtil));
         col.log(mInit);
-        boolean poisoned = (mInit.runtimeMs < 0);
+        boolean poisoned = (failedRun(mInit));
         forceFullGC();
 
         List<Sequence> cur = new ArrayList<>(dInit);
@@ -1031,7 +1044,7 @@ public class AutomatedExperimentRunner {
                 }
             }
             col.log(m);
-            if (m.runtimeMs < 0) poisoned = true;
+            if (failedRun(m)) poisoned = true;
             cur = after; total = newTotal;
             forceFullGC();
         }
@@ -1212,7 +1225,7 @@ public class AutomatedExperimentRunner {
         ExperimentMetrics m0 = measureAdaptive(adp, tag, ds.name, 0, opTag + "_INIT",
                 () -> adp.runInitialMining(dInit, initTotal));
         col.log(m0);
-        boolean poisoned = m0.runtimeMs < 0;
+        boolean poisoned = failedRun(m0);
 
         double rolling = initTotal;
         List<Sequence> dSoFar = new ArrayList<>(dInit);
@@ -1232,7 +1245,7 @@ public class AutomatedExperimentRunner {
                 ExperimentMetrics mb = measureAdaptive(adp, tag, ds.name, batchIdx, opTag + "_INC",
                         () -> adp.runIncrementalMining(delta, snap, nt));
                 col.log(mb);
-                if (mb.runtimeMs < 0) poisoned = true;
+                if (failedRun(mb)) poisoned = true;
             }
             dSoFar.addAll(delta);
             rolling = newTotal;
@@ -1267,7 +1280,7 @@ public class AutomatedExperimentRunner {
             col.log(m0);
             // OOM/poison → GIẢI PHÓNG NGAY CP-tree (nhiều GB) để các cấp phát main kế tiếp
             // (skipped log / snapshot / scenario) KHÔNG tiếp tục OOM rồi sập experiment.
-            if (m0.runtimeMs < 0) { poisoned = true; inc.releaseState(); forceFullGC(); }
+            if (failedRun(m0)) { poisoned = true; inc.releaseState(); forceFullGC(); }
 
             double rolling = initTotal;
             List<Sequence> dSoFar = new ArrayList<>(dInit);
@@ -1290,7 +1303,7 @@ public class AutomatedExperimentRunner {
                             () -> inc.candidateCount, () -> inc.patternCount, null, null);
                     if (mb.runtimeMs != -1) { mb.prunedTsu = inc.prunedTSU; mb.exploredNodes = inc.exploredNodes; }
                     col.log(mb);
-                    if (mb.runtimeMs < 0) { poisoned = true; inc.releaseState(); forceFullGC(); }
+                    if (failedRun(mb)) { poisoned = true; inc.releaseState(); forceFullGC(); }
                 }
                 dSoFar.addAll(delta);
                 rolling = newTotal;
@@ -1326,7 +1339,7 @@ public class AutomatedExperimentRunner {
                         () -> preh.candidateCount, () -> preh.patternCount, null, null);
                 attachPreHuspm(m0, preh);
                 col.log(m0);
-                if (m0.runtimeMs < 0) poisoned = true;
+                if (failedRun(m0)) poisoned = true;
 
                 double rolling = initTotal;
                 List<Sequence> dSoFar = new ArrayList<>(dInit);
@@ -1349,7 +1362,7 @@ public class AutomatedExperimentRunner {
                                 () -> preh.candidateCount, () -> preh.patternCount, null, null);
                         attachPreHuspm(mb, preh);
                         col.log(mb);
-                        if (mb.runtimeMs < 0) poisoned = true;
+                        if (failedRun(mb)) poisoned = true;
                     }
                     dSoFar.addAll(delta);
                     rolling = newTotal;
@@ -1393,7 +1406,7 @@ public class AutomatedExperimentRunner {
                     () -> rm0.prelargeCount, () -> rm0.uutValue, () -> rm0.sftValue, rm0::cancel);
             attachAdaptive(m0, rm0);
             col.log(m0);
-            if (m0.runtimeMs < 0) poisoned = true;
+            if (failedRun(m0)) poisoned = true;
             forceFullGC();
 
             for (int b = 0; b < batches.size(); b++) {
@@ -1430,7 +1443,7 @@ public class AutomatedExperimentRunner {
                 // cot rescan_count khong bi doc nham thanh "moc nay cung rescan moi lo".
                 mb.rescanCount = 0;
                 col.log(mb);
-                if (mb.runtimeMs < 0) poisoned = true;
+                if (failedRun(mb)) poisoned = true;
                 forceFullGC();
             }
         }
@@ -1452,7 +1465,7 @@ public class AutomatedExperimentRunner {
                             () -> adp.prelargeCount, () -> adp.uutValue, () -> adp.sftValue, adp::cancel);
             attachAdaptive(m0, adp);
             col.log(m0);
-            if (m0.runtimeMs < 0) poisoned = true;
+            if (failedRun(m0)) poisoned = true;
 
             double rolling = initTotal;
             List<Sequence> dSoFar = new ArrayList<>(dInit);
@@ -1478,7 +1491,7 @@ public class AutomatedExperimentRunner {
                             () -> adp.prelargeCount, () -> adp.uutValue, () -> adp.sftValue, adp::cancel);
                     attachAdaptive(mb, adp);
                     col.log(mb);
-                    if (mb.runtimeMs < 0) poisoned = true;
+                    if (failedRun(mb)) poisoned = true;
                 }
                 dSoFar.addAll(delta);
                 rolling = newTotal;
