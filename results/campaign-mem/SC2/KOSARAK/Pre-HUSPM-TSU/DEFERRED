@@ -1,0 +1,39 @@
+Deferred in the memory campaign as well, for the reason below. This arm does not finish its
+hundred increments within the eight-hour cap in timing mode, and live mode is slower still,
+because it forces a full collection at every sample. A live set measured over a curve that
+stops part way cannot be set beside the others, which cover all hundred increments. The
+timing-campaign file is copied below unchanged; delete this file to queue the arm.
+
+----------------------------------------------------------------------------------------
+
+﻿NOTE added 2026-09-21: this arm is deferred again for the JDK 25 campaign. The REASON
+carries over - the TSU bound is sound and rescans far more often, which Yan et al. report
+for it in section 6.3.1 - but every runtime quoted below was measured in the earlier
+campaign, under JDK 21 and mixed 24/48 GB heap ceilings. Those figures are evidence for the
+decision to defer, not results of this campaign, and none of them belongs in a table. The
+run that produced them is archived in results/campaign-jdk21.
+Pre-HUSPM-TSU on KOSARAK - measured, not finished. Set aside 2026-09-21.
+
+WHAT HAPPENED
+  2026-09-19 19:39 -> 2026-09-20 03:39   89 of 101 batches in 8.0 h, stopped by the cap
+  (rc=-1, capped=True). The CSV is that single run, iterations 0..88, no duplicates.
+
+  It previously carried a DONE file. That was wrong: 89 of 101 batches is not a finished
+  curve, and anything reading DONE would have treated it as one.
+
+WHY IT IS SLOW
+  The same reason as FIFA - see that arm's DEFERRED file. The TSU bound is sound and
+  rescans far more often than the SWUmax variant, which is the behaviour Yan et al.
+  report for it in section 6.3.1.
+
+WHAT IT IS WORTH
+  On the same database, same thresholds, one repeat:
+      Adaptive-Full            6459 s   101/101 batches
+      Pre-HUSPM (SWUmax)       4877 s   101/101
+      Remine-from-scratch      6656 s   101/101
+      Pre-HUSPM-TSU          >28800 s    89/101
+
+TO RETRY
+  Delete this file, then:  .\campaign.ps1 -CapSeconds 72000
+  Budget at least 10 h. There is no resume; a retry begins again at batch 0.
+
