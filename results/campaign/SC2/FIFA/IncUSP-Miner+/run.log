@@ -1,0 +1,8 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC2]
+Heap max: 49152 MB
+
+--- [SC2] Incremental sequence (100 batches, EVEN; D_init per Yan et al. Table 16) ---
+>> RUNNING IncUSP-Miner+/FIFA/SC2_INIT#0  (heap free=667MB / total=1024MB / max=49152MB)
+[IncUSP-Miner+/FIFA/SC2_INIT#0] FAILED after 862346ms (OOM)
+=== ALL SCENARIOS DONE (874.6s) ===
