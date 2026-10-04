@@ -1,0 +1,210 @@
+### LIVE HEAP: ep thu gom moi 20 ms | arm = Remine-from-scratch
+### runtime_ms xuat -3 (GC lam nhieu); gia tri that o wall_ms_perturbed. KHONG dung lam so hieu nang.
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC2]
+Heap max: 49152 MB
+
+--- [SC2] Incremental sequence (100 batches, EVEN; D_init per Yan et al. Table 16) ---
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INIT#0  (heap free=630MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INIT#0] OK t=465ms cand=1986136 pat=6 heapDelta=279MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#1  (heap free=592MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#1] OK t=296ms cand=1990505 pat=6 heapDelta=252MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#2  (heap free=593MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#2] OK t=273ms cand=1992550 pat=6 heapDelta=224MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#3  (heap free=593MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#3] OK t=267ms cand=1997055 pat=6 heapDelta=203MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#4  (heap free=593MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#4] OK t=268ms cand=1999162 pat=6 heapDelta=203MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#5  (heap free=593MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#5] OK t=273ms cand=1999620 pat=6 heapDelta=204MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#6  (heap free=593MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#6] OK t=270ms cand=1996079 pat=6 heapDelta=203MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#7  (heap free=592MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#7] OK t=272ms cand=1998945 pat=6 heapDelta=203MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#8  (heap free=592MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#8] OK t=313ms cand=2042816 pat=6 heapDelta=209MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#9  (heap free=592MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#9] OK t=276ms cand=2101529 pat=6 heapDelta=209MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#10  (heap free=591MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#10] OK t=277ms cand=2110333 pat=6 heapDelta=209MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#11  (heap free=591MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#11] OK t=277ms cand=2115302 pat=6 heapDelta=209MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#12  (heap free=591MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#12] OK t=274ms cand=2113412 pat=6 heapDelta=209MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#13  (heap free=590MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#13] OK t=274ms cand=2115965 pat=6 heapDelta=212MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#14  (heap free=590MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#14] OK t=277ms cand=2131582 pat=6 heapDelta=212MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#15  (heap free=590MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#15] OK t=281ms cand=2136465 pat=6 heapDelta=212MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#16  (heap free=591MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#16] OK t=276ms cand=2139140 pat=6 heapDelta=215MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#17  (heap free=591MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#17] OK t=277ms cand=2140990 pat=6 heapDelta=215MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#18  (heap free=591MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#18] OK t=279ms cand=2144882 pat=6 heapDelta=215MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#19  (heap free=591MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#19] OK t=279ms cand=2141676 pat=6 heapDelta=215MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#20  (heap free=590MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#20] OK t=278ms cand=2142289 pat=6 heapDelta=217MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#21  (heap free=590MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#21] OK t=283ms cand=2139418 pat=6 heapDelta=217MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#22  (heap free=590MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#22] OK t=283ms cand=2142481 pat=6 heapDelta=217MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#23  (heap free=590MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#23] OK t=281ms cand=2141012 pat=6 heapDelta=217MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#24  (heap free=590MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#24] OK t=285ms cand=2142342 pat=6 heapDelta=217MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#25  (heap free=589MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#25] OK t=286ms cand=2142340 pat=6 heapDelta=217MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#26  (heap free=589MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#26] OK t=284ms cand=2152408 pat=6 heapDelta=217MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#27  (heap free=589MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#27] OK t=290ms cand=2155232 pat=6 heapDelta=217MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#28  (heap free=589MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#28] OK t=288ms cand=2159758 pat=6 heapDelta=222MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#29  (heap free=589MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#29] OK t=287ms cand=2157544 pat=6 heapDelta=222MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#30  (heap free=588MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#30] OK t=285ms cand=2164777 pat=6 heapDelta=222MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#31  (heap free=588MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#31] OK t=287ms cand=2165783 pat=6 heapDelta=222MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#32  (heap free=588MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#32] OK t=286ms cand=2166652 pat=6 heapDelta=222MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#33  (heap free=588MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#33] OK t=288ms cand=2166482 pat=6 heapDelta=222MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#34  (heap free=589MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#34] OK t=291ms cand=2169706 pat=6 heapDelta=222MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#35  (heap free=589MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#35] OK t=291ms cand=2164503 pat=6 heapDelta=224MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#36  (heap free=589MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#36] OK t=292ms cand=2169467 pat=6 heapDelta=224MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#37  (heap free=588MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#37] OK t=289ms cand=2170759 pat=6 heapDelta=229MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#38  (heap free=588MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#38] OK t=296ms cand=2193783 pat=6 heapDelta=229MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#39  (heap free=588MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#39] OK t=295ms cand=2201848 pat=6 heapDelta=229MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#40  (heap free=588MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#40] OK t=294ms cand=2206561 pat=6 heapDelta=229MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#41  (heap free=587MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#41] OK t=298ms cand=2203176 pat=6 heapDelta=229MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#42  (heap free=587MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#42] OK t=294ms cand=2203824 pat=6 heapDelta=229MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#43  (heap free=587MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#43] OK t=297ms cand=2201986 pat=6 heapDelta=229MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#44  (heap free=587MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#44] OK t=292ms cand=2205134 pat=6 heapDelta=234MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#45  (heap free=587MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#45] OK t=294ms cand=2206753 pat=6 heapDelta=234MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#46  (heap free=587MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#46] OK t=295ms cand=2210010 pat=6 heapDelta=234MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#47  (heap free=587MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#47] OK t=296ms cand=2216756 pat=6 heapDelta=234MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#48  (heap free=588MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#48] OK t=299ms cand=2215773 pat=6 heapDelta=234MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#49  (heap free=588MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#49] OK t=299ms cand=2220360 pat=6 heapDelta=234MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#50  (heap free=588MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#50] OK t=299ms cand=2236156 pat=6 heapDelta=234MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#51  (heap free=588MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#51] OK t=299ms cand=2236693 pat=6 heapDelta=239MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#52  (heap free=588MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#52] OK t=298ms cand=2238313 pat=6 heapDelta=239MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#53  (heap free=588MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#53] OK t=300ms cand=2245809 pat=6 heapDelta=239MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#54  (heap free=588MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#54] OK t=301ms cand=2244740 pat=6 heapDelta=239MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#55  (heap free=588MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#55] OK t=305ms cand=2253273 pat=6 heapDelta=239MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#56  (heap free=588MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#56] OK t=304ms cand=2253744 pat=6 heapDelta=239MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#57  (heap free=588MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#57] OK t=306ms cand=2257677 pat=6 heapDelta=244MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#58  (heap free=587MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#58] OK t=308ms cand=2257908 pat=6 heapDelta=244MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#59  (heap free=587MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#59] OK t=345ms cand=2263931 pat=6 heapDelta=244MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#60  (heap free=587MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#60] OK t=307ms cand=2261695 pat=6 heapDelta=244MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#61  (heap free=587MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#61] OK t=306ms cand=2264892 pat=6 heapDelta=244MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#62  (heap free=589MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#62] OK t=306ms cand=2277222 pat=6 heapDelta=244MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#63  (heap free=588MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#63] OK t=304ms cand=2278605 pat=6 heapDelta=249MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#64  (heap free=588MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#64] OK t=306ms cand=2280179 pat=6 heapDelta=249MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#65  (heap free=588MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#65] OK t=307ms cand=2276098 pat=6 heapDelta=249MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#66  (heap free=588MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#66] OK t=307ms cand=2279631 pat=6 heapDelta=249MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#67  (heap free=587MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#67] OK t=312ms cand=2277908 pat=6 heapDelta=249MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#68  (heap free=587MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#68] OK t=306ms cand=2278009 pat=6 heapDelta=249MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#69  (heap free=587MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#69] OK t=308ms cand=2283430 pat=6 heapDelta=249MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#70  (heap free=587MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#70] OK t=314ms cand=2288108 pat=6 heapDelta=254MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#71  (heap free=588MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#71] OK t=312ms cand=2289664 pat=6 heapDelta=254MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#72  (heap free=588MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#72] OK t=311ms cand=2289301 pat=6 heapDelta=254MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#73  (heap free=588MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#73] OK t=314ms cand=2294191 pat=6 heapDelta=254MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#74  (heap free=587MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#74] OK t=308ms cand=2299005 pat=6 heapDelta=254MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#75  (heap free=587MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#75] OK t=313ms cand=2377614 pat=6 heapDelta=254MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#76  (heap free=587MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#76] OK t=314ms cand=2417551 pat=6 heapDelta=254MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#77  (heap free=586MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#77] OK t=317ms cand=2413999 pat=6 heapDelta=115MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#78  (heap free=586MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#78] OK t=319ms cand=2410040 pat=6 heapDelta=261MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#79  (heap free=586MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#79] OK t=326ms cand=2407100 pat=6 heapDelta=115MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#80  (heap free=586MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#80] OK t=321ms cand=2418565 pat=6 heapDelta=261MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#81  (heap free=586MB / total=864MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#81] OK t=332ms cand=2417383 pat=6 heapDelta=120MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#82  (heap free=682MB / total=960MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#82] OK t=327ms cand=2391044 pat=8 heapDelta=262MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#83  (heap free=681MB / total=960MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#83] OK t=321ms cand=2436290 pat=8 heapDelta=262MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#84  (heap free=681MB / total=960MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#84] OK t=323ms cand=2430776 pat=9 heapDelta=262MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#85  (heap free=681MB / total=960MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#85] OK t=327ms cand=2420920 pat=9 heapDelta=262MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#86  (heap free=681MB / total=960MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#86] OK t=329ms cand=2423771 pat=9 heapDelta=268MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#87  (heap free=681MB / total=960MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#87] OK t=328ms cand=2435371 pat=9 heapDelta=268MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#88  (heap free=681MB / total=960MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#88] OK t=325ms cand=2432198 pat=9 heapDelta=268MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#89  (heap free=681MB / total=960MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#89] OK t=329ms cand=2434102 pat=9 heapDelta=268MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#90  (heap free=681MB / total=960MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#90] OK t=327ms cand=2435780 pat=9 heapDelta=268MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#91  (heap free=681MB / total=960MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#91] OK t=329ms cand=2437863 pat=9 heapDelta=268MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#92  (heap free=681MB / total=960MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#92] OK t=326ms cand=2438735 pat=9 heapDelta=268MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#93  (heap free=681MB / total=960MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#93] OK t=329ms cand=2440310 pat=9 heapDelta=268MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#94  (heap free=681MB / total=960MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#94] OK t=330ms cand=2440087 pat=9 heapDelta=268MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#95  (heap free=681MB / total=960MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#95] OK t=330ms cand=2438273 pat=9 heapDelta=275MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#96  (heap free=681MB / total=960MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#96] OK t=332ms cand=2438410 pat=9 heapDelta=275MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#97  (heap free=680MB / total=960MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#97] OK t=330ms cand=2439144 pat=9 heapDelta=275MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#98  (heap free=680MB / total=960MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#98] OK t=330ms cand=2435826 pat=9 heapDelta=275MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#99  (heap free=682MB / total=960MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#99] OK t=340ms cand=2445301 pat=9 heapDelta=275MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#100  (heap free=681MB / total=960MB / max=49152MB)
+[Remine-from-scratch/TAFENG/SC2_INC#100] OK t=334ms cand=2469476 pat=9 heapDelta=275MB
+=== ALL SCENARIOS DONE (177.8s) ===
