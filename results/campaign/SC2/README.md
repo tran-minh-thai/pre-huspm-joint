@@ -15,7 +15,7 @@ Measured on `PC-THAI`, AMD Ryzen 9 9950X, JDK 25, `-Xmx48g`, one JVM per arm, on
 | C8T1S5I8N5K | 100/100 | 100/100 | 100/100 | 100/100 | 100/100 |
 | BIBLE | 100/100 | 100/100 | 100/100 | 100/100 | **40/100**, out of memory |
 | LEVIATHAN | 100/100 | **0/100**, out of memory on `D_init` | **0/100**, out of memory on `D_init` | 100/100 | **74/100** |
-| FIFA | 100/100 | 100/100 | deferred | 100/100 | not yet run |
+| FIFA | 100/100 | 100/100 | deferred | 100/100 | **0/100**, out of memory on `D_init` |
 | KOSARAK | 100/100 | 100/100 | deferred | 100/100 | **11/100**, out of memory |
 
 The proposal is the only arm that finishes every increment of every database.
@@ -94,5 +94,6 @@ pattern on either of those two databases, so on them it is both correct in pract
 cheaper. Where it does lose patterns — LEVIATHAN, up to 39 of 137 at one operation — it
 cannot be run at all here: it exhausts 48 GB on `D_init`.
 
-FIFA/IncUSP-Miner+ has not been measured yet, and the two Pre-HUSPM-TSU arms on FIFA and
-KOSARAK are deferred with their partial curves; see the `DEFERRED` files.
+IncUSP-Miner+ cannot start on FIFA: it exhausts 48 GB on the initial mine of `D_init`, so all
+100 increments are recorded as skipped. The two Pre-HUSPM-TSU arms on FIFA and KOSARAK are
+deferred with their partial curves; see the `DEFERRED` files.

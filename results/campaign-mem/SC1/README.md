@@ -15,24 +15,24 @@ reports the same HUSP count.
 |---|---|---|
 | FIFA | IncUSP-Miner+ | out of memory at 48 GB at the two lowest thresholds |
 | LEVIATHAN | Pre-HUSPM | out of memory at 0.01553 and 0.01647 |
-| LEVIATHAN | Pre-HUSPM | **no row at 0.014644** |
+| LEVIATHAN | Pre-HUSPM | at the heap ceiling for the whole 120-minute limit at 0.014644 |
 
-In timing mode this cell runs out of memory within seconds. Here the run lasted the full
-120-minute limit and then left no row at all. That is a harness defect, not a result: a run must
-always leave a row. Until it is measured again it counts as out of memory by inference, not by
-measurement.
+At 0.014644 Pre-HUSPM sat at the 48 GB ceiling - 48,747 MB live, over 33,840 samples - until the
+time limit stopped it. In timing mode the same cell runs out of memory within seconds; here the
+forced collections kept it just alive. Both modes say the same thing: it cannot be mined within
+48 GB.
 
-The cause was in `runSingle`, which SC1 and SC3 call: any exception after a run began was caught
-and answered with null, and those scenarios log only non-null rows. Pre-HUSPM has no cooperative
-cancel, so at the time limit its worker kept running and kept the heap full; the overtime row
-came back from `measure()`, and the first allocation after it - recording the outcome - threw
-`OutOfMemoryError` into that catch. `runSingle` now builds a failure row before it measures and
-returns it from the catch, so a run that started always leaves a row. The arm is queued again
-so that this cell is measured rather than inferred.
+The first time this arm ran, the cell left no row at all. `runSingle`, which SC1 and SC3 call,
+answered any exception after a run began with null, and those scenarios log only non-null rows;
+with the worker still holding the heap after the time limit, the first allocation after the
+overtime row threw `OutOfMemoryError` into that catch. `runSingle` now builds a failure row before
+it measures and returns it from the catch. The arm was run again and the row is there - written
+this time by the ordinary path, because the allocation succeeded, so the new catch has not yet
+been exercised by a real failure.
 
 ## How many samples a figure rests on
 
-187 cells completed. Sixteen of them were read only twice, at the start and after the end,
+187 of the 192 cells completed. Sixteen of them were read only twice, at the start and after the end,
 because the run finished before the first wait was over; for those the peak is what the run
 kept. They fall on both sides - nine of the proposal's, six of Pre-HUSPM's, one of
 IncUSP-Miner+'s - on TAFENG, BMS1 and KOSARAK at their higher thresholds, where a run takes a
