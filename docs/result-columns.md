@@ -165,10 +165,18 @@ exactly twice, before it had allocated anything and after its working set had be
 garbage, so the reported peak was what the run kept. Most of the proposal's static runs are
 that short and most baselines are not, which made the bias favour the proposal.
 
-In the incremental scenarios each increment is its own row, and the memory columns of a row
-are measured against the heap at the start of that increment. That heap already holds
-everything the algorithm kept from earlier increments, so an increment's `mem_live_mb` and
-`mem_retained_mb` are what that increment added, not what the algorithm holds: on SIGN they
-stay under one megabyte for all 100 increments and round to zero. The columns cannot be summed
-back into the state held either, since each is truncated to whole megabytes and floored at
-zero. The state an incremental method keeps across the stream is not recorded by these columns.
+A static mine is one call, and its memory is read against the heap at the start of the call.
+An incremental arm is many calls, one per increment, and is read against one baseline fixed for
+the whole arm: the heap after a full collection, taken before the arm's algorithm exists. An
+increment's `mem_retained_mb` is therefore everything the algorithm holds after that
+increment, and `mem_live_mb` the peak during it with that state included. Remine-from-scratch
+starts a new miner at every increment, so its rows are the peak of each fresh mine.
+
+Before the arm baseline, each increment was read against the heap at its own start, which
+already held the state kept from the increments before; the rows recorded only what an
+increment added, under a megabyte on SIGN and rounded to zero, and the state was recorded
+nowhere. Memory rows of an incremental scenario measured before that change do not mean the
+same thing and are not to be compared with later ones.
+
+The harness keeps its own list of the sequences seen so far, which grows along the stream and
+is counted in every arm alike.

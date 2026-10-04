@@ -322,6 +322,35 @@ public class AutomatedExperimentRunner {
         return m == null || m.runtimeMs == -1 || m.runtimeMs == -2;
     }
 
+    /**
+     * Live mode's memory baseline for an incremental arm, or -1 to measure each call on its own.
+     *
+     * measure() reads memory against the heap at the start of the call. For a static mine that
+     * is right: the call is the whole run. For an incremental arm it is not. The heap at the
+     * start of an increment already holds everything the algorithm kept from the increments
+     * before it, so each row recorded only what its increment added - under a megabyte on SIGN,
+     * rounded to zero - and the state an incremental method keeps, the thing its memory claim
+     * is about, was recorded nowhere. With the baseline fixed once per arm, before the
+     * algorithm exists, an increment's mem_retained_mb is everything the algorithm holds after
+     * it and mem_live_mb is the peak during it, state included. Remine-from-scratch, which
+     * starts a new miner every increment, reports the peak of each fresh mine.
+     *
+     * The harness's own list of the sequences seen so far grows along the stream too and is
+     * counted the same way in every arm, so it shifts all arms equally.
+     */
+    private static long memArmBaseline = -1;
+
+    /** Fix the baseline of an incremental arm. Live mode only; call before the arm's algorithm exists. */
+    private static void beginMemArm() {
+        if (!MEM_LIVE) { memArmBaseline = -1; return; }
+        forceFullGC();
+        Runtime rt = Runtime.getRuntime();
+        memArmBaseline = rt.totalMemory() - rt.freeMemory();
+    }
+
+    /** Back to measuring each call on its own, as a static mine is measured. */
+    private static void endMemArm() { memArmBaseline = -1; }
+
     /** Record what the call turned out to be, so later repeats can be skipped. */
     private static void noteOutcome(ExperimentMetrics m) {
         if (m == null) return;
@@ -989,6 +1018,7 @@ public class AutomatedExperimentRunner {
                                   List<Op> plan, ResultCollector col, boolean remine) throws IOException {
         final String label = remine ? "Remine-from-scratch" : "Adaptive-Full";
 
+        beginMemArm();
         PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp = newAdaptive(ds.name, ds.defaultSu);
         announce(label, ds.name, "SC6_INIT", 0);
         ExperimentMetrics mInit = measureAdaptive(adp, label, ds.name, 0, "SC6_INIT",
@@ -1153,6 +1183,7 @@ public class AutomatedExperimentRunner {
                 // runs one arm per JVM, so without it this reference repeats once for every
                 // ablation in the list and the CSV carries six copies of one measurement.
                 if (!ADAPTIVE_ONLY && algoEnabled("Pre-HUSPM")) {
+                endMemArm();
                 announce("Pre-HUSPM", ds.name, "SC7_ref", 0);
                 PreHUSPMAlgorithm.PreHUSPMAlgo pre = new PreHUSPMAlgorithm.PreHUSPMAlgo(
                         ds.defaultSu, slRatioFor(ds.name), ENABLE_PATTERN_EXPORT);
@@ -1172,6 +1203,7 @@ public class AutomatedExperimentRunner {
     private static void logAblation(ResultCollector col, DatasetConfig ds, List<Sequence> full,
                                     double totalUtil, String tag, boolean useBlockIndex,
                                     boolean useIub) {
+        endMemArm();   // static: one mine, measured against the heap at the start of the call
         // SC7's arms carry their own names - proposed_full, proposed_no_IUB and the rest -
         // and until now nothing here consulted -Dalgo.only. campaign.ps1 gives each arm its
         // own JVM, so running SC7 through it repeated every ablation once per name in the
@@ -1214,6 +1246,7 @@ public class AutomatedExperimentRunner {
         List<Sequence> rest = tailFrom(full, dInit.size());
         List<List<Sequence>> batches = splitByWeights(rest, equalWeights(BATCH_COUNT));
         final double initTotal = sumUtility(dInit);
+        beginMemArm();
         PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp = new PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo(
                 ds.defaultSu, DEFAULT_KAPPA, DEFAULT_DELTA0, slRatioFor(ds.name),
                 PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.AblationMode.FULL,
@@ -1270,6 +1303,7 @@ public class AutomatedExperimentRunner {
 
         // -------- Algorithm 1: IncUSP-Miner+ (isolated scope) --------
         if (!ADAPTIVE_ONLY && algoEnabled("IncUSP-Miner+")) {
+            beginMemArm();
             IncUSPMinerPlusAlgorithm inc = new IncUSPMinerPlusAlgorithm(Su);
             boolean poisoned = false;
             announce("IncUSP-Miner+", dsName, tag + "_INIT", 0);
@@ -1330,6 +1364,7 @@ public class AutomatedExperimentRunner {
                 final String label = (variant == PreHUSPMAlgorithm.PreHUSPMAlgo.Variant.TSU)
                         ? "Pre-HUSPM-TSU" : "Pre-HUSPM";
                 if (!algoEnabled(label)) continue;
+                beginMemArm();
                 final PreHUSPMAlgorithm.PreHUSPMAlgo preh = new PreHUSPMAlgorithm.PreHUSPMAlgo(
                         Su, slRatioFor(dsName), ENABLE_PATTERN_EXPORT, variant);
                 boolean poisoned = false;
@@ -1388,6 +1423,7 @@ public class AutomatedExperimentRunner {
         // cac dong cung mot lan chay, tinh duoc tu du lieu tho, dung quy uoc chung cua
         // ExperimentMetrics la khong luu dai luong dan xuat.
         if (algoEnabled("Remine-from-scratch")) {
+            beginMemArm();
             boolean poisoned = false;
             double rolling = initTotal;
             List<Sequence> dSoFar = new ArrayList<>(dInit);
@@ -1451,6 +1487,7 @@ public class AutomatedExperimentRunner {
 
         // -------- Algorithm 3: Adaptive-Full (isolated scope) --------
         if (algoEnabled("Adaptive-Full")) {
+            beginMemArm();
             PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp = new PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo(
                     Su, DEFAULT_KAPPA, DEFAULT_DELTA0, slRatioFor(dsName),
                     PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.AblationMode.FULL,
@@ -1587,6 +1624,8 @@ public class AutomatedExperimentRunner {
         if (ADAPTIVE_ONLY && !algo.equals("Adaptive-Full")) return null; // chỉ chạy lại Adaptive
         if (!algoEnabled(algo)) return null;   // -Dalgo.only: mot arm mot JVM (che do live)
         if (skipRepeat(algo, dsName, tag, currentRepeat)) return null;
+
+        endMemArm();   // a static mine is measured against the heap at the start of the call
 
         // Built before anything is measured, while there is memory to build it. If anything
         // below throws, this row is what gets logged, so a run that started always leaves one.
@@ -1969,8 +2008,9 @@ public class AutomatedExperimentRunner {
             long finalLive = rt.totalMemory() - rt.freeMemory();
             gcCount.incrementAndGet();
             long pl = Math.max(peakLive.get(), finalLive);
-            m.memLiveMb     = Math.max(0, pl - heapBefore) / (1024 * 1024);
-            m.memRetainedMb = Math.max(0, finalLive - heapBefore) / (1024 * 1024);
+            long memBase = (memArmBaseline >= 0) ? memArmBaseline : heapBefore;
+            m.memLiveMb     = Math.max(0, pl - memBase) / (1024 * 1024);
+            m.memRetainedMb = Math.max(0, finalLive - memBase) / (1024 * 1024);
             m.gcForced      = gcCount.get();
         } else {
             m.runtimeMs = realRuntime;

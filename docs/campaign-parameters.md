@@ -70,7 +70,9 @@ timing rows and memory rows never share a directory.
 
 The sampling interval stretches with the size of the live set - see
 `docs/result-columns.md` - and every row records how many samples it rests on in
-`gc_forced`. SC1 first: it is the static table the memory comparison rests on, and it took
+`gc_forced`. In the incremental scenarios every row of an arm is read against one baseline
+taken before the arm's algorithm exists, so `mem_retained_mb` is the state the algorithm holds
+after each increment. SC1 first: it is the static table the memory comparison rests on, and it took
 2.9 hours in timing mode on the measurement machine. SC2 took 8.9 hours in timing mode;
 decide on it once SC1 shows what live mode costs.
 
