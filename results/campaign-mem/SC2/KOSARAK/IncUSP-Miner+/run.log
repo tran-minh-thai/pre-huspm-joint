@@ -1,0 +1,32 @@
+### LIVE HEAP: ep thu gom moi 20 ms | arm = IncUSP-Miner+
+### runtime_ms xuat -3 (GC lam nhieu); gia tri that o wall_ms_perturbed. KHONG dung lam so hieu nang.
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC2]
+Heap max: 49152 MB
+
+--- [SC2] Incremental sequence (100 batches, EVEN; D_init per Yan et al. Table 16) ---
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INIT#0  (heap free=4234MB / total=6624MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INIT#0] OK t=15275ms cand=16216965 pat=10 heapDelta=3970MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#1  (heap free=8102MB / total=11008MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#1] OK t=2520ms cand=3347880 pat=10 heapDelta=5881MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#2  (heap free=5893MB / total=13728MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#2] OK t=4515ms cand=3688833 pat=10 heapDelta=4078MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#3  (heap free=8544MB / total=20288MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#3] OK t=6408ms cand=4662919 pat=9 heapDelta=4754MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#4  (heap free=11589MB / total=28000MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#4] OK t=5415ms cand=3433433 pat=10 heapDelta=3077MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#5  (heap free=17409MB / total=36480MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#5] OK t=10411ms cand=7635009 pat=9 heapDelta=7031MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#6  (heap free=17821MB / total=43904MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#6] OK t=8608ms cand=4624869 pat=9 heapDelta=3787MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#7  (heap free=19681MB / total=49152MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#7] OK t=10454ms cand=6224471 pat=9 heapDelta=5923MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#8  (heap free=15171MB / total=49152MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#8] OK t=9945ms cand=4327445 pat=9 heapDelta=4352MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#9  (heap free=12199MB / total=49152MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#9] OK t=11455ms cand=5492720 pat=9 heapDelta=4944MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#10  (heap free=8225MB / total=49152MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#10] OK t=11840ms cand=4820681 pat=9 heapDelta=3608MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#11  (heap free=5143MB / total=49152MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#11] OK t=11728ms cand=3953603 pat=9 heapDelta=3510MB
+=== ALL SCENARIOS DONE (238.1s) ===
