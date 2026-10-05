@@ -1,6 +1,7 @@
 package common;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * The databases this study measures, with the thresholds each one is measured at.
@@ -120,6 +121,30 @@ public final class Datasets {
             this.calibrated = calibrated; this.note = note; this.fullScopeOk = fullScopeOk;
             this.slMinRatio = slMinRatio;
         }
+    }
+
+    /**
+     * Databases whose item ids are compacted when they are loaded.
+     *
+     * An item id is a label. Every miner here also uses it as an array index, sizing its
+     * per-item scratch arrays by the largest id, so a database whose ids are spread thinly
+     * pays for ids that do not exist. C8T1S5I8N5K draws its 68,240 items from ids up to
+     * 4,999,999, so each per-item array is 73 times longer than the alphabet. On D_init,
+     * compacting takes the proposal from 784 MB to 46 and Pre-HUSPM from 357 MB to 162,
+     * with the same patterns: most of what either held there was such arrays rather than
+     * its own state.
+     *
+     * Compaction replaces each id by its rank among the ids of the _eui file, 1 for the
+     * smallest. The order of the items is unchanged, so every miner meets them in the same
+     * order and returns the same patterns under the new labels. The seven other databases
+     * are left as they are: their ids are already close to dense, so compacting them would
+     * change their labels and nothing else.
+     */
+    private static final Set<String> COMPACT_ITEM_IDS = Set.of("C8T1S5I8N5K");
+
+    /** Whether a database's item ids are replaced by their ranks when it is loaded. */
+    public static boolean compactItemIds(String name) {
+        return name != null && COMPACT_ITEM_IDS.contains(name);
     }
 
     /** The pre-large floor used wherever a database does not need its own. */

@@ -81,7 +81,8 @@ decide on it once SC1 shows what live mode costs.
 | parameter | value | why |
 |---|---|---|
 | JDK | **25** | One version for the whole campaign, checked by `campaign.ps1` before it measures anything. The source uses no API removed since 17, so this is about comparability rather than compilation: the arms are spread over several machines, and runtimes from two JVM versions do not belong in one table. Changing the number invalidates every arm already measured. |
-| heap | `-Xmx48g` | One ceiling for the whole campaign. It decides results: IncUSP-Miner+ reaches batch 7 on KOSARAK at 24 GB and batch 12 at 48. 48 leaves the OS 16 GB of 64. |
+| heap | `-Xmx48g` | One ceiling for the whole campaign. It decides results: IncUSP-Miner+ reaches batch 7 on KOSARAK at 24 GB and batch 12 at 48. 48 leaves the OS 16 GB of 64. Above 32 GB the JVM turns compressed object pointers off and G1 uses 32 MB regions, so every reference costs 8 bytes and an array over 16 MB occupies whole regions; this holds for every algorithm alike. |
+| item ids | compacted on C8T1S5I8N5K only | Its 68,240 items carry ids up to 4,999,999 and every miner sizes per-item arrays by the largest id. Each id is replaced at load by its rank in the `_eui` file (`Datasets.compactItemIds`), which keeps the item order and so the patterns. The other seven databases are close to dense and are loaded as they are. |
 | `D_init` | per database, `Datasets.Entry.dInitCount` | Yan et al. Table 16 OD.Num, verbatim for the five shared databases. A flat 50% had left rescan_count at zero in 15 of 18 cells. |
 | increments | `K = 100` | Yan et al. section 6.1. At the K=5 this study used, Adaptive and Pre-HUSPM do not separate. |
 | `r_l` | 0.80, KOSARAK 0.85 | 0.8 x KOSARAK's lowest threshold exceeds three billion candidates; 0.85 returns 16 patterns in 29 s. Both proposal and baseline read the same value. |

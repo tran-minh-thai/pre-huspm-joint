@@ -46,7 +46,10 @@ public class PreHUSPMAdaptiveAlgorithm {
         int blockId, startSeqId, endSeqId;
         double minSeqUtility = Double.MAX_VALUE;
         double maxSeqUtility = Double.MIN_VALUE;
-        BitSet itemPresence = new BitSet();
+        // No per-block item set. One used to be kept here, a BitSet over every item id the
+        // block holds, and nothing read it: itemBlockBitmap below answers "which blocks hold
+        // item i" on its own. Each such set is as long as the largest item id, so on
+        // C8T1S5I8N5K it held 407 MB after the last increment for no use.
 
         public BlockSummary(int id, int start, int end) {
             this.blockId = id; this.startSeqId = start; this.endSeqId = end;
@@ -55,9 +58,6 @@ public class PreHUSPMAdaptiveAlgorithm {
         public void addSequenceInfo(Sequence seq) {
             if (seq.sequenceUtility < minSeqUtility) minSeqUtility = seq.sequenceUtility;
             if (seq.sequenceUtility > maxSeqUtility) maxSeqUtility = seq.sequenceUtility;
-            for (QItemset itemset : seq.itemsets) {
-                for (QItem item : itemset.items) itemPresence.set(item.id);
-            }
         }
     }
 
@@ -695,6 +695,17 @@ public class PreHUSPMAdaptiveAlgorithm {
         // ====================================================================
         private static final int POOL_MAX_SIZE = 1 << 16;       // 65K cap
         private static final int POOL_TRACKER_ARRAY_CAP = 512;  // shrink Tracker arrays >512 before recycle
+        /**
+         * A TrackerList that held more trackers than this is not pooled again.
+         *
+         * clear() empties an ArrayList but keeps its backing array at the largest size it
+         * ever reached, so a pooled list keeps the footprint of the widest node it served.
+         * A rescan over a grown database serves wider nodes than the one before, and the
+         * pool kept every one of them: on KOSARAK, which rescans at every increment, it held
+         * 2,514 of the 3,078 MB the algorithm held after the last increment. Dropping the
+         * wide lists keeps the pool for what it is for, the many narrow nodes.
+         */
+        private static final int POOL_LIST_CAP = 1024;
         private static final int POOL_WARMUP_TRACKERS     = 4096; // pre-allocate ở INIT
         private static final int POOL_WARMUP_TRACKER_LISTS = 256;
 
@@ -763,8 +774,10 @@ public class PreHUSPMAdaptiveAlgorithm {
             void release(TrackerList tl) {
                 // Release nested Trackers vào trackerPool trước khi recycle TrackerList
                 ArrayList<Tracker> ts = tl.trackers;
-                for (int i = 0, n = ts.size(); i < n; i++) trackerPool.release(ts.get(i));
+                final int n = ts.size();
+                for (int i = 0; i < n; i++) trackerPool.release(ts.get(i));
                 ts.clear();
+                if (n > POOL_LIST_CAP) return;   // drop: its backing array stays at its peak size
                 if (top < POOL_MAX_SIZE) pool[top++] = tl;
             }
 

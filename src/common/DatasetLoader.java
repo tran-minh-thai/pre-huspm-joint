@@ -28,6 +28,20 @@ public class DatasetLoader {
      */
     public static List<List<Sequence>> loadBatches(String seqPath, String euiPath) throws IOException {
         Map<Integer, Double> externalUtilities = loadExternalUtilities(euiPath);
+        Map<Integer, Integer> relabel = null;          // null: ids are used as they are
+        if (Datasets.compactItemIds(databaseName(seqPath))) {
+            // Rank among the ids of the _eui file, 1 for the smallest - see
+            // Datasets.compactItemIds. Order preserving, so it changes labels and nothing else.
+            List<Integer> ids = new ArrayList<>(externalUtilities.keySet());
+            Collections.sort(ids);
+            relabel = new HashMap<>(ids.size() * 2);
+            Map<Integer, Double> ranked = new HashMap<>(ids.size() * 2);
+            for (int r = 0; r < ids.size(); r++) {
+                relabel.put(ids.get(r), r + 1);
+                ranked.put(r + 1, externalUtilities.get(ids.get(r)));
+            }
+            externalUtilities = ranked;
+        }
         List<List<Sequence>> batches = new ArrayList<>();
         List<Sequence> currentBatch = new ArrayList<>();
         boolean sawBatchMarker = false;
@@ -51,7 +65,7 @@ public class DatasetLoader {
                 }
                 if (trimmed.startsWith("%") || trimmed.startsWith("@")) continue;
 
-                Sequence seq = parseSequenceLine(trimmed, seqId++, externalUtilities);
+                Sequence seq = parseSequenceLine(trimmed, seqId++, externalUtilities, relabel);
                 if (seq != null) currentBatch.add(seq);
             }
         }
@@ -65,6 +79,12 @@ public class DatasetLoader {
             batches.add(all);
         }
         return batches;
+    }
+
+    /** The database a _seq file belongs to: its file name without the _seq.txt suffix. */
+    private static String databaseName(String seqPath) {
+        String f = new File(seqPath).getName();
+        return f.endsWith("_seq.txt") ? f.substring(0, f.length() - "_seq.txt".length()) : f;
     }
 
     private static Map<Integer, Double> loadExternalUtilities(String euiPath) throws IOException {
@@ -84,7 +104,8 @@ public class DatasetLoader {
         return map;
     }
 
-    private static Sequence parseSequenceLine(String line, int seqId, Map<Integer, Double> eui) {
+    private static Sequence parseSequenceLine(String line, int seqId, Map<Integer, Double> eui,
+                                              Map<Integer, Integer> relabel) {
         Sequence seq = new Sequence(seqId);
         QItemset currentSet = new QItemset();
         String[] tokens = line.split("\\s+");
@@ -109,6 +130,12 @@ public class DatasetLoader {
                 if (leftIdx < 0 || rightIdx < 0) continue;
                 try {
                     int itemId = Integer.parseInt(token.substring(0, leftIdx).trim());
+                    if (relabel != null) {
+                        Integer r = relabel.get(itemId);
+                        if (r == null) throw new IllegalStateException(
+                                "item " + itemId + " is not in the _eui file; cannot compact ids");
+                        itemId = r;
+                    }
                     double internalUtil = Double.parseDouble(token.substring(leftIdx + 1, rightIdx).trim());
                     currentSet.items.add(new QItem(itemId, internalUtil * eui.getOrDefault(itemId, 0.0)));
                 } catch (NumberFormatException nfe) {
