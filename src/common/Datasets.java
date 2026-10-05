@@ -222,7 +222,7 @@ public final class Datasets {
      * A coarse cut hides the mechanism. An increment inside the insertion safety budget needs
      * no rescan, and a finer cut puts more increments inside it. SC5 measures this directly:
      * on SIGN the share of increments that rescan falls from 96 percent at K=25 to 52 percent
-     * at K=100, and the proposal's time falls from 0.97 of remine-from-scratch's to 0.50. At a
+     * at K=100, and the proposal's time falls from 0.97 of remine-from-scratch's to 0.52. At a
      * handful of increments every one rescans and the proposal is a remine.
      *
      * What opens with K is the gap to remining, not a gap in rescan counts: the proposal

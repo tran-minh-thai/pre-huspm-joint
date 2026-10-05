@@ -22,18 +22,18 @@ The proposal is the only arm that finishes every increment of every database.
 
 ## Runtime, summed over the increments that completed
 
-Seconds. A total over a partial run is not comparable with a total over a whole one and is
-marked as such.
+Seconds, over the increments alone; the initial mine of `D_init` is not included. A total over
+a partial run is not comparable with a total over a whole one and is marked as such.
 
 | database | Adaptive-Full | rescans | Pre-HUSPM | Pre-HUSPM-TSU | Remine | IncUSP |
 |---|---:|---:|---:|---:|---:|---:|
-| SIGN | **18** | 59 | 27 | 61 | 30 | 94 |
-| TAFENG | **6** | 52 | 7 | 26 | 20 | 9 |
-| C8T1S5I8N5K | **66** | 80 | 245 | 318 | 93 | 83 |
-| BIBLE | **111** | 63 | 139 | 2920 | 209 | (55, 40 increments) |
-| LEVIATHAN | 96 | 98 | — | — | **91** | (174, 74 increments) |
-| FIFA | 2230 | 28 | **1310** | — | 8105 | — |
-| KOSARAK | 4656 | 100 | **1677** | — | 4547 | (69, 11 increments) |
+| SIGN | **17** | 59 | 27 | 61 | 30 | 94 |
+| TAFENG | **6** | 52 | 7 | 26 | 19 | 9 |
+| C8T1S5I8N5K | **62** | 80 | 230 | 309 | 81 | 81 |
+| BIBLE | **108** | 63 | 139 | 2920 | 181 | (55, 40 increments) |
+| LEVIATHAN | 93 | 98 | — | — | **90** | (174, 74 increments) |
+| FIFA | 2124 | 28 | **1310** | — | 7726 | — |
+| KOSARAK | 4650 | 100 | **1677** | — | 4563 | (69, 11 increments) |
 
 ## The operating region
 
@@ -63,12 +63,12 @@ Three regimes follow, and the middle one is where the method lives.
 remining after every one of them.
 
 **At the boundary.** TAFENG, SIGN, BIBLE and C8T1S5I8N5K sit at a median just above one,
-rescan between half and four fifths of the time, and still finish 1.4 to 3.3 times faster
+rescan between half and four fifths of the time, and still finish 1.3 to 3.3 times faster
 than remine — the increments that fit are enough to pay for the ones that do not.
 
 **Beyond it.** LEVIATHAN and KOSARAK exceed the budget on essentially every increment, so
-maintenance degenerates into remining. What that costs is the honest measurement here: 96 s
-against remine's 91 s, and 4656 s against 4547 s. Degradation is graceful, 2 to 6 percent,
+maintenance degenerates into remining. What that costs is the honest measurement here: 93 s
+against remine's 90 s, and 4650 s against 4563 s. Degradation is graceful, 2 to 3 percent,
 rather than a collapse.
 
 ## KOSARAK cannot be moved by tuning
@@ -88,8 +88,8 @@ directly: budget width against pre-large set size.
 
 ## What this does not show
 
-Pre-HUSPM is faster than the proposal on FIFA, 1310 s against 2230 s, and on KOSARAK,
-1677 s against 4656 s. Its trigger is not sound, but `results/verify-swumax` finds no lost
+Pre-HUSPM is faster than the proposal on FIFA, 1310 s against 2124 s, and on KOSARAK,
+1677 s against 4650 s. Its trigger is not sound, but `results/verify-swumax` finds no lost
 pattern on either of those two databases, so on them it is both correct in practice and
 cheaper. Where it does lose patterns — LEVIATHAN, up to 39 of 137 at one operation — it
 cannot be run at all here: it exhausts 48 GB on `D_init`.
