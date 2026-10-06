@@ -17,9 +17,9 @@ All 60 operations complete, and at every one the two arms report the same HUSP c
 
 | database | proposal | remine | ratio |
 |---|---:|---:|---:|
-| C8T1S5I8N5K | 9298 ms | 14758 ms | **0.63** |
-| SIGN | 3908 ms | 5078 ms | **0.77** |
-| LEVIATHAN | 10501 ms | 11522 ms | **0.91** |
+| C8T1S5I8N5K | 8458 ms | 12548 ms | **0.67** |
+| SIGN | 3769 ms | 5071 ms | **0.74** |
+| LEVIATHAN | 9706 ms | 11352 ms | **0.86** |
 
 The three now face the same operations, so the ratios are comparable.
 
@@ -27,22 +27,22 @@ The three now face the same operations, so the ratios are comparable.
 
 | database | kind | rescans | proposal | remine | remine / proposal |
 |---|---|---:|---:|---:|---:|
-| SIGN | insertion | 12 / 14 | 3137 ms | 3577 ms | 1.1 |
-| SIGN | deletion | 0 / 3 | 13 ms | 744 ms | 57.2 |
-| SIGN | modification | 3 / 3 | 758 ms | 757 ms | 1.0 |
-| LEVIATHAN | insertion | 14 / 14 | 8573 ms | 8028 ms | 0.9 |
-| LEVIATHAN | deletion | 0 / 3 | 7 ms | 1716 ms | 245.1 |
-| LEVIATHAN | modification | 3 / 3 | 1921 ms | 1778 ms | 0.9 |
-| C8T1S5I8N5K | insertion | 12 / 14 | 7691 ms | 10332 ms | 1.3 |
-| C8T1S5I8N5K | deletion | 0 / 3 | 124 ms | 2130 ms | 17.2 |
-| C8T1S5I8N5K | modification | 2 / 3 | 1483 ms | 2296 ms | 1.5 |
+| SIGN | insertion | 12 / 14 | 3012 ms | 3572 ms | 1.2 |
+| SIGN | deletion | 0 / 3 | 10 ms | 739 ms | 73.9 |
+| SIGN | modification | 3 / 3 | 747 ms | 760 ms | 1.0 |
+| LEVIATHAN | insertion | 14 / 14 | 7906 ms | 7901 ms | 1.0 |
+| LEVIATHAN | deletion | 0 / 3 | 8 ms | 1686 ms | 210.8 |
+| LEVIATHAN | modification | 3 / 3 | 1792 ms | 1765 ms | 1.0 |
+| C8T1S5I8N5K | insertion | 12 / 14 | 7000 ms | 8812 ms | 1.3 |
+| C8T1S5I8N5K | deletion | 0 / 3 | 118 ms | 1823 ms | 15.4 |
+| C8T1S5I8N5K | modification | 2 / 3 | 1340 ms | 1913 ms | 1.4 |
 
 No deletion rescans, on any database. The deletion budget is `(UUT - LUT_min) / UUT * TSU_ref`,
 a fifth of total utility at `r_l = 0.8` and about fourteen times the insertion budget, so a
 deletion of one hundredth of the stream sits well inside it and costs milliseconds.
 
 Insertions and modifications mostly rescan. On LEVIATHAN every one does, and the proposal is
-then about ten percent slower than remining, as in SC2. On C8T1S5I8N5K a rescan is cheaper than
+then level with remining, as in SC2. On C8T1S5I8N5K a rescan is cheaper than
 a remine, which is where its lead on insertions comes from.
 
 ## Why insertions rescan more here than in SC2

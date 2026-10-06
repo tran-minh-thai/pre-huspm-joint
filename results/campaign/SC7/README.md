@@ -15,34 +15,33 @@ off every rescan decision is the same as well.
 
 | database | HUSPs | full | IUB off | Pre-HUSPM | explored, full | explored, IUB off | IUB cuts |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| SIGN | 141 | 671 ms | 550 ms | 1570 ms | 38,372 | 38,372 | 152 |
-| LEVIATHAN | 135 | 1918 ms | 1744 ms | 15447 ms | 39,313 | 39,313 | 8,830 |
-| TAFENG | 9 | 489 ms | 619 ms | 383 ms | 23,847 | 23,847 | 22,911 |
-| BIBLE | 129 | 2477 ms | 2624 ms | 31761 ms | 18,939 | 18,939 | 13,805 |
-| C8T1S5I8N5K | 3438 | 2098 ms | 2226 ms | 3553 ms | 383,747 | 383,747 | 66,925 |
-| KOSARAK | 9 | 82.1 s | 92.7 s | 391.2 s | 84,913 | 84,913 | 40,948 |
-| FIFA | 17 | 103.6 s | 105.5 s | 630.4 s | 473,004 | 473,004 | 2,889 |
+| SIGN | 141 | 682 ms | 524 ms | 1570 ms | 38,372 | 38,372 | 152 |
+| LEVIATHAN | 135 | 1817 ms | 1868 ms | 15447 ms | 39,313 | 39,313 | 8,830 |
+| TAFENG | 9 | 479 ms | 540 ms | 383 ms | 23,847 | 23,847 | 22,911 |
+| BIBLE | 129 | 2325 ms | 2258 ms | 31761 ms | 18,939 | 18,939 | 13,805 |
+| C8T1S5I8N5K | 3438 | 1960 ms | 2159 ms | 3970 ms | 383,747 | 383,747 | 66,925 |
+| KOSARAK | 9 | 81.3 s | 80.8 s | 391.2 s | 84,913 | 84,913 | 40,948 |
+| FIFA | 17 | 101.4 s | 99.0 s | 630.4 s | 473,004 | 473,004 | 2,889 |
 
 The IUB bound does not shrink the search on any database: the explored count is identical with
 it and without it, on all seven, although the bound reports cutting between 152 and 66,925
 branches. Every branch it cuts is cut by another bound as well. Whatever it contributes, it
 contributes by cutting earlier, not by cutting more.
 
-Its effect on runtime is small and mixed. Without it SIGN and LEVIATHAN run faster, 0.82 and
-0.91 of the full proposal's time, and the other five slower by 2 to 27 percent; the geometric
-mean is about 3 percent. Most of these runs last under a few seconds and were measured once, so
-most of that spread is within noise. KOSARAK, at 82 s against 93 s, is the one difference long
-enough to take at face value.
+Nor does it change the runtime measurably. Without it the seven runs take between 0.77 and
+1.13 of the full proposal's time, with a geometric mean of 0.99. Most of these runs last a few
+seconds and were measured once, so that spread is noise; the two long enough to read, KOSARAK
+and FIFA, differ by under 2.5 percent.
 
-Pre-HUSPM is 1.7 to 12.8 times slower than the full proposal on six of the seven, and faster on
-TAFENG, 383 ms against 489 ms, as it is in SC1.
+Pre-HUSPM is 2.0 to 13.7 times slower than the full proposal on six of the seven, and faster on
+TAFENG, 383 ms against 479 ms, as it is in SC1.
 
 ## C5, the adaptive rescan
 
 | database | C5 on | C5 off (rescan every increment) | saving |
 |---|---|---|---:|
-| SIGN | 17.4 s, 59 rescans | 29.6 s, 100 rescans | 1.70 |
-| C8T1S5I8N5K | 63.1 s, 80 rescans | 80.0 s, 100 rescans | 1.27 |
+| SIGN | 17.4 s, 59 rescans | 29.8 s, 100 rescans | 1.71 |
+| C8T1S5I8N5K | 60.4 s, 80 rescans | 74.4 s, 100 rescans | 1.23 |
 
 This is the component that carries the incremental gain. Without it every increment is a
 remine; with it the increments that fit inside the insertion budget are updated instead.
@@ -53,13 +52,15 @@ The index is read only on an increment that does not rescan, so its effect is me
 
 | database | increments without a rescan | with the index | without it | block reads with | block reads without |
 |---|---:|---:|---:|---:|---:|
-| SIGN | 41 | 47 ms | 50 ms | 148,060 | 183,715 |
-| C8T1S5I8N5K | 20 | 245 ms | 667 ms | 5,890,200 | 56,054,600 |
+| SIGN | 41 | 52 ms | 48 ms | 148,060 | 183,715 |
+| C8T1S5I8N5K | 20 | 229 ms | 654 ms | 5,890,200 | 56,054,600 |
 
-Where it acts, it works: on C8T1S5I8N5K the updates run 2.7 times faster and read 9.5 times
-fewer blocks. But those updates are a small share of the whole, 245 ms of 63 s, because nearly
-all of the time goes to rescans. Over the 100 increments the index saves 1.7 percent on SIGN and
-3.4 percent on C8T1S5I8N5K.
+Where it acts, it works on C8T1S5I8N5K: the updates run 2.9 times faster and read 9.5 times fewer
+blocks. On SIGN it reads a fifth fewer blocks and the time is the same, 52 ms against 48 ms, too
+short to separate. Those updates are a small share of the whole, 229 ms of 60 s on
+C8T1S5I8N5K, because nearly all of the time goes to rescans, and over the 100 increments the
+two arms differ by less than the run-to-run spread of the rescans: 17.4 s against 17.5 s on
+SIGN, 60.4 s against 57.8 s on C8T1S5I8N5K. The index has no measurable effect on the total.
 
 The per-pattern evaluation still walks every sequence of the increment and uses the index only
 to skip the utility computation. A map from block to sequences would cut the walk as well, but
@@ -67,7 +68,7 @@ it would speed up the same small share of the runtime.
 
 ## What the ablation does not isolate
 
-The static speedups of SC1 and SC3, 3.8 to 16 times over the baselines, do not come from C3,
+The static speedups of SC1 and SC3, 4.0 to 17 times over the baselines, do not come from C3,
 which leaves the search unchanged. They come from what the ablation cannot switch off: C1, the
 value bound applied before materialisation, which is part of the miner itself. `pruned_value`
 and `explored_nodes` record its work in every row, but there is no arm without it.

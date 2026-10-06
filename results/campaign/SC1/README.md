@@ -29,32 +29,32 @@ Seconds.
 | TAFENG | 6 | 19.0 | 14.2 | 1.6 | 0.7 | 0.2 | **0.2** |
 | BIBLE | 192 | 13.9 | 93.5 | 5.1 | 96.2 | 31.0 | **1.4** |
 | BMS1 | 21 | 1.1 | 0.4 | 0.3 | 0.3 | 0.5 | **0.1** |
-| C8T1S5I8N5K | 5067 | 16.5 | 10.9 | 3.2 | 3.0 | 2.7 | **0.9** |
+| C8T1S5I8N5K | 5067 | 16.3 | 11.1 | 2.9 | 2.9 | 2.7 | **0.8** |
 | KOSARAK | 10 | 46.0 | 17.3 | 10.6 | 11.4 | 5.6 | **1.1** |
-| FIFA | 18 | 658.2 | 313.6 | 364.3 | OOM | 251.6 | **55.4** |
+| FIFA | 18 | 658.2 | 313.6 | 364.3 | OOM | 251.6 | **53.9** |
 
 ## Across all 32 cells
 
-The proposal is the fastest in 30 of 32. Against the fastest baseline in each cell it is
-3.46 times faster at the median, 6.03 at best, and 0.62 at worst.
+The proposal is the fastest in 29 of 32. Against the fastest baseline in each cell it is
+3.57 times faster at the median, 5.56 at best, and 0.81 at worst.
 
 Geometric mean speedup over each baseline, on the cells where both completed:
 
 | baseline | speedup | cells |
 |---|---:|---:|
-| USpan | 16.3 | 32 |
-| HUSP-ULL | 14.0 | 32 |
-| IncUSP-Miner+ | 8.4 | 30 |
-| HUSP-SP | 4.9 | 32 |
-| Pre-HUSPM | 3.8 | 29 |
+| USpan | 16.9 | 32 |
+| HUSP-ULL | 14.6 | 32 |
+| IncUSP-Miner+ | 8.7 | 30 |
+| HUSP-SP | 5.0 | 32 |
+| Pre-HUSPM | 4.0 | 29 |
 
 HUSP-SP is the strongest of the static miners, as its authors report, and the margin over it is
 the narrowest among them.
 
-The two cells it loses are both TAFENG against Pre-HUSPM: at the lowest threshold, 0.002812,
-by 488 ms to 301 ms; at the highest, 0.005691, by 148 ms to 145 ms, which is inside the noise
-of a run that short. TAFENG yields ten patterns or fewer at every level, so there is little for
-the proposal's pruning to remove.
+The three cells it loses are all TAFENG against Pre-HUSPM: at the lowest threshold, 0.002812,
+by 370 ms to 301 ms; at 0.004499 by 172 ms to 169 ms and at 0.005691 by 150 ms to 145 ms, both
+inside the noise of a run that short. TAFENG yields ten patterns or fewer at every level, so
+there is little for the proposal's pruning to remove.
 
 ## Memory is not measured here
 
@@ -63,7 +63,5 @@ yet, so it grows with `-Xmx` and depends on what ran earlier in the same JVM
 (`docs/result-columns.md`). It is recorded, but it is not the memory result. The live-set
 figures come from the memory campaign, run separately with `-MemMode live`.
 
-For that reason no memory claim is drawn from this file. It is also why none should be made
-about C8T1S5I8N5K in particular: the proposal's peak there, 1228 MB, is above that of USpan,
-HUSP-ULL and HUSP-SP, and only the live-set measurement can say whether that is garbage or
-state.
+For that reason no memory claim is drawn from this file; `results/campaign-mem/SC1` holds the
+live-set figures.
