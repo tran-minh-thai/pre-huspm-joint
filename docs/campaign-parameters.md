@@ -117,7 +117,7 @@ carries a fixed cost and the rescans do not thin out in proportion.
 |---|---|
 | IncUSP-Miner+ on BIBLE, KOSARAK, LEVIATHAN, FIFA | Exhausts 48 GB. Reaches batch 41, 12 and 75 respectively; on FIFA it does not finish the first mine. It fails the same way in the submitted results, on five databases. |
 | Pre-HUSPM and Pre-HUSPM-TSU on LEVIATHAN in SC2 | Exhaust 48 GB on D_init. Note they succeed in SC4 on the WHOLE database at sl=0.7, which is not a contradiction: the threshold is a ratio of TSU, and TSU(D_init) is about half TSU(full), so SC2's absolute floor is the lower of the two. |
-| Pre-HUSPM on LEVIATHAN in SC4 at sl=0.3 and 0.5 | Exhausts 48 GB. Its pre-large set is 18 to 60 times Adaptive's at the same sl. |
+| Pre-HUSPM on LEVIATHAN and C8T1S5I8N5K in SC4 at sl=0.3 and 0.5 | Exhausts 48 GB. Where both complete, its pre-large set is 18 to 69 times Adaptive's at the same sl. |
 | Pre-HUSPM-TSU on FIFA and KOSARAK in SC2 | Does not finish. FIFA reached 95 of 101 batches in 13.1 h; KOSARAK 89 of 101 in 8 h. Marked DEFERRED with the numbers. |
 
 ## Open before a final run
