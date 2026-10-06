@@ -1,0 +1,208 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC7]
+Heap max: 49152 MB
+
+--- [SC7] Ablation C3(IUB)/C4(Block)/C5(rescan) ---
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INIT#0  (heap free=229MB / total=320MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INIT#0] OK t=1393ms cand=31050488 pat=5067 heapDelta=161MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#1  (heap free=311MB / total=448MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#1] OK t=662ms cand=31061476 pat=5100 heapDelta=88MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#2  (heap free=403MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#2] OK t=647ms cand=30653683 pat=4900 heapDelta=99MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#3  (heap free=401MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#3] OK t=637ms cand=30442683 pat=5357 heapDelta=99MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#4  (heap free=399MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#4] OK t=630ms cand=30042948 pat=5212 heapDelta=96MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#5  (heap free=397MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#5] OK t=44ms cand=0 pat=5948 heapDelta=9MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#6  (heap free=396MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#6] OK t=618ms cand=29104305 pat=5760 heapDelta=96MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#7  (heap free=395MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#7] OK t=612ms cand=28896438 pat=5856 heapDelta=96MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#8  (heap free=393MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#8] OK t=617ms cand=28832802 pat=6878 heapDelta=96MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#9  (heap free=393MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#9] OK t=602ms cand=28409084 pat=6691 heapDelta=96MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#10  (heap free=394MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#10] OK t=603ms cand=28098474 pat=6588 heapDelta=96MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#11  (heap free=392MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#11] OK t=9ms cand=0 pat=6414 heapDelta=9MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#12  (heap free=392MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#12] OK t=600ms cand=27930852 pat=6291 heapDelta=99MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#13  (heap free=390MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#13] OK t=599ms cand=27984775 pat=6073 heapDelta=99MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#14  (heap free=389MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#14] OK t=604ms cand=27809452 pat=5921 heapDelta=99MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#15  (heap free=388MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#15] OK t=593ms cand=27553678 pat=5746 heapDelta=99MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#16  (heap free=387MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#16] OK t=596ms cand=27512076 pat=5655 heapDelta=99MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#17  (heap free=390MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#17] OK t=9ms cand=0 pat=5493 heapDelta=9MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#18  (heap free=390MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#18] OK t=606ms cand=27916684 pat=5331 heapDelta=99MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#19  (heap free=389MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#19] OK t=604ms cand=27830519 pat=5481 heapDelta=99MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#20  (heap free=388MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#20] OK t=8ms cand=0 pat=5368 heapDelta=9MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#21  (heap free=387MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#21] OK t=598ms cand=28144285 pat=5276 heapDelta=99MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#22  (heap free=386MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#22] OK t=596ms cand=27829724 pat=5243 heapDelta=102MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#23  (heap free=385MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#23] OK t=598ms cand=27825923 pat=5176 heapDelta=102MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#24  (heap free=384MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#24] OK t=11ms cand=0 pat=5328 heapDelta=7MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#25  (heap free=384MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#25] OK t=595ms cand=27465650 pat=5281 heapDelta=101MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#26  (heap free=384MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#26] OK t=607ms cand=27799675 pat=5564 heapDelta=103MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#27  (heap free=385MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#27] OK t=629ms cand=28569177 pat=5407 heapDelta=102MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#28  (heap free=384MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#28] OK t=16ms cand=0 pat=5213 heapDelta=7MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#29  (heap free=386MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#29] OK t=631ms cand=28298450 pat=5094 heapDelta=105MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#30  (heap free=384MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#30] OK t=638ms cand=28544827 pat=4921 heapDelta=103MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#31  (heap free=383MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#31] OK t=16ms cand=0 pat=5163 heapDelta=7MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#32  (heap free=382MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#32] OK t=670ms cand=29177198 pat=5266 heapDelta=103MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#33  (heap free=383MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#33] OK t=661ms cand=29058494 pat=5114 heapDelta=106MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#34  (heap free=383MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#34] OK t=663ms cand=29201922 pat=4961 heapDelta=106MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#35  (heap free=382MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#35] OK t=665ms cand=28993404 pat=4980 heapDelta=106MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#36  (heap free=382MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#36] OK t=663ms cand=28834883 pat=4981 heapDelta=106MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#37  (heap free=381MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#37] OK t=6ms cand=0 pat=4805 heapDelta=7MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#38  (heap free=380MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#38] OK t=656ms cand=28409726 pat=4610 heapDelta=106MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#39  (heap free=381MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#39] OK t=660ms cand=28554482 pat=4441 heapDelta=108MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#40  (heap free=382MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#40] OK t=657ms cand=28281922 pat=4260 heapDelta=108MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#41  (heap free=382MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#41] OK t=663ms cand=28530755 pat=4086 heapDelta=108MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#42  (heap free=382MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#42] OK t=8ms cand=0 pat=4060 heapDelta=7MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#43  (heap free=381MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#43] OK t=671ms cand=28507875 pat=3920 heapDelta=108MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#44  (heap free=381MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#44] OK t=667ms cand=28225591 pat=3794 heapDelta=111MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#45  (heap free=381MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#45] OK t=7ms cand=0 pat=3651 heapDelta=7MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#46  (heap free=380MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#46] OK t=689ms cand=29640795 pat=3809 heapDelta=111MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#47  (heap free=380MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#47] OK t=691ms cand=29451792 pat=3716 heapDelta=111MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#48  (heap free=380MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#48] OK t=720ms cand=30202746 pat=3632 heapDelta=113MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#49  (heap free=380MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#49] OK t=713ms cand=29852105 pat=3525 heapDelta=113MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#50  (heap free=380MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#50] OK t=706ms cand=29658732 pat=3361 heapDelta=113MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#51  (heap free=379MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#51] OK t=750ms cand=30534396 pat=3416 heapDelta=113MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#52  (heap free=381MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#52] OK t=750ms cand=30265457 pat=3302 heapDelta=113MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#53  (heap free=380MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#53] OK t=751ms cand=30228073 pat=3174 heapDelta=116MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#54  (heap free=380MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#54] OK t=745ms cand=30050969 pat=3316 heapDelta=116MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#55  (heap free=380MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#55] OK t=6ms cand=0 pat=3188 heapDelta=7MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#56  (heap free=379MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#56] OK t=736ms cand=29804920 pat=3075 heapDelta=116MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#57  (heap free=379MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#57] OK t=6ms cand=0 pat=2958 heapDelta=7MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#58  (heap free=378MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#58] OK t=736ms cand=29827561 pat=2931 heapDelta=116MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#59  (heap free=379MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#59] OK t=737ms cand=29912402 pat=2841 heapDelta=119MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#60  (heap free=378MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#60] OK t=9ms cand=0 pat=2782 heapDelta=7MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#61  (heap free=377MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#61] OK t=741ms cand=29930578 pat=2927 heapDelta=119MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#62  (heap free=378MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#62] OK t=14ms cand=0 pat=3278 heapDelta=7MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#63  (heap free=377MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#63] OK t=804ms cand=32049967 pat=3131 heapDelta=121MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#64  (heap free=377MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#64] OK t=802ms cand=31934617 pat=3016 heapDelta=121MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#65  (heap free=378MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#65] OK t=7ms cand=0 pat=2934 heapDelta=7MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#66  (heap free=377MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#66] OK t=794ms cand=31504119 pat=2881 heapDelta=121MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#67  (heap free=378MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#67] OK t=788ms cand=31303732 pat=2779 heapDelta=121MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#68  (heap free=377MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#68] OK t=797ms cand=31095663 pat=2640 heapDelta=121MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#69  (heap free=377MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#69] OK t=849ms cand=32392066 pat=2543 heapDelta=124MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#70  (heap free=376MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#70] OK t=9ms cand=0 pat=2554 heapDelta=7MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#71  (heap free=375MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#71] OK t=834ms cand=31887659 pat=2396 heapDelta=124MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#72  (heap free=377MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#72] OK t=836ms cand=31687024 pat=2259 heapDelta=124MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#73  (heap free=377MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#73] OK t=856ms cand=32963876 pat=2157 heapDelta=126MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#74  (heap free=377MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#74] OK t=19ms cand=0 pat=2384 heapDelta=7MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#75  (heap free=376MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#75] OK t=887ms cand=33335305 pat=2663 heapDelta=126MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#76  (heap free=376MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#76] OK t=875ms cand=33087625 pat=2816 heapDelta=126MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#77  (heap free=375MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#77] OK t=6ms cand=0 pat=2701 heapDelta=7MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#78  (heap free=374MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#78] OK t=876ms cand=32837322 pat=2565 heapDelta=128MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#79  (heap free=375MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#79] OK t=867ms cand=32562581 pat=2467 heapDelta=131MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#80  (heap free=375MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#80] OK t=926ms cand=33922073 pat=2350 heapDelta=131MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#81  (heap free=374MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#81] OK t=921ms cand=33619313 pat=2441 heapDelta=131MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#82  (heap free=374MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#82] OK t=6ms cand=0 pat=2317 heapDelta=9MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#83  (heap free=375MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#83] OK t=955ms cand=34169204 pat=2541 heapDelta=131MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#84  (heap free=375MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#84] OK t=13ms cand=0 pat=2657 heapDelta=9MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#85  (heap free=374MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#85] OK t=957ms cand=34163667 pat=2552 heapDelta=134MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#86  (heap free=374MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#86] OK t=948ms cand=33750698 pat=2521 heapDelta=134MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#87  (heap free=374MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#87] OK t=934ms cand=33335842 pat=2417 heapDelta=134MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#88  (heap free=374MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#88] OK t=926ms cand=33141578 pat=2366 heapDelta=134MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#89  (heap free=374MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#89] OK t=922ms cand=32876334 pat=2284 heapDelta=134MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#90  (heap free=372MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#90] OK t=910ms cand=32547261 pat=2737 heapDelta=134MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#91  (heap free=371MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#91] OK t=909ms cand=32535075 pat=2652 heapDelta=134MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#92  (heap free=373MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#92] OK t=902ms cand=32238930 pat=2603 heapDelta=134MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#93  (heap free=372MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#93] OK t=970ms cand=33620432 pat=2912 heapDelta=137MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#94  (heap free=371MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#94] OK t=968ms cand=33421975 pat=3059 heapDelta=137MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#95  (heap free=372MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#95] OK t=963ms cand=33213855 pat=2958 heapDelta=137MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#96  (heap free=371MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#96] OK t=959ms cand=32920019 pat=3449 heapDelta=137MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#97  (heap free=371MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#97] OK t=954ms cand=32815914 pat=3545 heapDelta=137MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#98  (heap free=371MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#98] OK t=945ms cand=32604645 pat=3451 heapDelta=137MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#99  (heap free=370MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#99] OK t=940ms cand=32425536 pat=3537 heapDelta=140MB
+>> RUNNING proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#100  (heap free=370MB / total=544MB / max=49152MB)
+[proposed_C5_on/C8T1S5I8N5K/SC7_C5_INC#100] OK t=937ms cand=32211305 pat=3438 heapDelta=140MB
+=== ALL SCENARIOS DONE (139.7s) ===
