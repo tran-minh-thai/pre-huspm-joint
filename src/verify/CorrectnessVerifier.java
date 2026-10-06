@@ -112,6 +112,13 @@ public final class CorrectnessVerifier {
         if (totalViolations > 0 && rule != TriggerRule.SWUMAX) System.exit(1);
     }
 
+    /** k distinct sequences of {@code from}, in random order. */
+    private static List<Sequence> sample(List<Sequence> from, int k, Random rnd) {
+        List<Sequence> copy = new ArrayList<>(from);
+        java.util.Collections.shuffle(copy, rnd);
+        return new ArrayList<>(copy.subList(0, Math.min(k, copy.size())));
+    }
+
     private static int verifyDataset(String name, double uut, TriggerRule rule,
                                      int nBatches, boolean mixed, PrintWriter w) throws IOException {
         List<Sequence> all = DatasetLoader.loadDataset(
@@ -140,19 +147,35 @@ public final class CorrectnessVerifier {
             if (from >= to) break;
             List<Sequence> batch = new ArrayList<>(stream.subList(from, to));
 
+            // --mixed cycles insert, insert, delete, modify, so the default five operations
+            // are I, I, D, M, I: every kind occurs, and the last insertion follows a deletion
+            // and a modification, so it is checked against a state the other two left behind.
             String opType;
-            if (!mixed || b % 3 != 2) {
+            int kind = mixed ? b % 4 : 0;
+            if (kind == 0 || kind == 1) {
                 opType = "insert";
                 current.addAll(batch);
                 algo.runIncrementalMining(batch, new ArrayList<>(current), tsu(current));
-            } else {
-                // xoa mot phan nho cua CSDL hien tai de kich hoat nhanh xoa
+            } else if (kind == 2) {
+                // delete a twentieth of the current database, drawn without replacement: a
+                // sequence drawn twice would have its utility subtracted twice
                 opType = "delete";
-                int k = Math.max(1, current.size() / 20);
-                List<Sequence> victims = new ArrayList<>();
-                for (int i = 0; i < k; i++) victims.add(current.get(rnd.nextInt(current.size() - i)));
+                List<Sequence> victims = sample(current, Math.max(1, current.size() / 20), rnd);
                 current.removeAll(victims);
                 algo.runDeletion(victims, new ArrayList<>(current), tsu(current));
+            } else {
+                // modify as SC6 does: k sequences of the current database are replaced by k
+                // sequences of the stream, so each pair is an old and a new version of a record.
+                // A five-hundredth of the database: small enough to fall inside the safety
+                // budget, so it exercises the direct update rather than a rescan. At a
+                // twentieth every modification rescanned, and the rescan is only a remine.
+                opType = "modify";
+                int k = Math.min(batch.size(), Math.max(1, current.size() / 500));
+                List<Sequence> oldSeqs = sample(current, k, rnd);
+                List<Sequence> newSeqs = new ArrayList<>(batch.subList(0, k));
+                current.removeAll(oldSeqs);
+                current.addAll(newSeqs);
+                algo.runModification(oldSeqs, newSeqs, new ArrayList<>(current), tsu(current));
             }
 
             // moc tham chieu: mine lai tu dau tren CSDL hien tai
