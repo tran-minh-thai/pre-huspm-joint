@@ -1,0 +1,16 @@
+### LIVE HEAP: ep thu gom moi 20 ms | arm = Adaptive-Full
+### runtime_ms xuat -3 (GC lam nhieu); gia tri that o wall_ms_perturbed. KHONG dung lam so hieu nang.
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC1]
+Heap max: 49152 MB
+
+--- [SC1] Static baseline on D_init (50%) ---
+>> RUNNING Adaptive-Full/LEVIATHAN/SC1_su=0.014644#0  (heap free=167MB / total=224MB / max=49152MB)
+[Adaptive-Full/LEVIATHAN/SC1_su=0.014644#0] OK t=1237ms cand=17982933 pat=136 heapDelta=35MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC1_su=0.01553#0  (heap free=166MB / total=224MB / max=49152MB)
+[Adaptive-Full/LEVIATHAN/SC1_su=0.01553#0] OK t=800ms cand=16362407 pat=107 heapDelta=27MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC1_su=0.01647#0  (heap free=166MB / total=224MB / max=49152MB)
+[Adaptive-Full/LEVIATHAN/SC1_su=0.01647#0] OK t=742ms cand=14863180 pat=89 heapDelta=25MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC1_su=0.017987#0  (heap free=166MB / total=224MB / max=49152MB)
+[Adaptive-Full/LEVIATHAN/SC1_su=0.017987#0] OK t=673ms cand=12867151 pat=63 heapDelta=22MB
+=== ALL SCENARIOS DONE (13.2s) ===
