@@ -1,13 +1,13 @@
 # SC7, what each component contributes
 
-Three components are switched off one at a time. C3, the IUB bound, acts inside the miner, so
+Four components are switched off one at a time. C3, the IUB bound, acts inside the miner, so
 it is ablated on one mine of the whole database, on all seven databases, with Pre-HUSPM beside
-it for reference. C4, the block index, and C5, the adaptive rescan, act only while the database
-grows, so they are ablated on `D_init` and 100 increments, one row per increment, on SIGN and
-C8T1S5I8N5K. C1, the value bound applied before a pattern is materialised, is inherent to the
+it for reference. C2, the adaptive pre-large band, C4, the block index, and C5, the adaptive
+rescan, act only while the database grows, so they are ablated on `D_init` and 100 increments,
+one row per increment, on SIGN and C8T1S5I8N5K. C1, the value bound applied before a pattern is materialised, is inherent to the
 miner and has no switch. `PC-THAI`, JDK 25, `-Xmx48g`, one JVM per arm, one repeat.
 
-All 27 arms completed. Switching any component off changes no answer: the HUSP count agrees
+All 29 arms completed. Switching any component off changes no answer: the HUSP count agrees
 on all seven static mines and on every one of the 101 rows of each incremental arm, and with C4
 off every rescan decision is the same as well.
 
@@ -45,6 +45,23 @@ TAFENG, 383 ms against 479 ms, as it is in SC1.
 
 This is the component that carries the incremental gain. Without it every increment is a
 remine; with it the increments that fit inside the insertion budget are updated instead.
+
+## C2, the adaptive pre-large band
+
+With C2 off the band is fixed at the hard floor, `LUT_min = r_l * UUT`, as Pre-HUSPM fixes it.
+
+| database | C2 on | C2 off | rescans, on / off | mean pre-large set, on / off |
+|---|---:|---:|---:|---:|
+| SIGN | 17.4 s | 17.6 s | 59 / 59 | 764 / 765 |
+| C8T1S5I8N5K | 60.4 s | 60.2 s | 80 / 80 | 9,985 / 9,985 |
+
+Switching C2 off changes nothing: the same increments rescan, the pre-large set is the same
+size, the answer is the same at every increment, and the runtimes differ by less than one
+percent. The reason is in the rows. `lut_dyn` with C2 on equals the hard floor on 199 of the
+200 increments, and on the remaining one, SIGN's 39th, lies 0.4 percent above it. The adaptive
+term `kappa * sigma^2 * rho` is computed in squared utility units - `sigma2` runs from 2.6e4 to
+1.6e6 on SIGN - so at `kappa = 0.5` it exceeds the cap `(UUT - LUT_min) * TSU'` at once, and the
+cap puts the band back on the floor. At this setting C2 is the fixed band of Pre-HUSPM.
 
 ## C4, the block index
 
