@@ -1,86 +1,57 @@
-# Experiment report pipeline - `make_figures.py`
+# Figures and tables - `analysis/make_figures.py`
 
-Tổng hợp + trực quan hoá kết quả thực nghiệm HUSP (SC1-SC7) cho bài báo Q1.
-Đọc các CSV 31-cột do `AutomatedExperimentRunner.java` sinh ra (gồm `explored_nodes`),
-xuất **hình PDF vector** (serif, DPI 300, LaTeX-ready) + **bảng tổng hợp** CSV/LaTeX.
+    python analysis/make_figures.py
 
-> File `yeucautonghopthucnghiem.txt` chỉ là GỢI Ý. Pipeline được khớp với **cấu trúc
-> dữ liệu THẬT** của từng kịch bản (parse `su`/`sl`/`K`/`strat`/ablation từ
-> `op_type`/`algorithm`), không bám cứng theo file gợi ý.
+Reads the campaign results and writes vector PDFs and CSV/LaTeX tables to
+`figures/campaign/`. Needs `pandas`, `numpy` and `matplotlib`; `seaborn` is used for the
+heatmap when present. `HUSP_DATA_DIR` and `HUSP_OUT_DIR` override the input and output
+directories, which is how the Colab notebook built by `analysis/build_colab_notebook.py`
+points the same script at a Drive copy.
 
-## Cách chạy
+## What it reads
 
-**Local (máy này):**
-```bash
-python3 analysis/make_figures.py
-# đọc results/, ghi figures/
-```
-Phụ thuộc: `pandas`, `matplotlib`, `numpy` (bắt buộc); `seaborn` (tuỳ chọn - heatmap
-đẹp hơn; thiếu thì fallback `imshow`).
+- `results/campaign/<SC>/<DATABASE>/<ARM>/*.csv` for runtimes and pattern counts.
+- `results/campaign-mem/<SC>/<DATABASE>/<ARM>/*.csv` for memory: the live set
+  (`mem_live_mb`) and the state held after each increment (`mem_retained_mb`).
+- `src/common/Datasets.java` for each database's default threshold, `D_init` and sweep.
+  The script has no table of its own, so a threshold changed there is picked up here.
 
-**Google Colab (khuyến nghị):** mở **`make_figures_colab.ipynb`** (File → Upload notebook,
-hoặc mở thẳng từ Drive). Chạy *Runtime → Run all*:
-1. Cell **Setup** mount Drive + **sửa `PROJECT`** trỏ tới thư mục `pre-huspm-adaptive` của bạn
-   (mặc định `/content/drive/MyDrive/Researching/pre-huspm-adaptive`).
-2. Cell cuối `main()` sinh toàn bộ hình + bảng vào `.../figures/` trên Drive.
+An arm is read only when its directory holds `DONE`. A `DEFERRED` arm keeps a partial CSV,
+and drawing it would set a curve that stops part way beside ones that cover the whole stream;
+the figures name it as deferred instead.
 
-> Notebook là **self-contained**, sinh tự động từ `make_figures.py` bằng
-> `python3 analysis/build_colab_notebook.py` (chạy lại builder mỗi khi sửa script để
-> regenerate `.ipynb` - giữ 1 nguồn code duy nhất). Colab có sẵn seaborn + jinja2.
+Every row is classified from its `op_type` suffix and runtime: `OK`, `OOM`, `OT` (over the
+time limit), `Fail`, `MemSkip` (refused by the memory guard) and `Skip` (an earlier increment
+of the same arm failed). A runtime of -3 is a completed run in the memory campaign, whose time
+is void. A configuration that did not finish is labelled with its outcome on the figure and
+left out of every sum.
 
-> Cơ chế đường dẫn: `make_figures.py` đọc env `HUSP_DATA_DIR`/`HUSP_OUT_DIR` trước
-> (cell Setup của notebook set 2 biến này), nên cùng 1 script chạy được cả local lẫn Colab.
+## Figures (`main()`)
 
-## Xử lý dữ liệu (đã cài trong loader)
-- **Phân loại trạng thái CHÍNH XÁC** (`classify_status`) - KHÔNG gộp chung "OOM/Fail".
-  Hậu tố `op_type` là nguồn chuẩn (runner set ở `measure()`), sentinel `runtime_ms` dự phòng:
+| file | scenario | content |
+|---|---|---|
+| `fig_scalability_SC3_runtime_ms.pdf` | SC3 | runtime against threshold, six algorithms, SIGN / LEVIATHAN / C8T1S5I8N5K |
+| `fig_scalability_SC3_explored_nodes.pdf` | SC3 | explored nodes against threshold, same panels |
+| `fig_incremental_cumulative.pdf` | SC2 | cumulative runtime over the 100 increments, five arms, seven databases; an arm that runs out of memory ends in a cross, and arms with no curve are named under the panel title |
+| `fig_C5_ablation.pdf` | SC7 | runtime over the increments and rescans, C5 on against C5 off, SIGN and C8T1S5I8N5K |
+| `fig_sl_sensitivity_prelarge_count.pdf` | SC4 | pre-large set size against `r_l`, Pre-HUSPM and the proposal |
+| `fig_batch_heatmap.pdf` | SC5 | the proposal's time over remine-from-scratch's, K x strategy; below one the proposal is faster |
+| `fig_memory_static.pdf` | memory SC1 | live set at each database's default threshold, six algorithms, eight databases |
+| `fig_memory_incremental.pdf` | memory SC2 | state held after each increment, five arms, seven databases |
 
-  | Trạng thái | Điều kiện | Nghĩa |
-  |---|---|---|
-  | `OK` | `runtime_ms ≥ 0` | chạy xong |
-  | `OT` | `_OT` / `rt=-2` | **Overtime** (>60' timeout) |
-  | `OOM` | `_OOM` | **OutOfMemory / StackOverflow** |
-  | `Fail` | `_FAILED` / `rt=-1` (khác) | exception khác |
-  | `MemSkip` | `_BUDGET` | bỏ qua do memory-guard trước khi chạy |
-  | `Skip` | `_SKIPPED_POISONED` | bỏ qua vì thuật toán đã hỏng ở op TRƯỚC (pha gia tăng) |
+`main_all()` adds SC1 runtime and explored nodes against threshold on all eight databases, and
+SC4 runtime against `r_l`.
 
-  → Trên hình: mỗi cấu hình không-OK được dán nhãn **đúng trạng thái** (OT/OOM/Fail/Skip),
-  **màu riêng** (OT=vàng, OOM=đỏ, Fail=đen, Skip=xám). Loại khỏi mean.
-  → `Skip`/`MemSkip` là HỆ QUẢ của lỗi trước (không phải lỗi độc lập của cấu hình đó).
-- **Khử trùng append-mode**: `ResultCollector` ghi nối → chạy lại 1 phần sinh dòng trùng;
-  loader giữ bản **mới nhất** (cảnh báo `[dedup]`).
-- **Aggregate**: mean/std cho `runtime_ms, peak_heap_mb, candidate_count, explored_nodes,
-  rescan_count` (runner chạy 1 lần/cấu hình ⇒ std≈0; cơ chế giữ sẵn nếu sau lặp seed).
+## Tables
 
-## Bộ hình RÚT GỌN (do giới hạn trang) - `main()`
+| file | content |
+|---|---|
+| `table_SC1_summary.csv`, `table_SC1_runtime.tex` | SC1 at the default threshold: runtime, live set, explored nodes, patterns and status per algorithm |
+| `table_SC1_speedup.csv` | each algorithm's runtime over the proposal's, per database |
+| `table_SC2_totals.csv` | SC2 per arm: increments completed, seconds over them, rescans, first failure |
+| `table_SC7_static.csv`, `table_SC7_ablation.tex` | SC7 on one mine: full, IUB off, Pre-HUSPM - runtime, explored nodes, IUB cuts |
+| `table_SC7_incremental.csv` | SC7 over the increments: full, C5 off, C4 off - runtime, rescans, block reads |
+| `table_status_summary.csv` | rows per outcome for every tree, scenario and database |
 
-**Nguyên tắc:** bảng đã rõ thì KHÔNG vẽ hình; mỗi hình đúng **3 subplot** =
-`FIG_DATASETS = {SIGN, LEVIATHAN, KOSARAK}` (đại diện dày+thưa, = SUBSET_3). Dữ liệu
-đủ 6 dataset nằm trong **bảng**.
-
-| # | File | Kịch bản | Nội dung |
-|---|---|---|---|
-| 1 | `fig_scalability_runtime_ms` | SC3 | line Runtime vs $su$ |
-| 2 | `fig_scalability_explored_nodes` | SC3 | line Explored vs $su$ - **bằng chứng C1** (Pre-HUSPM materialize tất cả) |
-| 3 | `fig_incremental_runtime_ms` | SC2 | clustered bar Runtime qua các lô (IncUSP/Pre-HUSPM/Proposed) |
-| 4 | `fig_C5_ablation` | SC7-C5 | 2 subplot: Runtime + #Rescans, C5 on vs off (BMS1 C5_off **OT**) |
-| 5 | `fig_sl_sensitivity_prelarge_count` | SC4 | grouped bar kích thước tập pre-large theo $s_l/s_u$ (dilemma + OOM/OT) |
-| 6 | `fig_batch_heatmap_runtime_heatmap` | SC5 | heatmap K × strategy (tổng runtime gia tăng) |
-| 7 | `fig_memory` | SC1 | bar Memory 5 thuật toán ở $su$ mặc định - **ưu thế bộ nhớ** (vd 57MB vs 9.5GB) |
-
-> Toàn bộ hình **memory-vs-su**, hình **SC1 scalability**, hình **ablation single-mine**,
-> và **SC6** đã được BỎ (bảng/text rõ hơn). Muốn sinh lại đầy đủ: gọi `main_all()`.
-
-## Bảng (đủ 6 dataset, số chính xác - `main()` xuất)
-- `table_SC1_summary.csv` / `table_SC1_runtime.tex` - SC1 tĩnh: Runtime/Memory/Candidate/Explored/Patterns + **status**; ô lỗi LaTeX hiện status cụ thể (OT/OOM/Fail).
-- `table_SC1_speedup.csv` - speedup Proposed vs từng baseline.
-- `table_SC7_ablation.csv` / `.tex` - **ablation single-mine** (Full/-EUCS/-IUB/-Block/Pre-HUSPM × 6 ds): Runtime + Explored + status.
-- `table_status_summary.csv` - **đếm OK/OT/OOM/Fail/MemSkip/Skip mỗi (scenario × dataset)**.
-  Vd: *"SC7/BMS1: 5 OT, 1 OOM, 1 OK"* (KHÔNG nói "đều OOM").
-
-## Ghi chú diễn giải (điểm nhấn paper)
-- **`explored_nodes`** là cột chốt: Pre-HUSPM `explored == candidate` (materialize MỌI
-  ứng viên) trong khi Proposed `explored ≪ candidate` (EUCS lọc trước materialize = C1).
-  Xem `set1_*_explored_nodes` và `set3_SC7_explored_nodes`.
-- Trung thực: trên dataset cực thưa (BMS1) Proposed **chậm hơn** HUSP-ULL/IncUSP về *thời
-  gian* nhưng thắng lớn về *bộ nhớ* (95MB vs ~8GB) và ở pha *gia tăng* (SC2) + độ bền OOM.
+The figures carry no number that the tables and the scenario READMEs under `results/` do not
+also state; those READMEs are where each result is explained.
