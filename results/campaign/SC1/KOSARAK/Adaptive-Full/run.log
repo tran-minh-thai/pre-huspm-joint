@@ -1,0 +1,14 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC1]
+Heap max: 49152 MB
+
+--- [SC1] Static baseline on D_init (50%) ---
+>> RUNNING Adaptive-Full/KOSARAK/SC1_su=0.022228#0  (heap free=4343MB / total=6720MB / max=49152MB)
+[Adaptive-Full/KOSARAK/SC1_su=0.022228#0] OK t=3190ms cand=183739261 pat=11 heapDelta=496MB
+>> RUNNING Adaptive-Full/KOSARAK/SC1_su=0.025#0  (heap free=4321MB / total=6720MB / max=49152MB)
+[Adaptive-Full/KOSARAK/SC1_su=0.025#0] OK t=1089ms cand=37941354 pat=10 heapDelta=432MB
+>> RUNNING Adaptive-Full/KOSARAK/SC1_su=0.028117#0  (heap free=4321MB / total=6720MB / max=49152MB)
+[Adaptive-Full/KOSARAK/SC1_su=0.028117#0] OK t=757ms cand=18883091 pat=7 heapDelta=400MB
+>> RUNNING Adaptive-Full/KOSARAK/SC1_su=0.031623#0  (heap free=4321MB / total=6720MB / max=49152MB)
+[Adaptive-Full/KOSARAK/SC1_su=0.031623#0] OK t=593ms cand=11918510 pat=5 heapDelta=352MB
+=== ALL SCENARIOS DONE (29.5s) ===
