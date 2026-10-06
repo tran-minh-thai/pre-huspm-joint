@@ -1,0 +1,14 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC4]
+Heap max: 49152 MB
+
+--- [SC4] Pre-large threshold (Sl) sensitivity: Pre-HUSPM vs Adaptive ---
+>> RUNNING Pre-HUSPM[sl=0.3]/LEVIATHAN/SC4#0  (heap free=844MB / total=1024MB / max=49152MB)
+[Pre-HUSPM[sl=0.3]/LEVIATHAN/SC4#0] FAILED after 25252ms (OOM)
+>> RUNNING Pre-HUSPM[sl=0.5]/LEVIATHAN/SC4#0  (heap free=380MB / total=49152MB / max=49152MB)
+[Pre-HUSPM[sl=0.5]/LEVIATHAN/SC4#0] FAILED after 22864ms (OOM)
+>> RUNNING Pre-HUSPM[sl=0.7]/LEVIATHAN/SC4#0  (heap free=323MB / total=49152MB / max=49152MB)
+[Pre-HUSPM[sl=0.7]/LEVIATHAN/SC4#0] OK t=18693ms cand=36592944 pat=135 heapDelta=8553MB
+>> RUNNING Pre-HUSPM[sl=0.9]/LEVIATHAN/SC4#0  (heap free=981MB / total=1280MB / max=49152MB)
+[Pre-HUSPM[sl=0.9]/LEVIATHAN/SC4#0] OK t=12093ms cand=24240364 pat=135 heapDelta=3155MB
+=== ALL SCENARIOS DONE (81.5s) ===
