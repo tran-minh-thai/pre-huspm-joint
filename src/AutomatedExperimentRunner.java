@@ -1168,14 +1168,18 @@ public class AutomatedExperimentRunner {
                 forceFullGC();
 
                 // --- Incremental ablations, on the representative set: C5 (adaptive rescan)
-                //     and C4 (block index) act only while the database grows. proposed_C5_on is
-                //     the full proposal on that stream and the reference for both. ---
+                //     and C4 (block index) act only while the database grows, and so does C2,
+                //     the adaptive pre-large band, which is recomputed at every increment.
+                //     proposed_C5_on is the full proposal on that stream and the reference
+                //     for all three. ---
                 if (C5_ABLATION_SET.contains(ds.name)) {
-                    logIncrementalAblation(col, ds, full, "proposed_C5_on",  "SC7_C5", true,  true);
+                    logIncrementalAblation(col, ds, full, "proposed_C5_on",  "SC7_C5", true,  true,  true);
                     forceFullGC();
-                    logIncrementalAblation(col, ds, full, "proposed_C5_off", "SC7_C5", false, true);  // -C5
+                    logIncrementalAblation(col, ds, full, "proposed_C5_off", "SC7_C5", false, true,  true);  // -C5
                     forceFullGC();
-                    logIncrementalAblation(col, ds, full, "proposed_no_block_index", "SC7_C4", true, false); // -C4
+                    logIncrementalAblation(col, ds, full, "proposed_no_block_index", "SC7_C4", true, false, true); // -C4
+                    forceFullGC();
+                    logIncrementalAblation(col, ds, full, "proposed_no_C2", "SC7_C2", true, true, false);  // -C2
                     forceFullGC();
                 }
 
@@ -1240,7 +1244,8 @@ public class AutomatedExperimentRunner {
      */
     private static void logIncrementalAblation(ResultCollector col, DatasetConfig ds, List<Sequence> full,
                                                String tag, String opTag,
-                                               boolean useAdaptiveRescan, boolean useBlockIndex) {
+                                               boolean useAdaptiveRescan, boolean useBlockIndex,
+                                               boolean useAdaptiveBand) {
         if (!algoEnabled(tag)) return;
         List<Sequence> dInit = dInitFor(ds, full);
         List<Sequence> rest = tailFrom(full, dInit.size());
@@ -1253,6 +1258,10 @@ public class AutomatedExperimentRunner {
                 ENABLE_PATTERN_EXPORT);
         adp.useAdaptiveRescan = useAdaptiveRescan; // C5 on/off
         adp.useBlockIndex = useBlockIndex;         // C4 on/off
+        // C2 off: the pre-large band is fixed at the hard floor LUT_min, as in Pre-HUSPM,
+        // instead of following the batch statistics. Still sound: on insertion TSU' >= TSU_ref,
+        // so the fixed margin (UUT - LUT_min) * TSU' is never below the safety lower bound.
+        adp.useAdaptiveBand = useAdaptiveBand;
 
         announce(tag, ds.name, opTag + "_INIT", 0);
         ExperimentMetrics m0 = measureAdaptive(adp, tag, ds.name, 0, opTag + "_INIT",

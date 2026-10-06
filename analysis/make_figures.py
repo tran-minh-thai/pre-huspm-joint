@@ -26,7 +26,8 @@
 #   SC6 mixed I/D/M        : op_type "SC6_(INIT|INS|DEL|MOD)", Adaptive and Remine
 #   SC7 ablation           : static  proposed_full / proposed_no_IUB / Pre-HUSPM (one mine);
 #                            incremental proposed_C5_on / proposed_C5_off /
-#                            proposed_no_block_index ("SC7_C5_*" / "SC7_C4_*", 101 rows)
+#                            proposed_no_block_index / proposed_no_C2
+#                            ("SC7_C5_*" / "SC7_C4_*" / "SC7_C2_*", 101 rows)
 #  Status suffixes on op_type: _OOM, _OT, _FAILED, _BUDGET, _SKIPPED_POISONED.
 #  runtime_ms: -1 failed, -2 overtime, -3 completed in live memory mode (time void).
 # =============================================================================
@@ -451,7 +452,8 @@ def export_ablation_table():
     write_csv(tab, os.path.join(OUT_DIR, "table_SC7_static.csv"))
 
     inc = {"proposed_C5_on": "Full", "proposed_C5_off": "-C5 (rescan every increment)",
-           "proposed_no_block_index": "-C4 (no block index)"}
+           "proposed_no_block_index": "-C4 (no block index)",
+           "proposed_no_C2": "-C2 (band fixed at LUT_min)"}
     rows = []
     for ds in [d for d in ALL_DATASETS if d in set(df["dataset"])]:
         for arm, label in inc.items():
@@ -462,7 +464,9 @@ def export_ablation_table():
             rows.append(dict(dataset=ds, variant=label, increments_done=len(ok),
                              runtime_s=ms_to_s(ok["runtime_ms"]).sum(),
                              rescans=ok["rescan_count"].iloc[-1] if len(ok) else np.nan,
-                             blocks_read=ok["blocks_read"].sum()))
+                             blocks_read=ok["blocks_read"].sum(),
+                             mean_prelarge=ok["prelarge_count"].mean(),
+                             final_patterns=ok["total_patterns_found"].iloc[-1] if len(ok) else np.nan))
     write_csv(pd.DataFrame(rows), os.path.join(OUT_DIR, "table_SC7_incremental.csv"))
 
     lines = ["\\begin{table}[t]", "\\centering",

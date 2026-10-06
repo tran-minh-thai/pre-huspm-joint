@@ -100,12 +100,12 @@ $subset3 = @('SIGN','LEVIATHAN','C8T1S5I8N5K')
 $static  = @('USpan','HUSP-ULL','HUSP-SP','IncUSP-Miner+','Pre-HUSPM','Adaptive-Full')
 $incr    = @('Adaptive-Full','Pre-HUSPM','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+')
 
-# Arms that exist on some databases only. SC7's incremental ablations - C4, the block index,
-# and C5, the adaptive rescan - run in the runner on C5_ABLATION_SET, which is SIGN and
+# Arms that exist on some databases only. SC7's incremental ablations - C2, the adaptive band,
+# C4, the block index, and C5, the adaptive rescan - run in the runner on C5_ABLATION_SET, which is SIGN and
 # C8T1S5I8N5K once BMS1 is filtered out by scope. Queued on any other database they come out
 # with no rows. This list repeats that set; if the two drift apart the stray arm is recorded as
 # EMPTY and named by -List, not written down as DONE.
-$sc7Incremental = @('proposed_C5_on','proposed_C5_off','proposed_no_block_index')
+$sc7Incremental = @('proposed_C5_on','proposed_C5_off','proposed_no_block_index','proposed_no_C2')
 $sc7IncSets     = @('SIGN','C8T1S5I8N5K')
 function Test-Arm($d, $a) {
     if ($Scenario -eq 'SC7' -and $sc7Incremental -contains $a -and $sc7IncSets -notcontains $d) {
@@ -121,7 +121,7 @@ if (-not $Algorithms) {
         'SC4'   { @('Pre-HUSPM','Adaptive-Full') }
         'SC6'   { @('Adaptive-Full','Remine-from-scratch') }
         'SC7'   { @('proposed_full','proposed_no_block_index','proposed_no_IUB',
-                    'proposed_C5_on','proposed_C5_off','Pre-HUSPM') }
+                    'proposed_C5_on','proposed_C5_off','proposed_no_C2','Pre-HUSPM') }
         default { $incr }                          # SC2, SC5
     }
 }
@@ -145,7 +145,7 @@ if (-not $Datasets) {
 $knownAlgos = @('Adaptive-Full','Pre-HUSPM','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+',
                 'USpan','HUSP-ULL','HUSP-SP',
                 'proposed_full','proposed_no_block_index','proposed_no_IUB',
-                'proposed_C5_on','proposed_C5_off')
+                'proposed_C5_on','proposed_C5_off','proposed_no_C2')
 $knownSets  = @('SIGN','LEVIATHAN','TAFENG','BIBLE','BMS1','C8T1S5I8N5K','KOSARAK','FIFA')
 foreach ($a in $Algorithms) {
     if ($knownAlgos -notcontains $a) {

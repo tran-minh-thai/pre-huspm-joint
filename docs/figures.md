@@ -50,7 +50,7 @@ SC4 runtime against `r_l`.
 | `table_SC1_speedup.csv` | each algorithm's runtime over the proposal's, per database |
 | `table_SC2_totals.csv` | SC2 per arm: increments completed, seconds over them, rescans, first failure |
 | `table_SC7_static.csv`, `table_SC7_ablation.tex` | SC7 on one mine: full, IUB off, Pre-HUSPM - runtime, explored nodes, IUB cuts |
-| `table_SC7_incremental.csv` | SC7 over the increments: full, C5 off, C4 off - runtime, rescans, block reads |
+| `table_SC7_incremental.csv` | SC7 over the increments: full, C5 off, C4 off, C2 off - runtime, rescans, block reads, mean pre-large set, final pattern count |
 | `table_status_summary.csv` | rows per outcome for every tree, scenario and database |
 
 The figures carry no number that the tables and the scenario READMEs under `results/` do not
