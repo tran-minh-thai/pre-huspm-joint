@@ -1,0 +1,8 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC7]
+Heap max: 49152 MB
+
+--- [SC7] Ablation C3(IUB)/C4(Block)/C5(rescan) ---
+>> RUNNING proposed_no_IUB/BIBLE/SC7#0  (heap free=642MB / total=864MB / max=49152MB)
+[proposed_no_IUB/BIBLE/SC7#0] OK t=2258ms cand=12858153 pat=129 heapDelta=409MB
+=== ALL SCENARIOS DONE (4.2s) ===
