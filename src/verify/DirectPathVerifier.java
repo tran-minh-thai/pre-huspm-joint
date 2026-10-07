@@ -60,8 +60,13 @@ public final class DirectPathVerifier {
     private static final String DATASET_DIR = "datasets";
     // The operating point of results/verify: D_init is the first half, r_l = 0.8 everywhere.
     private static final double RL = 0.8, KAPPA = 0.5, DELTA0 = 1e-4;
-    // Floor of the reference mine that finds the adversarial target, as a ratio of UUT.
+    // Floor of the reference mine that finds the adversarial target, as a ratio of UUT, and
+    // its candidate budget. Above the budget the miner raises its floor and starts again,
+    // which keeps BMS1 - where a floor of 0.6 * UUT does not finish - from stalling the run;
+    // whatever floor it settles on, the target is still the untracked pattern of highest
+    // utility below the HUSP threshold among those it found.
     private static final double PROBE_RL = 0.6;
+    private static final long PROBE_CANDIDATE_BUDGET = 500_000_000L;
 
     public static void main(String[] args) throws IOException {
         if (args.length == 0) {
@@ -245,7 +250,17 @@ public final class DirectPathVerifier {
                                                         double uut, String rule) {
         PreHUSPMAdaptiveAlgo probe = new PreHUSPMAdaptiveAlgo(uut, KAPPA, DELTA0, PROBE_RL, AblationMode.FULL, false);
         if (rule != null) probe.triggerRule = PreHUSPMAdaptiveAlgo.TriggerRule.valueOf(rule.toUpperCase());
-        probe.runInitialMining(new ArrayList<>(current), tsu(current));
+        probe.rescanCandidateBudget = PROBE_CANDIDATE_BUDGET;
+        try {
+            probe.runInitialMining(new ArrayList<>(current), tsu(current));
+        } catch (RuntimeException e) {
+            System.out.println("  no target: the reference mine did not finish (" + e.getClass().getSimpleName() + ")");
+            return null;
+        }
+        if (probe.rescanRetries > 0) {
+            System.out.printf("  reference mine raised its floor %d times, to %.2f * UUT%n",
+                    probe.rescanRetries, probe.slMinRatioEff);
+        }
         Map<String, Double> cand = new java.util.HashMap<>(probe.exportPrelargeAsStrings());
         cand.putAll(probe.exportLargeAsStrings());
         java.util.Set<String> tracked = new java.util.HashSet<>(algo.exportLargeAsStrings().keySet());
