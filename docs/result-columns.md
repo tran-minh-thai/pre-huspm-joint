@@ -81,6 +81,24 @@ thuộc PHA** (chèn vs xoá vs baseline Pre-HUSPM - bảng trên). Ở pha mine
 init) cột này ghi độ-rộng-band tối đa `ξ-lut_min` và KHÔNG dùng cho quyết định nào → **chỉ so
 sánh `sft_val` trong PHA GIA TĂNG**.
 
+### Adaptive columns under the joint rule (`trigger_rule = joint`, the default)
+
+Rows written with `trigger_rule = joint` read the proposal's columns as follows. Rows with
+`iaumax`, `cub` or `swumax` keep the definitions above.
+
+| Column | Meaning under `joint` |
+|---|---|
+| `iau_max` | the rescan test quantity at the decision, `max_i A_i - UUT*I + UUT*D`, taken before the counters are reset |
+| `sft_val` | the bound it is compared with, `(UUT - LUT_min) * TSU_ref`, on insertion and deletion alike |
+| `cub_triggered` | `iau_max > sft_val` (always true with C5 off) |
+| `lut_dyn` | `L_r = LUT_min * TSU_ref`, the floor a rescan mines at; the drop floor of a pattern `X` is `L_r + min_{i in X} A_i` and is not stored |
+| `sigma2`, `rho` | 0: not computed |
+| `kappa`, `delta0` | `NaN`: not used |
+| `iau_tightness` | `cub_val / max_i A_i`, kept for comparison with the earlier rule; not used by `joint` |
+
+The operating-region ratio of an increment is `iau_max / sft_val`; an increment rescans exactly
+when it exceeds 1.
+
 ---
 
 ## §3. Độ đo DẪN XUẤT (người đọc tự tính từ cột thô - đảm bảo tính độc lập của dữ liệu gốc)

@@ -315,7 +315,12 @@ while ($true) {
 
     $csv  = Get-ChildItem "$dir" -Filter '*.csv' | Select-Object -First 1
     $rows = if ($csv) { (Get-Content $csv.FullName | Measure-Object -Line).Lines - 1 } else { 0 }
-    $line = "host=$host_ finished=$(Get-Date -f 'yyyy-MM-dd HH:mm:ss') seconds=$secs rc=$($p.ExitCode) rows=$rows capped=$capped"
+    # The commit and the operating system go into DONE as well: the runner's log has the JVM,
+    # but nothing recorded which Windows build or which commit an arm ran on.
+    $commit = if ($NoGit) { 'unknown' } else { (git rev-parse --short HEAD 2>$null | Out-String).Trim() }
+    $treeState = if ($NoGit) { 'unknown' } elseif ((git status --porcelain -- src 2>$null | Out-String).Trim()) { 'src-modified' } else { 'clean' }
+    $osText = [Environment]::OSVersion.VersionString
+    $line = "host=$host_ finished=$(Get-Date -f 'yyyy-MM-dd HH:mm:ss') seconds=$secs rc=$($p.ExitCode) rows=$rows capped=$capped commit=$commit src=$treeState os=`"$osText`""
     # No rows and not capped means the runner had nothing to do for this arm: the scenario
     # does not run this algorithm, or not on this database. That is not a measurement, and
     # DONE would say it was - twenty such arms once sat in SC4 looking finished. A capped arm

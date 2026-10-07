@@ -1,160 +1,145 @@
 # Experimental protocol
 
-This document defines how the experiments are configured, measured, and recorded.
-It is the reference for anyone reproducing the numbers from a clean clone.
+How the experiments are configured, measured and recorded. The commands and the cost of each
+scenario are in `docs/campaign-parameters.md`; column definitions are in
+`docs/result-columns.md`.
 
 ## 1. Algorithms
 
-| Name in results | Role | Reference |
-|---|---|---|
-| `Adaptive` | proposed framework | this repository |
-| `Pre-HUSPM` | pre-large incremental baseline | Yan et al. |
-| `IncUSP-Miner+` | candidate-tree incremental baseline | Wang et al. |
-| `HUSP-ULL` | static baseline, LAR and IIP pruning | Gan et al. |
-| `USpan` | static baseline, SWU bound | Yin et al. |
-| `HUSP-SP` | static baseline, seqPro and TRSU bound | Zhang et al., TKDD 2023 |
+| Name in results | Role | Reference | Implementation |
+|---|---|---|---|
+| `Adaptive-Full` | proposed method | this repository | `PreHUSPMAdaptiveAlgorithm` |
+| `Pre-HUSPM` | pre-large incremental baseline, rescan test on `SWUmax(d)` (Yan et al., Theorem 2) | Yan et al., J. Supercomputing 2025 | `PreHUSPMAlgorithm`, `Variant.SWUMAX` |
+| `Pre-HUSPM-TSU` | the same baseline with the rescan test on `TSU(d)` (Yan et al., Theorem 1) | Yan et al. | `PreHUSPMAlgorithm`, `Variant.TSU` |
+| `IncUSP-Miner+` | candidate-tree incremental baseline | Wang et al., ACM TIST 2018 | `IncUSPMinerPlusAlgorithm` |
+| `Remine-from-scratch` | mines the whole current database after every increment | - | the proposal's own static miner, `runInitialMining` |
+| `USpan` | static baseline, SWU bound | Yin et al., KDD 2012 | `USpanAlgorithm` |
+| `HUSP-ULL` | static baseline, LAR and IIP pruning | Gan et al., IEEE TCYB 2021 | `HUSPULLAlgorithm` |
+| `HUSP-SP` | static baseline, seqPro and TRSU bound | Zhang et al., ACM TKDD 2023 | `HUSPSPAlgorithm` |
 
-All implementations live in `src/algorithms/` and run inside the same harness, so
-runtime, peak heap, and the two counters are measured under identical conditions.
-Numbers copied from other papers are never mixed into the tables.
+Every algorithm is implemented in Java in `src/algorithms/` and runs inside the same harness,
+so runtime, heap and the counters are measured under identical conditions. Numbers copied from
+other papers are never mixed into the tables.
+
+Both Pre-HUSPM variants compare the quantity accumulated since the last rescan with the bound,
+not the quantity of the current batch alone.
 
 ## 2. Datasets
 
-Six SPMF benchmark datasets, redistributed in quantitative form in `datasets/`.
-Sequence structure comes from SPMF; internal and external utilities are generated
-synthetically:
+Eight databases. The data are not kept in this repository: seven are release assets of
+`tran-minh-thai/huspm-datasets`, pinned to `v1.2.1-measured-quantity` and verified against
+that release's `MANIFEST.sha256` by `fetch-datasets.ps1` / `fetch-datasets.sh`; TAFENG is
+built locally from the raw Ta-Feng file by `tafeng/build_tafeng.py` and pinned by
+`tafeng/TAFENG.sha256`.
 
-* internal utility (quantity): 70 percent from [1,2], 20 percent from [3,5], 10 percent from [6,10]
-* external utility (unit profit): log-normal exp(N(2.5,1)), clamped to [1,1000]
-* generator seeded per input file
+| Database | Sequences | Distinct items | Events / sequence | Items / event | Total utility | Utilities |
+|---|---:|---:|---:|---:|---:|---|
+| SIGN | 730 | 267 | 52.00 | 1.00 | 1,796,483 | generated |
+| LEVIATHAN | 5,834 | 9,025 | 33.81 | 1.00 | 10,502,159 | generated |
+| FIFA | 20,450 | 2,990 | 36.24 | 1.00 | 42,781,841 | generated |
+| BIBLE | 36,369 | 13,905 | 21.64 | 1.00 | 35,550,162 | generated |
+| BMS1 | 59,601 | 497 | 2.51 | 1.00 | 7,229,030 | generated |
+| C8T1S5I8N5K | 47,132 | 68,240 | 2.36 | 7.97 | 47,416,411 | generated |
+| KOSARAK | 990,002 | 41,270 | 8.10 | 1.00 | 385,921,994 | generated |
+| TAFENG | 60,665 | 23,789 | 13.40 | 1.00 | 106,639,001 | measured |
 
-The generator is a separate repository, `convert-spmf-to-quantitative`. It reproduces the
-files in `datasets/` byte for byte from the raw SPMF inputs, so the utility draw can be
-regenerated under a different seed without touching this repository.
+Counted from the files as the loader reads them. C8T1S5I8N5K's `_seq` file ends with an empty
+sequence, which the loader skips, so it holds 47,132 sequences.
 
-The datasets are **not** tracked in this repository. They are published as release assets
-of the shared repository `huspm-datasets` and fetched at run time, pinned to one exact
-release tag, then verified against the `MANIFEST.sha256` of that same release. The release
-tag and the per-file checksums are recorded in the manifest of every run, which is what
-ties a set of numbers to a specific set of bytes. The only data files kept here are
-`paper_seq.txt` and `paper_eui.txt`, the small worked example, which are specific to this
-paper and are not part of the shared collection.
+Generated utilities (seven databases): the sequence structure comes from SPMF; the internal
+utility (quantity) is drawn 70 percent from [1,2], 20 percent from [3,5] and 10 percent from
+[6,10]; the external utility (unit profit) is `exp(N(2.5, 1.0))`, rounded and clamped to
+[1, 1000]; seed 42, one generator per input file. The generator is
+`tran-minh-thai/convert-spmf-to-quantitative`.
 
-| Dataset | Sequences | Items | Avg length | Total utility | Default threshold |
-|---|---:|---:|---:|---:|---:|
-| SIGN | 730 | 267 | 52.00 | 1,668,652 | 0.025 |
-| LEVIATHAN | 5,834 | 9,025 | 33.80 | 14,156,241 | 0.060 |
-| FIFA | 20,450 | 2,990 | 34.74 | 35,721,991 | 0.050 |
-| BIBLE | 36,369 | 13,905 | 21.60 | 35,550,162 | 0.025 |
-| BMS1 | 59,601 | 497 | 2.42 | 7,229,030 | 0.014 |
-| KOSARAK | 990,000 | 41,270 | 8.10 | 400,890,653 | 0.030 |
+Measured utilities (TAFENG): the internal utility is Ta-Feng's `AMOUNT`, the external utility
+the median of `SALES_PRICE / AMOUNT` per product; one sequence per customer and month,
+kept when it holds at least two events.
 
-`paper_seq.txt` and `paper_eui.txt` hold the small worked example used in the manuscript.
-
-SIGN, LEVIATHAN, and KOSARAK form the three-dataset subset used by the scenarios that
-cross several parameters at once. The subset mixes dense long sequences with sparse short
-ones and keeps the incremental grids inside the time budget.
+C8T1S5I8N5K is the only database whose events hold more than one item, so it is the only one
+that exercises within-event extension. Its item ids reach 4,999,999 and are replaced at load
+by their rank in the `_eui` file (`Datasets.compactItemIds`), which keeps the item order.
 
 ## 3. Parameters
 
-| Symbol in the paper | Name in code | Default | Meaning |
-|---|---|---|---|
-| UUT | `su` | per dataset, table above | upper utility threshold ratio |
-| r_l | `DEFAULT_SL_MIN_RATIO` | 0.8 | lower-threshold ratio; LUT_min = r_l * UUT |
-| kappa | `DEFAULT_ALPHA` | 0.5 | coefficient of the adaptive term |
-| Delta_0 | `DEFAULT_DELTA0` | 1e-4 | initial margin |
-| B_sz | `BlockIndex.blockSize` | 100 | block size of the block-level inverted index |
+Per database, from `common.Datasets`:
+
+| Database | `D_init` (sequences) | Default UUT | UUT levels (SC1, SC3) | `r_l` |
+|---|---:|---:|---|---:|
+| SIGN | 230 | 0.065911 | 0.049134, 0.065911, 0.083371, 0.091052 | 0.80 |
+| LEVIATHAN | 2,834 | 0.015530 | 0.014644, 0.015530, 0.016470, 0.017987 | 0.80 |
+| BIBLE | 21,369 | 0.022895 | 0.018100, 0.022895, 0.028960, 0.032570 | 0.80 |
+| BMS1 | 39,601 | 0.013597 | 0.012821, 0.013597, 0.015293, 0.016218 | 0.80 |
+| FIFA | 10,450 | 0.059637 | 0.056234, 0.059637, 0.067073, 0.075436 | 0.80 |
+| KOSARAK | 90,002 | 0.025000 | 0.022228, 0.025000, 0.028117, 0.031623 | 0.85 |
+| C8T1S5I8N5K | 27,133 | 0.001132 | 0.001099, 0.001132, 0.001200, 0.001236 | 0.80 |
+| TAFENG | 40,665 | 0.003557 | 0.002812, 0.003557, 0.004499, 0.005691 | 0.80 |
+
+`D_init` is the first `D_init` sequences in file order; the rest of the database is split, in
+file order, into `K` increments. `LUT_min = r_l * UUT`.
+
+| Symbol | Name in code | Value |
+|---|---|---|
+| `K` | `Datasets.BATCH_COUNT` | 100 (SC5: 100, 67, 50, 25) |
+| `B_sz` | `block.size`, `DEFAULT_BLOCK_SIZE` | 100 sequences per block |
+| rescan rule | `adapt.trigger` | `joint` |
+| repeats | `repeats` | 1 |
+
+The rescan rule `joint`: with `I` and `D` the utility inserted and deleted since the last
+rescan, `A_i` the inserted utility of the sequences containing item `i`, and
+`TSU_ref` the total utility at the last rescan, the proposal rescans when
+`max_i A_i - UUT*I + UUT*D > (UUT - LUT_min) * TSU_ref`, and on an operation that does not
+rescan it drops a tracked pattern `X` only when `u(X) < LUT_min * TSU_ref + min_{i in X} A_i`.
+`iaumax`, `cub` and `swumax` remain selectable for comparison only.
 
 ## 4. Scenarios
 
-| Scenario | Setup | Output file |
-|---|---|---|
-| SC1 | static mining on D_init, the first 50 percent of sequences, four threshold levels | `SC1_static.csv` |
-| SC2 | D_init plus five uniform batches of 10 percent | `SC2_incremental.csv` |
-| SC3 | threshold sweep on the full database | `SC3_su.csv` |
-| SC4 | lower-threshold ratio sweep, r_l in {0.3, 0.5, 0.7, 0.9} | `SC4_sl_sensitivity.csv` |
-| SC5 | batch count K in {3, 5, 10} crossed with four partitioning strategies | `SC5_batch_strategy.csv` |
-| SC6 | twenty mixed operations, exactly 14 insertions, 3 deletions and 3 modifications in a seeded order, each one hundredth of the incremental stream | `SC6_idm_mixed.csv` |
-| SC7 | ablation: C3 (IUB) on one mine of the whole database, against Pre-HUSPM; C2 (adaptive pre-large band), C4 (block index) and C5 (adaptive rescan) on `D_init` plus 100 increments, one row per increment, on SIGN and C8T1S5I8N5K, where they act | `SC7_ablation.csv` |
+| Scenario | Setup | Databases | Output file |
+|---|---|---|---|
+| SC1 | static mining of `D_init`, four UUT levels | all eight | `SC1_static.csv` |
+| SC2 | `D_init` then `K = 100` equal increments | seven (not BMS1) | `SC2_incremental.csv` |
+| SC3 | static mining of the whole database, four UUT levels | SIGN, LEVIATHAN, C8T1S5I8N5K | `SC3_su.csv` |
+| SC4 | static mining of the whole database at `r_l` in {0.3, 0.5, 0.7, 0.9}, Pre-HUSPM and the proposal | SIGN, LEVIATHAN, C8T1S5I8N5K | `SC4_sl_sensitivity.csv` |
+| SC5 | the increments cut EVEN, INCREASING, DECREASING and BURST at `K` in {100, 67, 50, 25} | SIGN, LEVIATHAN, C8T1S5I8N5K | `SC5_batch_strategy.csv` |
+| SC6 | twenty operations, 14 insertions, 3 deletions and 3 modifications in a seeded order, each a hundredth of the incremental stream; the proposal and remining | SIGN, LEVIATHAN, C8T1S5I8N5K | `SC6_idm_mixed.csv` |
+| SC7 | ablation. C3 (the IUB bound) on one mine of the whole database, with Pre-HUSPM for reference; C4 (block index) and C5 (adaptive rescan decision) on `D_init` and 100 increments, one row per increment | C3: seven; C4, C5: SIGN, C8T1S5I8N5K | `SC7_ablation.csv` |
 
-SC1, SC2, and SC7 run on all six datasets; SC3 to SC6 run on the three-dataset subset.
+BMS1 takes part in SC1 only: no threshold mines the whole database.
 
 ## 5. Measurement
 
-Each mining call runs in its own scope with a full GC before measurement, so one
-algorithm cannot contaminate the next. Runtime is wall-clock time of the mining task
-only, excluding dataset loading. Peak heap is sampled every 50 ms and reported net of the
-baseline heap measured after the preceding GC. Every call has a wall-clock limit,
-60 minutes by default, configurable with `-Dtimeout.min`.
+Each arm - one algorithm on one database in one scenario - runs in its own JVM. Runtime is the
+wall-clock time of the mining call, excluding loading. Each mining call has a limit of 120
+minutes (`-Dtimeout.min`), and each arm a limit of 8 hours (`campaign.ps1 -CapSeconds`).
 
-Two counters are defined differently on purpose:
+* `candidate_count` counts every extension generated, before any pruning.
+* `explored_nodes` counts the patterns actually materialised and recursed into, after the
+  extension filter; it measures pruning.
+* The memory campaign (`results/campaign-mem`) measures the live set: a full collection is
+  forced at every sample and the heap read right after, so its runtimes are void. See
+  `docs/result-columns.md` for `mem_live_mb` and `mem_retained_mb`.
 
-* `candidate_count` counts every distinct extension generated, before any pruning, so it
-  is identical across algorithms inside the same threshold family
-* `explored_nodes` counts the patterns actually materialized and recursed into, after the
-  extension filter, so it is the number that measures pruning effectiveness
+Status is encoded in `runtime_ms`: 0 or more is a completed run in milliseconds, -2 overtime,
+-1 a failure (out of memory, candidate budget, exception), -3 a memory-campaign row.
 
-Status is encoded in `runtime_ms`: a value of 0 or more is a completed run in
-milliseconds, -2 is overtime, and -1 is a failure such as out of memory, candidate budget
-exceeded, or an exception. The `op_type` field carries the scenario tag and may end in
-`_OT`, `_OOM`, `_BUDGET`, `_FAILED`, or `_SKIPPED_POISONED`. Column by column definitions
-are in `docs/result-columns.md`.
+## 6. Repetition
 
-## 6. Repetition and variance
-
-Three independent sources of variation are separated:
-
-1. **Measurement noise** from JIT compilation and garbage collection. Handled by repeating
-   an identical configuration three times. This is what the reported standard deviation of
-   runtime and peak heap refers to.
-2. **Batch and operation randomness** in SC2, SC5, and SC6, driven by the `SEEDS` array
-   in the runner. Five seeds are used.
-3. **The synthetic utility draw**, fixed inside the dataset files. Varying it requires
-   regenerating `datasets/` with the converter under a different seed. Three variants are
-   used for a robustness table on SC1 and SC2 over the three-dataset subset.
-
-Running the full grid under all three at once is not affordable, so the budget is spent as
-follows. SC1 and SC3 have no batch randomness and use three repetitions at a single
-dataset variant. SC2, SC5, and SC6 use five seeds, with three repetitions added at the
-default configuration. The utility-draw robustness check is reported as a separate small
-table rather than folded into the main results.
-
-Results are reported as mean plus or minus standard deviation. Overtime and out-of-memory
-calls are excluded from the means and reported separately as resource-limit evidence.
+One repeat per configuration. SC2 splits the stream in file order and so has no seed; SC6 draws
+its operation order from `Random(42 + name.hashCode())`, one fixed order per database. No table reports a standard deviation.
 
 ## 7. Measurement machine
 
-All numbers in a given table come from one machine, and every algorithm in that table is
-run on it under identical JVM settings. Numbers measured on different machines are never
-compared against each other.
+Every runtime and memory figure comes from one machine, `PC-THAI`: AMD Ryzen 9 9950X, 64 GB,
+Windows, JDK 25, `-Xmx48g -Xss64m`, one JVM per arm. `campaign.ps1` refuses to run under any
+other JDK major version. Numbers measured on different machines are never compared.
 
-The machine used for the revised experiments is a Windows laptop with an Intel Core
-i7-10750H, six cores and twelve threads at 2.60 GHz, and 64 GB of RAM. The mining task
-runs on a single worker thread, so single-core sustained clock is what matters; the
-discrete GPU is irrelevant to this workload.
-
-Two properties of this machine affect the protocol:
-
-* **Sustained load and thermal behaviour.** An H-series laptop processor reduces its clock
-  under a multi-hour load, which inflates the variance of runtime measurements. Runs are
-  done with the machine on mains power, the Windows power plan set to high performance,
-  sleep and hibernation disabled, and the repository folder excluded from real-time
-  antivirus scanning. The active power plan is recorded in each manifest.
-* **Memory.** 64 GB of RAM would allow a much larger heap, but the heap stays at 24 GB.
-  Out-of-memory outcomes are evidence in the comparison, so raising the heap would change
-  what the failures mean rather than remove a limitation.
-
-The wall-clock limit per call stays at 60 minutes. This machine is slower per core than
-the one used for the first submission, so more calls are expected to end in overtime;
-overtime is reported rather than hidden, and the affected calls are excluded from the
-means.
+Counters - pattern counts, rescans, explored nodes - do not depend on the machine, and the
+correctness evidence under `results/verify*` is measured on the development machine.
 
 ## 8. Provenance
 
-`run.sh` writes each run into `results/run-<timestamp>-<commit>/` together with a
-`manifest.json` recording the commit, whether the working tree was clean, the JDK, the JVM
-flags, the machine, the timeout, and the SHA-256 of every dataset file. A set of numbers
-that is not accompanied by a manifest is not used in the paper.
-
-`results/v1-submitted/` holds the frozen numbers of the first submission and is never
-overwritten.
+`campaign.ps1` runs each arm from a fresh compile of the checked-out commit, records `DONE`
+with the host, the duration and the row count, and commits and pushes the arm's directory.
+Runs outside the campaign go through `analysis/record_run.py`, which refuses an uncommitted
+`src/` and writes `run_meta.json` (command, commit, source digest, JVM, operating system) next
+to the output.

@@ -557,6 +557,15 @@ public class AutomatedExperimentRunner {
         System.out.println("Mode: " + (testMode ? "TEST (paper dataset)" : "PRODUCTION")
                 + " | Datasets: " + DATASETS.size() + " | Scenarios: " + scenarios);
         System.out.println("Heap max: " + (Runtime.getRuntime().maxMemory() / (1024 * 1024)) + " MB");
+        // The platform each arm ran on, in the arm's own log: the operating system was
+        // recorded nowhere before, and the paper has to state it.
+        System.out.println("Platform: os=" + System.getProperty("os.name") + " "
+                + System.getProperty("os.version") + " (" + System.getProperty("os.arch") + ")"
+                + " | java=" + System.getProperty("java.runtime.version")
+                + " " + System.getProperty("java.vm.name") + " (" + System.getProperty("java.vendor") + ")"
+                + " | cpus=" + Runtime.getRuntime().availableProcessors()
+                + " | adapt.trigger=" + ADAPT_TRIGGER + " | block.size=" + DEFAULT_BLOCK_SIZE
+                + " | timeout.min=" + TIMEOUT_MINUTES);
         if (SL_RATIO_OVERRIDE > 0) {
             System.out.println("### PROBE: r_l = " + SL_RATIO_OVERRIDE + " for every database, "
                     + "overriding common.Datasets. Not a campaign measurement.");
