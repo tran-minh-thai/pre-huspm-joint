@@ -124,8 +124,24 @@ Status is encoded in `runtime_ms`: 0 or more is a completed run in milliseconds,
 
 ## 6. Repetition
 
-One repeat per configuration. SC2 splits the stream in file order and so has no seed; SC6 draws
-its operation order from `Random(42 + name.hashCode())`, one fixed order per database. No table reports a standard deviation.
+Every replicate is an arm of its own, measured in a fresh JVM like every arm: a repeat run in
+the JVM of the one before it starts on a warmed JIT and is faster for that reason alone, so its
+spread would measure warm-up rather than noise. `campaign.ps1 -Repeat n -SeedIndex k` writes
+replicate `s<k>r<n>` to `results/campaign-replicates/s<k>r<n>/`; the main tree
+`results/campaign` is replicate `s0r0`. Rows carry the repeat and the seed in their own columns.
+
+| Scenario | Replicates | Spread reported for |
+|---|---|---|
+| SC1 | three repeats (`r0`, `r1`, `r2`), all algorithms, all eight databases | runtime at the default threshold |
+| SC2 | three repeats of Pre-HUSPM-Adaptive and Remine on SIGN, TAFENG, BIBLE and C8T1S5I8N5K; one run elsewhere | runtime summed over the increments |
+| SC6 | five seeds (`s0` to `s4`: 42, 1337, 2024, 31415, 271828), both arms | the proposal-to-remine ratio, paired by seed |
+| others | one run | - |
+
+Counters - pattern counts, rescans, explored nodes - are deterministic for a given stream, so
+their spread over repeats is zero by construction and is not reported. SC2 splits the stream in
+file order and draws nothing from a seed; SC6 draws its operation order from
+`Random(seed + name.hashCode())`. `analysis/make_figures.py` reports the sample standard
+deviation over the replicates that completed and counts those that did not.
 
 ## 7. Measurement machine
 

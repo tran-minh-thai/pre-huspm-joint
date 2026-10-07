@@ -65,7 +65,7 @@ after each increment.
 | `D_init` | per database, `Datasets.Entry.dInitCount` | Yan et al. Table 16 OD.Num, verbatim for the five shared databases. A flat 50% leaves rescan_count at zero in 15 of 18 cells. |
 | increments | `K = 100` | Yan et al. section 6.1. At K = 5 every increment rescans, and Adaptive and Pre-HUSPM do not separate. |
 | `r_l` | 0.80, KOSARAK 0.85 | 0.8 x KOSARAK's lowest threshold exceeds three billion candidates; 0.85 returns 16 patterns in 29 s. Both proposal and baseline read the same value. |
-| repeats | 1 | SC2 takes one seed and splits in file order, so repeats measured clock jitter at three times the cost. |
+| repeats | 1 per arm; replicates as separate arms | `-Repeat n` and `-SeedIndex k` measure a replicate in a fresh JVM, into `results/campaign-replicates/s<k>r<n>`. Three repeats for SC1 and for SC2's proposal and remine on SIGN, TAFENG, BIBLE and C8T1S5I8N5K; five seeds for SC6. See `docs/experiments.md` section 6. |
 | `SUBSET_3` | SIGN, LEVIATHAN, C8T1S5I8N5K | KOSARAK's SC5 grid alone is about fifty hours. Used by SC3, SC4, SC5 and SC6. |
 | `C5_ABLATION_SET` | SIGN, C8T1S5I8N5K (BMS1 listed, filtered) | The databases of SC7's incremental ablations (C2, C4, C5). `proposed_C5_off` rescans every batch, so it costs a hundred full mines. |
 | BMS1 | SC1 only | No threshold mines the whole database: 0.030 exceeds three billion candidates, 0.032 returns nothing. |
