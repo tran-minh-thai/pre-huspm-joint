@@ -14,7 +14,7 @@
 #  Thresholds, D_init and the sweeps come from src/common/Datasets.java, the one
 #  place they are defined; nothing here carries its own copy.
 #
-#  Core deps: pandas, numpy, matplotlib. seaborn is optional (nicer heatmaps).
+#  Core deps: pandas, numpy, matplotlib.
 #
 #  SCENARIO MAP (how each scenario's rows are keyed)
 #  -------------------------------------------------
@@ -26,8 +26,7 @@
 #   SC6 mixed I/D/M        : op_type "SC6_(INIT|INS|DEL|MOD)", Adaptive and Remine
 #   SC7 ablation           : static  proposed_full / proposed_no_IUB / Pre-HUSPM (one mine);
 #                            incremental proposed_C5_on / proposed_C5_off /
-#                            proposed_no_block_index / proposed_no_C2
-#                            ("SC7_C5_*" / "SC7_C4_*" / "SC7_C2_*", 101 rows)
+#                            proposed_no_block_index ("SC7_C5_*" / "SC7_C4_*", 101 rows)
 #  Status suffixes on op_type: _OOM, _OT, _FAILED, _BUDGET, _SKIPPED_POISONED.
 #  runtime_ms: -1 failed, -2 overtime, -3 completed in live memory mode (time void).
 # =============================================================================
@@ -40,12 +39,8 @@ import pandas as pd
 import matplotlib
 matplotlib.use("Agg")  # headless-safe; Colab/inline still works
 import matplotlib.pyplot as plt
+import matplotlib.ticker
 
-try:
-    import seaborn as sns
-    HAS_SNS = True
-except Exception:
-    HAS_SNS = False
 
 # ---- Data / output locations -------------------------------------------------
 # Resolution order:
@@ -73,47 +68,93 @@ TIMING_TREE = "campaign"
 MEMORY_TREE = "campaign-mem"
 
 # ---- Journal aesthetics -------------------------------------------------------
+# Black and white, no fills: series are told apart by line style and hollow marker,
+# bars by hatching. Times New Roman throughout, as in the manuscript (mathptmx), with
+# every font embedded as TrueType. Figures are drawn at the width they are printed at,
+# so a 9 pt font here is 9 pt on the page: the manuscript's \linewidth, measured from
+# its class and geometry, is 324.36 pt.
+from matplotlib import font_manager
+try:
+    font_manager.findfont("Times New Roman", fallback_to_default=False)
+except Exception:
+    sys.exit("Times New Roman is not installed; refusing to draw with a substitute font.")
+
+LINEWIDTH_IN = 324.36 / 72.27          # \linewidth of the manuscript, in inches
+FONT_PT = 9
 plt.rcParams.update({
-    "font.family":       "serif",
-    "font.serif":        ["Times New Roman", "Times", "DejaVu Serif"],
-    "mathtext.fontset":  "stix",
-    "font.size":         9,
-    "axes.titlesize":    9,
-    "axes.labelsize":    9,
-    "legend.fontsize":   7.5,
-    "xtick.labelsize":   8,
-    "ytick.labelsize":   8,
-    "axes.grid":         True,
-    "grid.alpha":        0.30,
-    "grid.linestyle":    ":",
-    "axes.axisbelow":    True,
-    "figure.dpi":        300,
-    "savefig.dpi":       300,
-    "savefig.bbox":      "tight",
-    "pdf.fonttype":      42,   # editable text in vector PDF (TrueType)
-    "ps.fonttype":       42,
+    "font.family":        "Times New Roman",
+    "mathtext.fontset":   "custom",
+    "mathtext.rm":        "Times New Roman",
+    "mathtext.it":        "Times New Roman:italic",
+    "mathtext.bf":        "Times New Roman:bold",
+    "font.size":          FONT_PT,
+    "axes.titlesize":     FONT_PT,
+    "axes.labelsize":     FONT_PT,
+    "legend.fontsize":    FONT_PT,
+    "xtick.labelsize":    FONT_PT,
+    "ytick.labelsize":    FONT_PT,
+    "axes.linewidth":     0.6,
+    "lines.linewidth":    0.9,
+    "lines.markersize":   4,
+    "xtick.major.width":  0.6,
+    "ytick.major.width":  0.6,
+    "axes.grid":          True,
+    "grid.color":         "0.8",
+    "grid.linewidth":     0.4,
+    "grid.linestyle":     ":",
+    "axes.axisbelow":     True,
+    "hatch.linewidth":    0.5,
+    "legend.frameon":     False,
+    "figure.dpi":         300,
+    "savefig.dpi":        300,
+    "savefig.bbox":       "tight",
+    "savefig.pad_inches": 0.02,
+    "pdf.fonttype":       42,
+    "ps.fonttype":        42,
 })
 
-# ---- Algorithms: order, labels, colours, markers -----------------------------
+# ---- Algorithms: order, labels, line styles, markers --------------------------
 STATIC_ORDER = ["USpan", "HUSP-ULL", "HUSP-SP", "IncUSP-Miner+", "Pre-HUSPM", "Adaptive-Full"]
 INC_ORDER    = ["IncUSP-Miner+", "Pre-HUSPM", "Pre-HUSPM-TSU", "Remine-from-scratch", "Adaptive-Full"]
+PROPOSED = "Adaptive-Full"
+PROPOSED_LABEL = "Pre-HUSPM-Adaptive"
 ALGO_LABEL = {
     "USpan": "USpan", "HUSP-ULL": "HUSP-ULL", "HUSP-SP": "HUSP-SP",
-    "IncUSP-Miner+": "IncUSP-Miner+", "Pre-HUSPM": "Pre-HUSPM",
+    "IncUSP-Miner+": "IncUSP-Miner$^{+}$", "Pre-HUSPM": "Pre-HUSPM",
     "Pre-HUSPM-TSU": "Pre-HUSPM-TSU", "Remine-from-scratch": "Remine",
-    "Adaptive-Full": "Proposed",
+    "Adaptive-Full": PROPOSED_LABEL,
 }
-ALGO_COLOR = {
-    "USpan": "#7f7f7f", "HUSP-ULL": "#1f77b4", "HUSP-SP": "#9467bd",
-    "IncUSP-Miner+": "#2ca02c", "Pre-HUSPM": "#ff7f0e", "Pre-HUSPM-TSU": "#8c564b",
-    "Remine-from-scratch": "#17becf", "Adaptive-Full": "#d62728",
+ALGO_LINESTYLE = {
+    "USpan": (0, (1, 1.5)), "HUSP-ULL": (0, (4, 1.5)), "HUSP-SP": (0, (4, 1.5, 1, 1.5)),
+    "IncUSP-Miner+": (0, (6, 2)), "Pre-HUSPM": (0, (2, 1.5)), "Pre-HUSPM-TSU": (0, (6, 1.5, 1, 1.5, 1, 1.5)),
+    "Remine-from-scratch": (0, (8, 2, 2, 2)), "Adaptive-Full": "-",
 }
 ALGO_MARKER = {
     "USpan": "o", "HUSP-ULL": "s", "HUSP-SP": "v", "IncUSP-Miner+": "^",
-    "Pre-HUSPM": "D", "Pre-HUSPM-TSU": "P", "Remine-from-scratch": "X",
+    "Pre-HUSPM": "D", "Pre-HUSPM-TSU": "P", "Remine-from-scratch": "x",
     "Adaptive-Full": "*",
 }
-PROPOSED = "Adaptive-Full"
+ALGO_HATCH = {
+    "USpan": "", "HUSP-ULL": "////", "HUSP-SP": "\\\\", "IncUSP-Miner+": "xxxx",
+    "Pre-HUSPM": "....", "Pre-HUSPM-TSU": "----", "Remine-from-scratch": "++",
+    "Adaptive-Full": "||||",
+}
+
+
+def line_style(algo, markevery=None):
+    """Keyword arguments for one series: black, its own dash pattern, hollow marker."""
+    kw = dict(color="black", linestyle=ALGO_LINESTYLE[algo], marker=ALGO_MARKER[algo],
+              markerfacecolor="none", markeredgecolor="black", markeredgewidth=0.7,
+              lw=1.2 if algo == PROPOSED else 0.9, ms=6 if algo == PROPOSED else 4,
+              label=ALGO_LABEL[algo])
+    if markevery is not None:
+        kw["markevery"] = markevery
+    return kw
+
+
+def bar_style(hatch, label):
+    return dict(facecolor="white", edgecolor="black", hatch=hatch, linewidth=0.6, label=label)
+
 
 # SUBSET_3 of the runner: the three databases SC3-SC6 measure, and the panels of
 # every three-panel figure.
@@ -126,8 +167,6 @@ SC2_DATASETS = [d for d in ALL_DATASETS if d != "BMS1"]   # BMS1 is SC1 only
 KS     = [25, 50, 67, 100]
 STRATS = ["EVEN", "INCREASING", "DECREASING", "BURST"]
 
-STATUS_COLOR = {"OK": None, "OT": "#b8860b", "OOM": "#c0392b",
-                "Fail": "#000000", "Skip": "#7f7f7f", "MemSkip": "#8e44ad"}
 STATUS_ORDER = ["OT", "OOM", "Fail", "MemSkip", "Skip"]
 
 
@@ -227,11 +266,22 @@ def default_su(ds):
 def ms_to_s(x):  return np.asarray(x, float) / 1000.0
 
 
+STATUS_MARK = {"OOM": ("x", "Out of memory (48 GB)"), "OT": ("+", "Over the time limit"),
+               "Fail": ("1", "Failed"), "MemSkip": ("2", "Skipped by the memory guard"),
+               "Skip": ("3", "Skipped after an earlier failure")}
+
+
 def annotate_fail(ax, xpos, status="Fail"):
-    """Mark a configuration that did not finish with its precise outcome."""
-    ax.annotate(status, xy=(xpos, 0.97), xycoords=("data", "axes fraction"),
-                ha="center", va="top", fontsize=6, rotation=90, weight="bold",
-                color=STATUS_COLOR.get(status, "black"), alpha=0.9)
+    """Mark a configuration that did not finish, at the foot of the axis, with a symbol
+    per outcome; the legend names the outcome. A label in the plot would not fit a bar
+    slot at a legible size."""
+    mark, label = STATUS_MARK.get(status, STATUS_MARK["Fail"])
+    shown = getattr(ax.figure, "_status_shown", set())
+    ax.plot([xpos], [0.04], transform=ax.get_xaxis_transform(), marker=mark, color="black",
+            ms=6, mew=1.0, linestyle="none", clip_on=False,
+            label=None if status in shown else label)
+    shown.add(status)
+    ax.figure._status_shown = shown
 
 
 def write_csv(df, path):
@@ -253,6 +303,8 @@ def safe_log(ax):
     ally = np.concatenate(ys) if ys else np.array([])
     if ally.size and np.nanmax(ally) > 0:
         ax.set_yscale("log")
+        # decades only: minor labels such as 6x10^1 crowd a short axis
+        ax.yaxis.set_minor_formatter(matplotlib.ticker.NullFormatter())
     else:
         ax.set_yticks([]); ax.set_ylim(0, 1)
 
@@ -271,23 +323,35 @@ def note_absent(ax, sub, expected, deferred_root=None, ds=None):
         if not init.empty and not bool(init.iloc[0]["finished"]):
             notes.append(f"{ALGO_LABEL[algo]}: {init.iloc[0]['status']} on $D_{{init}}$")
     if notes:
-        ax.text(0.5, 1.0, "; ".join(notes), transform=ax.transAxes, ha="center",
-                va="bottom", fontsize=5.5, style="italic")
-        ax.set_title(ax.get_title(), pad=9)
+        ax.text(0.03, 0.97, "\n".join(notes), transform=ax.transAxes, ha="left",
+                va="top", style="italic")
 
 
-def shared_legend(fig, axes, ncol=None, y=1.06):
+def shared_legend(fig, axes, ncol=None, y=0.97):
+    """One legend for the whole figure, above the panels: every series once, in the
+    order first drawn, then the outcome symbols of runs that did not finish."""
+    handles, labels = [], []
     for ax in np.atleast_1d(axes).ravel():
-        h, l = ax.get_legend_handles_labels()
-        if h:
-            fig.legend(h, l, loc="upper center", ncol=ncol or len(l), frameon=False,
-                       bbox_to_anchor=(0.5, y))
-            return
+        for h, l in zip(*ax.get_legend_handles_labels()):
+            if l not in labels:
+                handles.append(h); labels.append(l)
+    outcome = {lbl for _, lbl in STATUS_MARK.values()}
+    order = [i for i, l in enumerate(labels) if l not in outcome] + \
+            [i for i, l in enumerate(labels) if l in outcome]
+    handles = [handles[i] for i in order]; labels = [labels[i] for i in order]
+    if handles:
+        fig.legend(handles, labels, loc="lower center", ncol=ncol or min(len(labels), 3),
+                   frameon=False, bbox_to_anchor=(0.5, y), handlelength=3.2, columnspacing=1.2)
 
 
-def panel_grid(n, ncols, w=2.6, h=2.3):
+def panel_xlabel(ax, i, name, xlabel):
+    """No titles inside a figure: the panel is named under its axis, as (a) NAME."""
+    ax.set_xlabel(f"{xlabel}\n({chr(ord('a') + i)}) {name}")
+
+
+def panel_grid(n, ncols, h=1.9, width=LINEWIDTH_IN):
     nrows = int(np.ceil(n / ncols))
-    fig, axes = plt.subplots(nrows, ncols, figsize=(w * ncols, h * nrows), squeeze=False)
+    fig, axes = plt.subplots(nrows, ncols, figsize=(width, h * nrows), squeeze=False)
     axes = axes.ravel()
     for ax in axes[n:]:
         ax.set_visible(False)
@@ -305,32 +369,34 @@ def figset_scalability(sc="SC3", tag="fig_scalability", datasets=None,
     datasets = [d for d in (datasets or FIG_DATASETS) if d in set(df["dataset"])]
     spec = {"runtime_ms": ("Runtime (s)", ms_to_s),
             "explored_nodes": ("Explored nodes", lambda x: np.asarray(x, float))}
+    ncols = min(len(datasets), 3)
     for metric in metrics:
         ylab, conv = spec[metric]
-        fig, axes = panel_grid(len(datasets), min(len(datasets), 4), w=2.9, h=2.7)
-        for ax, ds in zip(axes, datasets):
+        fig, axes = panel_grid(len(datasets), ncols, h=1.9)
+        for i, (ax, ds) in enumerate(zip(axes, datasets)):
             sub = df[df["dataset"] == ds]
+            sus = sorted(sub["su"].dropna().unique())
+            level = {v: k for k, v in enumerate(sus)}
             for algo in STATIC_ORDER:
                 a = sub[sub["algorithm"] == algo].sort_values("su")
                 if a.empty:
                     continue
                 ok = a[a["finished"]]
-                ax.plot(ok["su"], conv(ok[metric]), marker=ALGO_MARKER[algo],
-                        color=ALGO_COLOR[algo], ms=7 if algo == PROPOSED else 5, lw=1.3,
-                        label=ALGO_LABEL[algo], markeredgewidth=0.4, markeredgecolor="white")
+                # the four levels are evenly spaced on the axis and labelled with their
+                # values: they are not evenly spaced in value, and their labels collide
+                ax.plot([level[v] for v in ok["su"]], conv(ok[metric]), **line_style(algo))
                 for _, r in a[~a["finished"]].iterrows():
-                    annotate_fail(ax, r["su"], r["status"])
-            ax.set_title(ds)
-            ax.set_xlabel(r"Threshold $su$")
-            sus = sorted(sub["su"].dropna().unique())
-            ax.set_xticks(sus)
-            ax.set_xticklabels([f"{v:.4g}" for v in sus], rotation=30, ha="right", fontsize=6.5)
+                    annotate_fail(ax, level[r["su"]], r["status"])
+            ax.set_xticks(range(len(sus)))
+            ax.set_xticklabels([f"{v:.4g}" for v in sus], rotation=45, ha="right")
+            ax.set_xlim(-0.3, len(sus) - 0.7)
             ax.minorticks_off()
+            panel_xlabel(ax, i, ds, "UUT")
             safe_log(ax)
-            if list(axes).index(ax) % 4 == 0:
+            if i % ncols == 0:
                 ax.set_ylabel(ylab)
-        shared_legend(fig, axes, y=1.10 if len(datasets) <= 4 else 1.05)
-        fig.tight_layout()
+        fig.tight_layout(w_pad=0.6)
+        shared_legend(fig, axes, ncol=3)
         save(fig, f"{tag}_{sc}_{metric}.pdf")
 
 
@@ -343,8 +409,8 @@ def figset_incremental(tag="fig_incremental_cumulative", datasets=None):
     if df is None:
         return
     datasets = [d for d in (datasets or SC2_DATASETS) if d in set(df["dataset"])]
-    fig, axes = panel_grid(len(datasets), 4, w=2.5, h=2.2)
-    for ax, ds in zip(axes, datasets):
+    fig, axes = panel_grid(len(datasets), 2, h=1.8)
+    for i, (ax, ds) in enumerate(zip(axes, datasets)):
         sub = df[(df["dataset"] == ds) & is_inc(df)]
         for algo in INC_ORDER:
             a = sub[sub["algorithm"] == algo].sort_values("iteration")
@@ -353,23 +419,21 @@ def figset_incremental(tag="fig_incremental_cumulative", datasets=None):
             ok = a[a["finished"]]
             if ok.empty:
                 # nothing to draw: failed on D_init, every increment skipped
-                ax.plot([], [], color=ALGO_COLOR[algo], label=ALGO_LABEL[algo])
+                ax.plot([], [], **line_style(algo))
                 continue
             y = ms_to_s(ok["runtime_ms"]).cumsum()
-            ax.plot(ok["iteration"], y, color=ALGO_COLOR[algo], lw=1.2,
-                    label=ALGO_LABEL[algo])
+            ax.plot(ok["iteration"], y, **line_style(algo, markevery=20))
             if len(ok) < len(a):
-                ax.plot(ok["iteration"].iloc[-1], y[-1], marker="x",
-                        color=ALGO_COLOR[algo], ms=6, mew=1.5)
-        ax.set_title(ds)
+                ax.plot(ok["iteration"].iloc[-1], y[-1], marker="X", color="black",
+                        markerfacecolor="black", ms=5, linestyle="none")
         note_absent(ax, df[df["dataset"] == ds], INC_ORDER,
                     os.path.join(DATA_DIR, TIMING_TREE, "SC2"), ds)
-        ax.set_xlabel("Increment")
+        panel_xlabel(ax, i, ds, "Increment")
         safe_log(ax)
-        if ax is axes[0] or list(axes).index(ax) % 4 == 0:
+        if i % 2 == 0:
             ax.set_ylabel("Cumulative runtime (s)")
-    shared_legend(fig, axes, y=1.04)
-    fig.tight_layout()
+    fig.tight_layout(w_pad=0.6)
+    shared_legend(fig, axes, ncol=3)
     save(fig, f"{tag}.pdf")
 
 
@@ -405,13 +469,13 @@ def figset_c5_ablation(tag="fig_C5_ablation"):
     if df.empty:
         return
     datasets = [d for d in ALL_DATASETS if d in set(df["dataset"])]
-    variants = [("proposed_C5_on", "C5 on (adaptive)", "#d62728"),
-                ("proposed_C5_off", "C5 off (rescan every increment)", "#4c72b0")]
-    fig, axes = plt.subplots(1, 2, figsize=(6.0, 2.5))
-    for ax, (metric, ylab) in zip(axes, [("runtime_ms", "Runtime over 100 increments (s)"),
-                                         ("rescan_count", "Rescans")]):
+    variants = [("proposed_C5_on", "Adaptive rescan decision", ""),
+                ("proposed_C5_off", "Rescan at every increment", "////")]
+    fig, axes = plt.subplots(1, 2, figsize=(LINEWIDTH_IN, 2.0))
+    for i, (ax, (metric, ylab)) in enumerate(zip(axes, [("runtime_ms", "Runtime over 100 increments (s)"),
+                                                        ("rescan_count", "Rescans")])):
         x = np.arange(len(datasets)); w = 0.38
-        for i, (algo, lbl, col) in enumerate(variants):
+        for j, (algo, lbl, hatch) in enumerate(variants):
             vals = []
             for ds in datasets:
                 g = df[(df["algorithm"] == algo) & (df["dataset"] == ds)].sort_values("iteration")
@@ -419,12 +483,12 @@ def figset_c5_ablation(tag="fig_C5_ablation"):
                     vals.append(np.nan); continue
                 vals.append(ms_to_s(g["runtime_ms"]).sum() if metric == "runtime_ms"
                             else g["rescan_count"].iloc[-1])
-            ax.bar(x + (i - 0.5) * w, np.nan_to_num(vals), width=w, color=col,
-                   label=lbl, edgecolor="white", linewidth=0.3)
+            ax.bar(x + (j - 0.5) * w, np.nan_to_num(vals), width=w, **bar_style(hatch, lbl))
         ax.set_xticks(x); ax.set_xticklabels(datasets)
+        ax.set_xlabel(f"({chr(ord('a') + i)})")
         ax.set_ylabel(ylab)
-    shared_legend(fig, axes, ncol=2, y=1.08)
-    fig.tight_layout()
+    fig.tight_layout(w_pad=1.0)
+    shared_legend(fig, axes, ncol=2)
     save(fig, f"{tag}.pdf")
 
 
@@ -452,8 +516,7 @@ def export_ablation_table():
     write_csv(tab, os.path.join(OUT_DIR, "table_SC7_static.csv"))
 
     inc = {"proposed_C5_on": "Full", "proposed_C5_off": "-C5 (rescan every increment)",
-           "proposed_no_block_index": "-C4 (no block index)",
-           "proposed_no_C2": "-C2 (band fixed at LUT_min)"}
+           "proposed_no_block_index": "-C4 (no block index)"}
     rows = []
     for ds in [d for d in ALL_DATASETS if d in set(df["dataset"])]:
         for arm, label in inc.items():
@@ -496,87 +559,74 @@ def figset_sl_sensitivity(tag="fig_sl_sensitivity", metrics=("prelarge_count",))
         return
     df = parse_sl(df)
     datasets = [d for d in FIG_DATASETS if d in set(df["dataset"])]
-    pair = [("Pre-HUSPM", "#ff7f0e", "Pre-HUSPM"), ("Adaptive", "#d62728", "Proposed")]
+    pair = [("Pre-HUSPM", "////", "Pre-HUSPM"), ("Adaptive", "", PROPOSED_LABEL)]
     spec = {"prelarge_count": ("Pre-large set size", lambda x: np.asarray(x, float)),
             "runtime_ms": ("Runtime (s)", ms_to_s)}
     for metric in metrics:
         ylab, conv = spec[metric]
-        fig, axes = panel_grid(len(datasets), len(datasets), w=2.9, h=2.7)
-        for ax, ds in zip(axes, datasets):
+        fig, axes = panel_grid(len(datasets), len(datasets), h=1.9)
+        for i, (ax, ds) in enumerate(zip(axes, datasets)):
             sub = df[df["dataset"] == ds]
             sls = sorted(sub["sl"].dropna().unique())
             x = np.arange(len(sls)); w = 0.38
-            for i, (base, col, lbl) in enumerate(pair):
+            for j, (base, hatch, lbl) in enumerate(pair):
                 a = sub[sub["base_algo"] == base].set_index("sl")
                 vals, stats = [], []
-                for s in sls:
-                    if s in a.index and bool(a.loc[s, "finished"]):
-                        vals.append(conv([a.loc[s, metric]])[0]); stats.append(None)
-                    elif s in a.index:
-                        vals.append(np.nan); stats.append(str(a.loc[s, "status"]))
+                for sl in sls:
+                    if sl in a.index and bool(a.loc[sl, "finished"]):
+                        vals.append(conv([a.loc[sl, metric]])[0]); stats.append(None)
+                    elif sl in a.index:
+                        vals.append(np.nan); stats.append(str(a.loc[sl, "status"]))
                     else:
                         vals.append(np.nan); stats.append(None)
-                pos = x + (i - 0.5) * w
-                ax.bar(pos, np.nan_to_num(vals), width=w, color=col, label=lbl,
-                       edgecolor="white", linewidth=0.3)
-                for p, st in zip(pos, stats):
+                pos = x + (j - 0.5) * w
+                ax.bar(pos, np.nan_to_num(vals), width=w, **bar_style(hatch, lbl))
+                for pp, st in zip(pos, stats):
                     if st:
-                        annotate_fail(ax, p, st)
-            ax.set_title(ds); ax.set_xlabel(r"Pre-large floor $r_l$")
-            ax.set_xticks(x); ax.set_xticklabels([f"{s:g}" for s in sls])
+                        annotate_fail(ax, pp, st)
+            ax.set_xticks(x); ax.set_xticklabels([f"{v:g}" for v in sls])
+            panel_xlabel(ax, i, ds, r"$r_l$")
             safe_log(ax)
-            if ax is axes[0]:
+            if i == 0:
                 ax.set_ylabel(ylab)
-        shared_legend(fig, axes, ncol=2, y=1.08)
-        fig.tight_layout()
+        fig.tight_layout(w_pad=0.6)
+        shared_legend(fig, axes, ncol=2)
         save(fig, f"{tag}_{metric}.pdf")
 
 
-def plot_heatmap(ax, mat, xt, yt, title, cbar_label, fmt=".2f", cmap="RdYlGn_r",
-                 vmin=None, vmax=None, cbar=True):
-    if HAS_SNS:
-        sns.heatmap(mat, annot=True, fmt=fmt, cmap=cmap, ax=ax, vmin=vmin, vmax=vmax,
-                    xticklabels=xt, yticklabels=yt, cbar=cbar,
-                    cbar_kws={"label": cbar_label} if cbar else None, annot_kws={"size": 6})
-    else:
-        im = ax.imshow(mat, cmap=cmap, aspect="auto", vmin=vmin, vmax=vmax)
-        cbar_on = cbar
-        ax.set_xticks(range(len(xt))); ax.set_xticklabels(xt)
-        ax.set_yticks(range(len(yt))); ax.set_yticklabels(yt)
-        for i in range(mat.shape[0]):
-            for j in range(mat.shape[1]):
-                if np.isfinite(mat[i, j]):
-                    ax.text(j, i, format(mat[i, j], fmt), ha="center", va="center", fontsize=6)
-        if cbar_on:
-            ax.figure.colorbar(im, ax=ax, label=cbar_label, fraction=0.046)
-    ax.set_title(title)
+STRAT_STYLE = {"EVEN": ("-", "o"), "INCREASING": ((0, (4, 1.5)), "s"),
+               "DECREASING": ((0, (1, 1.5)), "^"), "BURST": ((0, (6, 1.5, 1, 1.5)), "D")}
 
 
-def figset_batch_grid(tag="fig_batch_heatmap"):
-    """SC5: the proposal's time over remine-from-scratch's, summed over the
-    increments, K (rows) x strategy (columns). Below one, the proposal is faster."""
+def figset_batch_ratio(tag="fig_batch_ratio"):
+    """SC5: the proposal's time over remine-from-scratch's, summed over the increments,
+    against K, one line per strategy. Below one, the proposal is faster."""
     df = load_scenario("SC5")
     if df is None:
         return
     df = parse_batch(df)
     inc = df[(df["phase"] == "INC") & df["finished"]]
     datasets = [d for d in FIG_DATASETS if d in set(df["dataset"])]
-    fig, axes = panel_grid(len(datasets), len(datasets), w=3.0, h=2.6)
-    for ax, ds in zip(axes, datasets):
-        mat = np.full((len(KS), len(STRATS)), np.nan)
-        for r, k in enumerate(KS):
-            for c, s in enumerate(STRATS):
-                cell = inc[(inc["dataset"] == ds) & (inc["K"] == k) & (inc["strat"] == s)]
+    fig, axes = panel_grid(len(datasets), len(datasets), h=1.9)
+    for i, (ax, ds) in enumerate(zip(axes, datasets)):
+        for strat in STRATS:
+            ys = []
+            for k in KS:
+                cell = inc[(inc["dataset"] == ds) & (inc["K"] == k) & (inc["strat"] == strat)]
                 p = cell[cell["algorithm"] == PROPOSED]["runtime_ms"].sum()
                 q = cell[cell["algorithm"] == "Remine-from-scratch"]["runtime_ms"].sum()
-                if p > 0 and q > 0:
-                    mat[r, c] = p / q
-        plot_heatmap(ax, mat, ["EVEN", "INC.", "DEC.", "BURST"], KS, ds,
-                     "Proposed / Remine", vmin=0.4, vmax=1.0, cbar=(ax is axes[-1]))
-        ax.set_xlabel("Strategy")
-        if ax is axes[0]:
-            ax.set_ylabel("Increments K")
-    fig.tight_layout()
+                ys.append(p / q if p > 0 and q > 0 else np.nan)
+            ls, mk = STRAT_STYLE[strat]
+            ax.plot(KS, ys, color="black", linestyle=ls, marker=mk, markerfacecolor="none",
+                    markeredgecolor="black", markeredgewidth=0.7, lw=0.9, ms=4,
+                    label=strat.capitalize())
+        ax.axhline(1.0, color="black", lw=0.5)
+        ax.set_xticks(KS)
+        panel_xlabel(ax, i, ds, "Increments $K$")
+        if i == 0:
+            ax.set_ylabel(f"{PROPOSED_LABEL} / Remine")
+    fig.tight_layout(w_pad=0.6)
+    shared_legend(fig, axes, ncol=4)
     save(fig, f"{tag}.pdf")
 
 
@@ -589,8 +639,8 @@ def figset_memory_static(tag="fig_memory_static", datasets=None):
         return
     df = parse_su(df)
     datasets = [d for d in (datasets or ALL_DATASETS) if d in set(df["dataset"])]
-    fig, ax = plt.subplots(figsize=(7.2, 2.6))
-    x = np.arange(len(datasets)); w = 0.8 / len(STATIC_ORDER)
+    fig, ax = plt.subplots(figsize=(LINEWIDTH_IN, 2.3))
+    x = np.arange(len(datasets)); w = 0.84 / len(STATIC_ORDER)
     for i, algo in enumerate(STATIC_ORDER):
         vals, stats = [], []
         for ds in datasets:
@@ -604,16 +654,15 @@ def figset_memory_static(tag="fig_memory_static", datasets=None):
             else:
                 vals.append(np.nan); stats.append(str(a.iloc[-1]["status"]))
         pos = x + (i - (len(STATIC_ORDER) - 1) / 2) * w
-        ax.bar(pos, np.nan_to_num(vals), width=w, color=ALGO_COLOR[algo],
-               label=ALGO_LABEL[algo], edgecolor="white", linewidth=0.3)
-        for p, st in zip(pos, stats):
+        ax.bar(pos, np.nan_to_num(vals), width=w, **bar_style(ALGO_HATCH[algo], ALGO_LABEL[algo]))
+        for pp, st in zip(pos, stats):
             if st:
-                annotate_fail(ax, p, st)
-    ax.set_xticks(x); ax.set_xticklabels(datasets, fontsize=7)
+                annotate_fail(ax, pp, st)
+    ax.set_xticks(x); ax.set_xticklabels(datasets, rotation=30, ha="right")
     ax.set_ylabel("Live set (MB)")
     safe_log(ax)
-    shared_legend(fig, [ax], ncol=6, y=1.10)
     fig.tight_layout()
+    shared_legend(fig, [ax], ncol=3)
     save(fig, f"{tag}.pdf")
 
 
@@ -624,8 +673,8 @@ def figset_memory_incremental(tag="fig_memory_incremental", datasets=None):
     if df is None:
         return
     datasets = [d for d in (datasets or SC2_DATASETS) if d in set(df["dataset"])]
-    fig, axes = panel_grid(len(datasets), 4, w=2.5, h=2.2)
-    for ax, ds in zip(axes, datasets):
+    fig, axes = panel_grid(len(datasets), 2, h=1.8)
+    for i, (ax, ds) in enumerate(zip(axes, datasets)):
         sub = df[df["dataset"] == ds]
         for algo in INC_ORDER:
             a = sub[sub["algorithm"] == algo].sort_values("iteration")
@@ -633,21 +682,20 @@ def figset_memory_incremental(tag="fig_memory_incremental", datasets=None):
                 continue
             ok = a[a["finished"]]
             if ok.empty:
-                ax.plot([], [], color=ALGO_COLOR[algo], label=ALGO_LABEL[algo])
+                ax.plot([], [], **line_style(algo))
                 continue
             y = np.maximum(ok["mem_retained_mb"].to_numpy(float), 1.0)
-            ax.plot(ok["iteration"], y, color=ALGO_COLOR[algo], lw=1.2, label=ALGO_LABEL[algo])
+            ax.plot(ok["iteration"], y, **line_style(algo, markevery=20))
             if len(ok) < len(a):
-                ax.plot(ok["iteration"].iloc[-1], y[-1], marker="x",
-                        color=ALGO_COLOR[algo], ms=6, mew=1.5)
-        ax.set_title(ds)
+                ax.plot(ok["iteration"].iloc[-1], y[-1], marker="X", color="black",
+                        markerfacecolor="black", ms=5, linestyle="none")
         note_absent(ax, sub, INC_ORDER, os.path.join(DATA_DIR, MEMORY_TREE, "SC2"), ds)
-        ax.set_xlabel("Increment (0 = $D_{init}$)")
+        panel_xlabel(ax, i, ds, "Increment (0 = $D_{init}$)")
         safe_log(ax)
-        if list(axes).index(ax) % 4 == 0:
+        if i % 2 == 0:
             ax.set_ylabel("State held (MB)")
-    shared_legend(fig, axes, y=1.04)
-    fig.tight_layout()
+    fig.tight_layout(w_pad=0.6)
+    shared_legend(fig, axes, ncol=3)
     save(fig, f"{tag}.pdf")
 
 
@@ -747,14 +795,14 @@ def export_status_summary():
 # %% ------------------------------------------------------------------ Cell 9
 #    DRIVER - the figures the paper uses, and the tables behind its text
 def main():
-    print(f"DATA_DIR = {DATA_DIR}\nOUT_DIR  = {OUT_DIR}\nseaborn  = {HAS_SNS}")
+    print(f"DATA_DIR = {DATA_DIR}\nOUT_DIR  = {OUT_DIR}")
     print(f"databases from common.Datasets: {', '.join(DATASETS) or 'none found'}\n")
 
     figset_scalability("SC3", "fig_scalability")       # runtime + explored vs su, whole DB
     figset_incremental()                               # SC2 cumulative runtime, 7 databases
     figset_c5_ablation()                               # SC7 C5 on / off
     figset_sl_sensitivity()                            # SC4 pre-large set vs r_l
-    figset_batch_grid()                                # SC5 proposed / remine, K x strategy
+    figset_batch_ratio()                               # SC5 proposed / remine against K
     figset_memory_static()                             # SC1 live set, default threshold
     figset_memory_incremental()                        # SC2 state held per increment
 
