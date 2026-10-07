@@ -72,6 +72,13 @@ param(
     # Shortest wait between forced collections in live mode. The runner stretches it to four
     # times the last collection, so a large live set is sampled less often than a small one.
     [int]      $MemIntervalMs = 20,
+    # Replicates. Repeat n > 0 measures the same arms again, each in a fresh JVM as every arm
+    # is, and SeedIndex k > 0 measures them with SEEDS[k] instead of SEEDS[0]. A replicate
+    # goes to a tree of its own, results/campaign-replicates/s<k>r<n>, with its own DONE and
+    # CLAIM files, so the main tree is the replicate s0r0 and is never touched by this. Rows
+    # carry the repeat in their repeat column and the seed in their seed column.
+    [int]      $Repeat = 0,
+    [int]      $SeedIndex = 0,
     [switch]   $List,
     [switch]   $NoGit
 )
@@ -180,10 +187,22 @@ function Publish($msg) {
 
 # The memory campaign keeps its own tree. The runner refuses live mode unless results.dir
 # names a directory with "mem" in it, which is what keeps the two kinds of row apart.
-$top   = if ($MemMode -eq 'live') { 'results/campaign-mem' } else { 'results/campaign' }
-$label = if ($MemMode -eq 'live') { "mem $Scenario" } else { $Scenario }
+$replicate = ($Repeat -gt 0 -or $SeedIndex -gt 0)
+if ($Repeat -lt 0 -or $SeedIndex -lt 0 -or $SeedIndex -gt 4) {
+    throw "Repeat must be 0 or more and SeedIndex 0 to 4. Found Repeat=$Repeat SeedIndex=$SeedIndex."
+}
+if ($replicate -and $MemMode -eq 'live') {
+    throw "Replicates are timing runs. The memory campaign has no replicate tree."
+}
+$top   = if ($MemMode -eq 'live') { 'results/campaign-mem' }
+         elseif ($replicate) { "results/campaign-replicates/s${SeedIndex}r${Repeat}" }
+         else { 'results/campaign' }
+$label = if ($MemMode -eq 'live') { "mem $Scenario" }
+         elseif ($replicate) { "s${SeedIndex}r${Repeat} $Scenario" }
+         else { $Scenario }
 $root  = "$top/$Scenario"
 $memArgs = if ($MemMode -eq 'live') { @('-Dmem.mode=live', "-Dmem.interval.ms=$MemIntervalMs") } else { @() }
+$memArgs += @("-Drepeat.index=$Repeat", "-Dseed.index=$SeedIndex")
 $stale = (New-TimeSpan -Seconds ($CapSeconds + 3600))
 
 function Get-NextArm {

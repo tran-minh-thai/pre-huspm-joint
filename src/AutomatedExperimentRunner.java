@@ -82,6 +82,16 @@ public class AutomatedExperimentRunner {
     /** WP2.2 - so seed thuc su duoc dung (<= SEEDS.length). Ghi de: -Dseeds=5 */
     public static final int SEED_COUNT = Math.min(
             Integer.getInteger("seeds", 1), 5);
+    /**
+     * One replicate per JVM. campaign.ps1 measures every repeat and every seed of a
+     * replicated scenario in a JVM of its own, as it measures every arm, so that no
+     * replicate runs on a JIT warmed by the one before it - a repeat run in the same JVM is
+     * faster for that reason alone, and the spread it gives measures warm-up, not noise.
+     *   -Drepeat.index=n  writes n into the repeat column (the run itself is unchanged)
+     *   -Dseed.index=k    runs with SEEDS[k] alone, where a scenario draws from a seed
+     */
+    public static final int REPEAT_INDEX = Integer.getInteger("repeat.index", 0);
+    public static final int SEED_INDEX = Integer.getInteger("seed.index", 0);
 
     // === CHE DO DO BO NHO ===
     //
@@ -149,11 +159,18 @@ public class AutomatedExperimentRunner {
 
     private static void setRunContext(long seed, int repeat) {
         currentSeed = seed;
-        currentRepeat = repeat;
+        currentRepeat = repeat + REPEAT_INDEX;
     }
 
     /** Cac seed thuc su duoc dung trong lan chay nay. */
     private static long[] activeSeeds() {
+        if (SEED_INDEX > 0) {
+            if (SEED_INDEX >= SEEDS.length) {
+                throw new IllegalArgumentException("seed.index must be below " + SEEDS.length
+                        + ", got " + SEED_INDEX);
+            }
+            return new long[]{SEEDS[SEED_INDEX]};
+        }
         long[] out = new long[SEED_COUNT];
         System.arraycopy(SEEDS, 0, out, 0, SEED_COUNT);
         return out;
@@ -565,7 +582,9 @@ public class AutomatedExperimentRunner {
                 + " " + System.getProperty("java.vm.name") + " (" + System.getProperty("java.vendor") + ")"
                 + " | cpus=" + Runtime.getRuntime().availableProcessors()
                 + " | adapt.trigger=" + ADAPT_TRIGGER + " | block.size=" + DEFAULT_BLOCK_SIZE
-                + " | timeout.min=" + TIMEOUT_MINUTES);
+                + " | timeout.min=" + TIMEOUT_MINUTES
+                + " | repeats=" + REPEATS + " repeat.index=" + REPEAT_INDEX
+                + " | seed.index=" + SEED_INDEX);
         if (SL_RATIO_OVERRIDE > 0) {
             System.out.println("### PROBE: r_l = " + SL_RATIO_OVERRIDE + " for every database, "
                     + "overriding common.Datasets. Not a campaign measurement.");
