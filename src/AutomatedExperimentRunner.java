@@ -118,7 +118,7 @@ public class AutomatedExperimentRunner {
     public static final String ALGO_ONLY = System.getProperty("algo.only", "").trim();
 
     /** Luat kich hoat rescan dang dung, ghi vao CSV de truy nguoc. */
-    public static final String ADAPT_TRIGGER = System.getProperty("adapt.trigger", "iaumax");
+    public static final String ADAPT_TRIGGER = System.getProperty("adapt.trigger", "joint");
 
     /** Chi chay MOT dataset. Ghi de: -Ddataset.only=SIGN. Rong = tat ca. */
     public static final String DATASET_ONLY = System.getProperty("dataset.only", "").trim();
@@ -1168,8 +1168,7 @@ public class AutomatedExperimentRunner {
                 forceFullGC();
 
                 // --- Incremental ablations, on the representative set: C5 (adaptive rescan)
-                //     and C4 (block index) act only while the database grows, and so does C2,
-                //     the adaptive pre-large band, which is recomputed at every increment.
+                //     and C4 (block index) act only while the database grows.
                 //     proposed_C5_on is the full proposal on that stream and the reference
                 //     for all three. ---
                 if (C5_ABLATION_SET.contains(ds.name)) {
@@ -1178,8 +1177,6 @@ public class AutomatedExperimentRunner {
                     logIncrementalAblation(col, ds, full, "proposed_C5_off", "SC7_C5", false, true,  true);  // -C5
                     forceFullGC();
                     logIncrementalAblation(col, ds, full, "proposed_no_block_index", "SC7_C4", true, false, true); // -C4
-                    forceFullGC();
-                    logIncrementalAblation(col, ds, full, "proposed_no_C2", "SC7_C2", true, true, false);  // -C2
                     forceFullGC();
                 }
 
@@ -1561,6 +1558,14 @@ public class AutomatedExperimentRunner {
         // cua CSDL, san da bi day len toi dau, va co phai nang may lan moi chiu dung. Truoc
         // day chung bi bo qua cung voi tat ca metric khac, nen mot hang BUDGET hay OOM khong
         // mang theo chan doan nao - dung luc no can nhat.
+        // The rule the instance actually ran with, read from the instance rather than from a
+        // second default here that could drift from the algorithm's own. Under JOINT kappa and
+        // delta0 have no effect, so they are written as NaN rather than as a value that looks
+        // like a setting.
+        m.triggerRule   = adp.triggerRule.name().toLowerCase(java.util.Locale.ROOT);
+        if (adp.triggerRule == PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.TriggerRule.JOINT) {
+            m.kappa = Double.NaN; m.delta0 = Double.NaN;
+        }
         m.repetition    = adp.repetition;
         m.slMinEff      = adp.slMinRatioEff;
         m.rescanRetries = adp.rescanRetries;

@@ -22,11 +22,12 @@ public class MixedBudgetProbe {
 
     static double tsu(List<Sequence> s) { double t = 0; for (Sequence q : s) t += q.sequenceUtility; return t; }
 
-    static String RULE = "iaumax";
+    /** null keeps the algorithm's default rule. */
+    static String RULE = null;
 
     static PreHUSPMAdaptiveAlgo fresh() {
         PreHUSPMAdaptiveAlgo a = new PreHUSPMAdaptiveAlgo(SU, KAPPA, DELTA0, RL, AblationMode.FULL, false);
-        a.triggerRule = PreHUSPMAdaptiveAlgo.TriggerRule.valueOf(RULE.toUpperCase());
+        if (RULE != null) a.triggerRule = PreHUSPMAdaptiveAlgo.TriggerRule.valueOf(RULE.toUpperCase());
         return a;
     }
 
@@ -52,7 +53,7 @@ public class MixedBudgetProbe {
 
     public static void main(String[] a) {
         if (a.length > 0) RULE = a[0];
-        System.out.println("trigger rule = " + RULE);
+        System.out.println("trigger rule = " + fresh().triggerRule);
         int bad = 0;
 
         System.out.println("Case A: delete two fillers, then insert <1[6]>");

@@ -571,7 +571,7 @@ public class PreHUSPMAdaptiveAlgorithm {
 
         /** Luật kích hoạt cho pha chèn. Ghi đè bằng -Dadapt.trigger=swumax|cub|iaumax. */
         public TriggerRule triggerRule = parseTriggerRule(
-                System.getProperty("adapt.trigger", "iaumax"));
+                System.getProperty("adapt.trigger", "joint"));
 
         private static TriggerRule parseTriggerRule(String s) {
             switch (s.trim().toLowerCase(java.util.Locale.ROOT)) {
@@ -984,8 +984,10 @@ public class PreHUSPMAdaptiveAlgorithm {
             this.cubValue += batchTotalUtil;       // perturbation tich luy ke tu rescan gan nhat
             this.insertedSinceRescan += batchTotalUtil;
             this.iauTightness = (iauMax <= 0) ? 1.0 : (cubValue / iauMax);
-            this.sigmaDSquared = calculateVariance(deltaD);
-            this.rhoD = (batchTotalUtil == 0) ? 0 : (swuMax / batchTotalUtil);
+            boolean joint = this.triggerRule == TriggerRule.JOINT;
+            // The batch statistics feed LUT_dyn only, and JOINT has no LUT_dyn.
+            this.sigmaDSquared = joint ? 0 : calculateVariance(deltaD);
+            this.rhoD = (joint || batchTotalUtil == 0) ? 0 : (swuMax / batchTotalUtil);
 
             // --- Buoc 2: kiem tra dieu kien kich hoat (WP1.2) ---
             // SFT_ins = (UUT - LUT_min)/(1 - UUT) * TSU_ref  (Eq. 15, khong doi).
@@ -998,7 +1000,7 @@ public class PreHUSPMAdaptiveAlgorithm {
                 case JOINT:  triggerQuantity = jointTriggerQuantity(); break;
                 case IAUMAX: default: triggerQuantity = iauMax; break;
             }
-            if (this.triggerRule == TriggerRule.JOINT) {
+            if (joint) {
                 safetyBoundF = (Su - Sl_min) * tsuAtLastRescan;
                 this.sftValue = safetyBoundF;
             }
@@ -1015,44 +1017,50 @@ public class PreHUSPMAdaptiveAlgorithm {
                 this.tsuAtLastRescan = newTotalUtility; // cap nhat moc TSU cho SFT
             }
 
-            // --- Buoc 4: bien do thich ung Delta, nay co CA can duoi (WP1.3) ---
-            // Can duoi bat buoc. Mau bi loai tai LUT_dyn phai KHONG THE thanh HUSP truoc
-            // lan rescan ke tiep. Ngan sach chen con lai la A_max = SFT_ins - (bo dem hien
-            // tai). Voi moi A_future <= A_max ta can u(X,D') + A_future < UUT*(TSU' + A_future);
-            // hieu hai ve tang theo he so (1 - UUT) > 0 nen truong hop xau nhat o
-            // A_future = A_max, cho u(X,D') < UUT*TSU' - (1-UUT)*A_max, tuc
-            //     Delta >= (1 - UUT)*A_max = (UUT - LUT_min)*TSU_ref - (1 - UUT)*(bo dem).
-            // Khi bo dem = 0 (ngay sau rescan) can duoi nay bang dung tran cu, nen LUT_dyn
-            // roi ve san cung LUT_min*TSU_ref - khop pham vi Theorem 3 va 4.
-            // Tran duoc nang tu (UUT - LUT_min)*TSU' len UUT*TSU' de can duoi khong bi cat
-            // cut; LUT_dyn >= 0 luon dung.
-            double consumedIns = cubTriggeredRescan ? 0.0
-                    : (this.triggerRule == TriggerRule.SWUMAX ? cubValue : triggerQuantity);
-            double deltaMinIns = Math.max(0.0,
-                    (Su - Sl_min) * tsuAtLastRescan - (1.0 - Su) * consumedIns);
+            if (joint) {
+                // JOINT keeps no global band: the drop floor is per pattern (jointFloor), and
+                // a rescan mines at L_r = LUT_min * TSU_ref. lut_dyn reports L_r.
+                this.lutDynValue = Sl_min * tsuAtLastRescan;
+                this.deltaDValue = uut_abs - this.lutDynValue;
+            } else {
+                // --- Buoc 4: bien do thich ung Delta, nay co CA can duoi (WP1.3) ---
+                // Can duoi bat buoc. Mau bi loai tai LUT_dyn phai KHONG THE thanh HUSP truoc
+                // lan rescan ke tiep. Ngan sach chen con lai la A_max = SFT_ins - (bo dem hien
+                // tai). Voi moi A_future <= A_max ta can u(X,D') + A_future < UUT*(TSU' + A_future);
+                // hieu hai ve tang theo he so (1 - UUT) > 0 nen truong hop xau nhat o
+                // A_future = A_max, cho u(X,D') < UUT*TSU' - (1-UUT)*A_max, tuc
+                //     Delta >= (1 - UUT)*A_max = (UUT - LUT_min)*TSU_ref - (1 - UUT)*(bo dem).
+                // Khi bo dem = 0 (ngay sau rescan) can duoi nay bang dung tran cu, nen LUT_dyn
+                // roi ve san cung LUT_min*TSU_ref - khop pham vi Theorem 3 va 4.
+                // Tran duoc nang tu (UUT - LUT_min)*TSU' len UUT*TSU' de can duoi khong bi cat
+                // cut; LUT_dyn >= 0 luon dung.
+                double consumedIns = cubTriggeredRescan ? 0.0
+                        : (this.triggerRule == TriggerRule.SWUMAX ? cubValue : triggerQuantity);
+                double deltaMinIns = Math.max(0.0,
+                        (Su - Sl_min) * tsuAtLastRescan - (1.0 - Su) * consumedIns);
 
-            double dynamicTerm = 0;
-            switch (this.mode) {
-                case FULL: dynamicTerm = kappa * sigmaDSquared * rhoD; break;
-                case VARIANCE_ONLY: dynamicTerm = kappa * sigmaDSquared; break;
-                case RHO_ONLY: dynamicTerm = kappa * rhoD; break;
+                double dynamicTerm = 0;
+                switch (this.mode) {
+                    case FULL: dynamicTerm = kappa * sigmaDSquared * rhoD; break;
+                    case VARIANCE_ONLY: dynamicTerm = kappa * sigmaDSquared; break;
+                    case RHO_ONLY: dynamicTerm = kappa * rhoD; break;
+                }
+
+                // Tran cua SO HANG HEURISTIC giu nguyen (UUT - LUT_min)*TSU'. Bo tran nay di
+                // thi so hang +CUB (co the toi 10% TSU) se keo LUT_dyn ve 0 va bien toan bo
+                // mau thanh tien-lon - dung loi da quan sat khi chay thu. Can duoi an toan
+                // deltaMin duoc ap SAU tran do va co the vuot no (chi xay ra o pha xoa, khi
+                // TSU' < TSU_ref); clamp cuoi cung tai UUT*TSU' bao dam LUT_dyn >= 0.
+                //
+                // Y nghia: tinh dung dan den TU deltaMin, KHONG tu so hang +CUB. Ban thao
+                // tuyen bo +CUB bao phu duoc muc tang toi da cua mot mau; tuyen bo do khong
+                // dung vi so hang ay bi tran cat cut. deltaMin la dieu kien dung.
+                double heuristicIns = Math.min(delta0 * newTotalUtility + dynamicTerm + cubValue,
+                                               uut_abs - lut_min_abs);
+                this.deltaDValue = Math.min(Math.max(heuristicIns, deltaMinIns), uut_abs);
+                this.lutDynValue = Math.max(0.0, uut_abs - deltaDValue); // band floor thich ung
+                if (!useAdaptiveBand) this.lutDynValue = lut_min_abs; // ablation: band co dinh Sl_min
             }
-
-            // Tran cua SO HANG HEURISTIC giu nguyen (UUT - LUT_min)*TSU'. Bo tran nay di
-            // thi so hang +CUB (co the toi 10% TSU) se keo LUT_dyn ve 0 va bien toan bo
-            // mau thanh tien-lon - dung loi da quan sat khi chay thu. Can duoi an toan
-            // deltaMin duoc ap SAU tran do va co the vuot no (chi xay ra o pha xoa, khi
-            // TSU' < TSU_ref); clamp cuoi cung tai UUT*TSU' bao dam LUT_dyn >= 0.
-            //
-            // Y nghia: tinh dung dan den TU deltaMin, KHONG tu so hang +CUB. Ban thao
-            // tuyen bo +CUB bao phu duoc muc tang toi da cua mot mau; tuyen bo do khong
-            // dung vi so hang ay bi tran cat cut. deltaMin la dieu kien dung.
-            double heuristicIns = Math.min(delta0 * newTotalUtility + dynamicTerm + cubValue,
-                                           uut_abs - lut_min_abs);
-            this.deltaDValue = Math.min(Math.max(heuristicIns, deltaMinIns), uut_abs);
-            this.lutDynValue = Math.max(0.0, uut_abs - deltaDValue); // band floor thich ung
-            if (!useAdaptiveBand) this.lutDynValue = lut_min_abs; // ablation: band co dinh Sl_min
-            if (this.triggerRule == TriggerRule.JOINT) this.lutDynValue = Sl_min * tsuAtLastRescan;
 
             if (cubTriggeredRescan) {
                 // Can an toan vo -> Rescan (giu pruning chat khi mine lai)
@@ -1118,16 +1126,11 @@ public class PreHUSPMAdaptiveAlgorithm {
             double lut_min_abs = newTotalUtility * Sl_min;
 
             // Cập nhật LUT_dyn (giống logic insertion để giữ tính nhất quán)
-            this.sigmaDSquared = calculateVariance(deletedSeqs);
+            boolean joint = this.triggerRule == TriggerRule.JOINT;
+            this.sigmaDSquared = joint ? 0 : calculateVariance(deletedSeqs);
             double swuMaxDel = 0;
             for (Sequence s : deletedSeqs) if (s.sequenceUtility > swuMaxDel) swuMaxDel = s.sequenceUtility;
-            this.rhoD = (deletedTotal == 0) ? 0 : (swuMaxDel / deletedTotal);
-            double dynamicTerm = 0;
-            switch (this.mode) {
-                case FULL: dynamicTerm = kappa * sigmaDSquared * rhoD; break;
-                case VARIANCE_ONLY: dynamicTerm = kappa * sigmaDSquared; break;
-                case RHO_ONLY: dynamicTerm = kappa * rhoD; break;
-            }
+            this.rhoD = (joint || deletedTotal == 0) ? 0 : (swuMaxDel / deletedTotal);
             // WP1.4 - cung trinh tu bat buoc nhu pha chen:
             //   cap nhat bo dem -> kiem tra kich hoat -> reset neu rescan -> roi tinh Delta.
             // Luat kich hoat cua pha XOA von da dung dang TICH LUY (cubValue) nen VAN SOUND;
@@ -1138,13 +1141,14 @@ public class PreHUSPMAdaptiveAlgorithm {
             // F_del = (Su - Sl_min)/Su * TSU_lastRescan (Hong et al., chieu deletion).
             double safetyBoundDel = ((Su - Sl_min) / Su) * tsuAtLastRescan;
             this.sftValue = safetyBoundDel;
-            if (this.triggerRule == TriggerRule.JOINT) {
+            if (joint) {
                 safetyBoundDel = (Su - Sl_min) * tsuAtLastRescan;
                 this.sftValue = safetyBoundDel;
                 this.iauMaxAtDecision = jointTriggerQuantity();
                 this.cubTriggeredRescan = useAdaptiveRescan ? (iauMaxAtDecision > safetyBoundDel) : true;
-            } else
-            this.cubTriggeredRescan = useAdaptiveRescan ? (cubValue > safetyBoundDel) : true;
+            } else {
+                this.cubTriggeredRescan = useAdaptiveRescan ? (cubValue > safetyBoundDel) : true;
+            }
 
             if (cubTriggeredRescan) {
                 rescanCount++;
@@ -1154,19 +1158,29 @@ public class PreHUSPMAdaptiveAlgorithm {
                 this.tsuAtLastRescan = newTotalUtility; // cap nhat moc TSU cho F
             }
 
-            // WP1.3 - can duoi cho Delta, dang DOI XUNG voi pha chen.
-            // Xoa lam TSU giam nen mot mau co the vuot len thanh HUSP ma khong tang utility.
-            // Ngan sach xoa con lai A_max = SFT_del - CUB. Truong hop xau nhat: X khong mat
-            // gi trong khi TSU giam dung A_max, can u(X,D') < UUT*(TSU' - A_max), tuc
-            //     Delta >= UUT*A_max = (UUT - LUT_min)*TSU_ref - UUT*CUB.
-            double deltaMinDel = Math.max(0.0,
-                    (Su - Sl_min) * tsuAtLastRescan - Su * cubValue);
-            double heuristicDel = Math.min(delta0 * newTotalUtility + dynamicTerm + cubValue,
-                                           uut_abs - lut_min_abs);
-            this.deltaDValue = Math.min(Math.max(heuristicDel, deltaMinDel), uut_abs);
-            this.lutDynValue = Math.max(0.0, uut_abs - deltaDValue); // band floor thich ung
-            if (!useAdaptiveBand) this.lutDynValue = lut_min_abs; // ablation: band co dinh Sl_min
-            if (this.triggerRule == TriggerRule.JOINT) this.lutDynValue = Sl_min * tsuAtLastRescan;
+            if (joint) {
+                this.lutDynValue = Sl_min * tsuAtLastRescan;
+                this.deltaDValue = uut_abs - this.lutDynValue;
+            } else {
+                // WP1.3 - can duoi cho Delta, dang DOI XUNG voi pha chen.
+                // Xoa lam TSU giam nen mot mau co the vuot len thanh HUSP ma khong tang utility.
+                // Ngan sach xoa con lai A_max = SFT_del - CUB. Truong hop xau nhat: X khong mat
+                // gi trong khi TSU giam dung A_max, can u(X,D') < UUT*(TSU' - A_max), tuc
+                //     Delta >= UUT*A_max = (UUT - LUT_min)*TSU_ref - UUT*CUB.
+                double dynamicTerm = 0;
+                switch (this.mode) {
+                    case FULL: dynamicTerm = kappa * sigmaDSquared * rhoD; break;
+                    case VARIANCE_ONLY: dynamicTerm = kappa * sigmaDSquared; break;
+                    case RHO_ONLY: dynamicTerm = kappa * rhoD; break;
+                }
+                double deltaMinDel = Math.max(0.0,
+                        (Su - Sl_min) * tsuAtLastRescan - Su * cubValue);
+                double heuristicDel = Math.min(delta0 * newTotalUtility + dynamicTerm + cubValue,
+                                               uut_abs - lut_min_abs);
+                this.deltaDValue = Math.min(Math.max(heuristicDel, deltaMinDel), uut_abs);
+                this.lutDynValue = Math.max(0.0, uut_abs - deltaDValue); // band floor thich ung
+                if (!useAdaptiveBand) this.lutDynValue = lut_min_abs; // ablation: band co dinh Sl_min
+            }
 
             if (cubTriggeredRescan) {
                 largeMap.clear(); prelargeMap.clear();
