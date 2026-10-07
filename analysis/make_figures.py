@@ -457,6 +457,48 @@ def export_incremental_table():
     print(f"[saved] {path}")
 
 
+def operating_region(df):
+    """Per database, the proposal's rescan test over the increments: the ratio of the
+    test quantity to its bound (iau_max / sft_val under the joint rule), its median,
+    minimum and maximum, the increments within budget, and the rescans. An increment
+    rescans exactly when the ratio exceeds 1, so the rescan count read from the
+    counter must equal the number of increments above 1; `check` says whether it does,
+    and a mismatch is reported rather than smoothed over."""
+    rows = []
+    for ds, g in df[(df["algorithm"] == PROPOSED) & is_inc(df)].groupby("dataset", sort=False):
+        g = g.sort_values("iteration")
+        ok = g[g["finished"]]
+        if ok.empty:
+            continue
+        rules = sorted(set(ok["trigger_rule"].astype(str)))
+        ratio = ok["iau_max"].to_numpy(float) / ok["sft_val"].to_numpy(float)
+        above = int(np.sum(ratio > 1.0))
+        triggered = int(ok["cub_triggered"].astype(str).str.lower().eq("true").sum())
+        rescans = int(ok["rescan_count"].iloc[-1])
+        rows.append(dict(dataset=ds, rule="/".join(rules), increments=len(ok),
+                         ratio_median=float(np.median(ratio)), ratio_min=float(np.min(ratio)),
+                         ratio_max=float(np.max(ratio)), within_budget=len(ok) - above,
+                         rescans=rescans,
+                         check="ok" if above == rescans == triggered
+                               else f"MISMATCH above={above} triggered={triggered} rescans={rescans}"))
+    return pd.DataFrame(rows)
+
+
+def export_operating_region():
+    df = load_scenario("SC2")
+    if df is None:
+        return
+    tab = operating_region(df)
+    if tab.empty:
+        return
+    path = os.path.join(OUT_DIR, "table_SC2_operating_region.csv")
+    write_csv(tab, path)
+    print(f"[saved] {path}")
+    bad = tab[tab["check"] != "ok"]
+    for _, r in bad.iterrows():
+        print(f"      {r['dataset']}: {r['check']}")
+
+
 # %% ------------------------------------------------------------------ Cell 5
 #    ABLATION (SC7): C5 on the stream, C3 on one mine
 def figset_c5_ablation(tag="fig_C5_ablation"):
@@ -808,6 +850,7 @@ def main():
 
     export_summary_tables()                            # SC1 runtime / live set / speedup
     export_incremental_table()                         # SC2 totals
+    export_operating_region()                          # SC2 rescan test, ratio to budget
     export_ablation_table()                            # SC7 static + incremental
     export_status_summary()                            # every non-OK row, by outcome
     print("\nDONE.")
