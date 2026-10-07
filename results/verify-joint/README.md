@@ -115,5 +115,17 @@ hand-built cases on it.
 | drop floor with `max_i A_i` instead of `min_{i in X} A_i` | 6 | D |
 
 `verify.WP1AcceptanceTest` (23 checks) fails on each fault as well: case D on the second, A and
-B on the first. Whether the adversarial stream on the real databases catches either fault is
-measured in `fault-injection-real/`.
+B on the first.
+
+`fault-injection-real/` runs the same two faults through the adversarial stream of section 1b
+on the five databases where it can find a target or a fast reference mine (SIGN, LEVIATHAN,
+BIBLE, C8T1S5I8N5K, TAFENG):
+
+| fault | mismatching operations on the real databases |
+|---|---|
+| trigger without the `+ UUT*D` term | SIGN 1, BIBLE 1; LEVIATHAN, C8T1S5I8N5K, TAFENG 0 |
+| drop floor with `max_i A_i` | 0 on all five |
+
+So the real-database streams can fail a faulty deletion budget but have not failed a faulty
+drop floor: for the second fault, the evidence is the small databases (6 mismatches), the
+hand-built case D and the acceptance test, not the real databases.
