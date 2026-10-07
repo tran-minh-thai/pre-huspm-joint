@@ -206,19 +206,31 @@ def classify_status(op_type, runtime_ms):
     return "Fail"
 
 
-def load_scenario(sc, tree=TIMING_TREE, finished_only=True):
+REPLICATE_TREE = "campaign-replicates"
+
+
+def load_scenario(sc, tree=TIMING_TREE, finished_only=True, replicates=False):
     """All rows of one scenario: every <DB>/<ARM>/*.csv under results/<tree>/<sc>,
-    with `arm` and `status`/`finished` columns. Arms without DONE are skipped."""
-    base = os.path.join(DATA_DIR, tree, sc)
+    with `arm`, `replicate` and `status`/`finished` columns. Arms without DONE are
+    skipped. With replicates=True the timing tree is read together with every replicate
+    tree under results/campaign-replicates/s<k>r<n>; the main tree is replicate s0r0.
+    Without it only the main tree is read, so a figure drawn from one run per cell is
+    never handed several rows per cell."""
+    bases = [(os.path.join(DATA_DIR, tree, sc), "s0r0")]
+    if replicates and tree == TIMING_TREE:
+        for rd in sorted(glob.glob(os.path.join(DATA_DIR, REPLICATE_TREE, "s*r*"))):
+            bases.append((os.path.join(rd, sc), os.path.basename(rd)))
     frames, skipped = [], []
-    for csv_path in sorted(glob.glob(os.path.join(base, "*", "*", "*.csv"))):
+    for base, tag in bases:
+      for csv_path in sorted(glob.glob(os.path.join(base, "*", "*", "*.csv"))):
         arm_dir = os.path.dirname(csv_path)
         if finished_only and not os.path.exists(os.path.join(arm_dir, "DONE")):
-            skipped.append(os.path.relpath(arm_dir, base))
+            skipped.append(f"{tag}:{os.path.relpath(arm_dir, base)}")
             continue
         df = pd.read_csv(csv_path)
         df.columns = [c.strip() for c in df.columns]
         df["arm"] = os.path.basename(arm_dir)
+        df["replicate"] = tag
         frames.append(df)
     if skipped:
         print(f"[{tree}/{sc}] left out, not DONE: {', '.join(skipped)}")
@@ -228,7 +240,7 @@ def load_scenario(sc, tree=TIMING_TREE, finished_only=True):
     df = pd.concat(frames, ignore_index=True)
     for c in df.columns:
         if c not in ("algorithm", "dataset", "op_type", "run_id", "timestamp",
-                     "cub_triggered", "arm", "mem_mode", "trigger_rule"):
+                     "cub_triggered", "arm", "mem_mode", "trigger_rule", "replicate"):
             df[c] = pd.to_numeric(df[c], errors="coerce")
     df["status"] = [classify_status(o, r) for o, r in zip(df["op_type"], df["runtime_ms"])]
     df["finished"] = df["status"] == "OK"
@@ -806,23 +818,8 @@ def export_summary_tables():
     write_csv(tab, out_csv)
     write_csv(pd.DataFrame(sp), os.path.join(OUT_DIR, "table_SC1_speedup.csv"))
 
-    piv = tab.pivot_table(index="dataset", columns="algorithm", values="runtime_s",
-                          aggfunc="first").reindex(index=tab["dataset"].unique(), columns=STATIC_ORDER)
-    stat = tab.pivot_table(index="dataset", columns="algorithm", values="status",
-                           aggfunc="first").reindex(index=tab["dataset"].unique(), columns=STATIC_ORDER)
-    cols = list(piv.columns)
-    lines = ["\\begin{table}[t]", "\\centering",
-             "\\caption{Runtime (s) on $D_{\\mathrm{init}}$ at the default threshold.}",
-             "\\label{tab:sc1_runtime}",
-             "\\begin{tabular}{l" + "r" * len(cols) + "}", "\\toprule",
-             "Dataset & " + " & ".join(ALGO_LABEL[c] for c in cols) + " \\\\", "\\midrule"]
-    for ds, row in piv.iterrows():
-        cells = [f"{row[c]:.2f}" if pd.notna(row[c]) else str(stat.loc[ds, c]) for c in cols]
-        lines.append(f"{ds} & " + " & ".join(cells) + " \\\\")
-    lines += ["\\bottomrule", "\\end{tabular}", "\\end{table}", ""]
-    with open(os.path.join(OUT_DIR, "table_SC1_runtime.tex"), "w", encoding="utf-8") as fh:
-        fh.write("\n".join(lines))
-    print(f"[saved] {out_csv}  (+ speedup csv + LaTeX)")
+    # The LaTeX runtime table is written by export_replicate_tables, from every replicate.
+    print(f"[saved] {out_csv}  (+ speedup csv)")
 
 
 def export_memory_ratios():
@@ -862,6 +859,150 @@ def export_memory_ratios():
     path = os.path.join(OUT_DIR, "table_SC1_memory_ratios.csv")
     write_csv(pd.DataFrame(rows), path)
     print(f"[saved] {path}")
+
+
+def spread(values):
+    """n, mean, sample standard deviation (NaN for one value), min, max."""
+    v = np.asarray(values, float)
+    n = len(v)
+    return dict(n=n, mean=float(np.mean(v)) if n else np.nan,
+                std=float(np.std(v, ddof=1)) if n > 1 else np.nan,
+                min=float(np.min(v)) if n else np.nan, max=float(np.max(v)) if n else np.nan)
+
+
+def pm(st, digits=None):
+    """'mean +- std' for LaTeX, or the mean alone when there is one replicate. Decimals
+    follow the size of the mean - none from 100, one from 10, two below - so that a row
+    of six algorithms fits the column width."""
+    if not np.isfinite(st["mean"]):
+        return "--"
+    if digits is None:
+        digits = 0 if st["mean"] >= 100 else (1 if st["mean"] >= 10 else 2)
+    if st["n"] > 1 and np.isfinite(st["std"]):
+        # a deviation below the printed resolution reads as no spread at all; say so
+        dev = (f"{st['std']:.{digits}f}" if round(st["std"], digits) > 0 or st["std"] == 0
+               else f"<{10 ** -digits:.{digits}f}")
+        # mean above, the deviation below in a smaller size: one column holds the wider of
+        # the two rather than both side by side, which is what lets six columns fit
+        return (f"\\begin{{tabular}}[t]{{@{{}}r@{{}}}}{st['mean']:.{digits}f}\\\\"
+                f"{{\\scriptsize $\\pm${dev}}}\\end{{tabular}}")
+    return f"{st['mean']:.{digits}f}"
+
+
+def stacked_header(label):
+    """A long column label split at its last hyphen onto two lines."""
+    if len(label) <= 7 or "-" not in label:
+        return label
+    head, tail = label.rsplit("-", 1)
+    return f"\\begin{{tabular}}[b]{{@{{}}r@{{}}}}{head}-\\\\{tail}\\end{{tabular}}"
+
+
+def export_replicate_tables():
+    """Runtime spread over the replicates, each measured in a fresh JVM.
+
+    SC1   per database at the default threshold, every algorithm: runtime over the
+          replicates, mean, sample standard deviation, min, max; a replicate that did
+          not finish is counted in n_failed and left out of the figures.
+    SC2   per database and algorithm that has replicates: the runtime summed over the
+          increments (D_init excluded) per replicate, then its spread.
+    SC6   per database and seed: the proposal's and remining's time summed over the
+          twenty operations, their ratio, and whether every HUSP count agreed; then the
+          ratio's spread over the seeds. Both arms replay the same plan at a seed, so
+          the ratio is paired by seed.
+    Counters (patterns, rescans, explored nodes) are deterministic for a given stream
+    and are not tabulated here: their spread over repeats is zero by construction."""
+    out = []
+    df = load_scenario("SC1", replicates=True)
+    if df is not None:
+        df = parse_su(df)
+        rows = []
+        for ds in [d for d in ALL_DATASETS if d in set(df["dataset"])]:
+            su = default_su(ds)
+            for algo in STATIC_ORDER:
+                a = df[(df["dataset"] == ds) & (df["algorithm"] == algo) & np.isclose(df["su"], su)]
+                if a.empty:
+                    continue
+                ok = a[a["finished"]]
+                st = spread(ms_to_s(ok["runtime_ms"]))
+                rows.append(dict(dataset=ds, su=f"{su:g}", algorithm=algo, n_failed=int((~a["finished"]).sum()),
+                                 status=(a.loc[~a["finished"], "status"].iloc[0] if (~a["finished"]).any() else "OK"),
+                                 **{f"runtime_s_{k}" if k != "n" else "n": v for k, v in st.items()}))
+        tab = pd.DataFrame(rows)
+        write_csv(tab, os.path.join(OUT_DIR, "table_SC1_runtime_replicates.csv"))
+        out.append("table_SC1_runtime_replicates.csv")
+        cols = [a for a in STATIC_ORDER if a in set(tab["algorithm"])]
+        nmax = int(tab["n"].max()) if len(tab) else 0
+        lines = ["\\begin{table}[t]", "\\centering",
+                 f"\\caption{{Runtime (s) on $D_{{\\mathrm{{init}}}}$ at the default threshold"
+                 + (f", mean $\\pm$ standard deviation over {nmax} runs" if nmax > 1 else "") + ".}",
+                 "\\label{tab:sc1_runtime}",
+                 "\\small\\setlength{\\tabcolsep}{4pt}",
+                 "\\begin{tabular}{l" + "r" * len(cols) + "}", "\\toprule",
+                 "Dataset & " + " & ".join(stacked_header(ALGO_LABEL[c]) for c in cols) + " \\\\",
+                 "\\midrule"]
+        for ds in [d for d in ALL_DATASETS if d in set(tab["dataset"])]:
+            cells = []
+            for c in cols:
+                r = tab[(tab["dataset"] == ds) & (tab["algorithm"] == c)]
+                if r.empty:
+                    cells.append("--"); continue
+                r = r.iloc[0]
+                cells.append(r["status"] if r["n"] == 0 else
+                             pm(dict(n=r["n"], mean=r["runtime_s_mean"], std=r["runtime_s_std"])))
+            lines.append(f"{ds} & " + " & ".join(cells) + " \\\\")
+        lines += ["\\bottomrule", "\\end{tabular}", "\\end{table}", ""]
+        with open(os.path.join(OUT_DIR, "table_SC1_runtime.tex"), "w", encoding="utf-8") as fh:
+            fh.write("\n".join(lines))
+        out.append("table_SC1_runtime.tex")
+
+    df = load_scenario("SC2", replicates=True)
+    if df is not None:
+        inc = df[is_inc(df)]
+        reps = inc.groupby(["dataset", "algorithm"])["replicate"].nunique()
+        rows = []
+        for (ds, algo), nrep in reps.items():
+            if nrep < 2:
+                continue
+            totals, failed = [], 0
+            for rp, g in inc[(inc["dataset"] == ds) & (inc["algorithm"] == algo)].groupby("replicate"):
+                if g["finished"].all():
+                    totals.append(ms_to_s(g["runtime_ms"]).sum())
+                else:
+                    failed += 1
+            st = spread(totals)
+            rows.append(dict(dataset=ds, algorithm=algo, n_failed=failed,
+                             **{f"total_s_{k}" if k != "n" else "n": v for k, v in st.items()}))
+        if rows:
+            write_csv(pd.DataFrame(rows), os.path.join(OUT_DIR, "table_SC2_replicates.csv"))
+            out.append("table_SC2_replicates.csv")
+
+    df = load_scenario("SC6", replicates=True)
+    if df is not None:
+        ops = df[~df["op_type"].astype(str).str.contains("INIT")]
+        rows = []
+        for (ds, seed), g in ops.groupby(["dataset", "seed"]):
+            p = g[g["algorithm"] == PROPOSED].sort_values("iteration")
+            q = g[g["algorithm"] == "Remine-from-scratch"].sort_values("iteration")
+            if p.empty or q.empty:
+                continue
+            agree = (len(p) == len(q)
+                     and (p["total_patterns_found"].to_numpy() == q["total_patterns_found"].to_numpy()).all())
+            tp, tq = ms_to_s(p["runtime_ms"]).sum(), ms_to_s(q["runtime_ms"]).sum()
+            done = bool(p["finished"].all() and q["finished"].all())
+            rows.append(dict(dataset=ds, seed=int(seed), proposal_s=tp if done else np.nan,
+                             remine_s=tq if done else np.nan, ratio=tp / tq if done and tq > 0 else np.nan,
+                             counts_agree=agree, operations=len(p)))
+        if rows:
+            per_seed = pd.DataFrame(rows)
+            write_csv(per_seed, os.path.join(OUT_DIR, "table_SC6_seeds.csv"))
+            summ = []
+            for ds, g in per_seed.groupby("dataset", sort=False):
+                st = spread(g["ratio"].dropna())
+                summ.append(dict(dataset=ds, seeds=len(g), counts_agree_all=bool(g["counts_agree"].all()),
+                                 **{f"ratio_{k}" if k != "n" else "seeds_with_ratio": v for k, v in st.items()}))
+            write_csv(pd.DataFrame(summ), os.path.join(OUT_DIR, "table_SC6_seed_summary.csv"))
+            out += ["table_SC6_seeds.csv", "table_SC6_seed_summary.csv"]
+    print("[saved] " + ", ".join(out))
 
 
 def export_status_summary():
@@ -908,6 +1049,7 @@ def main():
 
     export_summary_tables()                            # SC1 runtime / live set / speedup
     export_memory_ratios()                             # SC1 live set, baselines over the proposal
+    export_replicate_tables()                          # runtime spread over replicates (SC1, SC2, SC6)
     export_incremental_table()                         # SC2 totals
     export_operating_region()                          # SC2 rescan test, ratio to budget
     export_ablation_table()                            # SC7 static + incremental
