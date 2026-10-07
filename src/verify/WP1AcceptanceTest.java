@@ -20,6 +20,12 @@ import java.util.Map;
  *   T3  Kiem tra bien: ngay sau rescan, LUT_dyn phai bang LUT_min * TSU_ref (R4-3).
  *   T4  Thao tac sua doi giu nguyen utility nhung doi toan bo item - lo hong thu tu,
  *       phan bien chua neu.
+ *   T6  The direct update under the default joint rule: a deletion followed by an
+ *       insertion, one modification, and insertions alone where a dropped pattern's items
+ *       have smaller counters than the largest. The superseded iaumax rule misses a HUSP
+ *       in all three; joint must not.
+ *
+ * T1, T2 and T4 check the default rule, joint, and keep iaumax beside it where it passes.
  */
 public final class WP1AcceptanceTest {
 
@@ -38,9 +44,10 @@ public final class WP1AcceptanceTest {
         testFloorAfterRescan();
         testModificationBudget();
         testPreHuspmVariants();
+        testDirectUpdateCounterexamples();
 
         System.out.println();
-        System.out.printf("=== WP1: %d dat, %d hong ===%n", passed, failures);
+        System.out.printf("=== WP1: %d passed, %d failed ===%n", passed, failures);
         if (failures > 0) System.exit(1);
     }
 
@@ -53,7 +60,7 @@ public final class WP1AcceptanceTest {
 
     /** Mine lai tu dau tren toan bo CSDL - moc tham chieu cho moi phep so sanh. */
     private static Map<String, Double> remineFromScratch(List<Sequence> all) {
-        PreHUSPMAdaptiveAlgo ref = newAlgo(TriggerRule.IAUMAX);
+        PreHUSPMAdaptiveAlgo ref = newAlgo(TriggerRule.JOINT);   // a single mine: the rule plays no part
         ref.runInitialMining(copyOf(all), SyntheticDb.tsu(all));
         return ref.exportLargeAsStrings();
     }
@@ -96,6 +103,10 @@ public final class WP1AcceptanceTest {
         check("  luat IAUMAX (moi) khong bo sot", dNew.isClean(), dNew.toString());
         check("  X = <1> duoc tra ve la HUSP", gotNew.containsKey("1"),
                 "cac mau: " + gotNew.keySet());
+
+        Map<String, Double> gotJoint = runInsertScenario(TriggerRule.JOINT);
+        check("  joint rule (default) misses nothing", PatternSetDiff.of(reference, gotJoint).isClean(),
+                PatternSetDiff.of(reference, gotJoint).toString());
 
         // Luat CUB tho cung phai day du
         Map<String, Double> gotCub = runInsertScenario(TriggerRule.CUB);
@@ -143,7 +154,7 @@ public final class WP1AcceptanceTest {
     private static void testCumulativeAcrossBatches() {
         System.out.println("T2 - nhieu lo lien tiep duoi nguong, tong vuot (comment 2 / R4-2)");
 
-        for (TriggerRule rule : new TriggerRule[]{TriggerRule.SWUMAX, TriggerRule.IAUMAX}) {
+        for (TriggerRule rule : new TriggerRule[]{TriggerRule.SWUMAX, TriggerRule.IAUMAX, TriggerRule.JOINT}) {
             SyntheticDb.resetIds();
             List<Sequence> init = SyntheticDb.db("1[19] | 2[31]", "2[50]");
             List<Sequence> b1 = SyntheticDb.db("1[4]");
@@ -160,7 +171,7 @@ public final class WP1AcceptanceTest {
             if (rule == TriggerRule.SWUMAX) {
                 check("  luat SWUMAX (cu) bo sot sau hai lo", d.missing > 0, d.toString());
             } else {
-                check("  luat IAUMAX (moi) khop remine-from-scratch", d.isClean(), d.toString());
+                check("  rule " + rule + " matches remine-from-scratch", d.isClean(), d.toString());
             }
         }
     }
@@ -182,7 +193,7 @@ public final class WP1AcceptanceTest {
         List<Sequence> big = SyntheticDb.db("1[40]", "3[40]");
         List<Sequence> all = SyntheticDb.concat(init, big);
 
-        PreHUSPMAdaptiveAlgo algo = newAlgo(TriggerRule.IAUMAX);
+        PreHUSPMAdaptiveAlgo algo = newAlgo(TriggerRule.JOINT);
         algo.runInitialMining(copyOf(init), SyntheticDb.tsu(init));
         algo.runIncrementalMining(copyOf(big), copyOf(all), SyntheticDb.tsu(all));
 
@@ -220,7 +231,7 @@ public final class WP1AcceptanceTest {
         after.add(init.get(0));
         after.addAll(newList);
 
-        PreHUSPMAdaptiveAlgo algo = newAlgo(TriggerRule.IAUMAX);
+        PreHUSPMAdaptiveAlgo algo = newAlgo(TriggerRule.JOINT);
         algo.runInitialMining(copyOf(init), SyntheticDb.tsu(init));
         double cubBefore = algo.cubValue;
         algo.runModification(oldList, newList, copyOf(after), SyntheticDb.tsu(after));
@@ -291,6 +302,74 @@ public final class WP1AcceptanceTest {
             out.put(e.getKey().toIntuitiveString(), e.getValue());
         }
         return out;
+    }
+
+    // ================================================================
+    // T6 - the direct update under the joint rule
+    // ================================================================
+    /**
+     * UUT = 0.25, LUT_min = 0.20, TSU_ref = 100, so the joint budget is 5.
+     *   A: <1> at 19 is untracked; two fillers (18) are deleted, then <1[6]> is inserted.
+     *      Remining returns <1> = 25 >= 0.25 * 88 = 22.
+     *   B: the same as one modification.
+     *   D: <1> at 22.7 is pre-large; <50[3]> is inserted, then <1[6]>. Remining returns
+     *      <1> = 28.7 >= 0.25 * 109 = 27.25. Insertions only.
+     * iaumax misses <1> in all three; joint must return it.
+     */
+    private static void testDirectUpdateCounterexamples() {
+        System.out.println("T6 - direct update: delete then insert, modify, insertions alone");
+        for (TriggerRule rule : new TriggerRule[]{TriggerRule.IAUMAX, TriggerRule.JOINT}) {
+            boolean[] miss = {caseDeleteInsert(rule, false), caseDeleteInsert(rule, true), caseInsertionsOnly(rule)};
+            String[] names = {"A delete then insert", "B one modification", "D insertions alone"};
+            for (int i = 0; i < 3; i++) {
+                if (rule == TriggerRule.IAUMAX) {
+                    check("  iaumax (superseded) misses <1> in case " + names[i], miss[i], "no pattern missed");
+                } else {
+                    check("  joint returns <1> in case " + names[i], !miss[i], "<1> missed");
+                }
+            }
+        }
+    }
+
+    private static List<Sequence> fillers(String first, int n, double u) {
+        List<Sequence> db = new ArrayList<>();
+        db.add(SyntheticDb.seq(first));
+        for (int i = 0; i < n; i++) db.add(SyntheticDb.seq((10 + i) + "[" + u + "]"));
+        return db;
+    }
+
+    /** True when the incremental answer misses a pattern that remining returns. */
+    private static boolean caseDeleteInsert(TriggerRule rule, boolean asModification) {
+        SyntheticDb.resetIds();
+        List<Sequence> cur = fillers("1[19]", 9, 9);
+        PreHUSPMAdaptiveAlgo algo = newAlgo(rule);
+        algo.runInitialMining(copyOf(cur), SyntheticDb.tsu(cur));
+        List<Sequence> victims = new ArrayList<>(cur.subList(1, 3));
+        List<Sequence> ins = SyntheticDb.db("1[6]");
+        if (asModification) {
+            cur.removeAll(victims); cur.addAll(ins);
+            algo.runModification(victims, ins, copyOf(cur), SyntheticDb.tsu(cur));
+        } else {
+            cur.removeAll(victims);
+            algo.runDeletion(victims, copyOf(cur), SyntheticDb.tsu(cur));
+            cur.addAll(ins);
+            algo.runIncrementalMining(copyOf(ins), copyOf(cur), SyntheticDb.tsu(cur));
+        }
+        return PatternSetDiff.of(remineFromScratch(cur), algo.exportLargeAsStrings()).missing > 0;
+    }
+
+    private static boolean caseInsertionsOnly(TriggerRule rule) {
+        SyntheticDb.resetIds();
+        List<Sequence> cur = fillers("1[22.7]", 8, 9);
+        cur.add(SyntheticDb.seq("30[5.3]"));
+        PreHUSPMAdaptiveAlgo algo = newAlgo(rule);
+        algo.runInitialMining(copyOf(cur), SyntheticDb.tsu(cur));
+        for (String spec : new String[]{"50[3]", "1[6]"}) {
+            List<Sequence> ins = SyntheticDb.db(spec);
+            cur.addAll(ins);
+            algo.runIncrementalMining(copyOf(ins), copyOf(cur), SyntheticDb.tsu(cur));
+        }
+        return PatternSetDiff.of(remineFromScratch(cur), algo.exportLargeAsStrings()).missing > 0;
     }
 
     // ================================================================

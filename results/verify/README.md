@@ -1,5 +1,13 @@
 # Correctness evidence
 
+> **Refuted, 2026-10-07.** This file verified the `iaumax` rule, and it could not have found
+> its fault: all 38 insertions rescanned, so none took the direct update the rule governs. The
+> rule misses HUSPs on the direct update - after a deletion followed by an insertion, after a
+> modification, and after insertions alone when a dropped pattern's items have smaller counters
+> than `iauMax` (`verify.MixedBudgetProbe`, `results/verify-joint/fuzz`). The default rule is
+> now `joint`, verified with the direct update forced in `results/verify-joint`. The rows below
+> stay as a record of what was checked.
+
 `verification.csv` compares the pattern set and the per-pattern utility of the incremental
 algorithm against remine-from-scratch after every operation, on every database, at the
 threshold `common.Datasets` holds for it. One row per operation.

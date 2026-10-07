@@ -1,5 +1,12 @@
 # Correctness evidence: insertion, deletion and modification
 
+> **Refuted, 2026-10-07.** This file verified the `iaumax` rule. Its 8 deletions and 8
+> modifications took the direct update, but no direct insertion followed a direct deletion or
+> modification - the only insertion after them rescanned - and that is where the rule fails: the
+> insertion test does not count the budget a deletion has spent (`verify.MixedBudgetProbe` cases
+> A and B; `results/verify-joint/fuzz`). The default rule is now `joint`, verified in
+> `results/verify-joint`. The rows below stay as a record of what was checked.
+
 `verification.csv` compares the pattern set and the per-pattern utility of the incremental
 algorithm against remine-from-scratch after every operation, as `results/verify` does, but on
 a stream that mixes the three kinds of operation.

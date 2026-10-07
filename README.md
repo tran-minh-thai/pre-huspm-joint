@@ -236,9 +236,9 @@ Verify correctness before measuring anything:
 
 ```bash
 .\fetch-datasets.ps1 -VerifyOnly                          # databases still intact
-java -cp build verify.WP1AcceptanceTest                   # must report 15 passed, 0 failed
+java -cp build verify.WP1AcceptanceTest                   # must report 23 passed, 0 failed
 java -cp build verify.BaselineAgreement SIGN              # static baselines must agree exactly
-java -Xmx48g -cp build verify.CorrectnessVerifier LEVIATHAN --rule iaumax
+java -Xmx16g -Xss64m -cp build verify.DirectPathVerifier SIGN --adversarial   # direct update, against remining
 ```
 
 ### Scenarios
@@ -251,7 +251,7 @@ java -Xmx48g -cp build verify.CorrectnessVerifier LEVIATHAN --rule iaumax
 | SC4 | lower-threshold ratio sweep, `r_l` in {0.3, 0.5, 0.7, 0.9} | `SC4_sl_sensitivity.csv` |
 | SC5 | increment count `K` in **{100, 67, 50, 25}** crossed with four partitioning strategies | `SC5_batch_strategy.csv` |
 | SC6 | twenty mixed operations, exactly 14 insertions, 3 deletions and 3 modifications in a seeded order, each one hundredth of the stream, incremental against remine-from-scratch | `SC6_idm_mixed.csv` |
-| SC7 | ablation: C3 on one mine of the whole database, against Pre-HUSPM; C2, C4 and C5 on `D_init` plus 100 increments, one row per increment, on SIGN and C8T1S5I8N5K | `SC7_ablation.csv` |
+| SC7 | ablation: C3 on one mine of the whole database, against Pre-HUSPM; C4 and C5 on `D_init` plus 100 increments, one row per increment, on SIGN and C8T1S5I8N5K | `SC7_ablation.csv` |
 
 One hundred increments, not a handful. Yan et al. section 6.1 divide each database into "an
 original dataset and 100 new datasets", and their section 6.3.1 confirms the arithmetic:
@@ -276,9 +276,12 @@ Standalone studies, run directly rather than through `run.ps1`:
 | `experiments.BatchSizeSweep` | rescan rate against batch size, for all three triggers | `SC_batchsize.csv` |
 | `experiments.PreHuspmVariantCompare` | the two Pre-HUSPM triggers under the protocol of the original paper | `prehuspm_variants.csv` |
 | `experiments.MachineCalibration` | how much slower this machine is than a reference, which sets the per-call limit | console |
-| `verify.CorrectnessVerifier` | pattern sets against remine-from-scratch after every operation | `verification.csv` |
+| `verify.CorrectnessVerifier` | pattern sets against remine-from-scratch after every operation, at increments that rescan | `verification.csv` |
+| `verify.DirectPathVerifier` | the same, with every operation sized from the safety budget so that it takes the direct update; `--adversarial` shapes deletions and insertions around the untracked pattern nearest the floor | `verification.csv` |
+| `verify.MixedBudgetFuzz` | random insert, delete and modify streams on small databases against remining, counting the direct updates | console |
+| `verify.MixedBudgetProbe` | the hand-built cases where a rule misses a HUSP on the direct update | console |
 | `verify.BaselineAgreement` | static baselines return identical pattern sets | console |
-| `verify.WP1AcceptanceTest` | the safety-bound counterexamples from review | console |
+| `verify.WP1AcceptanceTest` | the safety-bound counterexamples, for every rule | console |
 
 ### Reading the results
 
@@ -307,11 +310,10 @@ Everything below changes results. Defaults are what the scenarios use unless ove
 |---|---|---|---|
 | UUT | per dataset, table above | see table | upper utility threshold, as a ratio of total utility |
 | r_l | `DEFAULT_SL_MIN_RATIO` in the runner | 0.8 | lower-threshold ratio; `LUT_min = r_l * UUT` |
-| kappa | `-Dkappa` | 0.5 | coefficient of the adaptive term |
-| Delta_0 | `-Ddelta0` | 1e-4 | initial margin |
 | B_sz | `-Dblock.size` | 100 | block size of the block-level inverted index |
-| — | `-Dadapt.trigger` | `iaumax` | insertion rescan trigger: `swumax` (the unsound bound of the original method, kept for reference), `cub`, `iaumax` |
-| — | `-Dadapt.strictModify` | `true` | a modification spends `u(old) + u(new)` of the safety budget; `false` reproduces the earlier, unsound accounting |
+| — | `-Dadapt.trigger` | `joint` | rescan rule. `joint`: one budget for insertions and deletions and a per-pattern drop floor, see `docs/experiments.md`. `iaumax`, `cub` and `swumax` are kept for comparison only; `iaumax` and `swumax` miss HUSPs on the direct update |
+| — | `-Dkappa`, `-Ddelta0` | 0.5, 1e-4 | read by the comparison rules only; no effect under `joint` |
+| — | `-Dadapt.strictModify` | `true` | read by the comparison rules only; no effect under `joint` |
 | — | `-Dtimeout.min` | 120 | wall-clock limit per call, in minutes |
 | — | `-Drepeats` | 3 | reruns of an identical configuration, for the standard deviation |
 | — | `-Dseeds` | 1 | how many entries of `SEEDS` to sweep; only SC2 (above 1), SC5 `BURST` and SC6 are affected |
