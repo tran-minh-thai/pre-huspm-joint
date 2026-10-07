@@ -2,7 +2,7 @@
 """Check that the correctness tests can fail: inject a fault into a copy of the joint
 rule, compile the copy, and run the tests on it.
 
-    python3 analysis/fault_injection.py [--trials N] [--seed S]
+    python3 analysis/fault_injection.py [--trials N] [--seed S] [--real DB[,DB...]]
 
 Each fault is one textual substitution in src/algorithms/PreHUSPMAdaptiveAlgorithm.java.
 The substitution must match exactly once, and the faulty text must be present in the
@@ -11,7 +11,8 @@ a passing test look like a blind one. The copy is compiled into a temporary dire
 src/ is never touched.
 
 For each fault it runs verify.MixedBudgetFuzz (random streams on small databases) and
-verify.MixedBudgetProbe (the hand-built cases) and prints their verdicts. Exit status is
+verify.MixedBudgetProbe (the hand-built cases) and prints their verdicts; with --real it also
+runs verify.DirectPathVerifier --adversarial on the named databases of datasets/. Exit status is
 0 when every fault is caught by at least one of the two, 1 otherwise.
 """
 import argparse
@@ -43,6 +44,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--trials", type=int, default=2000)
     ap.add_argument("--seed", type=int, default=7)
+    ap.add_argument("--real", default="", help="comma-separated databases for the adversarial run")
     a = ap.parse_args()
 
     caught_all = True
@@ -66,6 +68,16 @@ def main():
             rc_f, out_f = run(["java", "-cp", "build", "verify.MixedBudgetFuzz", "joint",
                                str(a.trials), str(a.seed)], tmp)
             rc_p, out_p = run(["java", "-cp", "build", "verify.MixedBudgetProbe", "joint"], tmp)
+            real_lines = []
+            if a.real:
+                (tmp / "datasets").symlink_to(ROOT / "datasets")
+                for db in a.real.split(","):
+                    rc_r, out_r = run(["java", "-Xmx12g", "-Xss64m", "-cp", "build",
+                                       "verify.DirectPathVerifier", db, "--adversarial", "--ops", "16",
+                                       "--out", str(tmp / "real" / db)], tmp)
+                    mm = [l for l in out_r.splitlines() if l.startswith("mismatching operations")]
+                    real_lines.append(f"{db}: {mm[0] if mm else out_r.strip()[-200:]}")
+                    rc_f = rc_f or rc_r
             fuzz_line = [l for l in out_f.splitlines() if l.startswith("rule=")]
             probe_line = [l for l in out_p.splitlines() if "cases with a mismatch" in l]
             caught = rc_f != 0 or rc_p != 0
@@ -75,6 +87,8 @@ def main():
             print(f"      with: {new}")
             print(f"  fuzz : {fuzz_line[0] if fuzz_line else out_f.strip()[-300:]}")
             print(f"  probe: {probe_line[0] if probe_line else out_p.strip()[-300:]}")
+            for line in real_lines:
+                print(f"  real : {line}")
             print(f"  caught: {caught}")
     sys.exit(0 if caught_all else 1)
 
