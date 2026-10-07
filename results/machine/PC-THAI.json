@@ -1,0 +1,49 @@
+{
+    "machine":  "PC-THAI",
+    "recorded":  "2026-10-08T06:48:12+07:00",
+    "cpu":  "AMD Ryzen 9 9950X 16-Core Processor",
+    "cpu_cores":  16,
+    "cpu_threads":  32,
+    "cpu_max_mhz":  4300,
+    "memory_gb":  61.6,
+    "memory_modules":  [
+                           {
+                               "capacity_gb":  16,
+                               "speed_mts":  5600,
+                               "configured_mts":  5600
+                           },
+                           {
+                               "capacity_gb":  16,
+                               "speed_mts":  5600,
+                               "configured_mts":  5600
+                           },
+                           {
+                               "capacity_gb":  16,
+                               "speed_mts":  5600,
+                               "configured_mts":  5600
+                           },
+                           {
+                               "capacity_gb":  16,
+                               "speed_mts":  5600,
+                               "configured_mts":  5600
+                           }
+                       ],
+    "os":  "Microsoft Windows 11 Education",
+    "os_version":  "10.0.26300",
+    "os_build":  "26300",
+    "os_display":  "26H2",
+    "power_plan":  "Power Scheme GUID: 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c  (High performance)",
+    "java":  "openjdk version \"25.0.4.1\" 2026-08-18 LTS | OpenJDK Runtime Environment Temurin-25.0.4.1+1 (build 25.0.4.1+1-LTS) | OpenJDK 64-Bit Server VM Temurin-25.0.4.1+1 (build 25.0.4.1+1-LTS, mixed mode, sharing)",
+    "java_properties":  {
+                            "java.runtime.version":  "25.0.4.1+1-LTS",
+                            "java.vendor":  "Eclipse Adoptium",
+                            "java.vm.name":  "OpenJDK 64-Bit Server VM",
+                            "java.vm.version":  "25.0.4.1+1-LTS"
+                        },
+    "jvm_flags":  "-Xmx48g -Xss64m",
+    "jvm_flags_source":  "campaign.ps1: -HeapGb 48 and -Xss64m on every arm, one JVM per arm",
+    "git_commit":  "3b1880e40793244d9fa905726a1f58931f5d21ef",
+    "unavailable":  [
+
+                    ]
+}
