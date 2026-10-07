@@ -1005,6 +1005,60 @@ def export_replicate_tables():
     print("[saved] " + ", ".join(out))
 
 
+def measurement_hosts():
+    """Hosts named in the DONE files of every timing and memory arm, replicates included."""
+    hosts = set()
+    for pattern in (os.path.join(DATA_DIR, TIMING_TREE, "*", "*", "*", "DONE"),
+                    os.path.join(DATA_DIR, MEMORY_TREE, "*", "*", "*", "DONE"),
+                    os.path.join(DATA_DIR, REPLICATE_TREE, "*", "*", "*", "*", "DONE")):
+        for f in glob.glob(pattern):
+            m = re.search(r"host=(\S+)", open(f, encoding="utf-8", errors="replace").read())
+            if m:
+                hosts.add(m.group(1))
+    return hosts
+
+
+def export_platform():
+    """The manuscript's sentence on the measurement platform, generated from the machine
+    record (record-machine.ps1 -> results/machine/<host>.json), never typed. Refuses when
+    the arms name more than one host or the host has no record, and names the fields the
+    record could not read."""
+    import json
+    hosts = measurement_hosts()
+    if len(hosts) != 1:
+        print(f"[platform] not written: the arms name {len(hosts)} hosts: {sorted(hosts)}")
+        return
+    host = hosts.pop()
+    path = os.path.join(DATA_DIR, "machine", f"{host}.json")
+    if not os.path.exists(path):
+        print(f"[platform] not written: no machine record {path}; run record-machine.ps1 on {host}")
+        return
+    rec = json.load(open(path, encoding="utf-8"))
+    props = rec.get("java_properties") or {}
+    if isinstance(props, str):
+        props = {}
+    os_name = rec.get("os", "")
+    if rec.get("os_display") not in (None, "unavailable"):
+        os_name += f" {rec['os_display']}"
+    if rec.get("os_build") not in (None, "unavailable"):
+        os_name += f" (build {rec['os_build']})"
+    jvm = " ".join(v for v in (props.get("java.vm.name"), props.get("java.runtime.version")) if v)
+    # installed memory: the sum of the modules, when they could be read, rather than the
+    # usable figure Windows reports after reserving part of it
+    mods = rec.get("memory_modules")
+    memory = rec.get("memory_gb")
+    if isinstance(mods, list) and mods:
+        memory = int(round(sum(float(m.get("capacity_gb", 0)) for m in mods)))
+    sentence = (f"All runtimes and memory figures were measured on one machine with an "
+                f"{rec.get('cpu')} ({rec.get('cpu_cores')} cores, {rec.get('cpu_threads')} threads) "
+                f"and {memory}\\,GB of memory, running {os_name} and "
+                f"{jvm or rec.get('java')}, with \\texttt{{{rec.get('jvm_flags')}}} and one JVM per run.")
+    with open(os.path.join(OUT_DIR, "platform.tex"), "w", encoding="utf-8") as fh:
+        fh.write(sentence + "\n")
+    missing = rec.get("unavailable") or []
+    print(f"[saved] platform.tex from {path}" + (f"; UNREAD FIELDS: {missing}" if missing else ""))
+
+
 def export_status_summary():
     """Rows per outcome, per tree x scenario x database: OK / OT / OOM / Fail / Skip."""
     order = ["OK"] + STATUS_ORDER
@@ -1050,6 +1104,7 @@ def main():
     export_summary_tables()                            # SC1 runtime / live set / speedup
     export_memory_ratios()                             # SC1 live set, baselines over the proposal
     export_replicate_tables()                          # runtime spread over replicates (SC1, SC2, SC6)
+    export_platform()                                  # the platform sentence, from the machine record
     export_incremental_table()                         # SC2 totals
     export_operating_region()                          # SC2 rescan test, ratio to budget
     export_ablation_table()                            # SC7 static + incremental
