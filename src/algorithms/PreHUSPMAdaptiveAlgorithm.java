@@ -535,7 +535,39 @@ public class PreHUSPMAdaptiveAlgorithm {
          *         min_{i∈X} A_i ≤ max_i A_i. Suy biến về CUB khi tồn tại một item xuất hiện
          *         trong mọi chuỗi chèn (quan sát được trên KOSARAK).
          */
-        public enum TriggerRule { SWUMAX, CUB, IAUMAX }
+        public enum TriggerRule { SWUMAX, CUB, IAUMAX, JOINT }
+
+        /*
+         * JOINT: one budget for insertions and deletions since the last rescan, with a
+         * per-pattern drop floor in the direct-update branch.
+         *   I = inserted utility, D = deleted utility, A_i = inserted utility of the
+         *   sequences containing item i, all since the last rescan; L_r = LUT_min * TSU_r.
+         *   Rescan iff  max_i A_i - UUT*I + UUT*D > (UUT - LUT_min) * TSU_r.
+         *   A tracked pattern X is dropped only if u(X) < L_r + min_{i in X} A_i.
+         * Every untracked X then satisfies u(X) < L_r + min_{i in X} A_i at all later times
+         * (its gain is bounded by min_{i in X} A_i, deletions only lower it), and the rule
+         * keeps L_r + max_i A_i <= UUT * (TSU_r + I - D) = UUT * TSU, so no untracked X is a
+         * HUSP while the rule holds.
+         */
+        private double insertedSinceRescan = 0, deletedSinceRescan = 0;
+
+        private double minIauOf(CompactPattern p) {
+            double m = Double.POSITIVE_INFINITY;
+            for (int item : p.flat) {
+                if (item < 0) continue;
+                double a = item < iau.length ? iau[item] : 0.0;
+                if (a < m) m = a;
+            }
+            return m == Double.POSITIVE_INFINITY ? 0.0 : m;
+        }
+
+        private double jointTriggerQuantity() {
+            return iauMax - Su * insertedSinceRescan + Su * deletedSinceRescan;
+        }
+
+        private double jointFloor(CompactPattern p) {
+            return Sl_min * tsuAtLastRescan + minIauOf(p);
+        }
 
         /** Luật kích hoạt cho pha chèn. Ghi đè bằng -Dadapt.trigger=swumax|cub|iaumax. */
         public TriggerRule triggerRule = parseTriggerRule(
@@ -546,6 +578,7 @@ public class PreHUSPMAdaptiveAlgorithm {
                 case "swumax": return TriggerRule.SWUMAX;
                 case "cub":    return TriggerRule.CUB;
                 case "iaumax": return TriggerRule.IAUMAX;
+                case "joint":  return TriggerRule.JOINT;
                 default: throw new IllegalArgumentException(
                         "adapt.trigger phải là swumax|cub|iaumax, nhận được: " + s);
             }
@@ -865,6 +898,7 @@ public class PreHUSPMAdaptiveAlgorithm {
             prunedValueBound = 0; prunedIub = 0;
             cubValue = 0; cubTriggeredRescan = false;
             resetIau();
+            insertedSinceRescan = 0; deletedSinceRescan = 0;
             largeMap.clear(); prelargeMap.clear();
             dbClear();
             globalBlockIndex = new BlockIndex();
@@ -948,6 +982,7 @@ public class PreHUSPMAdaptiveAlgorithm {
 
             // --- Buoc 1: cap nhat bo dem tich luy ---
             this.cubValue += batchTotalUtil;       // perturbation tich luy ke tu rescan gan nhat
+            this.insertedSinceRescan += batchTotalUtil;
             this.iauTightness = (iauMax <= 0) ? 1.0 : (cubValue / iauMax);
             this.sigmaDSquared = calculateVariance(deltaD);
             this.rhoD = (batchTotalUtil == 0) ? 0 : (swuMax / batchTotalUtil);
@@ -960,7 +995,12 @@ public class PreHUSPMAdaptiveAlgorithm {
             switch (this.triggerRule) {
                 case SWUMAX: triggerQuantity = swuMax;   break;  // luat cu, KHONG sound
                 case CUB:    triggerQuantity = cubValue; break;
+                case JOINT:  triggerQuantity = jointTriggerQuantity(); break;
                 case IAUMAX: default: triggerQuantity = iauMax; break;
+            }
+            if (this.triggerRule == TriggerRule.JOINT) {
+                safetyBoundF = (Su - Sl_min) * tsuAtLastRescan;
+                this.sftValue = safetyBoundF;
             }
             // C5 ablation: useAdaptiveRescan=false -> rescan MOI LO (bo quyet dinh thich ung)
             this.cubTriggeredRescan = useAdaptiveRescan ? (triggerQuantity > safetyBoundF) : true;
@@ -971,6 +1011,7 @@ public class PreHUSPMAdaptiveAlgorithm {
                 rescanCount++;
                 this.cubValue = 0;                      // Reset bo dem
                 resetIau();                             // Reset A_i
+                insertedSinceRescan = 0; deletedSinceRescan = 0;
                 this.tsuAtLastRescan = newTotalUtility; // cap nhat moc TSU cho SFT
             }
 
@@ -1011,6 +1052,7 @@ public class PreHUSPMAdaptiveAlgorithm {
             this.deltaDValue = Math.min(Math.max(heuristicIns, deltaMinIns), uut_abs);
             this.lutDynValue = Math.max(0.0, uut_abs - deltaDValue); // band floor thich ung
             if (!useAdaptiveBand) this.lutDynValue = lut_min_abs; // ablation: band co dinh Sl_min
+            if (this.triggerRule == TriggerRule.JOINT) this.lutDynValue = Sl_min * tsuAtLastRescan;
 
             if (cubTriggeredRescan) {
                 // Can an toan vo -> Rescan (giu pruning chat khi mine lai)
@@ -1036,7 +1078,8 @@ public class PreHUSPMAdaptiveAlgorithm {
                     // (C2 active) thay cho lut_min cố định. Band = [lutDynValue, uut) co/giãn
                     // theo δ_D: hẹp khi ổn định (tránh bùng nổ pre-large) / rộng khi biến động
                     // (tránh thiếu mẫu). Đây là vai trò thật của C2 (xem thực nghiệm dilemma).
-                    else if (updatedUtility >= lutDynValue) prelargeMap.put(p, updatedUtility);
+                    else if (updatedUtility >= (triggerRule == TriggerRule.JOINT ? jointFloor(p) : lutDynValue))
+                        prelargeMap.put(p, updatedUtility);
                 }
 
                 // Khai phá lô mới để tìm mẫu Tiền Lớn/Lớn mới sinh ra trên deltaD.
@@ -1090,16 +1133,24 @@ public class PreHUSPMAdaptiveAlgorithm {
             // Luat kich hoat cua pha XOA von da dung dang TICH LUY (cubValue) nen VAN SOUND;
             // chi phai sua thu tu va bo sung can duoi cho Delta.
             this.cubValue += deletedTotal;   // perturbation tich luy ke tu rescan gan nhat
+            this.deletedSinceRescan += deletedTotal;
 
             // F_del = (Su - Sl_min)/Su * TSU_lastRescan (Hong et al., chieu deletion).
             double safetyBoundDel = ((Su - Sl_min) / Su) * tsuAtLastRescan;
             this.sftValue = safetyBoundDel;
+            if (this.triggerRule == TriggerRule.JOINT) {
+                safetyBoundDel = (Su - Sl_min) * tsuAtLastRescan;
+                this.sftValue = safetyBoundDel;
+                this.iauMaxAtDecision = jointTriggerQuantity();
+                this.cubTriggeredRescan = useAdaptiveRescan ? (iauMaxAtDecision > safetyBoundDel) : true;
+            } else
             this.cubTriggeredRescan = useAdaptiveRescan ? (cubValue > safetyBoundDel) : true;
 
             if (cubTriggeredRescan) {
                 rescanCount++;
                 cubValue = 0;
                 resetIau();
+                insertedSinceRescan = 0; deletedSinceRescan = 0;
                 this.tsuAtLastRescan = newTotalUtility; // cap nhat moc TSU cho F
             }
 
@@ -1115,6 +1166,7 @@ public class PreHUSPMAdaptiveAlgorithm {
             this.deltaDValue = Math.min(Math.max(heuristicDel, deltaMinDel), uut_abs);
             this.lutDynValue = Math.max(0.0, uut_abs - deltaDValue); // band floor thich ung
             if (!useAdaptiveBand) this.lutDynValue = lut_min_abs; // ablation: band co dinh Sl_min
+            if (this.triggerRule == TriggerRule.JOINT) this.lutDynValue = Sl_min * tsuAtLastRescan;
 
             if (cubTriggeredRescan) {
                 largeMap.clear(); prelargeMap.clear();
@@ -1137,7 +1189,8 @@ public class PreHUSPMAdaptiveAlgorithm {
                     if (updated >= uut_abs) largeMap.put(p, updated);
                     // PATCHED (tinhchinhcode5 #8): phục hồi sàn pre-large THÍCH ỨNG lutDynValue
                     // (C2 active), nhất quán với pha chèn.
-                    else if (updated >= lutDynValue) prelargeMap.put(p, updated);
+                    else if (updated >= (triggerRule == TriggerRule.JOINT ? jointFloor(p) : lutDynValue))
+                        prelargeMap.put(p, updated);
                 }
                 for (Sequence s : deletedSeqs) dbRemove(s.id);
             }
