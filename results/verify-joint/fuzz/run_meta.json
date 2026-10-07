@@ -1,0 +1,15 @@
+{
+  "command": "bash -c for s in \"2000 7\" \"5000 11\" \"5000 23\" \"5000 101\"; do set -- $s; for r in joint iaumax; do java -cp build-fuzz verify.MixedBudgetFuzz $r $1 $2; done; done; java -cp build-fuzz verify.MixedBudgetProbe joint; java -cp build-fuzz verify.MixedBudgetProbe iaumax; true",
+  "build_dir": "build-fuzz",
+  "git_commit": "36973c9162d2cc6894ee6acea453dc5cf942808d",
+  "tree": "src clean, other files modified",
+  "source_sha256": "9e77a7c186e020a7578f36c7c95b0dff16ea008c506befbe0bb3378a7f923540",
+  "source_files": 29,
+  "java": "openjdk version \"26.0.1\" 2026-04-21",
+  "os": "Darwin 27.0.0 (macOS-27.0.1-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-10-07T20:27:47",
+  "end": "2026-10-07T20:28:57",
+  "exit_code": 0
+}
