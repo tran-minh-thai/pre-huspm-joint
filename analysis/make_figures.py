@@ -290,13 +290,15 @@ def write_csv(df, path):
 
 
 def _source_commit():
-    """The repository commit the figures are drawn from, with -dirty when results/ or
-    analysis/ differ from it; written into every PDF so a figure says where it came from."""
+    """The repository commit the figures are drawn from, with -dirty when a tracked file
+    under results/ or analysis/ differs from it (new, untracked result directories are not
+    read by any figure); written into every PDF so a figure says where it came from."""
     try:
         import subprocess
         c = subprocess.check_output(["git", "rev-parse", "--short", "HEAD"], cwd=REPO_DIR,
                                     text=True, stderr=subprocess.DEVNULL).strip()
-        d = subprocess.check_output(["git", "status", "--porcelain", "--", "results", "analysis"],
+        d = subprocess.check_output(["git", "status", "--porcelain", "--untracked-files=no",
+                                     "--", "results", "analysis"],
                                     cwd=REPO_DIR, text=True, stderr=subprocess.DEVNULL).strip()
         return c + ("-dirty" if d else "")
     except Exception:
