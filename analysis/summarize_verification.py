@@ -3,7 +3,8 @@
 
     python3 analysis/summarize_verification.py results/verify-joint/adversarial/verification.csv
 
-One row per database: operations by kind and path, the direct insertions that follow a
+One row per database: operations by kind and path, in adversarial mode the operations that
+had a target pattern to shape themselves around (none means the stream fell back to random), the direct insertions that follow a
 direct deletion or a direct modification (the case the earlier rule got wrong), and the
 mismatches against remining. A final row sums the columns. Standard library only.
 """
@@ -19,7 +20,8 @@ def main(path):
     by = OrderedDict()
     for r in rows:
         by.setdefault(r["dataset"], []).append(r)
-    cols = ["operations", "insert direct", "insert rescan", "delete direct", "delete rescan",
+    adversarial = any(r.get("mode") == "adversarial" for r in rows)
+    cols = ["operations"] + (["with a target"] if adversarial else []) + ["insert direct", "insert rescan", "delete direct", "delete rescan",
             "modify direct", "modify rescan", "direct insert after direct delete",
             "direct insert after direct modify", "mismatches"]
     total = dict.fromkeys(cols, 0)
@@ -30,6 +32,8 @@ def main(path):
         c["operations"] = len(rs)
         for r in rs:
             c[f"{r['op_type']} {r['path']}"] += 1
+            if adversarial and r.get("target", "").strip('"'):
+                c["with a target"] += 1
             if r["op_type"] == "insert" and r["path"] == "direct":
                 if r["previous_path"] == "delete/direct":
                     c["direct insert after direct delete"] += 1
