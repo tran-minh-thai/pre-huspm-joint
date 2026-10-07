@@ -1,0 +1,58 @@
+{
+  "git_commit": "60e6cc0a0f10fd5437db7748fe74d175492cab84",
+  "tree": "clean",
+  "timestamp": "2026-10-07T09:18:09",
+  "java": "openjdk version \"26.0.1\" 2026-04-21",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "os": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "role": "probe (development machine); counters only, no timings",
+  "compile": "javac -encoding UTF-8 -d build $(find src -name \"*.java\")",
+  "tool_sha256": {
+    "src/algorithms/PreHUSPMAdaptiveAlgorithm.java": "3fe99b1eca4c88874d245017b795c81e2e1d4202e0a60890daa6da8db66dcc21",
+    "src/verify/MixedBudgetProbe.java": "e7dd68a3943cdcbd689483e7dc99021482a6f0f95265fba71d4849e1ed94b19f",
+    "src/verify/MixedBudgetFuzz.java": "8161d79f21255fa63e2fd0d1bf70ae609043fc6d83213a0779afd211b0499167",
+    "src/verify/SyntheticDb.java": "b0b64d864885040d281d23f64430a551910b32c0d678132066031672392e4a69"
+  },
+  "runs": [
+    {
+      "command": "java -cp build verify.MixedBudgetProbe iaumax",
+      "exit": 1
+    },
+    {
+      "command": "java -cp build verify.MixedBudgetProbe joint",
+      "exit": 0
+    },
+    {
+      "command": "java -cp build verify.MixedBudgetFuzz iaumax 2000 7",
+      "exit": 1
+    },
+    {
+      "command": "java -cp build verify.MixedBudgetFuzz joint 2000 7",
+      "exit": 0
+    },
+    {
+      "command": "java -cp build verify.MixedBudgetFuzz iaumax 5000 11",
+      "exit": 1
+    },
+    {
+      "command": "java -cp build verify.MixedBudgetFuzz joint 5000 11",
+      "exit": 0
+    },
+    {
+      "command": "java -cp build verify.MixedBudgetFuzz iaumax 5000 23",
+      "exit": 1
+    },
+    {
+      "command": "java -cp build verify.MixedBudgetFuzz joint 5000 23",
+      "exit": 0
+    },
+    {
+      "command": "java -cp build verify.MixedBudgetFuzz iaumax 5000 101",
+      "exit": 1
+    },
+    {
+      "command": "java -cp build verify.MixedBudgetFuzz joint 5000 101",
+      "exit": 0
+    }
+  ]
+}
