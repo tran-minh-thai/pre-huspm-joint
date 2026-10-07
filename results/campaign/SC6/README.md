@@ -1,5 +1,10 @@
 # SC6, insertion, deletion and modification mixed
 
+> **Being re-measured.** The proposal's arms here are queued again under the `joint` rescan
+> rule (commit d5b47ab and later). Every figure for the proposal below - Adaptive-Full and the
+> proposed_* ablations of the incremental part - comes from the superseded `iaumax` rule at
+> commit 4e3f256 and is not to be cited. The baselines' figures stand.
+
 Twenty operations on every database, exactly 14 insertions, 3 deletions and 3 modifications,
 in an order shuffled by the seed; each operation is one hundredth of the incremental stream,
 the size of an SC2 increment: 5 sequences on SIGN, 30 on LEVIATHAN, 199 on C8T1S5I8N5K. The plan

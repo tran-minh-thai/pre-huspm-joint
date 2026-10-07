@@ -1,5 +1,10 @@
 # SC2 memory: the state an incremental method holds over 100 increments
 
+> **Being re-measured.** The proposal's arms here are queued again under the `joint` rescan
+> rule (commit d5b47ab and later). Every figure for the proposal below - Adaptive-Full and the
+> proposed_* ablations of the incremental part - comes from the superseded `iaumax` rule at
+> commit 4e3f256 and is not to be cited. The baselines' figures stand.
+
 The same arms as `results/campaign/SC2` - seven databases, `D_init` then K = 100 increments -
 measured for memory instead of time. At every sample the runner forces a full collection and
 reads the heap immediately after, so what is recorded is the live set; runtimes are void and

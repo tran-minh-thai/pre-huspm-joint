@@ -1,5 +1,10 @@
 # SC7, what each component contributes
 
+> **Being re-measured.** The proposal's arms here are queued again under the `joint` rescan
+> rule (commit d5b47ab and later). Every figure for the proposal below - Adaptive-Full and the
+> proposed_* ablations of the incremental part - comes from the superseded `iaumax` rule at
+> commit 4e3f256 and is not to be cited. The baselines' figures stand.
+
 Four components are switched off one at a time. C3, the IUB bound, acts inside the miner, so
 it is ablated on one mine of the whole database, on all seven databases, with Pre-HUSPM beside
 it for reference. C2, the adaptive pre-large band, C4, the block index, and C5, the adaptive

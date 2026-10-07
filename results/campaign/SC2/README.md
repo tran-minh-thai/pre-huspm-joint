@@ -1,5 +1,10 @@
 # SC2, one hundred increments
 
+> **Being re-measured.** The proposal's arms here are queued again under the `joint` rescan
+> rule (commit d5b47ab and later). Every figure for the proposal below - Adaptive-Full and the
+> proposed_* ablations of the incremental part - comes from the superseded `iaumax` rule at
+> commit 4e3f256 and is not to be cited. The baselines' figures stand.
+
 Seven databases against five arms. BMS1 is absent: it carries `fullScopeOk = false` and
 cannot be mined once the database grows past `D_init`, so it appears in SC1 alone.
 

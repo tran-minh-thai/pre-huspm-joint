@@ -1,5 +1,10 @@
 # SC5, how the stream is cut
 
+> **Being re-measured.** The proposal's arms here are queued again under the `joint` rescan
+> rule (commit d5b47ab and later). Every figure for the proposal below - Adaptive-Full and the
+> proposed_* ablations of the incremental part - comes from the superseded `iaumax` rule at
+> commit 4e3f256 and is not to be cited. The baselines' figures stand.
+
 The same incremental stream cut four ways - EVEN, INCREASING, DECREASING, BURST - at four
 increment counts, `K` in {100, 67, 50, 25}, holding the total incremental data fixed, as in
 Yan et al. Figs. 5-7. SUBSET_3 only: SIGN, LEVIATHAN, C8T1S5I8N5K. Five arms, `D_init` per
