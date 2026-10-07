@@ -29,3 +29,6 @@ datasets/*
 # Machine-specific operating notes, kept outside the repository on purpose.
 # Anything needed to reproduce a result belongs in README instead.
 run.txt
+
+# per-run build directories of analysis/record_run.py
+build-*/

@@ -6,7 +6,7 @@
 
 Refuses to run from a working tree with uncommitted changes to src/: the commit hash written
 next to the output would then describe code that did not run. Compiles src/ into build/
-first, so the classes that run are the classes of that commit.
+first (or into --build), so the classes that run are the classes of that commit.
 
 Writes into --out:
     console.txt     everything the command printed
@@ -41,6 +41,8 @@ def source_digest():
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", required=True)
+    ap.add_argument("--build", default="build",
+                    help="directory to compile into; give each concurrent run its own")
     ap.add_argument("cmd", nargs=argparse.REMAINDER)
     a = ap.parse_args()
     cmd = a.cmd[1:] if a.cmd and a.cmd[0] == "--" else a.cmd
@@ -51,7 +53,7 @@ def main():
     if dirty:
         sys.exit("refusing to run: src/ has uncommitted changes\n" + dirty)
 
-    build = ROOT / "build"
+    build = ROOT / a.build
     build.mkdir(exist_ok=True)
     sources = [str(p) for p in sorted((ROOT / "src").rglob("*.java"))]
     subprocess.check_call(["javac", "-encoding", "UTF-8", "-nowarn", "-d", str(build), *sources],
@@ -63,6 +65,7 @@ def main():
     java = subprocess.run(["java", "-version"], capture_output=True, text=True).stderr.splitlines()
     meta = {
         "command": " ".join(cmd),
+        "build_dir": a.build,
         "git_commit": git("rev-parse", "HEAD"),
         "tree": "clean" if not git("status", "--porcelain") else "src clean, other files modified",
         "source_sha256": digest,
