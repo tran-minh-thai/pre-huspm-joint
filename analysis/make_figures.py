@@ -289,9 +289,28 @@ def write_csv(df, path):
     df.round(3).to_csv(path, index=False)
 
 
+def _source_commit():
+    """The repository commit the figures are drawn from, with -dirty when results/ or
+    analysis/ differ from it; written into every PDF so a figure says where it came from."""
+    try:
+        import subprocess
+        c = subprocess.check_output(["git", "rev-parse", "--short", "HEAD"], cwd=REPO_DIR,
+                                    text=True, stderr=subprocess.DEVNULL).strip()
+        d = subprocess.check_output(["git", "status", "--porcelain", "--", "results", "analysis"],
+                                    cwd=REPO_DIR, text=True, stderr=subprocess.DEVNULL).strip()
+        return c + ("-dirty" if d else "")
+    except Exception:
+        return "unknown"
+
+
+SOURCE_COMMIT = _source_commit()
+
+
 def save(fig, name):
     path = os.path.join(OUT_DIR, name)
-    fig.savefig(path, format="pdf")
+    fig.savefig(path, format="pdf",
+                metadata={"Title": name, "Subject": f"pre-huspm-adaptive {SOURCE_COMMIT}",
+                          "Creator": "analysis/make_figures.py"})
     plt.close(fig)
     print(f"[saved] {path}")
 
