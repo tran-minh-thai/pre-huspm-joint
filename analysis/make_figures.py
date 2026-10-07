@@ -596,8 +596,7 @@ def export_ablation_table():
     write_csv(pd.DataFrame(rows), os.path.join(OUT_DIR, "table_SC7_incremental.csv"))
 
     lines = ["\\begin{table}[t]", "\\centering",
-             "\\caption{Ablation of C3 on one mine of the whole database (SC7). "
-             "Runtime\\,(s) and explored nodes.}",
+             "\\caption{Runtime and explored nodes with and without the IUB bound.}",
              "\\label{tab:sc7_ablation}",
              "\\begin{tabular}{llrr}", "\\toprule",
              "Dataset & Variant & Runtime (s) & Explored \\\\", "\\midrule"]
@@ -813,8 +812,7 @@ def export_summary_tables():
                            aggfunc="first").reindex(index=tab["dataset"].unique(), columns=STATIC_ORDER)
     cols = list(piv.columns)
     lines = ["\\begin{table}[t]", "\\centering",
-             "\\caption{Runtime (s) on $D_{init}$ at each database's default threshold (SC1). "
-             "\\textbf{OOM}: out of memory at 48\\,GB.}",
+             "\\caption{Runtime (s) on $D_{\\mathrm{init}}$ at the default threshold.}",
              "\\label{tab:sc1_runtime}",
              "\\begin{tabular}{l" + "r" * len(cols) + "}", "\\toprule",
              "Dataset & " + " & ".join(ALGO_LABEL[c] for c in cols) + " \\\\", "\\midrule"]
