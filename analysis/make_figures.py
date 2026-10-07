@@ -825,6 +825,45 @@ def export_summary_tables():
     print(f"[saved] {out_csv}  (+ speedup csv + LaTeX)")
 
 
+def export_memory_ratios():
+    """SC1 live set, each baseline over the proposal, over every (database, threshold)
+    cell where both completed: geometric mean, cells used, cells left out and why (the
+    outcome of whichever did not finish), and the cells where the baseline holds less.
+    Leaving out a baseline's out-of-memory cell lowers the ratio, so it does not favour
+    the proposal. Two scopes: all four thresholds, and the default threshold alone."""
+    df = load_scenario("SC1", tree=MEMORY_TREE)
+    if df is None:
+        return
+    df = parse_su(df)
+    rows = []
+    for base in [a for a in STATIC_ORDER if a != PROPOSED]:
+        for scope in ("all four thresholds", "default threshold"):
+            ratios, left_out, cells = [], [], 0
+            for ds in [d for d in ALL_DATASETS if d in set(df["dataset"])]:
+                sub = df[df["dataset"] == ds]
+                sus = sorted(sub["su"].dropna().unique()) if scope.startswith("all") else [default_su(ds)]
+                for su in sus:
+                    cells += 1
+                    p = sub[(sub["algorithm"] == PROPOSED) & np.isclose(sub["su"], su)]
+                    b = sub[(sub["algorithm"] == base) & np.isclose(sub["su"], su)]
+                    if p.empty or b.empty:
+                        left_out.append(f"{ds}@{su:g}:absent"); continue
+                    p, b = p.iloc[-1], b.iloc[-1]
+                    if not (p["finished"] and b["finished"]):
+                        who = base if not b["finished"] else PROPOSED
+                        st = b["status"] if not b["finished"] else p["status"]
+                        left_out.append(f"{ds}@{su:g}:{who} {st}"); continue
+                    ratios.append(float(b["mem_live_mb"]) / float(p["mem_live_mb"]))
+            r = np.asarray(ratios, float)
+            rows.append(dict(baseline=base, scope=scope, cells=cells, cells_used=len(r),
+                             geomean_ratio=float(np.exp(np.mean(np.log(r)))) if len(r) else np.nan,
+                             baseline_holds_less=int(np.sum(r < 1)),
+                             left_out="; ".join(left_out)))
+    path = os.path.join(OUT_DIR, "table_SC1_memory_ratios.csv")
+    write_csv(pd.DataFrame(rows), path)
+    print(f"[saved] {path}")
+
+
 def export_status_summary():
     """Rows per outcome, per tree x scenario x database: OK / OT / OOM / Fail / Skip."""
     order = ["OK"] + STATUS_ORDER
@@ -868,6 +907,7 @@ def main():
     figset_memory_incremental()                        # SC2 state held per increment
 
     export_summary_tables()                            # SC1 runtime / live set / speedup
+    export_memory_ratios()                             # SC1 live set, baselines over the proposal
     export_incremental_table()                         # SC2 totals
     export_operating_region()                          # SC2 rescan test, ratio to budget
     export_ablation_table()                            # SC7 static + incremental
