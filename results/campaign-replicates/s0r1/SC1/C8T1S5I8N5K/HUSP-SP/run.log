@@ -1,0 +1,15 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC1]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | block.size=100 | timeout.min=120 | repeats=1 repeat.index=1 | seed.index=0
+
+--- [SC1] Static baseline on D_init (50%) ---
+>> RUNNING HUSP-SP/C8T1S5I8N5K/SC1_su=0.001099#0  (heap free=230MB / total=320MB / max=49152MB)
+[HUSP-SP/C8T1S5I8N5K/SC1_su=0.001099#0] OK t=3973ms cand=11782718 pat=6090 heapDelta=722MB
+>> RUNNING HUSP-SP/C8T1S5I8N5K/SC1_su=0.001132#0  (heap free=230MB / total=320MB / max=49152MB)
+[HUSP-SP/C8T1S5I8N5K/SC1_su=0.001132#0] OK t=2844ms cand=10604017 pat=5067 heapDelta=712MB
+>> RUNNING HUSP-SP/C8T1S5I8N5K/SC1_su=0.0012#0  (heap free=231MB / total=320MB / max=49152MB)
+[HUSP-SP/C8T1S5I8N5K/SC1_su=0.0012#0] OK t=2343ms cand=8682294 pat=3427 heapDelta=777MB
+>> RUNNING HUSP-SP/C8T1S5I8N5K/SC1_su=0.001236#0  (heap free=231MB / total=320MB / max=49152MB)
+[HUSP-SP/C8T1S5I8N5K/SC1_su=0.001236#0] OK t=2224ms cand=7895893 pat=2722 heapDelta=1041MB
+=== ALL SCENARIOS DONE (23.9s) ===
