@@ -1,0 +1,17 @@
+### LIVE HEAP: ep thu gom moi 20 ms | arm = USpan
+### runtime_ms xuat -3 (GC lam nhieu); gia tri that o wall_ms_perturbed. KHONG dung lam so hieu nang.
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC1]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | block.size=100 | timeout.min=120 | repeats=1 repeat.index=1 | seed.index=0
+
+--- [SC1] Static baseline on D_init (50%) ---
+>> RUNNING USpan/TAFENG/SC1_su=0.002812#0  (heap free=580MB / total=1024MB / max=49152MB)
+[USpan/TAFENG/SC1_su=0.002812#0] OK t=31696ms cand=2010310 pat=10 heapDelta=50MB
+>> RUNNING USpan/TAFENG/SC1_su=0.003557#0  (heap free=630MB / total=864MB / max=49152MB)
+[USpan/TAFENG/SC1_su=0.003557#0] OK t=24032ms cand=1618028 pat=6 heapDelta=57MB
+>> RUNNING USpan/TAFENG/SC1_su=0.004499#0  (heap free=631MB / total=864MB / max=49152MB)
+[USpan/TAFENG/SC1_su=0.004499#0] OK t=17681ms cand=1241562 pat=5 heapDelta=18MB
+>> RUNNING USpan/TAFENG/SC1_su=0.005691#0  (heap free=632MB / total=864MB / max=49152MB)
+[USpan/TAFENG/SC1_su=0.005691#0] OK t=12679ms cand=957284 pat=3 heapDelta=46MB
+=== ALL SCENARIOS DONE (99.8s) ===
