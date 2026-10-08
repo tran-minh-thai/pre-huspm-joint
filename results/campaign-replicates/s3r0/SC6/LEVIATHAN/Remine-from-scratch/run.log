@@ -1,0 +1,50 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC6]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=3
+
+--- [SC6] Mixed I/D/M, exactly 14:3:3 (Adaptive vs Remine-from-scratch) ---
+>> [SC6] LEVIATHAN seed=31415 opSize=30 plan=20 thao tac (14 chen, 3 xoa, 3 sua)
+>> RUNNING Remine-from-scratch/LEVIATHAN/SC6_INIT#0  (heap free=844MB / total=1024MB / max=49152MB)
+[Remine-from-scratch/LEVIATHAN/SC6_INIT#0] OK t=928ms cand=16362407 pat=107 heapDelta=63MB
+>> RUNNING Remine-from-scratch/LEVIATHAN/SC6_INS#1  (heap free=151MB / total=224MB / max=49152MB)
+[Remine-from-scratch/LEVIATHAN/SC6_INS#1] OK t=575ms cand=16465356 pat=107 heapDelta=64MB
+>> RUNNING Remine-from-scratch/LEVIATHAN/SC6_MOD#2  (heap free=151MB / total=224MB / max=49152MB)
+[Remine-from-scratch/LEVIATHAN/SC6_MOD#2] OK t=559ms cand=16439671 pat=107 heapDelta=62MB
+>> RUNNING Remine-from-scratch/LEVIATHAN/SC6_DEL#3  (heap free=247MB / total=320MB / max=49152MB)
+[Remine-from-scratch/LEVIATHAN/SC6_DEL#3] OK t=559ms cand=16455459 pat=107 heapDelta=73MB
+>> RUNNING Remine-from-scratch/LEVIATHAN/SC6_INS#4  (heap free=247MB / total=320MB / max=49152MB)
+[Remine-from-scratch/LEVIATHAN/SC6_INS#4] OK t=553ms cand=16338604 pat=106 heapDelta=69MB
+>> RUNNING Remine-from-scratch/LEVIATHAN/SC6_INS#5  (heap free=247MB / total=320MB / max=49152MB)
+[Remine-from-scratch/LEVIATHAN/SC6_INS#5] OK t=549ms cand=16268926 pat=106 heapDelta=69MB
+>> RUNNING Remine-from-scratch/LEVIATHAN/SC6_INS#6  (heap free=247MB / total=320MB / max=49152MB)
+[Remine-from-scratch/LEVIATHAN/SC6_INS#6] OK t=554ms cand=16349939 pat=108 heapDelta=69MB
+>> RUNNING Remine-from-scratch/LEVIATHAN/SC6_INS#7  (heap free=247MB / total=320MB / max=49152MB)
+[Remine-from-scratch/LEVIATHAN/SC6_INS#7] OK t=560ms cand=16283068 pat=106 heapDelta=67MB
+>> RUNNING Remine-from-scratch/LEVIATHAN/SC6_INS#8  (heap free=247MB / total=320MB / max=49152MB)
+[Remine-from-scratch/LEVIATHAN/SC6_INS#8] OK t=564ms cand=16551824 pat=107 heapDelta=69MB
+>> RUNNING Remine-from-scratch/LEVIATHAN/SC6_INS#9  (heap free=247MB / total=320MB / max=49152MB)
+[Remine-from-scratch/LEVIATHAN/SC6_INS#9] OK t=573ms cand=16751549 pat=107 heapDelta=71MB
+>> RUNNING Remine-from-scratch/LEVIATHAN/SC6_DEL#10  (heap free=247MB / total=320MB / max=49152MB)
+[Remine-from-scratch/LEVIATHAN/SC6_DEL#10] OK t=573ms cand=16837186 pat=111 heapDelta=69MB
+>> RUNNING Remine-from-scratch/LEVIATHAN/SC6_MOD#11  (heap free=247MB / total=320MB / max=49152MB)
+[Remine-from-scratch/LEVIATHAN/SC6_MOD#11] OK t=575ms cand=16808944 pat=110 heapDelta=69MB
+>> RUNNING Remine-from-scratch/LEVIATHAN/SC6_INS#12  (heap free=247MB / total=320MB / max=49152MB)
+[Remine-from-scratch/LEVIATHAN/SC6_INS#12] OK t=581ms cand=16960747 pat=110 heapDelta=71MB
+>> RUNNING Remine-from-scratch/LEVIATHAN/SC6_INS#13  (heap free=247MB / total=320MB / max=49152MB)
+[Remine-from-scratch/LEVIATHAN/SC6_INS#13] OK t=584ms cand=17107905 pat=110 heapDelta=71MB
+>> RUNNING Remine-from-scratch/LEVIATHAN/SC6_INS#14  (heap free=247MB / total=320MB / max=49152MB)
+[Remine-from-scratch/LEVIATHAN/SC6_INS#14] OK t=584ms cand=17078874 pat=113 heapDelta=71MB
+>> RUNNING Remine-from-scratch/LEVIATHAN/SC6_DEL#15  (heap free=247MB / total=320MB / max=49152MB)
+[Remine-from-scratch/LEVIATHAN/SC6_DEL#15] OK t=588ms cand=16959418 pat=113 heapDelta=71MB
+>> RUNNING Remine-from-scratch/LEVIATHAN/SC6_INS#16  (heap free=247MB / total=320MB / max=49152MB)
+[Remine-from-scratch/LEVIATHAN/SC6_INS#16] OK t=605ms cand=17392850 pat=112 heapDelta=71MB
+>> RUNNING Remine-from-scratch/LEVIATHAN/SC6_INS#17  (heap free=247MB / total=320MB / max=49152MB)
+[Remine-from-scratch/LEVIATHAN/SC6_INS#17] OK t=628ms cand=18215568 pat=112 heapDelta=75MB
+>> RUNNING Remine-from-scratch/LEVIATHAN/SC6_INS#18  (heap free=247MB / total=320MB / max=49152MB)
+[Remine-from-scratch/LEVIATHAN/SC6_INS#18] OK t=633ms cand=18426801 pat=114 heapDelta=75MB
+>> RUNNING Remine-from-scratch/LEVIATHAN/SC6_INS#19  (heap free=247MB / total=320MB / max=49152MB)
+[Remine-from-scratch/LEVIATHAN/SC6_INS#19] OK t=647ms cand=18671575 pat=113 heapDelta=75MB
+>> RUNNING Remine-from-scratch/LEVIATHAN/SC6_MOD#20  (heap free=247MB / total=320MB / max=49152MB)
+[Remine-from-scratch/LEVIATHAN/SC6_MOD#20] OK t=658ms cand=18896250 pat=114 heapDelta=77MB
+=== ALL SCENARIOS DONE (22.8s) ===
