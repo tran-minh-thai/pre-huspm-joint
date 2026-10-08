@@ -1,0 +1,4 @@
+random trials=300 seed=7 comparisons=3300 mismatches-vs-static=0 mismatches-vs-brute-force=0 static-vs-brute-force=0 paths: ndb-rescans=11273 case2-builds=5082 usp-reruns=5698
+random trials=300 seed=11 comparisons=3300 mismatches-vs-static=0 mismatches-vs-brute-force=0 static-vs-brute-force=0 paths: ndb-rescans=11017 case2-builds=5150 usp-reruns=5695
+random trials=300 seed=23 comparisons=3300 mismatches-vs-static=0 mismatches-vs-brute-force=0 static-vs-brute-force=0 paths: ndb-rescans=10798 case2-builds=4911 usp-reruns=5395
+random trials=300 seed=101 comparisons=3300 mismatches-vs-static=0 mismatches-vs-brute-force=0 static-vs-brute-force=0 paths: ndb-rescans=10054 case2-builds=4304 usp-reruns=5142

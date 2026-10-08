@@ -1,0 +1,16 @@
+{
+  "command": "java -Xmx24g -Xss64m -cp build-incv verify.IncUspVerifier real SIGN 100 datasets/",
+  "path_substitutions": 0,
+  "build_dir": "build-incv",
+  "git_commit": "899dd596ae55749d35c90d782ab8c958a558c97f",
+  "tree": "src clean, other files modified",
+  "source_sha256": "e2edfdf37e5acecc07f31ffdc8700ca0f563d3c242d6ac818ce06b8b8aa47e4a",
+  "source_files": 30,
+  "java": "openjdk version \"26.0.1\" 2026-04-21",
+  "os": "Darwin 27.0.0 (macOS-27.0.1-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-10-08T21:48:36",
+  "end": "2026-10-08T21:49:33",
+  "exit_code": 0
+}

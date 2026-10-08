@@ -1,0 +1,1 @@
+real LEVIATHAN uut=0.01553 D_init=2834 batches=100 comparisons=101 mismatches=0 paths: ndb-rescans=90384 case2-builds=8689 usp-reruns=31219 (173 s)

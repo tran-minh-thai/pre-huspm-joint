@@ -1,0 +1,13 @@
+commit 899dd59; java openjdk version "26.0.1" 2026-04-21
+old exit 1 | random trials=300 seed=7 comparisons=3300 mismatches-vs-static=414 mismatches-vs-brute-force=414 static-vs-brute-force=0 paths: ndb-rescans=0 case2-builds=0 usp-reruns=0
+no_ndb_rescan exit 1 | random trials=300 seed=7 comparisons=3300 mismatches-vs-static=376 mismatches-vs-brute-force=376 static-vs-brute-force=0 paths: ndb-rescans=0 case2-builds=303 usp-reruns=4412
+case2_ldb_only exit 1 | random trials=300 seed=7 comparisons=3300 mismatches-vs-static=376 mismatches-vs-brute-force=376 static-vs-brute-force=0 paths: ndb-rescans=10885 case2-builds=4931 usp-reruns=4918
+tsu_without_ru exit 1 | random trials=300 seed=7 comparisons=3300 mismatches-vs-static=526 mismatches-vs-brute-force=526 static-vs-brute-force=0 paths: ndb-rescans=8561 case2-builds=2627 usp-reruns=2596
+no_rebuild exit 1 | random trials=300 seed=7 comparisons=3300 mismatches-vs-static=1 mismatches-vs-brute-force=1 static-vs-brute-force=0 paths: ndb-rescans=12512 case2-builds=5520 usp-reruns=1524
+no_rebuild exit 1 | random trials=300 seed=11 comparisons=3300 mismatches-vs-static=3 mismatches-vs-brute-force=3 static-vs-brute-force=0 paths: ndb-rescans=12295 case2-builds=5610 usp-reruns=1522
+no_rebuild exit 1 | random trials=300 seed=23 comparisons=3300 mismatches-vs-static=3 mismatches-vs-brute-force=3 static-vs-brute-force=0 paths: ndb-rescans=11998 case2-builds=5333 usp-reruns=1436
+no_rebuild exit 1 | random trials=300 seed=101 comparisons=3300 mismatches-vs-static=5 mismatches-vs-brute-force=5 static-vs-brute-force=0 paths: ndb-rescans=11152 case2-builds=4659 usp-reruns=1281
+old implementation, real TAFENG:
+real TAFENG uut=0.003557 D_init=40665 batches=100 comparisons=101 mismatches=19 paths: ndb-rescans=0 case2-builds=0 usp-reruns=0 (20 s)
+old implementation, real C8T1S5I8N5K:
+real C8T1S5I8N5K uut=0.001132 D_init=27133 batches=100 comparisons=101 mismatches=31 paths: ndb-rescans=0 case2-builds=0 usp-reruns=0 (122 s)

@@ -1,0 +1,1 @@
+real TAFENG uut=0.003557 D_init=40665 batches=100 comparisons=101 mismatches=0 paths: ndb-rescans=432 case2-builds=82 usp-reruns=306 (25 s)

@@ -1,0 +1,1 @@
+real SIGN uut=0.065911 D_init=230 batches=100 comparisons=101 mismatches=0 paths: ndb-rescans=83121 case2-builds=17151 usp-reruns=65079 (57 s)

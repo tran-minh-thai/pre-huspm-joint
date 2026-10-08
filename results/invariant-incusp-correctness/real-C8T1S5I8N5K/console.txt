@@ -1,0 +1,1 @@
+real C8T1S5I8N5K uut=0.001132 D_init=27133 batches=100 comparisons=101 mismatches=0 paths: ndb-rescans=29527 case2-builds=27735 usp-reruns=91591 (92 s)
