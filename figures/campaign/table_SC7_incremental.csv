@@ -1,9 +1,7 @@
 dataset,variant,increments_done,runtime_s,rescans,blocks_read,mean_prelarge,final_patterns
-SIGN,Full,100,17.377,59,416835,764.46,141
-SIGN,-C5 (rescan every increment),100,29.783,100,0,768.35,141
-SIGN,-C4 (no block index),100,17.467,59,528655,764.46,141
-SIGN,-C2 (band fixed at LUT_min),100,17.606,59,416835,764.71,141
-C8T1S5I8N5K,Full,100,60.423,80,33607400,9984.86,3438
-C8T1S5I8N5K,-C5 (rescan every increment),100,74.448,100,0,10066.76,3438
-C8T1S5I8N5K,-C4 (no block index),100,57.752,80,270213200,9984.86,3438
-C8T1S5I8N5K,-C2 (band fixed at LUT_min),100,60.243,80,33607400,9984.86,3438
+SIGN,Full,100,17.354,59,415525,680.63,141
+SIGN,-C5 (rescan every increment),100,29.428,100,0,768.35,141
+SIGN,-C4 (no block index),100,17.718,59,527245,680.63,141
+C8T1S5I8N5K,Full,100,58.853,77,30344400,9939.62,3438
+C8T1S5I8N5K,-C5 (rescan every increment),100,73.529,100,0,10066.76,3438
+C8T1S5I8N5K,-C4 (no block index),100,59.627,77,268140400,9939.62,3438

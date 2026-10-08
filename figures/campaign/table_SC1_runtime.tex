@@ -1,19 +1,20 @@
 \begin{table}[t]
 \centering
-\caption{Runtime (s) on $D_{init}$ at each database's default threshold (SC1). \textbf{OOM}: out of memory at 48\,GB.}
+\caption{Runtime (s) on $D_{\mathrm{init}}$ at the default threshold, mean $\pm$ standard deviation over 3 runs.}
 \label{tab:sc1_runtime}
+\small\setlength{\tabcolsep}{4pt}
 \begin{tabular}{lrrrrrr}
 \toprule
-Dataset & USpan & HUSP-ULL & HUSP-SP & IncUSP-Miner+ & Pre-HUSPM & Proposed \\
+Dataset & USpan & \begin{tabular}[b]{@{}r@{}}HUSP-\\ULL\end{tabular} & HUSP-SP & \begin{tabular}[b]{@{}r@{}}IncUSP-\\Miner$^{+}$\end{tabular} & \begin{tabular}[b]{@{}r@{}}Pre-\\HUSPM\end{tabular} & \begin{tabular}[b]{@{}r@{}}Pre-HUSPM-\\Adaptive\end{tabular} \\
 \midrule
-SIGN & 2.68 & 1.07 & 1.50 & 1.72 & 0.82 & 0.23 \\
-LEVIATHAN & 7.13 & 18.41 & 3.31 & 20.69 & OOM & 0.61 \\
-FIFA & 658.25 & 313.62 & 364.33 & OOM & 251.64 & 53.91 \\
-BIBLE & 13.94 & 93.47 & 5.08 & 96.24 & 30.99 & 1.35 \\
-BMS1 & 1.09 & 0.38 & 0.33 & 0.33 & 0.45 & 0.13 \\
-KOSARAK & 46.00 & 17.28 & 10.61 & 11.42 & 5.58 & 1.09 \\
-C8T1S5I8N5K & 16.35 & 11.09 & 2.86 & 2.94 & 2.65 & 0.75 \\
-TAFENG & 19.00 & 14.20 & 1.63 & 0.68 & 0.24 & 0.17 \\
+SIGN & \begin{tabular}[t]{@{}r@{}}2.69\\{\scriptsize $\pm$0.01}\end{tabular} & \begin{tabular}[t]{@{}r@{}}1.10\\{\scriptsize $\pm$0.03}\end{tabular} & \begin{tabular}[t]{@{}r@{}}1.51\\{\scriptsize $\pm$0.01}\end{tabular} & \begin{tabular}[t]{@{}r@{}}1.72\\{\scriptsize $\pm$0.03}\end{tabular} & \begin{tabular}[t]{@{}r@{}}0.81\\{\scriptsize $\pm$<0.01}\end{tabular} & \begin{tabular}[t]{@{}r@{}}0.23\\{\scriptsize $\pm$<0.01}\end{tabular} \\
+LEVIATHAN & \begin{tabular}[t]{@{}r@{}}7.12\\{\scriptsize $\pm$0.16}\end{tabular} & \begin{tabular}[t]{@{}r@{}}17.2\\{\scriptsize $\pm$1.1}\end{tabular} & \begin{tabular}[t]{@{}r@{}}3.26\\{\scriptsize $\pm$0.04}\end{tabular} & \begin{tabular}[t]{@{}r@{}}20.9\\{\scriptsize $\pm$0.3}\end{tabular} & OOM & \begin{tabular}[t]{@{}r@{}}0.59\\{\scriptsize $\pm$0.03}\end{tabular} \\
+FIFA & \begin{tabular}[t]{@{}r@{}}656\\{\scriptsize $\pm$3}\end{tabular} & \begin{tabular}[t]{@{}r@{}}321\\{\scriptsize $\pm$11}\end{tabular} & \begin{tabular}[t]{@{}r@{}}368\\{\scriptsize $\pm$4}\end{tabular} & OOM & \begin{tabular}[t]{@{}r@{}}253\\{\scriptsize $\pm$1}\end{tabular} & \begin{tabular}[t]{@{}r@{}}54.3\\{\scriptsize $\pm$0.7}\end{tabular} \\
+BIBLE & \begin{tabular}[t]{@{}r@{}}14.0\\{\scriptsize $\pm$0.1}\end{tabular} & \begin{tabular}[t]{@{}r@{}}92.2\\{\scriptsize $\pm$1.2}\end{tabular} & \begin{tabular}[t]{@{}r@{}}5.08\\{\scriptsize $\pm$0.02}\end{tabular} & \begin{tabular}[t]{@{}r@{}}96.9\\{\scriptsize $\pm$0.5}\end{tabular} & \begin{tabular}[t]{@{}r@{}}30.8\\{\scriptsize $\pm$0.2}\end{tabular} & \begin{tabular}[t]{@{}r@{}}1.39\\{\scriptsize $\pm$0.04}\end{tabular} \\
+BMS1 & \begin{tabular}[t]{@{}r@{}}1.09\\{\scriptsize $\pm$<0.01}\end{tabular} & \begin{tabular}[t]{@{}r@{}}0.39\\{\scriptsize $\pm$0.01}\end{tabular} & \begin{tabular}[t]{@{}r@{}}0.33\\{\scriptsize $\pm$<0.01}\end{tabular} & \begin{tabular}[t]{@{}r@{}}0.32\\{\scriptsize $\pm$0.01}\end{tabular} & \begin{tabular}[t]{@{}r@{}}0.45\\{\scriptsize $\pm$<0.01}\end{tabular} & \begin{tabular}[t]{@{}r@{}}0.13\\{\scriptsize $\pm$<0.01}\end{tabular} \\
+KOSARAK & \begin{tabular}[t]{@{}r@{}}46.5\\{\scriptsize $\pm$0.5}\end{tabular} & \begin{tabular}[t]{@{}r@{}}17.3\\{\scriptsize $\pm$0.2}\end{tabular} & \begin{tabular}[t]{@{}r@{}}10.8\\{\scriptsize $\pm$0.3}\end{tabular} & \begin{tabular}[t]{@{}r@{}}11.7\\{\scriptsize $\pm$0.3}\end{tabular} & \begin{tabular}[t]{@{}r@{}}5.75\\{\scriptsize $\pm$0.27}\end{tabular} & \begin{tabular}[t]{@{}r@{}}1.09\\{\scriptsize $\pm$<0.01}\end{tabular} \\
+C8T1S5I8N5K & \begin{tabular}[t]{@{}r@{}}16.7\\{\scriptsize $\pm$0.3}\end{tabular} & \begin{tabular}[t]{@{}r@{}}11.2\\{\scriptsize $\pm$0.3}\end{tabular} & \begin{tabular}[t]{@{}r@{}}2.85\\{\scriptsize $\pm$0.01}\end{tabular} & \begin{tabular}[t]{@{}r@{}}2.92\\{\scriptsize $\pm$0.06}\end{tabular} & \begin{tabular}[t]{@{}r@{}}2.64\\{\scriptsize $\pm$0.02}\end{tabular} & \begin{tabular}[t]{@{}r@{}}0.72\\{\scriptsize $\pm$0.03}\end{tabular} \\
+TAFENG & \begin{tabular}[t]{@{}r@{}}19.0\\{\scriptsize $\pm$0.1}\end{tabular} & \begin{tabular}[t]{@{}r@{}}14.3\\{\scriptsize $\pm$0.1}\end{tabular} & \begin{tabular}[t]{@{}r@{}}1.60\\{\scriptsize $\pm$0.15}\end{tabular} & \begin{tabular}[t]{@{}r@{}}0.68\\{\scriptsize $\pm$0.02}\end{tabular} & \begin{tabular}[t]{@{}r@{}}0.22\\{\scriptsize $\pm$0.02}\end{tabular} & \begin{tabular}[t]{@{}r@{}}0.18\\{\scriptsize $\pm$0.02}\end{tabular} \\
 \bottomrule
 \end{tabular}
 \end{table}

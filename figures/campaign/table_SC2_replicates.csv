@@ -1,0 +1,9 @@
+dataset,algorithm,n_failed,n,total_s_mean,total_s_std,total_s_min,total_s_max
+BIBLE,Adaptive-Full,0,3,110.556,1.193,109.461,111.828
+BIBLE,Remine-from-scratch,0,3,184.863,2.994,181.482,187.178
+C8T1S5I8N5K,Adaptive-Full,0,3,56.551,1.375,55.697,58.137
+C8T1S5I8N5K,Remine-from-scratch,0,3,79.235,1.605,77.857,80.997
+SIGN,Adaptive-Full,0,3,17.533,0.158,17.383,17.698
+SIGN,Remine-from-scratch,0,3,30.572,0.509,29.995,30.955
+TAFENG,Adaptive-Full,0,3,5.846,0.054,5.813,5.908
+TAFENG,Remine-from-scratch,0,3,19.042,0.402,18.776,19.505
