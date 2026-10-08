@@ -26,6 +26,21 @@ they are, without correction. Counters are identical: 0 of 748 differ across the
 
 ## Memory - `memory/`
 
-Pending: the live set is compared once the memory arms re-measured on the new build are in
-(`results/campaign-mem-replicates/s0r1`: SC1 on SIGN, TAFENG, C8T1S5I8N5K, BMS1 and KOSARAK,
-all six algorithms; SC2 baselines on SIGN and TAFENG).
+The memory campaign's arms re-measured on the new build (`results/campaign-mem-replicates/s0r1`,
+38 arms, all on Temurin 25.0.4.1 as their logs record): SC1 on SIGN, TAFENG, C8T1S5I8N5K, BMS1
+and KOSARAK, all six algorithms; SC2's baselines on SIGN and TAFENG.
+
+| comparison | cells | factor | 95% interval |
+|---|---:|---:|---|
+| live set SC1: old build / new build | 120 | 0.9988 | 0.9652 - 1.0268 |
+| peak live set SC2: old build / new build | 8 | 0.9768 | 0.9496 - 0.9982 |
+
+SC1 has no difference: the per-cell ratio has median 1.000 and the per-algorithm medians run
+from 1.000 to 1.012. In SC2 the median live set over the stream agrees within 0.989 - 1.016 for
+all eight arms, and the largest, IncUSP-Miner+ on SIGN, within 0.04 percent; the factor below 1
+comes from the peaks of small arms, which differ by a few MB (Remine-from-scratch on TAFENG,
+69 against 77 MB). A peak is one sample, so it carries the sampling noise of the live-set
+measurement. The measured live sets are used as they are. Counters: 0 of 480 differ.
+
+A single cell's live set can move far between two measurements - 0.84 to 1.80 among the SC1
+cells of at least 50 MB - so memory claims rest on geometric means over cells, not on one cell.

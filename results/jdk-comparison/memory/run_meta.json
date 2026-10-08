@@ -1,0 +1,16 @@
+{
+  "command": "~/.venvs/pre-huspm-adaptive/bin/python analysis/jdk_comparison.py --out results/jdk-comparison/memory",
+  "path_substitutions": 1,
+  "build_dir": "build-jdk",
+  "git_commit": "493781524119b4e6e14b50b7c2052f2c122b96d4",
+  "tree": "clean",
+  "source_sha256": "e6a3dcc37483c6ccaad172a94db25b7de89ff43823c82baf4b0ef22bdbb569b0",
+  "source_files": 29,
+  "java": "openjdk version \"26.0.1\" 2026-04-21",
+  "os": "Darwin 27.0.0 (macOS-27.0.1-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-10-08T20:48:18",
+  "end": "2026-10-08T20:48:19",
+  "exit_code": 0
+}

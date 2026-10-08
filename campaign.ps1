@@ -351,7 +351,9 @@ while ($true) {
     $rows = if ($csv) { (Get-Content $csv.FullName | Measure-Object -Line).Lines - 1 } else { 0 }
     # The commit and the operating system go into DONE as well: the runner's log has the JVM,
     # but nothing recorded which Windows build or which commit an arm ran on.
-    $commit = if ($NoGit) { 'unknown' } else { (git rev-parse --short HEAD 2>$null | Out-String).Trim() }
+    # The last commit that changed src/: HEAD moves with every result this script commits, so
+    # it would name a results commit rather than the code the arm ran.
+    $commit = if ($NoGit) { 'unknown' } else { (git log -1 --format=%h -- src 2>$null | Out-String).Trim() }
     $treeState = if ($NoGit) { 'unknown' } elseif ((git status --porcelain -- src 2>$null | Out-String).Trim()) { 'src-modified' } else { 'clean' }
     $osText = [Environment]::OSVersion.VersionString
     $line = "host=$host_ finished=$(Get-Date -f 'yyyy-MM-dd HH:mm:ss') seconds=$secs rc=$($p.ExitCode) rows=$rows capped=$capped commit=$commit src=$treeState os=`"$osText`""
