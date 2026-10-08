@@ -79,6 +79,12 @@ param(
     # carry the repeat in their repeat column and the seed in their seed column.
     [int]      $Repeat = 0,
     [int]      $SeedIndex = 0,
+    # The exact JDK every arm runs on: runtime version and vendor, not just the major
+    # version. Two builds of JDK 25 (Microsoft 25.0.4 and Eclipse Temurin 25.0.4.1) once ran
+    # arms of the same tables because only "25" was checked, and the logs of the earlier arms
+    # did not say which. Change these only together with re-measuring what the tables hold.
+    [string]   $JdkRuntime = '25.0.4.1+1-LTS',
+    [string]   $JdkVendor  = 'Eclipse Adoptium',
     [switch]   $List,
     [switch]   $NoGit
 )
@@ -191,13 +197,14 @@ $replicate = ($Repeat -gt 0 -or $SeedIndex -gt 0)
 if ($Repeat -lt 0 -or $SeedIndex -lt 0 -or $SeedIndex -gt 4) {
     throw "Repeat must be 0 or more and SeedIndex 0 to 4. Found Repeat=$Repeat SeedIndex=$SeedIndex."
 }
-if ($replicate -and $MemMode -eq 'live') {
-    throw "Replicates are timing runs. The memory campaign has no replicate tree."
-}
-$top   = if ($MemMode -eq 'live') { 'results/campaign-mem' }
+# Memory replicates have a tree of their own too, results/campaign-mem-replicates/s<k>r<n>,
+# so a re-measured live set never lands in the memory campaign's main tree.
+$top   = if ($MemMode -eq 'live' -and $replicate) { "results/campaign-mem-replicates/s${SeedIndex}r${Repeat}" }
+         elseif ($MemMode -eq 'live') { 'results/campaign-mem' }
          elseif ($replicate) { "results/campaign-replicates/s${SeedIndex}r${Repeat}" }
          else { 'results/campaign' }
-$label = if ($MemMode -eq 'live') { "mem $Scenario" }
+$label = if ($MemMode -eq 'live' -and $replicate) { "mem s${SeedIndex}r${Repeat} $Scenario" }
+         elseif ($MemMode -eq 'live') { "mem $Scenario" }
          elseif ($replicate) { "s${SeedIndex}r${Repeat} $Scenario" }
          else { $Scenario }
 $root  = "$top/$Scenario"
@@ -240,7 +247,15 @@ $ver = (& $java -version 2>&1 | Select-Object -First 1 | Out-String).Trim()
 # API removed since 21, so the pin is about comparability, not compilation. Changing this
 # number invalidates every arm already measured: clear results/campaign so they are queued
 # again instead of being mixed with the new ones.
-if ($ver -notmatch '"25\.') { throw "This study is pinned to JDK 25. Found: $ver" }
+$props = & $java -XshowSettings:properties -version 2>&1 | ForEach-Object { "$_" }
+$runtime = ($props | Where-Object { $_ -match '^\s*java\.runtime\.version = ' } | Select-Object -First 1) -replace '^\s*java\.runtime\.version = ', ''
+$vendor  = ($props | Where-Object { $_ -match '^\s*java\.vendor = ' } | Select-Object -First 1) -replace '^\s*java\.vendor = ', ''
+if ("$runtime".Trim() -ne $JdkRuntime) {
+    throw "This study is pinned to JDK runtime $JdkRuntime. $java reports java.runtime.version '$runtime'."
+}
+if ("$vendor".Trim() -ne $JdkVendor) {
+    throw "This study is pinned to JDK vendor '$JdkVendor'. $java reports java.vendor '$vendor'."
+}
 
 if ($List) {
     Sync-Repo
