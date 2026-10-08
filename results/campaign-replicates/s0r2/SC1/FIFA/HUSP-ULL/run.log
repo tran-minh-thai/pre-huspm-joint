@@ -1,0 +1,15 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC1]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | block.size=100 | timeout.min=120 | repeats=1 repeat.index=2 | seed.index=0
+
+--- [SC1] Static baseline on D_init (50%) ---
+>> RUNNING HUSP-ULL/FIFA/SC1_su=0.056234#0  (heap free=558MB / total=768MB / max=49152MB)
+[HUSP-ULL/FIFA/SC1_su=0.056234#0] OK t=405625ms cand=225776770 pat=42 heapDelta=1172MB
+>> RUNNING HUSP-ULL/FIFA/SC1_su=0.059637#0  (heap free=563MB / total=768MB / max=49152MB)
+[HUSP-ULL/FIFA/SC1_su=0.059637#0] OK t=333326ms cand=175918193 pat=18 heapDelta=1125MB
+>> RUNNING HUSP-ULL/FIFA/SC1_su=0.067073#0  (heap free=565MB / total=768MB / max=49152MB)
+[HUSP-ULL/FIFA/SC1_su=0.067073#0] OK t=224997ms cand=106022730 pat=5 heapDelta=1081MB
+>> RUNNING HUSP-ULL/FIFA/SC1_su=0.075436#0  (heap free=566MB / total=768MB / max=49152MB)
+[HUSP-ULL/FIFA/SC1_su=0.075436#0] OK t=150559ms cand=62989028 pat=1 heapDelta=1071MB
+=== ALL SCENARIOS DONE (1126.8s) ===
