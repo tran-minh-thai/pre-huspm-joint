@@ -72,6 +72,10 @@ after each increment.
 
 ## What each scenario costs
 
+> The IncUSP-Miner+ arms of SC1, SC2, SC3 and SC5 (timing, memory and replicates) and the
+> proposal's SC4 arm on C8T1S5I8N5K are being re-measured; the costs and failures below that
+> name them refer to the previous implementation.
+
 Machine time on `PC-THAI`, summed over the arms that finished (from the `seconds` field of
 each `DONE`), one repeat.
 

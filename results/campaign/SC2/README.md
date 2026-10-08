@@ -12,13 +12,13 @@ test, which is. Both accumulate since the last rescan.
 
 | database | Pre-HUSPM-Adaptive | Pre-HUSPM-SWUmax | Pre-HUSPM-TSU | Remine | IncUSP-Miner+ |
 |---|---|---|---|---|---|
-| SIGN | 100/100 | 100/100 | 100/100 | 100/100 | 100/100 |
-| LEVIATHAN | 100/100 | 0/100, out of memory on `D_init` | 0/100, out of memory on `D_init` | 100/100 | 74/100, out of memory |
-| FIFA | 100/100 | 100/100 | 0/100, deferred, not finished within 8 h | 100/100 | 0/100, out of memory on `D_init` |
-| BIBLE | 100/100 | 100/100 | 100/100 | 100/100 | 40/100, out of memory |
-| KOSARAK | 100/100 | 100/100 | 0/100, deferred, not finished within 8 h | 100/100 | 11/100, out of memory |
-| C8T1S5I8N5K | 100/100 | 100/100 | 100/100 | 100/100 | 100/100 |
-| TAFENG | 100/100 | 100/100 | 100/100 | 100/100 | 100/100 |
+| SIGN | 100/100 | 100/100 | 100/100 | 100/100 | 0/100, not run |
+| LEVIATHAN | 100/100 | 0/100, out of memory on `D_init` | 0/100, out of memory on `D_init` | 100/100 | 0/100, not run |
+| FIFA | 100/100 | 100/100 | 0/100, deferred, not finished within 8 h | 100/100 | 0/100, not run |
+| BIBLE | 100/100 | 100/100 | 100/100 | 100/100 | 0/100, not run |
+| KOSARAK | 100/100 | 100/100 | 0/100, deferred, not finished within 8 h | 100/100 | 0/100, not run |
+| C8T1S5I8N5K | 100/100 | 100/100 | 100/100 | 100/100 | 0/100, not run |
+| TAFENG | 100/100 | 100/100 | 100/100 | 100/100 | 0/100, not run |
 
 ## Runtime, summed over the increments that completed
 
@@ -29,13 +29,13 @@ proposal and Remine over three runs is in the next table.
 
 | database | Pre-HUSPM-Adaptive | rescans | Pre-HUSPM-SWUmax | Pre-HUSPM-TSU | Remine | IncUSP-Miner+ |
 |---|---:|---:|---:|---:|---:|---:|
-| SIGN | **17.5** | 59 | 26.5 | 61.0 | 30.0 | 94.2 |
-| LEVIATHAN | 95.2 | 98 | - | - | **89.9** | (174, 74 increments) |
+| SIGN | **17.5** | 59 | 26.5 | 61.0 | 30.0 | - |
+| LEVIATHAN | 95.2 | 98 | - | - | **89.9** | - |
 | FIFA | 2,095 | 27 | **1,310** | - | 7,726 | - |
-| BIBLE | **109** | 63 | 139 | 2,920 | 181 | (55.3, 40 increments) |
-| KOSARAK | 4,673 | 100 | **1,677** | - | 4,563 | (68.6, 11 increments) |
-| C8T1S5I8N5K | **55.7** | 77 | 230 | 309 | 81.0 | 80.8 |
-| TAFENG | **5.8** | 52 | 7.0 | 26.4 | 18.8 | 8.9 |
+| BIBLE | **109** | 63 | 139 | 2,920 | 181 | - |
+| KOSARAK | 4,673 | 100 | **1,677** | - | 4,563 | - |
+| C8T1S5I8N5K | **55.7** | 77 | 230 | 309 | 81.0 | - |
+| TAFENG | **5.8** | 52 | 7.0 | 26.4 | 18.8 | - |
 
 ### Three runs
 
@@ -80,7 +80,7 @@ of 100 increments and still finish faster than remining.
 **Beyond it**: LEVIATHAN, 2 of 100 within budget, KOSARAK, 0 of 100 within budget.
 Maintenance degenerates into remining: LEVIATHAN 95.2 s against remining's 89.9 s (+5.8 %); KOSARAK 4,673 s against remining's 4,563 s (+2.4 %),
 one run each. Two runs of one SC1 configuration on the same JDK differ by a factor between
-0.83 and 1.19 (130 configurations of at least one second), so differences
+0.83 and 1.17 (109 configurations of at least one second), so differences
 of a few percent between single runs are not resolved here.
 
 ## KOSARAK cannot be moved by tuning

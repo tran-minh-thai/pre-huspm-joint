@@ -1,5 +1,9 @@
 # SC1, static mining on `D_init`
 
+> IncUSP-Miner+ is being re-measured after its reimplementation (commit 899dd59, checked in
+> `results/invariant-incusp-correctness`). Its columns below come from the previous
+> implementation and are replaced when the re-measurement is in.
+
 Eight databases, six algorithms, four thresholds each: 192 runs. `D_init` and the thresholds
 come from `common.Datasets`. Measured on `PC-THAI`, JDK 25, `-Xmx48g`, one JVM per arm, one
 repeat, the four thresholds run lowest first in the same JVM for every algorithm alike.

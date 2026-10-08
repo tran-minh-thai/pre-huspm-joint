@@ -14,7 +14,7 @@ The proposal is the fastest arm in 46 of 48 cells.
 |---|---:|---:|---:|
 | Pre-HUSPM-TSU | 3.88 | 32 | 0 |
 | Pre-HUSPM-SWUmax | 2.98 | 32 | 0 |
-| IncUSP-Miner+ | 2.72 | 32 | 0 |
+| IncUSP-Miner+ | nan | 0 | 0 |
 | Remine | 1.30 | 48 | 2 |
 
 ## The finer the cut, the wider the gap

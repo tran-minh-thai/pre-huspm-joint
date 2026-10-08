@@ -1,5 +1,9 @@
 # SC1 memory: the live set of a static mine on `D_init`
 
+> IncUSP-Miner+ is being re-measured after its reimplementation (commit 899dd59, checked in
+> `results/invariant-incusp-correctness`). Its columns below come from the previous
+> implementation and are replaced when the re-measurement is in.
+
 The same 192 runs as `results/campaign/SC1`, measured for memory instead of time. At every
 sample the runner forces a full collection and reads the heap immediately after, so what is
 recorded is the live set, not used heap; runtimes are void and written as -3. The wait between

@@ -14,13 +14,13 @@ MB.
 
 | database | Pre-HUSPM-Adaptive | Pre-HUSPM-SWUmax | Pre-HUSPM-TSU | Remine | IncUSP-Miner+ |
 |---|---:|---:|---:|---:|---:|
-| SIGN | 13 | 36 | 37 | 17 | 12,836 |
-| LEVIATHAN | 47 | deferred, out of memory on `D_init` | deferred, out of memory on `D_init` | 34 | 44,645 at 74, then out of memory |
-| FIFA | 42 | 503 | deferred, not finished within 8 h | 45 | out of memory on `D_init` |
-| BIBLE | 84 | 379 | 1,199 | 53 | 43,566 at 40, then out of memory |
-| KOSARAK | 532 | 874 | deferred, not finished within 8 h | 400 | 44,006 at 11, then out of memory |
-| C8T1S5I8N5K | 81 | 163 | 161 | 98 | 15,790 |
-| TAFENG | 90 | 52 | 58 | 65 | 1,067 |
+| SIGN | 13 | 36 | 37 | 17 | not run |
+| LEVIATHAN | 47 | deferred, out of memory on `D_init` | deferred, out of memory on `D_init` | 34 | not run |
+| FIFA | 42 | 503 | deferred, not finished within 8 h | 45 | not run |
+| BIBLE | 84 | 379 | 1,199 | 53 | not run |
+| KOSARAK | 532 | 874 | deferred, not finished within 8 h | 400 | not run |
+| C8T1S5I8N5K | 81 | 163 | 161 | 98 | not run |
+| TAFENG | 90 | 52 | 58 | 65 | not run |
 
 ## Peak live set over the stream
 
@@ -28,10 +28,10 @@ MB.
 
 | database | Pre-HUSPM-Adaptive | Pre-HUSPM-SWUmax | Pre-HUSPM-TSU | Remine | IncUSP-Miner+ |
 |---|---:|---:|---:|---:|---:|
-| SIGN | 17 | 89 | 95 | 21 | 12,836 |
-| LEVIATHAN | 70 | deferred, out of memory on `D_init` | deferred, out of memory on `D_init` | 61 | 44,645 before running out of memory |
-| FIFA | 153 | 946 | deferred, not finished within 8 h | 163 | out of memory on `D_init` |
-| BIBLE | 183 | 2,105 | 2,527 | 170 | 43,566 before running out of memory |
-| KOSARAK | 1,675 | 2,811 | deferred, not finished within 8 h | 1,539 | 44,006 before running out of memory |
-| C8T1S5I8N5K | 189 | 441 | 448 | 213 | 15,790 |
-| TAFENG | 96 | 167 | 182 | 69 | 1,067 |
+| SIGN | 17 | 89 | 95 | 21 | not run |
+| LEVIATHAN | 70 | deferred, out of memory on `D_init` | deferred, out of memory on `D_init` | 61 | not run |
+| FIFA | 153 | 946 | deferred, not finished within 8 h | 163 | not run |
+| BIBLE | 183 | 2,105 | 2,527 | 170 | not run |
+| KOSARAK | 1,675 | 2,811 | deferred, not finished within 8 h | 1,539 | not run |
+| C8T1S5I8N5K | 189 | 441 | 448 | 213 | not run |
+| TAFENG | 96 | 167 | 182 | 69 | not run |
