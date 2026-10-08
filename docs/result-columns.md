@@ -1,200 +1,204 @@
-# Codebook các thông số thực nghiệm (CSV - 30 cột)
+# Result columns
 
-Tài liệu này giải thích **ý nghĩa, công thức, đơn vị, thuật toán ghi nhận** của từng cột
-trong `results/SC*.csv`, để đọc/diễn giải chính xác. Mọi độ đo được **đo độc lập** (xem §1).
+Every result CSV under `results/campaign*/<SC>/<DATABASE>/<ARM>/` has one row per measured
+mining call and the 47 columns below, in this order. The header is written by
+`ExperimentMetrics.getHeader()` and each row by `ExperimentMetrics.toCsvRow()`. A column that
+does not apply to an algorithm holds 0 unless stated otherwise.
 
-## Ký hiệu
-| Ký hiệu | Nghĩa |
+## Notation
+
+| Symbol | Meaning |
 |---|---|
-| `U(D)` | TSU - tổng lợi ích CSDL hiện hành = Σ_{s∈D} u(s) |
-| `u(s)` | lợi ích (utility) của chuỗi s |
-| `Su` | ngưỡng HU tương đối (theo dataset) |
-| `Sl_min` | tỉ lệ sàn pre-large CỐ ĐỊNH = 0.8·Su |
-| `ξ` (uut) | ngưỡng HU tuyệt đối = `Su·U(D)` |
-| `B` | lô (batch) dữ liệu gia tăng δD |
-| `swuMax` | max u(s) trong lô = lợi ích chuỗi lớn nhất của lô |
+| `TSU` | total utility of the current database, the sum of `u(s)` over its sequences |
+| `UUT` | upper utility threshold, a fraction of `TSU` (`Su` in the code); a pattern `X` is high-utility when `u(X) >= UUT * TSU` |
+| `r_l`, `LUT_min` | floor ratio and floor, `LUT_min = r_l * UUT` (`Sl_min` in the code) |
+| `TSU_ref` | `TSU` at the last rescan or at the initial mine |
+| `I`, `D` | utility inserted and deleted since the last rescan |
+| `A_i` | utility of the sequences containing item `i` inserted since the last rescan |
 
----
+## Status of a row
 
-## §1. Phương pháp đo - ĐỘC LẬP & CHÍNH XÁC
-- **Cô lập thuật toán**: mỗi thuật toán chạy trong scope riêng, `forceFullGC()` TRƯỚC mỗi
-  lần đo ⇒ thời gian/bộ nhớ KHÔNG nhiễm chéo giữa các thuật toán.
-- **runtime_ms**: wall-clock CHỈ của tác vụ khai phá (chạy trong ExecutorService) - KHÔNG
-  gồm thời gian nạp dataset, KHÔNG gồm GC chuẩn bị.
-- **peak_heap_mb**: đo bằng **sampler daemon poll 50ms** trong suốt lúc chạy → lấy ĐỈNH heap
-  THẬT, trừ baseline (heap sau GC trước khi chạy). Khác hẳn "delta cuối" (vốn bỏ sót đỉnh
-  transient đã bị GC).
-- **candidate_count (Adaptive)**: **reset MỖI LÔ** ⇒ phản ánh chi phí TỪNG lô (không cộng dồn).
-- **Đếm cắt tỉa (pruned_*)**: counter nguyên tử, mỗi cột đếm MỘT kỹ thuật riêng (không trùng).
-
-### Sentinel & trạng thái
-| `runtime_ms` | Ý nghĩa |
+| `runtime_ms` | Meaning |
 |---|---|
-| `≥ 0` | hoàn thành bình thường (ms) |
-| `-2` | OT - vượt timeout (mặc định 120 phút, xem `-Dtimeout.min`) |
-| `-1` | thất bại (OOM / budget / exception / skipped) |
+| 0 or more | the call completed; wall-clock milliseconds |
+| `-1` | the call failed (out of memory, stack overflow, exception), or was skipped because an earlier call of the same arm failed or the memory guard refused it |
+| `-2` | the call exceeded the time limit (`-Dtimeout.min`, 120 minutes by default) |
+| `-3` | the call completed in live memory mode, where the timing is not valid |
 
-`op_type` mang nhãn scenario+pha, có thể kèm hậu tố: `_OT`, `_OOM`, `_BUDGET` (DNF do vượt
-ngân sách ứng viên), `_FAILED`, `_SKIPPED_POISONED` (lô bị bỏ sau khi thuật toán đã lỗi).
+`op_type` names the scenario and phase. A suffix records how a call ended: `_OT` (time limit),
+`_OOM` (out of memory or stack overflow), `_BUDGET` (the proposal's candidate or time budget,
+active only when `-Dadapt.rescanBudget` or `-Dadapt.rescanMillis` is set), `_FAILED` (any other
+error), `_SKIPPED_POISONED` (not run: an earlier call of the arm failed, or fewer than 10% of
+the heap was free before the call). A row without a suffix completed.
 
----
+## Columns
 
-## §2. Bảng 30 cột
-
-Cột | Ý nghĩa | Công thức / nguồn | Đơn vị | Thuật toán ghi | Loại
----|---|---|---|---|---
-`run_id` | định danh dòng | `algo_dataset_optype_iter` | - | tất cả | dẫn xuất
-`timestamp` | thời điểm ghi | ISO-8601 | - | tất cả | đo
-`algorithm` | tên thuật toán | - | - | tất cả | -
-`dataset` | tên tập dữ liệu | - | - | tất cả | -
-`iteration` | chỉ số lô/lần | 0 = INIT/static; 1..K = lô gia tăng | - | tất cả | -
-`runtime_ms` | thời gian khai phá | wall-clock; -2=OT, -1=fail | ms | tất cả | **đo** (độc lập)
-`peak_heap_mb` | đỉnh heap THẬT - baseline | `max(usedₜ) - heapBefore` (sampler 50ms) | MB | tất cả | **đo** (độc lập)
-`candidate_count` | số ứng viên SINH RA (**Sinh ra là đếm**): mỗi mở rộng (k+1)-pattern duy nhất (I/S-ext) tại mỗi node được đếm **TRƯỚC MỌI cắt tỉa** (EUCS/SWU/PEU/IIP/TSU). NHẤT QUÁN mọi thuật toán ⇒ **bảo toàn: cand = Σ pruned_* + survivors**. Pruning mạnh KHÔNG làm cand nhỏ đi - nó làm `pruned_*` lớn lên (vd EUCS của Adaptive). **BẰNG NHAU trong cùng nhóm ngưỡng** (định lý phản-đơn-điệu): nhóm large-only {USpan, HUSP-ULL, IncUSP} sinh giống nhau (ngưỡng ξ); nhóm pre-large {Pre-HUSPM, Adaptive} sinh giống nhau & LỚN HƠN (giữ ứng viên xuống sàn Sl·U(D)<ξ để đón lô tới). | counter (Adaptive: reset/lô) | ứng viên | tất cả | **đo**
-`explored_nodes` | số mẫu **THỰC SỰ khai triển/materialize** (đệ quy vào) - đếm tại entry đệ quy, SAU khi đã qua bộ lọc mở rộng. Đo **HIỆU QUẢ TỈA thật** (KHÁC `candidate_count`): tỉa tốt ⇒ explored ≪ candidate. **Pre-HUSPM: explored = candidate** (materialize MỌI extension trước khi xét). **Adaptive: explored ≪ candidate** vì EUCS lọc TRƯỚC materialize (C1) - vd SIGN@0.025: cùng sinh 67.2M ứng viên nhưng Pre-HUSPM khai triển 67.2M còn Adaptive chỉ 0.41M (≈163×). | counter (Adaptive: reset/lô) | mẫu | tất cả | **đo**
-`total_patterns_found` | số HUSP (mẫu LỚN) | `|largeMap|` = #{p : u(p) ≥ ξ} | mẫu | tất cả | **đo**
-`pruned_swu` | loại bởi SWU | counter | lần | USpan, HUSP-ULL | **đo**
-`pruned_depth` | loại bởi chặn độ sâu | counter | lần | USpan | **đo**
-`pruned_lar` | loại bởi Look-Ahead Removing | counter | lần | HUSP-ULL | **đo**
-`pruned_iip` | loại bởi Irrelevant-Item (PEU) | counter | lần | HUSP-ULL | **đo**
-`pruned_tsu` | loại bởi cận TSU | counter | lần | IncUSP-Miner+ | **đo**
-`pruned_peu` | loại bởi cận **SWU_proj (=PEU)** - projected SWU đúng bài Yan2025 (≠ SWU toàn cục) | counter | lần | Pre-HUSPM | **đo**
-`pruned_value` | **C1**: số mục mở rộng bị cận giá trị PEU gộp ($\IUB$) loại (áp trước khi hiện thực hoá) | counter | lần | Adaptive | **đo**
-`pruned_iub` | **C3**: loại nhánh bởi cận IUB | counter | lần | Adaptive | **đo**
-`lut_dyn` | **C2**: ngưỡng pre-large động | `ξ - δ_D` | utility | Adaptive | **đo**
-`cub_val` | **C5**: bộ đệm lợi ích tích luỹ | Σ u(B) (chèn) / Σ|u(B)| (xoá) từ rescan gần nhất | utility | Adaptive | **đo**
-`cub_triggered` | **C5**: lô này có kích hoạt rescan | bool (chèn: `swuMax>F`; xoá: `cub>F_del`) | bool | Adaptive | **đo**
-`op_type` | nhãn scenario/pha (+hậu tố lỗi) | - | - | tất cả | -
-`prelarge_count` | số mẫu Tiền-Lớn (PSWU) | Pre-HUSPM (Đ.n12 Yan2025): #{p : Sl·U(D) ≤ SWU_proj(p) < ξ}; Adaptive: #{p : lut ≤ u(p) < ξ} | mẫu | Pre-HUSPM, Adaptive | **đo**
-`uut_val` | ngưỡng HU tuyệt đối ξ | `Su · U(D)` | utility | Adaptive | **đo**
-`sft_val` | cận an toàn rescan (xem ghi chú⁺) | chèn: `((Su-Sl_min)/(1-Su))·U(D)` ; xoá: `((Su-Sl_min)/Su)·U(D)` ; Pre-HUSPM: `((Su-Sl)/(1-Su))·U(D)` | utility | Pre-HUSPM, Adaptive | **đo**
-`rescan_count` | số lần rescan tích luỹ | counter | lần | Pre-HUSPM, Adaptive | **đo**
-`blocks_read` | **C4**: số block ĐỌC khi đánh giá pattern | counter (pha gia tăng) | block | Adaptive | **đo**
-`blocks_skipped` | **C4**: số block BỎ QUA nhờ Block-Index | counter (pha gia tăng) | block | Adaptive | **đo**
-`sigma2` | **C2**: phương sai lợi ích lô | `σ² = (1/|B|) Σ_{s∈B}(u(s)-ū)²` | utility² | Adaptive | **đo**
-`rho` | **C2**: độ lệch lô | `ρ = swuMax / Σ_{s∈B} u(s)` | tỉ lệ | Adaptive | **đo**
-
-> Cột không áp dụng cho một thuật toán sẽ ghi `0` (vd USpan không có pre-large ⇒ `prelarge_count=0`).
-
-⁺ **Ghi chú `sft_val`**: là cận an toàn pre-large quyết định khi nào rescan. Công thức **phụ
-thuộc PHA** (chèn vs xoá vs baseline Pre-HUSPM - bảng trên). Ở pha mine-đơn (SC1/SC3/SC4/SC7
-init) cột này ghi độ-rộng-band tối đa `ξ-lut_min` và KHÔNG dùng cho quyết định nào → **chỉ so
-sánh `sft_val` trong PHA GIA TĂNG**.
-
-### Adaptive columns under the joint rule (`trigger_rule = joint`, the default)
-
-Rows written with `trigger_rule = joint` read the proposal's columns as follows. Rows with
-`iaumax`, `cub` or `swumax` keep the definitions above.
-
-| Column | Meaning under `joint` |
-|---|---|
-| `iau_max` | the rescan test quantity at the decision, `max_i A_i - UUT*I + UUT*D`, taken before the counters are reset |
-| `sft_val` | the bound it is compared with, `(UUT - LUT_min) * TSU_ref`, on insertion and deletion alike |
-| `cub_triggered` | `iau_max > sft_val` (always true with C5 off) |
-| `lut_dyn` | `L_r = LUT_min * TSU_ref`, the floor a rescan mines at; the drop floor of a pattern `X` is `L_r + min_{i in X} A_i` and is not stored |
-| `sigma2`, `rho` | 0: not computed |
-| `kappa`, `delta0` | `NaN`: not used |
-| `iau_tightness` | `cub_val / max_i A_i`, kept for comparison with the earlier rule; not used by `joint` |
-
-The operating-region ratio of an increment is `iau_max / sft_val`; an increment rescans exactly
-when it exceeds 1.
-
----
-
-## §3. Độ đo DẪN XUẤT (người đọc tự tính từ cột thô - đảm bảo tính độc lập của dữ liệu gốc)
-| Độ đo | Công thức | Ý nghĩa |
-|---|---|---|
-| Speedup | `runtime_ms(baseline) / runtime_ms(Proposed)` | hệ số tăng tốc |
-| Throughput | `total_patterns_found / (runtime_ms/1000)` | mẫu/giây |
-| Tỉ lệ skip (C4) | `blocks_skipped / (blocks_read + blocks_skipped)` | hiệu quả Block-Index |
-| Hiệu quả tỉa | `pruned_* / candidate_count` | tỉ lệ cắt tỉa |
-| **Tỉ lệ materialize** | `explored_nodes / candidate_count` | phần ứng viên PHẢI khai triển (thấp = tỉa-trước-materialize tốt; Adaptive≪Pre-HUSPM=1.0) |
-| Completeness | `total_patterns_found` so với GOLD (full re-mine ở ξ) | tính đầy đủ |
-| δ_D (độ rộng band) | `uut_val - lut_dyn` | độ rộng band pre-large (KHÔNG lưu cột riêng - dẫn xuất) |
-| Tần suất rescan | `rescan_count / số lô` | mức re-mine |
-
-> **Nguyên tắc độc lập**: mọi cột §2 (trừ `delta_d`) là **đo/đếm trực tiếp, độc lập**; các độ đo
-> phái sinh ở §3 KHÔNG lưu sẵn để tránh dư thừa/sai lệch - người đọc tính từ cột thô khi cần.
-
----
-
-## §4. Ánh xạ Đóng góp ↔ Metric (cho phần Ablation SC7)
-| Đóng góp | Metric trực tiếp |
-|---|---|
-| **C1** Áp cận trước materialize | `pruned_value`, **`explored_nodes`** (lọc-trước-materialize: Adaptive ≪ Pre-HUSPM dù cùng `candidate_count`) |
-| **C2** LUT_dyn | `lut_dyn`, `sigma2`, `rho` (δ_D = `uut_val - lut_dyn`) |
-| **C3** IUB | `pruned_iub` (+ candidate_count khi ablation `no_IUB`) |
-| **C4** Block-Index | `blocks_read`, `blocks_skipped`, tỉ lệ skip |
-| **C5** Adaptive rescan | `rescan_count`, `cub_val`, `cub_triggered`, `sft_val` (+ runtime khi `C5_off`) |
-
-## Memory measurement columns
-
-Two different quantities are recorded, and they must never be compared with each other.
+### Identification
 
 | Column | Meaning |
 |---|---|
-| `mem_mode` | `used` or `live`; says which quantity the row's memory columns hold |
-| `peak_heap_mb` | **used heap**: peak of `totalMemory - freeMemory` sampled every 50 ms, minus the post-GC baseline. Includes garbage that had not been collected yet. |
-| `mem_live_mb` | **live set**: peak of the used heap read immediately after a forced full collection. Only filled when `mem_mode = live`. |
-| `mem_retained_mb` | live set at the end of the call |
-| `gc_forced` | number of forced collections during the call |
-| `wall_ms_perturbed` | real wall-clock of a live-mode call; void as a performance figure |
-| `allocated_mb` | total bytes the mining thread allocated. Deterministic, independent of GC timing. `-1` when unavailable. |
+| `run_id` | `<algorithm>_<dataset>_<op_type>_<iteration>`, built before the call starts |
+| `timestamp` | local time when the row was created, at the start of the call, ISO-8601 |
+| `algorithm` | algorithm or arm name; SC4 writes `Pre-HUSPM[sl=<r_l>]` and `Adaptive[sl=<r_l>]` inside the arm directories `Pre-HUSPM` and `Adaptive-Full` |
+| `dataset` | database name |
+| `iteration` | 0 for the initial or static mine; 1 to K for an increment; 1 to 20 for an SC6 operation |
 
-### Why `peak_heap_mb` is not the memory metric
+### Cost and output
 
-`peak_heap_mb` counts uncollected garbage, so it measures when the collector happened to
-run rather than what the algorithm needs to hold. Two consequences follow.
+| Column | Meaning |
+|---|---|
+| `runtime_ms` | wall-clock time of the mining call alone, run on its own worker thread; loading the database is excluded. Negative values are statuses (above) |
+| `peak_heap_mb` | used mode: peak of `totalMemory - freeMemory`, sampled every 50 ms during the call, minus the used heap after a collection at the start of the call. It includes garbage not yet collected (see below). Not sampled in live mode |
+| `candidate_count` | extensions generated before any pruning. The proposal and Pre-HUSPM reset it at every call, so an increment row reports that increment's cost. Pre-HUSPM counts every node it enters, so for Pre-HUSPM it equals `explored_nodes` |
+| `explored_nodes` | patterns whose node is entered for expansion, after the extension filter. Strong pruning before materialisation gives `explored_nodes` far below `candidate_count` |
+| `total_patterns_found` | high-utility patterns, `u(X) >= UUT * TSU` |
 
-It grows with the heap. Same machine, same dataset (SIGN), same algorithm (Pre-HUSPM),
-same threshold (0.025), only `-Xmx` differs:
+### Pruning counters
 
-| `-Xmx` | `peak_heap_mb` | `mem_live_mb` | `allocated_mb` |
-|---|---:|---:|---:|
-| 1g | 338 | 299 | 6909 |
-| 2g | 545 | 299 | 6909 |
-| 3g | 619 | 301 | 6909 |
+Each column counts one pruning rule. Only the algorithms listed write a non-zero value.
 
-The used-heap figure nearly doubles for identical work; the live set moves by 0.7 percent
-and the allocation total is identical.
+| Column | USpan | HUSP-ULL | HUSP-SP | IncUSP-Miner+ | Pre-HUSPM | Adaptive-Full |
+|---|---|---|---|---|---|---|
+| `pruned_swu` | SWU (global and local) | SWU, single items only | SWU | | | |
+| `pruned_depth` | depth bound | | | | | |
+| `pruned_lar` | | look-ahead removing (LAR) | early pruning by TRSU | | | |
+| `pruned_iip` | | irrelevant items (IIP) | irrelevant items by RSU | | | |
+| `pruned_tsu` | | | | TSU bound | | |
+| `pruned_peu` | | | branches cut by PEU | | projected SWU (`SWU_proj`, the PEU bound of Yan et al., 2025) | |
+| `pruned_value` | | | | | | extension items removed by the aggregated PEU value bound before they are materialised |
+| `pruned_iub` | | | | | | branches cut by the IUB bound |
 
-It also depends on what ran before in the same JVM. Project 02 traced a reported 23.3 GB
-peak to a run that followed another arm in the same JVM whose heap had already grown to
-about 23 GB; the sampler read 14 GB at batch 0, one percent into the data. That is why live
-mode runs one JVM per arm and refuses to start otherwise.
+### Pre-large state and rescans
 
-### Reading a live-mode row
+These columns are written by the proposal (`Adaptive-Full`, `Adaptive[sl=...]`, the SC7
+`proposed_*` arms, and `Remine-from-scratch`, which runs the proposal's miner) and, where
+stated, by Pre-HUSPM. Their reading under each rescan rule is given in the next section.
 
-`runtime_ms` is `-3`. Forcing a collection at every sample point distorts timing, so live
-rows carry no performance information; the real elapsed time is kept in
-`wall_ms_perturbed` for the record only. Timing comes from separate `mem_mode = used`
-runs. `mem_live_mb` is a lower bound on the true peak live set: a peak that appears and
-disappears between two sample points is not seen, and the sampling interval bounds the gap.
+| Column | Meaning |
+|---|---|
+| `lut_dyn` | proposal: the absolute floor it mines at. Initial mine: `LUT_min * TSU` |
+| `cub_val` | proposal: utility inserted plus deleted since the last rescan; 0 on a row that rescanned. Pre-HUSPM: its accumulated rescan quantity since the last rescan (the sum of `SWUmax(d)` or `TSU(d)` over the batches that did not rescan) |
+| `cub_triggered` | proposal: `true` when this call rescanned the whole database; always `true` with the adaptive rescan switched off (SC7 `proposed_C5_off`); `false` on an initial mine. Pre-HUSPM: always `false` |
+| `op_type` | scenario and phase, with the status suffix (above). Labels: `SC1_su=<UUT>`, `SC2_INIT`, `SC2_INC`, `SC3_su=<UUT>`, `SC4`, `SC5_K=<K>_strat=<strategy>_INIT` and `_INC`, `SC6_INIT`, `SC6_INS`, `SC6_DEL`, `SC6_MOD`, `SC7` (static ablations), `SC7_ref` (Pre-HUSPM), `SC7_C5_INIT`, `SC7_C5_INC`, `SC7_C4_INIT`, `SC7_C4_INC` |
+| `prelarge_count` | number of pre-large patterns held after the call. Pre-HUSPM: patterns with `r_l * UUT * TSU <= SWU_proj(X) < UUT * TSU` (Yan et al., 2025, Definition 12). Proposal: tracked patterns below `UUT * TSU` |
+| `uut_val` | proposal only: the absolute threshold `UUT * TSU` |
+| `sft_val` | the bound the rescan quantity is compared with. Proposal, initial mine: `(UUT - LUT_min) * TSU`, compared with nothing. Pre-HUSPM: `((UUT - LUT_min) / (1 - UUT)) * TSU_ref` |
+| `rescan_count` | rescans since the initial mine, cumulative over the arm. 0 for algorithms without rescans and for `Remine-from-scratch` |
+| `blocks_read` | proposal: sequences of the increment read through the block index while updating tracked patterns, on the most recent increment that took the direct update. Reset at each direct insertion update and carried unchanged on a row that rescanned |
+| `blocks_skipped` | proposal: cumulative since the initial mine. Sequences the block index skipped, plus, for a pattern with an item in no block, the increment's size in blocks plus one |
+| `sigma2` | proposal, rules other than `joint`: variance of the sequence utilities of the batch. 0 under `joint` and on an initial mine |
+| `rho` | proposal, rules other than `joint`: largest sequence utility of the batch over the batch total. 0 under `joint` and on an initial mine |
 
-The interval is not fixed. After each forced collection the sampler waits the larger of
-`mem.interval.ms`, 20 ms by default, and four times what that collection took. A small live
-set is collected in milliseconds and sampled densely; a large one takes seconds to collect
-and is sampled less often, so collection never takes much more than a fifth of the wall
-time. `gc_forced` is the number of samples a row's figure rests on, and it belongs beside
-the figure: a row with two samples was read only at its start and its end.
+### Memory
 
-A fixed interval of a second, the earlier default, sampled every run shorter than a second
-exactly twice, before it had allocated anything and after its working set had become
-garbage, so the reported peak was what the run kept. Most of the proposal's static runs are
-that short and most baselines are not, which made the bias favour the proposal.
+| Column | Meaning |
+|---|---|
+| `mem_mode` | `used` or `live`: which quantity the memory columns of the row hold |
+| `mem_live_mb` | live mode: peak of the used heap read right after each forced full collection, minus the baseline (below). 0 in used mode |
+| `mem_retained_mb` | live mode: used heap after the last forced collection, at the end of the call, minus the baseline |
+| `gc_forced` | live mode: forced collections during the call, the final one included; the number of samples `mem_live_mb` rests on |
+| `wall_ms_perturbed` | live mode: wall-clock time of the call, slowed by the forced collections; not a performance figure |
+| `allocated_mb` | bytes allocated by the mining thread during the call, in MB. Independent of when the collector runs. `-1` when it could not be read |
 
-A static mine is one call, and its memory is read against the heap at the start of the call.
-An incremental arm is many calls, one per increment, and is read against one baseline fixed for
-the whole arm: the heap after a full collection, taken before the arm's algorithm exists. An
-increment's `mem_retained_mb` is therefore everything the algorithm holds after that
-increment, and `mem_live_mb` the peak during it with that state included. Remine-from-scratch
-starts a new miner at every increment, so its rows are the peak of each fresh mine.
+### Run configuration
 
-Before the arm baseline, each increment was read against the heap at its own start, which
-already held the state kept from the increments before; the rows recorded only what an
-increment added, under a megabyte on SIGN and rounded to zero, and the state was recorded
-nowhere. Memory rows of an incremental scenario measured before that change do not mean the
-same thing and are not to be compared with later ones.
+| Column | Meaning |
+|---|---|
+| `seed` | seed of the run (`AutomatedExperimentRunner.SEEDS`); it orders the operations of SC6 and the BURST batches of SC5. SC2 splits the stream in file order when one seed is active |
+| `repeat` | repeat index; `campaign.ps1 -Repeat n` writes `n` |
+| `block_size` | `B_sz`, sequences per block of the block index (`-Dblock.size`, default 100). 0 on Pre-HUSPM rows |
+| `kappa`, `delta0` | coefficients of the adaptive floor used by the comparison rules. `NaN` on the proposal's rows under `joint`, where they have no effect; 0 on Pre-HUSPM rows; the runner defaults (0.5, 1e-4) elsewhere |
+| `trigger_rule` | rescan rule. Proposal: `joint`, `iaumax`, `cub` or `swumax`. Pre-HUSPM: `swumax` (arm `Pre-HUSPM`) or `tsud` (arm `Pre-HUSPM-TSU`). Other algorithms carry the runner's `-Dadapt.trigger` value, which has no effect on them |
+| `iau_max` | proposal: the rescan quantity at the decision, taken before the counters are reset. Under `joint` it is `max_i A_i - UUT * I + UUT * D`. 0 on an initial mine |
+| `iau_tightness` | proposal, set on insertion: `cub_val / max_i A_i` before the decision; 1 when `max_i A_i` is 0 |
+| `repetition` | proposal: item occurrences per distinct item of the database mined first |
+| `sl_min_eff` | floor ratio `r_l` the call ran with, after any raise. Pre-HUSPM: its `r_l` |
+| `rescan_retries` | proposal: times the floor ratio was raised by 0.05 (up to 0.98, at most six times) after a mine exceeded the candidate or time budget. 0 unless such a budget is set |
 
-The harness keeps its own list of the sequences seen so far, which grows along the stream and
-is counted in every arm alike.
+The rescan rule has no effect on a call that makes no rescan decision: an initial or static
+mine, and every `Remine-from-scratch` row. In `results/campaign` and `results/campaign-mem`
+those rows (SC1, SC3, SC4, the static SC7 arms, and `Remine-from-scratch`) record
+`trigger_rule = iaumax` with `kappa = 0.5`; the rows that make a rescan decision record `joint`.
+
+## Proposal columns by rescan rule
+
+The default rule is `joint` (`-Dadapt.trigger`). It rescans when
+`max_i A_i - UUT * I + UUT * D > (UUT - LUT_min) * TSU_ref`, and on a call that does not rescan
+it drops a tracked pattern `X` only when `u(X) < LUT_min * TSU_ref + min_{i in X} A_i`. The rules
+`iaumax`, `cub` and `swumax` are kept for comparison only; `iaumax` and `swumax` can miss
+patterns on a direct update.
+
+| Column | `joint` | `iaumax`, `cub`, `swumax` |
+|---|---|---|
+| `iau_max` | `max_i A_i - UUT * I + UUT * D` | the compared quantity: `max_i A_i`, `cub_val`, or the largest sequence utility of the batch |
+| `sft_val` | `(UUT - LUT_min) * TSU_ref`, on insertion and deletion | insertion `((UUT - LUT_min) / (1 - UUT)) * TSU_ref`; deletion `((UUT - LUT_min) / UUT) * TSU_ref` |
+| `cub_triggered` | `iau_max > sft_val` | `iau_max > sft_val` on insertion; `cub_val > sft_val` on deletion |
+| `lut_dyn` | `LUT_min * TSU_ref`, the floor a rescan mines at; the drop floor of a pattern `X` adds `min_{i in X} A_i` and is not stored | the adaptive floor, `UUT * TSU` minus a band width that is at least the width the safety bound requires |
+| `sigma2`, `rho` | 0 | batch statistics feeding the adaptive floor |
+| `kappa`, `delta0` | `NaN` | the coefficients used |
+| `iau_tightness` | recorded, not used | recorded |
+
+Under `joint` an increment rescans exactly when `iau_max / sft_val > 1`;
+`analysis/make_figures.py` checks this against `rescan_count` and `cub_triggered` in
+`table_SC2_operating_region.csv`.
+
+## Derived quantities
+
+These are not stored; compute them from the columns.
+
+| Quantity | Formula | Meaning |
+|---|---|---|
+| speedup | `runtime_ms(baseline) / runtime_ms(proposal)` | how many times faster the proposal is |
+| throughput | `total_patterns_found / (runtime_ms / 1000)` | patterns per second |
+| pruning rate | `pruned_* / candidate_count` | share of candidates removed by one rule |
+| materialisation rate | `explored_nodes / candidate_count` | share of candidates expanded; 1 for Pre-HUSPM |
+| band width | `uut_val - lut_dyn` | width of the pre-large band |
+| rescan rate | `rescan_count` of the last row / number of increments | how often the arm remines |
+| completeness | `total_patterns_found` against `Remine-from-scratch` at the same operation | whether the incremental result matches remining |
+
+For the block index, take `blocks_read` from rows with `cub_triggered = false` and the
+difference of `blocks_skipped` between consecutive rows; the two columns have different
+scopes (per increment and cumulative).
+
+## Components and the columns that measure them
+
+The SC7 ablation arms switch these components off one at a time.
+
+| Component | Columns |
+|---|---|
+| C1, the value bound applied before materialisation | `pruned_value`, `explored_nodes` against `candidate_count` |
+| C2, the adaptive floor (rules other than `joint`) | `lut_dyn`, `sigma2`, `rho` |
+| C3, the IUB bound (`proposed_no_IUB` switches it off) | `pruned_iub`, `explored_nodes`, `runtime_ms` |
+| C4, the block index (`proposed_no_block_index`) | `blocks_read`, `blocks_skipped`, `runtime_ms` |
+| C5, the adaptive rescan decision (`proposed_C5_off` rescans every increment) | `rescan_count`, `cub_triggered`, `iau_max`, `sft_val`, `runtime_ms` |
+
+## Memory measurement
+
+Two quantities are recorded and they are never compared with each other.
+
+`peak_heap_mb` (used mode) counts garbage the collector has not yet reclaimed, so it reflects
+when the collector ran rather than what the algorithm holds. It grows with `-Xmx`, because a
+larger heap lets the collector run later, and it depends on what ran earlier in the same JVM.
+
+`mem_live_mb` (live mode, `-Dmem.mode=live`) is the live set: the sampler forces a full
+collection and reads the used heap right after. Live mode refuses to run unless
+`-Dalgo.only` names one arm, so every arm starts in a fresh JVM, and unless `results.dir`
+contains `mem`, so live rows never share a directory with timing rows. Forcing collections
+distorts timing, so a live row carries `runtime_ms = -3` and its elapsed time only in
+`wall_ms_perturbed`; timing comes from separate used-mode runs.
+
+`mem_live_mb` is a lower bound on the true peak live set: a peak that rises and falls between
+two samples is not seen. After each forced collection the sampler waits the larger of
+`-Dmem.interval.ms` (20 ms by default) and four times the duration of that collection, so a
+small live set is sampled densely and a large one less often, and collection takes at most
+about a fifth of the wall time. `gc_forced` gives the number of samples behind each figure;
+a row with two samples was read only at its start and its end.
+
+A static mine is one call, and its memory is measured against the heap after a collection at
+the start of that call. An incremental arm is many calls and is measured against one baseline
+fixed for the whole arm: the heap after a full collection, taken before the arm's algorithm
+is created. An increment's `mem_retained_mb` is therefore everything the algorithm holds
+after that increment, and its `mem_live_mb` the peak during the increment with that state
+included. `Remine-from-scratch` creates a new miner at every increment, so its rows are the
+peak of each fresh mine. The harness's own list of the sequences seen so far grows along the
+stream and is counted in every incremental arm alike.

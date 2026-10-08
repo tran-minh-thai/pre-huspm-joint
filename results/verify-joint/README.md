@@ -46,7 +46,7 @@ out. Sixteen operations per database, seed 42.
 
 Random operations cannot fail a faulty rule on these databases, so this table is coverage, not
 evidence of soundness: a random deletion lowers every pattern's utility roughly in proportion to
-TSU, and no pattern crosses the threshold. Measured: the superseded `iaumax` rule and both faults
+TSU, and no pattern crosses the threshold. Measured: the `iaumax` comparison rule and both faults
 of section 3 pass the random stream on SIGN and C8T1S5I8N5K.
 
 ### 1b. Adversarial operations - `adversarial/`
@@ -114,7 +114,7 @@ hand-built cases on it.
 | trigger without the `+ UUT*D` term | 519 | A, B |
 | drop floor with `max_i A_i` instead of `min_{i in X} A_i` | 6 | D |
 
-`verify.WP1AcceptanceTest` (23 checks) fails on each fault as well: case D on the second, A and
+`verify.RescanRuleAcceptanceTest` (23 checks) fails on each fault as well: case D on the second, A and
 B on the first.
 
 `fault-injection-real/` runs the same two faults through the adversarial stream of section 1b

@@ -23,24 +23,23 @@ import java.util.concurrent.TimeoutException;
 /**
  * Choose the default utility thresholds for a database.
  *
- * A threshold is a ratio of total utility, so it stays well defined when the databases
- * change. It does not stay comparable. The defaults inherited from the earlier vendored
- * files select vastly more patterns on the pinned release: SIGN at 0.025 went from 641
- * patterns to 36,582 while total utility moved by under eight percent. The change is in
- * the shape of the utility distribution, not its scale, so the thresholds have to be
- * re-chosen against the data actually being measured.
+ * A threshold is a ratio of total utility, so it stays well defined when the data
+ * changes, but it does not stay comparable: on two releases of SIGN whose total utility
+ * differs by under eight percent, 0.025 selects 641 patterns on one and 36,582 on the
+ * other. The difference is in the shape of the utility distribution, not its scale, so
+ * thresholds are chosen against the data actually being measured.
  *
  * Two modes:
  *
- *   --targets    for each sweep level, search for the threshold yielding the pattern
- *                count the submitted experiments produced, so the new runs pose
- *                comparable work. This is the default.
+ *   --targets    for each sweep level, search for the threshold yielding the target
+ *                pattern count in TARGETS, so every level poses a known amount of work.
+ *                This is the default.
  *   --grid a,b,c report the pattern count at each listed threshold.
  *
  * Pattern counts do not depend on the machine, so this can be run anywhere. Runtimes
  * printed here are for impatience only and must not be reported.
  *
- * Examples:
+ * Usage:
  *   java -Xmx24g -Xss64m -cp build experiments.ThresholdScan BMS1
  *   java -Xmx24g -Xss64m -cp build experiments.ThresholdScan ALL --out results/thresholds
  *   java -Xmx24g -Xss64m -cp build experiments.ThresholdScan FIFA --grid 0.05,0.08,0.12
@@ -67,9 +66,9 @@ public final class ThresholdScan {
     private static double currentRl = common.Datasets.DEFAULT_SL_MIN_RATIO;
 
     /**
-     * Pattern counts the submitted experiments produced on D_init, used as the targets.
-     * Listed lowest threshold first, matching the sweep order in the paper, so the counts
-     * descend. The search runs them in reverse; see searchAll.
+     * Target pattern counts on D_init, one per sweep level. Listed lowest threshold first,
+     * matching the sweep order of common.Datasets, so the counts descend. The search runs
+     * them in reverse; see searchAll.
      */
     private static final Object[][] TARGETS = {
             {"SIGN",      new int[]{3030, 641, 152, 83}},
@@ -77,24 +76,16 @@ public final class ThresholdScan {
             {"FIFA",      new int[]{41, 18, 5, 1}},
             {"BIBLE",     new int[]{343, 177, 103, 56}},
             {"BMS1",      new int[]{23, 20, 17, 15}},
-            // Re-chosen rather than inherited. The submitted counts {12, 6, 5, 5} collapse
-            // on this release: 6 and 5 both land at 0.030, so three of the four levels share
-            // one threshold and the sweep has two operating points wearing four labels. The
-            // counts below were measured on D_init and are the widest spread the database
-            // allows - 0.019 already exceeds three billion candidates, so twelve is the
-            // ceiling.
+            // The widest spread the database allows on D_init. Counts of 6 and 5 both land
+            // at 0.030, which would put two operating points under four labels, and 0.019
+            // already exceeds three billion candidates, so twelve is the ceiling.
             {"KOSARAK",   new int[]{12, 9, 7, 5}},
 
-            // Added by the pinned release with no submitted counts to inherit, so the ladder
-            // is chosen rather than reproduced. C8T1S5I8N5K is the one database here that
-            // reaches within-event extension.
-            //
-            // Raised from {300, 150, 80, 40}, which are the counts the FIRST calibration
-            // aimed at and hit. They were wrong: thresholds that give 300 patterns on D_init
-            // give 1 on the whole database, so SC2, SC5 and SC6 would have compared five
-            // algorithms against an answer of one pattern. The trajectory gate now refuses
-            // that, and these counts are what the replacement band measured - every level
-            // keeps at least 23% of its D_init count when the database grows.
+            // C8T1S5I8N5K is the one database here that reaches within-event extension.
+            // The counts are high because lower ones collapse: thresholds that give 300
+            // patterns on D_init give 1 on the whole database, which the trajectory gate
+            // rejects. At these counts every level keeps at least 23% of its D_init count
+            // when the database grows.
             {"C8T1S5I8N5K",          new int[]{6337, 4894, 3695, 2741}},
 
             // Ta-Feng is the only database whose utilities are measured on both sides:
@@ -112,7 +103,7 @@ public final class ThresholdScan {
      * has to earn the result - so seeding from the table the scan will overwrite costs
      * nothing in independence and saves probes on the expensive databases.
      *
-     * The literals below are the submitted defaults, kept for anything not in the table.
+     * The literals below are fallback seeds for anything not calibrated in the table.
      */
     private static double startFrom(String name) {
         for (common.Datasets.Entry e : common.Datasets.all()) {
@@ -125,7 +116,7 @@ public final class ThresholdScan {
             case "BIBLE":     return 0.025;
             case "BMS1":      return 0.014;
             case "KOSARAK":   return 0.025;
-            // No inherited default for these; start in the middle of the measured range.
+            // Start in the middle of the measured range.
             case "C8T1S5I8N5K":          return 0.02;
             case "TAFENG":               return 0.004;
             default:          return 0.02;
@@ -140,22 +131,21 @@ public final class ThresholdScan {
      * "far too many patterns", which pushes the search towards higher thresholds.
      *
      * Without this the tool hangs. Lowering the threshold on a database like BMS1 does not
-     * cost gradually more; it explodes. One probe at a threshold a little too low ran for
-     * an hour on the measurement machine and returned nothing, because nothing could stop
-     * it and the search had no way to learn that going lower was the wrong direction.
+     * cost gradually more; it explodes. An unbounded probe at a threshold a little too low
+     * can run for an hour and return nothing, and the search has no way to learn that going
+     * lower is the wrong direction.
      *
      * The candidate budget is the primary limit because it is deterministic: the same probe
      * is abandoned at the same point on any machine, so a calibration does not depend on how
      * fast the machine is. The wall-clock budget is a safety net for the cases the counter
      * does not catch, such as an allocation storm.
      */
-    // Three billion, not three hundred million. The cap exists to catch a probe that has
-    // fallen off the cliff below the useful threshold, not to interrupt normal work, and
-    // normal work varies by two orders of magnitude between databases: one finishes a
-    // useful probe in fourteen million candidates, another needs 1.7 billion at the
-    // threshold that yields forty patterns. A cap set from the first aborts every probe
-    // on the second, at every threshold, so nothing is ever measured and the tool reports
-    // the level unreachable while the real limit is a number it chose itself.
+    // Three billion. The cap exists to catch a probe that has fallen off the cliff below the
+    // useful threshold, not to interrupt normal work, and normal work varies by two orders
+    // of magnitude between databases: one finishes a useful probe in fourteen million
+    // candidates, another needs 1.7 billion at the threshold that yields forty patterns. A
+    // cap sized for the first would abort every probe on the second, at every threshold,
+    // and report the level unreachable when the real limit is the cap itself.
     private static long maxCandidates = Long.getLong("scan.maxCandidates", 3_000_000_000L);
     private static long budgetMs = 180_000L;
 
@@ -169,44 +159,41 @@ public final class ThresholdScan {
     private static long levelBudgetMs = 900_000L;
 
     /**
+     * After the band is found, check it in the two places the pattern-count target does
+     * NOT see. Disabled with --no-check.
+     *
+     *  - The threshold actually mined is not UUT but r_l x UUT: after every rescan LUT_dyn
+     *    falls back to that floor. BMS1 gives 18 patterns at UUT in 3.5 s; at the floor it
+     *    exceeds three billion candidates.
+     *
+     *  - D_init is not the largest database measured. SC2, SC5 and SC6 run on growing data
+     *    and SC3 runs on the whole database. BMS1 cannot be mined on the whole database at
+     *    its own calibrated threshold, and a C8T1S5I8N5K band chosen on D_init alone can
+     *    drop from 152 patterns to 1.
+     */
+    private static boolean runChecks = true;
+    /**
+     * Minimum share of the D_init pattern count that must remain on the whole database.
+     *
+     * The floor is relative, not absolute: an absolute floor of 10 patterns would fail
+     * healthy databases. FIFA at its highest level has exactly 1 pattern on D_init - its
+     * calibrated target, {41, 18, 5, 1} - and keeps 1 on the whole database; KOSARAK 5 -> 5
+     * and TAFENG 4 -> 3 likewise.
+     *
+     * What matters is the RELATIVE collapse. On the eight databases the stable bands keep
+     * 34% to 129%, while a collapsing band keeps a few percent (2.6% for a C8T1S5I8N5K band
+     * chosen on D_init alone). The gap is wide enough that any value inside it separates
+     * the two.
+     */
+    private static final double TRAJECTORY_MIN_RATIO = 0.20;
+
+    /**
      * Budget for one database, all levels together. Without it an overnight run cannot be
      * planned: four levels at their own budget, each able to widen and retry at three times
      * that, means the worst case is sixteen times the level budget rather than four. When
      * this is spent the remaining levels are reported as not attempted, which is a fact
-     * worth recording rather than a run that silently overshot into the morning.
+     * worth recording rather than a run that silently overshoots.
      */
-    /**
-     * Sau khi tim duoc dai, kiem no o hai cho ma dich so mau KHONG nhin thay. Tat bang
-     * --no-check.
-     *
-     * Dich so mau tren D_init la tieu chi duy nhat tu truoc den nay, va no bo sot hai thu,
-     * ca hai deu da gay thiet hai that:
-     *
-     *  - Nguong khai thac THAT khong phai UUT ma la r_l x UUT. Sau moi rescan LUT_dyn roi ve
-     *    san do. BMS1 tai UUT cho 18 mau trong 3,5 giay; tai san no vuot ba ty ung vien.
-     *
-     *  - D_init khong phai CSDL lon nhat duoc do. SC2, SC5, SC6 chay tren du lieu lon dan va
-     *    SC3 chay thang tren toan bo. BMS1 tai chinh nguong da hieu chinh cua no khong khai
-     *    thac noi tren toan bo CSDL, va C8T1S5I8N5K tut tu 152 mau xuong con 1.
-     *
-     * Hai bo do deu qua tieu chi cu ma khong ai thay gi, cho den khi mot chien dich do dem
-     * bao cao chung bang OOM va het gio.
-     */
-    private static boolean runChecks = true;
-    /**
-     * Ti le toi thieu con lai tren toan bo CSDL so voi D_init.
-     *
-     * Tuyet doi chu KHONG duoc, va lan dau viet cua nay dat san tuyet doi 10 mau nen no bao
-     * truot ba bo hoan toan lanh: FIFA o muc cao nhat co DUNG 1 mau tren D_init - chinh la
-     * dich da hieu chinh cua no, {41, 18, 5, 1} - va giu nguyen 1 mau tren toan bo. Doi no
-     * con 10 la doi mot thu no chua bao gio co. KOSARAK 5 -> 5 va TAFENG 4 -> 3 cung vay.
-     *
-     * Thu can do la SUP DO TUONG DOI. Do duoc tren tam bo: bay bo on dinh nam o 34% den 129%,
-     * con C8T1S5I8N5K tut xuong 2,6%. Khoang trong giua 34% va 2,6% rong den muc nguong dat o
-     * dau trong do cung tach dung.
-     */
-    private static final double TRAJECTORY_MIN_RATIO = 0.20;
-
     private static long totalBudgetMs = Long.MAX_VALUE;
     private static long runDeadline = Long.MAX_VALUE;
 
@@ -315,10 +302,6 @@ public final class ThresholdScan {
      * instead of possibly nothing at all. And each level solved becomes an upper bound for
      * the next: wanting more patterns can only mean a lower threshold, so the bracket
      * narrows as the search goes on rather than starting wide every time.
-     *
-     * The earlier version ran the levels in paper order, which meant it began with the
-     * lowest threshold: the most patterns, the most expensive probe, and on BMS1 an hour
-     * with nothing to show.
      */
     private static Result[] searchAll(String name, String scope, List<Sequence> db, double tsu,
                                   int[] targets, PrintWriter w) {
@@ -342,13 +325,10 @@ public final class ThresholdScan {
             }
             Result r = search(db, tsu, targets[i], seed, LO, hi);
 
-            // Nothing measured at all means the budgets were the binding constraint, not
-            // the data. Guessing flags and re-running by hand is what a tool should spare
-            // its user, so widen once and try again before giving up.
-            // Widen when the search did not reach the target AND budgets were part of the
-            // reason. Finishing is not succeeding: a probe at a threshold high enough to be
-            // cheap can complete and be wildly off, which reads as a result while telling
-            // you nothing.
+            // Widen the budgets once and retry when nothing was measured at all (the budgets,
+            // not the data, were the binding constraint), or when the target was missed and
+            // budgets were part of the reason. Finishing is not succeeding: a probe at a
+            // threshold high enough to be cheap can complete and be wildly off.
             if ((!r.ok() || (!r.onTarget() && r.hitBudget)) && System.nanoTime() < runDeadline) {
                 long oldC = maxCandidates, oldB = budgetMs, oldL = levelBudgetMs;
                 maxCandidates *= 10;
@@ -395,11 +375,13 @@ public final class ThresholdScan {
     }
 
     /**
-     * Hai cua kiem, chay tren toan bo CSDL vi do moi la pham vi lon nhat cac kich ban dung.
+     * Two gates, run on the whole database because that is the largest scope any scenario
+     * uses.
      *
-     * Cua chi phi kiem muc THAP NHAT, vi nguong thap nhat sinh nhieu ung vien nhat. Cua quy
-     * dao kiem muc CAO NHAT, vi nguong cao nhat de sup ve rong nhat. Hai truong hop xau nhat
-     * nguoc chieu nhau nen chi ton hai probe chu khong phai tam.
+     * The cost gate checks the LOWEST level, whose threshold generates the most candidates.
+     * The trajectory gate checks the HIGHEST level, whose threshold is the most likely to
+     * collapse to an empty answer. The two worst cases lie at opposite ends, so a few probes
+     * cover them instead of one per level.
      */
     private static void checkGates(String name, List<Sequence> all, List<Sequence> dInit,
                                    double tsuInit, Result[] found,
@@ -407,47 +389,47 @@ public final class ThresholdScan {
         double tsuAll = 0;
         for (Sequence s : all) tsuAll += s.sequenceUtility;
         Result lowest = found[0], highest = found[found.length - 1];
-        System.out.printf("%n--- kiem tra dai --- D_init |D|=%,d  |  toan bo |D|=%,d%n",
+        System.out.printf("%n--- band check --- D_init |D|=%,d  |  whole |D|=%,d%n",
                 dInit.size(), all.size());
 
-        // Cua chi phi, o CA HAI pham vi. Nguong la mot TI LE, nen cung mot ti le tren toan bo
-        // CSDL la mot nguong tuyet doi cao hon - TSU lon hon - va co the re hon han tren
-        // D_init. TAFENG la vi du: 0.002528 vuot 600 giay tren D_init va cho 21 mau trong 0,7
-        // giay tren toan bo. Mot cua chi chay o pham vi lon nhat se bo lot dieu do, ma SC1
-        // chay dung tren D_init.
+        // Cost gate, on BOTH scopes. A threshold is a RATIO, so the same ratio on the whole
+        // database is a higher absolute threshold - TSU is larger - and can be far cheaper
+        // than on D_init. TAFENG is an example: 0.002528 exceeds 600 s on D_init and gives
+        // 21 patterns in 0.7 s on the whole database. A gate run only on the largest scope
+        // would miss that, and SC1 runs on D_init.
         if (lowest.ok() && lowest.uut > 0) {
             double lut = rl(name) * lowest.uut;
             costGate(name, "D_init", dInit, tsuInit, lut, levels[0], w);
             costGate(name, "full",   all,   tsuAll,  lut, levels[0], w);
         }
 
-        // Cua quy dao: so mau tren toan bo so voi tren D_init, thuan ti le.
+        // Trajectory gate: pattern count on the whole database relative to D_init.
         if (highest.ok() && highest.uut > 0) {
             Probe p = mine(all, tsuAll, highest.uut);
             int need = Math.max(1, (int) Math.ceil(TRAJECTORY_MIN_RATIO * highest.patterns));
             boolean pass = !p.abandoned && p.patterns >= need;
-            System.out.printf("  quy dao  UUT=%.6f (%s)  %d mau tren D_init -> %s, can >= %d  %s%n",
+            System.out.printf("  trajectory  UUT=%.6f (%s)  %d patterns on D_init -> %s, need >= %d  %s%n",
                     highest.uut, levels[levels.length - 1], highest.patterns,
-                    p.abandoned ? "khong khai thac noi" : p.patterns + " mau",
-                    need, pass ? "DAT" : "KHONG DAT");
+                    p.abandoned ? "not mineable" : p.patterns + " patterns",
+                    need, pass ? "PASS" : "FAIL");
             w.printf("%s,full,gate-trajectory,%d,%.6f,%d,1,%d,%s%n", name, need, highest.uut,
                     p.abandoned ? -1 : p.patterns, p.ms, pass ? "ok" : "gate-failed:collapsed");
             w.flush();
         }
-        System.out.println("  (khong dat nghia la dai dung tren D_init nhung sai o pham vi ma "
-                + "kich ban that su do: SC1 tren D_init, SC2/SC5/SC6 lon dan, SC3 toan bo)");
+        System.out.println("  (FAIL means the band is right on D_init but wrong at a scope the "
+                + "scenarios measure: SC1 on D_init, SC2/SC5/SC6 growing, SC3 the whole database)");
     }
 
-    /** Mot lan kiem chi phi tai LUT, tren mot pham vi. */
+    /** One cost check at LUT, on one scope. */
     private static void costGate(String name, String scope, List<Sequence> db, double tsu,
                                  double lut, String level, PrintWriter w) {
         Probe p = mine(db, tsu, lut);
         boolean pass = !p.abandoned;
-        System.out.printf("  chi phi  r_l x UUT=%.6f (%s) tren %-6s ->  %-34s %s%n",
+        System.out.printf("  cost  r_l x UUT=%.6f (%s) on %-6s ->  %-34s %s%n",
                 lut, level, scope,
-                p.abandoned ? "khong khai thac noi: " + p.why
-                            : p.patterns + " mau trong " + p.ms + " ms",
-                pass ? "DAT" : "KHONG DAT");
+                p.abandoned ? "not mineable: " + p.why
+                            : p.patterns + " patterns in " + p.ms + " ms",
+                pass ? "PASS" : "FAIL");
         w.printf("%s,%s,gate-cost,,%.6f,%d,1,%d,%s%n", name, scope, lut,
                 p.abandoned ? -1 : p.patterns, p.ms, pass ? "ok" : "gate-failed:" + p.why);
         w.flush();

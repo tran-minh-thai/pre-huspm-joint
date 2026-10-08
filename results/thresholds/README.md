@@ -16,7 +16,7 @@ never to be reported.
 | Column | Meaning |
 |---|---|
 | `level` | which sweep level: `low` is the lowest threshold and the most patterns |
-| `target_patterns` | the count being searched for, taken from the submitted experiments |
+| `target_patterns` | the pattern count each level is calibrated to |
 | `uut` | the threshold found; `0` when none was |
 | `patterns` | the count it actually produced; `-1` when none was found |
 | `probes` | mining runs the search needed |

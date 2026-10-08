@@ -47,7 +47,7 @@ check_tafeng() {
   while read -r want name; do
     [ -n "${name:-}" ] || continue
     if [ ! -f "${DIR}/${name}" ]; then echo "    ${name} missing"; bad=1; continue; fi
-    have="$(sha256sum "${DIR}/${name}" | cut -d' ' -f1)"
+    have="$(sha_of "${DIR}/${name}")"
     [ "$have" = "$want" ] || { echo "    ${name} does not match"; bad=1; }
   done < "$sums"
   if [ "$bad" -eq 0 ]; then echo '==> TAFENG present and verified'; return 0; fi

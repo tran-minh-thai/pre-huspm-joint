@@ -8,17 +8,16 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * Thuật toán Đối chứng: HUSP-ULL (IEEE Transactions on Cybernetics, 2021)
- * Phiên bản đã được tinh chỉnh để ĐO LƯỜNG THỰC NGHIỆM:
- * - Ghi nhận tổng số candidate sinh ra.
- * - Ghi nhận số lần cắt tỉa bởi SWU (cho 1-item).
- * - Ghi nhận số lần cắt tỉa bởi LAR (Look-Ahead Removing - Subtree level).
- * - Ghi nhận số lần cắt tỉa bởi IIP/PEU (Irrelevant Item Pruning - Item level).
+ * Baseline: HUSP-ULL (Gan et al., IEEE Transactions on Cybernetics, 2021), instrumented for measurement:
+ * - candidateCount: total number of candidates generated.
+ * - prunedSWU: 1-items pruned by SWU.
+ * - prunedLAR: subtrees cut because the PEU of the current pattern is below the threshold.
+ * - prunedIIP: candidate extensions discarded because their own PEU is below the threshold.
  */
 public class HUSPULLAlgorithm {
 
     // ========================================================================
-    // 1. CẤU TRÚC UL-NODE ĐỂ LƯU VẾT
+    // 1. UL-NODE (one entry of a utility-linked list)
     // ========================================================================
     static class ULNode {
         int seqId;
@@ -37,17 +36,17 @@ public class HUSPULLAlgorithm {
     }
 
     // ========================================================================
-    // 2. BIẾN LƯU TRỮ CHỈ SỐ THỰC NGHIỆM (Metrics)
+    // 2. MEASUREMENT COUNTERS
     // ========================================================================
     public double minUtility;
     public int patternCount = 0;
 
-    // Các biến đếm phục vụ Logging theo file .docx
+    // Counters written to the result log
     public long candidateCount = 0;
-    public long exploredNodes = 0; // Số mẫu THỰC SỰ khai triển (đệ quy vào) - đo hiệu quả tỉa
-    public long prunedSWU = 0;  // Số lượng 1-item bị loại bởi SWU
-    public long prunedLAR = 0;  // Cắt tỉa nhánh (Subtree-level)
-    public long prunedIIP = 0;  // Cắt tỉa ứng viên (Item-level PEU)
+    public long exploredNodes = 0; // recursion entries, counted before the node-level bound check
+    public long prunedSWU = 0;  // 1-items removed by SWU
+    public long prunedLAR = 0;  // subtree-level cuts (PEU of the current pattern)
+    public long prunedIIP = 0;  // candidate-level cuts (PEU of the extension)
 
     public Map<Pattern, Double> largeMap = new HashMap<>();
     private Map<Integer, Sequence> seqLookupMap = new HashMap<>();
@@ -57,10 +56,10 @@ public class HUSPULLAlgorithm {
     }
 
     // ========================================================================
-    // 3. LÕI THUẬT TOÁN HUSP-ULL
+    // 3. HUSP-ULL CORE
     // ========================================================================
     public void run(List<Sequence> database) {
-        // Reset toàn bộ metrics trước khi chạy batch mới
+        // Reset all counters before mining a new batch
         largeMap.clear();
         patternCount = 0;
         candidateCount = 0;
@@ -70,13 +69,13 @@ public class HUSPULLAlgorithm {
         prunedIIP = 0;
         seqLookupMap.clear();
 
-        // 1. Tính toán trước Suffix Sum (Ma trận tiện ích còn lại O(1))
+        // 1. Precompute suffix sums (O(1) remaining utility)
         for (Sequence seq : database) {
             seq.calculateRemainingUtilities();
             seqLookupMap.put(seq.id, seq);
         }
 
-        // 2. Tính SWU (Sequence-Weighted Utility) cho các Item có độ dài 1
+        // 2. Compute the SWU (sequence-weighted utility) of each 1-item
         Map<Integer, Double> initialSWU = new HashMap<>();
         for (Sequence seq : database) {
             Set<Integer> uniqueItems = new HashSet<>();
@@ -88,21 +87,21 @@ public class HUSPULLAlgorithm {
             }
         }
 
-        // ĐẾM CÔNG BẰNG (Sinh ra là đếm): MỌI 1-item sinh ra, TRƯỚC khi lọc bằng SWU.
+        // Fair counting (a candidate counts when generated): every 1-item, BEFORE the SWU filter.
         candidateCount += initialSWU.size();
 
-        // 3. Lọc các Item tiềm năng bằng SWU
+        // 3. Keep the promising items by SWU
         List<Integer> promisingItems = new ArrayList<>();
         for (Map.Entry<Integer, Double> entry : initialSWU.entrySet()) {
             if (entry.getValue() >= minUtility) {
                 promisingItems.add(entry.getKey());
             } else {
-                prunedSWU++; // Bị loại bởi SWU
+                prunedSWU++; // removed by SWU
             }
         }
-        Collections.sort(promisingItems); // Sắp xếp theo từ vựng học (Lexicographical)
+        Collections.sort(promisingItems); // lexicographic order
 
-        // 4. Bắt đầu quá trình đệ quy (Pattern-Growth)
+        // 4. Start the recursion (pattern growth)
         for (Integer item : promisingItems) {
             Pattern pattern = new Pattern(item);
             List<ULNode> initialULList = buildInitialULList(database, item);
@@ -122,18 +121,18 @@ public class HUSPULLAlgorithm {
     }
 
     private void huspULLRecursive(Pattern prefix, List<ULNode> ulList, int depth) {
-        // LỚP PHÒNG THỦ 2: chặn StackOverflow trên dữ liệu chuỗi cực dài.
-        // 2000 là safety net (depth thực tế ≤ ~270) → không đổi kết quả.
+        // Depth cap: guards against StackOverflowError on very long sequences. It is a
+        // safety net set well above the recursion depth reached on the evaluated datasets.
         if (depth > 2000) return;
-        // PHÒNG THỦ ĐO LƯỜNG: dừng NGAY khi runner cancel (timeout) → tránh orphan
-        // thread chạy tiếp ăn CPU/giữ heap, NHIỄM thời gian/bộ nhớ của lần đo kế. Chỉ
-        // kích hoạt khi đã OT (kết quả bị bỏ) → KHÔNG đổi logic khai phá baseline.
+        // Stop as soon as the runner cancels the run (timeout), so an orphaned thread does
+        // not keep using CPU or holding heap and distort the next measurement. This only
+        // fires after a timeout, when the result is discarded, so mining logic is unchanged.
         if (Thread.currentThread().isInterrupted()) return;
-        exploredNodes++; // mẫu này được KHAI TRIỂN (đệ quy vào) - đếm TRƯỚC LAR-prune
-        // ĐẾM CÔNG BẰNG (Sinh ra là đếm): candidateCount ĐÃ DỜI khỏi entry. Ứng viên I/S-ext
-        // được đếm KHI SINH RA (trước lọc PEU/IIP) ở dưới - đồng nhất với thuật toán đề xuất.
+        exploredNodes++; // this pattern is expanded; counted BEFORE the subtree-level check
+        // Fair counting: candidateCount is not incremented on entry. I/S-extension candidates are
+        // counted when generated (before the PEU check) below, as in the adaptive algorithm.
         // ==========================================================
-        // CẮT TỈA TẦNG 2 (SUBTREE-LEVEL): LOOK-AHEAD REMOVING (LAR)
+        // SUBTREE-LEVEL CUT (counter prunedLAR): PEU of the current pattern
         // ==========================================================
         double totalMaxUpperBound = 0;
         Map<Integer, Double> seqMaxUBMap = new HashMap<>();
@@ -145,14 +144,14 @@ public class HUSPULLAlgorithm {
         }
         for (double ub : seqMaxUBMap.values()) totalMaxUpperBound += ub;
 
-        // Nếu tổng trần không qua ngưỡng, cắt bỏ toàn bộ nhánh này
+        // If the summed upper bound is below the threshold, cut the whole branch
         if (totalMaxUpperBound < minUtility) {
-            prunedLAR++; // Ghi nhận 1 lần cắt nhánh thành công
+            prunedLAR++; // one subtree cut
             return;
         }
 
         // ==========================================================
-        // SINH ỨNG VIÊN (CANDIDATE GENERATION)
+        // CANDIDATE GENERATION
         // ==========================================================
         Map<Integer, List<ULNode>> iCandidatesMap = new HashMap<>();
         Map<Integer, List<ULNode>> sCandidatesMap = new HashMap<>();
@@ -182,23 +181,23 @@ public class HUSPULLAlgorithm {
             }
         }
 
-        // ĐẾM CÔNG BẰNG (Sinh ra là đếm): MỌI ứng viên I/S-ext (gom theo item) sinh ra,
-        // TRƯỚC khi lọc bằng PEU/IIP - đồng nhất với thuật toán đề xuất.
+        // Fair counting: every generated I/S-extension candidate (grouped by item),
+        // BEFORE the PEU check, as in the adaptive algorithm.
         candidateCount += iCandidatesMap.size() + sCandidatesMap.size();
 
         // ==========================================================
-        // CẮT TỈA TẦNG 1 (ITEM-LEVEL): IRRELEVANT ITEM PRUNING (IIP / PEU)
-        // Vệ sinh bộ nhớ: dùng Iterator để giải phóng từng entry ngay khi xử lý xong,
-        // tránh giữ toàn bộ I/S candidate map trên call-stack trong suốt quá trình đệ quy.
+        // CANDIDATE-LEVEL CUT (counter prunedIIP): PEU of each extension
+        // Each entry is removed through the Iterator once processed, so the full I/S
+        // candidate maps are not kept alive on the call stack during the recursion.
         // ==========================================================
 
-        // Xét nhánh I-Extension
+        // I-extensions
         Iterator<Map.Entry<Integer, List<ULNode>>> itI = iCandidatesMap.entrySet().iterator();
         while (itI.hasNext()) {
             Map.Entry<Integer, List<ULNode>> entry = itI.next();
             List<ULNode> nodes = entry.getValue();
 
-            if (calculatePEU(nodes) >= minUtility) { // Vượt qua kiểm tra PEU
+            if (calculatePEU(nodes) >= minUtility) { // passes the PEU check
                 Pattern newPattern = prefix.iConcatenate(entry.getKey());
                 double actualUtility = calculateMaxUtility(nodes);
                 if (actualUtility >= minUtility) {
@@ -206,12 +205,12 @@ public class HUSPULLAlgorithm {
                 }
                 huspULLRecursive(newPattern, nodes, depth + 1);
             } else {
-                prunedIIP++; // Bị cắt bởi IIP/PEU
+                prunedIIP++; // cut by the PEU check
             }
-            itI.remove(); // Giải phóng tham chiếu nodes ngay sau khi xử lý
+            itI.remove(); // drop the reference to nodes once processed
         }
 
-        // Xét nhánh S-Extension
+        // S-extensions
         Iterator<Map.Entry<Integer, List<ULNode>>> itS = sCandidatesMap.entrySet().iterator();
         while (itS.hasNext()) {
             Map.Entry<Integer, List<ULNode>> entry = itS.next();
@@ -282,7 +281,7 @@ public class HUSPULLAlgorithm {
                 writer.newLine();
             }
         } catch (IOException e) {
-            System.err.println("Lỗi ghi file HUSP-ULL: " + e.getMessage());
+            System.err.println("Error writing HUSP-ULL output file: " + e.getMessage());
         }
     }
 }

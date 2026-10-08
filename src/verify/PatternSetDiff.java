@@ -4,12 +4,12 @@ import java.util.Map;
 import java.util.TreeSet;
 
 /**
- * So sanh hai TAP MAU (khong phai hai so dem) va utility cua tung mau.
+ * Compares two PATTERN SETS (not two counts) and the utility of each pattern.
  *
- * Ban nop chi doi chieu SO LUONG HUSP giua thuat toan gia tang va remine-from-scratch.
- * Hai tap co the cung kich thuoc ma khac nhau, nen phep so sanh do khong du de chung
- * minh Proposition 2. Lop nay bao cao: so mau THIEU (co o ban tham chieu, khong co o
- * ban gia tang), so mau THUA, va sai lech utility lon nhat tren phan giao.
+ * Two sets of the same size can still differ, so comparing HUSP counts cannot establish
+ * that the incremental result equals remine-from-scratch. This class reports the number of
+ * MISSING patterns (in the reference, not in the incremental result), the number of EXTRA
+ * patterns, and the largest utility difference over the patterns both sets share.
  */
 public final class PatternSetDiff {
 
@@ -34,14 +34,14 @@ public final class PatternSetDiff {
         return missing == 0 && extra == 0 && maxUtilityGap <= UTILITY_TOLERANCE;
     }
 
-    /** Sai so so hoc chap nhan duoc khi cong don utility bang double. */
+    /** Accepted rounding error when utilities are accumulated in double precision. */
     public static final double UTILITY_TOLERANCE = 1e-6;
 
     public static PatternSetDiff of(Map<String, Double> reference, Map<String, Double> got) {
         int missing = 0, extra = 0;
         double maxGap = 0;
         String firstMissing = "";
-        // Duyet theo thu tu tu dien de "mau thieu dau tien" on dinh giua cac lan chay.
+        // Iterate in lexicographic order so the "first missing pattern" is stable across runs.
         for (String key : new TreeSet<>(reference.keySet())) {
             Double g = got.get(key);
             if (g == null) {

@@ -9,36 +9,34 @@ public class Sequence {
     public List<QItemset> itemsets = new ArrayList<>();
     public double sequenceUtility = 0;
 
-    // Ma trận lưu trữ tiện ích còn lại (Rest Utility) phục vụ tra cứu O(1)
+    // Remaining (rest) utility per item position, for O(1) lookup
     public List<List<Double>> remainingUtilities = new ArrayList<>();
 
     // ====================================================================
-    //  FLATTENED REPRESENTATION (cho Pre-HUSPM-Adaptive)
+    //  FLATTENED REPRESENTATION (used by Pre-HUSPM-Adaptive)
     //
-    //  Trải phẳng toàn bộ List<QItemset> → List<List<QItem>> thành mảng 1D
-    //  primitive. Mục tiêu: cache-friendly + bỏ Object/iterator overhead
-    //  trong hot path đệ quy. Các thuật toán khác (USpan, HUSP-ULL, ...) vẫn
-    //  dùng itemsets/remainingUtilities cũ - chỉ Adaptive đọc flat fields.
+    //  The itemsets are flattened into 1-D primitive arrays, which keeps the
+    //  recursive hot path cache-friendly and free of object and iterator
+    //  overhead. Other algorithms (USpan, HUSP-ULL, ...) read itemsets and
+    //  remainingUtilities; only the adaptive algorithm reads the flat fields.
     //
-    //  Layout (4 mảng nguyên thuỷ - tối thiểu hoá memory footprint):
-    //    int[]    flatItems[k]            = item.id tại vị trí flat k
-    //    double[] flatUtilities[k]        = utility tại vị trí flat k
-    //    boolean[] isItemsetEnd[k]        = true nếu k là vị trí CUỐI của itemset
-    //                                       (next itemset bắt đầu tại k+1)
-    //    double[] flatRemainingUtility[k] = suffix sum utility từ k+1 đến hết
-    //    flatLen                          = tổng số item (size mảng flat)
+    //  Layout (four primitive arrays):
+    //    int[]     flatItems[k]            = item id at flat position k
+    //    double[]  flatUtilities[k]        = utility at flat position k
+    //    boolean[] isItemsetEnd[k]         = true if k is the LAST position of its itemset
+    //                                        (the next itemset starts at k+1)
+    //    double[]  flatRemainingUtility[k] = sum of utilities from k+1 to the end
+    //    flatLen                           = total number of items (flat array length)
     //
-    //  isItemsetEnd thay flatToItemsetIdx + itemsetStart cũ (~5× nhỏ hơn):
-    //    - flatToItemsetIdx: 4L bytes - không cần (tích hợp ranh giới vào scan)
-    //    - itemsetStart:     4(M+1) bytes - không cần (boundary biết qua isItemsetEnd)
-    //    - isItemsetEnd:     L bytes (boolean[] mỗi entry 1 byte JVM)
+    //  Itemset boundaries are read from isItemsetEnd (L bytes), so no position-to-
+    //  itemset index (4L bytes) or itemset start table (4(M+1) bytes) is stored.
     //
-    //  Cách dùng (Pass-2 scan):
+    //  Usage (second-pass scan):
     //    for (int q = parentFlatIdx + 1; q < flatLen; q++) {
-    //        if (flatItems[q] == itemToFind) { ... I-ext match ... }
-    //        if (isItemsetEnd[q]) break;   // crossed itemset boundary → I-ext done
+    //        if (flatItems[q] == itemToFind) { ... I-extension match ... }
+    //        if (isItemsetEnd[q]) break;   // crossed the itemset boundary: I-extensions done
     //    }
-    //    // S-ext bắt đầu từ q+1 (sau khi break ở isItemsetEnd[q])
+    //    // S-extensions start at q+1 (after breaking at isItemsetEnd[q])
     // ====================================================================
     public int[] flatItems;
     public double[] flatUtilities;
@@ -50,7 +48,7 @@ public class Sequence {
         this.id = id;
     }
 
-    // Tính toán trước Tiện ích còn lại (Suffix Sum) từ phải qua trái
+    // Precomputes the remaining utility (suffix sum), right to left
     public void calculateRemainingUtilities() {
         remainingUtilities.clear();
         double currentRemaining = 0;
@@ -67,8 +65,8 @@ public class Sequence {
     }
 
     /**
-     * Build the flat primitive representation. Idempotent: gọi lại sẽ rebuild.
-     * Adaptive thuật toán gọi 1 lần per sequence khi nạp vào dbLookup.
+     * Builds the flat primitive representation. Idempotent: calling it again rebuilds it.
+     * The adaptive algorithm calls it once per sequence when adding it to dbLookup.
      */
     public void buildFlatRepresentation() {
         int total = 0;
@@ -87,13 +85,13 @@ public class Sequence {
                 QItem qi = is.items.get(j);
                 flatItems[pos] = qi.id;
                 flatUtilities[pos] = qi.utility;
-                // Đánh dấu phần tử cuối của itemset
+                // Mark the last element of the itemset
                 if (j == n - 1) isItemsetEnd[pos] = true;
                 pos++;
             }
         }
 
-        // Build remaining utility (suffix sum của utilities sau vị trí k).
+        // Remaining utility: suffix sum of the utilities after position k.
         double running = 0;
         for (int k = total - 1; k >= 0; k--) {
             flatRemainingUtility[k] = running;
@@ -107,13 +105,13 @@ public class Sequence {
         return flatRemainingUtility[flatIdx];
     }
 
-    // Lấy tiện ích còn lại siêu tốc O(1) hoặc tính thủ công O(N) nếu chưa khởi tạo
+    // Remaining utility: O(1) when precomputed, otherwise computed in O(N)
     public double getRestUtility(int itemsetIdx, int itemIdx) {
         if (!remainingUtilities.isEmpty()) {
             return remainingUtilities.get(itemsetIdx).get(itemIdx);
         }
 
-        // Fallback O(N) cho các thuật toán không gọi calculateRemainingUtilities()
+        // O(N) fallback for algorithms that never call calculateRemainingUtilities()
         double rest = 0;
         for (int i = itemsetIdx; i < itemsets.size(); i++) {
             QItemset is = itemsets.get(i);

@@ -1,6 +1,6 @@
-==== FIFA per-level calibration  bat dau 07:01:34 ====
-grid da do truoc do (D_init): 0.05->143  0.06->16  0.07->3  0.08->0  0.09->0
-moi muc chay rieng mot tien trinh: seed tro lai 0.05, hi tro lai 0.95
+==== FIFA per-level calibration  start 07:01:34 ====
+grid measured earlier (D_init): 0.05->143  0.06->16  0.07->3  0.08->0  0.09->0
+each level runs in its own process: seed back to 0.05, hi back to 0.95
 
 ---- target 41 patterns  07:01:34 ----
 budgets: 3,000,000,000 candidates, 900 s per probe, 5400 s per level
@@ -40,7 +40,7 @@ budgets: 3,000,000,000 candidates, 900 s per probe, 900 s per level
 
 -> D:\pre-huspm-adaptive\results\thresholds\thresholds-admin-pc.csv
 
-==== xong 07:34:42 ====
+==== done 07:34:42 ====
 budgets: 3,000,000,000 candidates, 900 s per probe, 900 s per level
 
 === FIFA | D_init | |D|=10,225 | TSU=21,636,666 ===

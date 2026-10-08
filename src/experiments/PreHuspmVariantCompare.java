@@ -19,31 +19,31 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * WP3 - doi chieu hai bien the cua baseline Pre-HUSPM.
+ * Compares the two variants of the Pre-HUSPM baseline.
  *
- * Yan et al. dinh nghia hai luat kich hoat rescan: Dinh ly 1 dung TSU(d) (sound) va
- * Dinh ly 2 dung SWUmax(d) (khong sound). Ban nop cua ta chi cai bien the thu hai.
- * Kich ban nay do CHI PHI cua viec dung bien the dung, tren GIAO THUC CUA CHINH HO:
- * CSDL goc kich thuoc OD.Num, phan con lai chia thanh 100 lo (Bang 16 cua ho).
+ * Yan et al. give two rescan trigger rules: one bounded by TSU(d), which is sound, and one
+ * bounded by SWUmax(d), which is not. This study measures the COST of the sound variant
+ * under the authors' own protocol: an original database of OD.Num sequences, with the rest
+ * split into 100 batches (their Table 16).
  *
- * Voi moi bien the: so lan rescan, thoi gian, va sai lech tap mau so voi
- * remine-from-scratch sau lo cuoi.
+ * For each variant: rescan count, runtime, and the pattern-set difference from
+ * remine-from-scratch after the last batch.
  *
- * Chay: java -Xmx24g -cp build experiments.PreHuspmVariantCompare LEVIATHAN
+ * Run: java -Xmx24g -cp build experiments.PreHuspmVariantCompare LEVIATHAN
  */
 public final class PreHuspmVariantCompare {
 
     private static final String DIR = "datasets/";
     private static final double RL = 0.8;
 
-    /** dataset, UUT mac dinh, OD.Num theo Bang 16 cua Yan et al. */
+    /** dataset, UUT, OD.Num from Table 16 of Yan et al. */
     private static final Object[][] CFG = {
             {"SIGN",      0.025,   230},
             {"LEVIATHAN", 0.060,  2834},
             {"FIFA",      0.050, 10450},
             {"BIBLE",     0.025, 21369},
             {"BMS1",      0.014, 39601},
-            {"KOSARAK",   0.030,     0},   // ho dung Kosarak10k, khong so sanh truc tiep duoc
+            {"KOSARAK",   0.030,     0},   // they use Kosarak10k, which is not directly comparable
     };
 
     private static final int N_BATCHES = 100;
@@ -73,7 +73,7 @@ public final class PreHuspmVariantCompare {
         List<Sequence> all = DatasetLoader.loadDataset(
                 DIR + name + "_seq.txt", DIR + name + "_eui.txt");
         if (odNum >= all.size()) {
-            System.out.printf("%s: OD.Num=%d >= |D|=%d, bo qua%n", name, odNum, all.size());
+            System.out.printf("%s: OD.Num=%d >= |D|=%d, skipped%n", name, odNum, all.size());
             return;
         }
         List<Sequence> init = new ArrayList<>(all.subList(0, odNum));
@@ -82,7 +82,7 @@ public final class PreHuspmVariantCompare {
         double tsuInit = tsu(init);
         double batchPct = 100.0 * (perBatch * (tsuInit / init.size())) / tsuInit;
 
-        System.out.printf("%n=== %s | UUT=%.4f | giao thuc Yan et al.: OD=%d, %d lo, %d chuoi/lo "
+        System.out.printf("%n=== %s | UUT=%.4f | Yan et al. protocol: OD=%d, %d batches, %d seqs/batch "
                         + "(~%.3f%% utility) ===%n",
                 name, uut, odNum, N_BATCHES, perBatch, batchPct);
 
@@ -111,7 +111,7 @@ public final class PreHuspmVariantCompare {
 
             System.out.printf("  %-8s rescans=%3d/%d  %7dms  HUSP=%d  %s%n",
                     v, algo.rescanCount, N_BATCHES, ms, algo.patternCount,
-                    d.isClean() ? "khop remine" : "SAI LECH: " + d);
+                    d.isClean() ? "matches remine" : "MISMATCH: " + d);
 
             w.printf("%s,%.6f,%s,%d,%d,%d,%.4f,%d,%d,%d,%d,%d,%.9f%n",
                     name, uut, v, odNum, N_BATCHES, perBatch, batchPct,

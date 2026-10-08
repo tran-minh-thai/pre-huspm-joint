@@ -4,17 +4,17 @@ import java.io.*;
 import java.util.*;
 
 /**
- * Bộ nạp dữ liệu hỗ trợ hai chế độ:
- *  - loadDataset(seq, eui): trả về toàn bộ chuỗi làm 1 batch.
- *  - loadBatches(seq, eui): trả về List<List<Sequence>> đã chia batch theo
- *    chỉ thị '# --- BATCH n' trong file _seq.txt.
+ * Loads a database in one of two forms:
+ *  - loadDataset(seq, eui): every sequence in a single list.
+ *  - loadBatches(seq, eui): the sequences split into batches at each
+ *    '# --- BATCH n' marker line of the _seq.txt file.
  *
- * Định dạng dòng dữ liệu: token "id[utility]", "-1" chuyển sang itemset mới,
- * "-2" kết thúc chuỗi. Các dòng bắt đầu '#', '%', '@' đều là comment/meta.
+ * Data line format: tokens "id[utility]"; "-1" starts a new itemset and "-2" ends the
+ * sequence. Lines starting with '#', '%' or '@' are comments or metadata.
  */
 public class DatasetLoader {
 
-    /** Nạp toàn bộ dataset, không chia batch. */
+    /** Loads the whole database as one flat list. */
     public static List<Sequence> loadDataset(String seqPath, String euiPath) throws IOException {
         List<List<Sequence>> batched = loadBatches(seqPath, euiPath);
         List<Sequence> flat = new ArrayList<>();
@@ -23,8 +23,8 @@ public class DatasetLoader {
     }
 
     /**
-     * Nạp dataset và CHIA THEO BATCH dựa trên dòng "# --- BATCH ..." trong file _seq.
-     * Nếu file không có chỉ thị BATCH thì coi toàn bộ là 1 batch duy nhất.
+     * Loads the database split into batches at the "# --- BATCH ..." lines of the _seq file.
+     * A file without batch markers is returned as a single batch.
      */
     public static List<List<Sequence>> loadBatches(String seqPath, String euiPath) throws IOException {
         Map<Integer, Double> externalUtilities = loadExternalUtilities(euiPath);
@@ -53,7 +53,7 @@ public class DatasetLoader {
                 String trimmed = line.trim();
                 if (trimmed.isEmpty()) continue;
 
-                // Phát hiện ranh giới batch
+                // Batch boundary
                 if (trimmed.startsWith("#")) {
                     String upper = trimmed.toUpperCase(Locale.ROOT);
                     if (upper.contains("BATCH")) {
@@ -71,7 +71,7 @@ public class DatasetLoader {
         }
         if (!currentBatch.isEmpty()) batches.add(currentBatch);
 
-        // Trường hợp không có marker -> trả 1 batch chứa tất cả.
+        // No marker: return one batch holding everything.
         if (!sawBatchMarker && batches.size() > 1) {
             List<Sequence> all = new ArrayList<>();
             for (List<Sequence> b : batches) all.addAll(b);
@@ -139,7 +139,7 @@ public class DatasetLoader {
                     double internalUtil = Double.parseDouble(token.substring(leftIdx + 1, rightIdx).trim());
                     currentSet.items.add(new QItem(itemId, internalUtil * eui.getOrDefault(itemId, 0.0)));
                 } catch (NumberFormatException nfe) {
-                    // Bỏ qua token bị lỗi định dạng
+                    // Skip a malformed token
                 }
             }
         }

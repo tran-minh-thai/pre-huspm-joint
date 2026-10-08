@@ -6,11 +6,9 @@ import java.util.Set;
 /**
  * The databases this study measures, with the thresholds each one is measured at.
  *
- * This is the single place the thresholds live. They used to be written out twice, once
- * here in the runner's own table and once in verify.CorrectnessVerifier, and the second
- * copy silently went stale: it still held the inherited pre-release values, so every
- * correctness artefact was produced at an operating point the study had stopped using, and
- * nothing reported a problem. A table duplicated is a table that will disagree with itself.
+ * This is the single place the thresholds live. Runners and verifiers read them from here
+ * rather than keeping their own copy, because a duplicated table drifts out of agreement
+ * with itself without any error being reported.
  *
  * AutomatedExperimentRunner lives in the default package and can read this; the reverse is
  * not possible, which is why the table sits here rather than there.
@@ -19,10 +17,10 @@ import java.util.Set;
  * table that quietly lags behind the data makes "all databases were calibrated" false while
  * looking complete, so entries that are not ready are present and marked rather than absent.
  *
- * Thresholds are ratios of total utility. They stay well defined across releases but not
- * comparable: the pinned release changed the shape of the utility distribution, so the same
- * ratio selects a different number of patterns. Each sweep below was re-chosen with
- * experiments.ThresholdScan; the raw search output is in results/thresholds/.
+ * Thresholds are ratios of total utility. They are well defined on any release of the data
+ * but not comparable across releases: a different utility distribution makes the same ratio
+ * select a different number of patterns. Each sweep below is chosen on the pinned release
+ * with experiments.ThresholdScan; the raw search output is in results/thresholds/.
  */
 public final class Datasets {
 
@@ -46,11 +44,11 @@ public final class Datasets {
          * 3.5 s; on the whole database no threshold works at all. 0.030 exceeds three billion
          * candidates and 0.032 returns the empty set in 1.8 s, so the region that holds
          * patterns lies entirely behind the wall - the shape that removed ONLINE_RETAIL_II
-         * from the study. Unlike those, BMS1 is perfectly well behaved at half the data, so it
-         * keeps SC1 rather than leaving.
+         * from the study. Unlike that database, BMS1 is well behaved on D_init, so it stays
+         * in SC1.
          *
-         * The submitted SC3 already covers only KOSARAK, LEVIATHAN and SIGN, omitting BIBLE,
-         * BMS1 and FIFA without saying why. This makes that decision explicit and checkable.
+         * This flag makes the choice of databases for the whole-database scenarios explicit
+         * and checkable.
          */
         public final boolean fullScopeOk;
         /**
@@ -61,12 +59,10 @@ public final class Datasets {
          * Kosarak10k's 10000. The remainder is always a round number - 500, 3000, 10000,
          * 15000, 9000, 20000 - which is what fixes the odd-looking counts here.
          *
-         * This study used a flat 50% for every database instead, and that quietly broke the
-         * growth experiment twice over. It made the incremental stream half the database
-         * everywhere, so the database only ever doubled; and on KOSARAK it replaced a
-         * tenfold growth with a twofold one. Across SC2 and SC5 that left rescan_count at
-         * zero in 15 of 18 cells, and rescan_count is what measures LUT_dyn. An experiment
-         * whose measured quantity is zero almost everywhere is not measuring.
+         * A flat 50% split would not reproduce this. It makes the incremental stream half
+         * the database everywhere, so the database only ever doubles, and on KOSARAK it
+         * turns a tenfold growth into a twofold one. The growth scenarios then almost never
+         * rescan, and rescan_count is what measures LUT_dyn.
          *
          * Five of the eight below are Yan's OD.Num verbatim, so those are directly
          * comparable with their figures. KOSARAK is this study's full release, 990002
@@ -165,25 +161,24 @@ public final class Datasets {
                 new double[]{0.056234, 0.059637, 0.067073, 0.075436},
                 true,  "42 18 5 1"),
 
-        // The submitted counts {12, 6, 5, 5} are unusable on this release: 6 and 5 both
-        // land at 0.030, so three levels share one threshold and the sweep shows two
-        // operating points wearing four labels. Re-chosen for the widest spread the
-        // database allows; 0.019 already exceeds three billion candidates, so twelve
-        // patterns is the ceiling rather than a preference.
+        // Chosen for the widest spread the database allows: pattern counts of 6 and 5 both
+        // land at 0.030, which would give two operating points under four labels, and 0.019
+        // already exceeds three billion candidates, so about twelve patterns is the ceiling
+        // rather than a preference.
         new Entry("KOSARAK",   90002, 0.025000,
                 new double[]{0.022228, 0.025000, 0.028117, 0.031623},
                 true,  "11 10 7 5; r_l is 0.85 here, not 0.8 - see slMinRatio",
                 true, 0.85),
 
-        // Added by the pinned release. The one database here that reaches within-event
-        // extension, at 7.97 items per event; the other seven hold exactly one item per
-        // event and exercise across-event extension alone.
-        // Moved down. The old sweep matched its targets on D_init and collapsed on the whole
-        // database: 0.00152 returns 153 patterns on the half and 1 on the whole, so SC2, SC5
-        // and SC6 were comparing algorithms against an answer of one pattern. Every level here
-        // keeps at least 23% of its D_init count. The band stays narrow - six percent of
-        // threshold still separates 313 patterns from 38 - which is why the sweep spans only
-        // 2.3x rather than the 43x SIGN manages: anything above 0.00130 collapses again.
+        // The one database here that reaches within-event extension, at 7.97 items per
+        // event; the other seven hold exactly one item per event and exercise across-event
+        // extension alone.
+        // Every level keeps at least 23% of its D_init count on the whole database. Higher
+        // thresholds collapse there: 0.00152 returns 153 patterns on D_init and 1 on the
+        // whole database, which would leave SC2, SC5 and SC6 comparing algorithms against a
+        // one-pattern answer. The band is narrow - six percent of threshold separates 313
+        // patterns from 38 - so the sweep spans only 2.3x rather than the 43x of SIGN:
+        // anything above 0.00130 collapses again.
         new Entry("C8T1S5I8N5K",          27133, 0.001132,
                 new double[]{0.001099, 0.001132, 0.001200, 0.001236},
                 true,  "6101 5082 3427 2726 on D_init; the highest level keeps 1485 of its "
@@ -196,18 +191,17 @@ public final class Datasets {
         new Entry("TAFENG",               40665, 0.003557,
                 new double[]{0.002812, 0.003557, 0.004499, 0.005691},
                 true,  "10 6 5 3; the D_init cost gate passes here - 17 patterns in "
-                     + "309 ms - where it failed at the old half-database D_init")
+                     + "309 ms")
 
-        // ONLINE_RETAIL_II_ALL and ONLINE_RETAIL_II_QTY were measured and dropped, not
-        // forgotten. QTY gives each invoice line its own event, so its sequences average
-        // 139.66 events against 2.5 to 36 elsewhere: every threshold that completes
-        // returns nothing and every threshold low enough to return a pattern exceeds
-        // three billion candidates, with the two bracketing 0.15 and 0.16. Rebuilding it
-        // per customer-month cut that to 32.28 events and made the last computable
-        // threshold six hundred times cheaper, and it still returned nothing. ALL carries
-        // generated utilities like seven of the nine and its within-event extension is
-        // already covered by C8T1S5I8N5K, so it brought nothing the suite lacked. Both
-        // stay in the dataset release; they are simply not measured here.
+        // ONLINE_RETAIL_II_ALL and ONLINE_RETAIL_II_QTY are measured and excluded. QTY gives
+        // each invoice line its own event, so its sequences average 139.66 events against
+        // 2.5 to 36 elsewhere: every threshold that completes returns nothing and every
+        // threshold low enough to return a pattern exceeds three billion candidates, with
+        // the two bracketing 0.15 and 0.16. A per-customer-month build (32.28 events) makes
+        // the last computable threshold six hundred times cheaper and still returns nothing.
+        // ALL carries generated utilities like seven of the nine and its within-event
+        // extension is already covered by C8T1S5I8N5K, so it adds nothing the suite lacks.
+        // Both stay in the dataset release; they are not measured here.
     );
 
     /**
@@ -235,9 +229,8 @@ public final class Datasets {
     /**
      * Increment counts for the batch-size study, holding the stream fixed.
      *
-     * Yan et al. Figs. 5-7 vary the size of each increment while "the total incremental
-     * dataset size remains the same", and compare 100 against 67 among others. SC5 used
-     * {3, 5, 10}, which is a different experiment from theirs and not comparable with it.
+     * Follows Yan et al. Figs. 5-7, which vary the size of each increment while "the total
+     * incremental dataset size remains the same", and compare 100 against 67 among others.
      */
     public static final int[] BATCH_COUNT_SWEEP = {100, 67, 50, 25};
 
@@ -245,18 +238,18 @@ public final class Datasets {
 
     public static List<Entry> all() { return ALL; }
 
-    /**
-     * Size of D_init for a database, falling back to half for anything not in the table.
-     *
-     * Clamped to the database: a count larger than the data would otherwise leave the
-     * incremental stream empty and turn SC2 into a second copy of SC1 without saying so.
-     */
     /** The pre-large floor for a database, as a fraction of Su. */
     public static double slMinRatio(String name) {
         for (Entry e : ALL) if (e.name.equals(name)) return e.slMinRatio;
         return DEFAULT_SL_MIN_RATIO;
     }
 
+    /**
+     * Size of D_init for a database, falling back to half for anything not in the table.
+     *
+     * Clamped to the database: a count larger than the data would otherwise leave the
+     * incremental stream empty and turn SC2 into a second copy of SC1 without saying so.
+     */
     public static int dInitCount(String name, int dbSize) {
         for (Entry e : ALL) {
             if (e.name.equals(name)) return Math.max(1, Math.min(e.dInitCount, dbSize));

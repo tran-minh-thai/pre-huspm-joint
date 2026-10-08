@@ -18,36 +18,36 @@ import java.util.Map;
 import java.util.Random;
 
 /**
- * WP5 - bo kiem chung tinh dung dan.
+ * Correctness verifier.
  *
- * So sanh TAP MAU va utility TUNG MAU cua thuat toan gia tang voi remine-from-scratch,
- * sau MOI thao tac. Ban nop chi doi chieu SO LUONG HUSP, khong du de chung minh
- * Proposition 2: hai tap cung kich thuoc van co the khac nhau.
+ * Compares the PATTERN SET and the utility of EVERY PATTERN of the incremental algorithm
+ * with remine-from-scratch after EVERY operation. Comparing HUSP counts alone cannot
+ * establish that the incremental pattern set is exact: two sets of the same size can still
+ * differ.
  *
- * Chay:
+ * Run:
  *   java -cp build verify.CorrectnessVerifier SIGN 0.025
  *   java -cp build verify.CorrectnessVerifier SIGN 0.025 --rule swumax --batches 5
  *   java -cp build verify.CorrectnessVerifier ALL --out results/verify
  *
- * Nghiem thu: voi luat iaumax, moi cot missing/extra/maxUtilGap phai bang 0 tren moi
- * cau hinh. Voi luat swumax cu, phai xuat hien mau THIEU o it nhat mot cau hinh - do
- * chinh la bang chung thuc nghiem cho loi ma Reviewer #1 neu o Eq. (9).
+ * Acceptance: with any rule other than swumax, missing, extra and maxUtilGap must be 0 in
+ * every configuration, and the exit status is 1 otherwise. With the swumax rule MISSING
+ * patterns are expected in at least one configuration, as empirical evidence that the
+ * SWUmax trigger is unsound; they do not change the exit status.
  */
 public final class CorrectnessVerifier {
 
     private static final String DATASET_DIR = "datasets";
 
-    // Thresholds come from common.Datasets, the same table the runner measures at. This
-    // class used to carry its own copy of the pre-release values, so every artefact it
-    // produced verified correctness at an operating point the study had stopped using -
-    // LEVIATHAN at 0.060 where the calibrated threshold is 0.01553 - and nothing reported
-    // it, because a threshold that is merely wrong still runs perfectly well.
+    // Thresholds come from common.Datasets, the same table the runner measures at, never
+    // from a local copy: a wrong threshold still runs perfectly well, so nothing would
+    // report it.
 
     private static final double RL = 0.8, KAPPA = 0.5, DELTA0 = 1e-4;
 
     public static void main(String[] args) throws IOException {
         if (args.length == 0) {
-            System.out.println("dung: verify.CorrectnessVerifier <DATASET|ALL> [UUT] "
+            System.out.println("usage: verify.CorrectnessVerifier <DATASET|ALL> [UUT] "
                     + "[--rule swumax|cub|iaumax] [--batches K] [--mixed] [--out DIR]");
             System.out.println("databases: " + common.Datasets.names());
             return;
@@ -91,8 +91,8 @@ public final class CorrectnessVerifier {
                 ran = true;
             }
             if (!ran) {
-                System.out.println("khong co database nao ten " + target
-                        + "; co the chon: " + common.Datasets.names());
+                System.out.println("no database named " + target
+                        + "; choose from " + common.Datasets.names());
                 return;
             }
         }
@@ -100,15 +100,15 @@ public final class CorrectnessVerifier {
         System.out.println();
         System.out.println("verification.csv -> " + csv.toAbsolutePath());
         if (totalViolations == 0) {
-            System.out.println("KET LUAN: khong co sai lech nao. Tap mau khop remine-from-scratch"
-                    + " sau moi thao tac.");
+            System.out.println("RESULT: no mismatch. The pattern set matches remine-from-scratch"
+                    + " after every operation.");
         } else {
-            System.out.println("KET LUAN: " + totalViolations + " thao tac co sai lech."
+            System.out.println("RESULT: " + totalViolations + " operations with a mismatch."
                     + (rule == TriggerRule.SWUMAX
-                       ? " (Voi luat swumax day la ket qua MONG DOI - bang chung cho loi Eq. (9).)"
-                       : " (Voi luat nay day la LOI - phai sua truoc khi chay thuc nghiem.)"));
+                       ? " (EXPECTED with the swumax rule, whose trigger is unsound.)"
+                       : " (With this rule it is an ERROR - fix it before running experiments.)"));
         }
-        // Chi bao loi khi luat dang duoc DE XUAT lai sai.
+        // Fail only when a rule other than swumax produces a mismatch.
         if (totalViolations > 0 && rule != TriggerRule.SWUMAX) System.exit(1);
     }
 
@@ -125,8 +125,8 @@ public final class CorrectnessVerifier {
                 Paths.get(DATASET_DIR, name + "_seq.txt").toString(),
                 Paths.get(DATASET_DIR, name + "_eui.txt").toString());
 
-        System.out.printf("%n=== %s | UUT=%.4f | luat=%s | %d lo | %s ===%n",
-                name, uut, rule, nBatches, mixed ? "hon hop" : "chi chen");
+        System.out.printf("%n=== %s | UUT=%.4f | rule=%s | %d batches | %s ===%n",
+                name, uut, rule, nBatches, mixed ? "mixed" : "insert only");
 
         int half = all.size() / 2;
         List<Sequence> current = new ArrayList<>(all.subList(0, half));
@@ -168,7 +168,7 @@ public final class CorrectnessVerifier {
                 // sequences of the stream, so each pair is an old and a new version of a record.
                 // A five-hundredth of the database: small enough to fall inside the safety
                 // budget, so it exercises the direct update rather than a rescan. At a
-                // twentieth every modification rescanned, and the rescan is only a remine.
+                // twentieth every modification rescans, and a rescan is only a remine.
                 opType = "modify";
                 int k = Math.min(batch.size(), Math.max(1, current.size() / 500));
                 List<Sequence> oldSeqs = sample(current, k, rnd);
@@ -178,7 +178,7 @@ public final class CorrectnessVerifier {
                 algo.runModification(oldSeqs, newSeqs, new ArrayList<>(current), tsu(current));
             }
 
-            // moc tham chieu: mine lai tu dau tren CSDL hien tai
+            // reference: remine from scratch on the current database
             PreHUSPMAdaptiveAlgo ref = new PreHUSPMAdaptiveAlgo(
                     uut, KAPPA, DELTA0, RL, AblationMode.FULL, false);
             ref.runInitialMining(new ArrayList<>(current), tsu(current));
@@ -194,9 +194,9 @@ public final class CorrectnessVerifier {
                     diff.maxUtilityGap, algo.rescanCount, diff.isClean());
             w.flush();
 
-            System.out.printf("  thao tac %d (%s): %s  rescans=%d  %s%n",
+            System.out.printf("  operation %d (%s): %s  rescans=%d  %s%n",
                     b + 1, opType, diff, algo.rescanCount,
-                    diff.isClean() ? "OK" : "<<< SAI LECH");
+                    diff.isClean() ? "OK" : "<<< MISMATCH");
         }
         return violations;
     }

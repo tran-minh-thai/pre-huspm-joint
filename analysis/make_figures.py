@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # =============================================================================
-#  make_figures.py  -  figures and tables for the paper, from the campaign results
+#  make_figures.py  -  figures and tables from the campaign results
 #
 #  Reads the per-arm CSVs the campaign writes,
 #      results/campaign/<SC>/<DATABASE>/<ARM>/<file>.csv       timing campaign
@@ -44,8 +44,8 @@ import matplotlib.ticker
 
 # ---- Data / output locations -------------------------------------------------
 # Resolution order:
-#   1) env HUSP_DATA_DIR / HUSP_OUT_DIR  (the Colab notebook sets these)
-#   2) Colab default placeholder (edit PROJECT below if not using env)
+#   1) env HUSP_DATA_DIR / HUSP_OUT_DIR  (run.sh and run.ps1 set these)
+#   2) on Colab, the placeholder PROJECT below (edit it if not using env)
 #   3) local: <repo>/results and <repo>/figures/campaign
 IN_COLAB = "google.colab" in sys.modules
 DATA_DIR = os.environ.get("HUSP_DATA_DIR")
@@ -69,17 +69,16 @@ MEMORY_TREE = "campaign-mem"
 
 # ---- Journal aesthetics -------------------------------------------------------
 # Black and white, no fills: series are told apart by line style and hollow marker,
-# bars by hatching. Times New Roman throughout, as in the manuscript (mathptmx), with
-# every font embedded as TrueType. Figures are drawn at the width they are printed at,
-# so a 9 pt font here is 9 pt on the page: the manuscript's \linewidth, measured from
-# its class and geometry, is 324.36 pt.
+# bars by hatching. Times New Roman throughout, to match a Times text font (mathptmx),
+# with every font embedded as TrueType. Figures are drawn at the width they are printed
+# at, so a 9 pt font here is 9 pt on the page; the target \linewidth is 324.36 pt.
 from matplotlib import font_manager
 try:
     font_manager.findfont("Times New Roman", fallback_to_default=False)
 except Exception:
     sys.exit("Times New Roman is not installed; refusing to draw with a substitute font.")
 
-LINEWIDTH_IN = 324.36 / 72.27          # \linewidth of the manuscript, in inches
+LINEWIDTH_IN = 324.36 / 72.27          # target \linewidth, in inches
 FONT_PT = 9
 plt.rcParams.update({
     "font.family":        "Times New Roman",
@@ -279,8 +278,8 @@ def ms_to_s(x):  return np.asarray(x, float) / 1000.0
 
 
 STATUS_MARK = {"OOM": ("x", "Out of memory (48 GB)"), "OT": ("+", "Over the time limit"),
-               "Fail": ("1", "Failed"), "MemSkip": ("2", "Skipped by the memory guard"),
-               "Skip": ("3", "Skipped after an earlier failure")}
+               "Fail": ("1", "Failed"), "MemSkip": ("2", "Stopped by the candidate or time budget"),
+               "Skip": ("3", "Skipped after a failed batch or a memory-guard stop")}
 
 
 def annotate_fail(ax, xpos, status="Fail"):
@@ -343,7 +342,8 @@ def safe_log(ax):
 
 
 STATUS_WORDS = {"OOM": "out of memory", "OT": "over the time limit", "Fail": "failed",
-                "MemSkip": "refused by the memory guard", "Skip": "out of memory"}
+                "MemSkip": "stopped by the candidate or time budget",
+                "Skip": "skipped after a failed batch or a memory-guard stop"}
 
 
 def deferred_reason(path):
@@ -1054,7 +1054,7 @@ def measurement_hosts():
 
 
 def export_platform():
-    """The manuscript's sentence on the measurement platform, generated from the machine
+    """The sentence describing the measurement platform, generated from the machine
     record (record-machine.ps1 -> results/machine/<host>.json), never typed. Refuses when
     the arms name more than one host or the host has no record, and names the fields the
     record could not read."""
@@ -1077,8 +1077,9 @@ def export_platform():
         os_name += f" {rec['os_display']}"
     if rec.get("os_build") not in (None, "unavailable"):
         os_name += f" (build {rec['os_build']})"
-    # The JDK is named by the environment lock, the one place it is pinned: the arms ran on
-    # two builds of OpenJDK 25.0.4 (results/jdk-comparison), and the label covers both.
+    # The JDK is named by the environment lock, the one place it is pinned. The result trees
+    # hold arms from two builds of OpenJDK 25.0.4 (see results/jdk-comparison); the label
+    # covers both.
     lock_path = os.path.join(REPO_DIR, "environment.lock.json")
     if not os.path.exists(lock_path):
         print(f"[platform] not written: no {lock_path}")
@@ -1129,7 +1130,7 @@ def export_status_summary():
 
 
 # %% ------------------------------------------------------------------ Cell 9
-#    DRIVER - the figures the paper uses, and the tables behind its text
+#    DRIVER - the main figures and tables
 def main():
     print(f"DATA_DIR = {DATA_DIR}\nOUT_DIR  = {OUT_DIR}")
     print(f"databases from common.Datasets: {', '.join(DATASETS) or 'none found'}\n")
@@ -1154,7 +1155,7 @@ def main():
 
 
 def main_all():
-    """Everything above plus the figures the paper does not use."""
+    """Everything above plus supplementary figures."""
     main()
     figset_scalability("SC1", "fig_scalability", datasets=ALL_DATASETS)
     figset_sl_sensitivity(metrics=("prelarge_count", "runtime_ms"))

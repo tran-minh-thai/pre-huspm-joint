@@ -33,9 +33,7 @@
     measuring the same arm wastes time, but a machine that refuses to work because it
     cannot write a lock file wastes more.
 
-    One JVM per arm, always. The arms shared a process until K reached 100, when LEVIATHAN
-    showed the price: IncUSP-Miner+ exhausted the heap and Pre-HUSPM started next with
-    total=160MB and died in 31 s. Isolated, that same run finishes in 35 s.
+    One JVM per arm, so one arm's heap exhaustion cannot affect the next arm.
 #>
 param(
     [string]   $Scenario   = 'SC2',
@@ -44,28 +42,18 @@ param(
     # one is given explicitly.
     [string[]] $Algorithms,
     [int]      $CapSeconds = 28800,
-    # Heap for every arm, one value for the whole campaign. -Xmx is a ceiling, not a
-    # reservation: an arm that needs 800 MB takes 800 MB whatever this says, so there is
-    # nothing to gain by tuning it per database and something to lose - the number decides
-    # results, and a table whose rows were measured under different ceilings compares the
-    # ceilings as much as the algorithms.
-    #
-    # 48 on a 64 GB machine, leaving the operating system the rest. It was 24, chosen before
-    # anyone looked at the hardware, and six arms died of it. Raising it to 48 did not rescue
-    # them but moved every one: IncUSP-Miner+ reached batch 75 instead of 32 on LEVIATHAN, 41
-    # instead of 15 on BIBLE, 12 instead of 7 on KOSARAK. That is why the figure has to be
-    # fixed for the whole campaign and reported with the results.
+    # Heap ceiling for every arm, one value for the whole campaign. -Xmx is a ceiling, not a
+    # reservation, so tuning it per database gains nothing; but the ceiling decides how far a
+    # memory-bound arm gets, so rows measured under different ceilings are not comparable.
+    # Keep it fixed and report it with the results. 48 GB on a 64 GB machine leaves the
+    # operating system the rest.
     [int]      $HeapGb = 48,
     # Stop taking new arms once the session has run this long. 0 means run until the
-    # scenario is finished, which is the old behaviour.
+    # scenario is finished.
     #
-    # The session stops BETWEEN arms, never inside one. An arm killed at a wall-clock
-    # boundary is not a measurement: how far it got would depend on when the session
-    # happened to start, so the row would be neither a runtime nor an honest failure.
-    # A session therefore overruns by however long its last arm takes, bounded by
-    # CapSeconds. Budget 8 hours to land inside 10 with CapSeconds at its default 8;
-    # the arms known to run past 4 hours are FIFA/Remine-from-scratch and the two
-    # Pre-HUSPM-TSU arms already marked DEFERRED.
+    # The session stops BETWEEN arms, never inside one: an arm killed at a wall-clock
+    # boundary is neither a runtime nor a failure. A session therefore overruns by however
+    # long its last arm takes, bounded by CapSeconds.
     [double]   $SessionHours = 0,
     # 'used' is the timing campaign. 'live' is the memory campaign; see the header.
     [ValidateSet('used','live')][string] $MemMode = 'used',
@@ -80,10 +68,9 @@ param(
     [int]      $Repeat = 0,
     [int]      $SeedIndex = 0,
     # The exact JDK every arm runs on: runtime version and vendor, not just the major
-    # version. Two builds of JDK 25 (Microsoft 25.0.4 and Eclipse Temurin 25.0.4.1) once ran
-    # arms of the same tables because only "25" was checked, and the logs of the earlier arms
-    # did not say which. Read from environment.lock.json, the one place they are set; these
-    # parameters override it only for testing on another machine.
+    # version, since two builds of the same major version are different runtimes. Read from
+    # environment.lock.json, the one place they are set; these parameters override it only
+    # for testing on another machine.
     [string]   $JdkRuntime = '',
     [string]   $JdkVendor  = '',
     [switch]   $List,
@@ -96,29 +83,23 @@ $ErrorActionPreference = 'Continue'
 $host_ = $env:COMPUTERNAME
 if (-not $host_) { $host_ = 'unknown' }
 
-# BMS1 is absent from every scenario that grows past D_init: it cannot be mined on the whole
-# database at any threshold that returns patterns. The runner skips it and says so; leaving
-# it out here keeps the work list honest about what there is to do.
-# Each scenario has its own arms and its own databases, and the defaults below must say so.
-# A single list for everything was right for SC2 only. SC1 and SC3 measure the static
-# baselines, which that list did not contain, so asking for them was refused and running the
-# scenario silently left them out; SC4 has two arms, not five; SC6 has two; and SC3 to SC6 run
-# on SUBSET_3 alone, so the other four databases produced arms with no rows in them.
+# Each scenario has its own arms and databases. BMS1 is absent from every scenario that grows
+# past D_init: it cannot be mined on the whole database at any threshold that returns
+# patterns, and the runner skips it.
 #
-# SUBSET_3 below repeats AutomatedExperimentRunner.SUBSET_3. The two can drift apart, and
-# when they do the arm that should not exist comes out with no rows - which is now recorded
-# as EMPTY and reported by -List rather than written down as DONE.
+# SUBSET_3 below repeats AutomatedExperimentRunner.SUBSET_3. If the two drift apart, an arm
+# that should not exist produces no rows; it is recorded as EMPTY and reported by -List
+# rather than marked DONE.
 $all7    = @('SIGN','LEVIATHAN','TAFENG','BIBLE','C8T1S5I8N5K','KOSARAK','FIFA')
 $all8    = @('SIGN','LEVIATHAN','TAFENG','BIBLE','BMS1','C8T1S5I8N5K','KOSARAK','FIFA')
 $subset3 = @('SIGN','LEVIATHAN','C8T1S5I8N5K')
 $static  = @('USpan','HUSP-ULL','HUSP-SP','IncUSP-Miner+','Pre-HUSPM','Adaptive-Full')
 $incr    = @('Adaptive-Full','Pre-HUSPM','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+')
 
-# Arms that exist on some databases only. SC7's incremental ablations - C4, the block index,
-# and C5, the adaptive rescan - run in the runner on C5_ABLATION_SET, which is SIGN and
-# C8T1S5I8N5K once BMS1 is filtered out by scope. Queued on any other database they come out
-# with no rows. This list repeats that set; if the two drift apart the stray arm is recorded as
-# EMPTY and named by -List, not written down as DONE.
+# Arms that exist on some databases only. SC7's incremental ablations (the block index and
+# the adaptive rescan) run in the runner on C5_ABLATION_SET, which is SIGN and C8T1S5I8N5K
+# once BMS1 is filtered out by scope. This list repeats that set; if the two drift apart the
+# stray arm is recorded as EMPTY and named by -List.
 $sc7Incremental = @('proposed_C5_on','proposed_C5_off','proposed_no_block_index')
 $sc7IncSets     = @('SIGN','C8T1S5I8N5K')
 function Test-Arm($d, $a) {
@@ -153,9 +134,7 @@ if (-not $Datasets) {
 
 # Check the names before anything uses them. Passed through -File, PowerShell hands an
 # array parameter the whole comma-joined string, so -Algorithms A,B arrives as one name
-# "A,B". Unchecked, that name matched no algorithm: the runner produced an empty CSV in
-# seconds and the script wrote DONE for it, leaving one junk arm per database and looking
-# like it had worked. Use -Command "& { .\campaign.ps1 -Algorithms 'A','B' }" instead.
+# "A,B", which matches no algorithm. Use -Command "& { .\campaign.ps1 -Algorithms 'A','B' }".
 $knownAlgos = @('Adaptive-Full','Pre-HUSPM','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+',
                 'USpan','HUSP-ULL','HUSP-SP',
                 'proposed_full','proposed_no_block_index','proposed_no_IUB',
@@ -219,13 +198,11 @@ function Get-NextArm {
         if (-not (Test-Arm $d $a)) { continue }
         $dir = "$root/$d/$a"
         if (Test-Path "$dir/DONE") { continue }
-        # An arm set aside on purpose. It is not failure and not success: the measurement is
-        # real but too expensive to finish right now, and the file says what was learned and
-        # what to try. Delete the file to put the arm back in the queue.
+        # An arm set aside on purpose: the measurement is real but too expensive to finish,
+        # and the file says why. Delete the file to put the arm back in the queue.
         if (Test-Path "$dir/DEFERRED") { continue }
-        # An arm that ran and produced no rows. Not a measurement and not a failure of the
-        # algorithm - the scenario has no such arm on this database. Skipped so the loop does
-        # not offer it forever; -List names it so the list above can be corrected.
+        # An arm that ran and produced no rows: the scenario has no such arm on this database.
+        # Skipped so the loop does not offer it forever; -List names it.
         if (Test-Path "$dir/EMPTY") { continue }
         $c = "$dir/CLAIM"
         if (Test-Path $c) {
@@ -242,12 +219,10 @@ function Get-NextArm {
 $java = if ($env:JAVA_HOME) { Join-Path $env:JAVA_HOME 'bin\java.exe' } else { $null }
 if (-not ($java -and (Test-Path $java))) { $java = (Get-Command java).Source }
 $ver = (& $java -version 2>&1 | Select-Object -First 1 | Out-String).Trim()
-# One JVM version for the whole campaign, checked here rather than trusted. Runtimes from
-# two versions do not belong in one table, and the arms are spread over several machines, so
-# nothing else would catch a machine that upgraded its JDK between arms. The source uses no
-# API removed since 21, so the pin is about comparability, not compilation. Changing this
-# number invalidates every arm already measured: clear results/campaign so they are queued
-# again instead of being mixed with the new ones.
+# One exact JVM for the whole campaign, checked here rather than trusted. Runtimes from two
+# JVMs do not belong in one table, and arms may run on several machines. The pin is about
+# comparability, not compilation. Changing the pinned JDK invalidates every arm already
+# measured: clear results/campaign so they are queued again instead of mixed with new ones.
 $lockPath = Join-Path $PSScriptRoot 'environment.lock.json'
 if (-not (Test-Path $lockPath)) { throw "No ${lockPath}: the pinned environment is defined there." }
 $lock = Get-Content -Raw $lockPath | ConvertFrom-Json
@@ -333,10 +308,8 @@ while ($true) {
     }
     $d = $arm.d; $a = $arm.a; $dir = $arm.dir
     New-Item -ItemType Directory -Force $dir | Out-Null
-    # Clear anything a previous attempt left. ResultCollector APPENDS to its CSV, so an arm
-    # that is retried writes its new batches after the old ones: FIFA/Pre-HUSPM-TSU ended up
-    # with 143 rows and 48 duplicated iteration numbers from two runs, which no analysis
-    # could read correctly and nothing flagged. The run log is overwritten and so hid it.
+    # Clear anything a previous attempt left. ResultCollector appends to its CSV, so a retried
+    # arm would otherwise write its batches after the old ones and duplicate iterations.
     Get-ChildItem $dir -File -ErrorAction SilentlyContinue |
         Where-Object { $_.Name -ne 'DONE' } | Remove-Item -Force
     "$host_ $(Get-Date -f 'yyyy-MM-dd HH:mm:ss')" | Set-Content "$dir/CLAIM"
@@ -355,19 +328,17 @@ while ($true) {
 
     $csv  = Get-ChildItem "$dir" -Filter '*.csv' | Select-Object -First 1
     $rows = if ($csv) { (Get-Content $csv.FullName | Measure-Object -Line).Lines - 1 } else { 0 }
-    # The commit and the operating system go into DONE as well: the runner's log has the JVM,
-    # but nothing recorded which Windows build or which commit an arm ran on.
-    # The last commit that changed src/: HEAD moves with every result this script commits, so
-    # it would name a results commit rather than the code the arm ran.
+    # DONE also records the commit and the operating system; the runner's log has the JVM.
+    # The commit is the last one that changed src/: HEAD moves with every result this script
+    # commits, so it would name a results commit rather than the code the arm ran.
     $commit = if ($NoGit) { 'unknown' } else { (git log -1 --format=%h -- src 2>$null | Out-String).Trim() }
     $treeState = if ($NoGit) { 'unknown' } elseif ((git status --porcelain -- src 2>$null | Out-String).Trim()) { 'src-modified' } else { 'clean' }
     $osText = [Environment]::OSVersion.VersionString
     $line = "host=$host_ finished=$(Get-Date -f 'yyyy-MM-dd HH:mm:ss') seconds=$secs rc=$($p.ExitCode) rows=$rows capped=$capped commit=$commit src=$treeState os=`"$osText`""
     # No rows and not capped means the runner had nothing to do for this arm: the scenario
-    # does not run this algorithm, or not on this database. That is not a measurement, and
-    # DONE would say it was - twenty such arms once sat in SC4 looking finished. A capped arm
-    # with no rows is different: it is an arm that did not get through D_init inside the cap,
-    # which is a result, so it keeps DONE and says capped=True.
+    # does not run this algorithm, or not on this database. That is not a measurement, so it
+    # is recorded as EMPTY. A capped arm with no rows did not get through D_init inside the
+    # cap, which is a result, so it keeps DONE and says capped=True.
     if ($rows -le 0 -and -not $capped) {
         ($line + [Environment]::NewLine +
          "No rows: $Scenario has no arm '$a' on $d. Not a measurement. Delete this file once " +

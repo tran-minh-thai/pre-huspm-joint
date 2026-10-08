@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """How far apart are the two JDK builds the campaign ran on?
 
-The arms measured before 2026-10-08 ran on one build of JDK 25 and later arms on another
-(campaign.ps1 now pins the build). This compares the same configurations measured on both,
-cell by cell, and reports the geometric mean of old/new with a bootstrap 95% interval,
+The main campaign trees hold arms measured on one build of JDK 25 ("old") and the replicate
+trees arms measured on another ("new"). This compares the same configurations measured on
+both, cell by cell, and reports the geometric mean of old/new with a bootstrap 95% interval,
 beside the same statistic between two runs on the new build as a reference: a difference
 between builds smaller than the difference between two sessions on one build cannot be
 told from session noise.

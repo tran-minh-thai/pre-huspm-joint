@@ -8,16 +8,15 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * Thuật toán Đối chứng: USpan (Yin et al., KDD 2012)
- * Đã được tinh chỉnh để ĐO LƯỜNG THỰC NGHIỆM:
- * - Theo dõi candidateCount chính xác tại thời điểm sinh ứng viên mở rộng.
- * - Theo dõi prunedSWU (số lần ứng viên bị cắt bỏ bởi cận SWU cục bộ và toàn cục).
- * - Tích hợp cắt tỉa Width Pruning (SWU) & Depth Pruning (O(1) Suffix Sum).
+ * Baseline: USpan (Yin et al., KDD 2012), instrumented for measurement:
+ * - candidateCount counts each extension when it is generated.
+ * - prunedSWU counts candidates removed by the global and the local SWU bound.
+ * - Width pruning (SWU) and depth pruning (prefix utility plus O(1) suffix-sum remaining utility).
  */
 public class USpanAlgorithm {
 
     // ========================================================================
-    // 1. CẤU TRÚC THEO DÕI TRẠNG THÁI (PROJECTED DATABASE)
+    // 1. STATE TRACKING (PROJECTED DATABASE)
     // ========================================================================
 
     static class Instance {
@@ -43,23 +42,23 @@ public class USpanAlgorithm {
     }
 
     // ========================================================================
-    // 2. BIẾN LƯU TRỮ CHỈ SỐ THỰC NGHIỆM (Metrics)
+    // 2. MEASUREMENT COUNTERS
     // ========================================================================
 
     public double minUtility;
     public int patternCount = 0;
 
-    // Các biến đếm phục vụ Logging theo chuẩn thiết kế
+    // Counters written to the result log
     public long candidateCount = 0;
-    public long exploredNodes = 0; // Số mẫu THỰC SỰ khai triển (đệ quy vào) - đo hiệu quả tỉa
-    public long prunedSWU = 0; // Số lần cắt tỉa bởi Sequence-Weighted Utilization
-    public long prunedDepth = 0; // Số lần nhánh bị cắt bởi Depth Pruning (tùy chọn theo dõi)
+    public long exploredNodes = 0; // recursion entries, counted before the node-level bound check
+    public long prunedSWU = 0; // candidates pruned by the sequence-weighted utilization bound
+    public long prunedDepth = 0; // branches cut by depth pruning
 
-    // Bộ nhớ lưu trữ các mẫu HUSP đạt chuẩn (phục vụ xuất file)
+    // High-utility patterns found (for the output file)
     public Map<Pattern, Double> largeMap = new HashMap<>();
 
-    // Đếm cảnh báo lệch chỉ mục (Instance ↔ Sequence desync). Cap log để không
-    // làm ngập stderr / kéo chậm experiment runner trên dataset lỗi cấu trúc.
+    // Number of index-mismatch warnings (Instance vs Sequence). Logging is capped so a
+    // malformed dataset does not flood stderr or slow down the experiment runner.
     private long boundaryWarnings = 0;
     private static final long MAX_BOUNDARY_WARN = 20;
 
@@ -68,23 +67,23 @@ public class USpanAlgorithm {
     }
 
     /**
-     * Boundary check: chỉ mục (itemsetIdx, itemIdx) của 1 Instance phải nằm trong
-     * cấu trúc thực của seq. Nếu lệch → log cảnh báo (có cap) + trả false để caller
-     * BỎ QUA instance đó thay vì văng IndexOutOfBoundsException làm sập runner.
-     * KHÔNG thay đổi cơ chế cắt tỉa Width/Depth - chỉ chặn truy xuất mảng ngoài biên.
+     * Boundary check: the (itemsetIdx, itemIdx) of an Instance must lie inside seq.
+     * Otherwise a warning is logged (capped) and false is returned, so the caller skips
+     * the instance instead of throwing IndexOutOfBoundsException and stopping the runner.
+     * Width and depth pruning are unaffected; this only blocks out-of-bounds access.
      */
     private boolean inBounds(Sequence seq, int itemsetIdx, int itemIdx) {
         if (itemsetIdx < 0 || itemsetIdx >= seq.itemsets.size()) {
             if (boundaryWarnings++ < MAX_BOUNDARY_WARN) {
-                System.err.println("[USpan][WARN] itemsetIdx=" + itemsetIdx + " ngoài biên (itemsets="
-                        + seq.itemsets.size() + ", seqId=" + seq.id + ") - bỏ qua instance");
+                System.err.println("[USpan][WARN] itemsetIdx=" + itemsetIdx + " out of bounds (itemsets="
+                        + seq.itemsets.size() + ", seqId=" + seq.id + ") - instance skipped");
             }
             return false;
         }
         if (itemIdx < 0 || itemIdx >= seq.itemsets.get(itemsetIdx).items.size()) {
             if (boundaryWarnings++ < MAX_BOUNDARY_WARN) {
-                System.err.println("[USpan][WARN] itemIdx=" + itemIdx + " ngoài biên (items="
-                        + seq.itemsets.get(itemsetIdx).items.size() + ", seqId=" + seq.id + ") - bỏ qua instance");
+                System.err.println("[USpan][WARN] itemIdx=" + itemIdx + " out of bounds (items="
+                        + seq.itemsets.get(itemsetIdx).items.size() + ", seqId=" + seq.id + ") - instance skipped");
             }
             return false;
         }
@@ -92,11 +91,11 @@ public class USpanAlgorithm {
     }
 
     // ========================================================================
-    // 3. LÕI THUẬT TOÁN USPAN
+    // 3. USPAN CORE
     // ========================================================================
 
     public void run(List<Sequence> database) {
-        // Tối ưu: Chỉ tính lại O(1) Suffix Sum nếu CSDL chưa được tính
+        // Compute the O(1) suffix sums only for sequences that do not have them yet
         for (Sequence seq : database) {
             if (seq.remainingUtilities.isEmpty()) {
                 seq.calculateRemainingUtilities();
@@ -112,7 +111,7 @@ public class USpanAlgorithm {
         prunedDepth = 0;
 
         // ==============================================================
-        // BƯỚC 1: WIDTH PRUNING (Cắt tỉa chiều rộng ở thế hệ 1-item)
+        // STEP 1: WIDTH PRUNING on the 1-item candidates
         // ==============================================================
         Map<Integer, Double> initialSWU = new HashMap<>();
         for (Sequence seq : database) {
@@ -125,7 +124,7 @@ public class USpanAlgorithm {
             }
         }
 
-        // ĐẾM CÔNG BẰNG (Sinh ra là đếm): MỌI 1-item sinh ra, TRƯỚC khi lọc bằng SWU toàn cục.
+        // Fair counting (a candidate counts when generated): every 1-item, BEFORE the global SWU filter.
         candidateCount += initialSWU.size();
 
         List<Integer> promisingItems = new ArrayList<>();
@@ -133,13 +132,13 @@ public class USpanAlgorithm {
             if (entry.getValue() >= minUtility) {
                 promisingItems.add(entry.getKey());
             } else {
-                prunedSWU++; // Bị loại bởi SWU toàn cục
+                prunedSWU++; // removed by the global SWU
             }
         }
-        Collections.sort(promisingItems); // Sắp xếp theo từ vựng học
+        Collections.sort(promisingItems); // lexicographic order
 
         // ==============================================================
-        // BƯỚC 2: PHÓNG CHIẾU VÀ ĐỆ QUY (PATTERN-GROWTH)
+        // STEP 2: PROJECTION AND RECURSION (PATTERN GROWTH)
         // ==============================================================
         for (Integer item : promisingItems) {
             Pattern pattern = new Pattern(item);
@@ -153,7 +152,7 @@ public class USpanAlgorithm {
             uSpanRecursive(pattern, projectedDB, 1);
         }
 
-        // Dọn rác khởi tạo
+        // Release the initial structures
         initialSWU.clear();
         promisingItems.clear();
     }
@@ -164,40 +163,40 @@ public class USpanAlgorithm {
     }
 
     private void uSpanRecursive(Pattern prefix, List<ProjectedSequence> projectedDB, int depth) {
-        // LỚP PHÒNG THỦ 2: chặn StackOverflow trên dữ liệu chuỗi cực dài.
-        // 2000 là safety net (depth thực tế của các dataset ≤ ~270) → không đổi kết quả.
+        // Depth cap: guards against StackOverflowError on very long sequences. It is a
+        // safety net set well above the recursion depth reached on the evaluated datasets.
         if (depth > 2000) return;
-        // PHÒNG THỦ ĐO LƯỜNG: dừng NGAY khi runner cancel (timeout) → tránh orphan
-        // thread chạy tiếp ăn CPU/giữ heap, NHIỄM thời gian/bộ nhớ của lần đo kế. Chỉ
-        // kích hoạt khi đã OT (kết quả bị bỏ) → KHÔNG đổi logic khai phá baseline.
+        // Stop as soon as the runner cancels the run (timeout), so an orphaned thread does
+        // not keep using CPU or holding heap and distort the next measurement. This only
+        // fires after a timeout, when the result is discarded, so mining logic is unchanged.
         if (Thread.currentThread().isInterrupted()) return;
-        exploredNodes++; // mẫu này được KHAI TRIỂN (đệ quy vào) - đếm TRƯỚC depth-prune (= công khai triển thật)
-        // ĐẾM CÔNG BẰNG (Sinh ra là đếm): candidateCount ĐÃ DỜI khỏi entry. Ứng viên mở rộng
-        // được đếm KHI SINH RA (trước lọc SWU cục bộ) ở dưới - đồng nhất với thuật toán đề xuất.
+        exploredNodes++; // this pattern is expanded; counted BEFORE depth pruning (the real expansion work)
+        // Fair counting: candidateCount is not incremented on entry. Extensions are counted when
+        // generated (before the local SWU filter) below, as in the adaptive algorithm.
         // ==============================================================
-        // CHIẾN LƯỢC 1: DEPTH PRUNING (CẮT TỈA CHIỀU SÂU DỰA TRÊN U_REST)
+        // STRATEGY 1: DEPTH PRUNING (based on prefix utility + remaining utility)
         // ==============================================================
         double maxPossibleUtility = 0;
         for (ProjectedSequence pSeq : projectedDB) {
             double seqMaxUB = 0;
             for (Instance inst : pSeq.instances) {
-                // Boundary check trước getRestUtility (remainingUtilities.get(itemsetIdx).get(itemIdx))
+                // Boundary check before getRestUtility (remainingUtilities.get(itemsetIdx).get(itemIdx))
                 if (!inBounds(pSeq.seq, inst.itemsetIdx, inst.itemIdx)) continue;
-                // Tận dụng getRestUtility O(1) từ common.Sequence
+                // O(1) getRestUtility from common.Sequence
                 double ub = inst.utility + pSeq.seq.getRestUtility(inst.itemsetIdx, inst.itemIdx);
                 if (ub > seqMaxUB) seqMaxUB = ub;
             }
             maxPossibleUtility += seqMaxUB;
         }
 
-        // Khai tử toàn bộ nhánh DFS nếu tổng trần tiềm năng không chạm ngưỡng
+        // Cut the whole DFS branch if the summed upper bound does not reach the threshold
         if (maxPossibleUtility < minUtility) {
             prunedDepth++;
             return;
         }
 
         // ==============================================================
-        // CHIẾN LƯỢC 2: WIDTH PRUNING TRÊN PROJECTED DB (TÍNH SWU CỤC BỘ)
+        // STRATEGY 2: WIDTH PRUNING ON THE PROJECTED DB (LOCAL SWU)
         // ==============================================================
         Map<Integer, Double> iListSWU = new HashMap<>();
         Map<Integer, Double> sListSWU = new HashMap<>();
@@ -211,11 +210,11 @@ public class USpanAlgorithm {
                 if (!inBounds(pSeq.seq, inst.itemsetIdx, inst.itemIdx)) continue;
                 QItemset currentItemset = pSeq.seq.itemsets.get(inst.itemsetIdx);
 
-                // Thu thập ứng viên I-Extension
+                // Collect I-extension candidates
                 for (int i = inst.itemIdx + 1; i < currentItemset.items.size(); i++) {
                     iSeen.add(currentItemset.items.get(i).id);
                 }
-                // Thu thập ứng viên S-Extension
+                // Collect S-extension candidates
                 for (int i = inst.itemsetIdx + 1; i < pSeq.seq.itemsets.size(); i++) {
                     for (QItem item : pSeq.seq.itemsets.get(i).items) {
                         sSeen.add(item.id);
@@ -227,16 +226,16 @@ public class USpanAlgorithm {
             for (int item : sSeen) sListSWU.put(item, sListSWU.getOrDefault(item, 0.0) + seqUtil);
         }
 
-        // ĐẾM CÔNG BẰNG (Sinh ra là đếm): MỌI ứng viên I/S-ext sinh ra, TRƯỚC khi lọc bằng SWU cục bộ.
+        // Fair counting: every generated I/S-extension candidate, BEFORE the local SWU filter.
         candidateCount += iListSWU.size() + sListSWU.size();
 
-        // Đếm ứng viên và áp dụng SWU cục bộ
+        // Apply the local SWU bound
         List<Integer> iList = new ArrayList<>();
         for (Map.Entry<Integer, Double> e : iListSWU.entrySet()) {
             if (e.getValue() >= minUtility) {
                 iList.add(e.getKey());
             } else {
-                prunedSWU++; // Bị loại bởi SWU cục bộ
+                prunedSWU++; // removed by the local SWU
             }
         }
         Collections.sort(iList);
@@ -246,13 +245,13 @@ public class USpanAlgorithm {
             if (e.getValue() >= minUtility) {
                 sList.add(e.getKey());
             } else {
-                prunedSWU++; // Bị loại bởi SWU cục bộ
+                prunedSWU++; // removed by the local SWU
             }
         }
         Collections.sort(sList);
 
         // ==============================================================
-        // TIẾN HÀNH MỞ RỘNG (I-EXTENSION & S-EXTENSION)
+        // EXTENSION (I-EXTENSION AND S-EXTENSION)
         // ==============================================================
         for (Integer item : iList) {
             List<ProjectedSequence> newProjDB = buildIProjectedDB(projectedDB, item);
@@ -274,7 +273,7 @@ public class USpanAlgorithm {
             }
         }
 
-        // Tối ưu hóa Bộ nhớ
+        // Release memory
         iListSWU.clear();
         sListSWU.clear();
     }
@@ -311,7 +310,7 @@ public class USpanAlgorithm {
     private List<ProjectedSequence> buildIProjectedDB(List<ProjectedSequence> pdb, int targetItem) {
         List<ProjectedSequence> newPdb = new ArrayList<>();
         for (ProjectedSequence pSeq : pdb) {
-            // Khóa Long 64-bit (32 cao = itemsetIdx, 32 thấp = itemIdx) tránh xung đột với chuỗi dài
+            // 64-bit key (high 32 bits = itemsetIdx, low 32 bits = itemIdx) avoids collisions on long sequences
             Map<Long, Instance> bestInstances = new HashMap<>();
             for (Instance inst : pSeq.instances) {
                 if (!inBounds(pSeq.seq, inst.itemsetIdx, inst.itemIdx)) continue;
@@ -372,7 +371,7 @@ public class USpanAlgorithm {
                 writer.newLine();
             }
         } catch (IOException e) {
-            System.err.println("Lỗi ghi file USpan: " + e.getMessage());
+            System.err.println("Error writing USpan output file: " + e.getMessage());
         }
     }
 }

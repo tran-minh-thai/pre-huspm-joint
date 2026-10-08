@@ -16,22 +16,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * WP4.1 - TRUC KICH THUOC LO.
+ * Batch-size sweep.
  *
- * Kich ban tra loi truc tiep cho van de trung tam ma Reviewer #1 neu o comment 1 va 2:
- * ngan sach an toan cua lop pre-large trong boi canh utility la
+ * The insertion safety budget of the pre-large layer in the utility setting is
  *
  *     SFT_ins = (UUT - LUT_min)/(1 - UUT) * TSU_ref,
  *
- * tuc chi khoang 0.28% den 1.28% tong utility voi tham so cua ban thao. Trong khi do
- * thiet ke thuc nghiem cu dung lo bang 10% du lieu, vuot ngan sach tu 8 den 36 lan.
- * Ket qua "rat it rescan" cua ban nop la he qua truc tiep cua luat khong sound, khong
- * phai cua co che thich ung.
+ * only about 0.28% to 1.28% of total utility at the default parameters. A batch of 10% of
+ * the data exceeds it 8 to 36 times, so a trigger rule that rarely rescans at that size is
+ * missing perturbations rather than adapting to them.
  *
- * Kich ban do ty le rescan theo kich thuoc lo cho CA BA luat kich hoat, tren cung mot
- * chuoi lo, de xac dinh VUNG VAN HANH thuc su cua lop pre-large.
+ * This study measures the rescan ratio against batch size for all three trigger rules on
+ * the same batch stream, to locate the range in which the pre-large layer actually operates.
  *
- * Chay:
+ * Run:
  *   java -cp build experiments.BatchSizeSweep LEVIATHAN
  *   java -cp build experiments.BatchSizeSweep ALL --out results/sweep
  */
@@ -41,12 +39,13 @@ public final class BatchSizeSweep {
     private static final double KAPPA = 0.5, DELTA0 = 1e-4;
 
     /**
-     * Kich thuoc lo tinh theo phan tram TONG UTILITY cua CSDL ban dau.
+     * Batch size as a percentage of the TOTAL UTILITY of D_init.
      *
-     * Truc nay do theo UTILITY chu khong theo so lo, nen no bo tro cho SC5 thay vi trung:
-     * SC5 quet so lo (common.Datasets.BATCH_COUNT_SWEEP) tren cung mot dong du lieu, con
-     * day quet kich thuoc mot lo so voi NGAN SACH AN TOAN, vi ngan sach do la mot ty le
-     * cua tong utility chu khong phai cua so chuoi.
+     * This axis is measured in utility rather than in batch count, so it complements SC5
+     * instead of repeating it: SC5 sweeps the number of batches
+     * (common.Datasets.BATCH_COUNT_SWEEP) over a fixed stream, while this sweeps the size
+     * of one batch against the safety budget, which is a share of total utility rather
+     * than of the sequence count.
      */
     private static final double[] BATCH_PCT = {0.1, 0.25, 0.5, 1.0, 2.0, 5.0, 10.0};
 
@@ -57,7 +56,7 @@ public final class BatchSizeSweep {
             if ("--out".equals(args[i])) outDir = Paths.get(args[++i]);
         }
         if (!"ALL".equalsIgnoreCase(target) && common.Datasets.byName(target) == null) {
-            System.out.println("khong co CSDL " + target + "; co the chon: "
+            System.out.println("no database named " + target + "; choose from "
                     + common.Datasets.names());
             System.exit(2);
         }
@@ -79,9 +78,9 @@ public final class BatchSizeSweep {
     private static void sweep(String name, double uut, PrintWriter w) throws IOException {
         List<Sequence> all = DatasetLoader.loadDataset(
                 DATASET_DIR + name + "_seq.txt", DATASET_DIR + name + "_eui.txt");
-        // D_init va r_l lay tu common.Datasets: nguong duoc hieu chinh tren dung pham vi
-        // nay, va KOSARAK dung r_l = 0.85 chu khong 0.8 - dung mot nua CSDL hay mot r_l
-        // chung se do o diem van hanh khong ai chon.
+        // D_init and r_l come from common.Datasets: the thresholds are calibrated on exactly
+        // this scope, and KOSARAK uses r_l = 0.85 rather than 0.8. Half the database or a
+        // shared r_l would measure at an operating point nobody chose.
         double rl = common.Datasets.slMinRatio(name);
         int dInit = common.Datasets.dInitCount(name, all.size());
         List<Sequence> init = new ArrayList<>(all.subList(0, dInit));
@@ -92,14 +91,14 @@ public final class BatchSizeSweep {
         System.out.printf("%n=== %s | UUT=%.4f | TSU(D_init)=%.0f | SFT_ins=%.0f (%.3f%% TSU) ===%n",
                 name, uut, tsuInit, sftIns, 100 * sftIns / tsuInit);
         System.out.printf("%8s %10s %9s %9s %9s %9s %9s%n",
-                "batch%", "seqs/lo", "so lo", "swumax", "cub", "iaumax", "chat/tho");
+                "batch%", "seqs/batch", "batches", "swumax", "cub", "iaumax", "tightness");
 
         for (double pct : BATCH_PCT) {
-            // kich thuoc lo tinh theo UTILITY, quy doi sang so chuoi qua utility trung binh
+            // batch size in utility, converted to a sequence count through the mean utility
             double meanU = tsuInit / Math.max(1, init.size());
             int perBatch = Math.max(1, (int) Math.round(pct / 100.0 * tsuInit / meanU));
             int nBatches = Math.max(1, stream.size() / perBatch);
-            if (nBatches > 40) nBatches = 40;      // tran de thoi gian chay huu han
+            if (nBatches > 40) nBatches = 40;      // cap that keeps the run time bounded
 
             int[] rescans = new int[3];
             double tightness = 1.0;

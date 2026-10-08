@@ -20,21 +20,20 @@ param(
     [switch]$AllowConcurrent,
     # Set to the measurement machine's computer name to refuse running anywhere else.
     [string]$ExpectMachine = '',
+    # Compile and stop. Needed after every pull before invoking a class directly with
+    # java -cp build, since run.ps1 is what compiles.
+    [switch]$BuildOnly,
     # 'used' (default) or 'live'. See docs/experiments.md.
     # 'live' forces a full collection at every sample point and reads the used heap right
     # after, which is the live set. It runs one JVM per arm, writes into <run>\mem\, and
     # its runtimes are void (runtime_ms = -3).
-    # Compile and stop. Needed after every pull before invoking a class directly with
-    # java -cp build: run.ps1 is what compiles, so a pull leaves build/ holding the
-    # previous checkout and a newly added class appears to be missing.
-    [switch]$BuildOnly,
     [ValidateSet('used','live')][string]$MemMode = 'used',
     [int]$MemIntervalMs = 1000,
     # Arms swept in live mode, one JVM each.
     [string[]]$MemArms = @('USpan','HUSP-ULL','IncUSP-Miner+','Pre-HUSPM','Pre-HUSPM-TSU','Adaptive-Full'),
-    # Position = 0 here makes every OTHER parameter non-positional, which is what we want:
-    # without it PowerShell binds bare arguments to -Heap, -Stack, -TimeoutMin in order, so
-    # the documented 'run.ps1 SC1 SC2' form silently bound SC1 to -Heap.
+    # Position = 0 here makes every other parameter non-positional; without it PowerShell
+    # binds bare arguments to -Heap, -Stack, -TimeoutMin in order, so 'run.ps1 SC1 SC2'
+    # would bind SC1 to -Heap.
     [Parameter(Position = 0, ValueFromRemainingArguments = $true)]
     [string[]]$Scenarios
 )
@@ -61,9 +60,8 @@ function Get-GitValue([string[]]$gitArgs, [string]$fallback) {
 }
 
 # ---------------------------------------------------------------------------
-#  Preflight. Both checks exist because both failures have already happened and
-#  neither announces itself: a run on the wrong machine, and a heap larger than
-#  physical memory. Numbers from either are void, so refuse before spending hours.
+#  Preflight. A run on the wrong machine and a heap larger than physical memory both
+#  fail silently and void every number, so refuse before spending hours.
 # ---------------------------------------------------------------------------
 $cs0  = Get-CimInstance Win32_ComputerSystem
 $cpu0 = Get-CimInstance Win32_Processor | Select-Object -First 1
@@ -170,9 +168,8 @@ Get-ChildItem 'datasets' -Filter '*.txt' -File | ForEach-Object {
 } | ConvertTo-Json -Depth 4 | Set-Content -Path "$runDir\manifest.json" -Encoding UTF8
 
 if ($MemMode -eq 'live') {
-    # One JVM per arm. Sharing a JVM is precisely the defect live mode exists to avoid:
-    # the heap is already grown by whatever ran before, so the collector behaves
-    # differently and the reading depends on arm order.
+    # One JVM per arm. In a shared JVM the heap is already grown by whatever ran before,
+    # so the collector behaves differently and the reading depends on arm order.
     $memDir = Join-Path $runDir 'mem'
     New-Item -ItemType Directory -Force -Path $memDir | Out-Null
     Write-Host "==> live-heap campaign: $($MemArms.Count) arms, one JVM each -> $memDir"

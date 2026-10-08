@@ -6,38 +6,34 @@ import java.util.*;
 import java.util.concurrent.*;
 
 /**
- * Automated experiment runner for the Pre-HUSPM-Adaptive framework
- * (7 scenarios SC1-SC7 matching draftPaper.pdf).
+ * Automated experiment runner for the Pre-HUSPM-Adaptive framework (scenarios SC1-SC7).
  *
- * Running from IntelliJ IDEA:
- *  1. Open Code_PC as the project root.
- *  2. Ensure "datasets" and "results" directories exist in the working directory.
- *  3. Run > Run 'AutomatedExperimentRunner.main()'.
- *  4. For dense datasets (SIGN, LEVIATHAN, ...) set VM options "-Xmx8g".
+ * Run from the repository root, with the shared databases in datasets/ (see DATASET_DIR).
+ * Dense databases (SIGN, LEVIATHAN, ...) need -Xmx8g or more.
  *
- * Program Arguments to pick scenarios:
- *   ALL                  - run all 7 scenarios (default if no args).
+ * Program arguments select scenarios:
+ *   ALL                  - run all seven scenarios (default if no arguments).
  *   SC1 SC3              - run SC1 and SC3.
  *   SC1,SC2,SC7          - comma syntax is equivalent.
- *   TEST                 - switch dataset to paper (4 chuỗi, smoke-test < 1s).
- *   TEST SC1             - combine: smoke-test on SC1 only.
+ *   TEST                 - use the four-sequence worked example in examples/ (smoke test, < 1 s).
+ *   TEST SC1             - smoke test on SC1 only.
+ *   STATUS               - print each database's thresholds and calibration state, then exit.
  *
- * PRODUCTION mode dùng 6 dataset chuẩn (Table 4 paper): SIGN, LEVIATHAN, FIFA,
- *   KOSARAK, BMS1, BIBLE. paper dataset KHÔNG dùng cho thực nghiệm.
+ * Without TEST, every database listed in common.Datasets is used, in cost order.
  *
- * SC1 - Static baseline on D_init (Yan et al. Table 16 OD.Num) sweeping Su.
- * SC2 - Incremental: D_init per Yan et al. Table 16 + 100 EVEN batches.
- * SC3 - Su sensitivity on a 3-dataset subset.
- * SC4 - LUT_dyn sensitivity (Sl/Su for Pre-HUSPM; Delta0, alpha for Adaptive).
- * SC5 - Batch strategy grid (K in {100,67,50,25} x strategy in {EVEN, INC, DEC, BURST}).
- * SC6 - Mixed Insert/Delete/Modify 70:15:15 (Adaptive self-compare).
- * SC7 - Ablation: proposed_full vs no_block_index vs no_IUB vs Pre-HUSPM ref.
+ * SC1 - Static mining on D_init (Yan et al. Table 16 OD.Num), sweeping Su.
+ * SC2 - Incremental: D_init per Yan et al. Table 16, then BATCH_COUNT even batches.
+ * SC3 - Su sensitivity on the database subset SUBSET_3.
+ * SC4 - Pre-large floor sensitivity (Sl/Su) for Pre-HUSPM and Adaptive.
+ * SC5 - Batch strategy grid (K from common.Datasets.BATCH_COUNT_SWEEP x {EVEN, INC, DEC, BURST}).
+ * SC6 - Mixed insert/delete/modify stream (Adaptive vs Remine-from-scratch).
+ * SC7 - Ablation: proposed_full, proposed_no_IUB, the incremental block-index and adaptive-rescan
+ *       ablations, and a Pre-HUSPM reference.
  *
- * Each scenario writes one CSV file in results/ using the ExperimentMetrics format.
- * Before launching any individual mining call, the runner announces
- * "-> running ALGORITHM/dataset/op (heapFreeMB=...)" so progress is visible.
- * Any OutOfMemoryError or RuntimeException in a single mining call is caught,
- * logged and the run continues - the offending row is written with runtime=-1.
+ * Each scenario writes one CSV file in RESULTS_DIR in the ExperimentMetrics format.
+ * Before each mining call the runner prints ">> RUNNING algorithm/dataset/op#iter" with the
+ * current heap state. An error in a single mining call is caught and logged, and the run
+ * continues; the row is written with runtime_ms = -1 (or -2 on timeout).
  */
 public class AutomatedExperimentRunner {
 
@@ -53,33 +49,33 @@ public class AutomatedExperimentRunner {
     public static final String DATASET_DIR = "datasets/";
 
     /**
-     * The worked example from the manuscript. Four short sequences, used by TEST mode
-     * as a smoke test. It belongs to this study rather than to the shared collection,
+     * A small worked example of four short sequences, used by TEST mode as a smoke
+     * test. It belongs to this study rather than to the shared collection,
      * so it stays in the repository.
      */
     public static final String EXAMPLE_DIR = "examples/";
     public static final String RESULTS_DIR = System.getProperty("results.dir", "results/");
     public static final boolean ENABLE_PATTERN_EXPORT = false; // disable for bulk runs
-    /** Chế độ chạy lại CHỈ biến thể Adaptive (bỏ baseline) - dùng khi chỉ runtime Adaptive đổi
-     *  (vd sau khi tắt EUCS). Merge số mới vào CSV cũ. Bật bằng -Dadaptive.only=true. */
+    /** Run only the Adaptive arm and skip the baselines; rows are appended to the existing
+     *  CSV files. Enable with -Dadaptive.only=true. */
     public static final boolean ADAPTIVE_ONLY = Boolean.getBoolean("adaptive.only");
     public static final int REPETITIONS = 1;
     public static final long[] SEEDS = {42L, 1337L, 2024L, 31415L, 271828L};
 
     // Default algorithm parameters
-    // QUAN TRỌNG: Pre-HUSPM (Sl/Su) và Adaptive (Sl_min/Su) chia SẺ chung tỉ lệ Sl
-    // → BẮT BUỘC dùng cùng 1 constant để tránh drift gây so sánh bất công bằng.
+    // Pre-HUSPM (Sl/Su) and Adaptive (Sl_min/Su) must use the same Sl ratio; both read one
+    // constant so the comparison cannot drift.
     public static final double DEFAULT_SL_MIN_RATIO = common.Datasets.DEFAULT_SL_MIN_RATIO;
-    /** Alias đảm bảo Pre-HUSPM dùng đúng Sl ratio như Adaptive. KHÔNG sửa độc lập. */
+    /** Alias so Pre-HUSPM uses the same Sl ratio as Adaptive. Do not change it on its own. */
     public static final double DEFAULT_PRE_HUSPM_SL_RATIO = DEFAULT_SL_MIN_RATIO;
-    /** WP2.5 - bai goi la kappa; ten cu trong code la DEFAULT_KAPPA. Ghi de: -Dkappa=... */
+    /** Adaptation coefficient kappa. Override with -Dkappa=... */
     public static final double DEFAULT_KAPPA  = Double.parseDouble(System.getProperty("kappa", "0.5"));
     public static final double DEFAULT_DELTA0 = Double.parseDouble(System.getProperty("delta0", "1e-4"));
-    /** WP2.1 - B_sz, ghi de: -Dblock.size=... */
+    /** Block size of the block index. Override with -Dblock.size=... */
     public static final int DEFAULT_BLOCK_SIZE = Integer.getInteger("block.size", 100);
-    /** WP2.3 - so lan lap moi cau hinh de lay do lech chuan (khu nhieu JIT/GC). */
+    /** Repeats per configuration, for measurement noise (JIT/GC). Override with -Drepeats=... */
     public static final int REPEATS = Integer.getInteger("repeats", 3);
-    /** WP2.2 - so seed thuc su duoc dung (<= SEEDS.length). Ghi de: -Dseeds=5 */
+    /** Number of seeds used (at most SEEDS.length). Override with -Dseeds=5 */
     public static final int SEED_COUNT = Math.min(
             Integer.getInteger("seeds", 1), 5);
     /**
@@ -93,17 +89,17 @@ public class AutomatedExperimentRunner {
     public static final int REPEAT_INDEX = Integer.getInteger("repeat.index", 0);
     public static final int SEED_INDEX = Integer.getInteger("seed.index", 0);
 
-    // === CHE DO DO BO NHO ===
+    // === MEMORY MEASUREMENT MODE ===
     //
-    // "used" (mac dinh): dinh used-heap lay mau 50 ms, KE CA rac chua thu. Dai luong nay
-    //   phu thuoc lich GC, phu thuoc -Xmx, va phu thuoc thuat toan nao chay TRUOC trong
-    //   cung JVM. Project 02 da truy ra mot con so 23.3 GB hoan toan la artifact kieu do.
+    // "used" (default): peak used heap sampled every 50 ms, including uncollected garbage.
+    //   It depends on GC scheduling, on -Xmx, and on which algorithm ran earlier in the
+    //   same JVM.
     //
-    // "live": ep thu gom day du tai cac moc roi doc used-heap ngay sau. Do la tap song
-    //   that su phai giu. Doi lai, ep GC lam hong thoi gian, nen runtime cua lan chay nay
-    //   KHONG duoc dung: no xuat ra -3.
+    // "live": forces a full collection at sampling points and reads used heap right after,
+    //   which gives the live set. Forced GC invalidates timing, so runtime_ms is written
+    //   as -3 in this mode.
     //
-    // Ghi de: -Dmem.mode=live -Dmem.interval.ms=1000
+    // Override: -Dmem.mode=live -Dmem.interval.ms=<ms>
     public static final String MEM_MODE = System.getProperty("mem.mode", "used")
             .trim().toLowerCase(java.util.Locale.ROOT);
     public static final boolean MEM_LIVE = "live".equals(MEM_MODE);
@@ -111,49 +107,48 @@ public class AutomatedExperimentRunner {
      * Shortest wait between two forced collections in live mode. The actual wait is the larger
      * of this and four times the last collection's duration - see the sampler in measure().
      *
-     * It was a fixed 1000 ms. Two thirds of the proposal's SC1 cells finish in under a second,
-     * and a run shorter than the interval is sampled only at its start, before it has allocated
-     * anything, and after it ends, when its working set is already garbage. What was reported
-     * as its peak was what it kept, while a slower baseline was sampled throughout and credited
-     * with its true peak: a bias toward whichever algorithm is faster, which here is the one
-     * being proposed.
+     * Keep it short. A run shorter than the interval is sampled only at its start, before it
+     * has allocated anything, and after it ends, when its working set is already garbage, so
+     * its reported peak would be only what it retains. A slower algorithm is sampled
+     * throughout and credited with its true peak, so a long interval biases the comparison
+     * toward the faster algorithm.
      */
     public static final long MEM_SAMPLE_MS = Long.getLong("mem.interval.ms", 20L);
 
     /**
-     * Chi chay MOT thuat toan trong tien trinh nay. Che do do bo nho yeu cau moi arm mot
-     * JVM rieng, vi neu khong thi heap da bi arm truoc nong rong. Ghi de: -Dalgo.only=USpan
-     * Rong = chay tat ca (hanh vi cu).
+     * Run only ONE algorithm (arm) in this process. Live memory mode requires one JVM per
+     * arm, because otherwise the heap has already been grown by the previous arm.
+     * Override: -Dalgo.only=USpan. Empty = run all.
      */
     public static final String ALGO_ONLY = System.getProperty("algo.only", "").trim();
 
-    /** Luat kich hoat rescan dang dung, ghi vao CSV de truy nguoc. */
+    /** Rescan trigger rule in use, recorded in the CSV and on the Platform line. */
     public static final String ADAPT_TRIGGER = System.getProperty("adapt.trigger", "joint");
 
-    /** Chi chay MOT dataset. Ghi de: -Ddataset.only=SIGN. Rong = tat ca. */
+    /** Run only ONE dataset. Override: -Ddataset.only=SIGN. Empty = all. */
     public static final String DATASET_ONLY = System.getProperty("dataset.only", "").trim();
 
     public static boolean datasetEnabled(String ds) {
         return DATASET_ONLY.isEmpty() || DATASET_ONLY.equalsIgnoreCase(ds);
     }
 
-    /** true neu thuat toan nay duoc phep chay trong tien trinh hien tai. */
+    /** True if this algorithm may run in the current process. */
     public static boolean algoEnabled(String algo) {
         return ALGO_ONLY.isEmpty() || ALGO_ONLY.equalsIgnoreCase(algo);
     }
 
-    // === NGU CANH CUA MOT LAN DO ===
+    // === CONTEXT OF ONE MEASUREMENT ===
     //
-    // Truoc day khong dong ket qua nao ghi lai seed hay so hieu lan lap da sinh ra
-    // no, nen khong the tinh trung binh va do lech chuan, va cung khong the truy
-    // nguoc mot dong ve cau hinh cua no. Ca hai phan bien deu yeu cau dieu nay.
+    // Every row records the seed and repeat index that produced it, so rows can be
+    // averaged and traced back to their configuration.
     //
-    // Hai nguon bien thien KHAC NHAU, khong duoc gop:
-    //   seed   doi CAU HINH: lo nao chua chuoi nao, thao tac nao xay ra khi nao.
-    //          Chi co tac dung o noi that su co ngau nhien (xem ghi chu tung kich ban).
-    //   repeat lap lai DUNG cung mot cau hinh de do nhieu cua JIT va GC.
-    // Do lech chuan bao cao trong bai la cua repeat; seed dung de kiem tra ket luan
-    // khong phu thuoc mot cach chia lo cu the.
+    // Two different sources of variation; do not pool them:
+    //   seed   changes the CONFIGURATION: which batch holds which sequence, which
+    //          operation happens when. It matters only where a scenario is random (see
+    //          the note in each scenario).
+    //   repeat runs the SAME configuration again to measure JIT and GC noise.
+    // The standard deviation of runtime comes from repeats; seeds check that a conclusion
+    // does not depend on one particular batch split.
     private static long currentSeed = SEEDS[0];
     private static int currentRepeat = 0;
 
@@ -162,7 +157,7 @@ public class AutomatedExperimentRunner {
         currentRepeat = repeat + REPEAT_INDEX;
     }
 
-    /** Cac seed thuc su duoc dung trong lan chay nay. */
+    /** The seeds used in this run. */
     private static long[] activeSeeds() {
         if (SEED_INDEX > 0) {
             if (SEED_INDEX >= SEEDS.length) {
@@ -176,8 +171,8 @@ public class AutomatedExperimentRunner {
         return out;
     }
     /**
-     * Superseded by common.Datasets.dInitCount, which carries Yan et al. Table 16's OD.Num
-     * per database. Kept only as the fallback for a database not in that table.
+     * Fallback D_init fraction for a database without a count in common.Datasets.dInitCount
+     * (which carries Yan et al. Table 16's OD.Num per database).
      */
     public static final double D_INIT_RATIO = 0.5;
 
@@ -185,20 +180,14 @@ public class AutomatedExperimentRunner {
     public static final int BATCH_COUNT = Integer.getInteger("batch.count", common.Datasets.BATCH_COUNT);
 
     // === TIMEOUT PER ALGORITHM RUN ===
-    // Mỗi lời gọi measure() bị bao trong ExecutorService timeout. Khi timeout: cancel
-    // Adaptive flag, future.cancel(true), ghi opType "_OT", runtime_ms = -2 (phân biệt
-    // với -1 = FAILED).
+    // Every measure() call runs under an ExecutorService timeout. On timeout: the cancel
+    // hook is signalled, future.cancel(true) is called, opType gets "_OT" and
+    // runtime_ms = -2 (distinct from -1 = FAILED).
     //
-    // NGÂN SÁCH 120 PHÚT (bản nộp dùng 60). Lý do không phải là nới tay mà là GIỮ NGUYÊN
-    // ngân sách tính toán khi đổi máy đo. Máy đo mới (Dell XPS, i7-10750H, 6 nhân /
-    // 12 luồng, 2.60 GHz, 64 GB, Windows) chậm hơn máy ghi trong bản nộp (Apple M5)
-    // khoảng 2.1x đến 3.5x trên cùng khối lượng khai phá tĩnh - đo bằng
-    // experiments.MachineCalibration. Giữ nguyên 60 phút trên máy chậm hơn 2-3.5 lần
-    // tức là SIẾT ngân sách xuống còn 17 đến 29 phút theo thang máy cũ, làm baseline bị
-    // đánh OT nhiều hơn và vô tình có lợi cho phương pháp đề xuất - đúng thứ phản biện
-    // sẽ bắt. Muốn bảo toàn đúng ngân sách cũ thì cần 126 đến 210 phút; chọn 120 phút
-    // là mức vẫn CHẶT HƠN bản nộp về mặt tính toán mà thời gian chạy còn kiểm soát được.
-    // Giá trị dùng thực tế phải được ghi vào bài và vào manifest của mỗi lần chạy.
+    // Default 120 minutes; override with -Dtimeout.min. The value in effect is printed on
+    // the Platform line of every log and must be reported with the results. A shorter limit
+    // on a slower machine tightens the budget and marks more baselines as overtime, which
+    // favours the proposed method.
     public static final long TIMEOUT_MINUTES = Long.getLong("timeout.min", 120);
     public static final long TIMEOUT_MS = TIMEOUT_MINUTES * 60_000L;
 
@@ -275,17 +264,16 @@ public class AutomatedExperimentRunner {
     //  SPENDING THE MEASUREMENT BUDGET
     // ================================================================
     //
-    // Covering every database in every scenario is not negotiable: review asked why some
-    // databases appear and others do not, and the honest answer is to measure them. The
-    // grid is datasets x scenarios x algorithms x thresholds x seeds x repeats, so the
-    // question is where to stop paying without losing anything.
+    // Every database is measured in every scenario it can run in. The grid is datasets x
+    // scenarios x algorithms x thresholds x seeds x repeats, so the question is where to
+    // stop paying without losing anything.
     //
     // Three places, each cutting a different kind of waste.
     //
     //   1. A configuration that failed is not measured again. Overtime and out-of-memory
     //      are properties of the configuration, not samples of a distribution; repeating
-    //      one buys nothing and costs the full timeout every time. On the submitted
-    //      results this alone is hours: the failures cluster on the expensive databases.
+    //      one buys nothing and costs the full timeout every time. Failures cluster on the
+    //      expensive databases, so this saves hours.
     //
     //   2. Repeats are for measurement noise, and noise matters in proportion to the
     //      measurement. A call of a second repeated three times costs three seconds; a
@@ -331,9 +319,8 @@ public class AutomatedExperimentRunner {
      *
      * A negative runtime is not by itself a failure. In live memory mode a call that completed
      * records -3, because the collections forced at every sample make its timing meaningless.
-     * Every incremental pipeline used to test runtimeMs < 0, so in live mode the initial mine
-     * of every arm counted as failed and all 100 increments were skipped as poisoned: the first
-     * SC2 memory campaign measured nothing but the initial mines.
+     * Do not test runtimeMs < 0: in live mode that would count every initial mine as failed and
+     * skip all increments after it as poisoned.
      */
     private static boolean failedRun(ExperimentMetrics m) {
         return m == null || m.runtimeMs == -1 || m.runtimeMs == -2;
@@ -345,9 +332,8 @@ public class AutomatedExperimentRunner {
      * measure() reads memory against the heap at the start of the call. For a static mine that
      * is right: the call is the whole run. For an incremental arm it is not. The heap at the
      * start of an increment already holds everything the algorithm kept from the increments
-     * before it, so each row recorded only what its increment added - under a megabyte on SIGN,
-     * rounded to zero - and the state an incremental method keeps, the thing its memory claim
-     * is about, was recorded nowhere. With the baseline fixed once per arm, before the
+     * before it, so a per-call baseline would record only what each increment adds and miss
+     * the state an incremental method keeps. With the baseline fixed once per arm, before the
      * algorithm exists, an increment's mem_retained_mb is everything the algorithm holds after
      * it and mem_live_mb is the peak during it, state included. Remine-from-scratch, which
      * starts a new miner every increment, reports the peak of each fresh mine.
@@ -377,15 +363,14 @@ public class AutomatedExperimentRunner {
     }
 
     /**
-     * Databases ordered cheapest first, by measured cost per call on the submitted
-     * results. An interrupted campaign then leaves whole databases complete. FIFA is last
-     * on purpose: at 450 s per call it costs more than the other five together.
+     * Databases ordered cheapest first, by measured cost per call. An interrupted campaign
+     * then leaves whole databases complete. FIFA is last on purpose: at about 450 s per call
+     * it costs more than the other five together.
      */
     private static final List<String> COST_ORDER = List.of(
             "LEVIATHAN", "SIGN", "BMS1", "KOSARAK", "BIBLE",
-            // TAFENG has no submitted results to take a cost from. Placed here on the only
-            // evidence there is, its calibration probes, which finish in under a second at
-            // every threshold of its sweep. Move it once a run has measured it.
+            // TAFENG's place comes from its calibration probes, which finish in under a
+            // second at every threshold of its sweep. Move it once a run has measured it.
             "TAFENG", "C8T1S5I8N5K", "FIFA");
 
     private static List<DatasetConfig> inCostOrder(List<DatasetConfig> in) {
@@ -421,16 +406,12 @@ public class AutomatedExperimentRunner {
     }
 
     /**
-     * Datasets to run - PRODUCTION SET.
+     * Every database of the pinned release, with the thresholds each one is measured at.
      *   - SIGN, LEVIATHAN, FIFA: dense, long sequences.
      *   - BMS1, KOSARAK, TAFENG: sparse or short sequences.
      *   - C8T1S5I8N5K: the only one with more than one item per event.
-     * The "paper" dataset (4 sequences) is for the TEST-mode smoke test only.
-     *
+     * The "paper" example (4 sequences) is for the TEST-mode smoke test only.
      * Heap: LEVIATHAN and SIGN need -Xmx8g or more.
-     */
-    /**
-     * Every database of the pinned release, with the thresholds each one is measured at.
      *
      * The list must name every database that will be run, not just the ones already set
      * up. A table that quietly lags behind the data makes "all databases were calibrated"
@@ -438,18 +419,16 @@ public class AutomatedExperimentRunner {
      * rather than absent.
      *
      * Thresholds are ratios of total utility. They stay well defined across releases but
-     * not comparable: the pinned release changed the shape of the utility distribution, so
-     * the same ratio selects a different number of patterns. Each sweep below was re-chosen
-     * with experiments.ThresholdScan to reproduce the pattern counts of the submitted
-     * experiments, so the runs pose comparable work; the raw search output is in
-     * results/thresholds/thresholds.csv.
+     * not comparable: the shape of the utility distribution differs between releases, so the
+     * same ratio selects a different number of patterns. Each sweep is chosen with
+     * experiments.ThresholdScan to hit target pattern counts, so the runs pose comparable
+     * work; the raw search output is in results/thresholds/thresholds.csv.
      */
     private static final List<DatasetConfig> DATASETS_PRODUCTION = buildProduction();
 
     /**
      * The table itself lives in common.Datasets so that verify.CorrectnessVerifier reads the
-     * same thresholds this runner measures at. It used to keep its own copy, which went
-     * stale without anyone noticing.
+     * same thresholds this runner measures at. Do not keep a second copy here.
      */
     private static List<DatasetConfig> buildProduction() {
         List<DatasetConfig> out = new ArrayList<>();
@@ -462,12 +441,12 @@ public class AutomatedExperimentRunner {
         return List.copyOf(out);
     }
 
-    /** Dataset rút gọn cho smoke-test (paper = 4 chuỗi, < 1s). */
+    /** Smoke-test dataset (paper = 4 sequences, < 1 s). */
     private static final List<DatasetConfig> DATASETS_TEST = List.of(
             new DatasetConfig("paper", 0.001, new double[]{0.0005, 0.001, 0.002, 0.005})
     );
 
-    /** Chọn dataset thực tế: TEST mode hay PRODUCTION mode. */
+    /** Datasets in use: the TEST set or the production set. */
     private static List<DatasetConfig> DATASETS = DATASETS_PRODUCTION;
     /** Resolved at start-up: examples/ in TEST mode, datasets/ otherwise. */
     private static String datasetDir = DATASET_DIR;
@@ -475,43 +454,35 @@ public class AutomatedExperimentRunner {
     /**
      * The three databases SC3, SC4, SC5 and SC6 are measured on.
      *
-     * KOSARAK was the third and is now C8T1S5I8N5K. The reason is SC5, which measures a grid
-     * of four increment counts by four arrival strategies. Measured on SIGN, that grid costs
-     * 10.5 times what SC2 costs for the same arm: halving K saves only 24% rather than 50%,
-     * because each batch carries a fixed cost and the rescans do not thin out in proportion.
-     * Multiplying KOSARAK's SC2 time by 10.5 gives about fifty hours for its four working
-     * arms, and over eighty for Pre-HUSPM-TSU alone, which already fails to finish SC2.
+     * KOSARAK is not in this set because of SC5, which measures a grid of four increment
+     * counts by four arrival strategies. Measured on SIGN, that grid costs 10.5 times what SC2
+     * costs for the same arm: halving K saves only 24% rather than 50%, because each batch
+     * carries a fixed cost and the rescans do not thin out in proportion. For KOSARAK that is
+     * about fifty hours for its four working arms, and over eighty for Pre-HUSPM-TSU alone.
      *
-     * The replacement is not a concession. KOSARAK and BMS1 are both sparse click-streams, so
-     * the old three covered dense-dense-sparse; SIGN, LEVIATHAN and C8T1S5I8N5K cover small
-     * and dense, medium, and large - and C8T1S5I8N5K is the only database here that reaches
-     * within-event extension, at 7.97 items per event where the other seven hold exactly one.
-     * Losing it from these four scenarios would have left that case measured only in SC1,
-     * SC2 and SC7.
+     * SIGN, LEVIATHAN and C8T1S5I8N5K cover small and dense, medium, and large, and
+     * C8T1S5I8N5K is the only database here that reaches within-event extension (7.97 items
+     * per event; the other seven hold exactly one).
      *
-     * KOSARAK stays in SC1, SC2 and SC7, which is where its size earns its keep.
+     * KOSARAK runs in SC1, SC2 and SC7.
      */
     private static final Set<String> SUBSET_3 = new HashSet<>(Arrays.asList(
             "SIGN", "LEVIATHAN", "C8T1S5I8N5K"));
 
     /**
-     * Databases that also get the C5 ablation, the incremental half of SC7.
+     * Databases that also get the incremental ablations of SC7 (adaptive rescan and block
+     * index).
      *
-     * The other three SC7 arms are one full mine each and cost seconds. This one is not:
-     * proposed_C5_off rescans on EVERY batch by design, so at BATCH_COUNT=100 it mines from
-     * scratch a hundred times. Its cost is therefore a hundred times a full mine, and that
-     * is what decides who can be in this set.
+     * The static SC7 arms are one full mine each and cost seconds. proposed_C5_off is not: it
+     * rescans on EVERY batch by design, so at BATCH_COUNT=100 it mines from scratch a hundred
+     * times. Its cost, a hundred full mines, decides who can be in this set.
      *
-     * KOSARAK was here and is now C8T1S5I8N5K. A full-scope mine of KOSARAK takes 438 s, so
-     * proposed_C5_off alone would be of the order of twelve hours - for one arm, of one
-     * scenario, on one database. C8T1S5I8N5K also replaced it in SUBSET_3, for the same kind
-     * of reason, so the two sets now name the same databases and a reader does not have to
-     * hold two different threes in mind.
+     * KOSARAK is excluded: a full-scope mine takes 438 s, so proposed_C5_off alone would take
+     * about twelve hours. The set matches SUBSET_3 apart from BMS1.
      *
-     * BMS1 stays listed although SC7 does not currently reach it: scopeOk filters it out
-     * because SC7 mines the whole database and BMS1 cannot be mined there. If that ever
-     * changes the ablation should cover it again, which is why the name is left rather than
-     * deleted. Today this set delivers SIGN and C8T1S5I8N5K.
+     * BMS1 is listed although SC7 does not reach it: scopeOk filters it out because SC7 mines
+     * the whole database and BMS1 cannot be mined there. If that changes, the ablation covers
+     * it again. In practice this set delivers SIGN and C8T1S5I8N5K.
      */
     private static final Set<String> C5_ABLATION_SET = new HashSet<>(Arrays.asList(
             "BMS1", "SIGN", "C8T1S5I8N5K"));
@@ -520,35 +491,34 @@ public class AutomatedExperimentRunner {
     // ENTRY POINT
     // ==================================================================
     public static void main(String[] args) throws IOException {
-        // === PREFLIGHT CHE DO DO BO NHO ===
-        // Ket qua live va ket qua used do HAI DAI LUONG KHAC NHAU va chi khac nhau o mot
-        // cot, nen rat de bi tron rooi so sanh nham. Project 02 giai bang cach bat launcher
-        // ghi vao thu muc rieng; lam y het o day.
+        // === MEMORY MODE PREFLIGHT ===
+        // Live and used results measure DIFFERENT quantities but differ in only one column,
+        // so they are easy to mix up. Live mode must therefore write to its own directory.
         if (MEM_LIVE) {
             String rd = RESULTS_DIR.replace('\\', '/').toLowerCase(java.util.Locale.ROOT);
             if (!rd.contains("mem")) {
-                System.err.println("DUNG: -Dmem.mode=live phai ghi vao thu muc co chua 'mem' "
-                        + "trong ten, vd -Dresults.dir=results/run-xxx/mem/. Thu muc hien tai: "
+                System.err.println("STOP: -Dmem.mode=live must write to a directory with 'mem' "
+                        + "in its name, e.g. -Dresults.dir=results/run-xxx/mem/. Current directory: "
                         + RESULTS_DIR);
                 System.exit(2);
             }
             if (ALGO_ONLY.isEmpty()) {
-                System.err.println("DUNG: che do live yeu cau MOI ARM MOT JVM RIENG "
-                        + "(-Dalgo.only=<ten>). Chay nhieu arm chung JVM thi heap da bi arm "
-                        + "truoc nong rong - dung loi ma che do live sinh ra de tranh. "
-                        + "Dung run.ps1 -MemMode live de no tu lap qua tung arm.");
+                System.err.println("STOP: live mode requires ONE JVM PER ARM "
+                        + "(-Dalgo.only=<name>). With several arms in one JVM the heap has "
+                        + "already been grown by the previous arm, which is what live mode "
+                        + "exists to avoid. Use run.ps1 -MemMode live to loop over the arms.");
                 System.exit(2);
             }
-            System.out.println("### LIVE HEAP: ep thu gom moi " + MEM_SAMPLE_MS
+            System.out.println("### LIVE HEAP: forced collection, interval >= " + MEM_SAMPLE_MS
                     + " ms | arm = " + ALGO_ONLY);
-            System.out.println("### runtime_ms xuat -3 (GC lam nhieu); gia tri that o "
-                    + "wall_ms_perturbed. KHONG dung lam so hieu nang.");
+            System.out.println("### runtime_ms is written as -3 (perturbed by forced GC); the "
+                    + "wall time is in wall_ms_perturbed. NOT a performance figure.");
         }
 
         new File(RESULTS_DIR).mkdirs();
 
-        // Phát hiện cờ TEST trong args → dùng dataset rút gọn (paper, 4 chuỗi, < 1s).
-        // Truyền "TEST" hoặc "TEST SC1" để smoke-test, ALL/SC* (mặc định) dùng production.
+        // TEST (or SMOKE) in the arguments selects the smoke-test dataset (paper, 4 sequences,
+        // < 1 s). "TEST" or "TEST SC1" for a smoke test; ALL/SC* (default) use production.
         boolean testMode = false;
         if (args != null) for (String a : args) {
             for (String t : a.split("[,\\s]+")) {
@@ -574,8 +544,7 @@ public class AutomatedExperimentRunner {
         System.out.println("Mode: " + (testMode ? "TEST (paper dataset)" : "PRODUCTION")
                 + " | Datasets: " + DATASETS.size() + " | Scenarios: " + scenarios);
         System.out.println("Heap max: " + (Runtime.getRuntime().maxMemory() / (1024 * 1024)) + " MB");
-        // The platform each arm ran on, in the arm's own log: the operating system was
-        // recorded nowhere before, and the paper has to state it.
+        // The platform each arm ran on, recorded in the arm's own log.
         System.out.println("Platform: os=" + System.getProperty("os.name") + " "
                 + System.getProperty("os.version") + " (" + System.getProperty("os.arch") + ")"
                 + " | java=" + System.getProperty("java.runtime.version")
@@ -638,7 +607,7 @@ public class AutomatedExperimentRunner {
             for (String token : a.split("[,\\s]+")) {
                 String t = token.trim().toUpperCase(Locale.ROOT);
                 if (t.equals("ALL")) return all;
-                // Aliases for legacy KB naming
+                // KB1..KB7 are accepted as aliases for SC1..SC7
                 if (t.equals("KB1")) t = "SC1";
                 else if (t.equals("KB2")) t = "SC2";
                 else if (t.equals("KB3")) t = "SC3";
@@ -653,10 +622,10 @@ public class AutomatedExperimentRunner {
     }
 
     // ==================================================================
-    // SC1 - STATIC BASELINE ON D_INIT (50%)
+    // SC1 - STATIC MINING ON D_INIT
     // ==================================================================
     private static void runSC1_StaticBaseline() throws IOException {
-        System.out.println("\n--- [SC1] Static baseline on D_init (50%) ---");
+        System.out.println("\n--- [SC1] Static baseline on D_init ---");
         try (ResultCollector col = new ResultCollector(RESULTS_DIR + "SC1_static.csv")) {
             for (DatasetConfig ds : DATASETS) {
                 if (!datasetEnabled(ds.name)) continue;
@@ -667,18 +636,17 @@ public class AutomatedExperimentRunner {
                 List<Sequence> dInit = dInitFor(ds, full);
                 double totalUtil = sumUtility(dInit);
                 String[] algos = {"USpan", "HUSP-ULL", "HUSP-SP", "IncUSP-Miner+", "Pre-HUSPM", "Adaptive-Full"};
-                // SC1 khong co ngau nhien nao: khong chia lo, khong sinh thao tac. Seed
-                // khong doi duoc gi, nen chi lap lai cung cau hinh de do nhieu JIT/GC.
+                // SC1 has no randomness: no batch split, no generated operations. A seed
+                // changes nothing, so only the same configuration is repeated (JIT/GC noise).
                 for (double su : ds.suSweep) {
                     for (int r = 0; r < REPEATS; r++) {
                     setRunContext(SEEDS[0], r);
                     for (String algo : algos) {
                         ExperimentMetrics m = runSingle(algo, ds.name, dInit, totalUtil, su, 0, "SC1_su=" + su);
                         if (m != null) col.log(m);
-                        // GC giữa các thuật toán: heap mà algo vừa rồi giữ
-                        // (instance đã hết scope trong runSingle) phải được thu hồi
-                        // trước khi algo sau cấp phát; nếu thuật toán trước OOM,
-                        // forceFullGC() đảm bảo budget heap "sạch" cho thuật toán sau.
+                        // GC between algorithms: the heap held by the previous algorithm
+                        // (its instance went out of scope in runSingle) must be reclaimed
+                        // before the next one allocates, including after an OOM.
                         forceFullGC();
                     }
                     }
@@ -688,7 +656,7 @@ public class AutomatedExperimentRunner {
     }
 
     // ==================================================================
-    // SC2 - INCREMENTAL SEQUENCE: D_init=50% + 5 batch x 10% UNIFORM
+    // SC2 - INCREMENTAL SEQUENCE: D_init, then BATCH_COUNT EVEN batches
     // ==================================================================
     private static void runSC2_IncrementalSequence() throws IOException {
         System.out.println("\n--- [SC2] Incremental sequence (" + BATCH_COUNT + " batches, EVEN; D_init per Yan et al. Table 16) ---");
@@ -703,14 +671,13 @@ public class AutomatedExperimentRunner {
                 List<Sequence> dInit = dInitFor(ds, full);
                 List<Sequence> rest = tailFrom(full, dInit.size());
 
-                // SC2 chia lo DEU va TUAN TU theo thu tu file, tuc hoan toan tat dinh:
-                // voi mot seed thi nam seed cho ra dung mot cach chia, va "chay nam seed"
-                // se chi la lap lai mot cau hinh - do nhieu do dac chu khong do bien thien
-                // cua cach chia lo. Neu muon bien thien that thi phai hoan vi dong du lieu
-                // gia tang, va do la mot kich ban KHAC voi kich ban mo ta trong bai.
+                // SC2 splits EVENLY and IN FILE ORDER, so the split is fully deterministic:
+                // every seed would give the same split, and running several seeds would only
+                // repeat one configuration. Real variation needs a permuted incremental
+                // stream, which is a different scenario.
                 //
-                // Vi vay: mot seed giu nguyen dinh nghia cu; tu hai seed tro len thi dong
-                // gia tang duoc hoan vi theo seed, va dieu do phai duoc noi ro trong bai.
+                // So: with one seed the stream stays in file order; with two or more seeds
+                // the incremental stream is shuffled by seed. Report which was used.
                 long[] seeds = activeSeeds();
                 for (long seed : seeds) {
                     List<Sequence> stream = rest;
@@ -744,14 +711,14 @@ public class AutomatedExperimentRunner {
                                                                 datasetDir + ds.name + "_eui.txt");
                 if (full.isEmpty()) continue;
                 double totalUtil = sumUtility(full);
-                // Nhu SC1: khong co ngau nhien, chi lap lai de do nhieu do dac.
+                // As in SC1: no randomness, only repeats for measurement noise.
                 for (double su : ds.suSweep) {
                     for (int r = 0; r < REPEATS; r++) {
                         setRunContext(SEEDS[0], r);
                         for (String algo : algos) {
                             ExperimentMetrics m = runSingle(algo, ds.name, full, totalUtil, su, 0, "SC3_su=" + su);
                             if (m != null) col.log(m);
-                            forceFullGC(); // Cleanup heap giữa các thuật toán
+                            forceFullGC(); // clean up the heap between algorithms
                         }
                     }
                 }
@@ -760,8 +727,8 @@ public class AutomatedExperimentRunner {
     }
 
     // ==================================================================
-    // SC4 - ĐỘ NHẠY NGƯỠNG PRE-LARGE (Sl/Su): Pre-HUSPM vs Adaptive
-    //        (minh hoạ dilemma bùng-nổ-pre-large + ưu thế pruning; KHÔNG còn sweep Delta0/alpha)
+    // SC4 - PRE-LARGE FLOOR SENSITIVITY (Sl/Su): Pre-HUSPM vs Adaptive
+    //        (shows the pre-large explosion at low floors and the pruning advantage)
     // ==================================================================
     private static void runSC4_SensitivitySl() throws IOException {
         System.out.println("\n--- [SC4] Pre-large threshold (Sl) sensitivity: Pre-HUSPM vs Adaptive ---");
@@ -778,20 +745,18 @@ public class AutomatedExperimentRunner {
                 if (full.isEmpty()) continue;
                 double totalUtil = sumUtility(full);
 
-                // (a) Sl/Su sensitivity - chạy SONG SONG Pre-HUSPM + Adaptive với
-                //     CÙNG slRatio mỗi iteration để so sánh apple-to-apple công bằng.
-                //     Trước đây Pre-HUSPM sweep slRatios={0.3..0.9} còn Adaptive
-                //     bị FIX cứng ở DEFAULT_SL_MIN_RATIO → không thể so sánh trực tiếp.
+                // Sl/Su sensitivity: Pre-HUSPM and Adaptive run at the SAME slRatio in each
+                // iteration, so the comparison is like for like.
                 //
-                //     Mỗi instance được scope-hẹp trong block → ra khỏi block là
-                //     unreachable; forceFullGC() ngay sau thu hồi heap.
-                // Khong co ngau nhien; chi lap lai de do nhieu JIT/GC.
+                // Each instance is scoped to its block, so it is unreachable after the block
+                // and forceFullGC() reclaims its heap.
+                // No randomness; only repeats for JIT/GC noise.
                 for (double slRatio : slRatios) {
                   for (int r = 0; r < REPEATS; r++) {
                     setRunContext(SEEDS[0], r);
-                    // Each block answers to -Dalgo.only. Without the gates every arm of this scenario
-                    // ran both algorithms at all four levels, so campaign.ps1 measured the whole of SC4
-                    // once per arm name - five copies of the same eight rows.
+                    // Each block answers to -Dalgo.only. Without the gates every arm would run both
+                    // algorithms at all four levels, and campaign.ps1, which starts one JVM per arm
+                    // name, would measure the whole of SC4 once per arm.
                     // --- Pre-HUSPM @ slRatio ---
                     if (!ADAPTIVE_ONLY && algoEnabled("Pre-HUSPM")) {
                         String tag = "Pre-HUSPM[sl=" + slRatio + "]";
@@ -805,7 +770,7 @@ public class AutomatedExperimentRunner {
                         col.log(m);
                         forceFullGC();
                     }
-                    // --- Adaptive @ SAME slRatio (giữ default alpha+delta0) ---
+                    // --- Adaptive @ SAME slRatio (default kappa and delta0) ---
                     if (algoEnabled("Adaptive-Full")) {
                         String tag = "Adaptive[sl=" + slRatio + "]";
                         PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp = new PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo(
@@ -826,10 +791,9 @@ public class AutomatedExperimentRunner {
                   }
                 }
 
-                // (b) ĐÃ BỎ sweep (delta0, alpha): chạy trên runInitialMining nên 2 tham số
-                //     này KHÔNG có tác dụng (init đặt lutDynValue = TSU·Sl_min trực tiếp, không
-                //     tính δ_D) → kết quả vô nghĩa. C2 cũng đã de-emphasize. Chỉ giữ SC4a
-                //     (độ nhạy slRatio: minh hoạ bùng nổ pre-large + ưu thế pruning của Adaptive).
+                // No (delta0, kappa) sweep: SC4 runs runInitialMining, where these two
+                // parameters have no effect (the initial mine sets lutDynValue = TSU * Sl_min
+                // directly, without delta_D).
             }
         }
     }
@@ -855,10 +819,9 @@ public class AutomatedExperimentRunner {
                 List<Sequence> dInit = dInitFor(ds, full);
                 List<Sequence> rest = tailFrom(full, dInit.size());
 
-                // Trong bon chien luoc thi chi BURST dung den seed; EVEN, INCREASING va
-                // DECREASING deu tat dinh. Vong seed vi vay chi sinh cau hinh khac nhau o
-                // BURST - voi ba chien luoc kia no tro thanh lap lai, nen ta bo qua de
-                // khong nhan ba lan khoi luong ma khong thu duoc thong tin nao.
+                // Of the four strategies only BURST uses the seed; EVEN, INCREASING and
+                // DECREASING are deterministic. The seed loop therefore runs for BURST (and
+                // RANDOM) only; for the others it would only repeat the same configuration.
                 for (int k : kList) for (BatchSplitMode strat : strategies) {
                     boolean seedMatters = (strat == BatchSplitMode.BURST
                                         || strat == BatchSplitMode.RANDOM);
@@ -883,14 +846,14 @@ public class AutomatedExperimentRunner {
     // ==================================================================
     // SC6 - MIXED I/D/M 70:15:15 (Adaptive self-compare)
     // ==================================================================
-    /** Mot thao tac trong chuoi hon hop cua SC6. */
+    /** One operation in SC6's mixed stream. */
     private enum OpKind { INS, DEL, MOD }
 
     private static final class Op {
         final OpKind kind;
         final int iter;
-        final List<Sequence> a;   // INS: lo chen | DEL: chuoi bi xoa | MOD: chuoi cu
-        final List<Sequence> b;   // MOD: chuoi moi
+        final List<Sequence> a;   // INS: inserted batch | DEL: deleted sequences | MOD: old sequences
+        final List<Sequence> b;   // MOD: new sequences
         Op(OpKind kind, int iter, List<Sequence> a, List<Sequence> b) {
             this.kind = kind; this.iter = iter; this.a = a; this.b = b;
         }
@@ -904,21 +867,15 @@ public class AutomatedExperimentRunner {
     }
 
     /**
-     * Sinh chuoi thao tac hon hop MOT LAN, de moi arm phat lai DUNG chuoi do.
-     *
-     * Truoc day chuoi thao tac duoc sinh truc tiep trong vong lap do, nen khong the
-     * them arm thu hai: arm sau se rut ra mot chuoi thao tac khac tu cung bo sinh
-     * ngau nhien, va hai arm khong con so sanh duoc voi nhau.
-     */
-    /**
      * SC6's schedule: 70:15:15 as exact counts, not as probabilities.
      *
-     * Drawing each operation independently at 70:15:15 gave ten operations whose mix depended
-     * on the seed and the database: SIGN drew three deletions and no modification, LEVIATHAN
-     * no deletion and two modifications, C8T1S5I8N5K one deletion. A deletion costs a few
-     * milliseconds where an insertion costs a remine, so each database's total followed its
-     * draw and the three could not be compared (results/sc6-random-draw). Every database now
-     * gets the same operations; only their order depends on the seed.
+     * The plan is built ONCE per database and seed, and every arm replays that same plan, so
+     * the arms are comparable.
+     *
+     * Exact counts rather than independent draws: with independent draws the mix of
+     * operations depends on the seed and the database, and since a deletion costs a few
+     * milliseconds where an insertion costs a remine, each database's total would follow its
+     * draw. Every database gets the same operations; only their order depends on the seed.
      */
     static final int SC6_INSERTS = 14, SC6_DELETES = 3, SC6_MODIFIES = 3;
 
@@ -968,21 +925,18 @@ public class AutomatedExperimentRunner {
     // SC6 - MIXED I/D/M 70:15:15
     // ==================================================================
     /**
-     * Chuoi thao tac hon hop chen / xoa / sua theo ty le 70:15:15.
+     * Mixed insert / delete / modify stream at 70:15:15.
      *
-     * Ban nop chi bao cao phuong phap de xuat o kich ban nay, khong co moc so sanh
-     * nao, nen khong the dinh luong duoc loi ich thuc te cua co che duy tri nhieu
-     * thao tac (review, comment 4c). Nay chay HAI arm tren CUNG mot chuoi thao tac:
+     * Two arms run on the SAME operation plan:
      *
-     *   Adaptive-Full        duy tri gia tang
-     *   Remine-from-scratch  mine lai tu dau sau MOI thao tac
+     *   Adaptive-Full        incremental maintenance
+     *   Remine-from-scratch  mines from scratch after EVERY operation
      *
-     * Moc so sanh dung chinh bo khai pha tinh cua khung de xuat, nen moi khoang cach
-     * do duoc deu den tu viec khong phai mine lai chu khong den tu viec bo mine cua ta
-     * nhanh hon cua nguoi khac.
+     * The reference uses the proposed framework's own static miner, so any measured gap
+     * comes from not having to remine, not from one miner being faster than another.
      *
-     * Runtime cong don khong luu thanh cot rieng: no la tong runtime_ms tren cac dong
-     * cung arm cung dataset, tinh duoc tu du lieu tho.
+     * Cumulative runtime is not stored as a column: it is the sum of runtime_ms over the
+     * rows of one arm and dataset, computable from the raw data.
      */
     private static void runSC6_InsertDeleteModify() throws IOException {
         System.out.println("\n--- [SC6] Mixed I/D/M, exactly " + SC6_INSERTS + ":" + SC6_DELETES + ":"
@@ -1004,17 +958,16 @@ public class AutomatedExperimentRunner {
                 List<Sequence> rest  = new ArrayList<>(tailFrom(full, dInit.size()));
                 double initTotalUtil = sumUtility(dInit);
 
-                // One hundredth of the stream, the size of an SC2 increment. At a twentieth every
-                // insertion exceeded the insertion budget and rescanned, 24 of 24, which measured
-                // the regime SC5 already shows converging to remine rather than the one SC2 runs in.
+                // One hundredth of the stream, the size of an SC2 increment. Much larger operations
+                // exceed the insertion budget on every insertion and rescan, which measures the
+                // remine regime rather than the one SC2 runs in.
                 int opSize = Math.max(1, rest.size() / common.Datasets.BATCH_COUNT);
 
-                // Day la kich ban ma seed thuc su quan trong: no quyet dinh thao tac nao
-                // xay ra khi nao va tren chuoi nao. Ket luan cua SC6 khong duoc phu thuoc
-                // vao mot chuoi thao tac may man.
+                // Here the seed matters: it decides which operation happens when and on which
+                // sequences. SC6's conclusions must not depend on one lucky plan.
                 for (long seed : activeSeeds()) {
-                    // Seed rieng cho tung dataset, de chuoi thao tac cua dataset nay khong
-                    // phu thuoc vao viec dataset nao da chay truoc no.
+                    // A per-dataset seed, so this dataset's plan does not depend on which
+                    // datasets ran before it.
                     Random rnd = new Random(seed + ds.name.hashCode());
                     List<Op> plan = buildSC6Plan(dInit, rest, opSize, rnd);
                     System.out.println(">> [SC6] " + ds.name + " seed=" + seed
@@ -1038,10 +991,10 @@ public class AutomatedExperimentRunner {
             else if (o.kind == OpKind.DEL) d++;
             else m++;
         }
-        return plan.size() + " thao tac (" + i + " chen, " + d + " xoa, " + m + " sua)";
+        return plan.size() + " operations (" + i + " insert, " + d + " delete, " + m + " modify)";
     }
 
-    /** Phat lai ke hoach thao tac cho mot arm. remine=true nghia la mine lai tu dau moi thao tac. */
+    /** Replay the operation plan for one arm. remine=true mines from scratch after every operation. */
     private static void runSC6Arm(DatasetConfig ds, List<Sequence> dInit, double initTotalUtil,
                                   List<Op> plan, ResultCollector col, boolean remine) throws IOException {
         final String label = remine ? "Remine-from-scratch" : "Adaptive-Full";
@@ -1059,7 +1012,7 @@ public class AutomatedExperimentRunner {
         double total = initTotalUtil;
 
         for (Op op : plan) {
-            // Trang thai CSDL tien trien giong het nhau o ca hai arm, vi ke hoach da co dinh.
+            // The database evolves identically in both arms, because the plan is fixed.
             List<Sequence> after = new ArrayList<>(cur);
             switch (op.kind) {
                 case INS: after.addAll(op.a); break;
@@ -1076,13 +1029,13 @@ public class AutomatedExperimentRunner {
 
             ExperimentMetrics m;
             if (remine) {
-                // Mine lai tu dau: instance MOI, khong giu bat cu trang thai nao.
+                // Remine from scratch: a NEW instance that keeps no state.
                 final List<Sequence> snapshot = new ArrayList<>(after);
                 PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo rm = newAdaptive(ds.name, ds.defaultSu);
                 announce(label, ds.name, op.tag(), op.iter);
                 m = measureAdaptive(rm, label, ds.name, op.iter, op.tag(),
                         () -> rm.runInitialMining(snapshot, newTotal));
-                m.rescanCount = 0;   // khong co khai niem rescan gia tang o moc nay
+                m.rescanCount = 0;   // no incremental rescan in this reference
             } else {
                 final List<Sequence> snapshot = new ArrayList<>(after);
                 announce(label, ds.name, op.tag(), op.iter);
@@ -1155,7 +1108,7 @@ public class AutomatedExperimentRunner {
                 ENABLE_PATTERN_EXPORT);
     }
 
-    /** Goi measure() voi day du cac supplier cua Adaptive; gom lai de khoi lap 11 doi so. */
+    /** Call measure() with all of Adaptive's suppliers, so callers do not repeat 11 arguments. */
     private static ExperimentMetrics measureAdaptive(
             PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo a,
             String label, String dsName, int iter, String tag, Task task) {
@@ -1169,11 +1122,11 @@ public class AutomatedExperimentRunner {
     }
 
     // ==================================================================
-    // SC7 - ABLATION: C3 (IUB) on a static mine; C4 (block index) and C5 (adaptive rescan) on
-    // the incremental stream, where they act. C1 (the PEU bound before materialising) is inherent.
+    // SC7 - ABLATION: IUB pruning on a static mine; block index and adaptive rescan on the
+    // incremental stream, where they act. The PEU bound before materialising is always on.
     // ==================================================================
     private static void runSC7_Ablation() throws IOException {
-        System.out.println("\n--- [SC7] Ablation C3(IUB)/C4(Block)/C5(rescan) ---");
+        System.out.println("\n--- [SC7] Ablation: IUB pruning / block index / adaptive rescan ---");
         try (ResultCollector col = new ResultCollector(RESULTS_DIR + "SC7_ablation.csv")) {
             for (DatasetConfig ds : DATASETS) {
                 if (!datasetEnabled(ds.name)) continue;
@@ -1184,27 +1137,27 @@ public class AutomatedExperimentRunner {
                 if (full.isEmpty()) continue;
                 double totalUtil = sumUtility(full);
 
-                // Ablation khong co ngau nhien; chi lap lai de do nhieu JIT/GC.
+                // The ablation has no randomness; only repeats for JIT/GC noise.
                 for (int r = 0; r < REPEATS; r++) {
                 setRunContext(SEEDS[0], r);
 
-                // --- Static ablation (one mine of the whole database): C3, the IUB bound, acts
-                //     inside the miner, so a single mine is where it shows. C1 is inherent. ---
-                logAblation(col, ds, full, totalUtil, "proposed_full", true, true);        // đề xuất đầy đủ
+                // --- Static ablation (one mine of the whole database): the IUB bound acts inside
+                //     the miner, so a single mine is where it shows. The PEU bound is always on. ---
+                logAblation(col, ds, full, totalUtil, "proposed_full", true, true);        // full proposal
                 forceFullGC();
-                logAblation(col, ds, full, totalUtil, "proposed_no_IUB", true, false);     // -C3
+                logAblation(col, ds, full, totalUtil, "proposed_no_IUB", true, false);     // IUB pruning off
                 forceFullGC();
 
-                // --- Incremental ablations, on the representative set: C5 (adaptive rescan)
-                //     and C4 (block index) act only while the database grows.
+                // --- Incremental ablations, on the representative set: adaptive rescan and
+                //     the block index act only while the database grows.
                 //     proposed_C5_on is the full proposal on that stream and the reference
                 //     for all three. ---
                 if (C5_ABLATION_SET.contains(ds.name)) {
                     logIncrementalAblation(col, ds, full, "proposed_C5_on",  "SC7_C5", true,  true,  true);
                     forceFullGC();
-                    logIncrementalAblation(col, ds, full, "proposed_C5_off", "SC7_C5", false, true,  true);  // -C5
+                    logIncrementalAblation(col, ds, full, "proposed_C5_off", "SC7_C5", false, true,  true);  // adaptive rescan off
                     forceFullGC();
-                    logIncrementalAblation(col, ds, full, "proposed_no_block_index", "SC7_C4", true, false, true); // -C4
+                    logIncrementalAblation(col, ds, full, "proposed_no_block_index", "SC7_C4", true, false, true); // block index off
                     forceFullGC();
                 }
 
@@ -1222,7 +1175,7 @@ public class AutomatedExperimentRunner {
                 attachPreHuspm(m, pre);
                 col.log(m);
                 }
-                }   // het vong lap repeats
+                }   // end of repeats loop
 
                 forceFullGC();
             }
@@ -1233,17 +1186,16 @@ public class AutomatedExperimentRunner {
                                     double totalUtil, String tag, boolean useBlockIndex,
                                     boolean useIub) {
         endMemArm();   // static: one mine, measured against the heap at the start of the call
-        // SC7's arms carry their own names - proposed_full, proposed_no_IUB and the rest -
-        // and until now nothing here consulted -Dalgo.only. campaign.ps1 gives each arm its
-        // own JVM, so running SC7 through it repeated every ablation once per name in the
-        // algorithm list: five times the work, five copies of each row.
+        // SC7's arms carry their own names (proposed_full, proposed_no_IUB, ...) and answer
+        // to -Dalgo.only. campaign.ps1 gives each arm its own JVM; without this gate every
+        // JVM would repeat every ablation.
         if (!algoEnabled(tag)) return;
         PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp = new PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo(
                 ds.defaultSu, DEFAULT_KAPPA, DEFAULT_DELTA0, slRatioFor(ds.name),
                 PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.AblationMode.FULL,
                 ENABLE_PATTERN_EXPORT);
-        adp.useBlockIndex = useBlockIndex; // C4
-        adp.useIub = useIub;            // C3
+        adp.useBlockIndex = useBlockIndex; // block index
+        adp.useIub = useIub;            // IUB pruning
         announce(tag, ds.name, "SC7", 0);
         ExperimentMetrics m = measure(tag, ds.name, 0, "SC7",
                 () -> adp.runInitialMining(full, totalUtil),
@@ -1259,11 +1211,10 @@ public class AutomatedExperimentRunner {
      * The incremental ablations: D_init, then BATCH_COUNT equal increments, one row per
      * increment as SC2 records them.
      *
-     * C5 (adaptive rescan) and C4 (block index) act only while the database grows. C4 in
-     * particular is read nowhere but on an increment that does not rescan -
-     * evaluatePatternUtilityWithIndex has a single caller - so the static mine this ablation
-     * used to run with the index off did exactly the work of one with it on, and would have
-     * reported C4 as contributing nothing. Per-increment rows are what let its effect be read
+     * Adaptive rescan and the block index act only while the database grows. The block index
+     * in particular is read only on an increment that does not rescan -
+     * evaluatePatternUtilityWithIndex has a single caller - so a static mine with the index
+     * off does exactly the work of one with it on. Per-increment rows let its effect be read
      * off the increments where it can have one, those with cub_triggered = false; a single
      * total would bury it under the rescans, which carry almost all of the time.
      */
@@ -1281,9 +1232,9 @@ public class AutomatedExperimentRunner {
                 ds.defaultSu, DEFAULT_KAPPA, DEFAULT_DELTA0, slRatioFor(ds.name),
                 PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.AblationMode.FULL,
                 ENABLE_PATTERN_EXPORT);
-        adp.useAdaptiveRescan = useAdaptiveRescan; // C5 on/off
-        adp.useBlockIndex = useBlockIndex;         // C4 on/off
-        // C2 off: the pre-large band is fixed at the hard floor LUT_min, as in Pre-HUSPM,
+        adp.useAdaptiveRescan = useAdaptiveRescan; // adaptive rescan on/off
+        adp.useBlockIndex = useBlockIndex;         // block index on/off
+        // Adaptive band off: the pre-large band is fixed at the hard floor LUT_min, as in Pre-HUSPM,
         // instead of following the batch statistics. Still sound: on insertion TSU' >= TSU_ref,
         // so the fixed margin (UUT - LUT_min) * TSU' is never below the safety lower bound.
         adp.useAdaptiveBand = useAdaptiveBand;
@@ -1322,20 +1273,20 @@ public class AutomatedExperimentRunner {
     // ==================================================================
     // SHARED: INCREMENTAL PIPELINE (used by SC2 and SC5)
     //
-    // OOM ISOLATION: trước đây 3 thuật toán (inc, preh, adp) cùng sống xuyên
-    // suốt scenario, chia chung budget heap → OOM của thuật toán này CHẶN heap
-    // của thuật toán kế tiếp. Giờ tách thành 3 BLOCK độc lập, mỗi block tự kết
-    // thúc, drop reference rồi forceFullGC() trước khi block tiếp theo bắt đầu.
+    // OOM ISOLATION: each algorithm runs in its own block, which ends, drops its
+    // references and calls forceFullGC() before the next block starts, so one
+    // algorithm's OOM cannot starve the next one's heap.
     //
-    // Thêm cờ `poisoned`: khi 1 op fail (OOM/Exception), bỏ qua hết các op còn
-    // lại của THUẬT TOÁN ĐÓ (state đã hỏng, retrying chỉ tốn thời gian + OOM).
+    // The `poisoned` flag: once an operation fails (OOM/exception), the remaining
+    // operations of THAT algorithm are skipped; its state is broken and retrying
+    // only costs time and more OOMs.
     // ==================================================================
     private static void runIncrementalScenario(String dsName, double Su, List<Sequence> dInit,
                                                List<List<Sequence>> batches, ResultCollector col,
                                                String tag) {
         final double initTotal = sumUtility(dInit);
 
-        // -------- Algorithm 1: IncUSP-Miner+ (isolated scope) --------
+        // -------- Arm: IncUSP-Miner+ (isolated scope) --------
         if (!ADAPTIVE_ONLY && algoEnabled("IncUSP-Miner+")) {
             beginMemArm();
             IncUSPMinerPlusAlgorithm inc = new IncUSPMinerPlusAlgorithm(Su);
@@ -1346,8 +1297,8 @@ public class AutomatedExperimentRunner {
                     () -> inc.candidateCount, () -> inc.patternCount, null, null);
             if (m0.runtimeMs != -1) { m0.prunedTsu = inc.prunedTSU; m0.exploredNodes = inc.exploredNodes; }
             col.log(m0);
-            // OOM/poison → GIẢI PHÓNG NGAY CP-tree (nhiều GB) để các cấp phát main kế tiếp
-            // (skipped log / snapshot / scenario) KHÔNG tiếp tục OOM rồi sập experiment.
+            // On OOM/poison, release the CP-tree (several GB) at once so the next main-thread
+            // allocations (skipped rows, snapshots, the scenario) do not OOM and end the run.
             if (failedRun(m0)) { poisoned = true; inc.releaseState(); forceFullGC(); }
 
             double rolling = initTotal;
@@ -1357,7 +1308,7 @@ public class AutomatedExperimentRunner {
                 if (delta.isEmpty()) continue;
                 double newTotal = rolling + sumUtility(delta);
                 int batchIdx = b + 1;
-                // LỚP PHÒNG THỦ 1: check RAM trước batch - nếu thiếu, poison + skip.
+                // Memory guard before the batch: if memory is short, poison and skip.
                 if (!poisoned && !memoryGuardOk("IncUSP-Miner+", dsName, tag + "_INC")) poisoned = true;
                 if (poisoned) {
                     col.log(skippedMetric("IncUSP-Miner+", dsName, batchIdx, tag + "_INC"));
@@ -1379,16 +1330,14 @@ public class AutomatedExperimentRunner {
         } // inc out of scope here - GC can reclaim its heap
         forceFullGC();
 
-        // -------- Algorithm 2: Pre-HUSPM, CA HAI BIEN THE (moi cai mot scope rieng) --------
-        // (-Dalgo.only loc o vong lap ben trong vi hai bien the la hai arm rieng)
+        // -------- Arm: Pre-HUSPM, BOTH VARIANTS (each in its own scope) --------
+        // (-Dalgo.only is applied in the inner loop because the two variants are separate arms)
         //
-        // Yan et al. dinh nghia hai luat kich hoat rescan va so sanh CA HAI trong bai cua
-        // ho. Ban nop cua ta chi cai bien the SWUmax (Dinh ly 2 cua ho), von KHONG sound.
-        // Chi so sanh voi bien the yeu hon la danh gia thap baseline - dung cao buoc ma
-        // Reviewer #1 neu o comment 3. Tu day chay ca hai:
-        //   Pre-HUSPM      = bien the SWUmax, Dinh ly 2  (giu ten cu de khong vo CSV cu)
-        //   Pre-HUSPM-TSU  = bien the TSU(d), Dinh ly 1, sound
-        // O pha khai pha TINH hai bien the la mot, nen chung chi tach nhau o SC2/SC5.
+        // Yan et al. define two rescan trigger rules and compare both. Both run here, so the
+        // baseline is not represented by its weaker variant alone:
+        //   Pre-HUSPM      = SWUmax trigger, not sound (label kept so existing CSVs still match)
+        //   Pre-HUSPM-TSU  = TSU(d) trigger, sound
+        // In STATIC mining the two variants are identical; they differ only in SC2/SC5.
         if (!ADAPTIVE_ONLY) {
             PreHUSPMAlgorithm.PreHUSPMAlgo.Variant[] variants = {
                     PreHUSPMAlgorithm.PreHUSPMAlgo.Variant.SWUMAX,
@@ -1417,7 +1366,7 @@ public class AutomatedExperimentRunner {
                     if (delta.isEmpty()) continue;
                     double newTotal = rolling + sumUtility(delta);
                     int batchIdx = b + 1;
-                    // LỚP PHÒNG THỦ 1: check RAM trước batch.
+                    // Memory guard before the batch.
                     if (!poisoned && !memoryGuardOk(label, dsName, tag + "_INC")) poisoned = true;
                     if (poisoned) {
                         col.log(skippedMetric(label, dsName, batchIdx, tag + "_INC"));
@@ -1441,21 +1390,19 @@ public class AutomatedExperimentRunner {
         }
         forceFullGC();
 
-        // -------- Moc so sanh: Remine-from-scratch (isolated scope) --------
+        // -------- Reference: Remine-from-scratch (isolated scope) --------
         //
-        // Tra loi cau hoi ma review neu o comment 4b: duy tri gia tang re hon bao nhieu
-        // so voi don gian mine lai tu dau sau moi lo. Neu khong co moc nay thi khong the
-        // dinh luong duoc loi ich cua toan bo co che gia tang.
+        // Measures how much cheaper incremental maintenance is than simply mining from
+        // scratch after every batch.
         //
-        // Moc nay dung CHINH bo khai pha tinh cua khung de xuat, khong dung USpan hay
-        // HUSP-ULL. Do la lua chon co chu y: no khien Remine tro thanh doi thu MANH NHAT
-        // co the cho tuyen bo gia tang, vi moi khoang cach do duoc deu den tu viec KHONG
-        // phai mine lai, chu khong den tu viec bo mine cua ta nhanh hon bo mine cua nguoi
-        // khac. Lay mot baseline tinh cham hon lam moc se thoi phong loi ich len.
+        // It uses the proposed framework's OWN static miner, not USpan or HUSP-ULL. This
+        // makes Remine the STRONGEST possible opponent for the incremental claim: every
+        // measured gap comes from NOT having to remine, not from one miner being faster
+        // than another. A slower static baseline as reference would inflate the benefit.
         //
-        // Runtime cong don khong luu thanh cot rieng: no la tong cua cot runtime_ms tren
-        // cac dong cung mot lan chay, tinh duoc tu du lieu tho, dung quy uoc chung cua
-        // ExperimentMetrics la khong luu dai luong dan xuat.
+        // Cumulative runtime is not stored as a column: it is the sum of runtime_ms over
+        // the rows of one run, computable from the raw data, following ExperimentMetrics'
+        // rule of not storing derived quantities.
         if (algoEnabled("Remine-from-scratch")) {
             beginMemArm();
             boolean poisoned = false;
@@ -1492,8 +1439,8 @@ public class AutomatedExperimentRunner {
                     col.log(skippedMetric("Remine-from-scratch", dsName, batchIdx, tag + "_INC"));
                     continue;
                 }
-                // Moi lo mot instance moi: mine lai tu dau nghia la KHONG giu bat cu trang
-                // thai nao cua lo truoc.
+                // A new instance per batch: mining from scratch keeps NO state from the
+                // previous batch.
                 final List<Sequence> snapshot = new ArrayList<>(dSoFar);
                 final double finalTotal = newTotal;
                 PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo rm =
@@ -1509,8 +1456,8 @@ public class AutomatedExperimentRunner {
                         null, () -> rm.prunedValueBound,
                         () -> rm.prelargeCount, () -> rm.uutValue, () -> rm.sftValue, rm::cancel);
                 attachAdaptive(mb, rm);
-                // Mine lai tu dau khong co khai niem rescan gia tang; de 0 thay vi 1 de
-                // cot rescan_count khong bi doc nham thanh "moc nay cung rescan moi lo".
+                // Mining from scratch has no incremental rescan; write 0 rather than 1 so
+                // rescan_count is not misread as "this reference rescans every batch".
                 mb.rescanCount = 0;
                 col.log(mb);
                 if (failedRun(mb)) poisoned = true;
@@ -1519,7 +1466,7 @@ public class AutomatedExperimentRunner {
         }
         forceFullGC();
 
-        // -------- Algorithm 3: Adaptive-Full (isolated scope) --------
+        // -------- Arm: Adaptive-Full (isolated scope) --------
         if (algoEnabled("Adaptive-Full")) {
             beginMemArm();
             PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp = new PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo(
@@ -1545,7 +1492,7 @@ public class AutomatedExperimentRunner {
                 if (delta.isEmpty()) continue;
                 double newTotal = rolling + sumUtility(delta);
                 int batchIdx = b + 1;
-                // LỚP PHÒNG THỦ 1: check RAM trước batch.
+                // Memory guard before the batch.
                 if (!poisoned && !memoryGuardOk("Adaptive-Full", dsName, tag + "_INC")) poisoned = true;
                 if (poisoned) {
                     col.log(skippedMetric("Adaptive-Full", dsName, batchIdx, tag + "_INC"));
@@ -1575,17 +1522,16 @@ public class AutomatedExperimentRunner {
     // RUN ONE ALGORITHM (used by SC1, SC3)
     // ==================================================================
     /**
-     * Gom TẤT CẢ metric riêng của Adaptive vào 1 chỗ (tránh bỏ sót khi thêm site mới):
-     * prunedIub (C3) + rescanCount (C5) + blocksRead/blocksSkipped (C4 Block-Index).
-     * Bỏ qua nếu metric null hoặc lần chạy thất bại (runtimeMs == -1).
+     * Copies ALL Adaptive-specific metrics in one place, so a new call site cannot miss one:
+     * trigger rule and adaptation state always; the work counters (prunedIub, rescanCount,
+     * blocksRead/blocksSkipped, ...) only when the run did not fail (runtimeMs != -1).
+     * Does nothing if m is null.
      */
     private static void attachAdaptive(ExperimentMetrics m, PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp) {
         if (m == null) return;
-        // Trang thai thich nghi duoc ghi KE CA tren mot luot that bai. Hang that bai la hang
-        // dang doc nhat trong ca bang, va day la ba cot noi duoc VI SAO no that bai: do lap
-        // cua CSDL, san da bi day len toi dau, va co phai nang may lan moi chiu dung. Truoc
-        // day chung bi bo qua cung voi tat ca metric khac, nen mot hang BUDGET hay OOM khong
-        // mang theo chan doan nao - dung luc no can nhat.
+        // The adaptation state is written EVEN on a failed run. These three columns say WHY
+        // it failed: the database's repetition, how far the floor was raised, and how many
+        // raises it took. A BUDGET or OOM row needs that diagnosis most.
         // The rule the instance actually ran with, read from the instance rather than from a
         // second default here that could drift from the algorithm's own. Under JOINT kappa and
         // delta0 have no effect, so they are written as NaN rather than as a value that looks
@@ -1597,41 +1543,40 @@ public class AutomatedExperimentRunner {
         m.repetition    = adp.repetition;
         m.slMinEff      = adp.slMinRatioEff;
         m.rescanRetries = adp.rescanRetries;
-        // Bo dem CONG thi khong: mot luot vo giua chung de lai so lieu do dang, va mot con
-        // so do dang lot vao ho so con te hon la khong co.
+        // The work counters are not: a run that broke off leaves partial counts, and a
+        // partial count in the record is worse than none.
         if (m.runtimeMs == -1) return;
-        m.exploredNodes = adp.exploredNodes;    // mẫu khai triển thật (sau cận PEU)
-        m.prunedIub     = adp.prunedIub;        // C3
-        m.rescanCount   = adp.rescanCount;      // C5
-        m.blocksRead    = adp.blocksReadCount;  // C4
-        m.blocksSkipped = adp.numBlocksSkipped; // C4
-        m.sigma2        = adp.sigmaDSquared;    // C2 (phương sai lô - thô, độc lập)
-        m.rho           = adp.rhoD;             // C2 (độ lệch - thô, độc lập)
-        // iau_max la dai luong QUYET DINH rescan (triggerQuantity > safetyBoundF), nhung
-        // cot nay ton tai ma khong ai dien: moi hang tu truoc den nay deu la 0.0, nen quyet
-        // dinh rescan khong hau kiem duoc tu ho so. sft_val co ghi, nhung no la ve kia cua
-        // phep so sanh chu khong phai dai luong duoc so.
-        m.iauMax        = adp.iauMaxAtDecision;   // gia tri TAI diem quyet dinh, truoc resetIau()
+        m.exploredNodes = adp.exploredNodes;    // patterns materialised (after the PEU bound)
+        m.prunedIub     = adp.prunedIub;        // IUB pruning
+        m.rescanCount   = adp.rescanCount;      // adaptive rescan
+        m.blocksRead    = adp.blocksReadCount;  // block index
+        m.blocksSkipped = adp.numBlocksSkipped; // block index
+        m.sigma2        = adp.sigmaDSquared;    // adaptive band: batch variance, raw
+        m.rho           = adp.rhoD;             // adaptive band: skew, raw
+        // iau_max is the quantity that DECIDES a rescan (triggerQuantity > safetyBoundF), so
+        // it is recorded to let each rescan decision be checked from the results. sft_val is
+        // the other side of that comparison, not the compared quantity.
+        m.iauMax        = adp.iauMaxAtDecision;   // value AT the decision, before resetIau()
         m.iauTightness  = adp.iauTightness;
         m.repetition    = adp.repetition;
         m.slMinEff      = adp.slMinRatioEff;
         m.rescanRetries = adp.rescanRetries;
-        // δ_D KHÔNG lưu (dẫn xuất = uut_val - lut_dyn)
+        // delta_D is not stored (derived: uut_val - lut_dyn)
     }
 
     /**
-     * Gom metric Pre-HUSPM: prunedPeu + prelarge + rescanCount + safetyBoundF→sft_val
-     * (map cận an toàn của Pre-HUSPM vào cột sft_val để SO TRỰC TIẾP với cận F của Adaptive).
+     * Copies Pre-HUSPM's metrics: prunedPeu, pre-large count, rescanCount, and safetyBoundF into
+     * sft_val (so Pre-HUSPM's safety bound compares DIRECTLY with Adaptive's bound F).
      */
     private static void attachPreHuspm(ExperimentMetrics m, PreHUSPMAlgorithm.PreHUSPMAlgo pre) {
         if (m == null || m.runtimeMs == -1) return;
-        m.exploredNodes        = pre.exploredNodes; // = candidateCount (materialize MỌI extension)
-        m.prunedPeu            = pre.prunedPEU; // Pre-HUSPM tỉa bằng SWU_proj (= PEU) đúng bài báo
+        m.exploredNodes        = pre.exploredNodes; // = candidateCount (materialises EVERY extension)
+        m.prunedPeu            = pre.prunedPEU; // pruning by SWU_proj (= PEU), as in Pre-HUSPM
         m.prelargePatternCount = pre.prelargeCount;
         m.rescanCount          = pre.rescanCount;
-        m.sftValue             = pre.safetyBoundF; // cận an toàn pre-large (so với Adaptive)
-        m.cubValue             = pre.bufValue;     // bộ đệm tích luỹ của Pre-HUSPM
-        // WP2.4 - ghi rõ biến thể nào đã sinh ra dòng này.
+        m.sftValue             = pre.safetyBoundF; // pre-large safety bound (compare with Adaptive)
+        m.cubValue             = pre.bufValue;     // Pre-HUSPM's accumulated buffer
+        // Record which variant produced this row.
         m.triggerRule          = (pre.variant == PreHUSPMAlgorithm.PreHUSPMAlgo.Variant.TSU)
                                  ? "tsud" : "swumax";
         m.kappa = 0; m.delta0 = 0; m.blockSize = 0;
@@ -1641,8 +1586,9 @@ public class AutomatedExperimentRunner {
     }
 
     /**
-     * Tong byte thread da cap phat. Tat dinh (khong phu thuoc lich GC), nen dung de bao
-     * cao ap luc cap phat tach roi khoi tap song. Tra -1 neu JVM khong ho tro.
+     * Total bytes allocated by a thread. Deterministic (independent of GC scheduling), so it
+     * reports allocation pressure separately from the live set. Returns -1 if the JVM does
+     * not support it.
      */
     private static long threadAllocatedBytes(long tid) {
         try {
@@ -1663,8 +1609,8 @@ public class AutomatedExperimentRunner {
 
     private static ExperimentMetrics runSingle(String algo, String dsName, List<Sequence> db,
                                                double totalUtil, double su, int iter, String tag) {
-        if (ADAPTIVE_ONLY && !algo.equals("Adaptive-Full")) return null; // chỉ chạy lại Adaptive
-        if (!algoEnabled(algo)) return null;   // -Dalgo.only: mot arm mot JVM (che do live)
+        if (ADAPTIVE_ONLY && !algo.equals("Adaptive-Full")) return null; // rerun Adaptive only
+        if (!algoEnabled(algo)) return null;   // -Dalgo.only: one arm per JVM
         if (skipRepeat(algo, dsName, tag, currentRepeat)) return null;
 
         endMemArm();   // a static mine is measured against the heap at the start of the call
@@ -1672,12 +1618,9 @@ public class AutomatedExperimentRunner {
         // Built before anything is measured, while there is memory to build it. If anything
         // below throws, this row is what gets logged, so a run that started always leaves one.
         //
-        // This used to return null, and SC1 and SC3 log only non-null rows. Pre-HUSPM on
-        // LEVIATHAN in the memory campaign reached the 120-minute limit; it has no cooperative
-        // cancel, so its worker kept running and kept the heap full, measure() returned an
-        // overtime row, and the first allocation after it - recording the outcome - threw
-        // OutOfMemoryError into this catch. The row vanished and nothing but a line on stderr
-        // said so.
+        // Do not return null on failure: SC1 and SC3 log only non-null rows. A baseline without
+        // cooperative cancel keeps running after a timeout and keeps the heap full, so the
+        // first allocation after measure() returns can throw OutOfMemoryError into this catch.
         final ExperimentMetrics failure = skippedMetric(algo, dsName, iter, tag);
         final String opOom = tag + "_OOM", opFailed = tag + "_FAILED";
         failure.seed = currentSeed;
@@ -1700,9 +1643,9 @@ public class AutomatedExperimentRunner {
                     return logged(m);
                 }
                 case "HUSP-SP": {
-                    // Thuat toan TINH, khong xu ly cap nhat gia tang, nen chi co mat o
-                    // SC1 va SC3. Dem giong het cac baseline khac: candidate_count truoc
-                    // moi phep tia, explored_nodes tai diem vao de quy.
+                    // A STATIC algorithm without incremental updates, so it appears only in
+                    // SC1 and SC3. Counted like the other baselines: candidate_count before
+                    // any pruning, explored_nodes at each recursion entry.
                     HUSPSPAlgorithm sp = new HUSPSPAlgorithm(totalUtil * su);
                     ExperimentMetrics m = measure(algo, dsName, iter, tag,
                             () -> sp.run(db),
@@ -1710,9 +1653,9 @@ public class AutomatedExperimentRunner {
                             null, null, null, null, null, null, sp::cancel);
                     if (m != null && m.runtimeMs != -1) {
                         m.prunedSwu = sp.prunedSWU;
-                        m.prunedIip = sp.prunedIIP;      // IIP theo RSU
-                        m.prunedPeu = sp.prunedPEU;      // nhanh dung boi can PEU
-                        m.prunedLar = sp.prunedEP;       // EP theo TRSU, dong gop rieng cua bai
+                        m.prunedIip = sp.prunedIIP;      // IIP by RSU
+                        m.prunedPeu = sp.prunedPEU;      // branches stopped by the PEU bound
+                        m.prunedLar = sp.prunedEP;       // EP by TRSU, HUSP-SP's own strategy
                         m.exploredNodes = sp.exploredNodes;
                     }
                     return logged(m);
@@ -1793,7 +1736,7 @@ public class AutomatedExperimentRunner {
     @FunctionalInterface interface DblSup  { double get(); }
     @FunctionalInterface interface BoolSup { boolean get(); }
 
-    /** Overload: gọi không cần adaptive supplier. */
+    /** Overload without the Adaptive suppliers. */
     private static ExperimentMetrics measure(String algo, String dataset, int iter, String opType,
                                              Task task,
                                              LongSup candidateCount, IntSup patternCount,
@@ -1802,7 +1745,7 @@ public class AutomatedExperimentRunner {
                 lutSup, cubSup, null, null, null, null, null, null, null);
     }
 
-    /** Overload: cũ - Adaptive supplier nhưng KHÔNG có cancelHook + 3 supplier mới. */
+    /** Overload with Adaptive suppliers but without the cancel hook and the pre-large/threshold suppliers. */
     private static ExperimentMetrics measure(String algo, String dataset, int iter, String opType,
                                              Task task,
                                              LongSup candidateCount, IntSup patternCount,
@@ -1813,21 +1756,23 @@ public class AutomatedExperimentRunner {
     }
 
     /**
-     * Chạy task trên worker thread riêng với TIMEOUT mặc định 60 PHÚT (cấu hình qua -Dtimeout.min).
+     * Runs the task on its own worker thread under TIMEOUT_MINUTES (default 120, set with
+     * -Dtimeout.min).
      *
-     * Đường đi:
-     *  * Tạo single-thread ExecutorService (daemon → không khoá JVM exit).
-     *  * Submit task; main thread chờ tối đa TIMEOUT_MS.
-     *  * Trường hợp COMPLETE: trả về metric bình thường với opType gốc.
-     *  * Trường hợp TIMEOUT: gọi cancelHook (signal cooperative cancellation cho Adaptive),
-     *      future.cancel(true) (interrupt worker), ghi opType "_OT", runtime_ms = -2.
-     *      Đọc partial counters nếu có thể (volatile read an toàn cho int/long).
-     *  * Trường hợp OOM/Exception: opType "_FAILED", runtime_ms = -1.
+     * Flow:
+     *  * Create a single-thread ExecutorService (daemon, so it cannot block JVM exit).
+     *  * Submit the task; the main thread waits at most TIMEOUT_MS.
+     *  * COMPLETE: return the metrics with the original opType.
+     *  * TIMEOUT: call cancelHook (cooperative cancellation for Adaptive), future.cancel(true)
+     *      (interrupt the worker), opType "_OT", runtime_ms = -2. Partial counters are read
+     *      where possible.
+     *  * Failure: opType "_OOM", "_BUDGET" or "_FAILED", runtime_ms = -1.
      *
-     * Sentinel runtime_ms:
-     *    >=0 : OK (thực tế ms)
-     *    -1  : FAILED (OOM hoặc Exception khác)
-     *    -2  : OT (Overtime - vượt TIMEOUT_MINUTES)
+     * runtime_ms sentinels:
+     *    >=0 : OK (milliseconds)
+     *    -1  : failed (OOM, pattern budget exceeded, or another exception)
+     *    -2  : overtime (over TIMEOUT_MINUTES)
+     *    -3  : completed in live memory mode (timing invalid; see wall_ms_perturbed)
      */
     private static ExperimentMetrics measure(String algo, String dataset, int iter, String opType,
                                              Task task,
@@ -1841,18 +1786,19 @@ public class AutomatedExperimentRunner {
         long heapBefore = rt.totalMemory() - rt.freeMemory();
         long start = System.currentTimeMillis();
 
-        // === BO LAY MAU BO NHO ===
+        // === MEMORY SAMPLER ===
         //
-        // used : dinh used-heap moi 50 ms, KE CA rac chua thu (hanh vi cu).
-        // live : ep MOT lan thu gom day du roi doc used-heap NGAY SAU, cach nhau
-        //        max(MEM_SAMPLE_MS, 4 x thoi gian lan thu gom truoc).
-        //        Dinh cua cac lan doc ay la tap song, khong phu thuoc lich GC hay -Xmx.
-        //        Day la CAN DUOI cua dinh tap song that: mot dinh xuat hien va bien mat
-        //        giua hai moc se khong duoc thay. Khoang lay mau chan sai so do.
+        // used : peak used heap every 50 ms, including uncollected garbage.
+        // live : force ONE full collection, then read used heap RIGHT AFTER, at intervals of
+        //        max(MEM_SAMPLE_MS, 4 x the previous collection's duration).
+        //        The peak of these readings is the live set, independent of GC scheduling
+        //        and -Xmx. It is a LOWER BOUND on the true live-set peak: a peak that comes
+        //        and goes between two samples is not seen. The interval bounds that error.
         //
-        // Ca hai deu KHONG cap phat trong vong lap (doc native + atomic) nen an toan ca
-        // khi heap gan day. Neu heap can, thread co the bi nem OOM tai safepoint; nuot im
-        // lang vi in stack-trace se lai cap phat va gay OOM lan hai.
+        // Neither mode allocates in the loop (native reads and atomics), so both are safe on
+        // a nearly full heap. If the heap is exhausted the thread may get an OOM at a
+        // safepoint; it is swallowed silently because printing a stack trace would allocate
+        // and cause a second OOM.
         final java.util.concurrent.atomic.AtomicLong peakUsed =
                 new java.util.concurrent.atomic.AtomicLong(heapBefore);
         final java.util.concurrent.atomic.AtomicLong peakLive =
@@ -1897,19 +1843,20 @@ public class AutomatedExperimentRunner {
         heapSampler.setDaemon(true);
         heapSampler.start();
 
-        // Byte da cap phat cua thread khai phá. Tat dinh, khong phu thuoc lich GC, nen no
-        // do "thuat toan nay cap phat nhieu hay it" ma khong tron lan voi thoi diem GC.
-        // Phai doc NGAY TRONG worker thread truoc khi no ket thuc: sau shutdownNow thread
-        // da chet va getThreadAllocatedBytes(tid) tra -1.
+        // Bytes allocated by the mining thread. Deterministic and independent of GC scheduling,
+        // so it measures how much the algorithm allocates without mixing in GC timing.
+        // Must be read INSIDE the worker thread before it ends: after shutdownNow the thread
+        // is dead and getThreadAllocatedBytes(tid) returns -1.
         final long[] allocStart = {-1L};
         final long[] allocEnd   = {-1L};
 
-        // Pre-build runId NGAY BÂY GIỜ (heap còn khỏe) để KHỎI phải concat chuỗi lúc
-        // dựng metric sau OOM (heap gần đầy do CP-Tree baseline → concat có thể OOM main).
+        // Build runId NOW, while the heap is healthy, so no string concatenation is needed
+        // when filling the metrics after an OOM (a nearly full heap can make concat OOM too).
         final String preRunId = algo + "_" + dataset + "_" + opType + "_" + iter;
-        // PRE-ALLOCATE metric + các chuỗi opType NGAY (heap còn khỏe) → toàn bộ post-processing
-        // CHỈ gán field nguyên thuỷ/tham chiếu, KHÔNG `new`/concat → KHÔNG thể OOM main-thread
-        // ngay cả khi worker để heap gần đầy (vd CP-tree IncUSP-Miner+ tích luỹ qua các lô).
+        // PRE-ALLOCATE the metrics object and opType strings NOW. All post-processing only
+        // assigns primitive or reference fields, with no `new` or concatenation, so it cannot
+        // OOM the main thread even when the worker leaves the heap nearly full (e.g. the
+        // IncUSP-Miner+ CP-tree growing across batches).
         final ExperimentMetrics m = new ExperimentMetrics();
         m.runId = preRunId; m.algorithm = algo; m.dataset = dataset; m.iteration = iter;
         final String OPT_OT = opType + "_OT", OPT_BUDGET = opType + "_BUDGET",
@@ -1922,12 +1869,13 @@ public class AutomatedExperimentRunner {
         String errMsg = null;
         final Throwable[] thrown = new Throwable[1];
 
-        // Daemon thread → orphan execution không khoá JVM exit nếu timeout.
+        // Daemon thread: an orphaned worker after a timeout cannot block JVM exit.
         ExecutorService exec = null;
         Future<?> future = null;
-        // OUTER GUARD: bọc TOÀN BỘ thân measure → mọi OOM/lỗi MAIN-THREAD ở BẤT KỲ điểm cấp
-        // phát nào (submit / future.get / build metric / shutdown ...) rơi vào catch cuối →
-        // trả metric `m` (đã pre-allocate, alloc-free) → KHÔNG propagate làm SẬP experiment.
+        // OUTER GUARD around the WHOLE body of measure(): any main-thread OOM or error at ANY
+        // allocation point (submit, future.get, filling metrics, shutdown, ...) lands in the
+        // final catch, which returns the pre-allocated `m` without allocating, instead of
+        // propagating and ending the run.
         try {
         exec = Executors.newSingleThreadExecutor(r -> {
             Thread t = new Thread(r, "algo-" + algo + "-" + dataset);
@@ -1941,7 +1889,7 @@ public class AutomatedExperimentRunner {
             try { task.run(); }
             catch (Throwable t) { thrown[0] = t; }
             finally {
-                // Doc trong finally de van co so khi task bi huy hoac nem loi.
+                // Read in finally so there is a value even if the task is cancelled or throws.
                 long a = threadAllocatedBytes(tid);
                 if (a >= 0) allocEnd[0] = a;
             }
@@ -1952,27 +1900,27 @@ public class AutomatedExperimentRunner {
         } catch (TimeoutException te) {
             timedOut = true;
             errMsg = "OT (>" + TIMEOUT_MINUTES + " min)";
-            // 1. Signal cooperative cancellation (Adaptive sẽ thoát đệ quy gần ngay).
+            // 1. Signal cooperative cancellation (Adaptive leaves its recursion almost at once).
             if (cancelHook != null) {
                 try { cancelHook.run(); } catch (Throwable ignored) {}
             }
-            // 2. Interrupt thread (best-effort cho baselines không có cancel flag).
+            // 2. Interrupt the thread (best effort for baselines without a cancel flag).
             future.cancel(true);
-            // 3. Chờ thoát êm tối đa 5s; nếu orphan vẫn chạy, ta vẫn move on.
+            // 3. Wait up to 5 s for a clean exit; if the orphan keeps running, move on anyway.
             try { future.get(5, TimeUnit.SECONDS); } catch (Throwable ignored) {}
         } catch (InterruptedException ie) {
             Thread.currentThread().interrupt();
             failed = true; errMsg = "Interrupted";
         } catch (ExecutionException ee) {
-            // Bao bọc khi task không catch - hiếm vì lambda đã try/catch.
+            // Only when the task did not catch - rare, since the lambda already catches.
             Throwable cause = ee.getCause();
             if (cause != null) thrown[0] = cause;
         } catch (Throwable mainErr) {
-            // CÔ LẬP LỖI MAIN-THREAD (đặc biệt OutOfMemoryError): khi worker nhồi heap
-            // gần đầy (vd CP-tree IncUSP-Miner+ tích luỹ qua các lô), chính future.get()
-            // ở MAIN cấp Node-chờ trên heap đầy → ném OOM. TRƯỚC ĐÂY KHÔNG bắt → propagate
-            // → SẬP toàn experiment. Nay: bắt → đánh dấu fail/oom → GC → trả metric DNF,
-            // experiment CHẠY TIẾP (poison thuật toán này, giải phóng heap ở cuối scope).
+            // ISOLATE MAIN-THREAD ERRORS (especially OutOfMemoryError): when the worker fills
+            // the heap (e.g. the IncUSP-Miner+ CP-tree growing across batches), future.get()
+            // itself allocates a wait node on the MAIN thread and can throw OOM. Catch it, mark
+            // the call failed/OOM, GC, and return a did-not-finish row so the run continues
+            // (the caller poisons this algorithm; its heap is freed at the end of its scope).
             failed = true;
             if (mainErr instanceof OutOfMemoryError) { oom = true; errMsg = "MAIN-OOM"; }
             else { errMsg = "MAIN-" + mainErr.getClass().getSimpleName(); }
@@ -1982,35 +1930,35 @@ public class AutomatedExperimentRunner {
 
         long runtime = System.currentTimeMillis() - start;
 
-        // Phân loại thrown[0] (OOM vs Exception khác).
-        // QUAN TRỌNG: nếu timedOut, worker thread sẽ catch CancellationSignal mà
-        // ta CHỦ ĐỘNG kích hoạt qua cancelHook → thrown[0] = CancellationSignal.
-        // Không được treat đây là FAILED - phải giữ semantic OT.
+        // Classify thrown[0] (OOM vs other exceptions).
+        // IMPORTANT: on timeout the worker catches the CancellationSignal that the cancelHook
+        // raised on purpose, so thrown[0] = CancellationSignal. That must NOT be treated as
+        // FAILED; it stays an overtime.
         if (thrown[0] != null && !timedOut) {
             Throwable t = thrown[0];
             failed = true;
             if (t instanceof OutOfMemoryError) {
-                // === OOM RECOVERY AN TOÀN ===
-                // KHÔNG concat chuỗi (t.getMessage()) ở đây: heap đang gần đầy do worker
-                // (vd CP-Tree của IncUSP-Miner+) → string-concat sẽ làm CHÍNH main thread
-                // OOM → sập experiment (đúng lỗi đã gặp ở line 918 cũ). Dùng hằng số +
-                // GC NGAY để giải phóng rác transient trước khi làm bất cứ allocation nào.
+                // === SAFE OOM RECOVERY ===
+                // Do NOT concatenate strings (t.getMessage()) here: the worker has left the heap
+                // nearly full (e.g. the IncUSP-Miner+ CP-tree), so concatenation can OOM the main
+                // thread itself and end the run. Use constants and GC AT ONCE to free transient
+                // garbage before any allocation.
                 oom = true;
                 errMsg = "OOM";
                 forceFullGC();
             } else if (t instanceof PreHUSPMAdaptiveAlgorithm.PatternBudgetExceeded) {
-                budgetExceeded = true;        // ngưỡng quá thấp → quá nhiều mẫu (DNF, không phải OOM cứng)
+                budgetExceeded = true;        // threshold too low, too many patterns (did not finish, not a hard OOM)
                 errMsg = "BUDGET";
                 forceFullGC();
             } else if (t instanceof StackOverflowError) {
-                oom = true; // gộp nhóm "tài nguyên" - đệ quy quá sâu
+                oom = true; // counted as a resource failure: recursion too deep
                 errMsg = "STACKOVERFLOW";
                 forceFullGC();
             } else {
                 errMsg = "EXC:" + t.getClass().getSimpleName();
                 forceFullGC();
             }
-            // Logging bọc try/catch: nếu vẫn OOM khi build log, NUỐT để main thread sống.
+            // Logging is wrapped in try/catch: an OOM while building the message is swallowed so the main thread survives.
             try { System.err.println("[" + algo + "/" + dataset + "/" + opType + "] " + errMsg); }
             catch (Throwable ignored) {}
         }
@@ -2020,19 +1968,19 @@ public class AutomatedExperimentRunner {
             forceFullGC();
         }
 
-        // Shutdown executor - orphan thread (nếu còn) là daemon, sẽ tự chết khi JVM exit.
+        // Shut down the executor; an orphaned thread, if any, is a daemon and dies with the JVM.
         exec.shutdownNow();
         try { exec.awaitTermination(2, TimeUnit.SECONDS); } catch (InterruptedException ignored) {}
 
-        // Dừng sampler; peakUsed = đỉnh heap THẬT đã ghi trong toàn bộ window chạy.
+        // Stop the sampler; peakUsed is the peak heap sampled over the whole run.
         sampling.set(false); heapSampler.interrupt();
 
         long heapAfter = rt.totalMemory() - rt.freeMemory();
 
-        // m đã pre-allocate ở đầu hàm (heap khỏe) → đây chỉ FILL field, KHÔNG cấp phát.
+        // m was pre-allocated at the top while the heap was healthy; this only FILLS fields, with no allocation.
         long realRuntime = timedOut ? -2 : (failed ? -1 : runtime);
-        // Cau hinh cua lan do nay. attachPreHuspm ghi de mot so cot cho baseline
-        // khong co khai niem tuong ung.
+        // Configuration of this measurement. attachPreHuspm overwrites some columns for a
+        // baseline without the corresponding concept.
         m.seed = currentSeed;
         m.repeat = currentRepeat;
         m.blockSize = DEFAULT_BLOCK_SIZE;
@@ -2041,11 +1989,11 @@ public class AutomatedExperimentRunner {
         m.triggerRule = ADAPT_TRIGGER;
         m.memMode = MEM_MODE;
         if (MEM_LIVE) {
-            // Ep GC lam hong thoi gian. Xuat -3 de khong ai ve nham no thanh so hieu nang;
-            // gia tri that van duoc giu o wall_ms_perturbed.
+            // Forced GC invalidates timing. Write -3 so nobody plots it as a performance
+            // figure; the wall time is kept in wall_ms_perturbed.
             m.runtimeMs = (realRuntime < 0) ? realRuntime : -3;
             m.wallMsPerturbed = runtime;
-            // Doc cuoi cung sau khi worker da dung: day moi la tap song thuc su con lai.
+            // Final reading after the worker has stopped: the live set that actually remains.
             System.gc();
             long finalLive = rt.totalMemory() - rt.freeMemory();
             gcCount.incrementAndGet();
@@ -2057,38 +2005,38 @@ public class AutomatedExperimentRunner {
         } else {
             m.runtimeMs = realRuntime;
         }
-        // Peak THẬT: max(đỉnh-mẫu, heapAfter) trừ baseline → footprint thật của thuật toán.
-        // CHÚ Ý: ở chế độ "used" đại lượng này gồm cả rác chưa thu - xem ExperimentMetrics.
+        // Peak: max(sampled peak, heapAfter) minus the baseline.
+        // NOTE: in "used" mode this includes uncollected garbage - see ExperimentMetrics.
         long peakHeap = Math.max(peakUsed.get(), heapAfter);
         m.peakHeapMb = Math.max(0, (peakHeap - heapBefore)) / (1024 * 1024);
         if (allocStart[0] >= 0 && allocEnd[0] >= allocStart[0]) {
             m.allocatedMb = (allocEnd[0] - allocStart[0]) / (1024 * 1024);
         } else {
-            m.allocatedMb = -1;   // khong doc duoc (vd worker bi huy giua chung)
+            m.allocatedMb = -1;   // unavailable (e.g. the worker was cancelled midway)
         }
-        // Trên TIMEOUT vẫn cố đọc partial counters - int/long read an toàn,
-        // worst case là giá trị stale (chấp nhận được).
-        boolean readCounters = !failed; // OK hoặc timeout đều có partial state
+        // On TIMEOUT the partial counters are still read; int/long reads are safe and
+        // at worst stale, which is acceptable.
+        boolean readCounters = !failed; // OK and timeout both have (partial) state
         m.candidateCount = (readCounters && candidateCount != null) ? safeLong(candidateCount) : 0;
         m.totalPatternsFound = (readCounters && patternCount != null) ? safeInt(patternCount) : 0;
         m.lutDynValue = (readCounters && lutSup != null) ? safeDbl(lutSup) : 0;
         m.cubValue   = (readCounters && cubSup != null) ? safeDbl(cubSup) : 0;
         m.cubTriggeredRescan = readCounters && rescanSup != null && safeBool(rescanSup);
         m.prunedValueBound     = (readCounters && prunedBound != null) ? safeLong(prunedBound) : 0;
-        // Pre-large & ngưỡng tuyệt đối (đọc an toàn; null → 0 cho thuật toán không hỗ trợ)
+        // Pre-large count and absolute thresholds (safe reads; null -> 0 for algorithms without them)
         m.prelargePatternCount = (readCounters && prelargeCount != null) ? safeInt(prelargeCount) : 0;
         m.uutValue             = (readCounters && uutSup != null) ? safeDbl(uutSup) : 0;
         m.sftValue             = (readCounters && sftSup != null) ? safeDbl(sftSup) : 0;
-        // opType phản ánh rõ loại kết thúc để phân tích CSV: _OT (timeout),
-        // _OOM (hết RAM), _BUDGET (quá nhiều mẫu), _FAILED (lỗi khác), hoặc gốc (OK).
+        // opType records how the call ended: _OT (timeout), _OOM (out of memory),
+        // _BUDGET (too many patterns), _FAILED (other error), or unchanged (OK).
         if (timedOut)            m.opType = OPT_OT;
         else if (budgetExceeded) m.opType = OPT_BUDGET;
         else if (oom)            m.opType = OPT_OOM;
         else if (failed)         m.opType = OPT_FAILED;
         else                     m.opType = opType;
 
-        // Bọc printf trong try/catch: format string cũng allocate → trên heap đầy có
-        // thể OOM. Nuốt để main thread sống (metric m đã sẵn sàng để caller log).
+        // printf is wrapped in try/catch: formatting allocates and can OOM on a full heap.
+        // Swallow it so the main thread survives; m is ready for the caller to log.
         try {
             if (timedOut) {
                 System.out.printf("[%s/%s/%s#%d] TIMEOUT after %dms (>%d min) cand=%d pat=%d%n",
@@ -2105,8 +2053,8 @@ public class AutomatedExperimentRunner {
         } catch (Throwable ignored) {}
         return m;
         } catch (Throwable fatal) {
-            // OOM/lỗi MAIN-THREAD bất kỳ trong measure → trả `m` đã pre-allocate (KHÔNG cấp
-            // phát mới ⇒ catch không thể OOM). Dừng worker + GC để pha/thuật toán kế có heap.
+            // Any main-thread OOM or error in measure(): return the pre-allocated `m` (no new
+            // allocation, so this catch cannot OOM). Stop the worker and GC so the next step has heap.
             try { if (future != null) future.cancel(true); } catch (Throwable ig) {}
             try { if (exec != null) exec.shutdownNow(); } catch (Throwable ig) {}
             try { if (exec != null) exec.awaitTermination(3, TimeUnit.SECONDS); } catch (Throwable ig) {}
@@ -2128,12 +2076,11 @@ public class AutomatedExperimentRunner {
     private static boolean safeBool(BoolSup s) { try { return s.get(); } catch (Throwable t) { return false; } }
 
     /**
-     * Aggressive GC để thu hồi heap sau khi 1 thuật toán OOM hoặc trước khi
-     * chuyển sang thuật toán tiếp theo trong cùng 1 scenario. Nhiều cycle
-     * gc() cách nhau ngắn buộc HotSpot xử lý hết soft/weak refs và promote
-     * young → old. Lưu ý: System.gc() là hint, nhưng khi heap đang gần max,
-     * JVM gần như luôn honor; đặc biệt cần thiết ngay sau OOM.
-     * (Không gọi System.runFinalization() vì đã deprecated từ Java 18+.)
+     * Aggressive GC to reclaim the heap after an algorithm's OOM, or before moving to the
+     * next algorithm in a scenario. Several gc() cycles a short time apart make HotSpot
+     * clear soft and weak references and promote young to old. System.gc() is a hint, but
+     * the JVM almost always honours it when the heap is near its maximum, which matters most
+     * right after an OOM. System.runFinalization() is not called (deprecated since Java 18).
      */
     private static void forceFullGC() {
         for (int i = 0; i < 3; i++) {
@@ -2142,34 +2089,34 @@ public class AutomatedExperimentRunner {
         }
     }
 
-    // === LỚP PHÒNG THỦ 1: CẢM BIẾN RAM ===
-    // Tránh Global OOM làm sập Main Thread khi baseline (vd IncUSP-Miner+ với CP-Tree
-    // persistent) ăn dần RAM qua từng batch. Available = maxMemory - used
-    // (= freeMemory + phần chưa cấp phát). Nếu < 10% max → KHÔNG an toàn để chạy
-    // batch tiếp theo (nguy cơ heap đầy → main thread OOM lúc recovery).
+    // === MEMORY GUARD ===
+    // Prevents a global OOM from killing the main thread when a baseline (e.g. IncUSP-Miner+
+    // with its persistent CP-tree) consumes memory batch by batch. Available = maxMemory - used
+    // (= freeMemory + the part not yet committed). Below 10% of max it is NOT safe to run the
+    // next batch (the heap could fill and the main thread OOM during recovery).
     private static final double MEM_SAFE_FRACTION = 0.10;
     private static boolean isMemorySafe() {
         Runtime rt = Runtime.getRuntime();
         long max = rt.maxMemory();
         long used = rt.totalMemory() - rt.freeMemory();
-        long available = max - used; // free trong heap đã cấp + phần còn có thể cấp
+        long available = max - used; // free in the committed heap + what can still be committed
         return available > (long) (max * MEM_SAFE_FRACTION);
     }
 
     /**
-     * Guard trước mỗi batch: forceFullGC rồi check isMemorySafe.
-     * Trả true nếu AN TOÀN để chạy; false nếu nên skip (đã in cảnh báo).
+     * Guard before each batch: forceFullGC, then isMemorySafe.
+     * Returns true if it is SAFE to run; false if the batch should be skipped (a warning is printed).
      */
     private static boolean memoryGuardOk(String algo, String dataset, String op) {
         forceFullGC();
         if (isMemorySafe()) return true;
         Runtime rt = Runtime.getRuntime();
-        System.err.println("OOM Warning: Bỏ qua lô này để bảo vệ Main Thread [" + algo + "/" + dataset
+        System.err.println("OOM Warning: skipping this batch to protect the main thread [" + algo + "/" + dataset
                 + "/" + op + "] availableMB=" + ((rt.maxMemory() - (rt.totalMemory() - rt.freeMemory())) / 1048576));
         return false;
     }
 
-    /** Tạo metric "SKIPPED" cho ops bị bỏ qua sau khi algorithm bị poisoned (đã OOM trước đó). */
+    /** Builds a "SKIPPED" row for an operation skipped because its algorithm is poisoned (an earlier call failed). */
     private static ExperimentMetrics skippedMetric(String algo, String dataset, int iter, String opType) {
         ExperimentMetrics m = new ExperimentMetrics();
         m.runId = algo + "_" + dataset + "_" + opType + "_" + iter;
@@ -2192,8 +2139,8 @@ public class AutomatedExperimentRunner {
      * D_init for a database: an absolute count from Yan et al. Table 16, not a fraction.
      *
      * Every scenario takes D_init from here, so SC1, SC2, SC5, SC6 and SC7 all cut the
-     * database at the same place. A reviewer comparing two of our figures sees one
-     * definition; the batching study in SC5 varies only how finely the rest is delivered.
+     * database at the same place and share one definition; SC5 varies only how finely the
+     * rest is delivered.
      */
     private static List<Sequence> dInitFor(DatasetConfig ds, List<Sequence> all) {
         if (all.isEmpty()) return Collections.emptyList();
@@ -2289,16 +2236,15 @@ public class AutomatedExperimentRunner {
         // units left over by rounding going to the largest fractional parts (ties to the lower
         // index).
         //
-        // The previous rule floored every share and handed the remainder out from the front.
-        // That treats the two ends of the stream differently: INCREASING has its small batches
-        // at the front, where the remainder lands, and DECREASING has them at the back, where
-        // it does not. On SIGN at K = 100, DECREASING left ten batches empty and INCREASING
-        // none, and the arms skip an empty batch without a word, so "DECREASING, K = 100" was
-        // ninety increments against a hundred - a difference in K passed off as a difference
-        // in strategy, in the one scenario built to compare strategies.
+        // Do not floor every share and hand the remainder out from the front. That treats the
+        // two ends of the stream differently: INCREASING has its small batches at the front,
+        // where the remainder lands, and DECREASING has them at the back, where it does not.
+        // On SIGN at K = 100 that leaves ten DECREASING batches empty and no INCREASING ones,
+        // and the arms skip an empty batch silently, so a difference in K would pass for a
+        // difference in strategy.
         //
-        // EVEN splits come out exactly as they did before, batch for batch, on every database
-        // the campaign measures, so SC2 and SC7 are unaffected.
+        // For EVEN splits this rule gives the same batches as floor-and-remainder on every
+        // database the campaign measures, so SC2 and SC7 are unaffected.
         int[] sizes = new int[k];
         if (n >= k) {
             int m = n - k;

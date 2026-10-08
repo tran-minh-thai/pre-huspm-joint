@@ -1,9 +1,6 @@
 #!/usr/bin/env python3
 """Aggregate repeated runs into mean +/- standard deviation.
 
-Both reviewers asked for this: every configuration in the submitted results was run
-once, so no runtime or memory figure carried any statement of its own reliability.
-
 Two sources of variation are kept apart, because they answer different questions.
 
     repeat  reruns of an identical configuration. This measures JIT and GC noise
@@ -136,7 +133,7 @@ def main():
         try:
             shown = os.path.relpath(path)
         except ValueError:
-            shown = path          # khac o dia tren Windows
+            shown = path          # different drive on Windows
         print(shown)
         print(f"  {len(rows)} rows, {len(groups)} configurations, "
               f"repeat values seen: {sorted(reps) if reps != {''} else 'column absent'}")

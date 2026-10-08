@@ -8,23 +8,23 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * Thuật toán Đối chứng: IncUSP-Miner+ (ACM TIST 2018)
- * Đã sửa đổi TSU Bounding theo ĐÚNG Định nghĩa 16 (2-case condition).
- * - Theo dõi candidateCount (số lượng node ứng viên sinh ra).
- * - Theo dõi prunedTSU (số lần ứng viên bị cắt bỏ bởi cận TSU).
+ * Baseline: IncUSP-Miner+ (Wang and Huang, ACM TIST 2018).
+ * The TSU bound follows Definitions 15 and 16 of Wang and Huang (two cases for l-sequences).
+ * - candidateCount: number of candidate nodes generated.
+ * - prunedTSU: number of candidates pruned by the TSU bound.
  */
 public class IncUSPMinerPlusAlgorithm {
 
     public double Su;
     public double currentMinUtil;
-    public int maxDepth = 1000; // Chỉ là chốt an toàn chống tràn stack - không thay đổi logic baseline
+    public int maxDepth = 1000; // safety cap against stack overflow; not part of the baseline logic
 
     // ========================================================================
-    // BIẾN LƯU TRỮ CHỈ SỐ THỰC NGHIỆM (Metrics)
+    // MEASUREMENT COUNTERS
     // ========================================================================
     public int patternCount = 0;
     public long candidateCount = 0;
-    public long exploredNodes = 0; // Số mẫu THỰC SỰ khai triển (đệ quy vào) - đo hiệu quả tỉa
+    public long exploredNodes = 0; // recursion entries, counted before the node-level bound check
     public long prunedTSU = 0;
 
     public Map<Pattern, Double> largeMap = new HashMap<>();
@@ -34,7 +34,7 @@ public class IncUSPMinerPlusAlgorithm {
     }
 
     // ========================================================================
-    // CẤU TRÚC DỮ LIỆU CỦA INCUSP-MINER+
+    // INCUSP-MINER+ DATA STRUCTURES
     // ========================================================================
     static class Instance {
         int itemsetIdx, itemIdx;
@@ -51,9 +51,9 @@ public class IncUSPMinerPlusAlgorithm {
         int seqId;
         List<Instance> instances = new ArrayList<>();
 
-        double exactUtility = 0; // u(alpha, s) - Utility tốt nhất
+        double exactUtility = 0; // u(alpha, s) - best utility over the instances
         double peu = 0;          // PEU(alpha, s)
-        double tsu = 0;          // TSU của tracker này (tính theo Định nghĩa 16)
+        double tsu = 0;          // TSU of this tracker (Definitions 15 and 16)
 
         public Tracker(int id) {
             this.seqId = id;
@@ -61,16 +61,16 @@ public class IncUSPMinerPlusAlgorithm {
 
         public void addInstance(Instance inst, Sequence seq) {
             instances.add(inst);
-            // Cập nhật exactUtility
+            // Update exactUtility
             if (inst.utility > exactUtility) exactUtility = inst.utility;
 
-            // Cập nhật PEU cho prefix này (để dự phòng cho case 2 của TSU)
+            // Update the PEU of this prefix (used by case 2 of the TSU of its extensions)
             double currentPeu = inst.utility + seq.getRestUtility(inst.itemsetIdx, inst.itemIdx);
             if (currentPeu > peu) peu = currentPeu;
         }
 
         /**
-         * CHÍNH XÁC ĐỊNH NGHĨA 16 CỦA BÀI BÁO INCUSP-MINER+
+         * TSU(t, s) as in Definitions 15 and 16 of Wang and Huang.
          */
         public void finalizeTSU(Tracker parentTracker, Sequence seq) {
             if (instances.isEmpty()) {
@@ -78,24 +78,24 @@ public class IncUSPMinerPlusAlgorithm {
                 return;
             }
 
-            // Trường hợp 1-item (Định nghĩa 15)
+            // 1-sequence (Definition 15)
             if (parentTracker == null) {
                 Instance firstInst = instances.get(0);
                 this.tsu = firstInst.utility + seq.getRestUtility(firstInst.itemsetIdx, firstInst.itemIdx);
             }
-            // Trường hợp l-sequence (Định nghĩa 16: Phân nhánh 2 case)
+            // l-sequence (Definition 16: two cases)
             else {
                 Instance parentFirstInst = parentTracker.instances.get(0);
 
-                // Phép thử: Vị trí đầu tiên của prefix CÓ PHẢI là vị trí mang lại utility lớn nhất không?
-                // epsilon 1e-6 để tránh sai số dấu phẩy động trong Java
+                // Test: does the first position of the prefix carry its largest utility?
+                // The 1e-6 tolerance absorbs floating-point rounding.
                 if (Math.abs(parentTracker.exactUtility - parentFirstInst.utility) < 1e-6) {
                     // Case 1: TSU = u(alpha, a_p1, s) + u(i, p1, s) + ru(i, p1, s)
-                    // (Lưu ý: instances.get(0).utility chính là tổng u(alpha, a_p1) + u(i, p1))
+                    // (instances.get(0).utility is taken as u(alpha, a_p1) + u(i, p1))
                     Instance firstInst = instances.get(0);
                     this.tsu = firstInst.utility + seq.getRestUtility(firstInst.itemsetIdx, firstInst.itemIdx);
                 } else {
-                    // Case 2: Trở về dùng PEU của parent
+                    // Case 2: fall back to the PEU of the parent
                     this.tsu = parentTracker.peu;
                 }
             }
@@ -128,10 +128,11 @@ public class IncUSPMinerPlusAlgorithm {
     Map<Integer, Sequence> globalDB = new HashMap<>();
 
     /**
-     * Giải phóng NGAY cấu trúc nặng (CP-tree + globalDB) khi thuật toán không thể tiếp
-     * (OOM/poison ở pha gia tăng). CP-tree IncUSP tích luỹ qua các lô → có thể chiếm
-     * nhiều GB; nếu không thả ngay, các cấp phát main-thread kế tiếp (log/snapshot) sẽ
-     * tiếp tục OOM. Gọi xong nên forceFullGC ở caller để thu hồi heap.
+     * Releases the large structures (CP-tree and globalDB) at once when the algorithm cannot
+     * continue (for example after an OutOfMemoryError in an incremental batch). The CP-tree
+     * grows across batches and can occupy several GB; unless it is released, the following
+     * allocations on the main thread (logging, snapshots) also run out of memory. The caller
+     * should force a full GC afterwards to reclaim the heap.
      */
     public void releaseState() {
         root = null;
@@ -140,10 +141,10 @@ public class IncUSPMinerPlusAlgorithm {
     }
 
     // ========================================================================
-    // LÕI THUẬT TOÁN (KHỞI TẠO VÀ GIA TĂNG)
+    // CORE (INITIAL AND INCREMENTAL MINING)
     // ========================================================================
     public void runInitialMining(List<Sequence> dInit, double currentTotalUtility) {
-        // Reset state TRƯỚC khi bắt đầu để 1-item candidate được đếm đầy đủ.
+        // Reset state BEFORE starting so every 1-item candidate is counted.
         patternCount = 0;
         candidateCount = 0;
         exploredNodes = 0;
@@ -168,10 +169,10 @@ public class IncUSPMinerPlusAlgorithm {
             }
         }
 
-        // ĐẾM CÔNG BẰNG (Sinh ra là đếm): MỌI 1-item sinh ra, TRƯỚC khi lọc bằng TSU.
+        // Fair counting (a candidate counts when generated): every 1-item, BEFORE the TSU filter.
         candidateCount += l1Trackers.size();
 
-        // Chốt TSU cho các phần tử 1-item
+        // Finalize the TSU of the 1-items
         for (TrackerList tl : l1Trackers.values()) {
             for (Tracker t : tl.trackers.values()) {
                 t.finalizeTSU(null, globalDB.get(t.seqId));
@@ -183,7 +184,7 @@ public class IncUSPMinerPlusAlgorithm {
             double aggTsu = 0;
             for (Tracker t : tl.trackers.values()) aggTsu += t.tsu;
             if (aggTsu < currentMinUtil) {
-                prunedTSU++; // Loại 1-item ngay, không lưu vào CPTree
+                prunedTSU++; // drop the 1-item here; it is not stored in the CP-tree
                 continue;
             }
             Pattern p = new Pattern(entry.getKey());
@@ -219,10 +220,10 @@ public class IncUSPMinerPlusAlgorithm {
             }
         }
 
-        // ĐẾM CÔNG BẰNG (Sinh ra là đếm): MỌI 1-item lô gia tăng sinh ra, TRƯỚC khi lọc bằng TSU.
+        // Fair counting: every 1-item generated from the batch, BEFORE the TSU filter.
         candidateCount += deltaL1Trackers.size();
 
-        // Chốt TSU cho 1-item trong deltaD
+        // Finalize the TSU of the 1-items in deltaD
         for (TrackerList tl : deltaL1Trackers.values()) {
             for (Tracker t : tl.trackers.values()) {
                 t.finalizeTSU(null, globalDB.get(t.seqId));
@@ -245,7 +246,7 @@ public class IncUSPMinerPlusAlgorithm {
     }
 
     // ========================================================================
-    // HÀM ĐỆ QUY (MỞ RỘNG VÀ CẮT TỈA TSU)
+    // RECURSION (EXTENSION AND TSU PRUNING)
     // ========================================================================
     private void expandNode(CPTreeNode node, List<Sequence> db) {
         expandNode(node, db, 1);
@@ -253,13 +254,13 @@ public class IncUSPMinerPlusAlgorithm {
 
     private void expandNode(CPTreeNode node, List<Sequence> db, int depth) {
         if (depth > maxDepth) return;
-        // PHÒNG THỦ ĐO LƯỜNG: dừng NGAY khi runner cancel (timeout) → tránh orphan
-        // thread chạy tiếp ăn CPU/giữ heap, NHIỄM thời gian/bộ nhớ của lần đo kế. Chỉ
-        // kích hoạt khi đã OT (kết quả bị bỏ) → KHÔNG đổi logic khai phá baseline.
+        // Stop as soon as the runner cancels the run (timeout), so an orphaned thread does
+        // not keep using CPU or holding heap and distort the next measurement. This only
+        // fires after a timeout, when the result is discarded, so mining logic is unchanged.
         if (Thread.currentThread().isInterrupted()) return;
-        exploredNodes++; // mẫu này được KHAI TRIỂN (đệ quy vào) - đếm TRƯỚC node-prune TSU
-        // ĐẾM CÔNG BẰNG (Sinh ra là đếm): candidateCount ĐÃ DỜI khỏi entry. Ứng viên I/S-ext
-        // được đếm KHI SINH RA (trước lọc TSU) ở dưới - đồng nhất với thuật toán đề xuất.
+        exploredNodes++; // this pattern is expanded; counted BEFORE the node-level TSU check
+        // Fair counting: candidateCount is not incremented on entry. I/S-extension candidates are
+        // counted when generated (before the TSU filter) below, as in the adaptive algorithm.
 
         double exactUtil = 0, tsuAccumulated = 0;
         for (Tracker t : node.trackerList.trackers.values()) {
@@ -269,8 +270,8 @@ public class IncUSPMinerPlusAlgorithm {
         node.exactUtilityD = exactUtil;
         node.tsuD = tsuAccumulated;
 
-        // Safety net: tsu phải đã pass khi node được thêm vào CPTree.
-        // Giữ check ở đây để bảo vệ root + 1-item entry.
+        // Safety net: a node's TSU has already passed when it was added to the CP-tree.
+        // The check stays here to cover the root and the 1-item entries.
         if (node.tsuD < currentMinUtil) {
             prunedTSU++;
             return;
@@ -299,12 +300,11 @@ public class IncUSPMinerPlusAlgorithm {
             }
         }
 
-        // ĐẾM CÔNG BẰNG (Sinh ra là đếm): MỌI ứng viên I/S-ext sinh ra, TRƯỚC khi lọc bằng TSU.
+        // Fair counting: every generated I/S-extension candidate, BEFORE the TSU filter.
         candidateCount += iExtensions.size() + sExtensions.size();
 
-        // Chốt TSU cho I-Ext, kiểm tra TSU TRƯỚC khi lưu vào CPTree.
-        // Theo paper IncUSP-Miner+ 2018: CP-tree CHỈ lưu candidate có TSU >= min_util.
-        // Trước đây code lưu cả TSU-pruned children → CPTree phình to gây OOM.
+        // Finalize the TSU of each I-extension and check it BEFORE storing the node in the CP-tree.
+        // The CP-tree stores only candidates whose TSU reaches min_util.
         Iterator<Map.Entry<Integer, TrackerList>> itI = iExtensions.entrySet().iterator();
         while (itI.hasNext()) {
             Map.Entry<Integer, TrackerList> entry = itI.next();
@@ -317,7 +317,7 @@ public class IncUSPMinerPlusAlgorithm {
             }
             if (childAggTsu < currentMinUtil) {
                 prunedTSU++;
-                itI.remove(); // KHÔNG lưu vào CPTree - TrackerList được GC ngay
+                itI.remove(); // not stored in the CP-tree; the TrackerList becomes garbage at once
                 continue;
             }
             Pattern np = node.pattern.iConcatenate(entry.getKey());
@@ -353,9 +353,9 @@ public class IncUSPMinerPlusAlgorithm {
     }
 
     private void updateAndExpandNode(CPTreeNode node, TrackerList deltaTrackers, List<Sequence> deltaD) {
-        exploredNodes++; // mẫu này được KHAI TRIỂN ở pha gia tăng - đếm TRƯỚC node-prune TSU
+        exploredNodes++; // this pattern is expanded in the incremental phase; counted BEFORE the node-level TSU check
 
-        // Merge Tracker từ delta vào Node hiện tại
+        // Merge the delta trackers into the current node
         if (deltaTrackers != null) {
             for (Map.Entry<Integer, Tracker> entry : deltaTrackers.trackers.entrySet()) {
                 node.trackerList.trackers.put(entry.getKey(), entry.getValue());
@@ -400,10 +400,10 @@ public class IncUSPMinerPlusAlgorithm {
             }
         }
 
-        // ĐẾM CÔNG BẰNG (Sinh ra là đếm): MỌI ứng viên I/S-ext lô gia tăng sinh ra, TRƯỚC khi chốt/lọc TSU.
+        // Fair counting: every I/S-extension candidate generated from the batch, BEFORE the TSU is finalized and checked.
         candidateCount += deltaIExts.size() + deltaSExts.size();
 
-        // Chốt TSU cho các extension của lô gia tăng
+        // Finalize the TSU of the batch extensions
         for (Map.Entry<Integer, TrackerList> entry : deltaIExts.entrySet()) {
             TrackerList childTl = entry.getValue();
             for (Tracker childT : childTl.trackers.values()) {
@@ -465,7 +465,7 @@ public class IncUSPMinerPlusAlgorithm {
                 writer.newLine();
             }
         } catch (IOException e) {
-            System.err.println("Lỗi ghi file IncUSP-MinerPlus: " + e.getMessage());
+            System.err.println("Error writing IncUSP-MinerPlus output file: " + e.getMessage());
         }
     }
 }

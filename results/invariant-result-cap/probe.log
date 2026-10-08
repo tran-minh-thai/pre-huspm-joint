@@ -1,0 +1,3 @@
+ds=C8T1S5I8N5K sl=0.7 cap=default uut=0.001132 large=3438 prelarge=20694 candidates=50887795 sec=2.5
+ds=C8T1S5I8N5K sl=0.5 cap=default uut=0.001132 large=3438 prelarge=1017337 candidates=4575615738 sec=188.3
+ds=C8T1S5I8N5K sl=0.5 cap=nocap uut=0.001132 large=3438 prelarge=31767337 candidates=4575615738 sec=199.0

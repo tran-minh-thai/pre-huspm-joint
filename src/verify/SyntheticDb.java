@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Dung cac chuoi nho ngay trong bo nho, phuc vu cac test tinh dung dan.
+ * Builds small in-memory sequences for the correctness tests.
  *
- * Cu phap: "1[19] 2[31] | 3[4]" nghia la mot chuoi gom hai itemset,
- * itemset dau co item 1 (utility 19) va item 2 (utility 31), itemset sau co
- * item 3 (utility 4). Utility ghi trong ngoac vuong la utility DA NHAN
- * (internal x external), giong gia tri ma DatasetLoader tinh ra.
+ * Syntax: "1[19] 2[31] | 3[4]" is one sequence of two itemsets: the first holds item 1
+ * (utility 19) and item 2 (utility 31), the second holds item 3 (utility 4). The utility in
+ * brackets is the MULTIPLIED utility (internal x external), the same value DatasetLoader
+ * computes.
  */
 public final class SyntheticDb {
 
@@ -21,7 +21,7 @@ public final class SyntheticDb {
 
     private static int nextId = 0;
 
-    /** Dat lai bo cap phat id chuoi (goi o dau moi kich ban test). */
+    /** Resets the sequence id counter (call at the start of every test scenario). */
     public static void resetIds() { nextId = 0; }
 
     public static Sequence seq(String spec) {
@@ -32,7 +32,7 @@ public final class SyntheticDb {
             QItemset is = new QItemset();
             for (String tok : p.split("\\s+")) {
                 int l = tok.indexOf('['), r = tok.indexOf(']');
-                if (l < 0 || r < 0) throw new IllegalArgumentException("token sai dinh dang: " + tok);
+                if (l < 0 || r < 0) throw new IllegalArgumentException("malformed token: " + tok);
                 int id = Integer.parseInt(tok.substring(0, l).trim());
                 double u = Double.parseDouble(tok.substring(l + 1, r).trim());
                 is.items.add(new QItem(id, u));

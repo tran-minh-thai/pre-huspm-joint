@@ -3,9 +3,9 @@
 
     python3 analysis/summarize_verification.py results/verify-joint/adversarial/verification.csv
 
-One row per database: operations by kind and path, in adversarial mode the operations that
-had a target pattern to shape themselves around (none means the stream fell back to random), the direct insertions that follow a
-direct deletion or a direct modification (the case the earlier rule got wrong), and the
+One row per database: operations by kind and path; in adversarial mode, the operations that
+had a target pattern to shape themselves around (none means the stream fell back to random);
+the direct insertions that follow a direct deletion or a direct modification; and the
 mismatches against remining. A final row sums the columns. Standard library only.
 """
 import csv

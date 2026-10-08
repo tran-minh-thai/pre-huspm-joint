@@ -3,18 +3,18 @@ package common;
 import java.util.Arrays;
 
 /**
- * Inline "fastutil-style" primitive-keyed hash maps cho HUSPM-Adapt.
+ * Inline "fastutil-style" primitive-keyed hash maps for the adaptive miner.
  *
- * Thay thế HashMap<Integer, V> / HashMap<Integer, Double> trên đường nóng đệ quy:
- *  - Không boxing key (int) → mỗi lookup không tạo Integer.
- *  - Open-addressing + linear probing → cache-friendly, không Node object rác.
- *  - Tăng trưởng theo power-of-two + Murmur3 finalizer → ít collision hơn HashMap mặc định.
+ * They replace HashMap<Integer, V> / HashMap<Integer, Double> on the recursive hot path:
+ *  - int keys are not boxed, so a lookup allocates no Integer;
+ *  - open addressing with linear probing is cache-friendly and creates no Node garbage;
+ *  - power-of-two capacity with a Murmur3 finalizer keeps collisions low.
  *
- * Cố ý KHÔNG hỗ trợ iterator/keySet/entrySet để không sinh allocate trên hot path.
- * Chỉ expose put / get / remove / clear / addTo (cho IntDoubleMap).
+ * There is deliberately no iterator, keySet or entrySet, so the hot path does not allocate.
+ * Only put / get / remove / clear / addTo (IntDoubleMap) are exposed.
  *
- * Reserved key: Integer.MIN_VALUE (dùng làm sentinel "ô trống"). Không được dùng
- * làm key thật - trong domain của ta, seqId/itemId luôn ≥ 0 nên an toàn tuyệt đối.
+ * Reserved key: Integer.MIN_VALUE marks an empty slot and must never be used as a real
+ * key. Sequence ids and item ids are always >= 0, so they never collide with it.
  */
 public final class PrimitiveMaps {
     private PrimitiveMaps() {}
@@ -22,7 +22,7 @@ public final class PrimitiveMaps {
     private static final int FREE = Integer.MIN_VALUE;
 
     private static int hash(int k) {
-        // Murmur3 finalizer - phân tán tốt cho int keys tuần tự (seqId, itemId).
+        // Murmur3 finalizer: spreads sequential int keys (seqId, itemId) well.
         k ^= k >>> 16;
         k *= 0x85ebca6b;
         k ^= k >>> 13;
@@ -136,7 +136,7 @@ public final class PrimitiveMaps {
                 if (k == FREE) return null;
                 if (k == key) {
                     Object old = values[i];
-                    // backward-shift deletion (giữ open-addressing không bị break)
+                    // backward-shift deletion keeps every probe chain intact
                     int j = i;
                     while (true) {
                         int next = (j + 1) & mask;
@@ -209,7 +209,7 @@ public final class PrimitiveMaps {
         public int size() { return size; }
         public boolean isEmpty() { return size == 0; }
 
-        /** Get hoặc trả defVal nếu không có. */
+        /** The value for key, or defVal when absent. */
         public double get(int key, double defVal) {
             if (key == FREE) return defVal;
             int i = hash(key) & mask;
@@ -221,7 +221,7 @@ public final class PrimitiveMaps {
             }
         }
 
-        /** Cộng dồn delta vào key (key chưa có → tạo mới = delta). */
+        /** Adds delta to the value for key; an absent key is created with value delta. */
         public void addTo(int key, double delta) {
             if (key == FREE) throw new IllegalArgumentException("Reserved key Integer.MIN_VALUE");
             int i = hash(key) & mask;
@@ -269,9 +269,9 @@ public final class PrimitiveMaps {
         }
 
         /**
-         * Đổ tất cả entries vào mảng double[] indexed by key.
-         * Dùng cho materializeEucsRow → tra cứu O(1) không boxing.
-         * Reset slot ngoài size bằng 0 (caller chịu trách nhiệm reset slot trước).
+         * Writes every entry into a double[] indexed by key, for O(1) unboxed lookup
+         * (used by materializeEucsRow). Keys outside dest are skipped. Slots of absent
+         * keys are not touched, so the caller must zero dest first.
          */
         public void materializeInto(double[] dest) {
             for (int i = 0; i < keys.length; i++) {

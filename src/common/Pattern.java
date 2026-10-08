@@ -43,7 +43,7 @@ public class Pattern {
         elements.remove(elements.size() - 1);
     }
 
-    // Tiện ích nối chuỗi (Dành cho USpan và HUSP-ULL)
+    // Concatenation helpers returning a new pattern (used by USpan and HUSP-ULL)
     public Pattern iConcatenate(int item) {
         Pattern newPattern = clonePattern();
         newPattern.addIExtension(item);
@@ -56,7 +56,7 @@ public class Pattern {
         return newPattern;
     }
 
-    // Chuyển đổi định dạng trực quan để ghi file
+    // Human-readable form used in output files
     public String toIntuitiveString() {
         StringBuilder sb = new StringBuilder();
         for (List<Integer> element : elements) {

@@ -13,67 +13,68 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Thuat toan doi chung: HUSP-SP (Zhang, Yang, Du, Gan, Yu; ACM TKDD 2023).
+ * Baseline: HUSP-SP (Zhang, Yang, Du, Gan, Yu; ACM TKDD 2023).
  *
  * ---------------------------------------------------------------------------
- * NGUON GOC CAI DAT
+ * PROVENANCE
  *
- * Cai dat lai DOC LAP tu pseudocode va cac dinh nghia trong bai bao (Dinh nghia
- * 4.5, 4.6, 4.7, 4.9, 4.11; Dinh ly 4.8, 4.10, 4.12; Thuat toan 1, 2, 3).
- * Ma nguon cua tac gia tai github.com/DSI-Lab1/HUSPM KHONG co file license nen
- * khong duoc sao chep vao day; khong dong nao trong file nay lay tu do.
+ * Independent reimplementation from the pseudocode and definitions of Zhang et al.
+ * (Definitions 4.5, 4.6, 4.7, 4.9, 4.11; Theorems 4.8, 4.10, 4.12; Algorithms 1, 2, 3).
+ * The authors' code at github.com/DSI-Lab1/HUSPM has no license file, so it is not
+ * copied here; no line of this file is taken from it.
  * ---------------------------------------------------------------------------
  *
- * BA THANH PHAN CHINH CUA BAI BAO
+ * THE THREE MAIN COMPONENTS OF HUSP-SP
  *
- * 1. seq-array (Dinh nghia 4.5). Moi q-sequence duoc trai phang thanh bon mang
- *    song song cung do dai: ten item, utility cua item, utility cua phan con lai
- *    ke tu sau vi tri do, va chi so item dau tien cua itemset dang chua vi tri
- *    do. Kem mot bang item-indices anh xa item sang danh sach vi tri cua no.
+ * 1. seq-array (Definition 4.5). Each q-sequence is flattened into four parallel
+ *    arrays of equal length: item name, item utility, utility of everything after
+ *    that position, and the index of the first item of the itemset containing that
+ *    position. An item-indices table maps each item to its list of positions.
  *
- * 2. seqPro (Dinh nghia 4.6). Bieu dien CSDL chieu cua mot nut: con tro toi
- *    seq-array goc cong mot extension-list ghi cac the hien cua mau hien tai,
- *    moi the hien gom utility tich luy (acu) va vi tri mo rong (exIndex).
- *    Khac voi UL-list cua HUSP-ULL o cho khong phai luu o rong.
+ * 2. seqPro (Definition 4.6). The projected database of a node: a pointer to the
+ *    original seq-array plus an extension-list holding the instances of the current
+ *    pattern, each with its accumulated utility (acu) and extension position (exIndex).
+ *    Unlike the UL-list of HUSP-ULL, it does not store empty slots.
  *
- * 3. Ba can tren, tu long den chat: PEU, RSU, va TRSU.
- *    TRSU la dong gop cua bai: no tru di utility cua doan CON KHONG LIEN QUAN
- *    nam giua vi tri mo rong dau tien cua tien to va lan xuat hien dau tien cua
- *    item moi. Doan do gop vao PEU nhung khong the gop vao bat ky mo rong nao
- *    cua mau moi, nen tru di van con la can tren hop le.
+ * 3. Three upper bounds, from loosest to tightest: PEU, RSU and TRSU.
+ *    TRSU subtracts the utility of the IRRELEVANT segment between the first
+ *    extension position of the prefix and the first occurrence of the new item.
+ *    That segment contributes to PEU but cannot contribute to any extension of the
+ *    new pattern, so the result is still a valid upper bound.
  *
- * Hai chien luoc tia: IIP (theo RSU, ke thua tu HUSP-ULL) va EP (theo TRSU).
+ * Two pruning strategies: IIP (by RSU, inherited from HUSP-ULL) and EP (by TRSU).
  *
  * ---------------------------------------------------------------------------
- * MOT CHI TIET DE SAI, BAI BAO NEU RO
+ * ORDER IN ALGORITHM 3 (stated by Zhang et al.)
  *
- * Trong Thuat toan 3, phai GHI KET QUA TRUOC roi moi kiem tra dieu kien tia
- * theo PEU. Lam nguoc lai se bo sot mau: mot mau co the la HUSP trong khi PEU
- * cua no khong du de mo rong tiep.
+ * The result must be RECORDED BEFORE the PEU pruning condition is checked. The
+ * reverse order misses patterns: a pattern can be a HUSP while its PEU is too
+ * small to extend it further.
  * ---------------------------------------------------------------------------
  *
- * DEM DE SO SANH CONG BANG VOI CAC BASELINE KHAC
- *   candidateCount  dem MOI mo rong duoc sinh ra, TRUOC bat ky phep tia nao,
- *                   nen no la bien tim kiem va bang nhau giua cac thuat toan
- *                   cung ho nguong.
- *   exploredNodes   dem tai diem VAO de quy, tuc so mau thuc su duoc khai trien
- *                   sau khi tia. Day moi la so do hieu qua tia.
+ * COUNTERS FOR A FAIR COMPARISON WITH THE OTHER BASELINES
+ *   candidateCount  counts the extensions generated, BEFORE any pruning, so it
+ *                   measures the search frontier (at the 1-item level only the
+ *                   items that pass the SWU filter are counted).
+ *   exploredNodes   counts entries into the recursion, i.e. patterns actually
+ *                   expanded after pruning. This measures pruning effectiveness.
  *
- * La thuat toan TINH, khong xu ly cap nhat gia tang, nen chi dung o SC1 va SC3.
+ * Static algorithm with no incremental update; used only in the static scenarios
+ * SC1 and SC3.
  */
 public class HUSPSPAlgorithm {
 
     // =====================================================================
-    // 1. seq-array (Dinh nghia 4.5)
+    // 1. seq-array (Definition 4.5)
     // =====================================================================
     static final class SeqArray {
         final int seqId;
-        final int[] item;          // ten item tai moi vi tri phang
-        final double[] util;       // utility cua item tai vi tri do
-        final double[] remUtil;    // utility cua phan con lai KE TU SAU vi tri do
-        final int[] elemStart;     // chi so item dau tien cua itemset dang chua vi tri do
+        final int[] item;          // item name at each flat position
+        final double[] util;       // utility of the item at that position
+        final double[] remUtil;    // utility of everything AFTER that position
+        final int[] elemStart;     // index of the first item of the itemset containing that position
         final int len;
-        /** item -> cac vi tri phang ma no xuat hien (tang dan). */
+        /** item -> the flat positions where it occurs (ascending). */
         final Map<Integer, int[]> itemIndices;
         final double seqUtility;
 
@@ -97,7 +98,7 @@ public class HUSPSPAlgorithm {
                     k++;
                 }
             }
-            // remUtil la tong hau to: utility cua toan bo phan sau vi tri i.
+            // remUtil is a suffix sum: the utility of everything after position i.
             double acc = 0;
             for (int i = n - 1; i >= 0; i--) {
                 remUtil[i] = acc;
@@ -119,16 +120,16 @@ public class HUSPSPAlgorithm {
             this.itemIndices = idx;
         }
 
-        /** true neu vi tri a va b thuoc CUNG mot itemset. */
+        /** true if positions a and b belong to the SAME itemset. */
         boolean sameElement(int a, int b) { return elemStart[a] == elemStart[b]; }
     }
 
     // =====================================================================
-    // 2. seqPro (Dinh nghia 4.6)
+    // 2. seqPro (Definition 4.6)
     // =====================================================================
     /**
-     * Mot the hien cua mau trong mot q-sequence: utility tich luy den vi tri mo
-     * rong, va chinh vi tri mo rong do.
+     * One instance of the pattern in a q-sequence: the utility accumulated up to the
+     * extension position, and that extension position.
      */
     static final class Ins {
         final double acu;
@@ -138,10 +139,10 @@ public class HUSPSPAlgorithm {
 
     static final class SeqPro {
         final SeqArray sa;
-        final List<Ins> exList;    // sap tang dan theo exIndex
+        final List<Ins> exList;    // sorted by ascending exIndex
         SeqPro(SeqArray sa, List<Ins> exList) { this.sa = sa; this.exList = exList; }
 
-        /** u(t, s): utility cua mau trong chuoi nay = max tren moi the hien. */
+        /** u(t, s): utility of the pattern in this sequence = max over its instances. */
         double patternUtility() {
             double best = 0;
             for (Ins in : exList) if (in.acu > best) best = in.acu;
@@ -149,26 +150,26 @@ public class HUSPSPAlgorithm {
         }
 
         /**
-         * PEU(t, s) theo Dinh nghia 4.7: max tren cac the hien cua
-         * (acu + utility phan con lai), va bang 0 khi khong con gi de mo rong.
+         * PEU(t, s) as in Definition 4.7: max over the instances of
+         * (acu + remaining utility), and 0 when nothing is left to extend.
          */
         double peu() {
             double best = 0;
             for (Ins in : exList) {
                 double rem = sa.remUtil[in.exIndex];
-                if (rem <= 0) continue;              // het cho mo rong
+                if (rem <= 0) continue;              // nothing left to extend
                 double v = in.acu + rem;
                 if (v > best) best = v;
             }
             return best;
         }
 
-        /** Vi tri mo rong DAU TIEN cua mau trong chuoi nay. */
+        /** FIRST extension position of the pattern in this sequence. */
         int firstExIndex() { return exList.isEmpty() ? -1 : exList.get(0).exIndex; }
 
         /**
-         * PEU co dat tai the hien DAU TIEN hay khong. Dieu kien nay quyet dinh
-         * TRSU dung nhanh tru bot hay lui ve RSU (Dinh nghia 4.11).
+         * Whether PEU is attained at the FIRST instance. This decides whether TRSU
+         * uses the subtracting case or falls back to RSU (Definition 4.11).
          */
         boolean peuAttainedAtFirst() {
             if (exList.isEmpty()) return false;
@@ -183,20 +184,20 @@ public class HUSPSPAlgorithm {
     private static final double EPS = 1e-9;
 
     // =====================================================================
-    // 3. Chi so thuc nghiem
+    // 3. Measurement counters
     // =====================================================================
     public double minUtility;
     public int patternCount = 0;
-    public long candidateCount = 0;   // MOI mo rong sinh ra, truoc moi phep tia
-    public long exploredNodes = 0;    // dem tai diem vao de quy
-    public long prunedSWU = 0;        // item bi loai o buoc quet dau bang SWU
-    public long prunedIIP = 0;        // item bi loai khoi seqPro boi IIP (theo RSU)
-    public long prunedEP = 0;         // ung vien bi loai boi EP (theo TRSU)
-    public long prunedPEU = 0;        // nhanh bi dung boi can PEU trong Thuat toan 3
+    public long candidateCount = 0;   // extensions generated, before pruning
+    public long exploredNodes = 0;    // counted on entry to the recursion
+    public long prunedSWU = 0;        // items dropped by SWU in the first scan
+    public long prunedIIP = 0;        // candidates dropped by IIP (RSU)
+    public long prunedEP = 0;         // candidates dropped by EP (TRSU)
+    public long prunedPEU = 0;        // branches stopped by the PEU bound in Algorithm 3
 
     public Map<Pattern, Double> largeMap = new HashMap<>();
 
-    /** Cho phep runner ngat khi vuot timeout, giong cac baseline khac. */
+    /** Lets the runner stop the algorithm on timeout, like the other baselines. */
     private volatile boolean cancelled = false;
     public void cancel() { this.cancelled = true; }
     public boolean isCancelled() { return cancelled; }
@@ -213,7 +214,7 @@ public class HUSPSPAlgorithm {
     private List<SeqArray> db;
 
     // =====================================================================
-    // Thuat toan 1
+    // Algorithm 1 of Zhang et al.
     // =====================================================================
     public void run(List<Sequence> database) {
         cancelled = false;
@@ -221,16 +222,17 @@ public class HUSPSPAlgorithm {
         prunedSWU = 0; prunedIIP = 0; prunedEP = 0; prunedPEU = 0;
         largeMap.clear();
 
-        // Buoc 1: dung seq-array cho tung q-sequence.
+        // Step 1: build a seq-array for each q-sequence.
         db = new ArrayList<>(database.size());
         for (Sequence s : database) {
             SeqArray sa = new SeqArray(s);
             if (sa.len > 0) db.add(sa);
         }
 
-        // Buoc 2: loai vinh vien cac item co SWU duoi nguong. Voi mau MOT item,
-        // RSU trung voi SWU (ghi chu sau Dinh nghia 4.9), nen day chinh la IIP
-        // ap o muc toan CSDL. Bai bao lam dung buoc nay trong vi du chay.
+        // Step 2: items whose SWU is below the threshold are not used as 1-item
+        // patterns. For a single-item pattern RSU equals SWU (note after Definition 4.9),
+        // so this is IIP applied to the whole database, as in the running example of
+        // Zhang et al. The items stay in the seq-arrays.
         Map<Integer, Double> swu = new HashMap<>();
         for (SeqArray sa : db) {
             for (Integer it : sa.itemIndices.keySet()) {
@@ -243,9 +245,9 @@ public class HUSPSPAlgorithm {
             else prunedSWU++;
         }
 
-        // Buoc 3: voi moi item hua hen, dung seqPro roi goi UtilityCalculation.
-        // Mau rong khong co the hien nen ta khoi tao truc tiep o day; day dung la
-        // vong lap ma Thuat toan 2 se chay tren tien to rong.
+        // Step 3: for each promising item, build its seqPro and call UtilityCalculation.
+        // The empty pattern has no instances, so it is set up directly here; this is the
+        // loop Algorithm 2 would run on the empty prefix.
         for (Integer it : promising) {
             checkCancelled();
             candidateCount++;
@@ -256,7 +258,7 @@ public class HUSPSPAlgorithm {
         }
     }
 
-    /** seqPro cua mau mot item: moi lan xuat hien la mot the hien. */
+    /** seqPro of a single-item pattern: each occurrence is one instance. */
     private List<SeqPro> projectSingleItem(int item) {
         List<SeqPro> out = new ArrayList<>();
         for (SeqArray sa : db) {
@@ -270,7 +272,7 @@ public class HUSPSPAlgorithm {
     }
 
     // =====================================================================
-    // Thuat toan 3 - UtilityCalculation
+    // Algorithm 3 of Zhang et al. - UtilityCalculation
     // =====================================================================
     private void utilityCalculation(Pattern prefix, List<SeqPro> proj) {
         double util = 0, peu = 0;
@@ -279,8 +281,8 @@ public class HUSPSPAlgorithm {
             peu += sp.peu();
         }
 
-        // GHI KET QUA TRUOC. Bai bao canh bao ro: dao thu tu se bo sot mau, vi
-        // mot mau co the la HUSP trong khi PEU cua no khong du de di tiep.
+        // RECORD THE RESULT FIRST. Reversing the order misses patterns, because a
+        // pattern can be a HUSP while its PEU is too small to go further.
         if (util >= minUtility) {
             largeMap.put(prefix.clonePattern(), util);
             patternCount = largeMap.size();
@@ -294,27 +296,27 @@ public class HUSPSPAlgorithm {
     }
 
     // =====================================================================
-    // Thuat toan 2 - PatternGrowth
+    // Algorithm 2 of Zhang et al. - PatternGrowth
     // =====================================================================
     private void patternGrowth(Pattern prefix, List<SeqPro> proj) {
         checkCancelled();
         exploredNodes++;
 
-        // --- IIP (theo RSU) ---
-        // RSU cua mot item mo rong = tong PEU(prefix, s) tren cac chuoi s con
-        // chua item do sau vi tri mo rong. Item duoi nguong bi loai khoi seqPro
-        // cua prefix VA cua moi mo rong cua prefix.
+        // --- IIP (by RSU) ---
+        // RSU of an extension item = sum of PEU(prefix, s) over the sequences s that
+        // still contain the item after an extension position. Items below the threshold
+        // are skipped as extensions of this prefix; the seqPro itself is not modified.
         Map<Integer, Double> rsu = new HashMap<>();
         for (SeqPro sp : proj) {
             double peuS = sp.peu();
             if (peuS <= 0) continue;
-            // cac item con co the xuat hien sau vi tri mo rong dau tien
+            // items that still occur after the first extension position
             int from = sp.firstExIndex();
             Set<Integer> seen = new HashSet<>();
             for (int i = from + 1; i < sp.sa.len; i++) {
                 if (seen.add(sp.sa.item[i])) rsu.merge(sp.sa.item[i], peuS, Double::sum);
             }
-            // item cung itemset voi vi tri mo rong cung la ung vien I-Extension
+            // items in the same itemset as an extension position are I-extension candidates too
             for (Ins in : sp.exList) {
                 int es = sp.sa.elemStart[in.exIndex];
                 for (int i = es; i < sp.sa.len && sp.sa.elemStart[i] == es; i++) {
@@ -324,10 +326,10 @@ public class HUSPSPAlgorithm {
                 }
             }
         }
-        // --- Gom ung vien I-Extension va S-Extension, kem TRSU cho EP ---
-        // Liet ke TRUOC khi loc. candidateCount phai dem bien tim kiem THO, giong
-        // moi baseline khac, neu khong thi con so cua HUSP-SP se nho hon chi vi no
-        // tia som hon - dung thu khong duoc so sanh voi nhau.
+        // --- Collect I-extension and S-extension candidates, with their TRSU for EP ---
+        // Enumerated BEFORE filtering. candidateCount counts the raw search frontier, as
+        // for every other baseline; otherwise HUSP-SP would report a smaller number only
+        // because it prunes earlier, which is not what the counter compares.
         Map<Integer, Double> trsuI = new HashMap<>();
         Map<Integer, Double> trsuS = new HashMap<>();
         for (SeqPro sp : proj) {
@@ -337,17 +339,17 @@ public class HUSPSPAlgorithm {
         candidateCount += trsuI.size();
         candidateCount += trsuS.size();
 
-        // --- IIP roi EP, theo dung thu tu cua Thuat toan 2 ---
+        // --- IIP, then EP, in the order of Algorithm 2 ---
         expand(prefix, proj, trsuI, rsu, true);
         expand(prefix, proj, trsuS, rsu, false);
     }
 
     /**
-     * Ap IIP roi EP cho mot phia mo rong, sau do di sau.
+     * Applies IIP and then EP to one extension side, then recurses.
      *
-     * IIP loai theo RSU, EP loai theo TRSU. Vi TRSU <= RSU nen EP mot minh da du
-     * chat; giu ca hai va dem rieng de bao cao dung dong gop cua tung chien luoc,
-     * dung nhu bai bao trinh bay chung.
+     * IIP prunes by RSU, EP by TRSU. Since TRSU <= RSU, EP alone would be as tight;
+     * both are kept and counted separately to report the share of each strategy,
+     * as Zhang et al. present them.
      */
     private void expand(Pattern prefix, List<SeqPro> proj, Map<Integer, Double> trsu,
                         Map<Integer, Double> rsu, boolean iExtension) {
@@ -365,33 +367,34 @@ public class HUSPSPAlgorithm {
     }
 
     /**
-     * TRSU (Dinh nghia 4.11) cong don cho moi item mo rong kha di trong mot chuoi.
+     * Accumulates TRSU (Definition 4.11) for every possible extension item in one sequence.
      *
-     * Khi PEU dat tai the hien DAU TIEN, doan nam giua vi tri mo rong dau tien cua
-     * TIEN TO va lan xuat hien dau tien cua ITEM MOI khong the gop vao bat ky mo
-     * rong nao cua mau moi, nen tru phan do khoi PEU van con la can tren:
+     * When PEU is attained at the FIRST instance, the segment between the first
+     * extension position of the PREFIX and the first occurrence of the NEW ITEM cannot
+     * contribute to any extension of the new pattern, so subtracting it from PEU still
+     * gives an upper bound:
      *
      *     TRSU = PEU(t,s) - [ u(s / p1) - u(s / (q1 - 1)) ]
      *
-     * voi p1 la vi tri mo rong dau tien cua tien to va q1 la vi tri hop le dau tien
-     * cua item moi. Neu khong thoa dieu kien thi TRSU lui ve RSU, tuc bang PEU(t,s).
+     * where p1 is the first extension position of the prefix and q1 the first valid
+     * position of the new item. Otherwise TRSU falls back to RSU, i.e. PEU(t,s).
      */
     private void accumulateTrsu(SeqPro sp, Set<Integer> allowed,
                                 Map<Integer, Double> out, boolean iExtension) {
-        // allowed == null: liet ke moi item, khong loc. Dung khi con dang dem bien
-        // tim kiem tho, truoc khi IIP va EP duoc ap.
+        // allowed == null: enumerate every item without filtering. Used while counting
+        // the raw search frontier, before IIP and EP are applied.
         double peuS = sp.peu();
         if (peuS <= 0) return;
         boolean tighten = sp.peuAttainedAtFirst();
         int p1 = sp.firstExIndex();
         double remP1 = sp.sa.remUtil[p1];
 
-        // Vi tri hop le dau tien cua tung item mo rong trong chuoi nay.
+        // First valid position of each extension item in this sequence.
         Map<Integer, Integer> firstPos = new HashMap<>();
         for (Ins in : sp.exList) {
             if (iExtension) {
-                // I-Extension: item phai nam trong CUNG itemset voi vi tri mo rong,
-                // va o sau no.
+                // I-extension: the item must be in the SAME itemset as the extension
+                // position, and after it.
                 int es = sp.sa.elemStart[in.exIndex];
                 for (int i = in.exIndex + 1; i < sp.sa.len && sp.sa.elemStart[i] == es; i++) {
                     int it = sp.sa.item[i];
@@ -400,7 +403,7 @@ public class HUSPSPAlgorithm {
                     if (cur == null || i < cur) firstPos.put(it, i);
                 }
             } else {
-                // S-Extension: item phai nam trong itemset SAU itemset cua vi tri mo rong.
+                // S-extension: the item must be in an itemset AFTER that of the extension position.
                 int es = sp.sa.elemStart[in.exIndex];
                 int i = in.exIndex + 1;
                 while (i < sp.sa.len && sp.sa.elemStart[i] == es) i++;
@@ -427,10 +430,10 @@ public class HUSPSPAlgorithm {
     }
 
     /**
-     * Chieu seqPro cua tien to sang seqPro cua mau da noi them mot item.
-     * Utility cua mau trong mot chuoi la LON NHAT tren moi the hien, nhung moi the
-     * hien deu phai giu lai vi bat ky the hien nao cung co the sinh ra mo rong tot
-     * hon ve sau. Do la ly do exList giu tat ca chu khong chi giu the hien tot nhat.
+     * Projects the seqPro of the prefix to the seqPro of the pattern extended by one item.
+     * The utility of a pattern in a sequence is the MAXIMUM over its instances, but every
+     * instance must be kept because any of them can lead to a better extension later.
+     * That is why exList keeps all instances, not only the best one.
      */
     private List<SeqPro> project(List<SeqPro> proj, int item, boolean iExtension) {
         List<SeqPro> out = new ArrayList<>();
@@ -438,8 +441,8 @@ public class HUSPSPAlgorithm {
             int[] pos = sp.sa.itemIndices.get(item);
             if (pos == null) continue;
 
-            // Voi moi vi tri cua item, giu the hien co acu LON NHAT trong so cac
-            // the hien cua tien to co the noi dai toi vi tri do.
+            // For each position of the item, keep the LARGEST acu among the prefix
+            // instances that can be extended to that position.
             List<Ins> next = null;
             for (int q : pos) {
                 double best = -1;

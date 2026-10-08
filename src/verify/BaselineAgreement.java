@@ -15,24 +15,23 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Nghiem thu cho baseline tinh: moi thuat toan tinh phai tra ve DUNG CUNG MOT
- * tap HUSP tren cung du lieu va cung nguong.
+ * Acceptance check for the static baselines: every static algorithm must return EXACTLY
+ * THE SAME set of HUSPs on the same data at the same threshold.
  *
- * Day la dieu kien nghiem thu cua HUSP-SP: no duoc cai lai doc lap tu pseudocode
- * nen phai chung minh la cai dung, va cach chung minh la doi chieu tap mau voi
- * USpan chu khong phai chi doi chieu SO LUONG mau.
+ * This is the acceptance condition for HUSP-SP, which is reimplemented independently from
+ * its pseudocode: its pattern set is compared with USpan's, not only its pattern count.
  *
- * Nguong va D_init lay tu common.Datasets, cung bang ma runner do. Lop nay tung giu
- * bang nguong RIENG va bang do da cu, nen bang chung "cac baseline tinh khop nhau"
- * duoc sinh o mot diem van hanh nghien cuu khong con dung - va khop nhau o nguong nao
- * cung dung, nen khong co gi bao loi. Truyen nguong tay chi de tham do.
+ * Thresholds and D_init come from common.Datasets, the table the runner measures at, so
+ * agreement is checked at the operating point actually used. Agreement holds at any
+ * threshold, so a wrong threshold would raise no error; pass a threshold by hand only to
+ * explore.
  *
- * Chay:
+ * Run:
  *   java -Xmx48g -Xss64m -cp build verify.BaselineAgreement SIGN
- *   java -Xmx48g -Xss64m -cp build verify.BaselineAgreement SIGN 0.08337   (mot muc khac cua sweep)
+ *   java -Xmx48g -Xss64m -cp build verify.BaselineAgreement SIGN 0.08337   (another sweep level)
  *   java -Xmx48g -Xss64m -cp build verify.BaselineAgreement ALL
  *
- * Thoat 0 neu moi thuat toan khop nhau, 1 neu co sai lech.
+ * Exits 0 if every algorithm agrees, 1 on any mismatch.
  */
 public final class BaselineAgreement {
 
@@ -44,7 +43,7 @@ public final class BaselineAgreement {
         boolean halfOnly = System.getProperty("half", "true").equalsIgnoreCase("true");
 
         if (!"ALL".equalsIgnoreCase(target) && common.Datasets.byName(target) == null) {
-            System.out.println("khong co CSDL " + target + "; co the chon: "
+            System.out.println("no database named " + target + "; choose from "
                     + common.Datasets.names());
             System.exit(2);
         }
@@ -56,8 +55,8 @@ public final class BaselineAgreement {
         }
         System.out.println();
         System.out.println(bad == 0
-                ? "KET LUAN: moi thuat toan tinh tra ve cung mot tap HUSP."
-                : "KET LUAN: " + bad + " cap khong khop - PHAI sua truoc khi bao cao so nao.");
+                ? "RESULT: every static algorithm returns the same set of HUSPs."
+                : "RESULT: " + bad + " mismatching pairs - fix before reporting any number.");
         if (bad > 0) System.exit(1);
     }
 
@@ -65,16 +64,16 @@ public final class BaselineAgreement {
         List<Sequence> all = DatasetLoader.loadDataset(
                 Paths.get(DIR, name + "_seq.txt").toString(),
                 Paths.get(DIR, name + "_eui.txt").toString());
-        // Mac dinh dung DUNG D_init cua CSDL do - so chuoi lay tu Datasets, khong phai mot
-        // nua - cho khop SC1, vi nguong duoc hieu chinh tren chinh pham vi ay. -Dhalf=false
-        // de chay toan bo.
+        // By default use exactly the D_init of the database - the sequence count from
+        // Datasets, not half - to match SC1, since the thresholds are calibrated on that
+        // scope. -Dhalf=false runs on the whole database.
         int dInit = common.Datasets.dInitCount(name, all.size());
         List<Sequence> db = halfOnly ? new ArrayList<>(all.subList(0, dInit)) : all;
         double tsu = 0;
         for (Sequence s : db) tsu += s.sequenceUtility;
         double minUtil = tsu * uut;
 
-        System.out.printf("%n=== %s | |D|=%d | UUT=%.4f | nguong tuyet doi=%.1f ===%n",
+        System.out.printf("%n=== %s | |D|=%d | UUT=%.4f | absolute threshold=%.1f ===%n",
                 name, db.size(), uut, minUtil);
 
         USpanAlgorithm us = new USpanAlgorithm(minUtil);
@@ -109,10 +108,10 @@ public final class BaselineAgreement {
     private static int compare(String who, Map<String, Double> ref, Map<String, Double> got) {
         PatternSetDiff d = PatternSetDiff.of(ref, got);
         if (d.isClean()) {
-            System.out.printf("    %-10s khop USpan tuyet doi%n", who);
+            System.out.printf("    %-10s matches USpan exactly%n", who);
             return 0;
         }
-        System.out.printf("    %-10s SAI LECH: %s%n", who, d);
+        System.out.printf("    %-10s MISMATCH: %s%n", who, d);
         return 1;
     }
 
@@ -124,7 +123,7 @@ public final class BaselineAgreement {
         return out;
     }
 
-    /** Cac thuat toan ghi de truong noi bo cua Sequence, nen moi lan chay mot ban sao list. */
+    /** The algorithms overwrite internal fields of Sequence, so each run gets its own list copy. */
     private static List<Sequence> copy(List<Sequence> src) {
         return new ArrayList<>(src);
     }

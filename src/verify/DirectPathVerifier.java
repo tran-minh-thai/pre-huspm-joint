@@ -43,12 +43,12 @@ import java.util.TreeMap;
  * --adversarial shapes the operations like the counterexamples instead of drawing them at
  * random. Random deletions lower every pattern's utility roughly in proportion to TSU, so
  * no pattern is pushed across the threshold and a faulty rule goes unseen (measured: the
- * superseded iaumax rule and two injected faults all pass the random stream on SIGN and
+ * unsound iaumax rule and two injected faults all pass the random stream on SIGN and
  * C8T1S5I8N5K). In adversarial mode a target X is chosen after the initial mine and after
  * every rescan: the untracked pattern of highest utility, found by a reference mine at the
  * lower floor PROBE_RL. Deletions then take only sequences missing one of X's items, which
- * cannot contain X, and
- * insertions (and the new side of a modification) take only sequences holding all of them -
+ * cannot contain X, and insertions (and the new side of a modification) take only sequences
+ * holding all of them -
  * from the stream first, otherwise copies, under fresh ids, of such sequences of the
  * database. X keeps its utility while TSU falls, and gains while it rises.
  *
@@ -71,7 +71,7 @@ public final class DirectPathVerifier {
     public static void main(String[] args) throws IOException {
         if (args.length == 0) {
             System.out.println("usage: verify.DirectPathVerifier <DATABASE|ALL> [--ops N] [--share S] "
-                    + "[--rule joint|iaumax|cub|swumax] [--seed N] [--out DIR]");
+                    + "[--rule joint|iaumax|cub|swumax] [--seed N] [--adversarial] [--out DIR]");
             System.out.println("databases: " + common.Datasets.names());
             return;
         }

@@ -1,4 +1,4 @@
-==== KOSARAK  bat dau 20:02:06 ====
+==== KOSARAK  start 20:02:06 ====
 budgets: 3,000,000,000 candidates, 600 s per probe, 1800 s per level, 7200 s per database
 
 === KOSARAK | D_init | |D|=495,001 | TSU=193,542,126 ===
@@ -9,7 +9,7 @@ budgets: 3,000,000,000 candidates, 600 s per probe, 1800 s per level, 7200 s per
      low         12     0.02109           12       4    624523  ok
 
 -> D:\pre-huspm-adaptive\results\thresholds\thresholds-admin-pc.csv
-==== FIFA  bat dau 20:40:57 ====
+==== FIFA  start 20:40:57 ====
 budgets: 3,000,000,000 candidates, 900 s per probe, 2700 s per level, 10800 s per database
 
 === FIFA | D_init | |D|=10,225 | TSU=21,636,666 ===
@@ -23,7 +23,7 @@ budgets: 3,000,000,000 candidates, 900 s per probe, 2700 s per level, 10800 s pe
      low         41     0.00000            -       3   4500091  unreachable-within-budget
 
 -> D:\pre-huspm-adaptive\results\thresholds\thresholds-admin-pc.csv
-==== ONLINE_RETAIL_II_QTY  bat dau 23:48:01 ====
+==== ONLINE_RETAIL_II_QTY  start 23:48:01 ====
 budgets: 3,000,000,000 candidates, 900 s per probe, 1800 s per level, 7200 s per database
 
 === ONLINE_RETAIL_II_QTY | D_init | |D|=2,883 | TSU=10,757,136 ===
@@ -35,7 +35,7 @@ budgets: 3,000,000,000 candidates, 900 s per probe, 1800 s per level, 7200 s per
      low        300  not-attempted-database-budget-spent
 
 -> D:\pre-huspm-adaptive\results\thresholds\thresholds-admin-pc.csv
-==== ONLINE_RETAIL_II_ALL  bat dau 02:19:20 ====
+==== ONLINE_RETAIL_II_ALL  start 02:19:20 ====
 budgets: 3,000,000,000 candidates, 900 s per probe, 1800 s per level, 7200 s per database
 
 === ONLINE_RETAIL_II_ALL | D_init | |D|=2,191 | TSU=15,097,163 ===
@@ -47,4 +47,4 @@ budgets: 3,000,000,000 candidates, 900 s per probe, 1800 s per level, 7200 s per
      low        300  not-attempted-database-budget-spent
 
 -> D:\pre-huspm-adaptive\results\thresholds\thresholds-admin-pc.csv
-==== xong 04:58:30 ====
+==== done 04:58:30 ====

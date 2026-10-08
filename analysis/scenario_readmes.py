@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Write the READMEs of the re-measured scenarios from their result files.
+"""Write the READMEs of the campaign scenarios from their result files.
 
     python3 analysis/scenario_readmes.py
 
@@ -126,7 +126,7 @@ def sc2():
     boundary = [d for d in dbs if d not in inside and d not in beyond]
     import re
     src = open(os.path.join(mf.REPO_DIR, "src", "common", "Datasets.java"), encoding="utf-8").read()
-    rl = {d: (0.85 if re.search(rf'new Entry\("{d}".*?true, 0\.85\)', src, re.S) else 0.8) for d in dbs}
+    rl = {d: (0.85 if re.search(rf'new Entry\("{d}",(?:(?!new Entry).)*?true, 0\.85\)', src, re.S) else 0.8) for d in dbs}
     swu_faster = [d for d in dbs if totals[(d, "Pre-HUSPM")][1] == 100 and totals[(d, "Pre-HUSPM")][0] < totals[(d, P)][0]]
     kos = "KOSARAK"
     s1 = mf.parse_su(mf.load_scenario("SC1", replicates=True))

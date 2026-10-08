@@ -33,13 +33,12 @@ public final class Density {
     /**
      * Above this, mining at the usual floor stops being affordable on the measured suite.
      *
-     * Measured on D_init, which is what this class sees and therefore the only scale the
-     * constant may be stated on. The first version of it was 150, read off the same eight
-     * databases measured over their whole extent instead, and the two scales are not
-     * interchangeable: the ratio between them runs from 0.53 to 0.71 across the suite, so no
-     * conversion factor exists. The effect was that the floor rose on BMS1 alone while FIFA
-     * and KOSARAK, at 137.5 and 112.9 here against 247.9 and 194.3 over the whole database,
-     * fell below the line and were left at the configured floor.
+     * Stated on D_init, which is what this class sees and therefore the only scale the
+     * constant may be stated on. Repetition over the whole database is a different scale
+     * with no conversion factor: the ratio between the two runs from 0.53 to 0.71 across the
+     * suite (FIFA is 137.5 on D_init against 247.9 on the whole database, KOSARAK 112.9
+     * against 194.3). A constant read off whole-database values would leave such databases
+     * at the configured floor.
      */
     public static final double REPETITION_HIGH = 90.0;
 

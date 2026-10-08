@@ -18,15 +18,15 @@ public class ResultCollector implements Closeable {
 
     public synchronized void log(ExperimentMetrics metrics) {
         if (metrics == null) return;
-        // Catch Throwable (không chỉ IOException): nếu toCsvRow()/write OOM trên heap
-        // gần đầy (do CP-Tree baseline chưa được GC), NUỐT lỗi để Main Thread sống sót
-        // và experiment chạy tiếp thuật toán/dataset kế - KHÔNG sập toàn bộ tiến trình.
+        // Catch Throwable, not only IOException: if toCsvRow() or write throws
+        // OutOfMemoryError on a nearly full heap, swallow it so the main thread survives
+        // and the run continues with the next algorithm or dataset.
         try {
             writer.write(metrics.toCsvRow());
             writer.newLine();
-            writer.flush(); // Flush ngay để không mất log khi OOM/crash
+            writer.flush(); // flush every row so nothing is lost on OOM or crash
         } catch (Throwable e) {
-            try { System.err.println("Lỗi ghi log thực nghiệm: " + e.getClass().getSimpleName()); }
+            try { System.err.println("Failed to write result row: " + e.getClass().getSimpleName()); }
             catch (Throwable ignored) {}
         }
     }

@@ -7,65 +7,69 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * Thuật toán Đối chứng: Pre-HUSPM (Yan et al., J. Supercomputing 2025) - ZERO-ALLOCATION.
+ * Baseline: Pre-HUSPM (Yan et al., J. Supercomputing 2025), zero-allocation implementation.
  *
  * ───────────────────────────────────────────────────────────────────────────
- * TRUNG THỰC THEO BÀI BÁO GỐC.
+ * PRUNING BOUND = projected SWU (the SWU computed on the projected database):
+ *   For a prefix X in one sequence the quantity is max over occurrences of
+ *   (prefixUtil + restUtil); summed over sequences,
+ *   SWU_proj(X) = Σ_{s⊇X} max_occ(prefixUtil + restUtil) = PEU(X).
+ *   The global SWU of Yan et al., Definition 8 (Σ SU(s)), is not used: it is a much
+ *   looser bound and makes the candidate set explode.
+ *   A pattern is pruned when SWU_proj(X) < Sl·TSU (downward closure: no extension of X
+ *   can be pre-large).
+ *   * HUSP (Yan et al., Definition 10):           su(X) ≥ Su·TSU   (su = actual utility).
+ *   * Pre-large PSWU (Yan et al., Definition 12): Sl·TSU ≤ SWU_proj(X) < Su·TSU.
+ *   * Buffer = LSWU ∪ PSWU = every candidate with SWU_proj ≥ Sl·TSU, stored as (SWU_proj, su).
  *
- * CẬN CẮT TỈA = "projected SWU" (SWU tính trên projection database):
- *   Với prefix X tại một chuỗi, đại lượng này = max(prefixUtil + restUtil) - cộng
- *   trên các chuỗi:  SWU_proj(X) = Σ_{s⊇X} max_occ(prefixUtil + restUtil) = PEU.
- *   (SWU TOÀN CỤC Σ SU(s) - Đ.n 8 - chỉ là baseline khái niệm; dùng nó sẽ bùng nổ
- *    ~10⁹ ứng viên. Bài báo nói rõ "projected SWU < global SWU".)
- *   Tỉa khi SWU_proj(X) < Sl·TSU (downward closure ⇒ không thể pre-large).
- *   * HUSP (Đ.n 10):           su(X) ≥ Su·TSU         (su = tiện ích THỰC).
- *   * Pre-large PSWU (Đ.n 12): Sl·TSU ≤ SWU_proj(X) < Su·TSU.
- *   * Bộ đệm = LSWU ∪ PSWU = mọi ứng viên SWU_proj ≥ Sl·TSU, lưu (SWU_proj, su).
+ * INCREMENTAL RESCAN TEST - two variants, both as stated by Yan et al.:
  *
- * CƠ CHẾ GIA TĂNG - HAI BIẾN THỂ, đúng như bài gốc trình bày:
+ *   Common budget: f = ((Su-Sl)/(1-Su))·TSU_lastRescan.
  *
- *   Ngân sách chung: f = ((Su-Sl)/(1-Su))·TSU_lastRescan.
+ *   Variant.TSU (Yan et al., Theorem 1), arm "Pre-HUSPM-TSU":
+ *     the quantity compared with f is TSU(d) = Σ_{s∈d} u(s), the total utility of the batch.
+ *     SOUND. The utility gained by a pattern X over a batch is the sum of the
+ *     contributions of every inserted sequence containing X, and that sum is bounded
+ *     by TSU(d).
  *
- *   Variant.TSU (Định lý 1 của Yan et al.) - Pre-HUSPM-TSU:
- *     đại lượng so sánh là TSU(d) = Σ_{s∈d} u(s), tổng utility của lô.
- *     ĐÚNG ĐẮN. Mức tăng utility của một mẫu X trên lô là tổng đóng góp của mọi
- *     chuỗi chèn chứa X, và tổng đó bị chặn bởi TSU(d).
- *
- *   Variant.SWUMAX (Định lý 2 của Yan et al.) - Pre-HUSPM-SWUmax:
- *     đại lượng so sánh là SWUmax(d) = max_{s∈d} u(s), utility của MỘT chuỗi.
- *     KHÔNG ĐÚNG ĐẮN. Chứng minh của họ, Eq. (14), đi qua bước
+ *   Variant.SWUMAX (Yan et al., Theorem 2), arm "Pre-HUSPM":
+ *     the quantity compared with f is SWUmax(d) = max_{s∈d} u(s), the utility of ONE sequence.
+ *     NOT SOUND. The proof of Theorem 2 relies on Eq. (14) of Yan et al.,
  *         TSU_d ≥ SWUmax ≥ SWU_d(X),
- *     nhưng SWUmax là utility của một chuỗi trong khi SWU_d(X) cộng trên MỌI chuỗi
- *     của d có chứa X, nên bất đẳng thức thứ hai sai. Phản ví dụ: Su=0.25, Sl=0.20,
- *     TSU(D)=100, u(X,D)=19; chèn hai chuỗi cùng chứa X với u=6 cho SWUmax=6 ≤ f=6.67
- *     nên không rescan, trong khi u(X,D')=31 > 0.25·112=28, tức X đã thành HUSP.
+ *     but SWUmax is the utility of a single sequence while SWU_d(X) sums over EVERY
+ *     sequence of d that contains X, so the second inequality does not hold.
+ *     Counterexample: Su=0.25, Sl=0.20, TSU(D)=100, u(X,D)=19. Inserting two sequences
+ *     that both contain X with u=6 gives SWUmax=6 ≤ f=6.67, so no rescan is made, yet
+ *     u(X,D')=31 > 0.25·112=28, i.e. X has become a HUSP.
  *
- *   Cả hai biến thể ở đây đều dùng dạng TÍCH LUỸ (buf), tức đã chặt hơn bản gốc vốn
- *   chỉ so sánh trên từng lô riêng lẻ.
+ *   Both variants use the cumulative form (buf, accumulated since the last rescan),
+ *   which is stricter than the published test that looks at each batch in isolation.
  *
  * ───────────────────────────────────────────────────────────────────────────
- * ZERO-ALLOCATION (KHÔNG đổi logic toán học - chỉ đổi cách CẤP PHÁT bộ nhớ):
- *   * Tracker dùng primitive arrays (int[] flatIndices, double[] utility) - KHÔNG
- *     còn List<Instance>/Instance trong vòng đệ quy.
- *   * Object Pool (TrackerPool + TrackerListPool) + warmup ⇒ recursion CHỈ borrow/release.
- *   * Scratch buffer O(1) merge theo flatIdx; 2-pha (Pass-1 gom item duy nhất; Pass-2
- *     lazy-materialize TỪNG item rồi đệ quy + release) ⇒ RAM = O(depth).
- *   * Biểu diễn flat của Sequence (flatItems/flatUtilities/isItemsetEnd/flatRemainingUtility).
- *   Kết quả khai phá (tập HUSP + utility) GIỮ NGUYÊN - đã verify khớp gold.
+ * ZERO-ALLOCATION (memory layout only; it does not change which patterns are mined):
+ *   * Tracker uses primitive arrays (int[] flatIndices, double[] utility); no
+ *     List<Instance> or Instance objects inside the recursion.
+ *   * Object pools (TrackerPool + TrackerListPool) with warmup, so the recursion only
+ *     borrows and releases.
+ *   * O(1) scratch buffer merge by flatIdx; two passes (pass 1 collects the distinct
+ *     extension items; pass 2 recurses into each child and releases it), so memory
+ *     grows with O(depth).
+ *   * Uses the flat representation of Sequence (flatItems/flatUtilities/isItemsetEnd/
+ *     flatRemainingUtility).
  * ───────────────────────────────────────────────────────────────────────────
  */
 public class PreHUSPMAlgorithm {
 
     // ========================================================================
-    // 1. TRACKER - primitive parallel arrays (KHÔNG còn Instance/List)
+    // 1. TRACKER - primitive parallel arrays (no Instance objects, no List)
     // ========================================================================
     static final class Tracker {
         int seqId;
         int[] flatIndices;
         double[] utility;
         int size = 0;
-        double exactUtility = 0;   // su cục bộ = max tiện ích tiền tố trong 1 chuỗi
-        double peu = 0;            // SWU_proj cục bộ = max(prefixUtil + restUtil) trong 1 chuỗi
+        double exactUtility = 0;   // local su = max prefix utility within one sequence
+        double peu = 0;            // local SWU_proj = max(prefixUtil + restUtil) within one sequence
 
         Tracker(int id) {
             this.seqId = id;
@@ -77,7 +81,7 @@ public class PreHUSPMAlgorithm {
             this.seqId = newSeqId; this.size = 0; this.exactUtility = 0; this.peu = 0;
         }
 
-        /** Append (caller đảm bảo flatIdx unique trong 1 chuỗi qua scratch buffer merge). */
+        /** Appends one position; the caller guarantees flatIdx is unique within the sequence. */
         void append(int flatIdx, double u, Sequence seq) {
             if (size == flatIndices.length) grow();
             flatIndices[size] = flatIdx;
@@ -101,37 +105,37 @@ public class PreHUSPMAlgorithm {
     }
 
     // ========================================================================
-    // 2. LÕI THUẬT TOÁN PRE-HUSPM
+    // 2. PRE-HUSPM CORE
     // ========================================================================
     public static class PreHUSPMAlgo {
 
-        /** Hai biến thể của cơ chế gia tăng trong bài gốc. Xem chú thích đầu lớp. */
+        /** The two rescan tests of Yan et al. See the class comment. */
         public enum Variant {
-            /** Định lý 1: so sánh TSU(d). Đúng đắn. */
+            /** Theorem 1: compares TSU(d). Sound. */
             TSU,
-            /** Định lý 2: so sánh SWUmax(d). Không đúng đắn; giữ để đối chiếu. */
+            /** Theorem 2: compares SWUmax(d). Not sound; kept as the published baseline. */
             SWUMAX
         }
 
         public double Su, Sl;
-        /** Mặc định SWUMAX để giữ nguyên hành vi của các kết quả đã công bố. */
+        /** Default: SWUMAX, the test of Theorem 2 used by the "Pre-HUSPM" arm. */
         public Variant variant = Variant.SWUMAX;
         public double safetyBoundF = 0;
-        /** Đại lượng đã dùng để so với f ở lô gần nhất (xuất CSV/chẩn đoán). */
+        /** Quantity compared with f in the latest batch (written to the CSV for diagnosis). */
         public double lastTriggerQuantity = 0;
-        /** buf sau khi cập nhật ở lô gần nhất. */
+        /** buf after the update of the latest batch. */
         public double bufValue = 0;
         public int maxDepth = 1000;
 
         public Map<Pattern, Double> largeMap = new HashMap<>();      // HUSP: su ≥ Su·TSU
         public Map<Pattern, Double> prelargeMap = new HashMap<>();   // PSWU: Sl·TSU ≤ SWU_proj < Su·TSU
         private Map<Pattern, double[]> swuBuffer = new HashMap<>();  // LSWU∪PSWU → {SWU_proj, su}
-        private double buf = 0.0;                                    // tích luỹ SWUmax từ rescan gần nhất
+        private double buf = 0.0;                                    // trigger quantity accumulated since the last rescan
 
         public int rescanCount = 0, patternCount = 0;
         public int prelargeCount = 0;
         public long candidateCount = 0;
-        public long exploredNodes = 0; // Số mẫu THỰC SỰ khai triển (đệ quy vào) - đo hiệu quả tỉa
+        public long exploredNodes = 0; // nodes entered by expandNode, including those then pruned by the bound
         public long prunedPEU = 0;
 
         private boolean writeToFile;
@@ -147,7 +151,7 @@ public class PreHUSPMAlgorithm {
             this.writeToFile = writeToFile;
         }
 
-        // ---- DB lookup theo seqId bằng ARRAY (không Integer boxing) ----
+        // ---- Sequence lookup by seqId through an array (no Integer boxing) ----
         private Sequence[] dbLookupArr = new Sequence[16];
         private void dbPut(Sequence seq) {
             int sid = seq.id;
@@ -199,10 +203,10 @@ public class PreHUSPMAlgorithm {
         private TrackerList borrowTrackerList() { return trackerListPool.borrow(); }
         private void releaseTrackerList(TrackerList tl) { trackerListPool.release(tl); }
 
-        // ---- Slot theo itemId: gom con TRỰC TIẾP trong 1 LƯỢT quét (single-pass,
-        //      khớp profile thuật toán gốc; nhanh hơn lazy-rescan trên data dày) ----
-        private transient TrackerList[] iSlot, sSlot;   // iSlot[itemId] = TrackerList con I-ext
-        private transient int[] usedItemI, usedItemS;   // danh sách itemId đã chạm (reset selective)
+        // ---- Slots by itemId: children are collected directly in a single pass over
+        //      the parent, as in the published algorithm ----
+        private transient TrackerList[] iSlot, sSlot;   // iSlot[itemId] = TrackerList of the I-extension child
+        private transient int[] usedItemI, usedItemS;   // itemIds touched in this pass (for selective reset)
         private int maxItemId = -1;
         private int maxFlatLen = 0;
         private void ensureItemScratch(int sz) {
@@ -212,7 +216,7 @@ public class PreHUSPMAlgorithm {
             }
         }
 
-        // ---- Mảng depth-local (snapshot con trước khi đệ quy → chống clobber slot[]) ----
+        // ---- Per-depth arrays: children are copied out before recursing so slot[] is not overwritten ----
         private transient List<int[]> iItemPool = new ArrayList<>();
         private transient List<int[]> sItemPool = new ArrayList<>();
         private transient List<TrackerList[]> iTLPool = new ArrayList<>();
@@ -231,7 +235,7 @@ public class PreHUSPMAlgorithm {
         }
 
         // ====================================================================
-        // PHA 1: KHAI PHÁ KHỞI TẠO
+        // PHASE 1: INITIAL MINING
         // ====================================================================
         public void runInitialMining(List<Sequence> dInit, double currentTotalUtility) {
             rescanCount = 0; patternCount = 0; prelargeCount = 0;
@@ -241,16 +245,16 @@ public class PreHUSPMAlgorithm {
         }
 
         // ====================================================================
-        // PHA 2: KHAI PHÁ GIA TĂNG (Định lý 2 - Pre-HUSPM-SWUmax)
+        // PHASE 2: INCREMENTAL MINING (rescan test of the selected variant)
         // ====================================================================
         public void runIncrementalMining(List<Sequence> deltaD, List<Sequence> dSoFar, double newTotalUtility) {
-            // Reset MỖI LÔ (nhất quán Adaptive) → candidate/explored/prunedPEU phản ánh ĐÚNG lô này
-            // (lô safe-update không mine → 0; lô rescan → số của lần re-mine đó).
+            // Reset per batch (as in the adaptive algorithm) so the counters describe this batch only:
+            // a safe-update batch mines nothing and reports 0; a rescan batch reports that re-mine.
             candidateCount = 0; exploredNodes = 0; prunedPEU = 0;
 
-            // Đại lượng so sánh phụ thuộc biến thể (xem chú thích đầu lớp).
-            //   TSU    : TSU(d) = Σ_{s∈d} u(s)      - Định lý 1, đúng đắn
-            //   SWUMAX : max_{s∈d} u(s)             - Định lý 2, không đúng đắn
+            // The quantity compared with f depends on the variant (see the class comment).
+            //   TSU    : TSU(d) = Σ_{s∈d} u(s)      - Theorem 1, sound
+            //   SWUMAX : max_{s∈d} u(s)             - Theorem 2, not sound
             double swuMax = 0, tsuD = 0;
             for (Sequence seq : deltaD) {
                 tsuD += seq.sequenceUtility;
@@ -300,7 +304,7 @@ public class PreHUSPMAlgorithm {
             deriveMaps(absSu, absSl);
         }
 
-        /** Suy ra largeMap (HUSP, Đ.n10) & prelargeMap (PSWU, Đ.n12) từ bộ đệm. */
+        /** Derives largeMap (HUSP, Definition 10) and prelargeMap (PSWU, Definition 12) from the buffer. */
         private void deriveMaps(double absSu, double absSl) {
             largeMap.clear(); prelargeMap.clear();
             for (Map.Entry<Pattern, double[]> e : swuBuffer.entrySet()) {
@@ -313,7 +317,7 @@ public class PreHUSPMAlgorithm {
         }
 
         // ====================================================================
-        // KHAI PHÁ TỪ ĐẦU - zero-allocation
+        // MINING FROM SCRATCH - zero-allocation
         // ====================================================================
         private Map<Pattern, double[]> mineFromScratch(List<Sequence> db, double minSl) {
             dbClear();
@@ -331,7 +335,7 @@ public class PreHUSPMAlgorithm {
 
             Map<Pattern, double[]> results = new HashMap<>();
 
-            // ---- L1: gom theo item (một lần quét; flat Tracker, không Instance) ----
+            // ---- L1: group by item in one scan (flat Tracker, no Instance) ----
             Map<Integer, TrackerList> l1 = new HashMap<>();
             for (Sequence seq : db) {
                 int sid = seq.id, flatLen = seq.flatLen;
@@ -356,12 +360,13 @@ public class PreHUSPMAlgorithm {
         }
 
         /**
-         * Đệ quy 2-pha zero-allocation (SINGLE-PASS) với cận SWU_proj(=PEU).
-         *  Pass-1: quét parent ĐÚNG 1 LƯỢT, gom con TRỰC TIẾP vào iSlot/sSlot[itemId]
-         *          (mượn Tracker/TrackerList từ pool; 1 Tracker / 1 seqId / 1 item).
-         *  Pass-2: snapshot con ra mảng depth-local (chống clobber slot[]), đệ quy
-         *          từng con rồi release về pool.
-         *  Khớp luồng thuật toán gốc (gom toàn bộ mở rộng 1 lượt) - chỉ đổi cấp phát.
+         * Two-pass zero-allocation recursion with the SWU_proj (= PEU) bound.
+         *  Pass 1: scans the parent exactly once and collects children directly into
+         *          iSlot/sSlot[itemId] (Tracker/TrackerList borrowed from the pools;
+         *          one Tracker per seqId per item).
+         *  Pass 2: copies the children into per-depth arrays (so slot[] is not
+         *          overwritten), recurses into each child, then releases it to the pool.
+         *  All extensions are collected in one pass, as in the published algorithm.
          */
         private void expandNode(Pattern currentPattern, TrackerList parentTrackers, double minSl,
                                 Map<Pattern, double[]> results, int depth) {
@@ -369,9 +374,10 @@ public class PreHUSPMAlgorithm {
             if (Thread.currentThread().isInterrupted()) return;
             if (parentTrackers == null || parentTrackers.isEmpty()) return;
 
-            exploredNodes++;  // mẫu này được KHAI TRIỂN (materialize + đệ quy vào)
-            candidateCount++; // One Generation = One Candidate (Pre-HUSPM materialize MỌI extension
-                              //   → candidate_count = explored_nodes; KHÁC Adaptive: EUCS lọc trước materialize)
+            exploredNodes++;  // counted on entry, before the SWU_proj check below
+            candidateCount++; // one generated extension = one candidate. Pre-HUSPM materializes EVERY
+                              //   extension, so candidate_count = explored_nodes (the adaptive algorithm
+                              //   filters with EUCS before materializing)
 
             final ArrayList<Tracker> ptList = parentTrackers.trackers;
             final int ptSize = ptList.size();
@@ -386,7 +392,7 @@ public class PreHUSPMAlgorithm {
             if (projSwuD < minSl) { prunedPEU++; return; }
             results.put(currentPattern.clonePattern(), new double[]{projSwuD, suD});
 
-            // ===== PASS-1: SINGLE-PASS - gom con I-ext & S-ext trực tiếp vào slot[] =====
+            // ===== PASS 1: single pass - collect I-ext and S-ext children directly into slot[] =====
             int usedICount = 0, usedSCount = 0;
             for (int pi = 0; pi < ptSize; pi++) {
                 Tracker t = ptList.get(pi);
@@ -401,7 +407,7 @@ public class PreHUSPMAlgorithm {
                 for (int k = 0; k < tSize; k++) {
                     int p = tFlat[k];
                     double iu = tUtil[k];
-                    // I-ext: cùng itemset, sau p (đến isItemsetEnd)
+                    // I-ext: same itemset, after p (up to isItemsetEnd)
                     if (!isItemsetEnd[p]) {
                         for (int q = p + 1; q < flatLen; q++) {
                             int item = flatItems[q];
@@ -414,7 +420,7 @@ public class PreHUSPMAlgorithm {
                             if (isItemsetEnd[q]) break;
                         }
                     }
-                    // S-ext: itemset sau itemset của p
+                    // S-ext: itemsets after the itemset of p
                     int boundary = p; while (boundary < flatLen && !isItemsetEnd[boundary]) boundary++;
                     for (int q = boundary + 1; q < flatLen; q++) {
                         int item = flatItems[q];
@@ -428,7 +434,7 @@ public class PreHUSPMAlgorithm {
                 }
             }
 
-            // ===== Snapshot con ra mảng depth-local + GIẢI PHÓNG slot[] (chống clobber) =====
+            // ===== Copy children into per-depth arrays and clear slot[] (so it is not overwritten) =====
             int[] itemsI = null; TrackerList[] tlsI = null;
             if (usedICount > 0) {
                 itemsI = borrowIntArr(iItemPool, depth, usedICount);
@@ -442,7 +448,7 @@ public class PreHUSPMAlgorithm {
                 for (int u = 0; u < usedSCount; u++) { int item = usedItemS[u]; itemsS[u] = item; tlsS[u] = sSlot[item]; sSlot[item] = null; }
             }
 
-            // ===== PASS-2: đệ quy từng con rồi release về pool =====
+            // ===== PASS 2: recurse into each child, then release it to the pool =====
             for (int u = 0; u < usedICount; u++) {
                 currentPattern.addIExtension(itemsI[u]);
                 expandNode(currentPattern, tlsI[u], minSl, results, depth + 1);
@@ -458,8 +464,8 @@ public class PreHUSPMAlgorithm {
         }
 
         // ====================================================================
-        // evaluatePatternUtility - {su, SWU_proj} của p trong 1 chuỗi (frontier
-        // bằng mảng song song tái sử dụng - KHÔNG List/Instance).
+        // evaluatePatternUtility - {su, SWU_proj} of p in one sequence (the frontier
+        // is kept in reused parallel arrays; no List or Instance).
         // ====================================================================
         private int[] evCurIs = new int[16], evCurIi = new int[16];
         private double[] evCurU = new double[16];
@@ -516,7 +522,7 @@ public class PreHUSPMAlgorithm {
                         }
                     }
                     if (evNxtN == 0) { evalOut[0] = 0; evalOut[1] = 0; return evalOut; }
-                    // swap cur <-> nxt (chỉ đổi tham chiếu - không alloc)
+                    // swap cur <-> nxt (references only, no allocation)
                     int[] ti = evCurIs; evCurIs = evNxtIs; evNxtIs = ti;
                     ti = evCurIi; evCurIi = evNxtIi; evNxtIi = ti;
                     double[] td = evCurU; evCurU = evNxtU; evNxtU = td;
@@ -543,7 +549,7 @@ public class PreHUSPMAlgorithm {
                     writer.newLine();
                 }
             } catch (IOException e) {
-                System.err.println("Lỗi ghi file Pre-HUSPM: " + e.getMessage());
+                System.err.println("Error writing Pre-HUSPM output file: " + e.getMessage());
             }
         }
     }

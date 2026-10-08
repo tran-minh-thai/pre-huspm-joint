@@ -7,19 +7,20 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * Thuật toán Đề xuất: Pre-HUSPM-Adaptive
- * Tích hợp 5 đóng góp lõi:
- * C1. Áp cận giá trị PEU gộp TRƯỚC khi materialize (single-pass survey→filter→materialize)
- * C2. Ngưỡng dưới thích ứng động (LUT_dyn)
- * C3. Cận trên cục bộ chặt IUB
- * C4. Chỉ mục ngược cấp độ khối (Block-level Inverted Index)
- * C5. Bộ đệm lợi ích ròng tích lũy (CUB)
+ * Pre-HUSPM-Adaptive: incremental high-utility sequential pattern mining with pre-large
+ * maintenance. Components:
+ * - aggregated PEU value bound applied before child occurrence lists are built
+ *   (survey, filter, then materialize);
+ * - adaptive pre-large floor LUT_dyn (not used under the JOINT trigger rule);
+ * - IUB branch bound summed over the per-sequence PEU of a node;
+ * - block-level inverted index for the direct-update branch;
+ * - accumulated insertion/deletion counters that decide when to rescan.
  */
 public class PreHUSPMAdaptiveAlgorithm {
 
     /**
-     * Lightweight signal cho cooperative cancellation từ runner (timeout 60 phút).
-     * Không fill stack trace → throw cực nhẹ (~10 ns).
+     * Cooperative cancellation signal raised when the runner's timeout fires.
+     * Built without a stack trace, so throwing it is cheap.
      */
     public static final class CancellationSignal extends RuntimeException {
         private static final long serialVersionUID = 1L;
@@ -27,29 +28,28 @@ public class PreHUSPMAdaptiveAlgorithm {
     }
 
     /**
-     * Safety net: số mẫu (pre)large vượt ngân sách bộ nhớ → dừng êm thay vì OOM cứng
-     * 24GB. Runner bắt Throwable → ghi FAILED. Tương tự cách baseline bị đánh dấu OOM/DNF
-     * khi vượt giới hạn. Throw nhẹ (không stack trace).
+     * Raised when a mining pass exceeds its candidate or wall-clock budget, so the run
+     * stops cleanly instead of running out of memory. The runner records it as BUDGET.
+     * Built without a stack trace.
      */
     public static final class PatternBudgetExceeded extends RuntimeException {
         private static final long serialVersionUID = 1L;
         public PatternBudgetExceeded(long n) {
-            super("Pattern budget exceeded (" + n + " patterns) - threshold quá thấp cho dataset này", null, false, false);
+            super("Pattern budget exceeded (" + n + " patterns) - threshold too low for this dataset", null, false, false);
         }
     }
 
 
     // ========================================================================
-    // ĐÓNG GÓP C4: CHỈ MỤC NGƯỢC CẤP ĐỘ KHỐI (BLOCK-INDEX)
+    // BLOCK-LEVEL INVERTED INDEX
     // ========================================================================
     static class BlockSummary {
         int blockId, startSeqId, endSeqId;
         double minSeqUtility = Double.MAX_VALUE;
         double maxSeqUtility = Double.MIN_VALUE;
-        // No per-block item set. One used to be kept here, a BitSet over every item id the
-        // block holds, and nothing read it: itemBlockBitmap below answers "which blocks hold
-        // item i" on its own. Each such set is as long as the largest item id, so on
-        // C8T1S5I8N5K it held 407 MB after the last increment for no use.
+        // No per-block item set is kept: itemBlockBitmap already answers "which blocks
+        // hold item i", and a per-block set as long as the largest item id costs memory
+        // for no use.
 
         public BlockSummary(int id, int start, int end) {
             this.blockId = id; this.startSeqId = start; this.endSeqId = end;
@@ -62,27 +62,23 @@ public class PreHUSPMAdaptiveAlgorithm {
     }
 
     /**
-     * BLOCK-INDEX (C4) với BitMask Inverted Index.
+     * Block-level inverted index stored as one bitmap per item.
      *
-     * Thay {@code Map<Integer, List<Integer>>} (boxing tràn lan + ArrayList<Integer>
-     * cho mỗi item) bằng {@code BitSet[] itemBlockBitmap}:
-     *  - itemBlockBitmap[itemId].get(blockId) == true  ↔ item xuất hiện trong block đó.
-     *  - Lookup O(1) qua bit-test (vs O(log M) binary search cũ).
-     *  - Tiết kiệm RAM ~10×: N_items × M_blocks bits thay vì N_items × M_blocks ×
-     *    24 bytes/Integer + ArrayList overhead.
-     *  - Hỗ trợ stream tốt: append block mới chỉ là set bit ở vị trí cuối → O(1).
+     *  - itemBlockBitmap[itemId].get(blockId) is true iff the item occurs in that block.
+     *  - Lookup is a bit test; memory is one bit per (item, block) pair, with no boxing.
+     *  - Appending a block only sets bits at the highest block id.
      *
-     * seqIdToBlock vẫn là int[] (đã primitive, tăng trưởng power-of-two).
+     * seqIdToBlock is an int[] that grows by doubling.
      */
     static class BlockIndex {
         int blockSize = 100;
         List<BlockSummary> blocks = new ArrayList<>();
 
-        // BitMask inverted index: itemBlockBitmap[itemId] = BitSet of block ids containing it.
+        // itemBlockBitmap[itemId] = set of block ids that contain the item.
         BitSet[] itemBlockBitmap = new BitSet[256];
         int maxItemSeen = -1;
 
-        // C4-OPT: Mảng seqId -> blockId cho tra cứu O(1). Tự động mở rộng theo nhu cầu.
+        // seqId -> blockId, grown on demand.
         int[] seqIdToBlock = new int[1024];
         int maxSeqIdSeen = -1;
 
@@ -140,13 +136,13 @@ public class PreHUSPMAdaptiveAlgorithm {
             }
         }
 
-        /** Tra cứu blockId của 1 sequence trong O(1). */
+        /** Block id of a sequence, or -1 if unknown. */
         public int blockOf(int seqId) {
             if (seqId < 0 || seqId >= seqIdToBlock.length) return -1;
             return seqIdToBlock[seqId];
         }
 
-        /** BitMask của các block chứa item. null nếu item chưa từng xuất hiện. */
+        /** Bitmap of the blocks that contain the item; null if the item has never occurred. */
         public BitSet bitsetFor(int itemId) {
             if (itemId < 0 || itemId >= itemBlockBitmap.length) return null;
             return itemBlockBitmap[itemId];
@@ -154,32 +150,25 @@ public class PreHUSPMAdaptiveAlgorithm {
     }
 
     // ========================================================================
-    // HỆ THỐNG TRACKER (ĐÓNG GÓP C3 - IUB)
+    // OCCURRENCE TRACKERS
     //
-    // PRIMITIVE ARRAYS cho mỗi Tracker: 3 mảng nguyên thuỷ song song
-    //   int[] itemsetIdx, int[] itemIdx, double[] utility
-    // Tiết kiệm ~50% bộ nhớ so với List<Instance> (mỗi Instance ~24B header +
-    // padding) + cache-friendly khi duyệt tuần tự instances. Doubling growth
-    // capacity với amortized O(1) append; trimToSize() có điều kiện để gọt
-    // mảng thừa trước khi đẩy xuống recursion sâu hơn.
+    // A Tracker holds the occurrences of one pattern in one sequence as two parallel
+    // primitive arrays (flat position, accumulated utility). Arrays grow by doubling;
+    // TrackerList.trimToSize() trims large slack before a list is passed down the
+    // recursion.
     // ========================================================================
 
     /**
-     * COMPACT PATTERN - int[] flat representation thay {@code List<List<Integer>>}.
+     * Pattern stored as a flat int[]: itemsets separated by -1.
      *
      * Pattern <code>&lt;{a,b},{c}&gt;</code> → {@code int[] = {a, b, -1, c}}.
      * Pattern <code>&lt;{a}&gt;</code>       → {@code int[] = {a}}.
      *
-     * KÍCH THƯỚC: ~3-5× nhỏ hơn Pattern object.
-     *  - Pattern object: ~16B header + List<List<Integer>> ~200B (nested ArrayList + autoboxed Integer)
-     *  - CompactPattern: 16B header + int[] (4B/item) + 4B cachedHash ≈ 60B cho pattern 5 items
+     * Much smaller than nested lists of boxed integers. The hash is computed once in the
+     * constructor; equals compares the arrays.
      *
-     * HASH O(1): cachedHash tính 1 lần ở constructor → put/get trên Map cực nhanh.
-     * EQUALS: Arrays.equals trên int[] cache-friendly, không recursive list comparison.
-     *
-     * MỤC ĐÍCH: dùng làm KEY trong largeMap/prelargeMap/results. Tại low-Su dense
-     * data, số patterns qualifying có thể hàng triệu → tiết kiệm 3-5× = 10-20 GB.
-     * Conversion sang Pattern chỉ khi cần (export, evaluate trong incremental).
+     * Used as the key of largeMap, prelargeMap and the mining results. Converted to
+     * Pattern only for export and for re-evaluation in the update branches.
      */
     static final class CompactPattern {
         final int[] flat;
@@ -190,10 +179,10 @@ public class PreHUSPMAdaptiveAlgorithm {
             this.cachedHash = Arrays.hashCode(flat);
         }
 
-        /** First item (flat[0] luôn là item, không bao giờ là -1 separator). */
+        /** First item (flat[0] is always an item, never the -1 separator). */
         int firstItem() { return flat[0]; }
 
-        /** Build từ Pattern đang ở trạng thái mutable trong expandNodeWithPruning. */
+        /** Builds from the mutable Pattern used in expandNodeWithPruning. */
         static CompactPattern fromMutable(Pattern src) {
             int isCount = src.elements.size();
             int total = 0;
@@ -210,7 +199,7 @@ public class PreHUSPMAdaptiveAlgorithm {
             return new CompactPattern(flat);
         }
 
-        /** Convert ngược về Pattern (dùng cho export/evaluate path, không hot). */
+        /** Converts back to a Pattern (export and evaluation paths, not hot). */
         Pattern toPattern() {
             Pattern p = new Pattern();
             ArrayList<Integer> current = new ArrayList<>();
@@ -226,9 +215,6 @@ public class PreHUSPMAdaptiveAlgorithm {
             return p;
         }
 
-        // (Export đi qua toPattern().toIntuitiveString() trực tiếp - xem exportLargePatterns.
-        //  Không cần toIntuitiveString() riêng trên CompactPattern.)
-
         @Override
         public int hashCode() { return cachedHash; }
 
@@ -242,17 +228,13 @@ public class PreHUSPMAdaptiveAlgorithm {
     }
 
     /**
-     * Tracker - 2 mảng primitive duy nhất:
-     *   int[] flatIndices  - vị trí phẳng (flat) trong sequence
-     *   double[] utility   - utility tích lũy của pattern tại vị trí đó
+     * Occurrences of one pattern in one sequence:
+     *   int[] flatIndices  - flat positions in the sequence where the pattern ends
+     *   double[] utility   - pattern utility at that position
      *
-     * Trước đây cần 2 mảng int (itemsetIdx + itemIdx) - nay gộp thành 1 (flatIdx).
-     * Tiết kiệm 50% bộ nhớ int của Tracker. Mọi truy vấn rest-utility, itemsetIdx
-     * đều đi qua Sequence.flatToItemsetIdx / itemsetStart / flatRemainingUtility
-     * với chi phí O(1) lookup.
+     * Itemset boundaries and rest utility are read from the sequence's flat arrays.
      *
-     * Hỗ trợ Object Pool: reset() KHÔNG drop arrays, chỉ zero hoá scalar state →
-     * lần borrow kế sử dụng lại arrays đã cấp phát → Zero-Allocation steady-state.
+     * reset() keeps the arrays, so a pooled tracker is reused without allocation.
      */
     static class Tracker {
         int seqId;
@@ -267,7 +249,7 @@ public class PreHUSPMAdaptiveAlgorithm {
             this.utility = new double[4];
         }
 
-        /** Reset cho pool reuse - GIỮ NGUYÊN arrays nội bộ (zero-alloc). */
+        /** Resets for pool reuse; keeps the internal arrays. */
         public void reset(int newSeqId) {
             this.seqId = newSeqId;
             this.size = 0;
@@ -276,8 +258,8 @@ public class PreHUSPMAdaptiveAlgorithm {
         }
 
         /**
-         * Direct append - KHÔNG dedup. Dùng sau scratch buffer merge (caller đảm bảo
-         * flatIdx unique). Cách nhanh nhất, không cần backward scan O(L).
+         * Appends without deduplication. The caller guarantees flatIdx is unique,
+         * which the scratch buffer merge ensures.
          */
         public void append(int flatIdx, double u, Sequence seq) {
             if (size == flatIndices.length) grow();
@@ -288,9 +270,6 @@ public class PreHUSPMAdaptiveAlgorithm {
             double currentPeu = u + seq.getRestUtilityFlat(flatIdx);
             if (currentPeu > peu) peu = currentPeu;
         }
-
-        // (REMOVED) addOrUpdateInstance - backward scan O(L) đã bị loại bỏ theo
-        // yêu cầu toiuucode.txt. Mọi caller giờ dùng scratch buffer merge + append().
 
         private void grow() {
             int newCap = flatIndices.length << 1;
@@ -307,11 +286,10 @@ public class PreHUSPMAdaptiveAlgorithm {
     }
 
     /**
-     * Sequential list of Tracker đối với 1 pattern. ArrayList giữ thứ tự seqId
-     * tăng dần (invariant: caller iterate parentTrackers theo seq.id tăng dần).
+     * Trackers of one pattern, ordered by increasing seqId (callers iterate the parent
+     * trackers in that order).
      *
-     * Pool-aware: KHÔNG có wrapper addInstance bên trong - caller dùng pool helper
-     * borrowTracker/releaseTracker trên class PreHUSPMAdaptiveAlgo để quản lý.
+     * Trackers are borrowed and released through the pool helpers of PreHUSPMAdaptiveAlgo.
      */
     static class TrackerList {
         final ArrayList<Tracker> trackers = new ArrayList<>();
@@ -320,8 +298,8 @@ public class PreHUSPMAdaptiveAlgorithm {
         public int size() { return trackers.size(); }
 
         /**
-         * Gọt primitive arrays trong các Tracker có waste lớn (>=4 slot và >=25%).
-         * Có điều kiện để tránh Arrays.copyOf storm trên trackers nhỏ.
+         * Trims the arrays of trackers with large slack (at least 4 slots and 25%).
+         * Small slack is left alone to avoid a burst of copies.
          */
         public void trimToSize() {
             for (int i = 0, n = trackers.size(); i < n; i++) {
@@ -336,204 +314,167 @@ public class PreHUSPMAdaptiveAlgorithm {
     }
 
     // ========================================================================
-    // LÕI THUẬT TOÁN ĐỀ XUẤT (C1, C2, C5)
+    // MINER AND INCREMENTAL MAINTENANCE
     // ========================================================================
     public static class PreHUSPMAdaptiveAlgo {
         public enum AblationMode { FULL, VARIANCE_ONLY, RHO_ONLY }
 
-        // WP2.5 - ky hieu THONG NHAT voi ban thao: kappa (bai) == alpha (code cu).
-        // Truong `alpha` cu da doi ten thanh `kappa`; khong con alias de tranh drift.
+        // kappa weights the dynamic term of the adaptive band.
         public double Su, kappa, delta0, Sl_min;
         AblationMode mode;
         boolean writeToFile;
-        public int maxDepth = 1000;
-        /** Ablation flag (C4): nếu false, rescan tuần tự toàn bộ thay vì block-selective. */
+        // No depth cap by default: a pattern is never longer than a sequence that contains it, so
+        // the data bounds the recursion, and a cap would drop patterns silently.
+        public int maxDepth = Integer.MAX_VALUE;
+        /** Block index ablation: if false, the direct update reads every sequence of the batch. */
         public boolean useBlockIndex = true;
-        /**
-         * Ngưỡng kích hoạt "xả hơi" results (Lớp phòng thủ 3). Khi results đạt mức này,
-         * flushWeakestResults() bỏ 50% mẫu utility thấp nhất để chặn RAM ~1.5GB thay vì
-         * OOM 24GB. Mặc định 1.5M (~1-3GB cho CompactPattern). Đặt Long.MAX_VALUE để tắt.
-         */
-        public long maxResultPatterns = 1_500_000L;
 
         /**
-         * NGÂN SÁCH ỨNG VIÊN CPU - lưới an toàn (tuỳ chọn). TẮT MẶC ĐỊNH (Long.MAX_VALUE).
+         * Candidate budget for one mining pass. Off by default (Long.MAX_VALUE).
          *
-         * LÝ DO TẮT: (1) C5 đã sửa hẳn nổ-rescan SC2 → mọi mine HỢP LỆ đều KẾT THÚC trong
-         * timeout (BMS1 SC1 Su=0.013: 1.81 TỶ candidate nhưng chỉ 27s; FIFA 0.045: 318M/297s).
-         * (2) Sau Nhiệm vụ 1 ("Sinh ra là đếm"), candidateCount đếm GENERATED (trước BoundEUCS)
-         * → trần hợp lệ lên tới HÀNG TỶ → KHÔNG còn ngưỡng hữu hạn nào an toàn (mọi giá trị đều
-         * có nguy cơ cắt OAN run thật - thảm hoạ cho báo cáo). (3) Chặn đúng đắn cho runaway =
-         * 60' timeout + cooperative-cancellation (đã hoạt động cho MỌI thuật toán). Ablation
-         * tắt-pruning (SC7) sẽ DNF tại 60' (chậm nhưng đúng, và DNF là kết quả mong đợi).
-         *
-         * Đặt giá trị hữu hạn CHỈ khi muốn ablation DNF nhanh hơn 60' VÀ chấp nhận rủi ro cắt
-         * oan - cần > trần hợp lệ (≥ vài tỷ). Breaker CHỈ có ở Adaptive (baseline không ảnh hưởng).
+         * Valid runs may generate billions of candidates (candidateCount counts every
+         * generated item, before pruning), so no finite value is safe for all of them.
+         * Runaway runs are stopped by the runner's timeout through cooperative
+         * cancellation. Set a finite value only to stop an ablation early, and keep it
+         * above any valid run. Only this algorithm has the budget; the baselines do not.
          */
         public long maxCandidatesBudget = Long.MAX_VALUE;
 
-        // ---- Thich nghi theo CONG, khong theo loi ich (tuy chon, mac dinh TAT) ----
+        // ---- Work-based adaptation (optional, off by default) ----
         //
-        // Moi tin hieu dieu khien khac o day la mot dai luong LOI ICH: cubValue, swuMax,
-        // iauMax. Chung tra loi "da co bao nhieu loi ich di vao", dung cho tinh dung dan.
-        // Khong cai nao tra loi "luot khai thac toi se ton bao nhieu cong", ma do moi la
-        // thu no ra. Do duoc tren tam bo: BMS1 co loi ich nho nhat va chuoi ngan nhat, ma
-        // mot lan rescan cua no vuot ba ty ung vien.
+        // The other control signals here (cubValue, swuMax, iauMax) measure utility and
+        // serve correctness. None of them predicts how much work the next mining pass
+        // costs, and that cost is what explodes.
         //
-        // Hai co che duoi day dong khoang trong do. Ca hai deu KHONG dung toi luat kich
-        // hoat rescan lan can duoi LUT_dyn, nen khong no nghia vu chung minh nao: nang san
-        // Sl_min chi thu hep dai tien-lon, va Theorem 3-4 dung voi moi ti le trong (0,1).
+        // The two mechanisms below never change the rescan trigger or the floor below
+        // LUT_dyn. They only raise Sl_min, which narrows the pre-large band; the safety
+        // argument holds for every floor ratio in (0,1).
         //
-        // Mac dinh tat de moi ket qua cu van tai lap duoc; bat bang co de do duoc ca hai
-        // chieu, dung kieu cac ablation khac trong lop nay.
+        // Off by default so that existing results reproduce; flags enable each one.
 
-        /** Ti le san da cau hinh, giu nguyen de biet da lech bao nhieu. */
+        /** Configured floor ratio, kept to report how far the effective one moved. */
         public double slMinRatioCfg;
-        /** Ti le san DANG dung. Chi tang, khong bao gio giam. */
+        /** Floor ratio in use. Only increases. */
         public double slMinRatioEff;
-        /** Do lap cua CSDL: so lan xuat hien tren mot item phan biet. 0 khi chua do. */
+        /** Repetition of the database: occurrences per distinct item. 0 until measured. */
         public double repetition = 0;
-        /** So lan phai nang san vi mot luot rescan vuot tran ung vien. */
+        /** Number of times the floor was raised because a mining pass exceeded its budget. */
         public int rescanRetries = 0;
         /**
-         * iauMax DUNG TAI THOI DIEM quyet dinh rescan, chup truoc khi resetIau() xoa no.
-         *
-         * Doc thang adp.iauMax sau mot lo co rescan luon cho 0: khoi rescan goi resetIau()
-         * ngay sau phep so sanh, nen dai luong quyet dinh bien mat truoc khi ai kip ghi lai.
-         * Cot iau_max vi the da nam trong CSV tu lau ma moi hang deu la 0.0, con sft_val -
-         * ve KIA cua phep so sanh - thi co ghi. Quyet dinh rescan do do khong hau kiem duoc.
+         * Trigger quantity at the rescan decision, recorded before resetIau() clears the
+         * counters. Reading iauMax after a rescanning batch would always give 0, so this
+         * field is what the CSV reports.
          */
         public double iauMaxAtDecision = 0;
 
-        /** Tang 1: chon san khoi dau theo do lap. -Dadapt.densityFloor=true */
+        /** Choose the starting floor from the repetition of the database. -Dadapt.densityFloor=true */
         public boolean useDensityFloor = Boolean.getBoolean("adapt.densityFloor");
         /**
-         * Tang 2: tran ung vien cho MOT luot khai thac khi rescan. 0 = tat.
-         * Vuot tran thi nang san roi thu lai, thay vi chay den khi het bo nho hoac het gio.
+         * Candidate cap for one mining pass during a rescan. 0 = off.
+         * When exceeded, the floor is raised and the pass retried, instead of running out
+         * of memory or time.
          * -Dadapt.rescanBudget=3000000000
          */
         public long rescanCandidateBudget = Long.getLong("adapt.rescanBudget", 0L);
 
         /**
-         * Luoi an toan DONG HO cho mot luot khai thac. 0 = tat.
+         * Wall-clock safety net for one mining pass. 0 = off.
          *
-         * Tran dem la gioi han chinh vi no tat dinh: cung mot luot bi cat o cung cho tren
-         * moi may. Nhung no chi bat duoc chi phi ti le voi SO ung vien. Do tren BMS1 INC#4:
-         * 798 trieu ung vien trong hon 35 phut, tuc 0,38 trieu moi giay, trong khi INC#3 cua
-         * chinh no chay 28,2 trieu moi giay - cham hon 74 lan tren MOI ung vien. Nut that o
-         * do khong phai sinh ung vien, nen mot tran tinh bang ung vien khong the bat duoc.
-         *
-         * ThresholdScan da ghi san bai hoc nay trong chu thich cua no; co che tran dem duoc
-         * sao chep sang day ma bo mat luoi an toan di kem.
+         * The candidate cap is the primary limit because it is deterministic: a pass is
+         * cut at the same point on every machine. It only catches cost proportional to the
+         * number of candidates, however; a pass whose time per candidate is very high
+         * passes under it. This net catches that case.
          *
          * -Dadapt.rescanMillis=600000
          */
         public long rescanMillisBudget = Long.getLong("adapt.rescanMillis", 0L);
-        /** Han chot tuyet doi cua luot khai thac hien tai; 0 = khong co. */
+        /** Absolute deadline of the current mining pass; 0 = none. */
         private long mineDeadlineNanos = 0;
-        /** Dem thua de khong goi nanoTime() tren moi ung vien. */
+        /** Sampling counter, so nanoTime() is not called on every candidate. */
         private int deadlineTick = 0;
 
-        private static final double SL_RATIO_CAP = 0.98;   // tren nua thi dai tien-lon coi nhu khong con
+        private static final double SL_RATIO_CAP = 0.98;   // above this the pre-large band is effectively empty
         private static final double SL_RATIO_STEP = 0.05;
         private static final int    SL_MAX_RETRIES = 6;
 
         /**
-         * Nhánh AN TOÀN (không rescan) có mine LẠI mỗi lô (mineBatchWithIUB trên deltaD)
-         * hay KHÔNG. Mặc định FALSE = kiến trúc Pre-HUSPM đúng chuẩn pre-large:
-         *   - false (MẶC ĐỊNH): nhánh an toàn CHỈ cập nhật mẫu đã-theo-dõi; khám phá mẫu
-         *     mới dành cho rescan (kích hoạt bởi cận an toàn swuMax > F). → nhanh, KHÔNG
-         *     nổ trên lô bệnh lý (BMS1), số mẫu ≥ Pre-HUSPM.
-         *   - true : khám phá mẫu mới NGAY mỗi lô (mine deltaD) - chậm hơn & có thể nổ
-         *     trên lô chứa chuỗi cực dày. Chỉ để thử nghiệm/so sánh.
+         * Whether the safe (no-rescan) branch also mines each batch for new patterns.
+         *   - false (default): the safe branch only updates tracked patterns; new patterns
+         *     are found by rescans, which the trigger rule schedules.
+         *   - true: mines deltaD on every batch. Slower, and may explode on batches with
+         *     very dense sequences. For comparison only.
          */
         public boolean mineNewPatternsPerBatch = false;
 
         /**
-         * Bật/tắt NGƯỠNG PRE-LARGE THÍCH ỨNG (C2). Dùng cho ablation/so sánh:
-         *   - true  (MẶC ĐỊNH): band [lutDynValue, uut) co/giãn theo δ_D (C2 active).
-         *   - false: band CỐ ĐỊNH = [lut_min, uut) (Sl_min cố định, kiểu Pre-HUSPM) →
-         *     dùng để minh hoạ dilemma (sl thấp → bùng nổ pre-large; sl cao → thiếu mẫu).
+         * Adaptive pre-large floor, for ablation:
+         *   - true (default): the band [lutDynValue, uut) follows δ_D.
+         *   - false: fixed band [lut_min, uut), as in Pre-HUSPM.
+         * Has no effect under the JOINT trigger rule, which uses a per-pattern floor.
          */
         public boolean useAdaptiveBand = true;
 
-        /** Ablation C3: nếu false → BỎ cận trên cục bộ IUB (không cắt nhánh theo IUB). */
+        /** IUB branch pruning ablation: if false, branches are never cut by IUB. */
         public boolean useIub = true;
-        /** Ablation C5: nếu false → BỎ quyết định rescan thích ứng → rescan MỖI LÔ (naive). */
+        /** Adaptive rescan ablation: if false, every batch triggers a rescan. */
         public boolean useAdaptiveRescan = true;
 
         /**
-         * true (mac dinh): thao tac sua tieu ngan sach bang u(old) + u(new) - can tren dung.
-         * false: tai hien hanh vi cua ban nop (chi tieu |u(new) - u(old)|), KHONG sound.
+         * true (default): a modification charges u(old) + u(new) to the budget, a valid
+         * upper bound. false: charges only |u(new) - u(old)|, which is NOT sound.
          */
         public boolean strictModificationBudget =
                 !"false".equalsIgnoreCase(System.getProperty("adapt.strictModify", "true"));
 
         /**
-         * WP2.1 - B_sz, kich thuoc khoi cua chi muc nguoc cap do khoi (C4).
-         * Truoc day la hang so cung 100 trong BlockIndex. Ghi de bang -Dblock.size=N.
-         * Gia tri dang dung duoc xuat ra cot CSV block_size.
+         * Block size of the block-level inverted index. Set with -Dblock.size=N; the value
+         * in use is reported in the CSV column block_size.
          */
         public int blockSize = Integer.getInteger("block.size", 100);
 
-        /**
-         * Xả 50% mẫu YẾU NHẤT (utility thấp) khỏi map. Bỏ theo SỐ LƯỢNG (n/2) nên luôn
-         * giảm đúng một nửa bất kể phân bố utility. Giữ nguyên các mẫu utility cao
-         * (gồm toàn bộ mẫu Lớn ≥ uut) → an toàn cho output cuối.
-         */
-        private void flushWeakestResults(Map<CompactPattern, Double> map) {
-            int n = map.size();
-            if (n == 0) return;
-            ArrayList<Map.Entry<CompactPattern, Double>> entries = new ArrayList<>(map.entrySet());
-            entries.sort(Map.Entry.comparingByValue()); // tăng dần theo utility
-            int removeCount = n / 2;
-            for (int i = 0; i < removeCount; i++) map.remove(entries.get(i).getKey());
-            entries.clear();
-            System.gc(); // ép GC dọn hàng trăm MB rác vừa thải
-        }
-
-        // --- COOPERATIVE CANCELLATION (cho timeout 60 phút trong runner) ---
-        // volatile để runner thread set, recursion thread đọc thấy ngay.
-        // Check tại entry expandNodeWithPruning → exit nhanh trong vài µs sau cancel().
+        // --- Cooperative cancellation for the runner's timeout ---
+        // volatile so that a flag set by the runner thread is seen by the mining thread.
+        // Checked on entry to expandNodeWithPruning, so the miner stops within microseconds.
         private volatile boolean cancelled = false;
         public void cancel() { this.cancelled = true; }
         public boolean isCancelled() { return cancelled; }
 
-        // --- CÁC CHỈ SỐ THỰC NGHIỆM ĐỂ XUẤT RA CSV ---
+        // --- Metrics exported to the result CSV ---
         public int rescanCount = 0, patternCount = 0;
         public long candidateCount = 0, blocksReadCount = 0, numBlocksSkipped = 0;
-        public long exploredNodes = 0; // Số mẫu THỰC SỰ khai triển (đệ quy) - cận PEU áp TRƯỚC materialize nên ≪ candidate_count
-        // prunedValueBound = số item bị cận giá trị PEU loại (C1 - cơ chế tỉa chính).
+        public long exploredNodes = 0; // nodes actually expanded; the PEU bound is applied before materialization, so this is far below candidate_count
+        // prunedValueBound = items removed by the aggregated PEU value bound.
         public long prunedValueBound = 0, prunedIub = 0;
 
-        // --- CHỈ SỐ C5 (CUB) VÀ C2 (ADAPTIVE) ---
+        // --- Counters and adaptive band ---
         public double lutDynValue, deltaDValue, sigmaDSquared, rhoD;
         public double cubValue = 0, sftValue = 0;
 
         // ====================================================================
-        // WP1 - LUẬT KÍCH HOẠT RESCAN CHO PHA CHÈN
+        // RESCAN TRIGGER RULES
         // ====================================================================
         /**
-         * Ba luật kích hoạt rescan cho pha CHÈN, chọn được bằng cờ để phục vụ
-         * kịch bản trục kích thước lô (WP4.1).
+         * Rescan trigger rules, selected by flag.
          *
-         * SWUMAX  Luật của bản nộp (Pre-HUSPM gốc, Eq. 9): rescan ⇔ max_{s∈d} u(s) > SFT.
-         *         KHÔNG SOUND. u(s) là utility của MỘT chuỗi, trong khi độ tăng utility của
-         *         một mẫu là TỔNG đóng góp của mọi chuỗi chèn chứa nó. Phản ví dụ của
-         *         Reviewer #1: UUT=0.25, LUT=0.20, TSU=100, u(X)=19, chèn hai chuỗi cùng
-         *         chứa X với u=6 ⇒ SWUmax=6 ≤ 6.67 nên không rescan, nhưng sau cập nhật
-         *         u(X)=31 > 0.25·112=28, tức X đã thành HUSP mà bị bỏ sót.
-         *         Giữ lại CHỈ để đối chiếu lịch sử; không dùng cho kết quả chính.
+         * SWUMAX  Rule of the original Pre-HUSPM: rescan iff max_{s in d} u(s) > SFT.
+         *         NOT sound: u(s) is the utility of ONE sequence, while the gain of a
+         *         pattern is the sum over every inserted sequence that contains it.
+         *         Example: UUT=0.25, LUT=0.20, TSU=100, u(X)=19; inserting two sequences
+         *         that contain X with u=6 gives SWUmax=6 <= 6.67, so no rescan, yet after
+         *         the update u(X)=31 > 0.25*112=28 and X is a missed HUSP.
+         *         Kept for comparison only.
          *
-         * CUB     Luật tích luỹ thô: rescan ⇔ Σ_{s∈d chèn từ rescan gần nhất} u(s) > SFT.
-         *         Sound, nhưng lỏng vì giả định toàn bộ utility chèn dồn được vào một mẫu.
+         * CUB     Raw accumulation: rescan iff sum of u(s) over sequences inserted since the
+         *         last rescan > SFT. Sound, but loose: it assumes all inserted utility may
+         *         go to one pattern.
          *
-         * IAUMAX  Luật đề xuất (mặc định): rescan ⇔ max_i A_i > SFT, với
-         *         A_i = Σ_{s chèn từ rescan gần nhất, i ∈ s} u(s).
-         *         Sound và luôn chặt hơn hoặc bằng CUB. Cơ sở: nếu X ⊑ s thì mọi item của
-         *         X đều xuất hiện trong s, nên độ tăng utility của X bị chặn bởi
-         *         min_{i∈X} A_i ≤ max_i A_i. Suy biến về CUB khi tồn tại một item xuất hiện
-         *         trong mọi chuỗi chèn (quan sát được trên KOSARAK).
+         * IAUMAX  rescan iff max_i A_i > SFT, with
+         *         A_i = sum of u(s) over sequences inserted since the last rescan with i in s.
+         *         Never looser than CUB. If X is in s then every item of X is in s, so the
+         *         gain of X is bounded by min_{i in X} A_i <= max_i A_i. Reduces to CUB when
+         *         one item occurs in every inserted sequence.
+         *
+         * JOINT   Default. See below.
          */
         public enum TriggerRule { SWUMAX, CUB, IAUMAX, JOINT }
 
@@ -569,7 +510,7 @@ public class PreHUSPMAdaptiveAlgorithm {
             return Sl_min * tsuAtLastRescan + minIauOf(p);
         }
 
-        /** Luật kích hoạt cho pha chèn. Ghi đè bằng -Dadapt.trigger=swumax|cub|iaumax. */
+        /** Trigger rule. Override with -Dadapt.trigger=swumax|cub|iaumax|joint. */
         public TriggerRule triggerRule = parseTriggerRule(
                 System.getProperty("adapt.trigger", "joint"));
 
@@ -580,40 +521,37 @@ public class PreHUSPMAdaptiveAlgorithm {
                 case "iaumax": return TriggerRule.IAUMAX;
                 case "joint":  return TriggerRule.JOINT;
                 default: throw new IllegalArgumentException(
-                        "adapt.trigger phải là swumax|cub|iaumax, nhận được: " + s);
+                        "adapt.trigger must be swumax|cub|iaumax|joint, got: " + s);
             }
         }
 
         /**
-         * A_i - bộ đếm utility chèn tích luỹ THEO TỪNG ITEM kể từ lần rescan gần nhất.
-         * Chỉ mục theo itemId; tăng trưởng theo nhu cầu. Cập nhật một lượt khi nạp lô,
-         * chi phí O(Σ_{s∈d}|s|), không đổi độ phức tạp tiệm cận.
+         * A_i: inserted utility accumulated per item since the last rescan.
+         * Indexed by itemId and grown on demand. Updated once per loaded batch at cost
+         * O(sum of |s| over the batch).
          */
         private double[] iau = new double[256];
-        /** max_i A_i, duy trì tăng dần để khỏi quét lại mảng. */
+        /** max_i A_i, maintained incrementally. */
         public double iauMax = 0;
-        /** Tỷ số CUB/iauMax của lô gần nhất - hệ số nới rộng kích thước lô (xuất CSV). */
+        /** CUB / iauMax for the latest batch (exported to CSV). */
         public double iauTightness = 1.0;
-        // Mốc TSU tại lần rescan gần nhất (hoặc init) - dùng tính cận an toàn pre-large
-        // F = (Su - Sl_min)/(1 - Su) · tsuAtLastRescan cho QUYẾT ĐỊNH rescan kiểu Pre-HUSPM.
+        // TSU at the last rescan (or initial mining): reference for the safety bounds and
+        // for the JOINT drop floor.
         public double tsuAtLastRescan = 0;
         public boolean cubTriggeredRescan = false;
 
-        // --- Pre-large & ngưỡng HUSP tuyệt đối (xuất CSV) ---
+        // --- Pre-large count and absolute HUSP threshold (exported to CSV) ---
         public int prelargeCount = 0;   // |PL| = prelargeMap.size()
         public double uutValue = 0;     // uut_abs = TSU * Su
 
         BlockIndex globalBlockIndex = new BlockIndex();
-        // === COMPACT STORAGE cho result maps ===
-        // Sử dụng CompactPattern (int[] flat + cached hash) thay Pattern (List<List<Integer>>)
-        // → tiết kiệm 3-5× memory khi pattern count lớn (low Su dense data).
-        // Conversion sang Pattern chỉ khi exportLargePatterns hoặc incremental update.
+        // Result maps are keyed by CompactPattern; conversion to Pattern happens only on
+        // export or re-evaluation.
         public Map<CompactPattern, Double> largeMap = new HashMap<>();
 
         /**
-         * WP5 - anh chup TAP MAU lon duoi dang chuoi, de bo kiem chung so sanh tap mau
-         * va utility tung mau voi remine-from-scratch. Ban nop chi so sanh SO LUONG HUSP,
-         * khong du de chung minh Proposition 2.
+         * Snapshot of the large set as strings, so a verifier compares every pattern and
+         * its utility against mining from scratch, not only the pattern count.
          */
         public java.util.Map<String, Double> exportLargeAsStrings() {
             java.util.Map<String, Double> out = new java.util.HashMap<>(largeMap.size() * 2);
@@ -623,7 +561,7 @@ public class PreHUSPMAdaptiveAlgorithm {
             return out;
         }
 
-        /** Anh chup tap TIEN LON, phuc vu chan doan khi tap lon lech nhau. */
+        /** Snapshot of the pre-large set, for diagnosis when large sets disagree. */
         public java.util.Map<String, Double> exportPrelargeAsStrings() {
             java.util.Map<String, Double> out = new java.util.HashMap<>(prelargeMap.size() * 2);
             for (Map.Entry<CompactPattern, Double> e : prelargeMap.entrySet()) {
@@ -632,10 +570,9 @@ public class PreHUSPMAdaptiveAlgorithm {
             return out;
         }
         Map<CompactPattern, Double> prelargeMap = new HashMap<>();
-        // dbLookup được truy cập trong MỌI tracker iteration của recursion.
-        // seqId trong DatasetLoader luôn sequential [0..N) → dùng Sequence[] direct
-        // (1 array access, không hash compute, không open-addressing probing).
-        // Sparse seqIds (gap lớn) sẽ chỉ tốn slot null - chấp nhận được cho stream.
+        // Sequence lookup is on the hot path of every tracker iteration. Sequence ids
+        // from DatasetLoader are dense [0..N), so a direct array is used; sparse ids only
+        // leave null slots.
         private Sequence[] dbLookupArr = new Sequence[1024];
 
         private void dbPut(int seqId, Sequence seq) {
@@ -659,31 +596,30 @@ public class PreHUSPMAdaptiveAlgorithm {
             Arrays.fill(dbLookupArr, null);
         }
 
-        // Tối ưu: max itemId trong DB hiện tại → dùng cho mảng nguyên thuỷ thay HashMap
+        // Largest item id in the database; sizes the scratch arrays below.
         private int maxItemId = -1;
-        // Mảng scratch tái sử dụng trong Pass-1 (tránh allocate HashMap per tracker)
+        // Pass-1 scratch arrays indexed by item id, reused across trackers.
         private transient double[] scratchLocalI, scratchLocalS, scratchAggI, scratchAggS;
         private transient int[] scratchUsedI, scratchUsedS;
         private transient int scratchUsedICount, scratchUsedSCount;
-        // Cờ "seen" thay vì BitSet để tránh allocate per-tracker
+        // "Seen" flags, reset selectively.
         private transient boolean[] scratchLocalSeenI, scratchLocalSeenS;
         private transient boolean[] scratchAggSeenI, scratchAggSeenS;
         private transient int[] scratchLocalUsedI, scratchLocalUsedS;
         private transient int scratchLocalUsedICount, scratchLocalUsedSCount;
-        // Hoisted survivingI/S - hoist class-field để tránh allocate boolean[] mỗi call.
-        // Reset selective qua scratchUsedI/S nên O(touched) thay vì O(maxItemId).
+        // Survivor flags, held as fields to avoid allocation per call.
         private transient boolean[] scratchSurvivingI, scratchSurvivingS;
 
         // ====================================================================
-        //  Survivor pool (depth-local snapshot list)
-        //  Vì scratchUsedI/S + scratchSurvivingI/S là class field, sẽ bị overwrite
-        //  bởi recursion → phải snapshot danh sách surviving items vào mảng
-        //  depth-local TRƯỚC khi enter Pass-2 loop.
+        //  Survivor pool (depth-local snapshot arrays)
+        //  scratchUsedI/S and scratchSurvivingI/S are fields that the recursion
+        //  overwrites, so the surviving items of a node must be copied into a
+        //  depth-local array before the Pass-2 loop.
         // ====================================================================
         private transient List<int[]> iSurvivorPool = new ArrayList<>();
         private transient List<int[]> sSurvivorPool = new ArrayList<>();
 
-        /** Mượn int[] survivor list theo depth (cấp lại nếu chưa đủ size). */
+        /** Borrows the survivor array for a depth, reallocating it if too small. */
         private int[] borrowSurvivorArray(List<int[]> pool, int depth, int sz) {
             while (pool.size() <= depth) pool.add(null);
             int[] arr = pool.get(depth);
@@ -694,11 +630,11 @@ public class PreHUSPMAdaptiveAlgorithm {
             return arr;
         }
 
-        // ===== SINGLE-PASS PASS-2 (mượn ưu điểm baseline: gom con 1 LƯỢT quét) =====
-        // iSlot/sSlot[itemId] = TrackerList con (cấp trong allocateScratch). Dùng tạm
-        // trong 1 node rồi snapshot ra mảng depth-local + giải phóng slot trước đệ quy.
+        // ===== Single-pass Pass 2: collect every child in one scan of the parent =====
+        // iSlot/sSlot[itemId] = child TrackerList (allocated in allocateScratch). Used
+        // within one node, then moved into a depth-local array and cleared before recursion.
         private transient TrackerList[] iSlot, sSlot;
-        private transient long[] spSurvGenI, spSurvGenS; // gen marker (single-pass survivor membership)
+        private transient long[] spSurvGenI, spSurvGenS; // generation marker: survivor of the current node
         private long spNodeGen = 0;
         private transient List<TrackerList[]> iTLPool = new ArrayList<>();
         private transient List<TrackerList[]> sTLPool = new ArrayList<>();
@@ -708,23 +644,16 @@ public class PreHUSPMAdaptiveAlgorithm {
             if (arr == null || arr.length < sz) { arr = new TrackerList[sz]; pool.set(depth, arr); }
             return arr;
         }
-        // Ngưỡng chọn chiến lược materialize: node "hẹp" (ptSize nhỏ - đa số node) →
-        // single-pass (nhanh như baseline); node "rộng" (nông, dày, @ Su rất thấp) →
-        // fallback LAZY (RAM tạm O(depth) - giữ điểm bán hàng "không OOM data dày").
+        // Materialization strategy threshold: nodes with at most this many parent trackers
+        // use single-pass; wider nodes use the lazy path, which builds one child at a time.
         private static final int SINGLE_PASS_PT_CAP = Integer.getInteger("adapt.singlePassCap", 100_000);
 
         // ====================================================================
-        //  OBJECT POOL - TrackerPool + TrackerListPool (Zero-Allocation)
+        //  OBJECT POOLS - TrackerPool and TrackerListPool
         //
-        //  Triển khai theo yêu cầu toiuucode.txt: mảng tĩnh + int top pointer.
-        //  Đơn giản hơn ArrayDeque, không có Iterator allocation, cache-friendly.
-        //
-        //  WARMUP: pre-allocate N Trackers + M TrackerLists trong INIT phase.
-        //  Sau khi warmup, recursion CHỈ borrow/release → ZERO `new Tracker()`
-        //  trong vòng đệ quy (yêu cầu cứng từ user).
-        //
-        //  Pool đầy on release → drop (let GC reclaim). Pool rỗng on borrow → đáng
-        //  lý không xảy ra sau warmup; cold fallback gọi `new` để không crash.
+        //  Fixed arrays with a top pointer: no iterator allocation, LIFO reuse.
+        //  Warm-up pre-allocates trackers and lists before mining. A release into a
+        //  full pool drops the object; a borrow from an empty pool allocates a new one.
         // ====================================================================
         private static final int POOL_MAX_SIZE = 1 << 16;       // 65K cap
         private static final int POOL_TRACKER_ARRAY_CAP = 512;  // shrink Tracker arrays >512 before recycle
@@ -733,21 +662,20 @@ public class PreHUSPMAdaptiveAlgorithm {
          *
          * clear() empties an ArrayList but keeps its backing array at the largest size it
          * ever reached, so a pooled list keeps the footprint of the widest node it served.
-         * A rescan over a grown database serves wider nodes than the one before, and the
-         * pool kept every one of them: on KOSARAK, which rescans at every increment, it held
-         * 2,514 of the 3,078 MB the algorithm held after the last increment. Dropping the
-         * wide lists keeps the pool for what it is for, the many narrow nodes.
+         * A rescan over a grown database serves wider nodes than the one before, and an
+         * uncapped pool would retain all of them. Dropping the wide lists keeps the pool
+         * for the many narrow nodes it is meant for.
          */
         private static final int POOL_LIST_CAP = 1024;
-        private static final int POOL_WARMUP_TRACKERS     = 4096; // pre-allocate ở INIT
+        private static final int POOL_WARMUP_TRACKERS     = 4096; // pre-allocated before mining
         private static final int POOL_WARMUP_TRACKER_LISTS = 256;
 
         /**
-         * TrackerPool: stack đơn giản trên mảng cố định.
-         *  - pool[0..top-1] = các Tracker đang chờ recycle.
-         *  - borrow() lấy từ đỉnh stack (LIFO → cache-hot).
-         *  - release(t) đẩy lên đỉnh; nếu đầy thì drop.
-         *  - warmup(n) pre-alloc n Trackers (gọi 1 lần trong INIT).
+         * TrackerPool: stack over a fixed array.
+         *  - pool[0..top-1] holds trackers waiting for reuse.
+         *  - borrow() takes from the top (LIFO, cache-warm).
+         *  - release(t) pushes on top; drops t if the pool is full.
+         *  - warmup(n) pre-allocates n trackers.
          */
         static final class TrackerPool {
             final Tracker[] pool = new Tracker[POOL_MAX_SIZE];
@@ -755,8 +683,7 @@ public class PreHUSPMAdaptiveAlgorithm {
 
             Tracker borrow(int seqId) {
                 if (top == 0) {
-                    // COLD FALLBACK - chỉ kích hoạt nếu warmup không đủ.
-                    // Trong steady state sau INIT, KHÔNG được phép xảy ra.
+                    // Pool empty: allocate.
                     return new Tracker(seqId);
                 }
                 Tracker t = pool[--top];
@@ -766,16 +693,16 @@ public class PreHUSPMAdaptiveAlgorithm {
             }
 
             void release(Tracker t) {
-                // Shrink oversized arrays trước khi recycle (cap pool memory).
+                // Shrink oversized arrays before reuse to bound pool memory.
                 if (t.flatIndices.length > POOL_TRACKER_ARRAY_CAP) {
                     t.flatIndices = new int[4];
                     t.utility = new double[4];
                 }
                 if (top < POOL_MAX_SIZE) pool[top++] = t;
-                // else: drop, GC reclaim
+                // else: dropped, left to GC
             }
 
-            /** Pre-allocate n Trackers; CHỈ gọi 1 lần trong INIT, không trong recursion. */
+            /** Pre-allocates up to n trackers; called before mining, not during recursion. */
             void warmup(int n) {
                 while (top < n && top < POOL_MAX_SIZE) {
                     pool[top++] = new Tracker(-1);
@@ -784,28 +711,28 @@ public class PreHUSPMAdaptiveAlgorithm {
         }
 
         /**
-         * TrackerListPool: tương tự nhưng cho TrackerList wrapper.
-         * trackerList.trackers (ArrayList<Tracker>) được clear() trước recycle.
+         * TrackerListPool: same scheme for TrackerList. release() returns the nested
+         * trackers to the TrackerPool and clears the list.
          */
         static final class TrackerListPool {
             final TrackerList[] pool = new TrackerList[POOL_MAX_SIZE];
             int top = 0;
-            private final TrackerPool trackerPool; // để release nested Trackers
+            private final TrackerPool trackerPool; // receives the nested trackers
 
             TrackerListPool(TrackerPool tp) { this.trackerPool = tp; }
 
             TrackerList borrow() {
                 if (top == 0) {
-                    return new TrackerList(); // cold fallback
+                    return new TrackerList(); // pool empty: allocate
                 }
                 TrackerList tl = pool[--top];
                 pool[top] = null;
-                // trackers đã empty từ release trước (invariant)
+                // trackers is already empty (cleared on release)
                 return tl;
             }
 
             void release(TrackerList tl) {
-                // Release nested Trackers vào trackerPool trước khi recycle TrackerList
+                // Return the nested trackers before reusing the list.
                 ArrayList<Tracker> ts = tl.trackers;
                 final int n = ts.size();
                 for (int i = 0; i < n; i++) trackerPool.release(ts.get(i));
@@ -824,53 +751,30 @@ public class PreHUSPMAdaptiveAlgorithm {
         private transient final TrackerPool trackerPool = new TrackerPool();
         private transient final TrackerListPool trackerListPool = new TrackerListPool(trackerPool);
 
-        /** Convenience helpers - hot path gọi qua đây để JIT inline. */
+        /** Pool helpers used on the hot path. */
         private Tracker borrowTracker(int seqId) { return trackerPool.borrow(seqId); }
         private void releaseTracker(Tracker t)   { trackerPool.release(t); }
         private TrackerList borrowTrackerList()  { return trackerListPool.borrow(); }
         private void releaseTrackerList(TrackerList tl) { trackerListPool.release(tl); }
 
         // ====================================================================
-        //  SCRATCH BUFFER O(1) INSTANCE MERGING (3 mảng song song theo toiuucode.txt)
+        //  SCRATCH BUFFER MERGE OF OCCURRENCES, indexed by flat position
         //
-        //  Thay backward-scan O(L) trong addOrUpdateInstance bằng class-level
-        //  scratch indexed by flatIdx → O(1) lookup/update.
+        //    scratchMaxUtil[flatIdx]  = largest utility reaching flatIdx
+        //    scratchPresent[flatIdx]  = flatIdx has been touched
+        //    scratchUsedFlat[i]       = touched positions, for selective reset
         //
-        //  3 mảng:
-        //    double[]  scratchMaxUtil[flatIdx]   = max utility hội tụ về flatIdx
-        //    boolean[] scratchPresent[flatIdx]   = true nếu flatIdx đã touched
-        //                                          (CHÍNH XÁC HƠN sentinel utility=0)
-        //    int[]     scratchUsedFlat[i]        = danh sách flatIdx đã touched
-        //                                          (cho selective reset)
+        //  For each parent sequence: every match at position q either marks q present
+        //  and records its utility, or raises scratchMaxUtil[q]. The touched positions
+        //  are then appended to the child tracker and only scratchPresent is reset.
         //
-        //  Workflow (per-parent-sequence trong Pass-2):
-        //    int localUsedCount = 0;
-        //    for each instance trong parent tracker:
-        //      for each matching position j (flat):
-        //        double newU = ...;
-        //        if (!scratchPresent[j]) {
-        //          scratchPresent[j] = true;
-        //          scratchUsedFlat[localUsedCount++] = j;
-        //          scratchMaxUtil[j] = newU;
-        //        } else if (newU > scratchMaxUtil[j]) {
-        //          scratchMaxUtil[j] = newU;
-        //        }
-        //    // FLUSH: copy scratch vào child Tracker và RESET selective
-        //    Tracker child = borrowTracker(...);
-        //    for (x in [0, localUsedCount)):
-        //        int idx = scratchUsedFlat[x];
-        //        child.append(idx, scratchMaxUtil[idx], seq);
-        //        scratchPresent[idx] = false;   // reset O(usedCount)
-        //        // scratchMaxUtil[idx] giữ nguyên - chỉ reset present (đỡ 1 store)
-        //
-        //  Lý do dùng boolean[] scratchPresent thay sentinel 0:
-        //    - Robust trên data có utility = 0 (edge case)
-        //    - Không phụ thuộc giá trị utility làm marker
+        //  A separate present flag is used instead of utility 0 as a sentinel, so a
+        //  zero-utility occurrence is not mistaken for an absent one.
         // ====================================================================
         private transient double[] scratchMaxUtil;
         private transient boolean[] scratchPresent;
         private transient int[] scratchUsedFlat;
-        private int maxFlatLen = 0; // max flat length đã thấy across sequences
+        private int maxFlatLen = 0; // largest flat length seen across sequences
 
         private void ensureScratchCapacity(int needed) {
             if (scratchMaxUtil == null || scratchMaxUtil.length < needed) {
@@ -887,11 +791,11 @@ public class PreHUSPMAdaptiveAlgorithm {
             this.mode = mode; this.writeToFile = writeToFile;
         }
 
-        // ================= PHA 1: KHỞI TẠO =================
+        // ================= PHASE 1: INITIAL MINING =================
         public void runInitialMining(List<Sequence> dInit, double currentTotalUtility) {
-            // Reset trạng thái đầy đủ - bao gồm cancellation flag để instance
-            // bị OT từ phiên trước có thể được tái sử dụng (defense in depth;
-            // runner cũng kiểm tra poisoned trước khi gọi lại).
+            // Reset the whole state, including the cancellation flag, so an instance
+            // cancelled in an earlier run may be reused (the runner also refuses
+            // poisoned instances).
             cancelled = false;
             rescanCount = 0; patternCount = 0;
             candidateCount = 0; exploredNodes = 0; blocksReadCount = 0; numBlocksSkipped = 0;
@@ -902,13 +806,13 @@ public class PreHUSPMAdaptiveAlgorithm {
             largeMap.clear(); prelargeMap.clear();
             dbClear();
             globalBlockIndex = new BlockIndex();
-            if (blockSize < 1) throw new IllegalArgumentException("block.size phai >= 1");
-            globalBlockIndex.blockSize = blockSize;   // WP2.1: B_sz tham so hoa
+            if (blockSize < 1) throw new IllegalArgumentException("block.size must be >= 1");
+            globalBlockIndex.blockSize = blockSize;
 
             globalBlockIndex.buildFromBatch(dInit);
             for (Sequence s : dInit) {
                 s.calculateRemainingUtilities();
-                s.buildFlatRepresentation();    // tiền xử lý sang flat 1D arrays
+                s.buildFlatRepresentation();    // flat 1D arrays
                 if (s.flatLen > maxFlatLen) maxFlatLen = s.flatLen;
                 dbPut(s.id, s);
                 for (QItemset is : s.itemsets) for (QItem it : is.items)
@@ -916,37 +820,36 @@ public class PreHUSPMAdaptiveAlgorithm {
             }
             allocateScratch(maxItemId + 1);
             ensureScratchCapacity(maxFlatLen);
-            // === POOL WARMUP - pre-alloc TRƯỚC khi recursion bắt đầu ===
-            // Sau dòng này, expandNodeWithPruning sẽ KHÔNG gọi `new Tracker()`.
+            // Pool warm-up before the recursion starts.
             trackerPool.warmup(POOL_WARMUP_TRACKERS);
             trackerListPool.warmup(POOL_WARMUP_TRACKER_LISTS);
 
-            // Tang 1: do do lap cua CSDL roi chon san khoi dau. Chi nang, khong ha, nen
-            // mot CSDL trong hien de van giu nguyen ti le da cau hinh.
+            // Density-based starting floor: measure the repetition of the database and
+            // choose the starting floor. It only raises the floor, so a sparse database
+            // keeps the configured ratio.
             this.repetition = common.Density.repetition(dInit);
             if (useDensityFloor) {
                 double suggested = common.Density.suggestFloor(slMinRatioCfg, repetition);
                 if (suggested > slMinRatioEff) { slMinRatioEff = suggested; Sl_min = slMinRatioEff * Su; }
             }
 
-            // Tính toán LUT_dyn và SFT ban đầu
+            // Initial LUT_dyn and SFT.
             double uut_abs = currentTotalUtility * Su;
-            this.uutValue = uut_abs; // ngưỡng HUSP tuyệt đối (xuất CSV)
-            this.lutDynValue = currentTotalUtility * Sl_min; // Khởi tạo bằng ngưỡng cứng
-            // SFT (Δ) = khoảng cách tiện ích TUYỆT ĐỐI giữa ngưỡng lớn (uut_abs)
-            // và ngưỡng tiền-lớn động (lutDynValue). Cùng thứ nguyên với cubValue.
+            this.uutValue = uut_abs; // absolute HUSP threshold (exported to CSV)
+            this.lutDynValue = currentTotalUtility * Sl_min; // starts at the fixed floor
+            // SFT is the absolute utility gap between the large threshold (uut_abs) and the
+            // pre-large floor (lutDynValue); same unit as cubValue.
             this.sftValue = uut_abs - this.lutDynValue;
 
             mineWithBudget(dInit, uut_abs, currentTotalUtility);
-            this.tsuAtLastRescan = currentTotalUtility; // mốc TSU cho cận an toàn F
+            this.tsuAtLastRescan = currentTotalUtility; // TSU reference for the safety bounds
         }
 
-        // ================= PHA 2: GIA TĂNG =================
+        // ================= PHASE 2: INSERTION =================
         public void runIncrementalMining(List<Sequence> deltaD, List<Sequence> dSoFar, double newTotalUtility) {
-            cancelled = false; // reset cancellation từ phiên đo trước (nếu có)
-            // PATCHED (tinhchinhcode5 #2): reset candidateCount MỖI LÔ → circuit-breaker
-            // là ngân sách per-batch (lô bệnh lý đơn lẻ bị ngắt; nhiều lô hợp lệ cộng dồn
-            // KHÔNG bị DNF nhầm) + metric candidate_count phản ánh đúng chi phí từng lô.
+            cancelled = false; // clear a cancellation left by an earlier measurement
+            // candidateCount is reset every batch: the candidate budget applies per batch,
+            // and candidate_count reports the cost of each batch.
             candidateCount = 0; exploredNodes = 0;
             globalBlockIndex.buildFromBatch(deltaD);
             double batchTotalUtil = 0;
@@ -959,29 +862,28 @@ public class PreHUSPMAdaptiveAlgorithm {
                 dbPut(s.id, s);
                 batchTotalUtil += s.sequenceUtility;
                 if (s.sequenceUtility > swuMax) swuMax = s.sequenceUtility;
-                accumulateIau(s);          // WP1.1: A_i += u(s) cho mọi item i thuoc s
+                accumulateIau(s);          // A_i += u(s) for every item i in s
                 for (QItemset is : s.itemsets) for (QItem it : is.items)
                     if (it.id > maxItemId) maxItemId = it.id;
             }
             allocateScratch(maxItemId + 1);
             ensureScratchCapacity(maxFlatLen);
-            // Pool warmup ở incremental call cũng (pool có thể đã được drain).
+            // Warm up again: the pools may have been drained.
             trackerPool.warmup(POOL_WARMUP_TRACKERS);
             trackerListPool.warmup(POOL_WARMUP_TRACKER_LISTS);
 
             double uut_abs = newTotalUtility * Su;
-            this.uutValue = uut_abs; // ngưỡng HUSP tuyệt đối (xuất CSV)
+            this.uutValue = uut_abs; // absolute HUSP threshold (exported to CSV)
             double lut_min_abs = newTotalUtility * Sl_min;
 
-            // WP1.4 - TRINH TU BAT BUOC TRONG MOT LO:
-            //   nap lo -> cap nhat bo dem (CUB, A_i) -> kiem tra kich hoat ->
-            //   neu rescan thi RESET bo dem TRUOC -> roi moi tinh Delta va LUT_dyn.
-            // Ban nop tinh Delta truoc khi reset nen mineAndClassify nhan LUT_dyn cu (da bi
-            // bom phong boi cubValue chua reset), tuc mine lai bang mot nguong khong tuong
-            // ung voi trang thai sau rescan.
+            // Required order within a batch:
+            //   load batch -> update counters (CUB, A_i) -> test the trigger ->
+            //   on rescan, reset the counters -> only then compute Delta and LUT_dyn.
+            // Computing Delta before the reset would mine the rescan with a floor inflated
+            // by counters that the rescan clears.
 
-            // --- Buoc 1: cap nhat bo dem tich luy ---
-            this.cubValue += batchTotalUtil;       // perturbation tich luy ke tu rescan gan nhat
+            // --- Step 1: update the accumulated counters ---
+            this.cubValue += batchTotalUtil;       // perturbation accumulated since the last rescan
             this.insertedSinceRescan += batchTotalUtil;
             this.iauTightness = (iauMax <= 0) ? 1.0 : (cubValue / iauMax);
             boolean joint = this.triggerRule == TriggerRule.JOINT;
@@ -989,13 +891,13 @@ public class PreHUSPMAdaptiveAlgorithm {
             this.sigmaDSquared = joint ? 0 : calculateVariance(deltaD);
             this.rhoD = (joint || batchTotalUtil == 0) ? 0 : (swuMax / batchTotalUtil);
 
-            // --- Buoc 2: kiem tra dieu kien kich hoat (WP1.2) ---
-            // SFT_ins = (UUT - LUT_min)/(1 - UUT) * TSU_ref  (Eq. 15, khong doi).
+            // --- Step 2: test the trigger ---
+            // Insertion safety bound of Hong et al.: (UUT - LUT_min)/(1 - UUT) * TSU_ref.
             double safetyBoundF = ((Su - Sl_min) / (1.0 - Su)) * tsuAtLastRescan;
             this.sftValue = safetyBoundF;
             double triggerQuantity;
             switch (this.triggerRule) {
-                case SWUMAX: triggerQuantity = swuMax;   break;  // luat cu, KHONG sound
+                case SWUMAX: triggerQuantity = swuMax;   break;  // not sound
                 case CUB:    triggerQuantity = cubValue; break;
                 case JOINT:  triggerQuantity = jointTriggerQuantity(); break;
                 case IAUMAX: default: triggerQuantity = iauMax; break;
@@ -1004,17 +906,17 @@ public class PreHUSPMAdaptiveAlgorithm {
                 safetyBoundF = (Su - Sl_min) * tsuAtLastRescan;
                 this.sftValue = safetyBoundF;
             }
-            // C5 ablation: useAdaptiveRescan=false -> rescan MOI LO (bo quyet dinh thich ung)
+            // Adaptive rescan ablation: useAdaptiveRescan=false rescans every batch.
             this.cubTriggeredRescan = useAdaptiveRescan ? (triggerQuantity > safetyBoundF) : true;
-            this.iauMaxAtDecision = triggerQuantity;   // chup TRUOC resetIau() o buoc ke tiep
+            this.iauMaxAtDecision = triggerQuantity;   // recorded before resetIau() below
 
-            // --- Buoc 3: neu rescan thi reset bo dem TRUOC khi tinh Delta ---
+            // --- Step 3: on rescan, reset the counters before computing Delta ---
             if (cubTriggeredRescan) {
                 rescanCount++;
-                this.cubValue = 0;                      // Reset bo dem
-                resetIau();                             // Reset A_i
+                this.cubValue = 0;
+                resetIau();                             // reset A_i
                 insertedSinceRescan = 0; deletedSinceRescan = 0;
-                this.tsuAtLastRescan = newTotalUtility; // cap nhat moc TSU cho SFT
+                this.tsuAtLastRescan = newTotalUtility; // new TSU reference
             }
 
             if (joint) {
@@ -1023,17 +925,18 @@ public class PreHUSPMAdaptiveAlgorithm {
                 this.lutDynValue = Sl_min * tsuAtLastRescan;
                 this.deltaDValue = uut_abs - this.lutDynValue;
             } else {
-                // --- Buoc 4: bien do thich ung Delta, nay co CA can duoi (WP1.3) ---
-                // Can duoi bat buoc. Mau bi loai tai LUT_dyn phai KHONG THE thanh HUSP truoc
-                // lan rescan ke tiep. Ngan sach chen con lai la A_max = SFT_ins - (bo dem hien
-                // tai). Voi moi A_future <= A_max ta can u(X,D') + A_future < UUT*(TSU' + A_future);
-                // hieu hai ve tang theo he so (1 - UUT) > 0 nen truong hop xau nhat o
-                // A_future = A_max, cho u(X,D') < UUT*TSU' - (1-UUT)*A_max, tuc
-                //     Delta >= (1 - UUT)*A_max = (UUT - LUT_min)*TSU_ref - (1 - UUT)*(bo dem).
-                // Khi bo dem = 0 (ngay sau rescan) can duoi nay bang dung tran cu, nen LUT_dyn
-                // roi ve san cung LUT_min*TSU_ref - khop pham vi Theorem 3 va 4.
-                // Tran duoc nang tu (UUT - LUT_min)*TSU' len UUT*TSU' de can duoi khong bi cat
-                // cut; LUT_dyn >= 0 luon dung.
+                // --- Step 4: adaptive width Delta, with a lower bound ---
+                // Required lower bound: a pattern dropped at LUT_dyn must not become a HUSP
+                // before the next rescan. The remaining insertion budget is
+                // A_max = SFT_ins - (current counter). For every A_future <= A_max we need
+                // u(X,D') + A_future < UUT*(TSU' + A_future); the difference of the two sides
+                // grows with factor (1 - UUT) > 0, so the worst case is A_future = A_max,
+                // giving u(X,D') < UUT*TSU' - (1-UUT)*A_max, i.e.
+                //     Delta >= (1 - UUT)*A_max = (UUT - LUT_min)*TSU_ref - (1 - UUT)*(counter).
+                // With the counter at 0 (right after a rescan) this equals the fixed band, so
+                // LUT_dyn falls back to LUT_min*TSU_ref.
+                // The final cap is UUT*TSU' rather than (UUT - LUT_min)*TSU' so that the lower
+                // bound is never cut; LUT_dyn >= 0 always holds.
                 double consumedIns = cubTriggeredRescan ? 0.0
                         : (this.triggerRule == TriggerRule.SWUMAX ? cubValue : triggerQuantity);
                 double deltaMinIns = Math.max(0.0,
@@ -1046,30 +949,28 @@ public class PreHUSPMAdaptiveAlgorithm {
                     case RHO_ONLY: dynamicTerm = kappa * rhoD; break;
                 }
 
-                // Tran cua SO HANG HEURISTIC giu nguyen (UUT - LUT_min)*TSU'. Bo tran nay di
-                // thi so hang +CUB (co the toi 10% TSU) se keo LUT_dyn ve 0 va bien toan bo
-                // mau thanh tien-lon - dung loi da quan sat khi chay thu. Can duoi an toan
-                // deltaMin duoc ap SAU tran do va co the vuot no (chi xay ra o pha xoa, khi
-                // TSU' < TSU_ref); clamp cuoi cung tai UUT*TSU' bao dam LUT_dyn >= 0.
+                // The HEURISTIC term stays capped at (UUT - LUT_min)*TSU'. Without that cap the
+                // +CUB term would pull LUT_dyn to 0 and make every pattern pre-large. The safe
+                // lower bound deltaMin is applied AFTER the cap and may exceed it (only in the
+                // deletion phase, when TSU' < TSU_ref); the final clamp at UUT*TSU' keeps
+                // LUT_dyn >= 0.
                 //
-                // Y nghia: tinh dung dan den TU deltaMin, KHONG tu so hang +CUB. Ban thao
-                // tuyen bo +CUB bao phu duoc muc tang toi da cua mot mau; tuyen bo do khong
-                // dung vi so hang ay bi tran cat cut. deltaMin la dieu kien dung.
+                // Correctness rests on deltaMin, not on the +CUB term: the cap may cut that
+                // term, so it does not cover the largest possible gain of a pattern.
                 double heuristicIns = Math.min(delta0 * newTotalUtility + dynamicTerm + cubValue,
                                                uut_abs - lut_min_abs);
                 this.deltaDValue = Math.min(Math.max(heuristicIns, deltaMinIns), uut_abs);
-                this.lutDynValue = Math.max(0.0, uut_abs - deltaDValue); // band floor thich ung
-                if (!useAdaptiveBand) this.lutDynValue = lut_min_abs; // ablation: band co dinh Sl_min
+                this.lutDynValue = Math.max(0.0, uut_abs - deltaDValue); // adaptive band floor
+                if (!useAdaptiveBand) this.lutDynValue = lut_min_abs; // ablation: fixed band at Sl_min
             }
 
             if (cubTriggeredRescan) {
-                // Can an toan vo -> Rescan (giu pruning chat khi mine lai)
-                // Gia lap quet lai tren D_SoFar (thuc te se dung BlockIndex de nap selective)
+                // Safety bound exceeded: mine the whole current database again.
                 largeMap.clear(); prelargeMap.clear();
                 mineWithBudget(dSoFar, uut_abs, newTotalUtility);
 
             } else {
-                // An toàn -> Cập nhật trực tiếp trên Lớn và Tiền Lớn (CompactPattern)
+                // Safe: update the large and pre-large patterns directly.
                 List<CompactPattern> allTrackedPatterns = new ArrayList<>();
                 allTrackedPatterns.addAll(largeMap.keySet());
                 allTrackedPatterns.addAll(prelargeMap.keySet());
@@ -1082,17 +983,15 @@ public class PreHUSPMAdaptiveAlgorithm {
                 for (CompactPattern p : allTrackedPatterns) {
                     double updatedUtility = oldUtilities.get(p) + evaluatePatternUtilityWithIndex(p, deltaD);
                     if (updatedUtility >= uut_abs) largeMap.put(p, updatedUtility);
-                    // PATCHED (tinhchinhcode5 #8): PHỤC HỒI sàn pre-large THÍCH ỨNG lutDynValue
-                    // (C2 active) thay cho lut_min cố định. Band = [lutDynValue, uut) co/giãn
-                    // theo δ_D: hẹp khi ổn định (tránh bùng nổ pre-large) / rộng khi biến động
-                    // (tránh thiếu mẫu). Đây là vai trò thật của C2 (xem thực nghiệm dilemma).
+                    // Pre-large floor: the per-pattern floor under JOINT, the adaptive
+                    // lutDynValue otherwise.
                     else if (updatedUtility >= (triggerRule == TriggerRule.JOINT ? jointFloor(p) : lutDynValue))
                         prelargeMap.put(p, updatedUtility);
                 }
 
-                // Khai phá lô mới để tìm mẫu Tiền Lớn/Lớn mới sinh ra trên deltaD.
-                // (Vẫn dùng lutDynValue toàn cục - KHÔNG dùng localLut: ngưỡng thấp sẽ
-                //  bơm mẫu toàn-cục-nhỏ vào prelargeMap qua nhánh merge bên dưới.)
+                // Mine the new batch for new large and pre-large patterns.
+                // Uses the global lutDynValue, not a batch-local threshold: a lower threshold
+                // would feed globally small patterns into prelargeMap through the merge below.
                 if (mineNewPatternsPerBatch) {
                     Map<CompactPattern, Double> newMinedPatterns = mineBatchWithIUB(deltaD, lutDynValue);
                     for (Map.Entry<CompactPattern, Double> entry : newMinedPatterns.entrySet()) {
@@ -1106,39 +1005,38 @@ public class PreHUSPMAdaptiveAlgorithm {
             this.patternCount = largeMap.size(); this.prelargeCount = prelargeMap.size();
         }
 
-        // ================= PHA 2b: XOÁ (Deletion) =================
+        // ================= PHASE 2b: DELETION =================
         /**
-         * Xoá tập deletedSeqs khỏi CSDL. dAfter là CSDL còn lại sau khi xoá.
-         * newTotalUtility = TSU(dAfter). CUB cộng |δτ| = u(s) cho mỗi chuỗi xoá.
+         * Removes deletedSeqs from the database. dAfter is the database after deletion and
+         * newTotalUtility = TSU(dAfter). CUB adds u(s) for every deleted sequence.
          */
         public void runDeletion(List<Sequence> deletedSeqs, List<Sequence> dAfter, double newTotalUtility) {
-            cancelled = false; // reset cancellation từ phiên đo trước
+            cancelled = false; // clear a cancellation left by an earlier measurement
             if (deletedSeqs == null || deletedSeqs.isEmpty()) { this.patternCount = largeMap.size(); this.prelargeCount = prelargeMap.size(); return; }
-            // Defensive: calculateExactUtilityInSeq + Pass-2 dùng scratchMaxUtil/Present/UsedFlat
-            // indexed by flatIdx. Đảm bảo allocate (no-op nếu đã đủ size từ INIT/INCREMENTAL).
+            // calculateExactUtilityInSeq and Pass 2 use the scratch buffer arrays indexed by
+            // flatIdx; make sure they are allocated (no-op if already large enough).
             allocateScratch(maxItemId + 1);
             ensureScratchCapacity(maxFlatLen);
             double deletedTotal = 0;
             for (Sequence s : deletedSeqs) deletedTotal += s.sequenceUtility;
 
             double uut_abs = newTotalUtility * Su;
-            this.uutValue = uut_abs; // ngưỡng HUSP tuyệt đối (xuất CSV)
+            this.uutValue = uut_abs; // absolute HUSP threshold (exported to CSV)
             double lut_min_abs = newTotalUtility * Sl_min;
 
-            // Cập nhật LUT_dyn (giống logic insertion để giữ tính nhất quán)
+            // Update LUT_dyn with the same logic as insertion.
             boolean joint = this.triggerRule == TriggerRule.JOINT;
             this.sigmaDSquared = joint ? 0 : calculateVariance(deletedSeqs);
             double swuMaxDel = 0;
             for (Sequence s : deletedSeqs) if (s.sequenceUtility > swuMaxDel) swuMaxDel = s.sequenceUtility;
             this.rhoD = (joint || deletedTotal == 0) ? 0 : (swuMaxDel / deletedTotal);
-            // WP1.4 - cung trinh tu bat buoc nhu pha chen:
-            //   cap nhat bo dem -> kiem tra kich hoat -> reset neu rescan -> roi tinh Delta.
-            // Luat kich hoat cua pha XOA von da dung dang TICH LUY (cubValue) nen VAN SOUND;
-            // chi phai sua thu tu va bo sung can duoi cho Delta.
-            this.cubValue += deletedTotal;   // perturbation tich luy ke tu rescan gan nhat
+            // Same required order as insertion:
+            //   update counters -> test the trigger -> reset on rescan -> compute Delta.
+            // The non-JOINT deletion trigger is cumulative (cubValue), hence sound.
+            this.cubValue += deletedTotal;   // perturbation accumulated since the last rescan
             this.deletedSinceRescan += deletedTotal;
 
-            // F_del = (Su - Sl_min)/Su * TSU_lastRescan (Hong et al., chieu deletion).
+            // F_del = (Su - Sl_min)/Su * TSU_lastRescan (deletion bound of Hong et al.).
             double safetyBoundDel = ((Su - Sl_min) / Su) * tsuAtLastRescan;
             this.sftValue = safetyBoundDel;
             if (joint) {
@@ -1155,17 +1053,17 @@ public class PreHUSPMAdaptiveAlgorithm {
                 cubValue = 0;
                 resetIau();
                 insertedSinceRescan = 0; deletedSinceRescan = 0;
-                this.tsuAtLastRescan = newTotalUtility; // cap nhat moc TSU cho F
+                this.tsuAtLastRescan = newTotalUtility; // new TSU reference
             }
 
             if (joint) {
                 this.lutDynValue = Sl_min * tsuAtLastRescan;
                 this.deltaDValue = uut_abs - this.lutDynValue;
             } else {
-                // WP1.3 - can duoi cho Delta, dang DOI XUNG voi pha chen.
-                // Xoa lam TSU giam nen mot mau co the vuot len thanh HUSP ma khong tang utility.
-                // Ngan sach xoa con lai A_max = SFT_del - CUB. Truong hop xau nhat: X khong mat
-                // gi trong khi TSU giam dung A_max, can u(X,D') < UUT*(TSU' - A_max), tuc
+                // Lower bound on Delta, symmetric to the insertion phase.
+                // Deletion lowers TSU, so a pattern may become a HUSP without gaining utility.
+                // Remaining deletion budget A_max = SFT_del - CUB. Worst case: X loses nothing
+                // while TSU drops by exactly A_max, which needs u(X,D') < UUT*(TSU' - A_max), i.e.
                 //     Delta >= UUT*A_max = (UUT - LUT_min)*TSU_ref - UUT*CUB.
                 double dynamicTerm = 0;
                 switch (this.mode) {
@@ -1178,17 +1076,17 @@ public class PreHUSPMAdaptiveAlgorithm {
                 double heuristicDel = Math.min(delta0 * newTotalUtility + dynamicTerm + cubValue,
                                                uut_abs - lut_min_abs);
                 this.deltaDValue = Math.min(Math.max(heuristicDel, deltaMinDel), uut_abs);
-                this.lutDynValue = Math.max(0.0, uut_abs - deltaDValue); // band floor thich ung
-                if (!useAdaptiveBand) this.lutDynValue = lut_min_abs; // ablation: band co dinh Sl_min
+                this.lutDynValue = Math.max(0.0, uut_abs - deltaDValue); // adaptive band floor
+                if (!useAdaptiveBand) this.lutDynValue = lut_min_abs; // ablation: fixed band at Sl_min
             }
 
             if (cubTriggeredRescan) {
                 largeMap.clear(); prelargeMap.clear();
-                // Loại bỏ các sequence đã xoá khỏi dbLookup để mineAndClassify không truy cập sai
+                // Remove the deleted sequences from the lookup so mining never reads them.
                 for (Sequence s : deletedSeqs) dbRemove(s.id);
                 mineWithBudget(dAfter, uut_abs, newTotalUtility);
             } else {
-                // Cập nhật trực tiếp: trừ utility do chuỗi bị xoá đóng góp (CompactPattern)
+                // Direct update: subtract the utility contributed by the deleted sequences.
                 List<CompactPattern> tracked = new ArrayList<>();
                 tracked.addAll(largeMap.keySet());
                 tracked.addAll(prelargeMap.keySet());
@@ -1201,8 +1099,7 @@ public class PreHUSPMAdaptiveAlgorithm {
                     for (Sequence s : deletedSeqs) removed += calculateExactUtilityInSeq(p, s);
                     double updated = Math.max(0, oldUtil.get(p) - removed);
                     if (updated >= uut_abs) largeMap.put(p, updated);
-                    // PATCHED (tinhchinhcode5 #8): phục hồi sàn pre-large THÍCH ỨNG lutDynValue
-                    // (C2 active), nhất quán với pha chèn.
+                    // Same pre-large floor as the insertion phase.
                     else if (updated >= (triggerRule == TriggerRule.JOINT ? jointFloor(p) : lutDynValue))
                         prelargeMap.put(p, updated);
                 }
@@ -1211,28 +1108,21 @@ public class PreHUSPMAdaptiveAlgorithm {
             this.patternCount = largeMap.size(); this.prelargeCount = prelargeMap.size();
         }
 
-        // ================= PHA 2c: SỬA ĐỔI (Modification) =================
+        // ================= PHASE 2c: MODIFICATION =================
         /**
-         * Sửa đổi tập chuỗi: tương đương xoá oldSeqs + chèn newSeqs.
-         * CUB cộng |δτ| = |u(new) - u(old)| (theo Định nghĩa 9 / paper).
+         * Modifies sequences: deletion of oldSeqs followed by insertion of newSeqs.
+         * The two phases charge u(old) and u(new) to the counters.
          */
         public void runModification(List<Sequence> oldSeqs, List<Sequence> newSeqs,
                                     List<Sequence> dAfter, double newTotalUtility) {
-            // Mo hinh hoa modification = deletion + insertion.
+            // Modification = deletion + insertion.
             //
-            // WP1 - LO HONG THU TU BON (phan bien chua neu, cung loai voi A1).
-            // Ban nop ghi de bo dem bang cubValue = cubBefore + |u(new) - u(old)|, tuc lay
-            // do lech utility RONG lam luong perturbation da tieu. Dai luong nay KHONG chan
-            // duoc do bien dong cua tap mau: mot thao tac sua giu nguyen utility nhung doi
-            // toan bo item cho |delta| = 0, tuc khong tieu ngan sach nao, trong khi tap mau
-            // co the doi hoan toan. Day dung la loi ma Reviewer #1 chi ra o Eq. (9): lay mot
-            // dai luong khong chan duoc thu can chan.
-            //
-            // Cach dung: de nguyen phan tich luy ma hai pha con da cong, tuc
-            //     CUB += u(old) + u(new),
-            // vi mot thao tac sua vua rut u(old) khoi CSDL vua bom u(new) vao, va ca hai deu
-            // co the day mot mau qua nguong. Day la can tren dung cua perturbation.
-            // Dat strictModificationBudget=false de tai hien hanh vi cu (chi de doi chieu).
+            // A modification both removes u(old) from the database and adds u(new), and either
+            // may push a pattern across a threshold, so the valid charge is u(old) + u(new),
+            // which the two phases add on their own. The net change |u(new) - u(old)| does not
+            // bound the change of the pattern set: a modification that keeps the utility but
+            // replaces every item has net change 0.
+            // strictModificationBudget=false charges the net change instead (comparison only).
             double delta = 0;
             int n = Math.min(oldSeqs.size(), newSeqs.size());
             for (int i = 0; i < n; i++) delta += Math.abs(newSeqs.get(i).sequenceUtility - oldSeqs.get(i).sequenceUtility);
@@ -1240,9 +1130,9 @@ public class PreHUSPMAdaptiveAlgorithm {
             runDeletion(oldSeqs, subtract(dAfter, newSeqs), totalUtilityOf(subtract(dAfter, newSeqs)));
             runIncrementalMining(newSeqs, dAfter, newTotalUtility);
             if (!strictModificationBudget) {
-                this.cubValue = cubBefore + delta;   // hanh vi cu, KHONG sound
+                this.cubValue = cubBefore + delta;   // net-change charge, NOT sound
             }
-            // Khong reset triggeredRescan vi hai pha tren da xu ly dung.
+            // cubTriggeredRescan keeps the value set by the insertion phase.
         }
 
         private List<Sequence> subtract(List<Sequence> all, List<Sequence> remove) {
@@ -1257,7 +1147,7 @@ public class PreHUSPMAdaptiveAlgorithm {
             double t = 0; for (Sequence s : seqs) t += s.sequenceUtility; return t;
         }
 
-        /** Đặt lại toàn bộ bộ đếm A_i (gọi tại init và tại mỗi lần rescan). */
+        /** Clears every A_i (at initial mining and at each rescan). */
         private void resetIau() {
             java.util.Arrays.fill(iau, 0.0);
             iauMax = 0;
@@ -1269,9 +1159,9 @@ public class PreHUSPMAdaptiveAlgorithm {
         }
 
         /**
-         * Cộng u(s) vào A_i cho mọi item PHÂN BIỆT i xuất hiện trong s, và cập nhật iauMax.
-         * Dùng scratchIauSeen làm cờ chống cộng trùng khi item lặp lại trong cùng chuỗi
-         * (cộng trùng vẫn sound vì chỉ nới cận lên, nhưng làm luật lỏng đi vô cớ).
+         * Adds u(s) to A_i for every DISTINCT item i of s and updates iauMax.
+         * scratchIauSeen prevents adding twice when an item repeats within the sequence
+         * (adding twice would still be sound, but would loosen the rule for no reason).
          */
         private void accumulateIau(Sequence s) {
             final double u = s.sequenceUtility;
@@ -1285,7 +1175,7 @@ public class PreHUSPMAdaptiveAlgorithm {
                                 scratchIauSeen == null ? new int[256] : scratchIauSeen,
                                 Math.max(id + 1, (scratchIauSeen == null ? 256 : scratchIauSeen.length) * 2));
                     }
-                    if (scratchIauSeen[id] == iauStamp) continue;   // đã cộng cho chuỗi này
+                    if (scratchIauSeen[id] == iauStamp) continue;   // already added for this sequence
                     scratchIauSeen[id] = iauStamp;
                     double v = iau[id] + u;
                     iau[id] = v;
@@ -1298,7 +1188,7 @@ public class PreHUSPMAdaptiveAlgorithm {
         private transient int[] scratchIauSeen = new int[256];
         private int iauStamp = 1;
 
-        /** Cấp phát mảng scratch double[] cho Pass-1 nhanh (tránh HashMap mỗi tracker). */
+        /** Allocates the item-indexed scratch arrays for Pass 1 and Pass 2. */
         private void allocateScratch(int sz) {
             if (sz <= 0) sz = 16;
             if (scratchLocalI == null || scratchLocalI.length < sz) {
@@ -1316,7 +1206,7 @@ public class PreHUSPMAdaptiveAlgorithm {
                 scratchLocalUsedS = new int[sz];
                 scratchSurvivingI = new boolean[sz];
                 scratchSurvivingS = new boolean[sz];
-                // Single-pass Pass-2: slot TrackerList theo itemId (gom con 1 lượt quét)
+                // Single-pass Pass 2: child TrackerList slot per item id
                 iSlot = new TrackerList[sz];
                 sSlot = new TrackerList[sz];
                 spSurvGenI = new long[sz];
@@ -1335,30 +1225,29 @@ public class PreHUSPMAdaptiveAlgorithm {
         }
 
         private double evaluatePatternUtilityWithIndex(CompactPattern p, List<Sequence> deltaD) {
-            // PATCHED (tinhchinhcode5 #1): GIAO bitset của TẤT CẢ item trong pattern,
-            // thay vì chỉ firstItem. Trên BMS1 (siêu thưa) item đầu xuất hiện ở gần như
-            // mọi block → bitset toàn 1 → Index vô hiệu → ép quét thủ công hàng triệu
-            // mẫu × toàn bộ deltaD (điểm treo CPU 100% ở vòng cập nhật dòng 772-776).
-            // An toàn: seq chỉ chứa p nếu chứa MỌI item của p ⟹ block của seq phải nằm
-            // trong GIAO các bitset item ⟹ giao là bộ lọc CHẶT HƠN, KHÔNG bỏ sót.
-            // (Bỏ qua khi tắt block index - giữ đúng ablation KB7: quét tuần tự toàn bộ.)
+            // Intersect the block bitmaps of ALL items of the pattern, not only the first:
+            // on sparse data a single item may occur in almost every block, which would
+            // make the index useless.
+            // A sequence contains p only if it contains every item of p, so its block lies
+            // in the intersection: the filter is tighter and misses nothing.
+            // Skipped under the block index ablation, which reads every sequence.
             final int blkUnit = Math.max(1, globalBlockIndex.blockSize);
             BitSet relevantBlocks = null;
             if (useBlockIndex) {
                 final int[] flat = p.flat;
                 for (int idx = 0; idx < flat.length; idx++) {
                     int item = flat[idx];
-                    if (item < 0) continue; // bỏ separator -1 (ranh giới itemset)
+                    if (item < 0) continue; // skip the -1 itemset separator
                     BitSet bs = globalBlockIndex.bitsetFor(item);
-                    if (bs == null || bs.isEmpty()) {     // item không ở block nào → pattern bất khả
+                    if (bs == null || bs.isEmpty()) {     // item in no block: pattern absent
                         numBlocksSkipped += (deltaD.size() / blkUnit) + 1;
                         return 0.0;
                     }
                     if (relevantBlocks == null) {
-                        relevantBlocks = (BitSet) bs.clone(); // CLONE: KHÔNG mutate bitset gốc trong index
+                        relevantBlocks = (BitSet) bs.clone(); // clone: never mutate the index bitmap
                     } else {
                         relevantBlocks.and(bs);
-                        if (relevantBlocks.isEmpty()) {   // giao rỗng → không block nào chứa đủ item
+                        if (relevantBlocks.isEmpty()) {   // empty intersection: no block holds all items
                             numBlocksSkipped += (deltaD.size() / blkUnit) + 1;
                             return 0.0;
                         }
@@ -1372,7 +1261,7 @@ public class PreHUSPMAdaptiveAlgorithm {
 
             double totalUtil = 0;
             for (Sequence seq : deltaD) {
-                // Ablation KB7: nếu tắt block index thì scan tuần tự toàn bộ (không skip)
+                // Block index ablation: read every sequence, skip nothing.
                 boolean shouldRead;
                 if (!useBlockIndex) {
                     shouldRead = true;
@@ -1391,11 +1280,9 @@ public class PreHUSPMAdaptiveAlgorithm {
         }
 
         private double calculateExactUtilityInSeq(CompactPattern p, Sequence seq) {
-            // === SCRATCH BUFFER O(1) cho TỪNG step trong pattern walk ===
-            // Thay backward-scan O(L) trong addOrUpdateInstance bằng class-level
-            // scratch buffer indexed by flatIdx. Cấu trúc:
-            //   Cho mỗi step (extension), accumulate matches vào scratch buffer,
-            //   sau đó flush vào nextTracker bằng append() (no dedup needed).
+            // Walks the pattern one item at a time. Each step merges matches per flat
+            // position in the scratch buffer (keeping the largest utility), then appends them
+            // to the next tracker; no deduplication is needed on append.
             if (seq.flatItems == null) seq.buildFlatRepresentation();
             final int[] flatItems = seq.flatItems;
             final double[] flatUtils = seq.flatUtilities;
@@ -1406,8 +1293,8 @@ public class PreHUSPMAdaptiveAlgorithm {
 
             int firstItem = pFlat[0];
 
-            // === STEP 0: build first Tracker cho firstItem ===
-            // L1 không có duplicate (mỗi flatIdx unique cho 1 item) → append trực tiếp.
+            // === Step 0: tracker for the first item ===
+            // Each flat position is unique, so append directly.
             Tracker tracker = borrowTracker(seq.id);
             for (int k = 0; k < flatLen; k++) {
                 if (flatItems[k] == firstItem) {
@@ -1422,7 +1309,7 @@ public class PreHUSPMAdaptiveAlgorithm {
             Tracker current = tracker;
             boolean nextIsSExt = false;
 
-            // === STEPS 1..pLen-1: extend pattern ===
+            // === Steps 1..pLen-1: extend the pattern ===
             for (int idx = 1; idx < pLen; idx++) {
                 int v = pFlat[idx];
                 if (v == -1) {
@@ -1433,7 +1320,7 @@ public class PreHUSPMAdaptiveAlgorithm {
                 boolean isIExt = !nextIsSExt;
                 nextIsSExt = false;
 
-                // === SCRATCH BUFFER ACCUMULATE ===
+                // === Scratch buffer accumulate ===
                 int localUsedCount = 0;
 
                 final int curSize = current.size;
@@ -1445,7 +1332,7 @@ public class PreHUSPMAdaptiveAlgorithm {
                     double instUtility = curUtil[k];
                     if (isIExt) {
                         if (isItemsetEnd[parentFlatIdx]) continue;
-                        // I-ext scan
+                        // I-extension scan
                         for (int q = parentFlatIdx + 1; q < flatLen; q++) {
                             boolean endOfItemset = isItemsetEnd[q];
                             if (flatItems[q] == itemToFind) {
@@ -1461,7 +1348,7 @@ public class PreHUSPMAdaptiveAlgorithm {
                             if (endOfItemset) break;
                         }
                     } else {
-                        // S-ext scan
+                        // S-extension scan
                         int boundary = parentFlatIdx;
                         while (boundary < flatLen && !isItemsetEnd[boundary]) boundary++;
                         int sExtStart = boundary + 1;
@@ -1480,7 +1367,7 @@ public class PreHUSPMAdaptiveAlgorithm {
                     }
                 }
 
-                // === FLUSH vào nextTracker + reset scratch buffer selective ===
+                // === Flush into the next tracker and reset the touched positions ===
                 releaseTracker(current);
                 if (localUsedCount == 0) return 0.0;
 
@@ -1501,10 +1388,10 @@ public class PreHUSPMAdaptiveAlgorithm {
         private Map<CompactPattern, Double> mineBatchWithIUB(List<Sequence> batch, double minThreshold) {
             Map<CompactPattern, Double> results = new HashMap<>();
 
-            // === L1 trackers: TrackerList[] indexed by itemId (no boxing) ===
-            // Dùng FLAT representation: scan flatItems[] thay vì itemsets.items.
-            // L1: mỗi flatIdx unique → đi qua Tracker.append() (no-dedup) trực tiếp.
-            // Pool: borrow TrackerList + borrow Tracker; release sau expand.
+            // === 1-item trackers: TrackerList[] indexed by item id ===
+            // Scans the flat arrays. Each flat position is unique, so Tracker.append()
+            // is used directly. Lists and trackers come from the pools and are returned
+            // after expansion.
             final int sz = Math.max(1, maxItemId + 1);
             TrackerList[] l1Trackers = new TrackerList[sz];
             int[] l1Used = new int[sz];
@@ -1525,7 +1412,7 @@ public class PreHUSPMAdaptiveAlgorithm {
                         l1Trackers[idx] = tl;
                         l1Used[l1UsedCount++] = idx;
                     }
-                    // Reuse last Tracker if same seqId; else borrow fresh from pool.
+                    // Reuse the last tracker if it belongs to this sequence; else borrow one.
                     int trSize = tl.trackers.size();
                     Tracker last;
                     if (trSize > 0 && (last = tl.trackers.get(trSize - 1)).seqId == seqId) {
@@ -1534,16 +1421,16 @@ public class PreHUSPMAdaptiveAlgorithm {
                         last = borrowTracker(seqId);
                         tl.trackers.add(last);
                     }
-                    // L1: mỗi flatIdx là unique (chỉ thấy 1 lần / sequence) →
-                    // dùng append() trực tiếp (skip backward scan).
+                    // Each flat position is seen once per sequence: append directly.
                     last.append(k, flatUtils[k], seq);
                 }
             }
 
-            // NHIỆM VỤ 1: đếm đầy đủ ứng viên 1-item sinh ra ở đợt quét đầu (đồng nhất baseline).
+            // Count every generated 1-item candidate, as the baselines do.
             candidateCount += l1UsedCount;
 
-            // Recurse + release pool (Strategy 3 + Pool: l1Trackers[idx] = null trước recurse).
+            // Expand each 1-item pattern; clear its slot before recursing and return the
+            // list to the pool afterwards.
             for (int u = 0; u < l1UsedCount; u++) {
                 int item = l1Used[u];
                 TrackerList tl = l1Trackers[item];
@@ -1551,27 +1438,29 @@ public class PreHUSPMAdaptiveAlgorithm {
                 if (tl == null) continue;
                 Pattern p = new Pattern(item);
                 expandNodeWithPruning(p, tl, batch, minThreshold, results, 1);
-                // Sau khi expand, release tl về pool (recycle Trackers bên trong).
+                // Return tl and its trackers to the pool.
                 releaseTrackerList(tl);
             }
             return results;
         }
 
         /**
-         * ĐÓNG GÓP C1 & C3: CƠ CHẾ CẮT TỈA PHÂN TẦNG (FILTER-FIRST, COMPUTE-SECOND)
+         * Bound-first expansion of one node: survey the child items with their PEU, filter
+         * them by the aggregated PEU value bound, and build occurrence lists only for the
+         * survivors. The IUB bound prunes the whole branch.
          */
         private void expandNodeWithPruning(Pattern currentPattern, TrackerList parentTrackers, List<Sequence> batch, double minThreshold, Map<CompactPattern, Double> results, int depth) {
 
-            // === COOPERATIVE CANCELLATION CHECK (timeout 60 phút từ runner) ===
-            // Volatile read - JIT vẫn inline tốt; cost ~1 ns per recursion node.
+            // === Cooperative cancellation check (runner timeout) ===
+            // One volatile read per node.
             if (cancelled) throw new CancellationSignal();
 
-            // XỬ LÝ DƯ THỪA: Ngăn OOM do deep recursion trên tập dữ liệu sparse/dài
+            // Optional depth cap; off by default (see maxDepth).
             if (depth > maxDepth) return;
             if (parentTrackers == null || parentTrackers.isEmpty()) return;
 
-            exploredNodes++; // mẫu này được KHAI TRIỂN (đã qua cận PEU, được materialize + đệ quy vào)
-            // "Sinh ra là đếm": candidateCount đếm MỌI item sinh ra ở bước Filter survivors (đồng nhất baseline).
+            exploredNodes++; // this node passed the PEU bound and is expanded
+            // candidateCount counts every item generated in the survey below, as the baselines do.
             double exactUtilityD = 0, IUB = 0;
 
             ArrayList<Tracker> ptList = parentTrackers.trackers;
@@ -1579,42 +1468,31 @@ public class PreHUSPMAdaptiveAlgorithm {
             for (int pi = 0; pi < ptSize; pi++) {
                 Tracker t = ptList.get(pi);
                 exactUtilityD += t.exactUtility;
-                IUB += t.peu; // PEU cục bộ tạo thành IUB
+                IUB += t.peu; // per-sequence PEU summed into IUB
             }
 
             if (exactUtilityD >= minThreshold) {
-                // LỚP PHÒNG THỦ 3: XẢ HƠI CƯỠNG BỨC (Heuristic Flushing).
-                // Khi results phình tới ngưỡng nguy hiểm (vd BMS1 sinh hàng triệu mẫu
-                // có utility ≥ lutDyn), bỏ 50% mẫu YẾU NHẤT (utility thấp) để giữ RAM
-                // bị chặn → không OOM cứng 24GB. An toàn cho output: mẫu LỚN (≥ uut,
-                // utility cao nhất) LUÔN được giữ; chỉ tỉa bớt buffer Tiền-Lớn yếu
-                // (định lý an toàn + cơ chế Rescan đảm bảo tính toàn vẹn).
-                if (results.size() >= maxResultPatterns) flushWeakestResults(results);
-                // Build CompactPattern DIRECTLY from currentPattern → 3-5× nhỏ hơn,
-                // hashCode cached (1 phép hash O(L) khi tạo, sau đó O(1)).
-                // Không clonePattern() → loại 3-5 ArrayList alloc per pattern.
+                // Every pattern that reaches the cutoff is kept. A tracked set too large for the
+                // heap ends the run with an out-of-memory status; dropping patterns instead would
+                // break exactness, since an untracked pattern above the floor is never revisited.
                 results.put(CompactPattern.fromMutable(currentPattern), exactUtilityD);
             }
 
-            // --- TẦNG 2: BRANCH PRUNING (Cắt nhánh dựa trên IUB) ---
-            if (useIub && IUB < minThreshold) {   // C3 ablation: useIub=false → bỏ cắt nhánh IUB
-                prunedIub++; // Cận IUB đã loại nhánh này
+            // --- Branch pruning by IUB ---
+            if (useIub && IUB < minThreshold) {   // IUB branch pruning ablation: useIub=false never cuts
+                prunedIub++; // branch removed by the IUB bound
                 return;
             }
 
             allocateScratch(maxItemId + 1);
 
-            // ===== TỐI ƯU PASS-1: mảng nguyên thuỷ + boolean[] thay BitSet =====
-            // Không allocate gì per-tracker (BitSet trước đây đã gây GC churn).
-            // Reset CHỈ các slot từng dùng ở lần gọi recursion trước (selective O(touched)).
+            // ===== Pass 1: survey with primitive scratch arrays =====
+            // Nothing is allocated per tracker. Only the slots used by the previous call
+            // are reset (O(touched)).
             //
-            // QUAN TRỌNG (tối ưu KOSARAK/BMS1 nhiều item): KHÔNG bulk-reset
-            // scratchSurvivingI/S nữa. Lý do: scratchSurvivingI[idx] CHỈ được GHI ở
-            // block "filter survivors" (cho mọi idx ∈ scratchUsedI, cả nhánh true & false)
-            // và CHỈ được ĐỌC ở block snapshot (cũng chỉ duyệt scratchUsedI). Vì mọi lần
-            // đọc luôn có lần ghi tươi trước đó trong CÙNG call, các bit "rác" ngoài
-            // scratchUsedI KHÔNG BAO GIỜ bị đọc → bulk-reset O(maxItemId) là dư thừa.
-            // (Trên KOSARAK maxItemId≈41k × hàng triệu node = hàng tỷ thao tác bỏ đi.)
+            // scratchSurvivingI/S need no bulk reset: an entry is read only at indices in
+            // scratchUsedI/S, and each such entry is written by the filter step of the same
+            // call before it is read. A bulk reset would cost O(maxItemId) per node.
             for (int u = 0; u < scratchUsedICount; u++) {
                 int idx = scratchUsedI[u];
                 scratchAggI[idx] = 0;
@@ -1633,7 +1511,7 @@ public class PreHUSPMAdaptiveAlgorithm {
                 Sequence seq = dbGet(t.seqId);
                 if (seq == null) continue;
 
-                // Reset local seen từ tracker trước (selective)
+                // Reset the per-sequence flags of the previous tracker (selective).
                 for (int u = 0; u < scratchLocalUsedICount; u++) {
                     int idx = scratchLocalUsedI[u];
                     scratchLocalI[idx] = 0;
@@ -1647,10 +1525,9 @@ public class PreHUSPMAdaptiveAlgorithm {
                 scratchLocalUsedICount = 0;
                 scratchLocalUsedSCount = 0;
 
-                // FLAT REPRESENTATION - bỏ List<QItemset>.get() khỏi hot loop
-                // isItemsetEnd boolean[] thay cho flatToItemsetIdx+itemsetStart:
-                //   scan forward từ parentFlatIdx+1, phase I-ext cho tới khi gặp
-                //   isItemsetEnd[q]=true → chuyển sang phase S-ext cho phần còn lại.
+                // Flat representation: scan forward from parentFlatIdx+1, in the
+                // I-extension phase until isItemsetEnd[q] is true, then in the
+                // S-extension phase for the rest of the sequence.
                 final int tSize = t.size;
                 final int[] tFlat = t.flatIndices;
                 final double[] tUtil = t.utility;
@@ -1664,13 +1541,14 @@ public class PreHUSPMAdaptiveAlgorithm {
                     int parentFlatIdx = tFlat[k];
                     double instUtility = tUtil[k];
 
-                    // ===== INTEGRATED SCAN: I-ext phase rồi S-ext phase =====
-                    // IMPORTANT: nếu parent đã là phần tử CUỐI của itemset → skip I-ext
-                    // (q = parent+1 sẽ là START của itemset kế, không phải I-ext của parent).
+                    // ===== Integrated scan: I-extension phase, then S-extension phase =====
+                    // If the parent is the LAST element of its itemset, there is no
+                    // I-extension: q = parent+1 starts the next itemset.
                     int q = parentFlatIdx + 1;
 
-                    // PHASE 1: I-extension survey trong CÙNG itemset - gom MỌI item duy nhất
-                    // SINH RA (dedup + max localPEU). Cắt tỉa thực hiện ở bước Filter (cận PEU).
+                    // Phase 1: I-extension survey within the same itemset; collect each
+                    // generated item once with its largest local PEU. Pruning happens in the
+                    // filter step.
                     if (!isItemsetEnd[parentFlatIdx]) {
                         while (q < flatLen) {
                             int idx = flatItems[q];
@@ -1684,11 +1562,11 @@ public class PreHUSPMAdaptiveAlgorithm {
                                 scratchLocalI[idx] = localPeu;
                             }
                             q++;
-                            if (endOfItemset) break; // chuyển sang phase S-ext
+                            if (endOfItemset) break; // continue with the S-extension phase
                         }
                     }
 
-                    // PHASE 2: S-extension survey từ vị trí q (đã qua boundary).
+                    // Phase 2: S-extension survey from q (past the itemset boundary).
                     while (q < flatLen) {
                         int idx = flatItems[q];
                         double localPeu = instUtility + flatUtils[q] + flatRest[q];
@@ -1703,7 +1581,7 @@ public class PreHUSPMAdaptiveAlgorithm {
                     }
                 }
 
-                // Aggregate: cộng local max vào agg, track used cho selective reset sau này
+                // Aggregate: add the per-sequence maxima and record used items for the reset.
                 for (int u = 0; u < scratchLocalUsedICount; u++) {
                     int idx = scratchLocalUsedI[u];
                     scratchAggI[idx] += scratchLocalI[idx];
@@ -1722,22 +1600,21 @@ public class PreHUSPMAdaptiveAlgorithm {
                 }
             }
 
-            // ĐẾM CÔNG BẰNG ("Sinh ra là đếm"): candidateCount = TỔNG item duy nhất SINH RA tại
-            // node này (TRƯỚC cắt tỉa) - đồng nhất baseline + Pre-HUSPM.
+            // candidateCount adds every distinct item GENERATED at this node, before
+            // pruning, as the baselines and Pre-HUSPM count.
             candidateCount += (scratchUsedICount + scratchUsedSCount);
-            // Circuit-breaker (dời từ entry): ngắt nhánh runaway khi vượt ngân sách ứng viên.
+            // Candidate budget: stop a runaway pass.
             if (candidateCount > maxCandidatesBudget) throw new PatternBudgetExceeded(candidateCount);
-            // Luoi an toan dong ho. Kiem thua thot vi goi nanoTime() tren moi ung vien se tu
-            // no thanh chi phi dang ke; 4096 ung vien mot lan la du day de bat mot luot chay
-            // hang chuc phut ma bo dem khong thay gi.
+            // Wall-clock safety net, sampled every 4096 nodes because calling nanoTime() on
+            // every node would itself be costly.
             if (mineDeadlineNanos != 0 && (++deadlineTick & 0xFFF) == 0
                     && System.nanoTime() > mineDeadlineNanos) {
                 throw new PatternBudgetExceeded(candidateCount);
             }
 
-            // FILTER bằng CẬN GIÁ TRỊ PEU GỘP (đóng góp C1): áp cận TRƯỚC khi materialize con
-            // ⇒ chỉ con sống sót mới được hiện thực hoá (explored ≪ candidate). prunedValueBound
-            // đếm số item bị cận PEU loại. GEN MARKER: spSurvGen[idx]==spNodeGen ⟺ survivor node này.
+            // Filter by the aggregated PEU value bound, before any child is materialized, so
+            // only survivors get occurrence lists. prunedValueBound counts the items removed.
+            // Generation marker: spSurvGen[idx] == spNodeGen iff idx survives at this node.
             spNodeGen++;
             boolean anyI = false, anyS = false;
             for (int u = 0; u < scratchUsedICount; u++) {
@@ -1751,22 +1628,10 @@ public class PreHUSPMAdaptiveAlgorithm {
                 else { scratchSurvivingS[idx] = false; prunedValueBound++; }
             }
 
-            // ===== PASS-2: LAZY DFS MATERIALIZATION (PREFIXSPAN-STYLE) =====
-            // Chiến lược cốt lõi (theo goiytinhchinhcode.txt): Chỉ quét parent CSDL
-            // để build TrackerList cho MỘT item duy nhất ngay trước khi đệ quy.
-            // Sau khi đệ quy xong → tl rơi vào Unreachable → GC thu hồi tức thì.
-            //
-            // INVARIANT MEMORY: tại mọi depth, chỉ có ĐÚNG 1 TrackerList đang sống
-            // (cái đang được đệ quy). Tổng RAM = O(Depth) bất kể số item surviving.
-            // → Không bao giờ OOM dù dense data (LEVIATHAN/SIGN @ Su=0.01).
-            //
-            // TRADE-OFF: rescan parent ptList × (#surviving_I + #surviving_S) lần thay
-            // vì 1 lần. CPU tăng, nhưng đổi lại an toàn RAM tuyệt đối - đúng yêu cầu.
-            //
-            // !!! SNAPSHOT BẮT BUỘC !!! scratchUsedI/S và scratchSurvivingI/S là CLASS
-            // FIELD - recursion sẽ OVERWRITE chúng. Phải copy danh sách surviving items
-            // ra mảng depth-local TRƯỚC khi vào vòng lặp. (Bug do bỏ qua bước này:
-            // pattern count đột ngột rớt 73 → 16 trên paper dataset.)
+            // ===== Pass 2: build child occurrence lists =====
+            // REQUIRED SNAPSHOT: scratchUsedI/S and scratchSurvivingI/S are fields that the
+            // recursion overwrites. Copy the surviving items into depth-local arrays before
+            // the loops below, or children of deeper nodes replace those of this node.
             int[] survI = (anyI && scratchUsedICount > 0)
                     ? borrowSurvivorArray(iSurvivorPool, depth, scratchUsedICount) : null;
             int survICount = 0;
@@ -1786,14 +1651,14 @@ public class PreHUSPMAdaptiveAlgorithm {
                 }
             }
 
-            // ===== CHỌN CHIẾN LƯỢC MATERIALIZE =====
-            // Node "hẹp" (ptSize nhỏ - đa số node) → SINGLE-PASS: quét parent ĐÚNG 1
-            // lượt/phase, gom MỌI con cùng lúc (nhanh như baseline). Node "rộng" (nông,
-            // dày, @ Su rất thấp) → fallback LAZY: RAM tạm O(depth), chống OOM data dày.
-            // Cả 2 cho TRACKER CON Y HỆT (cùng dedup scratch buffer theo vị trí, cùng thứ tự)
-            // ⇒ kết quả & số ứng viên BẤT BIẾN.
+            // ===== Materialization strategy =====
+            // Narrow node (ptSize <= SINGLE_PASS_PT_CAP, most nodes): SINGLE-PASS, one scan of
+            // the parent per extension kind, collecting every child at once. Wide node: LAZY,
+            // one child at a time, so only one child list per depth is alive.
+            // Both build IDENTICAL child trackers (same scratch buffer merge by position, same
+            // order), so results and candidate counts do not depend on the choice.
             if ((long) ptSize <= SINGLE_PASS_PT_CAP) {
-                // ---------- SINGLE-PASS: I-ext (1 lượt quét) → iSlot ----------
+                // ---------- Single-pass: I-extensions (one scan) into iSlot ----------
                 if (anyI) {
                     for (int pi = 0; pi < ptSize; pi++) {
                         Tracker t = ptList.get(pi);
@@ -1808,7 +1673,7 @@ public class PreHUSPMAdaptiveAlgorithm {
                         int localUsedCount = 0;
                         for (int k = 0; k < tSize; k++) {
                             int parentFlatIdx = tFlat[k];
-                            if (isItemsetEnd[parentFlatIdx]) continue; // không có I-ext
+                            if (isItemsetEnd[parentFlatIdx]) continue; // no I-extension
                             double instUtility = tUtil[k];
                             for (int q = parentFlatIdx + 1; q < flatLen; q++) {
                                 boolean end = isItemsetEnd[q];
@@ -1821,7 +1686,7 @@ public class PreHUSPMAdaptiveAlgorithm {
                                 if (end) break;
                             }
                         }
-                        // FLUSH per-seq: gom theo item vào iSlot (1 Tracker / 1 seqId / 1 item)
+                        // Flush per sequence: group by item into iSlot (one tracker per sequence per item)
                         for (int x = 0; x < localUsedCount; x++) {
                             int q = scratchUsedFlat[x];
                             int idx = flatItems[q];
@@ -1831,11 +1696,11 @@ public class PreHUSPMAdaptiveAlgorithm {
                             Tracker ct = (n > 0 && ts.get(n - 1).seqId == sid) ? ts.get(n - 1) : null;
                             if (ct == null) { ct = borrowTracker(sid); ts.add(ct); }
                             ct.append(q, scratchMaxUtil[q], seq);
-                            scratchPresent[q] = false; // reset selective
+                            scratchPresent[q] = false; // selective reset
                         }
                     }
                 }
-                // ---------- SINGLE-PASS: S-ext (1 lượt quét) → sSlot ----------
+                // ---------- Single-pass: S-extensions (one scan) into sSlot ----------
                 if (anyS) {
                     for (int pi = 0; pi < ptSize; pi++) {
                         Tracker t = ptList.get(pi);
@@ -1875,13 +1740,13 @@ public class PreHUSPMAdaptiveAlgorithm {
                         }
                     }
                 }
-                // ---------- Snapshot con ra depth-local + GIẢI PHÓNG slot[] trước đệ quy ----------
-                // (tránh recursion clobber iSlot/sSlot - slot là class field)
+                // ---------- Move children into depth-local arrays and CLEAR the slots before recursion ----------
+                // (iSlot/sSlot are fields, so the recursion would overwrite them)
                 TrackerList[] tlsI = (anyI && survICount > 0) ? borrowTLArray(iTLPool, depth, survICount) : null;
                 for (int u = 0; u < survICount; u++) { int idx = survI[u]; tlsI[u] = iSlot[idx]; iSlot[idx] = null; }
                 TrackerList[] tlsS = (anyS && survSCount > 0) ? borrowTLArray(sTLPool, depth, survSCount) : null;
                 for (int u = 0; u < survSCount; u++) { int idx = survS[u]; tlsS[u] = sSlot[idx]; sSlot[idx] = null; }
-                // ---------- Đệ quy I rồi S, release từng con sau đệ quy ----------
+                // ---------- Recurse into I- then S-extensions, releasing each child afterwards ----------
                 for (int u = 0; u < survICount; u++) {
                     TrackerList tl = tlsI[u];
                     if (tl == null) continue;
@@ -1905,12 +1770,11 @@ public class PreHUSPMAdaptiveAlgorithm {
                     releaseTrackerList(tl);
                 }
             } else {
-            // ===== PASS-2 LAZY DFS (FALLBACK node rộng) - SCRATCH BUFFER + OBJECT POOL =====
+            // ===== Lazy Pass 2 (wide nodes) =====
             //
-            // Mỗi surviving item: borrow TrackerList từ pool, scan parent ptList,
-            // mỗi parent sequence dùng scratch buffer để merge max-utility theo flatIdx
-            // (O(1) thay backward scan O(L)), flush vào Tracker pooled, recurse, release.
-            // INVARIANT MEMORY: chỉ 1 TrackerList sống tại mỗi depth → RAM O(depth).
+            // For each surviving item: borrow a TrackerList, scan the parent trackers,
+            // merge occurrences per sequence in the scratch buffer by flat position, flush into
+            // a pooled tracker, recurse, release. Only one child list is alive per depth.
 
             if (anyI) {
                 for (int u = 0; u < survICount; u++) {
@@ -1930,17 +1794,17 @@ public class PreHUSPMAdaptiveAlgorithm {
                         final boolean[] isItemsetEnd = seq.isItemsetEnd;
                         final int flatLen = seq.flatLen;
 
-                        // === SCRATCH BUFFER per-sequence: localUsedCount reset = 0 ===
+                        // Per-sequence scratch buffer: start empty.
                         int localUsedCount = 0;
 
                         for (int k = 0; k < tSize; k++) {
                             int parentFlatIdx = tFlat[k];
                             double instUtility = tUtil[k];
 
-                            // Nếu parent đã là itemsetEnd → KHÔNG có I-ext.
+                            // A parent at the end of its itemset has no I-extension.
                             if (isItemsetEnd[parentFlatIdx]) continue;
 
-                            // Scan I-ext: forward đến khi gặp isItemsetEnd
+                            // I-extension scan: forward until the itemset ends.
                             for (int q = parentFlatIdx + 1; q < flatLen; q++) {
                                 boolean endOfItemset = isItemsetEnd[q];
                                 if (flatItems[q] == itemToFind) {
@@ -1957,7 +1821,7 @@ public class PreHUSPMAdaptiveAlgorithm {
                             }
                         }
 
-                        // FLUSH: dump scratch vào Tracker pooled + reset selective O(usedCount)
+                        // Flush into a pooled tracker and reset the touched positions.
                         if (localUsedCount > 0) {
                             Tracker child = borrowTracker(t.seqId);
                             for (int x = 0; x < localUsedCount; x++) {
@@ -1975,7 +1839,7 @@ public class PreHUSPMAdaptiveAlgorithm {
                         expandNodeWithPruning(currentPattern, tl, batch, minThreshold, results, depth + 1);
                         currentPattern.removeLastIExtension();
                     }
-                    releaseTrackerList(tl); // recycle TrackerList + nested Trackers về pool
+                    releaseTrackerList(tl); // return the list and its trackers to the pool
                 }
             }
 
@@ -2003,13 +1867,13 @@ public class PreHUSPMAdaptiveAlgorithm {
                             int parentFlatIdx = tFlat[k];
                             double instUtility = tUtil[k];
 
-                            // Tìm sExtStart bằng forward scan đến isItemsetEnd, rồi +1.
-                            // Nếu parent đã là itemsetEnd, while không lặp → sExtStart = parent+1.
+                            // sExtStart = end of the parent's itemset + 1.
+                            // If the parent already ends its itemset, sExtStart = parent+1.
                             int boundary = parentFlatIdx;
                             while (boundary < flatLen && !isItemsetEnd[boundary]) boundary++;
                             int sExtStart = boundary + 1;
 
-                            // Scan S-ext: từ sExtStart đến hết flatLen
+                            // S-extension scan: from sExtStart to the end of the sequence.
                             for (int q = sExtStart; q < flatLen; q++) {
                                 if (flatItems[q] == itemToFind) {
                                     double newU = instUtility + flatUtils[q];
@@ -2044,20 +1908,20 @@ public class PreHUSPMAdaptiveAlgorithm {
                     releaseTrackerList(tl);
                 }
             }
-            } // end else (fallback lazy)
+            } // end else (lazy Pass 2)
         }
 
         /**
-         * Khai thac mot lan, co tran cong. Vuot tran thi nang san Sl_min roi thu lai tren
-         * cung du lieu do.
+         * Mines once under a work budget. When the budget is exceeded, raises Sl_min and
+         * retries on the same data.
          *
-         * Vi sao phan ung thay vi du doan: chi phi la so ung vien, va khong dai luong cau
-         * truc nao do duoc truoc khi chay du tin cay de dat mot hang so. Do lap tach duoc
-         * tam bo cua nghien cuu nay, nhung tam diem va mot nguong la co so mong. Con tran
-         * ung vien thi do dung thu can do.
+         * The budget reacts instead of predicting: cost is the number of candidates, and no
+         * structural quantity measured before mining predicts it reliably enough to set a
+         * constant. The candidate cap measures exactly the quantity that needs bounding.
          *
-         * Het cach thi NEM ra thay vi chay khong tran. Mot bo du lieu khong co diem van hanh
-         * kha thi nen bao duoc dieu do; chay den khi OOM thi nguoi doc khong biet vi sao.
+         * When no retry is left, the exception is rethrown instead of running without a
+         * cap: a dataset with no feasible operating point reports that, rather than running
+         * until it is out of memory with no stated reason.
          */
         private void mineWithBudget(List<Sequence> db, double uut, double tsuRef) {
             if (rescanCandidateBudget <= 0 && rescanMillisBudget <= 0) {
@@ -2067,12 +1931,10 @@ public class PreHUSPMAdaptiveAlgorithm {
             long saved = maxCandidatesBudget;
             try {
                 for (int attempt = 0; ; attempt++) {
-                    // Tran GIAM NUA moi lan thu lai. Mot lan that bai la cong bo di hoan toan
-                    // - khai thac bat dau lai tu dau tren cung du lieu - nen tran co dinh bien
-                    // ngan sach thanh boi so cua so lan thu. Do tren BMS1 INC#4: hai lan thu
-                    // voi tran co dinh ba ty da dot 6,8 ty ung vien TRUOC khi lan co co hoi
-                    // bat dau, nhieu hon ca luot khong bat co che nay. Giam nua thi tong phi
-                    // khong bao gio vuot hai lan tran ban dau.
+                    // The budget HALVES on each retry. A failed attempt discards all its work
+                    // (mining restarts from scratch on the same data), so a fixed budget would
+                    // make the total cost a multiple of the retry count; halving keeps the
+                    // total below twice the initial budget.
                     maxCandidatesBudget = candBudget == Long.MAX_VALUE
                             ? Long.MAX_VALUE : Math.max(1L, candBudget >> attempt);
                     mineDeadlineNanos = (rescanMillisBudget > 0)
@@ -2086,7 +1948,7 @@ public class PreHUSPMAdaptiveAlgorithm {
                         Sl_min = slMinRatioEff * Su;
                         lutDynValue = Math.max(lutDynValue, tsuRef * Sl_min);
                         rescanRetries++;
-                        largeMap.clear(); prelargeMap.clear();   // bo ket qua do dang
+                        largeMap.clear(); prelargeMap.clear();   // discard partial results
                         candidateCount = 0;
                     }
                 }
@@ -2109,13 +1971,13 @@ public class PreHUSPMAdaptiveAlgorithm {
                 sortedEntries.sort((e1, e2) -> Double.compare(e2.getValue(), e1.getValue()));
 
                 for (Map.Entry<CompactPattern, Double> entry : sortedEntries) {
-                    // Convert CompactPattern → Pattern chỉ tại điểm export (không hot path)
+                    // CompactPattern is converted to Pattern only here, off the hot path.
                     writer.write(entry.getKey().toPattern().toIntuitiveString()
                             + " #UTIL: " + entry.getValue());
                     writer.newLine();
                 }
             } catch (IOException e) {
-                System.err.println("Lỗi ghi file Adaptive: " + e.getMessage());
+                System.err.println("Error writing Adaptive output file: " + e.getMessage());
             }
         }
     }

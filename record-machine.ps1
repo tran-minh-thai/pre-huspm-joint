@@ -6,10 +6,10 @@
       .\record-machine.ps1            record, commit, push
       .\record-machine.ps1 -NoGit     record only
 
-  Run it on the machine that measures, before the campaign. The manuscript's description
-  of the platform is generated from this file (analysis/make_figures.py, export_platform),
-  not typed: a typed platform sentence outlives the machine it describes. A field that
-  cannot be read is written as "unavailable" rather than guessed, and the script says so.
+  Run it on the machine that measures, before the campaign. The platform description used
+  with the figures and tables is generated from this file (analysis/make_figures.py,
+  export_platform), not typed. A field that cannot be read is written as "unavailable"
+  rather than guessed, and the script says so.
 #>
 param([switch]$NoGit)
 

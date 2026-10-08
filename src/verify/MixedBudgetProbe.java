@@ -113,7 +113,7 @@ public class MixedBudgetProbe {
         bad += caseD;
 
         System.out.printf("caseD mismatch=%s ; ", caseD > 0);
-        System.out.printf("cases with a mismatch: A=%s B=%s ; total mismatching patterns over 7 checks = %d%n",
+        System.out.printf("cases with a mismatch: A=%s B=%s ; total mismatching patterns over 8 checks = %d%n",
                 caseA > 0, caseB > 0, bad);
         System.exit(bad > 0 ? 1 : 0);
     }

@@ -22,14 +22,6 @@ time limit stopped it. In timing mode the same cell runs out of memory within se
 forced collections kept it just alive. Both modes say the same thing: it cannot be mined within
 48 GB.
 
-The first time this arm ran, the cell left no row at all. `runSingle`, which SC1 and SC3 call,
-answered any exception after a run began with null, and those scenarios log only non-null rows;
-with the worker still holding the heap after the time limit, the first allocation after the
-overtime row threw `OutOfMemoryError` into that catch. `runSingle` now builds a failure row before
-it measures and returns it from the catch. The arm was run again and the row is there - written
-this time by the ordinary path, because the allocation succeeded, so the new catch has not yet
-been exercised by a real failure.
-
 ## How many samples a figure rests on
 
 187 of the 192 cells completed. Fifteen of them were read only twice, at the start and after the
@@ -75,13 +67,9 @@ holds less in 18 of the 32 cells, and about 2.3 times more than USpan. That is t
 being incremental: a static miner keeps its answer, and an incremental one also keeps what it
 needs to avoid mining again.
 
-## C8T1S5I8N5K: item ids, not state
+## C8T1S5I8N5K: item ids
 
-An earlier measurement put the proposal at 1154 MB on C8T1S5I8N5K against Pre-HUSPM's 421,
-although its pre-large set is 27 times smaller. A heap probe showed that almost none of it was
-the algorithm's state. The database draws its 68,240 items from ids up to 4,999,999, and every
-miner here sizes its per-item arrays by the largest id: the proposal's 18 such arrays took about
-700 MB, and a per-block item set that nothing read took most of the rest. That set has been
-removed, and the database's ids are compacted at load, in order (`common.Datasets.compactItemIds`).
-The table above is measured that way, for every algorithm: the proposal holds 95 MB and
-Pre-HUSPM 222, with the same patterns as before.
+C8T1S5I8N5K draws its 68,240 items from ids up to 4,999,999, and every miner here sizes its
+per-item arrays by the largest id. The loader therefore replaces each id by its rank among the
+ids of the `_eui` file (`common.Datasets.compactItemIds`), keeping the item order and so the
+patterns. Every algorithm is measured with compacted ids.

@@ -1,9 +1,8 @@
 # Two builds of JDK 25 on the measurement machine
 
-Every arm ran on `PC-THAI`. The arms measured up to 2026-10-05 ran on Microsoft OpenJDK
-25.0.4, the build `setup-may-do.ps1` installs; the arms measured from 2026-10-08 ran on Eclipse
-Temurin 25.0.4.1, as their logs record. The earlier logs record no JVM, so the first attribution
-rests on the setup script. `campaign.ps1` now refuses any build but the pinned one.
+Every arm ran on `PC-THAI`. Part of the arms ran on Microsoft OpenJDK 25.0.4 and part on
+Eclipse Temurin 25.0.4.1+1, the build pinned in `environment.lock.json`; each arm's `run.log`
+names its JVM where it was recorded.
 
 `analysis/jdk_comparison.py` compares configurations measured on both builds, cell by cell,
 and reports the geometric mean of old/new with a bootstrap 95% interval, beside the same
