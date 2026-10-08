@@ -1,0 +1,209 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC2]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | block.size=100 | timeout.min=120 | repeats=1 repeat.index=2 | seed.index=0
+
+--- [SC2] Incremental sequence (100 batches, EVEN; D_init per Yan et al. Table 16) ---
+>> RUNNING Adaptive-Full/BIBLE/SC2_INIT#0  (heap free=641MB / total=864MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INIT#0] OK t=1791ms cand=10238341 pat=192 heapDelta=279MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#1  (heap free=616MB / total=864MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#1] OK t=1368ms cand=10257451 pat=190 heapDelta=267MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#2  (heap free=613MB / total=864MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#2] OK t=1351ms cand=10210462 pat=190 heapDelta=261MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#3  (heap free=611MB / total=864MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#3] OK t=9ms cand=0 pat=189 heapDelta=12MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#4  (heap free=610MB / total=864MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#4] OK t=1359ms cand=10149640 pat=188 heapDelta=267MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#5  (heap free=610MB / total=864MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#5] OK t=4ms cand=0 pat=186 heapDelta=12MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#6  (heap free=610MB / total=864MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#6] OK t=1352ms cand=10112658 pat=183 heapDelta=261MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#7  (heap free=610MB / total=864MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#7] OK t=1362ms cand=10116190 pat=182 heapDelta=267MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#8  (heap free=609MB / total=864MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#8] OK t=4ms cand=0 pat=181 heapDelta=11MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#9  (heap free=608MB / total=864MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#9] OK t=1365ms cand=10037060 pat=180 heapDelta=267MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#10  (heap free=607MB / total=864MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#10] OK t=1381ms cand=10027829 pat=180 heapDelta=254MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#11  (heap free=605MB / total=864MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#11] OK t=1390ms cand=10050197 pat=177 heapDelta=268MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#12  (heap free=604MB / total=864MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#12] OK t=1421ms cand=10266743 pat=180 heapDelta=273MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#13  (heap free=603MB / total=864MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#13] OK t=1438ms cand=10396777 pat=181 heapDelta=279MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#14  (heap free=602MB / total=864MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#14] OK t=1469ms cand=10574559 pat=184 heapDelta=288MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#15  (heap free=601MB / total=864MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#15] OK t=1562ms cand=11164403 pat=191 heapDelta=300MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#16  (heap free=599MB / total=864MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#16] OK t=1607ms cand=11579814 pat=195 heapDelta=307MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#17  (heap free=597MB / total=864MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#17] OK t=1639ms cand=11736841 pat=195 heapDelta=284MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#18  (heap free=820MB / total=1088MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#18] OK t=3ms cand=0 pat=195 heapDelta=17MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#19  (heap free=693MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#19] OK t=1663ms cand=11793694 pat=196 heapDelta=318MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#20  (heap free=694MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#20] OK t=4ms cand=0 pat=195 heapDelta=15MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#21  (heap free=693MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#21] OK t=1677ms cand=11755269 pat=196 heapDelta=318MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#22  (heap free=692MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#22] OK t=1708ms cand=11800133 pat=196 heapDelta=320MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#23  (heap free=691MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#23] OK t=1702ms cand=11934408 pat=197 heapDelta=327MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#24  (heap free=692MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#24] OK t=1717ms cand=12045515 pat=194 heapDelta=327MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#25  (heap free=692MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#25] OK t=1704ms cand=11971952 pat=193 heapDelta=335MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#26  (heap free=691MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#26] OK t=1715ms cand=12049445 pat=192 heapDelta=335MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#27  (heap free=690MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#27] OK t=1735ms cand=12193246 pat=193 heapDelta=343MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#28  (heap free=689MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#28] OK t=1758ms cand=12268549 pat=192 heapDelta=343MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#29  (heap free=687MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#29] OK t=1784ms cand=12252087 pat=191 heapDelta=343MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#30  (heap free=688MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#30] OK t=1799ms cand=12362520 pat=196 heapDelta=350MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#31  (heap free=686MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#31] OK t=1813ms cand=12418617 pat=196 heapDelta=352MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#32  (heap free=685MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#32] OK t=1836ms cand=12500753 pat=196 heapDelta=359MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#33  (heap free=684MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#33] OK t=1847ms cand=12590158 pat=197 heapDelta=359MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#34  (heap free=684MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#34] OK t=4ms cand=0 pat=197 heapDelta=15MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#35  (heap free=686MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#35] OK t=1836ms cand=12520497 pat=192 heapDelta=367MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#36  (heap free=684MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#36] OK t=3ms cand=0 pat=192 heapDelta=15MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#37  (heap free=684MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#37] OK t=1847ms cand=12493175 pat=190 heapDelta=367MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#38  (heap free=685MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#38] OK t=1861ms cand=12550871 pat=191 heapDelta=367MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#39  (heap free=683MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#39] OK t=3ms cand=0 pat=190 heapDelta=15MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#40  (heap free=683MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#40] OK t=1867ms cand=12477495 pat=191 heapDelta=375MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#41  (heap free=682MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#41] OK t=1920ms cand=12830282 pat=190 heapDelta=382MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#42  (heap free=681MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#42] OK t=1952ms cand=12949481 pat=190 heapDelta=382MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#43  (heap free=680MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#43] OK t=4ms cand=0 pat=191 heapDelta=15MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#44  (heap free=681MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#44] OK t=1978ms cand=12964379 pat=190 heapDelta=382MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#45  (heap free=680MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#45] OK t=2ms cand=0 pat=188 heapDelta=15MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#46  (heap free=680MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#46] OK t=1972ms cand=12842635 pat=187 heapDelta=382MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#47  (heap free=679MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#47] OK t=4ms cand=0 pat=186 heapDelta=16MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#48  (heap free=679MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#48] OK t=1944ms cand=12742701 pat=183 heapDelta=392MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#49  (heap free=678MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#49] OK t=3ms cand=0 pat=182 heapDelta=16MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#50  (heap free=677MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#50] OK t=1956ms cand=12693916 pat=181 heapDelta=392MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#51  (heap free=676MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#51] OK t=3ms cand=0 pat=177 heapDelta=16MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#52  (heap free=676MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#52] OK t=1951ms cand=12607686 pat=176 heapDelta=400MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#53  (heap free=675MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#53] OK t=3ms cand=0 pat=175 heapDelta=16MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#54  (heap free=675MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#54] OK t=1926ms cand=12452670 pat=175 heapDelta=400MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#55  (heap free=674MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#55] OK t=3ms cand=0 pat=170 heapDelta=16MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#56  (heap free=675MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#56] OK t=1917ms cand=12382225 pat=169 heapDelta=400MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#57  (heap free=674MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#57] OK t=4ms cand=0 pat=169 heapDelta=16MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#58  (heap free=674MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#58] OK t=1927ms cand=12420016 pat=167 heapDelta=400MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#59  (heap free=673MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#59] OK t=2ms cand=0 pat=164 heapDelta=16MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#60  (heap free=673MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#60] OK t=1925ms cand=12323256 pat=164 heapDelta=408MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#61  (heap free=672MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#61] OK t=2ms cand=0 pat=163 heapDelta=16MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#62  (heap free=672MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#62] OK t=1934ms cand=12257452 pat=162 heapDelta=408MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#63  (heap free=673MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#63] OK t=3ms cand=0 pat=160 heapDelta=16MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#64  (heap free=672MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#64] OK t=1923ms cand=12202894 pat=157 heapDelta=408MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#65  (heap free=671MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#65] OK t=2ms cand=0 pat=157 heapDelta=16MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#66  (heap free=673MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#66] OK t=1920ms cand=12094701 pat=154 heapDelta=408MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#67  (heap free=672MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#67] OK t=2ms cand=0 pat=151 heapDelta=16MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#68  (heap free=672MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#68] OK t=1919ms cand=11979361 pat=150 heapDelta=408MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#69  (heap free=671MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#69] OK t=2ms cand=0 pat=150 heapDelta=16MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#70  (heap free=671MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#70] OK t=1897ms cand=11858913 pat=150 heapDelta=408MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#71  (heap free=670MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#71] OK t=2ms cand=0 pat=150 heapDelta=16MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#72  (heap free=670MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#72] OK t=1920ms cand=11851599 pat=148 heapDelta=416MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#73  (heap free=668MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#73] OK t=4ms cand=0 pat=149 heapDelta=16MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#74  (heap free=670MB / total=960MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#74] OK t=1918ms cand=11820614 pat=147 heapDelta=416MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#75  (heap free=799MB / total=1088MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#75] OK t=3ms cand=0 pat=146 heapDelta=21MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#76  (heap free=798MB / total=1088MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#76] OK t=1929ms cand=11781968 pat=145 heapDelta=426MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#77  (heap free=797MB / total=1088MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#77] OK t=3ms cand=0 pat=144 heapDelta=21MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#78  (heap free=796MB / total=1088MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#78] OK t=1932ms cand=11726655 pat=142 heapDelta=426MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#79  (heap free=795MB / total=1088MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#79] OK t=3ms cand=0 pat=142 heapDelta=21MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#80  (heap free=795MB / total=1088MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#80] OK t=1920ms cand=11696745 pat=140 heapDelta=437MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#81  (heap free=795MB / total=1088MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#81] OK t=2ms cand=0 pat=140 heapDelta=21MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#82  (heap free=795MB / total=1088MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#82] OK t=1915ms cand=11642360 pat=140 heapDelta=437MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#83  (heap free=794MB / total=1088MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#83] OK t=2ms cand=0 pat=139 heapDelta=21MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#84  (heap free=794MB / total=1088MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#84] OK t=1892ms cand=11530966 pat=135 heapDelta=437MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#85  (heap free=794MB / total=1088MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#85] OK t=3ms cand=0 pat=134 heapDelta=21MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#86  (heap free=794MB / total=1088MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#86] OK t=1890ms cand=11458529 pat=133 heapDelta=437MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#87  (heap free=793MB / total=1088MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#87] OK t=3ms cand=0 pat=133 heapDelta=21MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#88  (heap free=794MB / total=1088MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#88] OK t=1887ms cand=11449196 pat=133 heapDelta=437MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#89  (heap free=793MB / total=1088MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#89] OK t=3ms cand=0 pat=132 heapDelta=21MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#90  (heap free=793MB / total=1088MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#90] OK t=1906ms cand=11436181 pat=131 heapDelta=437MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#91  (heap free=792MB / total=1088MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#91] OK t=1925ms cand=11427479 pat=129 heapDelta=448MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#92  (heap free=791MB / total=1088MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#92] OK t=3ms cand=0 pat=128 heapDelta=21MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#93  (heap free=792MB / total=1088MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#93] OK t=1915ms cand=11528963 pat=128 heapDelta=448MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#94  (heap free=793MB / total=1088MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#94] OK t=2ms cand=0 pat=127 heapDelta=21MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#95  (heap free=792MB / total=1088MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#95] OK t=1937ms cand=11499376 pat=127 heapDelta=448MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#96  (heap free=791MB / total=1088MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#96] OK t=2ms cand=0 pat=127 heapDelta=21MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#97  (heap free=791MB / total=1088MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#97] OK t=1943ms cand=11501136 pat=127 heapDelta=458MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#98  (heap free=790MB / total=1088MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#98] OK t=3ms cand=0 pat=127 heapDelta=21MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#99  (heap free=791MB / total=1088MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#99] OK t=1991ms cand=11610081 pat=128 heapDelta=458MB
+>> RUNNING Adaptive-Full/BIBLE/SC2_INC#100  (heap free=791MB / total=1088MB / max=49152MB)
+[Adaptive-Full/BIBLE/SC2_INC#100] OK t=3ms cand=0 pat=129 heapDelta=21MB
+=== ALL SCENARIOS DONE (181.2s) ===
