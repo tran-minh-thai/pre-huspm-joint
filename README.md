@@ -112,6 +112,8 @@ java -cp build verify.RescanRuleAcceptanceTest                              # sa
 java -cp build verify.BaselineAgreement SIGN                                # static miners return identical pattern sets
 java -Xmx12g -Xss64m -cp build verify.DirectPathVerifier ALL --adversarial --ops 16 --out results/verify-joint/adversarial
 java -cp build verify.MixedBudgetFuzz joint 5000 11                         # random insert, delete and modify streams: rule, trials, seed
+java -Xmx24g -Xss64m -cp build verify.IncUspVerifier random 300 7           # IncUSP-Miner+ after every insertion batch
+java -Xmx24g -Xss64m -cp build verify.IncUspVerifier real SIGN 100          # the same on a real database, 100 batches
 ```
 
 Scenarios, one at a time or all:
