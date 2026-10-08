@@ -1,5 +1,5 @@
 <#
-  Build, run the selected scenarios, and plot the results. Windows version of run.sh.
+  Build and run the selected scenarios. Windows version of run.sh.
 
       .\run.ps1                        every scenario
       .\run.ps1 SC1 SC2                selected scenarios
@@ -8,7 +8,8 @@
       .\run.ps1 TEST SC1               reduced grid, finishes in minutes
 
   Output goes to results\run-<timestamp>-<commit>\ with a manifest describing the code
-  version and the machine, and figures to figures\run-<timestamp>-<commit>\.
+  version and the machine. Figures are built from the campaign trees by
+  analysis\make_figures.py, not from a single run.
 #>
 
 [CmdletBinding()]
@@ -111,8 +112,7 @@ $dirty = if ($clean) { '' } else { '-dirty' }
 $stamp  = (Get-Date).ToUniversalTime().ToString('yyyyMMddTHHmmssZ')
 $runId  = "run-$stamp-$commitShort$dirty"
 $runDir = "results\$runId"
-$figDir = "figures\$runId"
-New-Item -ItemType Directory -Force -Path $runDir, $figDir, 'build' | Out-Null
+New-Item -ItemType Directory -Force -Path $runDir, 'build' | Out-Null
 
 Write-Host "==> compiling"
 Remove-Item 'build\*' -Recurse -Force -ErrorAction SilentlyContinue
@@ -199,13 +199,8 @@ if ($MemMode -eq 'live') {
     Invoke-Native { java @javaArgs 2>&1 } | Tee-Object -FilePath "$runDir\console.log"
 }
 
-Write-Host "==> building figures"
-$env:HUSP_DATA_DIR = (Resolve-Path $runDir).Path
-$env:HUSP_OUT_DIR  = (Resolve-Path $figDir).Path
-& python analysis\make_figures.py
-Remove-Item Env:\HUSP_DATA_DIR, Env:\HUSP_OUT_DIR -ErrorAction SilentlyContinue
 
 Write-Host ""
 Write-Host "Results:  $runDir"
-Write-Host "Figures:  $figDir"
+Write-Host "Summary:  python analysis\aggregate.py $runDir"
 Write-Host "Commit these together to keep the numbers tied to commit $commitShort."

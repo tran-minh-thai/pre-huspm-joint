@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
-# Build, run the selected scenarios, and plot the results.
+# Build and run the selected scenarios.
 #
 #   ./run.sh                      every scenario
 #   ./run.sh SC1 SC2              selected scenarios
 #   HEAP=8g ./run.sh TEST SC1     reduced grid
 #
 # Output goes to results/run-<timestamp>-<commit>/ with a manifest describing the
-# code version and the machine, and figures to figures/run-<timestamp>-<commit>/.
+# code version and the machine. Figures are built from the campaign trees by
+# analysis/make_figures.py, not from a single run.
 
 set -euo pipefail
 cd "$(dirname "$0")"
@@ -23,8 +24,7 @@ git diff --quiet 2>/dev/null || DIRTY="-dirty"
 STAMP="$(date -u +%Y%m%dT%H%M%SZ)"
 RUN_ID="run-${STAMP}-${COMMIT}${DIRTY}"
 RUN_DIR="results/${RUN_ID}"
-FIG_DIR="figures/${RUN_ID}"
-mkdir -p "$RUN_DIR" "$FIG_DIR"
+mkdir -p "$RUN_DIR"
 
 echo "==> compiling"
 rm -rf build && mkdir -p build
@@ -64,10 +64,8 @@ java -Xmx"$HEAP" -Xss"$STACK" \
      -cp build AutomatedExperimentRunner "${SCENARIOS[@]}" \
      2>&1 | tee "$RUN_DIR/console.log"
 
-echo "==> building figures"
-HUSP_DATA_DIR="$RUN_DIR" HUSP_OUT_DIR="$FIG_DIR" python3 analysis/make_figures.py
 
 echo
 echo "Results:  $RUN_DIR"
-echo "Figures:  $FIG_DIR"
+echo "Summary:  python3 analysis/aggregate.py $RUN_DIR"
 echo "Commit these together to keep the numbers tied to commit ${COMMIT}."

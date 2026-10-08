@@ -43,25 +43,13 @@ import matplotlib.ticker
 
 
 # ---- Data / output locations -------------------------------------------------
-# Resolution order:
-#   1) env HUSP_DATA_DIR / HUSP_OUT_DIR  (run.sh and run.ps1 set these)
-#   2) on Colab, the placeholder PROJECT below (edit it if not using env)
-#   3) local: <repo>/results and <repo>/figures/campaign
-IN_COLAB = "google.colab" in sys.modules
-DATA_DIR = os.environ.get("HUSP_DATA_DIR")
-OUT_DIR  = os.environ.get("HUSP_OUT_DIR")
-if not DATA_DIR:
-    if IN_COLAB:
-        from google.colab import drive            # noqa
-        drive.mount("/content/drive", force_remount=False)
-        PROJECT  = "/content/drive/MyDrive/.../pre-huspm-adaptive"  # <-- EDIT if not using env
-        DATA_DIR = PROJECT + "/results"
-    else:
-        HERE     = os.path.dirname(os.path.abspath(__file__))
-        DATA_DIR = os.path.join(os.path.dirname(HERE), "results")
-REPO_DIR = os.path.dirname(DATA_DIR.rstrip("/\\"))
-if not OUT_DIR:
-    OUT_DIR = os.path.join(REPO_DIR, "figures", "campaign")
+# The repository root is found from this file, so the tool works from any directory.
+# Defaults: <repo>/results (the campaign trees) and <repo>/figures/campaign.
+# HUSP_DATA_DIR and HUSP_OUT_DIR override them; HUSP_DATA_DIR must hold campaign trees
+# (campaign/<SC>/<DATABASE>/<ARM>/...), not the flat directory of a single run.sh run.
+REPO_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_DIR = os.environ.get("HUSP_DATA_DIR") or os.path.join(REPO_DIR, "results")
+OUT_DIR  = os.environ.get("HUSP_OUT_DIR") or os.path.join(REPO_DIR, "figures", "campaign")
 os.makedirs(OUT_DIR, exist_ok=True)
 
 TIMING_TREE = "campaign"

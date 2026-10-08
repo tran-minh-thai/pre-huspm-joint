@@ -56,7 +56,7 @@ is deterministic and `tafeng/TAFENG.sha256` pins its output:
 
 ```bash
 python tafeng/build_tafeng.py --zip archive.zip --out-dir datasets --name TAFENG
-sha256sum -c tafeng/TAFENG.sha256
+(cd datasets && shasum -a 256 -c ../tafeng/TAFENG.sha256)
 ```
 
 It forms one sequence per customer and month, uses `AMOUNT` as quantity and
@@ -96,7 +96,7 @@ Rebuild after every pull.
 
 ## Run
 
-A smoke test on `examples/` takes a few minutes:
+A smoke test on `examples/` takes under a minute:
 
 ```powershell
 .\run.ps1 TEST SC1
