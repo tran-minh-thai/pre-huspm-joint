@@ -1,0 +1,15 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC1]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | block.size=100 | timeout.min=120 | repeats=1 repeat.index=1 | seed.index=0
+
+--- [SC1] Static baseline on D_init (50%) ---
+>> RUNNING IncUSP-Miner+/FIFA/SC1_su=0.056234#0  (heap free=557MB / total=768MB / max=49152MB)
+[IncUSP-Miner+/FIFA/SC1_su=0.056234#0] FAILED after 1109511ms (OOM)
+>> RUNNING IncUSP-Miner+/FIFA/SC1_su=0.059637#0  (heap free=656MB / total=864MB / max=49152MB)
+[IncUSP-Miner+/FIFA/SC1_su=0.059637#0] FAILED after 1054872ms (OOM)
+>> RUNNING IncUSP-Miner+/FIFA/SC1_su=0.067073#0  (heap free=658MB / total=864MB / max=49152MB)
+[IncUSP-Miner+/FIFA/SC1_su=0.067073#0] OK t=454281ms cand=109295642 pat=5 heapDelta=46447MB
+>> RUNNING IncUSP-Miner+/FIFA/SC1_su=0.075436#0  (heap free=660MB / total=864MB / max=49152MB)
+[IncUSP-Miner+/FIFA/SC1_su=0.075436#0] OK t=308756ms cand=65202971 pat=1 heapDelta=35849MB
+=== ALL SCENARIOS DONE (2959.1s) ===
