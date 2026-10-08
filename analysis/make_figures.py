@@ -1042,7 +1042,13 @@ def export_platform():
         os_name += f" {rec['os_display']}"
     if rec.get("os_build") not in (None, "unavailable"):
         os_name += f" (build {rec['os_build']})"
-    jvm = " ".join(v for v in (props.get("java.vm.name"), props.get("java.runtime.version")) if v)
+    # The JDK is named by the environment lock, the one place it is pinned: the arms ran on
+    # two builds of OpenJDK 25.0.4 (results/jdk-comparison), and the label covers both.
+    lock_path = os.path.join(REPO_DIR, "environment.lock.json")
+    if not os.path.exists(lock_path):
+        print(f"[platform] not written: no {lock_path}")
+        return
+    jvm = json.load(open(lock_path, encoding="utf-8"))["jdk"]["paper_label"]
     # installed memory: the sum of the modules, when they could be read, rather than the
     # usable figure Windows reports after reserving part of it
     mods = rec.get("memory_modules")
@@ -1052,7 +1058,7 @@ def export_platform():
     sentence = (f"All runtimes and memory figures were measured on one machine with an "
                 f"{rec.get('cpu')} ({rec.get('cpu_cores')} cores, {rec.get('cpu_threads')} threads) "
                 f"and {memory}\\,GB of memory, running {os_name} and "
-                f"{jvm or rec.get('java')}, with \\texttt{{{rec.get('jvm_flags')}}} and one JVM per run.")
+                f"{jvm}, with \\texttt{{{rec.get('jvm_flags')}}} and one JVM per run.")
     with open(os.path.join(OUT_DIR, "platform.tex"), "w", encoding="utf-8") as fh:
         fh.write(sentence + "\n")
     missing = rec.get("unavailable") or []

@@ -82,9 +82,10 @@ param(
     # The exact JDK every arm runs on: runtime version and vendor, not just the major
     # version. Two builds of JDK 25 (Microsoft 25.0.4 and Eclipse Temurin 25.0.4.1) once ran
     # arms of the same tables because only "25" was checked, and the logs of the earlier arms
-    # did not say which. Change these only together with re-measuring what the tables hold.
-    [string]   $JdkRuntime = '25.0.4.1+1-LTS',
-    [string]   $JdkVendor  = 'Eclipse Adoptium',
+    # did not say which. Read from environment.lock.json, the one place they are set; these
+    # parameters override it only for testing on another machine.
+    [string]   $JdkRuntime = '',
+    [string]   $JdkVendor  = '',
     [switch]   $List,
     [switch]   $NoGit
 )
@@ -247,6 +248,11 @@ $ver = (& $java -version 2>&1 | Select-Object -First 1 | Out-String).Trim()
 # API removed since 21, so the pin is about comparability, not compilation. Changing this
 # number invalidates every arm already measured: clear results/campaign so they are queued
 # again instead of being mixed with the new ones.
+$lockPath = Join-Path $PSScriptRoot 'environment.lock.json'
+if (-not (Test-Path $lockPath)) { throw "No ${lockPath}: the pinned environment is defined there." }
+$lock = Get-Content -Raw $lockPath | ConvertFrom-Json
+if (-not $JdkRuntime) { $JdkRuntime = $lock.jdk.runtime_version }
+if (-not $JdkVendor)  { $JdkVendor  = $lock.jdk.vendor }
 $props = & $java -XshowSettings:properties -version 2>&1 | ForEach-Object { "$_" }
 $runtime = ($props | Where-Object { $_ -match '^\s*java\.runtime\.version = ' } | Select-Object -First 1) -replace '^\s*java\.runtime\.version = ', ''
 $vendor  = ($props | Where-Object { $_ -match '^\s*java\.vendor = ' } | Select-Object -First 1) -replace '^\s*java\.vendor = ', ''

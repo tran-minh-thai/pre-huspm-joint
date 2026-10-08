@@ -1,0 +1,27 @@
+{
+  "purpose": "The environment every measurement of this study is reproduced on. campaign.ps1 refuses a JVM that differs from the jdk entry; analysis/make_figures.py writes the paper_label into the platform sentence.",
+  "jdk": {
+    "runtime_version": "25.0.4.1+1-LTS",
+    "vendor": "Eclipse Adoptium",
+    "paper_label": "OpenJDK 25.0.4 (HotSpot)",
+    "windows_installer": {
+      "name": "OpenJDK25U-jdk_x64_windows_hotspot_25.0.4.1_1.msi",
+      "url": "https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.4.1%2B1/OpenJDK25U-jdk_x64_windows_hotspot_25.0.4.1_1.msi",
+      "sha256": "517b3590be43120c34c3891d09c97a1eddc12da982208c4f5adf1bdc1b5e3f15"
+    },
+    "windows_zip": {
+      "name": "OpenJDK25U-jdk_x64_windows_hotspot_25.0.4.1_1.zip",
+      "url": "https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.4.1%2B1/OpenJDK25U-jdk_x64_windows_hotspot_25.0.4.1_1.zip",
+      "sha256": "00c847d804f4a78e9f04f2683faf14fed898535b177b7fc704486cb0284e9283"
+    },
+    "note": "Arms measured up to 2026-10-05 ran on Microsoft OpenJDK 25.0.4; results/jdk-comparison measures the two builds against each other."
+  },
+  "jvm_flags": "-Xmx48g -Xss64m",
+  "datasets": {
+    "release": "tran-minh-thai/huspm-datasets v1.2.1-measured-quantity",
+    "manifest": "MANIFEST.sha256 attached to that release; fetch-datasets.ps1 verifies it",
+    "tafeng": "built locally by tafeng/build_tafeng.py, pinned by tafeng/TAFENG.sha256"
+  },
+  "measurement_machine": "results/machine/PC-THAI.json",
+  "analysis": "analysis/requirements.txt"
+}
