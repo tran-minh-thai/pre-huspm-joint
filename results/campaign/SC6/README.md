@@ -1,68 +1,37 @@
 # SC6, insertion, deletion and modification mixed
 
-> **Being re-measured.** The proposal's arms here are queued again under the `joint` rescan
-> rule (commit d5b47ab and later). Every figure for the proposal below - Adaptive-Full and the
-> proposed_* ablations of the incremental part - comes from the superseded `iaumax` rule at
-> commit 4e3f256 and is not to be cited. The baselines' figures stand.
-
-Twenty operations on every database, exactly 14 insertions, 3 deletions and 3 modifications,
-in an order shuffled by the seed; each operation is one hundredth of the incremental stream,
-the size of an SC2 increment: 5 sequences on SIGN, 30 on LEVIATHAN, 199 on C8T1S5I8N5K. The plan
-is built once and both arms replay it. SUBSET_3, `D_init` per `common.Datasets`, one seed, one
-repeat, `PC-THAI`, JDK 25, `-Xmx48g`.
-
-The scenario first ran with independent draws at 70:15:15, which gave each database a
-different mix and made the totals incomparable; that run is kept in `results/sc6-random-draw`.
+Twenty operations per database and seed - exactly 14 insertions, 3 deletions and 3 modifications
+in an order drawn from `Random(seed + name.hashCode())`, each a hundredth of the incremental
+stream - replayed by the proposal and by remining. SIGN, LEVIATHAN and C8T1S5I8N5K, five seeds
+(42, 1337, 2024, 31415, 271828); seed 42 is in the main tree, the others in
+`results/campaign-replicates/s1r0` to `s4r0`, each in a fresh JVM. Measured on `PC-THAI` (see `results/machine/PC-THAI.json` and `environment.lock.json`), `-Xmx48g`, one JVM per arm. Written by `analysis/scenario_readmes.py` from the arms' CSVs; rerun it rather than editing numbers here.
 
 ## Every operation agrees
 
-All 60 operations complete, and at every one the two arms report the same HUSP count.
+At every one of the 300 operations the two arms report the same HUSP count:
+yes.
 
-## Per database
+## Per database, over the five seeds
 
-| database | proposal | remine | ratio |
-|---|---:|---:|---:|
-| C8T1S5I8N5K | 8458 ms | 12548 ms | **0.67** |
-| SIGN | 3769 ms | 5071 ms | **0.74** |
-| LEVIATHAN | 9706 ms | 11352 ms | **0.86** |
+The proposal's time over remining's, summed over the twenty operations of a seed; the two arms
+replay the same plan at a seed, so the ratio is paired by seed.
 
-The three now face the same operations, so the ratios are comparable.
+| database | seeds | ratio, mean ± sd | min | max |
+|---|---:|---:|---:|---:|
+| C8T1S5I8N5K | 5 | 0.686 ± 0.009 | 0.674 | 0.696 |
+| LEVIATHAN | 5 | 0.833 ± 0.035 | 0.775 | 0.870 |
+| SIGN | 5 | 0.773 ± 0.026 | 0.728 | 0.793 |
 
-## By kind of operation
+## By kind of operation, all seeds together
 
 | database | kind | rescans | proposal | remine | remine / proposal |
 |---|---|---:|---:|---:|---:|
-| SIGN | insertion | 12 / 14 | 3012 ms | 3572 ms | 1.2 |
-| SIGN | deletion | 0 / 3 | 10 ms | 739 ms | 73.9 |
-| SIGN | modification | 3 / 3 | 747 ms | 760 ms | 1.0 |
-| LEVIATHAN | insertion | 14 / 14 | 7906 ms | 7901 ms | 1.0 |
-| LEVIATHAN | deletion | 0 / 3 | 8 ms | 1686 ms | 210.8 |
-| LEVIATHAN | modification | 3 / 3 | 1792 ms | 1765 ms | 1.0 |
-| C8T1S5I8N5K | insertion | 12 / 14 | 7000 ms | 8812 ms | 1.3 |
-| C8T1S5I8N5K | deletion | 0 / 3 | 118 ms | 1823 ms | 15.4 |
-| C8T1S5I8N5K | modification | 2 / 3 | 1340 ms | 1913 ms | 1.4 |
-
-No deletion rescans, on any database. The deletion budget is `(UUT - LUT_min) / UUT * TSU_ref`,
-a fifth of total utility at `r_l = 0.8` and about fourteen times the insertion budget, so a
-deletion of one hundredth of the stream sits well inside it and costs milliseconds.
-
-Insertions and modifications mostly rescan. On LEVIATHAN every one does, and the proposal is
-then level with remining, as in SC2. On C8T1S5I8N5K a rescan is cheaper than
-a remine, which is where its lead on insertions comes from.
-
-## Why insertions rescan more here than in SC2
-
-At the same size, SC2's insertions on SIGN rescan 59 times in 100 and SC6's 12 in 14. The
-difference is where in the stream they fall. The insertion budget is proportional to the total
-utility at the last rescan, so it widens as the database grows while an increment stays the same
-size. SC2 shows the rescan rate falling along the stream:
-
-| database | increments 1-14 | 15-50 | 51-100 |
-|---|---:|---:|---:|
-| SIGN | 13 / 14 | 22 / 36 | 24 / 50 |
-| LEVIATHAN | 14 / 14 | 36 / 36 | 48 / 50 |
-| C8T1S5I8N5K | 12 / 14 | 28 / 36 | 40 / 50 |
-
-SC6 has fourteen insertions, so it lies entirely in the first band, and there it matches SC2
-almost exactly: 12, 14 and 12 rescans against 13, 14 and 12. The proposal's advantage grows the
-longer the stream runs, and SC6 measures its start.
+| C8T1S5I8N5K | insertion | 57 / 70 | 35.08 s | 45.43 s | 1.3 |
+| C8T1S5I8N5K | deletion | 1 / 15 | 1.15 s | 9.67 s | 8.4 |
+| C8T1S5I8N5K | modification | 12 / 15 | 8.19 s | 9.71 s | 1.2 |
+| LEVIATHAN | insertion | 70 / 70 | 41.38 s | 42.29 s | 1.0 |
+| LEVIATHAN | deletion | 0 / 15 | 0.03 s | 9.15 s | 277.2 |
+| LEVIATHAN | modification | 15 / 15 | 8.92 s | 9.08 s | 1.0 |
+| SIGN | insertion | 62 / 70 | 16.06 s | 18.59 s | 1.2 |
+| SIGN | deletion | 0 / 15 | 0.04 s | 3.91 s | 93.1 |
+| SIGN | modification | 15 / 15 | 4.32 s | 3.96 s | 0.9 |

@@ -1,104 +1,101 @@
 # SC2, one hundred increments
 
-> **Being re-measured.** The proposal's arms here are queued again under the `joint` rescan
-> rule (commit d5b47ab and later). Every figure for the proposal below - Adaptive-Full and the
-> proposed_* ablations of the incremental part - comes from the superseded `iaumax` rule at
-> commit 4e3f256 and is not to be cited. The baselines' figures stand.
+Seven databases against five arms; `D_init` per `common.Datasets`, the remainder cut into 100
+equal increments in file order. BMS1 is absent: no threshold mines it once the database grows
+past `D_init`, so it appears in SC1 alone. Measured on `PC-THAI` (see `results/machine/PC-THAI.json` and `environment.lock.json`), `-Xmx48g`, one JVM per arm. Written by `analysis/scenario_readmes.py` from the arms' CSVs; rerun it rather than editing numbers here.
 
-Seven databases against five arms. BMS1 is absent: it carries `fullScopeOk = false` and
-cannot be mined once the database grows past `D_init`, so it appears in SC1 alone.
-
-Measured on `PC-THAI`, AMD Ryzen 9 9950X, JDK 25, `-Xmx48g`, one JVM per arm, one repeat,
-`D_init` per `common.Datasets`, the remainder cut into 100 equal increments.
+Pre-HUSPM-SWUmax is the arm `Pre-HUSPM`: Yan et al.'s Theorem 2 test, which compares the largest
+inserted sequence utility with the safety bound and is not sound. Pre-HUSPM-TSU is their Theorem 1
+test, which is. Both accumulate since the last rescan.
 
 ## What completed
 
-| database | Adaptive-Full | Pre-HUSPM | Pre-HUSPM-TSU | Remine-from-scratch | IncUSP-Miner+ |
+| database | Pre-HUSPM-Adaptive | Pre-HUSPM-SWUmax | Pre-HUSPM-TSU | Remine | IncUSP-Miner+ |
 |---|---|---|---|---|---|
 | SIGN | 100/100 | 100/100 | 100/100 | 100/100 | 100/100 |
-| TAFENG | 100/100 | 100/100 | 100/100 | 100/100 | 100/100 |
+| LEVIATHAN | 100/100 | 0/100, out of memory on `D_init` | 0/100, out of memory on `D_init` | 100/100 | 74/100, out of memory |
+| FIFA | 100/100 | 100/100 | 0/100, deferred, not finished within 8 h | 100/100 | 0/100, out of memory on `D_init` |
+| BIBLE | 100/100 | 100/100 | 100/100 | 100/100 | 40/100, out of memory |
+| KOSARAK | 100/100 | 100/100 | 0/100, deferred, not finished within 8 h | 100/100 | 11/100, out of memory |
 | C8T1S5I8N5K | 100/100 | 100/100 | 100/100 | 100/100 | 100/100 |
-| BIBLE | 100/100 | 100/100 | 100/100 | 100/100 | **40/100**, out of memory |
-| LEVIATHAN | 100/100 | **0/100**, out of memory on `D_init` | **0/100**, out of memory on `D_init` | 100/100 | **74/100** |
-| FIFA | 100/100 | 100/100 | deferred | 100/100 | **0/100**, out of memory on `D_init` |
-| KOSARAK | 100/100 | 100/100 | deferred | 100/100 | **11/100**, out of memory |
-
-The proposal is the only arm that finishes every increment of every database.
+| TAFENG | 100/100 | 100/100 | 100/100 | 100/100 | 100/100 |
 
 ## Runtime, summed over the increments that completed
 
-Seconds, over the increments alone; the initial mine of `D_init` is not included. A total over
-a partial run is not comparable with a total over a whole one and is marked as such.
+Seconds over the increments alone; the initial mine of `D_init` is excluded. A total over a
+partial run is in parentheses: it is not comparable with a total over the whole stream. The
+fastest arm that completed the whole stream is in bold. One run per arm; the spread of the
+proposal and Remine over three runs is in the next table.
 
-| database | Adaptive-Full | rescans | Pre-HUSPM | Pre-HUSPM-TSU | Remine | IncUSP |
+| database | Pre-HUSPM-Adaptive | rescans | Pre-HUSPM-SWUmax | Pre-HUSPM-TSU | Remine | IncUSP-Miner+ |
 |---|---:|---:|---:|---:|---:|---:|
-| SIGN | **17** | 59 | 27 | 61 | 30 | 94 |
-| TAFENG | **6** | 52 | 7 | 26 | 19 | 9 |
-| C8T1S5I8N5K | **62** | 80 | 230 | 309 | 81 | 81 |
-| BIBLE | **108** | 63 | 139 | 2920 | 181 | (55, 40 increments) |
-| LEVIATHAN | 93 | 98 | — | — | **90** | (174, 74 increments) |
-| FIFA | 2124 | 28 | **1310** | — | 7726 | — |
-| KOSARAK | 4650 | 100 | **1677** | — | 4563 | (69, 11 increments) |
+| SIGN | **17.5** | 59 | 26.5 | 61.0 | 30.0 | 94.2 |
+| LEVIATHAN | 95.2 | 98 | - | - | **89.9** | (174, 74 increments) |
+| FIFA | 2,095 | 27 | **1,310** | - | 7,726 | - |
+| BIBLE | **109** | 63 | 139 | 2,920 | 181 | (55.3, 40 increments) |
+| KOSARAK | 4,673 | 100 | **1,677** | - | 4,563 | (68.6, 11 increments) |
+| C8T1S5I8N5K | **55.7** | 77 | 230 | 309 | 81.0 | 80.8 |
+| TAFENG | **5.8** | 52 | 7.0 | 26.4 | 18.8 | 8.9 |
+
+### Three runs
+
+On SIGN, TAFENG, BIBLE and C8T1S5I8N5K the proposal and Remine were each measured three times, each
+run in a fresh JVM (`results/campaign-replicates/s0r1`, `s0r2`). Seconds summed over the
+increments, mean ± sample standard deviation.
+
+| database | arm | runs | mean ± sd | min | max |
+|---|---|---:|---:|---:|---:|
+| SIGN | Pre-HUSPM-Adaptive | 3 | 17.53 ± 0.16 | 17.38 | 17.70 |
+| SIGN | Remine | 3 | 30.57 ± 0.51 | 29.99 | 30.96 |
+| BIBLE | Pre-HUSPM-Adaptive | 3 | 110.56 ± 1.19 | 109.46 | 111.83 |
+| BIBLE | Remine | 3 | 184.86 ± 2.99 | 181.48 | 187.18 |
+| C8T1S5I8N5K | Pre-HUSPM-Adaptive | 3 | 56.55 ± 1.37 | 55.70 | 58.14 |
+| C8T1S5I8N5K | Remine | 3 | 79.24 ± 1.60 | 77.86 | 81.00 |
+| TAFENG | Pre-HUSPM-Adaptive | 3 | 5.85 ± 0.05 | 5.81 | 5.91 |
+| TAFENG | Remine | 3 | 19.04 ± 0.40 | 18.78 | 19.50 |
 
 ## The operating region
 
-An insertion triggers a rescan when `iauMax > SFT_ins`, where `iauMax` is the largest
-accumulated utility over items since the last rescan and
+The rescan test is the joint rule: rescan when
+`max_i A_i - UUT*I + UUT*D > (UUT - LUT_min) * TSU_ref`. The ratio of the left side to the right
+is the whole mechanism; an increment rescans exactly when it exceeds one, and `check` confirms
+that the increments above one, the triggered flags and the rescan counter agree.
 
-    SFT_ins = (UUT - LUT_min) / (1 - UUT) * TSU_ref = Su (1 - r_l) / (1 - Su) * TSU_ref.
+| database | median ratio | min | max | increments within budget | rescans | check |
+|---|---:|---:|---:|---:|---:|---|
+| FIFA | 0.76 | 0.18 | 1.51 | 73/100 | 27 | ok |
+| TAFENG | 1.01 | 0.31 | 6.52 | 48/100 | 52 | ok |
+| SIGN | 1.10 | 0.41 | 2.51 | 41/100 | 59 | ok |
+| BIBLE | 1.20 | 0.56 | 2.14 | 37/100 | 63 | ok |
+| C8T1S5I8N5K | 1.44 | 0.38 | 5.05 | 23/100 | 77 | ok |
+| LEVIATHAN | 2.08 | 0.94 | 4.04 | 2/100 | 98 | ok |
+| KOSARAK | 3.77 | 1.92 | 21.39 | 0/100 | 100 | ok |
 
-The ratio of the two is the whole mechanism. Counting increments whose ratio is at most one
-reproduces the rescan count exactly on every database — 41 and 41 on SIGN, 48 and 48 on
-TAFENG, 37 and 37 on BIBLE, 20 and 20 on C8T1S5I8N5K, 72 and 72 on FIFA, 2 and 2 on
-LEVIATHAN, 0 and 0 on KOSARAK.
+**Inside the budget** (median ratio at most one): FIFA, 3.69 times faster than remining.
 
-| database | median `iauMax / SFT_ins` | min | max | increments within budget | rescans |
-|---|---:|---:|---:|---:|---:|
-| FIFA | 0.74 | 0.19 | 1.39 | 72/100 | 28 |
-| TAFENG | 1.04 | 0.32 | 6.58 | 48/100 | 52 |
-| SIGN | 1.10 | 0.41 | 2.51 | 41/100 | 59 |
-| BIBLE | 1.21 | 0.56 | 2.15 | 37/100 | 63 |
-| C8T1S5I8N5K | 1.45 | 0.40 | 5.11 | 20/100 | 80 |
-| LEVIATHAN | 2.08 | 0.95 | 4.04 | 2/100 | 98 |
-| KOSARAK | 3.80 | 1.92 | 21.48 | 0/100 | 100 |
+**At the boundary**: SIGN (1.71x), BIBLE (1.66x), C8T1S5I8N5K (1.45x), TAFENG (3.23x). They rescan on
+52 to 77
+of 100 increments and still finish faster than remining.
 
-Three regimes follow, and the middle one is where the method lives.
-
-**Inside the budget.** FIFA keeps 72 increments out of 100 and runs 3.6 times faster than
-remining after every one of them.
-
-**At the boundary.** TAFENG, SIGN, BIBLE and C8T1S5I8N5K sit at a median just above one,
-rescan between half and four fifths of the time, and still finish 1.3 to 3.3 times faster
-than remine — the increments that fit are enough to pay for the ones that do not.
-
-**Beyond it.** LEVIATHAN and KOSARAK exceed the budget on essentially every increment, so
-maintenance degenerates into remining. What that costs is the honest measurement here: 93 s
-against remine's 90 s, and 4650 s against 4563 s. Degradation is graceful, 2 to 3 percent,
-rather than a collapse.
+**Beyond it**: LEVIATHAN, 2 of 100 within budget, KOSARAK, 0 of 100 within budget.
+Maintenance degenerates into remining: LEVIATHAN 95.2 s against remining's 89.9 s (+5.8 %); KOSARAK 4,673 s against remining's 4,563 s (+2.4 %),
+one run each. Two runs of one SC1 configuration on the same JDK differ by a factor between
+0.83 and 1.19 (130 configurations of at least one second), so differences
+of a few percent between single runs are not resolved here.
 
 ## KOSARAK cannot be moved by tuning
 
-The budget is proportional to `1 - r_l`, so a wider budget needs a lower pre-large floor.
-KOSARAK's median ratio of 3.8 would need roughly `r_l = 0.3` to fall below one.
-
-`r_l` on KOSARAK is 0.85 precisely because it cannot go lower: at 0.8 the floor is already
-low enough that mining it exceeds three billion candidates and is abandoned after 103 s,
-while 0.85 returns 16 patterns in 29 s. The two constraints point in opposite directions —
-a wider budget needs a lower floor, and a lower floor is unmineable — so no value of `r_l`
-satisfies both. This is a limit of the pre-large approach on a sparse database at a small
-threshold, not a configuration that was got wrong.
-
-SC4 sweeps `r_l` over {0.3, 0.5, 0.7, 0.9} and is the scenario that measures the trade-off
-directly: budget width against pre-large set size.
+The bound is proportional to `1 - r_l` and the test quantity does not depend on `r_l`, so the
+median ratio of 3.77 at `r_l = 0.85` would come down to one only at
+`r_l = 0.43`, a lower pre-large floor. A lower floor
+costs more to mine, and on KOSARAK it is already the binding limit: `r_l` is 0.85 there, not 0.8,
+because at 0.8 the lowest threshold of the sweep exceeds three billion candidates
+(`docs/campaign-parameters.md`). SC4 measures the trade-off between the floor and the pre-large
+set directly.
 
 ## What this does not show
 
-Pre-HUSPM is faster than the proposal on FIFA, 1310 s against 2124 s, and on KOSARAK,
-1677 s against 4650 s. Its trigger is not sound, but `results/verify-swumax` finds no lost
-pattern on either of those two databases, so on them it is both correct in practice and
-cheaper. Where it does lose patterns — LEVIATHAN, up to 39 of 137 at one operation — it
-cannot be run at all here: it exhausts 48 GB on `D_init`.
-
-IncUSP-Miner+ cannot start on FIFA: it exhausts 48 GB on the initial mine of `D_init`, so all
-100 increments are recorded as skipped. The two Pre-HUSPM-TSU arms on FIFA and KOSARAK are
-deferred with their partial curves; see the `DEFERRED` files.
+Pre-HUSPM-SWUmax is faster than the proposal on FIFA (1,310 s against 2,095 s, 1 rescan against 27), KOSARAK (1,677 s against 4,673 s, 8 rescans against 100).
+Its test rescans rarely because it under-counts what an increment can add to a pattern; it is not
+sound, and its sound counterpart, Pre-HUSPM-TSU, does not finish these two streams within the
+eight-hour cap.
