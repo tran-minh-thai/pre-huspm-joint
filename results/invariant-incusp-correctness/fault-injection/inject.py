@@ -1,4 +1,4 @@
-"""Inject one fault into a copy of src/ (or take the implementation before commit 899dd59),
+"""Inject one fault into a copy of src/ (or take the implementation before commit 0cad934),
 compile it and run verify.IncUspVerifier on random streams.
 
     python3 inject.py REPO WORKDIR NAME     NAME: old | no_ndb_rescan | case2_ldb_only | tsu_without_ru | no_rebuild
@@ -11,7 +11,7 @@ d=os.path.join(F,name); shutil.rmtree(d,ignore_errors=True); shutil.copytree(os.
 p=os.path.join(d,'src/algorithms/IncUSPMinerPlusAlgorithm.java')
 s=open(p).read()
 if name=='old':
-    s=subprocess.run(['git','-C',repo,'show','076c0b8:src/algorithms/IncUSPMinerPlusAlgorithm.java'],capture_output=True,text=True).stdout
+    s=subprocess.run(['git','-C',repo,'show','2a7faa8:src/algorithms/IncUSPMinerPlusAlgorithm.java'],capture_output=True,text=True).stdout
     a='    public Map<Pattern, Double> largeMap = new HashMap<>();\n'
     b=a+'    public long ndbScans = 0, case2Builds = 0, rebuilds = 0;\n    public Map<Pattern, Double> husps() { return largeMap; }\n'
 else:

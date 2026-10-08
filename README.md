@@ -174,6 +174,10 @@ Columns that are easy to misread:
 - `candidate_count` counts extensions before pruning; `explored_nodes` counts the nodes that
   receive an occurrence list.
 
+Result files name the commit of `src/` they ran on (`DONE`, `run_meta.json`). Commits recorded in
+them before the history was rewritten to its present form are mapped to the current commits in
+`COMMIT_MAP.tsv` (old commit, new commit; same source tree).
+
 Figures and tables are regenerated from the result files:
 
 ```bash

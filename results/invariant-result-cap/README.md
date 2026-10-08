@@ -8,7 +8,7 @@ mechanism has since been removed: every pattern reaching the cutoff is kept. Thi
 C8T1S5I8N5K once with the default and once with the cap disabled, at the floor ratios of
 the floor-sensitivity scenario.
 
-Code: commit 1008c22 (working tree as of 2026-10-08T14:15Z), compiled with
+Code: commit 325a058 (working tree as of 2026-10-08T14:15Z), compiled with
 `javac` from `src/` plus `FlushProbe.java`; run with `java -Xmx24g -cp out FlushProbe C8T1S5I8N5K <r_l> default|nocap datasets`.
 JVM: openjdk version "26.0.1" 2026-04-21. Data: datasets release pinned in environment.lock.json.
 

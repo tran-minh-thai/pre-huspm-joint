@@ -5,7 +5,7 @@ Kind: invariant (text-similarity counts; machine-independent).
 Reference: https://www.philippe-fournier-viger.com/spmf/spmf.zip, 34,107,808 bytes,
 Last-Modified Wed, 30 Sep 2026 03:22:52 GMT,
 sha256 48599087a24bd43fc1f32dac05cd2390f3895da437e092a7c0b7e6c7426a9c10, 3,051 Java files.
-Targets: every tracked `src/**/*.java` at commit 1008c22.
+Targets: every tracked `src/**/*.java` at commit 325a058.
 
 `tools/provenance.py` reports, for each target, the SPMF file that contains the largest share
 of it under three measures: normalised source lines, 8-grams of code tokens, and 8-grams of

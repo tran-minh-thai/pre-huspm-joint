@@ -38,7 +38,7 @@ equal insertion batches in file order; reference: remining with the static miner
 
 Raw output: `fault-injection/console.txt`, produced by `fault-injection/inject.py`.
 
-The implementation before commit 899dd59 (no rescan of the old sequences, no USP-Miner rerun,
+The implementation before commit 0cad934 (no rescan of the old sequences, no USP-Miner rerun,
 TSU from the first stored instance), run through the same check:
 
 | run | comparisons | mismatches |
