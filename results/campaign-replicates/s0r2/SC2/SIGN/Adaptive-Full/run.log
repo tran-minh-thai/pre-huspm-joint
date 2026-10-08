@@ -1,0 +1,209 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC2]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | block.size=100 | timeout.min=120 | repeats=1 repeat.index=2 | seed.index=0
+
+--- [SC2] Incremental sequence (100 batches, EVEN; D_init per Yan et al. Table 16) ---
+>> RUNNING Adaptive-Full/SIGN/SC2_INIT#0  (heap free=114MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INIT#0] OK t=492ms cand=9425036 pat=583 heapDelta=21MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#1  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#1] OK t=249ms cand=10187250 pat=611 heapDelta=12MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#2  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#2] OK t=271ms cand=11043690 pat=684 heapDelta=12MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#3  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#3] OK t=264ms cand=10700378 pat=663 heapDelta=12MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#4  (heap free=108MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#4] OK t=4ms cand=0 pat=631 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#5  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#5] OK t=365ms cand=10487390 pat=652 heapDelta=12MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#6  (heap free=108MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#6] OK t=271ms cand=10527414 pat=695 heapDelta=12MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#7  (heap free=108MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#7] OK t=280ms cand=10915769 pat=664 heapDelta=12MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#8  (heap free=108MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#8] OK t=285ms cand=11013956 pat=660 heapDelta=12MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#9  (heap free=108MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#9] OK t=291ms cand=10982626 pat=632 heapDelta=11MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#10  (heap free=108MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#10] OK t=281ms cand=10688350 pat=594 heapDelta=11MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#11  (heap free=108MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#11] OK t=276ms cand=10332254 pat=564 heapDelta=10MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#12  (heap free=108MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#12] OK t=272ms cand=10074728 pat=571 heapDelta=10MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#13  (heap free=107MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#13] OK t=273ms cand=9968294 pat=556 heapDelta=10MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#14  (heap free=107MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#14] OK t=271ms cand=9769618 pat=528 heapDelta=10MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#15  (heap free=107MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#15] OK t=265ms cand=9523308 pat=506 heapDelta=10MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#16  (heap free=107MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#16] OK t=3ms cand=0 pat=480 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#17  (heap free=107MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#17] OK t=267ms cand=9336517 pat=461 heapDelta=9MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#18  (heap free=107MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#18] OK t=278ms cand=9618813 pat=503 heapDelta=10MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#19  (heap free=107MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#19] OK t=273ms cand=9409207 pat=471 heapDelta=9MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#20  (heap free=107MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#20] OK t=270ms cand=9100415 pat=434 heapDelta=9MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#21  (heap free=107MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#21] OK t=3ms cand=0 pat=415 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#22  (heap free=107MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#22] OK t=273ms cand=8976190 pat=423 heapDelta=9MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#23  (heap free=106MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#23] OK t=279ms cand=9113284 pat=434 heapDelta=9MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#24  (heap free=106MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#24] OK t=285ms cand=9250086 pat=470 heapDelta=9MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#25  (heap free=106MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#25] OK t=1ms cand=0 pat=456 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#26  (heap free=106MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#26] OK t=289ms cand=9195193 pat=475 heapDelta=9MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#27  (heap free=106MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#27] OK t=291ms cand=9137495 pat=442 heapDelta=9MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#28  (heap free=106MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#28] OK t=2ms cand=0 pat=425 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#29  (heap free=106MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#29] OK t=301ms cand=9403510 pat=435 heapDelta=9MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#30  (heap free=106MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#30] OK t=306ms cand=9415342 pat=416 heapDelta=9MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#31  (heap free=106MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#31] OK t=1ms cand=0 pat=394 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#32  (heap free=106MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#32] OK t=311ms cand=9394439 pat=373 heapDelta=9MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#33  (heap free=105MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#33] OK t=1ms cand=0 pat=337 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#34  (heap free=105MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#34] OK t=309ms cand=9172249 pat=333 heapDelta=9MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#35  (heap free=105MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#35] OK t=2ms cand=0 pat=316 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#36  (heap free=105MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#36] OK t=311ms cand=9080929 pat=323 heapDelta=8MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#37  (heap free=105MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#37] OK t=1ms cand=0 pat=308 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#38  (heap free=105MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#38] OK t=303ms cand=8729067 pat=298 heapDelta=8MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#39  (heap free=105MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#39] OK t=2ms cand=0 pat=293 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#40  (heap free=105MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#40] OK t=298ms cand=8462042 pat=276 heapDelta=8MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#41  (heap free=105MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#41] OK t=1ms cand=0 pat=269 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#42  (heap free=105MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#42] OK t=295ms cand=8200242 pat=269 heapDelta=8MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#43  (heap free=104MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#43] OK t=1ms cand=0 pat=276 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#44  (heap free=104MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#44] OK t=298ms cand=8149885 pat=289 heapDelta=8MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#45  (heap free=104MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#45] OK t=1ms cand=0 pat=275 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#46  (heap free=104MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#46] OK t=296ms cand=7891694 pat=280 heapDelta=7MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#47  (heap free=104MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#47] OK t=1ms cand=0 pat=279 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#48  (heap free=104MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#48] OK t=294ms cand=7791483 pat=271 heapDelta=7MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#49  (heap free=104MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#49] OK t=1ms cand=0 pat=269 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#50  (heap free=104MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#50] OK t=294ms cand=7642041 pat=253 heapDelta=7MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#51  (heap free=104MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#51] OK t=1ms cand=0 pat=244 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#52  (heap free=104MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#52] OK t=287ms cand=7438974 pat=239 heapDelta=7MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#53  (heap free=104MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#53] OK t=1ms cand=0 pat=243 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#54  (heap free=104MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#54] OK t=291ms cand=7401621 pat=245 heapDelta=7MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#55  (heap free=103MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#55] OK t=1ms cand=0 pat=243 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#56  (heap free=103MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#56] OK t=289ms cand=7249773 pat=236 heapDelta=7MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#57  (heap free=103MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#57] OK t=1ms cand=0 pat=230 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#58  (heap free=103MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#58] OK t=284ms cand=7108971 pat=223 heapDelta=7MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#59  (heap free=103MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#59] OK t=1ms cand=0 pat=226 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#60  (heap free=103MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#60] OK t=293ms cand=7176929 pat=217 heapDelta=7MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#61  (heap free=103MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#61] OK t=1ms cand=0 pat=205 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#62  (heap free=103MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#62] OK t=288ms cand=7003315 pat=206 heapDelta=7MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#63  (heap free=103MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#63] OK t=1ms cand=0 pat=200 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#64  (heap free=103MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#64] OK t=286ms cand=6843817 pat=197 heapDelta=6MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#65  (heap free=103MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#65] OK t=2ms cand=0 pat=199 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#66  (heap free=103MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#66] OK t=296ms cand=7020581 pat=190 heapDelta=6MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#67  (heap free=102MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#67] OK t=1ms cand=0 pat=188 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#68  (heap free=103MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#68] OK t=300ms cand=7028736 pat=185 heapDelta=7MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#69  (heap free=102MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#69] OK t=1ms cand=0 pat=185 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#70  (heap free=102MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#70] OK t=310ms cand=7174947 pat=183 heapDelta=7MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#71  (heap free=102MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#71] OK t=1ms cand=0 pat=172 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#72  (heap free=102MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#72] OK t=311ms cand=7100988 pat=166 heapDelta=7MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#73  (heap free=102MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#73] OK t=1ms cand=0 pat=162 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#74  (heap free=102MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#74] OK t=1ms cand=0 pat=157 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#75  (heap free=102MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#75] OK t=304ms cand=6882088 pat=151 heapDelta=7MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#76  (heap free=102MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#76] OK t=1ms cand=0 pat=155 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#77  (heap free=102MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#77] OK t=309ms cand=6910734 pat=155 heapDelta=7MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#78  (heap free=102MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#78] OK t=1ms cand=0 pat=151 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#79  (heap free=102MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#79] OK t=311ms cand=6820013 pat=144 heapDelta=7MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#80  (heap free=102MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#80] OK t=1ms cand=0 pat=145 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#81  (heap free=102MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#81] OK t=317ms cand=6867575 pat=148 heapDelta=7MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#82  (heap free=102MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#82] OK t=1ms cand=0 pat=144 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#83  (heap free=102MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#83] OK t=317ms cand=6770112 pat=139 heapDelta=7MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#84  (heap free=102MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#84] OK t=1ms cand=0 pat=139 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#85  (heap free=102MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#85] OK t=318ms cand=6708563 pat=132 heapDelta=7MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#86  (heap free=102MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#86] OK t=1ms cand=0 pat=124 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#87  (heap free=102MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#87] OK t=323ms cand=6699150 pat=123 heapDelta=8MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#88  (heap free=102MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#88] OK t=1ms cand=0 pat=123 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#89  (heap free=102MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#89] OK t=332ms cand=6785204 pat=118 heapDelta=8MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#90  (heap free=102MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#90] OK t=1ms cand=0 pat=119 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#91  (heap free=102MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#91] OK t=0ms cand=0 pat=115 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#92  (heap free=102MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#92] OK t=341ms cand=6836513 pat=113 heapDelta=8MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#93  (heap free=102MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#93] OK t=1ms cand=0 pat=116 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#94  (heap free=102MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#94] OK t=361ms cand=7128186 pat=119 heapDelta=8MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#95  (heap free=102MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#95] OK t=1ms cand=0 pat=124 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#96  (heap free=102MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#96] OK t=377ms cand=7364421 pat=139 heapDelta=9MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#97  (heap free=102MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#97] OK t=1ms cand=0 pat=143 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#98  (heap free=102MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#98] OK t=384ms cand=7398154 pat=146 heapDelta=9MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#99  (heap free=102MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#99] OK t=1ms cand=0 pat=142 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC2_INC#100  (heap free=102MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC2_INC#100] OK t=383ms cand=7294276 pat=141 heapDelta=9MB
+=== ALL SCENARIOS DONE (51.9s) ===
