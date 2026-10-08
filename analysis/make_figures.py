@@ -342,22 +342,52 @@ def safe_log(ax):
         ax.set_yticks([]); ax.set_ylim(0, 1)
 
 
-def note_absent(ax, sub, expected, deferred_root=None, ds=None):
-    """Under the title, name each expected arm that has no curve and why: out of
-    memory on D_init (its INIT row failed) or deferred (no finished arm)."""
+STATUS_WORDS = {"OOM": "out of memory", "OT": "over the time limit", "Fail": "failed",
+                "MemSkip": "refused by the memory guard", "Skip": "out of memory"}
+
+
+def deferred_reason(path):
+    """Why an arm was set aside, read from its DEFERRED file. Two reasons occur: it ran out
+    of memory on D_init in the timing campaign, or it does not finish within the arm's
+    eight-hour cap. Anything else is reported, not guessed."""
+    text = open(path, encoding="utf-8-sig", errors="replace").read().lower()
+    if "d_init within 48 gb" in text or "past d_init" in text:
+        return "out of memory on $D_{\\mathrm{init}}$"
+    if "eight-hour cap" in text or "within the eight-hour" in text or "measured, not finished" in text:
+        return "not finished within 8 h"
+    print(f"[warn] {path}: reason not recognised; labelled 'set aside'")
+    return "set aside"
+
+
+def note_absent(sub, expected, deferred_root=None, ds=None):
+    """The expected arms that have no curve, and why: failed on D_init (its INIT row did
+    not finish) or set aside (DEFERRED: it did not finish within the arm's time cap).
+    Returned, not drawn: a note inside a panel covers the curves."""
     notes = []
     for algo in expected:
         a = sub[sub["algorithm"] == algo]
         if a.empty:
-            if deferred_root and os.path.exists(os.path.join(deferred_root, ds, algo, "DEFERRED")):
-                notes.append(f"{ALGO_LABEL[algo]}: deferred")
+            path = os.path.join(deferred_root, ds, algo, "DEFERRED") if deferred_root else None
+            if path and os.path.exists(path):
+                notes.append(f"{ALGO_LABEL[algo]} {deferred_reason(path)}")
             continue
         init = a[a["op_type"].astype(str).str.contains("_INIT")]
         if not init.empty and not bool(init.iloc[0]["finished"]):
-            notes.append(f"{ALGO_LABEL[algo]}: {init.iloc[0]['status']} on $D_{{init}}$")
-    if notes:
-        ax.text(0.03, 0.97, "\n".join(notes), transform=ax.transAxes, ha="left",
-                va="top", style="italic")
+            st = str(init.iloc[0]["status"])
+            notes.append(f"{ALGO_LABEL[algo]} {STATUS_WORDS.get(st, st)} on $D_{{\\mathrm{{init}}}}$")
+    return notes
+
+
+def absent_footnote(fig, absent, width_chars=72):
+    """One note under the panels naming, per panel, the arms that have no curve."""
+    import textwrap
+    parts = [f"({chr(ord('a') + i)}) {ds}: " + "; ".join(n) + "." for i, ds, n in absent if n]
+    if not parts:
+        return
+    text = "No curve - " + " ".join(parts)
+    fig.text(0.0, 0.0, "\n".join(textwrap.wrap(text, width_chars, break_on_hyphens=False)),
+             ha="left", va="top",
+             transform=fig.transFigure)
 
 
 def shared_legend(fig, axes, ncol=None, y=0.97):
@@ -374,7 +404,8 @@ def shared_legend(fig, axes, ncol=None, y=0.97):
     handles = [handles[i] for i in order]; labels = [labels[i] for i in order]
     if handles:
         fig.legend(handles, labels, loc="lower center", ncol=ncol or min(len(labels), 3),
-                   frameon=False, bbox_to_anchor=(0.5, y), handlelength=3.2, columnspacing=1.2)
+                   frameon=False, bbox_to_anchor=(0.5, y), handlelength=2.6, columnspacing=0.8,
+                   handletextpad=0.4)
 
 
 def panel_xlabel(ax, i, name, xlabel):
@@ -443,6 +474,7 @@ def figset_incremental(tag="fig_incremental_cumulative", datasets=None):
         return
     datasets = [d for d in (datasets or SC2_DATASETS) if d in set(df["dataset"])]
     fig, axes = panel_grid(len(datasets), 2, h=1.8)
+    absent = []
     for i, (ax, ds) in enumerate(zip(axes, datasets)):
         sub = df[(df["dataset"] == ds) & is_inc(df)]
         for algo in INC_ORDER:
@@ -459,14 +491,15 @@ def figset_incremental(tag="fig_incremental_cumulative", datasets=None):
             if len(ok) < len(a):
                 ax.plot(ok["iteration"].iloc[-1], y[-1], marker="X", color="black",
                         markerfacecolor="black", ms=5, linestyle="none")
-        note_absent(ax, df[df["dataset"] == ds], INC_ORDER,
-                    os.path.join(DATA_DIR, TIMING_TREE, "SC2"), ds)
+        absent.append((i, ds, note_absent(df[df["dataset"] == ds], INC_ORDER,
+                                          os.path.join(DATA_DIR, TIMING_TREE, "SC2"), ds)))
         panel_xlabel(ax, i, ds, "Increment")
         safe_log(ax)
         if i % 2 == 0:
             ax.set_ylabel("Cumulative runtime (s)")
     fig.tight_layout(w_pad=0.6)
     shared_legend(fig, axes, ncol=3)
+    absent_footnote(fig, absent)
     save(fig, f"{tag}.pdf")
 
 
@@ -748,6 +781,7 @@ def figset_memory_incremental(tag="fig_memory_incremental", datasets=None):
         return
     datasets = [d for d in (datasets or SC2_DATASETS) if d in set(df["dataset"])]
     fig, axes = panel_grid(len(datasets), 2, h=1.8)
+    absent = []
     for i, (ax, ds) in enumerate(zip(axes, datasets)):
         sub = df[df["dataset"] == ds]
         for algo in INC_ORDER:
@@ -763,13 +797,14 @@ def figset_memory_incremental(tag="fig_memory_incremental", datasets=None):
             if len(ok) < len(a):
                 ax.plot(ok["iteration"].iloc[-1], y[-1], marker="X", color="black",
                         markerfacecolor="black", ms=5, linestyle="none")
-        note_absent(ax, sub, INC_ORDER, os.path.join(DATA_DIR, MEMORY_TREE, "SC2"), ds)
+        absent.append((i, ds, note_absent(sub, INC_ORDER, os.path.join(DATA_DIR, MEMORY_TREE, "SC2"), ds)))
         panel_xlabel(ax, i, ds, "Increment (0 = $D_{init}$)")
         safe_log(ax)
         if i % 2 == 0:
             ax.set_ylabel("State held (MB)")
     fig.tight_layout(w_pad=0.6)
     shared_legend(fig, axes, ncol=3)
+    absent_footnote(fig, absent)
     save(fig, f"{tag}.pdf")
 
 
