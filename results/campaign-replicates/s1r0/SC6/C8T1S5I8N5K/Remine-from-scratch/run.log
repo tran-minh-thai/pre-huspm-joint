@@ -1,0 +1,50 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC6]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=1
+
+--- [SC6] Mixed I/D/M, exactly 14:3:3 (Adaptive vs Remine-from-scratch) ---
+>> [SC6] C8T1S5I8N5K seed=1337 opSize=199 plan=20 thao tac (14 chen, 3 xoa, 3 sua)
+>> RUNNING Remine-from-scratch/C8T1S5I8N5K/SC6_INIT#0  (heap free=812MB / total=1024MB / max=49152MB)
+[Remine-from-scratch/C8T1S5I8N5K/SC6_INIT#0] OK t=1642ms cand=31050488 pat=5067 heapDelta=158MB
+>> RUNNING Remine-from-scratch/C8T1S5I8N5K/SC6_INS#1  (heap free=310MB / total=448MB / max=49152MB)
+[Remine-from-scratch/C8T1S5I8N5K/SC6_INS#1] OK t=746ms cand=31066350 pat=5101 heapDelta=155MB
+>> RUNNING Remine-from-scratch/C8T1S5I8N5K/SC6_INS#2  (heap free=405MB / total=544MB / max=49152MB)
+[Remine-from-scratch/C8T1S5I8N5K/SC6_INS#2] OK t=711ms cand=30658020 pat=4900 heapDelta=165MB
+>> RUNNING Remine-from-scratch/C8T1S5I8N5K/SC6_MOD#3  (heap free=404MB / total=544MB / max=49152MB)
+[Remine-from-scratch/C8T1S5I8N5K/SC6_MOD#3] OK t=702ms cand=30797634 pat=4178 heapDelta=163MB
+>> RUNNING Remine-from-scratch/C8T1S5I8N5K/SC6_INS#4  (heap free=405MB / total=544MB / max=49152MB)
+[Remine-from-scratch/C8T1S5I8N5K/SC6_INS#4] OK t=692ms cand=30390466 pat=4036 heapDelta=165MB
+>> RUNNING Remine-from-scratch/C8T1S5I8N5K/SC6_DEL#5  (heap free=405MB / total=544MB / max=49152MB)
+[Remine-from-scratch/C8T1S5I8N5K/SC6_DEL#5] OK t=704ms cand=31026851 pat=3490 heapDelta=162MB
+>> RUNNING Remine-from-scratch/C8T1S5I8N5K/SC6_INS#6  (heap free=499MB / total=640MB / max=49152MB)
+[Remine-from-scratch/C8T1S5I8N5K/SC6_INS#6] OK t=702ms cand=30545652 pat=4120 heapDelta=163MB
+>> RUNNING Remine-from-scratch/C8T1S5I8N5K/SC6_MOD#7  (heap free=499MB / total=640MB / max=49152MB)
+[Remine-from-scratch/C8T1S5I8N5K/SC6_MOD#7] OK t=696ms cand=30465784 pat=3999 heapDelta=164MB
+>> RUNNING Remine-from-scratch/C8T1S5I8N5K/SC6_INS#8  (heap free=404MB / total=544MB / max=49152MB)
+[Remine-from-scratch/C8T1S5I8N5K/SC6_INS#8] OK t=684ms cand=30173713 pat=4155 heapDelta=165MB
+>> RUNNING Remine-from-scratch/C8T1S5I8N5K/SC6_MOD#9  (heap free=404MB / total=544MB / max=49152MB)
+[Remine-from-scratch/C8T1S5I8N5K/SC6_MOD#9] OK t=697ms cand=30507382 pat=5462 heapDelta=165MB
+>> RUNNING Remine-from-scratch/C8T1S5I8N5K/SC6_INS#10  (heap free=500MB / total=640MB / max=49152MB)
+[Remine-from-scratch/C8T1S5I8N5K/SC6_INS#10] OK t=692ms cand=29977436 pat=5286 heapDelta=167MB
+>> RUNNING Remine-from-scratch/C8T1S5I8N5K/SC6_INS#11  (heap free=498MB / total=640MB / max=49152MB)
+[Remine-from-scratch/C8T1S5I8N5K/SC6_INS#11] OK t=678ms cand=29608352 pat=5203 heapDelta=167MB
+>> RUNNING Remine-from-scratch/C8T1S5I8N5K/SC6_INS#12  (heap free=498MB / total=640MB / max=49152MB)
+[Remine-from-scratch/C8T1S5I8N5K/SC6_INS#12] OK t=685ms cand=29494081 pat=5039 heapDelta=169MB
+>> RUNNING Remine-from-scratch/C8T1S5I8N5K/SC6_INS#13  (heap free=498MB / total=640MB / max=49152MB)
+[Remine-from-scratch/C8T1S5I8N5K/SC6_INS#13] OK t=679ms cand=29312316 pat=4945 heapDelta=167MB
+>> RUNNING Remine-from-scratch/C8T1S5I8N5K/SC6_INS#14  (heap free=498MB / total=640MB / max=49152MB)
+[Remine-from-scratch/C8T1S5I8N5K/SC6_INS#14] OK t=682ms cand=29304407 pat=4749 heapDelta=168MB
+>> RUNNING Remine-from-scratch/C8T1S5I8N5K/SC6_INS#15  (heap free=498MB / total=640MB / max=49152MB)
+[Remine-from-scratch/C8T1S5I8N5K/SC6_INS#15] OK t=674ms cand=29090254 pat=4590 heapDelta=168MB
+>> RUNNING Remine-from-scratch/C8T1S5I8N5K/SC6_INS#16  (heap free=498MB / total=640MB / max=49152MB)
+[Remine-from-scratch/C8T1S5I8N5K/SC6_INS#16] OK t=669ms cand=28761687 pat=4413 heapDelta=170MB
+>> RUNNING Remine-from-scratch/C8T1S5I8N5K/SC6_INS#17  (heap free=497MB / total=640MB / max=49152MB)
+[Remine-from-scratch/C8T1S5I8N5K/SC6_INS#17] OK t=670ms cand=28695525 pat=4253 heapDelta=170MB
+>> RUNNING Remine-from-scratch/C8T1S5I8N5K/SC6_DEL#18  (heap free=497MB / total=640MB / max=49152MB)
+[Remine-from-scratch/C8T1S5I8N5K/SC6_DEL#18] OK t=678ms cand=29146824 pat=4442 heapDelta=167MB
+>> RUNNING Remine-from-scratch/C8T1S5I8N5K/SC6_INS#19  (heap free=497MB / total=640MB / max=49152MB)
+[Remine-from-scratch/C8T1S5I8N5K/SC6_INS#19] OK t=680ms cand=29106941 pat=4339 heapDelta=170MB
+>> RUNNING Remine-from-scratch/C8T1S5I8N5K/SC6_DEL#20  (heap free=497MB / total=640MB / max=49152MB)
+[Remine-from-scratch/C8T1S5I8N5K/SC6_DEL#20] OK t=679ms cand=29307735 pat=4478 heapDelta=169MB
+=== ALL SCENARIOS DONE (27.9s) ===
