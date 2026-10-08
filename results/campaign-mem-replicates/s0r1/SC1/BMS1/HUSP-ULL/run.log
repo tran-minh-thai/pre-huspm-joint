@@ -1,0 +1,17 @@
+### LIVE HEAP: ep thu gom moi 20 ms | arm = HUSP-ULL
+### runtime_ms xuat -3 (GC lam nhieu); gia tri that o wall_ms_perturbed. KHONG dung lam so hieu nang.
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC1]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | block.size=100 | timeout.min=120 | repeats=1 repeat.index=1 | seed.index=0
+
+--- [SC1] Static baseline on D_init (50%) ---
+>> RUNNING HUSP-ULL/BMS1/SC1_su=0.012821#0  (heap free=164MB / total=224MB / max=49152MB)
+[HUSP-ULL/BMS1/SC1_su=0.012821#0] OK t=933ms cand=1046573 pat=22 heapDelta=14MB
+>> RUNNING HUSP-ULL/BMS1/SC1_su=0.013597#0  (heap free=163MB / total=224MB / max=49152MB)
+[HUSP-ULL/BMS1/SC1_su=0.013597#0] OK t=492ms cand=632364 pat=21 heapDelta=38MB
+>> RUNNING HUSP-ULL/BMS1/SC1_su=0.015293#0  (heap free=163MB / total=224MB / max=49152MB)
+[HUSP-ULL/BMS1/SC1_su=0.015293#0] OK t=421ms cand=313730 pat=18 heapDelta=83MB
+>> RUNNING HUSP-ULL/BMS1/SC1_su=0.016218#0  (heap free=164MB / total=224MB / max=49152MB)
+[HUSP-ULL/BMS1/SC1_su=0.016218#0] OK t=390ms cand=228665 pat=15 heapDelta=42MB
+=== ALL SCENARIOS DONE (12.3s) ===
