@@ -1,0 +1,15 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC1]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | block.size=100 | timeout.min=120 | repeats=1 repeat.index=2 | seed.index=0
+
+--- [SC1] Static baseline on D_init (50%) ---
+>> RUNNING IncUSP-Miner+/TAFENG/SC1_su=0.002812#0  (heap free=630MB / total=864MB / max=49152MB)
+[IncUSP-Miner+/TAFENG/SC1_su=0.002812#0] OK t=944ms cand=2023192 pat=10 heapDelta=970MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC1_su=0.003557#0  (heap free=630MB / total=864MB / max=49152MB)
+[IncUSP-Miner+/TAFENG/SC1_su=0.003557#0] OK t=696ms cand=1623255 pat=6 heapDelta=400MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC1_su=0.004499#0  (heap free=631MB / total=864MB / max=49152MB)
+[IncUSP-Miner+/TAFENG/SC1_su=0.004499#0] OK t=518ms cand=1243228 pat=5 heapDelta=428MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC1_su=0.005691#0  (heap free=632MB / total=864MB / max=49152MB)
+[IncUSP-Miner+/TAFENG/SC1_su=0.005691#0] OK t=485ms cand=957284 pat=3 heapDelta=801MB
+=== ALL SCENARIOS DONE (15.7s) ===
