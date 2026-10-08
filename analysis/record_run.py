@@ -63,8 +63,15 @@ def main():
     out.mkdir(parents=True, exist_ok=True)
     digest, nfiles = source_digest()
     java = subprocess.run(["java", "-version"], capture_output=True, text=True).stderr.splitlines()
+    # The recorded command names no directory of this machine: the repository root becomes
+    # "." and the home directory "~" (counted in path_substitutions).
+    command, subs = " ".join(cmd), 0
+    for real, alias in ((str(ROOT), "."), (str(pathlib.Path.home()), "~")):
+        subs += command.count(real)
+        command = command.replace(real, alias)
     meta = {
-        "command": " ".join(cmd),
+        "command": command,
+        "path_substitutions": subs,
         "build_dir": a.build,
         "git_commit": git("rev-parse", "HEAD"),
         "tree": "clean" if not git("status", "--porcelain") else "src clean, other files modified",
