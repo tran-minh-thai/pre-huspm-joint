@@ -1,0 +1,42 @@
+random trials=300 seed=1 batches=1-3 random sequences n0=[15,30) comparisons/arm=3300 static-vs-brute-force-mismatches=0
+  Pre-HUSPM-SWUmax comparisons=3300 mismatches=0 (missing=0 extra=0 max-utility-gap=0.000000) safe-updates=1233 mismatches-after-safe-update=0 rescans=1767
+                   buffer-patterns-checked=1202455 buffer-violations=0 counter-violations=0 brute-force-mismatches=0 occurrence-entries=3396638 safe-update work: candidates=29365 kept=310195 sub-procedure-calls=324547
+  Pre-HUSPM-TSU    comparisons=3300 mismatches=0 (missing=0 extra=0 max-utility-gap=0.000000) safe-updates=1191 mismatches-after-safe-update=0 rescans=1809
+                   buffer-patterns-checked=1202585 buffer-violations=0 counter-violations=0 brute-force-mismatches=0 occurrence-entries=3461050 safe-update work: candidates=28169 kept=294468 sub-procedure-calls=307288
+RESULT: no mismatch
+random trials=300 seed=2 batches=1-3 random sequences n0=[15,30) comparisons/arm=3300 static-vs-brute-force-mismatches=0
+  Pre-HUSPM-SWUmax comparisons=3300 mismatches=0 (missing=0 extra=0 max-utility-gap=0.000000) safe-updates=1213 mismatches-after-safe-update=0 rescans=1787
+                   buffer-patterns-checked=1149132 buffer-violations=0 counter-violations=0 brute-force-mismatches=0 occurrence-entries=3322327 safe-update work: candidates=30502 kept=279571 sub-procedure-calls=293055
+  Pre-HUSPM-TSU    comparisons=3300 mismatches=0 (missing=0 extra=0 max-utility-gap=0.000000) safe-updates=1168 mismatches-after-safe-update=0 rescans=1832
+                   buffer-patterns-checked=1149288 buffer-violations=0 counter-violations=0 brute-force-mismatches=0 occurrence-entries=3406215 safe-update work: candidates=29298 kept=254015 sub-procedure-calls=265780
+RESULT: no mismatch
+random trials=300 seed=3 batches=1-3 random sequences n0=[15,30) comparisons/arm=3300 static-vs-brute-force-mismatches=0
+  Pre-HUSPM-SWUmax comparisons=3300 mismatches=0 (missing=0 extra=0 max-utility-gap=0.000000) safe-updates=1235 mismatches-after-safe-update=0 rescans=1765
+                   buffer-patterns-checked=1128314 buffer-violations=0 counter-violations=0 brute-force-mismatches=0 occurrence-entries=3273555 safe-update work: candidates=29285 kept=267609 sub-procedure-calls=279674
+  Pre-HUSPM-TSU    comparisons=3300 mismatches=0 (missing=0 extra=0 max-utility-gap=0.000000) safe-updates=1196 mismatches-after-safe-update=0 rescans=1804
+                   buffer-patterns-checked=1128512 buffer-violations=0 counter-violations=0 brute-force-mismatches=0 occurrence-entries=3334706 safe-update work: candidates=27635 kept=254185 sub-procedure-calls=265200
+RESULT: no mismatch
+random trials=300 seed=4 batches=dupbatch(2-6 copies of one sequence) n0=[15,30) comparisons/arm=3300 static-vs-brute-force-mismatches=0
+  Pre-HUSPM-SWUmax comparisons=3300 mismatches=0 (missing=0 extra=0 max-utility-gap=0.000000) safe-updates=914 mismatches-after-safe-update=0 rescans=2086
+                   buffer-patterns-checked=1281165 buffer-violations=0 counter-violations=0 brute-force-mismatches=0 occurrence-entries=6439560 safe-update work: candidates=9699 kept=266491 sub-procedure-calls=276515
+  Pre-HUSPM-TSU    comparisons=3300 mismatches=0 (missing=0 extra=0 max-utility-gap=0.000000) safe-updates=914 mismatches-after-safe-update=0 rescans=2086
+                   buffer-patterns-checked=1281165 buffer-violations=0 counter-violations=0 brute-force-mismatches=0 occurrence-entries=6439560 safe-update work: candidates=9699 kept=266491 sub-procedure-calls=276515
+RESULT: no mismatch
+random trials=300 seed=5 batches=dupbatch(2-6 copies of one sequence) n0=[15,30) comparisons/arm=3300 static-vs-brute-force-mismatches=0
+  Pre-HUSPM-SWUmax comparisons=3300 mismatches=0 (missing=0 extra=0 max-utility-gap=0.000000) safe-updates=921 mismatches-after-safe-update=0 rescans=2079
+                   buffer-patterns-checked=1489963 buffer-violations=0 counter-violations=0 brute-force-mismatches=0 occurrence-entries=7035445 safe-update work: candidates=10138 kept=303304 sub-procedure-calls=313713
+  Pre-HUSPM-TSU    comparisons=3300 mismatches=0 (missing=0 extra=0 max-utility-gap=0.000000) safe-updates=921 mismatches-after-safe-update=0 rescans=2079
+                   buffer-patterns-checked=1489963 buffer-violations=0 counter-violations=0 brute-force-mismatches=0 occurrence-entries=7035445 safe-update work: candidates=10138 kept=303304 sub-procedure-calls=313713
+RESULT: no mismatch
+random trials=300 seed=6 batches=dupbatch(2-6 copies of one sequence) n0=[15,30) comparisons/arm=3300 static-vs-brute-force-mismatches=0
+  Pre-HUSPM-SWUmax comparisons=3300 mismatches=0 (missing=0 extra=0 max-utility-gap=0.000000) safe-updates=909 mismatches-after-safe-update=0 rescans=2091
+                   buffer-patterns-checked=1417880 buffer-violations=0 counter-violations=0 brute-force-mismatches=0 occurrence-entries=6788705 safe-update work: candidates=9597 kept=286753 sub-procedure-calls=296686
+  Pre-HUSPM-TSU    comparisons=3300 mismatches=0 (missing=0 extra=0 max-utility-gap=0.000000) safe-updates=909 mismatches-after-safe-update=0 rescans=2091
+                   buffer-patterns-checked=1417880 buffer-violations=0 counter-violations=0 brute-force-mismatches=0 occurrence-entries=6788705 safe-update work: candidates=9597 kept=286753 sub-procedure-calls=296686
+RESULT: no mismatch
+random trials=300 seed=7 batches=dupbatch(2-6 copies of one sequence) n0=[15,30) comparisons/arm=3300 static-vs-brute-force-mismatches=0
+  Pre-HUSPM-SWUmax comparisons=3300 mismatches=0 (missing=0 extra=0 max-utility-gap=0.000000) safe-updates=867 mismatches-after-safe-update=0 rescans=2133
+                   buffer-patterns-checked=1422295 buffer-violations=0 counter-violations=0 brute-force-mismatches=0 occurrence-entries=6964546 safe-update work: candidates=8619 kept=273467 sub-procedure-calls=283397
+  Pre-HUSPM-TSU    comparisons=3300 mismatches=0 (missing=0 extra=0 max-utility-gap=0.000000) safe-updates=867 mismatches-after-safe-update=0 rescans=2133
+                   buffer-patterns-checked=1422295 buffer-violations=0 counter-violations=0 brute-force-mismatches=0 occurrence-entries=6964546 safe-update work: candidates=8619 kept=273467 sub-procedure-calls=283397
+RESULT: no mismatch

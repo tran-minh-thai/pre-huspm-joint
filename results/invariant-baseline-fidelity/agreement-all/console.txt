@@ -52,3 +52,25 @@
     Adaptive   matches USpan exactly
 
 === FIFA | |D|=10450 | UUT=0.0596 | absolute threshold=1317100.3 ===
+  USpan      HUSP=18      cand=175918193    explored=211221
+  HUSP-SP    HUSP=18      cand=199847       explored=5584       swu=2561 iip=145965 ep=45737 peu=0
+    HUSP-SP    matches USpan exactly
+  HUSP-ULL   HUSP=18      cand=372754       explored=5762
+    HUSP-ULL   matches USpan exactly
+Exception in thread "main" java.lang.OutOfMemoryError: Java heap space
+	at algorithms.IncUSPMinerPlusAlgorithm$Entry.<init>(IncUSPMinerPlusAlgorithm.java:74)
+	at algorithms.IncUSPMinerPlusAlgorithm.lambda$scan$2(IncUSPMinerPlusAlgorithm.java:415)
+	at algorithms.IncUSPMinerPlusAlgorithm$$Lambda/0x00000ffe01047368.apply(Unknown Source)
+	at java.base/java.util.HashMap.computeIfAbsent(HashMap.java:1229)
+	at algorithms.IncUSPMinerPlusAlgorithm.scan(IncUSPMinerPlusAlgorithm.java:415)
+	at algorithms.IncUSPMinerPlusAlgorithm.uspMiner(IncUSPMinerPlusAlgorithm.java:217)
+	at algorithms.IncUSPMinerPlusAlgorithm.uspMiner(IncUSPMinerPlusAlgorithm.java:222)
+	at algorithms.IncUSPMinerPlusAlgorithm.uspMiner(IncUSPMinerPlusAlgorithm.java:222)
+	at algorithms.IncUSPMinerPlusAlgorithm.uspMiner(IncUSPMinerPlusAlgorithm.java:222)
+	at algorithms.IncUSPMinerPlusAlgorithm.uspMiner(IncUSPMinerPlusAlgorithm.java:222)
+	at algorithms.IncUSPMinerPlusAlgorithm.uspMiner(IncUSPMinerPlusAlgorithm.java:222)
+	at algorithms.IncUSPMinerPlusAlgorithm.uspMiner(IncUSPMinerPlusAlgorithm.java:222)
+	at algorithms.IncUSPMinerPlusAlgorithm.runInitialMining(IncUSPMinerPlusAlgorithm.java:159)
+	at verify.BaselineAgreement.runIncUsp(BaselineAgreement.java:98)
+	at verify.BaselineAgreement.check(BaselineAgreement.java:90)
+	at verify.BaselineAgreement.main(BaselineAgreement.java:54)

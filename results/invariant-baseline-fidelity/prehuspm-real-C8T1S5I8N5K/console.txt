@@ -1,0 +1,8 @@
+  Pre-HUSPM-SWUmax initial mine: HUSP=5067 (static 5067) buffer=163002 prelarge=112217 candidates=5209403 explored=163002 pruned=5046401 removed-items=58214 occurrence-entries=35155847
+  Pre-HUSPM-TSU initial mine: HUSP=5067 (static 5067) buffer=163002 prelarge=112217 candidates=5209403 explored=163002 pruned=5046401 removed-items=58214 occurrence-entries=35155847
+real C8T1S5I8N5K uut=0.001132 Sl/Su=0.8 D_init=27133 batches=100 comparisons/arm=101 (170 s)
+  Pre-HUSPM-SWUmax comparisons=101 mismatches=0 (missing=0 extra=0 max-utility-gap=0.000000) safe-updates=20 mismatches-after-safe-update=0 rescans=80
+                   buffer-patterns-checked=0 buffer-violations=0 counter-violations=0 brute-force-mismatches=0 occurrence-entries=2547901242 safe-update work: candidates=4466049 kept=2009886 sub-procedure-calls=2035087
+  Pre-HUSPM-TSU    comparisons=101 mismatches=0 (missing=0 extra=0 max-utility-gap=0.000000) safe-updates=0 mismatches-after-safe-update=0 rescans=100
+                   buffer-patterns-checked=0 buffer-violations=0 counter-violations=0 brute-force-mismatches=0 occurrence-entries=3145975935 safe-update work: candidates=0 kept=0 sub-procedure-calls=0
+RESULT: no mismatch

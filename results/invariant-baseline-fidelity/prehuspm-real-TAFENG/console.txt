@@ -1,0 +1,8 @@
+  Pre-HUSPM-SWUmax initial mine: HUSP=6 (static 6) buffer=399 prelarge=132 candidates=478215 explored=399 pruned=477816 removed-items=20712 occurrence-entries=1636858
+  Pre-HUSPM-TSU initial mine: HUSP=6 (static 6) buffer=399 prelarge=132 candidates=478215 explored=399 pruned=477816 removed-items=20712 occurrence-entries=1636858
+real TAFENG uut=0.003557 Sl/Su=0.8 D_init=40665 batches=100 comparisons/arm=101 (33 s)
+  Pre-HUSPM-SWUmax comparisons=101 mismatches=0 (missing=0 extra=0 max-utility-gap=0.000000) safe-updates=44 mismatches-after-safe-update=0 rescans=56
+                   buffer-patterns-checked=0 buffer-violations=0 counter-violations=0 brute-force-mismatches=0 occurrence-entries=110415791 safe-update work: candidates=319677 kept=16884 sub-procedure-calls=16949
+  Pre-HUSPM-TSU    comparisons=101 mismatches=0 (missing=0 extra=0 max-utility-gap=0.000000) safe-updates=0 mismatches-after-safe-update=0 rescans=100
+                   buffer-patterns-checked=0 buffer-violations=0 counter-violations=0 brute-force-mismatches=0 occurrence-entries=195601128 safe-update work: candidates=0 kept=0 sub-procedure-calls=0
+RESULT: no mismatch
