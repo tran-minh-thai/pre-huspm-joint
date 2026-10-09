@@ -181,8 +181,8 @@ public final class Datasets {
         // anything above 0.00130 collapses again.
         new Entry("C8T1S5I8N5K",          27133, 0.001132,
                 new double[]{0.001099, 0.001132, 0.001200, 0.001236},
-                true,  "6101 5082 3427 2726 on D_init; the highest level keeps 1485 of its "
-                     + "2726 when the database grows"),
+                true,  "6090 5067 3427 2722 on D_init; the highest level keeps 1484 of its "
+                     + "2722 when the database grows"),
 
         // The only database whose utilities are measured on both sides: quantities from
         // Ta-Feng's AMOUNT, profits from SALES_PRICE / AMOUNT. It is also the one a
@@ -219,10 +219,8 @@ public final class Datasets {
      * at K=100, and the proposal's time falls from 0.97 of remine-from-scratch's to 0.52. At a
      * handful of increments every one rescans and the proposal is a remine.
      *
-     * What opens with K is the gap to remining, not a gap in rescan counts: the proposal
-     * rescans more often than Pre-HUSPM at every K, 52 against 19 on SIGN at K=100, because
-     * Pre-HUSPM's SWUmax trigger under-counts the perturbation - the unsoundness
-     * results/verify-swumax measures. It is still faster, because each of its rescans is cheaper.
+     * The rescan counts of every arm at every K are given per database in SC5's README,
+     * generated from the result files.
      */
     public static final int BATCH_COUNT = 100;
 

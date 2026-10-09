@@ -456,7 +456,9 @@ public class PreHUSPMAdaptiveAlgorithm {
         /**
          * Rescan trigger rules, selected by flag.
          *
-         * SWUMAX  Rule of the original Pre-HUSPM: rescan iff max_{s in d} u(s) > SFT.
+         * SWUMAX  Comparison rule: rescan iff max_{s in d} u(s) > SFT, the utility of the
+         *         largest inserted sequence. This is not the SWUmax of Yan et al., which is the
+         *         largest sequence-weighted utility of an item and gives a sound test.
          *         NOT sound: u(s) is the utility of ONE sequence, while the gain of a
          *         pattern is the sum over every inserted sequence that contains it.
          *         Example: UUT=0.25, LUT=0.20, TSU=100, u(X)=19; inserting two sequences

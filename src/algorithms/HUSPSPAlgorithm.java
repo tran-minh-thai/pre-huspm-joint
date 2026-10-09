@@ -6,61 +6,72 @@ import common.QItemset;
 import common.Sequence;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.TreeMap;
+import java.util.function.Consumer;
 
 /**
- * Baseline: HUSP-SP (Zhang, Yang, Du, Gan, Yu; ACM TKDD 2023).
+ * Baseline: HUSP-SP (Zhang, Yang, Du, Gan, Yu; ACM TKDD 18(1), Article 5, 2024).
  *
  * ---------------------------------------------------------------------------
  * PROVENANCE
  *
  * Independent reimplementation from the pseudocode and definitions of Zhang et al.
- * (Definitions 4.5, 4.6, 4.7, 4.9, 4.11; Theorems 4.8, 4.10, 4.12; Algorithms 1, 2, 3).
- * The authors' code at github.com/DSI-Lab1/HUSPM has no license file, so it is not
- * copied here; no line of this file is taken from it.
+ * (Definitions 4.5, 4.6, 4.7, 4.9, 4.11; Theorems 4.8, 4.10; Algorithms 1, 2, 3; the
+ * IIP and EP strategies and the complexity analysis of Section 4.5). The authors' code
+ * at github.com/DSI-Lab1/HUSPM has no license file, so it is not copied here; no line of
+ * this file is taken from it.
  * ---------------------------------------------------------------------------
  *
- * THE THREE MAIN COMPONENTS OF HUSP-SP
+ * WHAT IS IMPLEMENTED AS PUBLISHED
  *
- * 1. seq-array (Definition 4.5). Each q-sequence is flattened into four parallel
- *    arrays of equal length: item name, item utility, utility of everything after
- *    that position, and the index of the first item of the itemset containing that
- *    position. An item-indices table maps each item to its list of positions.
+ *  - seq-array (Definition 4.5): item, utility, remaining-utility and element-index
+ *    arrays plus an item-indices table, one per q-sequence.
+ *  - seqPro (Definition 4.6): a pointer to the seq-array plus the extension-list, one
+ *    entry per extension position with its accumulated utility (acu).
+ *  - Algorithm 1 and the root of the running example: items whose SWU is below the
+ *    threshold are deleted from the database before the seq-arrays are built, so every
+ *    remaining utility excludes them; the 1-item candidates then go through EP.
+ *  - Algorithm 2 line 1 (IIP): RSU (Definition 4.9) of every extension item; items below
+ *    the threshold are marked in one global array and their utility is removed from the
+ *    remaining-utility array of the node's sequences. The subtree inherits the reduced
+ *    array; it is restored when the node returns.
+ *  - Algorithm 2 line 2 (EP): one scan of the reduced seqPro gives the I- and S-extension
+ *    items and their look-ahead bound; candidates below the threshold are discarded.
+ *  - Algorithm 3: utility and PEU (Equations (4)-(6), with u(S/I(t,p)) >= 0, so every
+ *    extension position counts); the pattern is recorded BEFORE the PEU test.
  *
- * 2. seqPro (Definition 4.6). The projected database of a node: a pointer to the
- *    original seq-array plus an extension-list holding the instances of the current
- *    pattern, each with its accumulated utility (acu) and extension position (exIndex).
- *    Unlike the UL-list of HUSP-ULL, it does not store empty slots.
+ * ONE DEPARTURE: the EP bound. Definition 4.11's TRSU is not an upper bound (see
+ * trsuScan), so EP uses TRSU*(t+i, S) = max over prefix instances j and valid positions
+ * q of i of acu_j + u(S/(q-1)). It never exceeds PEU(t, S) and never falls below
+ * u(t+i+w, S) for any w. It equals the PEU of t+i, so with it the PEU test of Algorithm 3
+ * line 6 does not prune beyond EP (prunedPEU stays at 0 up to rounding).
  *
- * 3. Three upper bounds, from loosest to tightest: PEU, RSU and TRSU.
- *    TRSU subtracts the utility of the IRRELEVANT segment between the first
- *    extension position of the prefix and the first occurrence of the new item.
- *    That segment contributes to PEU but cannot contribute to any extension of the
- *    new pattern, so the result is still a valid upper bound.
- *
- * Two pruning strategies: IIP (by RSU, inherited from HUSP-ULL) and EP (by TRSU).
+ * Assumes every itemset is sorted by item id with no repeated id, and utilities are
+ * already the product of quantity and external utility.
  *
  * ---------------------------------------------------------------------------
- * ORDER IN ALGORITHM 3 (stated by Zhang et al.)
+ * COUNTERS (each has one meaning)
  *
- * The result must be RECORDED BEFORE the PEU pruning condition is checked. The
- * reverse order misses patterns: a pattern can be a HUSP while its PEU is too
- * small to extend it further.
- * ---------------------------------------------------------------------------
+ *   candidateCount        every candidate generated, before any filter: at the root,
+ *                         every distinct item of the database; at a node, the distinct
+ *                         I-extension items plus the distinct S-extension items of its
+ *                         seqPro (as reduced by its ancestors), before IIP and EP.
+ *   prunedSWU             root items deleted because SWU < threshold.
+ *   prunedIIP             node candidates (I or S) removed because RSU < threshold.
+ *   prunedEP              candidates (root 1-items and node I/S candidates) discarded
+ *                         because TRSU* < threshold.
+ *   utilityCalculations   calls of Algorithm 3 (candidates that passed every filter).
+ *   prunedPEU             calls of Algorithm 3 whose PEU < threshold (no PatternGrowth).
+ *   exploredNodes         calls of Algorithm 2 below the root.
  *
- * COUNTERS FOR A FAIR COMPARISON WITH THE OTHER BASELINES
- *   candidateCount  counts the extensions generated, BEFORE any pruning, so it
- *                   measures the search frontier (at the 1-item level only the
- *                   items that pass the SWU filter are counted).
- *   exploredNodes   counts entries into the recursion, i.e. patterns actually
- *                   expanded after pruning. This measures pruning effectiveness.
+ *   Identities: candidateCount = prunedSWU + prunedIIP + prunedEP + utilityCalculations,
+ *               exploredNodes  = utilityCalculations - prunedPEU.
  *
- * Static algorithm with no incremental update; used only in the static scenarios
- * SC1 and SC3.
+ * Static algorithm with no incremental update; used only in the static scenarios.
  */
 public class HUSPSPAlgorithm {
 
@@ -68,134 +79,100 @@ public class HUSPSPAlgorithm {
     // 1. seq-array (Definition 4.5)
     // =====================================================================
     static final class SeqArray {
-        final int seqId;
-        final int[] item;          // item name at each flat position
+        final int[] item;          // dense item code at each flat position
         final double[] util;       // utility of the item at that position
-        final double[] remUtil;    // utility of everything AFTER that position
+        final double[] remUtil;    // utility of the non-deleted items AFTER that position
         final int[] elemStart;     // index of the first item of the itemset containing that position
         final int len;
-        /** item -> the flat positions where it occurs (ascending). */
-        final Map<Integer, int[]> itemIndices;
-        final double seqUtility;
+        final double seqUtility;   // utility of the sequence after the SWU deletion
+        final int[] keys;          // item-indices table: sorted distinct item codes...
+        final int[][] positions;   // ...and their ascending positions
 
-        SeqArray(Sequence s) {
-            this.seqId = s.id;
-            int n = 0;
-            for (QItemset is : s.itemsets) n += is.items.size();
-            this.len = n;
-            this.item = new int[n];
-            this.util = new double[n];
-            this.remUtil = new double[n];
-            this.elemStart = new int[n];
-
-            int k = 0;
-            for (QItemset is : s.itemsets) {
-                int start = k;
-                for (QItem it : is.items) {
-                    item[k] = it.id;
-                    util[k] = it.utility;
-                    elemStart[k] = start;
-                    k++;
-                }
-            }
-            // remUtil is a suffix sum: the utility of everything after position i.
+        SeqArray(int[] item, double[] util, int[] elemStart) {
+            this.item = item;
+            this.util = util;
+            this.elemStart = elemStart;
+            this.len = item.length;
+            this.remUtil = new double[len];
             double acc = 0;
-            for (int i = n - 1; i >= 0; i--) {
+            for (int i = len - 1; i >= 0; i--) {
                 remUtil[i] = acc;
                 acc += util[i];
             }
             this.seqUtility = acc;
 
-            Map<Integer, List<Integer>> tmp = new HashMap<>();
-            for (int i = 0; i < n; i++) {
-                tmp.computeIfAbsent(item[i], x -> new ArrayList<>()).add(i);
+            int[] sorted = item.clone();
+            Arrays.sort(sorted);
+            int d = 0;
+            for (int i = 0; i < sorted.length; i++) if (i == 0 || sorted[i] != sorted[i - 1]) sorted[d++] = sorted[i];
+            this.keys = Arrays.copyOf(sorted, d);
+            int[] count = new int[d];
+            for (int x : item) count[Arrays.binarySearch(keys, x)]++;
+            this.positions = new int[d][];
+            for (int k = 0; k < d; k++) positions[k] = new int[count[k]];
+            Arrays.fill(count, 0);
+            for (int i = 0; i < len; i++) {
+                int k = Arrays.binarySearch(keys, item[i]);
+                positions[k][count[k]++] = i;
             }
-            Map<Integer, int[]> idx = new HashMap<>(tmp.size() * 2);
-            for (Map.Entry<Integer, List<Integer>> e : tmp.entrySet()) {
-                List<Integer> v = e.getValue();
-                int[] a = new int[v.size()];
-                for (int i = 0; i < a.length; i++) a[i] = v.get(i);
-                idx.put(e.getKey(), a);
-            }
-            this.itemIndices = idx;
         }
 
-        /** true if positions a and b belong to the SAME itemset. */
-        boolean sameElement(int a, int b) { return elemStart[a] == elemStart[b]; }
+        int[] positionsOf(int code) {
+            int k = Arrays.binarySearch(keys, code);
+            return k < 0 ? null : positions[k];
+        }
+
+        /** u(S/i) for i >= from, on the current set of deleted items. */
+        void recomputeRemaining(int from, boolean[] deleted) {
+            double acc = 0;
+            for (int i = len - 1; i >= from; i--) {
+                remUtil[i] = acc;
+                if (!deleted[item[i]]) acc += util[i];
+            }
+        }
     }
 
     // =====================================================================
     // 2. seqPro (Definition 4.6)
     // =====================================================================
-    /**
-     * One instance of the pattern in a q-sequence: the utility accumulated up to the
-     * extension position, and that extension position.
-     */
-    static final class Ins {
-        final double acu;
-        final int exIndex;
-        Ins(double acu, int exIndex) { this.acu = acu; this.exIndex = exIndex; }
-    }
-
     static final class SeqPro {
         final SeqArray sa;
-        final List<Ins> exList;    // sorted by ascending exIndex
-        SeqPro(SeqArray sa, List<Ins> exList) { this.sa = sa; this.exList = exList; }
+        final int[] ex;            // extension positions, ascending (at most one per itemset)
+        final double[] acu;        // utility of the best instance ending at each position
+        final int size;
+        double peu;                // PEU(t, S), set by utilityCalculation
 
-        /** u(t, s): utility of the pattern in this sequence = max over its instances. */
-        double patternUtility() {
-            double best = 0;
-            for (Ins in : exList) if (in.acu > best) best = in.acu;
-            return best;
-        }
-
-        /**
-         * PEU(t, s) as in Definition 4.7: max over the instances of
-         * (acu + remaining utility), and 0 when nothing is left to extend.
-         */
-        double peu() {
-            double best = 0;
-            for (Ins in : exList) {
-                double rem = sa.remUtil[in.exIndex];
-                if (rem <= 0) continue;              // nothing left to extend
-                double v = in.acu + rem;
-                if (v > best) best = v;
-            }
-            return best;
-        }
-
-        /** FIRST extension position of the pattern in this sequence. */
-        int firstExIndex() { return exList.isEmpty() ? -1 : exList.get(0).exIndex; }
-
-        /**
-         * Whether PEU is attained at the FIRST instance. This decides whether TRSU
-         * uses the subtracting case or falls back to RSU (Definition 4.11).
-         */
-        boolean peuAttainedAtFirst() {
-            if (exList.isEmpty()) return false;
-            Ins f = exList.get(0);
-            double rf = sa.remUtil[f.exIndex];
-            if (rf <= 0) return false;
-            double first = f.acu + rf;
-            return first >= peu() - EPS;
+        SeqPro(SeqArray sa, int[] ex, double[] acu, int size) {
+            this.sa = sa; this.ex = ex; this.acu = acu; this.size = size;
         }
     }
 
-    private static final double EPS = 1e-9;
+    /** Growable int list used for the scratch arrays' touched entries. */
+    private static final class IntList {
+        int[] a = new int[16];
+        int n = 0;
+        void add(int x) { if (n == a.length) a = Arrays.copyOf(a, n * 2); a[n++] = x; }
+    }
+
+    private static final double NONE = Double.NEGATIVE_INFINITY;
 
     // =====================================================================
-    // 3. Measurement counters
+    // 3. Measurement counters (definitions in the class comment)
     // =====================================================================
     public double minUtility;
     public int patternCount = 0;
-    public long candidateCount = 0;   // extensions generated, before pruning
-    public long exploredNodes = 0;    // counted on entry to the recursion
-    public long prunedSWU = 0;        // items dropped by SWU in the first scan
-    public long prunedIIP = 0;        // candidates dropped by IIP (RSU)
-    public long prunedEP = 0;         // candidates dropped by EP (TRSU)
-    public long prunedPEU = 0;        // branches stopped by the PEU bound in Algorithm 3
+    public long candidateCount = 0;
+    public long exploredNodes = 0;
+    public long prunedSWU = 0;
+    public long prunedIIP = 0;
+    public long prunedEP = 0;
+    public long prunedPEU = 0;
+    public long utilityCalculations = 0;
 
     public Map<Pattern, Double> largeMap = new HashMap<>();
+
+    /** Optional trace of intermediate values (SWU, RSU, TRSU*, u, PEU); null = off. */
+    public Consumer<String> trace = null;
 
     /** Lets the runner stop the algorithm on timeout, like the other baselines. */
     private volatile boolean cancelled = false;
@@ -211,62 +188,129 @@ public class HUSPSPAlgorithm {
         this.minUtility = absoluteMinUtility;
     }
 
+    // Item codes are dense ranks of the item ids (order preserved); codeToId maps back.
+    private int[] codeToId;
     private List<SeqArray> db;
+    // The global array of deleted items (Section 4.5), and per-item scratch arrays.
+    private boolean[] deleted;
+    private boolean[] seqSeen, nodeOn, candI, candS;
+    private double[] rsu, seqMaxI, seqMaxS, trsuI, trsuS;
+    private final IntList seqTouched = new IntList();
+    private final IntList nodeTouched = new IntList();
 
     // =====================================================================
-    // Algorithm 1 of Zhang et al.
+    // Algorithm 1 of Zhang et al., with the root as in the running example
     // =====================================================================
     public void run(List<Sequence> database) {
         cancelled = false;
-        patternCount = 0; candidateCount = 0; exploredNodes = 0;
+        patternCount = 0; candidateCount = 0; exploredNodes = 0; utilityCalculations = 0;
         prunedSWU = 0; prunedIIP = 0; prunedEP = 0; prunedPEU = 0;
         largeMap.clear();
 
-        // Step 1: build a seq-array for each q-sequence.
+        // Dense item codes.
+        Map<Integer, Integer> idToCode = new HashMap<>();
+        for (Sequence s : database)
+            for (QItemset is : s.itemsets)
+                for (QItem it : is.items) idToCode.putIfAbsent(it.id, 0);
+        int m = idToCode.size();
+        codeToId = new int[m];
+        int c = 0;
+        for (int id : idToCode.keySet()) codeToId[c++] = id;
+        Arrays.sort(codeToId);
+        for (int k = 0; k < m; k++) idToCode.put(codeToId[k], k);
+        allocateScratch(m);
+
+        // Every 1-item is a candidate before any filter.
+        candidateCount += m;
+
+        // SWU of each item (= RSU of the 1-items, note after Definition 4.9).
+        double[] swu = new double[m];
+        for (Sequence s : database) {
+            double su = 0;
+            for (QItemset is : s.itemsets) for (QItem it : is.items) su += it.utility;
+            for (QItemset is : s.itemsets)
+                for (QItem it : is.items) {
+                    int code = idToCode.get(it.id);
+                    if (!seqSeen[code]) { seqSeen[code] = true; seqTouched.add(code); swu[code] += su; }
+                }
+            clearSeqSeen();
+        }
+        boolean[] keep = new boolean[m];
+        for (int k = 0; k < m; k++) {
+            keep[k] = swu[k] >= minUtility;
+            if (!keep[k]) prunedSWU++;
+        }
+        if (trace != null) {
+            trace.accept("SWU " + byId(swu, null) + "  deleted by SWU " + deletedIds(keep));
+        }
+
+        // Line 1: seq-arrays built without the low-SWU items (permanent deletion), so the
+        // remaining utilities and u(S) exclude them.
         db = new ArrayList<>(database.size());
         for (Sequence s : database) {
-            SeqArray sa = new SeqArray(s);
-            if (sa.len > 0) db.add(sa);
+            SeqArray sa = buildSeqArray(s, idToCode, keep);
+            if (sa != null) db.add(sa);
         }
 
-        // Step 2: items whose SWU is below the threshold are not used as 1-item
-        // patterns. For a single-item pattern RSU equals SWU (note after Definition 4.9),
-        // so this is IIP applied to the whole database, as in the running example of
-        // Zhang et al. The items stay in the seq-arrays.
-        Map<Integer, Double> swu = new HashMap<>();
+        // Root EP (Algorithm 2 line 2 on the empty prefix): TRSU* of a 1-item in S is the
+        // utility of S from the item's first occurrence onwards.
+        double[] rootTrsu = new double[m];
         for (SeqArray sa : db) {
-            for (Integer it : sa.itemIndices.keySet()) {
-                swu.merge(it, sa.seqUtility, Double::sum);
+            for (int k = 0; k < sa.keys.length; k++) {
+                int q1 = sa.positions[k][0];
+                rootTrsu[sa.keys[k]] += (q1 == 0) ? sa.seqUtility : sa.remUtil[q1 - 1];
             }
         }
-        Set<Integer> promising = new HashSet<>();
-        for (Map.Entry<Integer, Double> e : swu.entrySet()) {
-            if (e.getValue() >= minUtility) promising.add(e.getKey());
-            else prunedSWU++;
-        }
+        if (trace != null) trace.accept("root TRSU* " + byId(rootTrsu, keep));
 
-        // Step 3: for each promising item, build its seqPro and call UtilityCalculation.
-        // The empty pattern has no instances, so it is set up directly here; this is the
-        // loop Algorithm 2 would run on the empty prefix.
-        for (Integer it : promising) {
+        for (int code = 0; code < m; code++) {
+            if (!keep[code]) continue;
             checkCancelled();
-            candidateCount++;
-            List<SeqPro> proj = projectSingleItem(it);
-            if (proj.isEmpty()) continue;
-            Pattern p = new Pattern(it);
-            utilityCalculation(p, proj);
+            if (rootTrsu[code] < minUtility) { prunedEP++; continue; }
+            utilityCalculation(new Pattern(codeToId[code]), projectSingleItem(code));
         }
     }
 
-    /** seqPro of a single-item pattern: each occurrence is one instance. */
-    private List<SeqPro> projectSingleItem(int item) {
+    private void allocateScratch(int m) {
+        deleted = new boolean[m];
+        seqSeen = new boolean[m]; nodeOn = new boolean[m];
+        candI = new boolean[m]; candS = new boolean[m];
+        rsu = new double[m]; trsuI = new double[m]; trsuS = new double[m];
+        seqMaxI = new double[m]; seqMaxS = new double[m];
+        Arrays.fill(seqMaxI, NONE);
+        Arrays.fill(seqMaxS, NONE);
+        seqTouched.n = 0; nodeTouched.n = 0;
+    }
+
+    private static SeqArray buildSeqArray(Sequence s, Map<Integer, Integer> idToCode, boolean[] keep) {
+        int n = 0;
+        for (QItemset is : s.itemsets)
+            for (QItem it : is.items) if (keep[idToCode.get(it.id)]) n++;
+        if (n == 0) return null;
+        int[] item = new int[n];
+        double[] util = new double[n];
+        int[] elemStart = new int[n];
+        int k = 0;
+        for (QItemset is : s.itemsets) {
+            int start = k;
+            for (QItem it : is.items) {
+                int code = idToCode.get(it.id);
+                if (!keep[code]) continue;
+                item[k] = code; util[k] = it.utility; elemStart[k] = start; k++;
+            }
+        }
+        return new SeqArray(item, util, elemStart);
+    }
+
+    /** seqPro of a 1-item pattern: each occurrence is one instance. */
+    private List<SeqPro> projectSingleItem(int code) {
         List<SeqPro> out = new ArrayList<>();
         for (SeqArray sa : db) {
-            int[] pos = sa.itemIndices.get(item);
+            int[] pos = sa.positionsOf(code);
             if (pos == null) continue;
-            List<Ins> ex = new ArrayList<>(pos.length);
-            for (int p : pos) ex.add(new Ins(sa.util[p], p));
-            out.add(new SeqPro(sa, ex));
+            double[] acu = new double[pos.length];
+            for (int j = 0; j < pos.length; j++) acu[j] = sa.util[pos[j]];
+            out.add(new SeqPro(sa, pos, acu, pos.length));
         }
         return out;
     }
@@ -274,25 +318,30 @@ public class HUSPSPAlgorithm {
     // =====================================================================
     // Algorithm 3 of Zhang et al. - UtilityCalculation
     // =====================================================================
-    private void utilityCalculation(Pattern prefix, List<SeqPro> proj) {
+    private void utilityCalculation(Pattern p, List<SeqPro> proj) {
+        utilityCalculations++;
         double util = 0, peu = 0;
         for (SeqPro sp : proj) {
-            util += sp.patternUtility();
-            peu += sp.peu();
+            double best = 0, bestPeu = 0;
+            for (int j = 0; j < sp.size; j++) {
+                if (sp.acu[j] > best) best = sp.acu[j];
+                // Equation (4): u(t,p,S) + u(S/I(t,p)), u(S/I(t,p)) >= 0 always holds.
+                double v = sp.acu[j] + sp.sa.remUtil[sp.ex[j]];
+                if (v > bestPeu) bestPeu = v;
+            }
+            sp.peu = bestPeu;
+            util += best;
+            peu += bestPeu;
         }
+        if (trace != null) trace.accept("UC " + p.toIntuitiveString() + " u=" + util + " PEU=" + peu);
 
-        // RECORD THE RESULT FIRST. Reversing the order misses patterns, because a
-        // pattern can be a HUSP while its PEU is too small to go further.
+        // Record the result BEFORE the PEU test (lines 3-5, then 6-8).
         if (util >= minUtility) {
-            largeMap.put(prefix.clonePattern(), util);
+            largeMap.put(p, util);
             patternCount = largeMap.size();
         }
-
-        if (peu >= minUtility) {
-            patternGrowth(prefix, proj);
-        } else {
-            prunedPEU++;
-        }
+        if (peu >= minUtility) patternGrowth(p, proj);
+        else prunedPEU++;
     }
 
     // =====================================================================
@@ -302,169 +351,199 @@ public class HUSPSPAlgorithm {
         checkCancelled();
         exploredNodes++;
 
-        // --- IIP (by RSU) ---
-        // RSU of an extension item = sum of PEU(prefix, s) over the sequences s that
-        // still contain the item after an extension position. Items below the threshold
-        // are skipped as extensions of this prefix; the seqPro itself is not modified.
-        Map<Integer, Double> rsu = new HashMap<>();
+        // ---- Line 1, first scan: RSU of every extension item, and the raw candidates.
+        // An item at a non-deleted position after the first extension position p1 is an
+        // I-extension item if an instance lies earlier in its itemset, and an S-extension
+        // item if its itemset is after that of p1. RSU(t+i, S) = PEU(t, S) (Definition 4.9).
+        int nI = 0, nS = 0;
         for (SeqPro sp : proj) {
-            double peuS = sp.peu();
-            if (peuS <= 0) continue;
-            // items that still occur after the first extension position
-            int from = sp.firstExIndex();
-            Set<Integer> seen = new HashSet<>();
-            for (int i = from + 1; i < sp.sa.len; i++) {
-                if (seen.add(sp.sa.item[i])) rsu.merge(sp.sa.item[i], peuS, Double::sum);
-            }
-            // items in the same itemset as an extension position are I-extension candidates too
-            for (Ins in : sp.exList) {
-                int es = sp.sa.elemStart[in.exIndex];
-                for (int i = es; i < sp.sa.len && sp.sa.elemStart[i] == es; i++) {
-                    if (i > in.exIndex && seen.add(sp.sa.item[i])) {
-                        rsu.merge(sp.sa.item[i], peuS, Double::sum);
-                    }
+            SeqArray sa = sp.sa;
+            int p1 = sp.ex[0], e1 = sa.elemStart[p1];
+            int ptr = 0, lastElem = -1;
+            for (int q = p1 + 1; q < sa.len; q++) {
+                int it = sa.item[q];
+                if (deleted[it]) continue;
+                while (ptr < sp.size && sp.ex[ptr] < q) lastElem = sa.elemStart[sp.ex[ptr++]];
+                if (!seqSeen[it]) {
+                    seqSeen[it] = true; seqTouched.add(it);
+                    if (!nodeOn[it]) { nodeOn[it] = true; rsu[it] = 0; nodeTouched.add(it); }
+                    rsu[it] += sp.peu;
                 }
+                if (lastElem == sa.elemStart[q] && !candI[it]) { candI[it] = true; nI++; }
+                if (sa.elemStart[q] > e1 && !candS[it]) { candS[it] = true; nS++; }
             }
+            clearSeqSeen();
         }
-        // --- Collect I-extension and S-extension candidates, with their TRSU for EP ---
-        // Enumerated BEFORE filtering. candidateCount counts the raw search frontier, as
-        // for every other baseline; otherwise HUSP-SP would report a smaller number only
-        // because it prunes earlier, which is not what the counter compares.
-        Map<Integer, Double> trsuI = new HashMap<>();
-        Map<Integer, Double> trsuS = new HashMap<>();
-        for (SeqPro sp : proj) {
-            accumulateTrsu(sp, null, trsuI, true);
-            accumulateTrsu(sp, null, trsuS, false);
+        candidateCount += nI + nS;
+
+        // ---- Line 1, IIP: mark the items with RSU < threshold as deleted for this subtree.
+        int[] removed = new int[nodeTouched.n];
+        int nRemoved = 0;
+        TreeMap<Integer, Double> rsuTrace = (trace != null) ? new TreeMap<>() : null;
+        for (int k = 0; k < nodeTouched.n; k++) {
+            int it = nodeTouched.a[k];
+            if (rsuTrace != null) rsuTrace.put(codeToId[it], rsu[it]);
+            if (rsu[it] < minUtility) {
+                deleted[it] = true;
+                removed[nRemoved++] = it;
+                prunedIIP += (candI[it] ? 1 : 0) + (candS[it] ? 1 : 0);
+            }
+            nodeOn[it] = false; candI[it] = false; candS[it] = false;
         }
-        candidateCount += trsuI.size();
-        candidateCount += trsuS.size();
+        nodeTouched.n = 0;
+        if (trace != null) {
+            List<Integer> r = new ArrayList<>();
+            for (int k = 0; k < nRemoved; k++) r.add(codeToId[removed[k]]);
+            r.sort(null);
+            trace.accept("PG " + prefix.toIntuitiveString() + " RSU " + rsuTrace + " IIP-deleted " + r);
+        }
 
-        // --- IIP, then EP, in the order of Algorithm 2 ---
-        expand(prefix, proj, trsuI, rsu, true);
-        expand(prefix, proj, trsuS, rsu, false);
-    }
+        // ---- Line 1, second scan: delete their utility from the remaining-utility array.
+        if (nRemoved > 0) for (SeqPro sp : proj) sp.sa.recomputeRemaining(sp.ex[0], deleted);
 
-    /**
-     * Applies IIP and then EP to one extension side, then recurses.
-     *
-     * IIP prunes by RSU, EP by TRSU. Since TRSU <= RSU, EP alone would be as tight;
-     * both are kept and counted separately to report the share of each strategy,
-     * as Zhang et al. present them.
-     */
-    private void expand(Pattern prefix, List<SeqPro> proj, Map<Integer, Double> trsu,
-                        Map<Integer, Double> rsu, boolean iExtension) {
-        for (Map.Entry<Integer, Double> e : trsu.entrySet()) {
+        // ---- Line 2: scan the reduced seqPro for the I/S-extension items and apply EP.
+        for (SeqPro sp : proj) trsuScan(sp);
+        int[] iList = collect(trsuI, true);
+        int[] sList = collect(trsuS, false);
+
+        // ---- Lines 3-8: I-extensions, then S-extensions.
+        for (int it : iList) {
             checkCancelled();
-            int item = e.getKey();
-            Double r = rsu.get(item);
-            if (r == null || r < minUtility) { prunedIIP++; continue; }   // IIP
-            if (e.getValue() < minUtility)   { prunedEP++;  continue; }   // EP
-            List<SeqPro> child = project(proj, item, iExtension);
-            if (child.isEmpty()) continue;
-            Pattern p = iExtension ? prefix.iConcatenate(item) : prefix.sConcatenate(item);
-            utilityCalculation(p, child);
+            utilityCalculation(prefix.iConcatenate(codeToId[it]), project(proj, it, true));
+        }
+        for (int it : sList) {
+            checkCancelled();
+            utilityCalculation(prefix.sConcatenate(codeToId[it]), project(proj, it, false));
+        }
+
+        // Restore the items and remaining utilities of the parent.
+        if (nRemoved > 0) {
+            for (int k = 0; k < nRemoved; k++) deleted[removed[k]] = false;
+            for (SeqPro sp : proj) sp.sa.recomputeRemaining(sp.ex[0], deleted);
         }
     }
 
     /**
-     * Accumulates TRSU (Definition 4.11) for every possible extension item in one sequence.
+     * EP bound of every extension item in one sequence, in one left-to-right scan.
      *
-     * When PEU is attained at the FIRST instance, the segment between the first
-     * extension position of the PREFIX and the first occurrence of the NEW ITEM cannot
-     * contribute to any extension of the new pattern, so subtracting it from PEU still
-     * gives an upper bound:
-     *
-     *     TRSU = PEU(t,s) - [ u(s / p1) - u(s / (q1 - 1)) ]
-     *
-     * where p1 is the first extension position of the prefix and q1 the first valid
-     * position of the new item. Otherwise TRSU falls back to RSU, i.e. PEU(t,s).
+     * Replaces TRSU (Definition 4.11) by TRSU*(t+i, S) = max over prefix instances j and
+     * valid positions q of i of acu_j + u(S/(q-1)), using a running max of acu. The
+     * published TRSU is not an upper bound (Theorem 4.12 fails): for
+     * S = <{a}:1,{b}:1,{a}:50,{e}:1,{b}:1,{e}:1> and t = <a,b>, TRSU(<a,b,e>) = 55 - 50 = 5,
+     * yet u(<a,b,e>) = 52 (instance a@3, b@5, e@6).
      */
-    private void accumulateTrsu(SeqPro sp, Set<Integer> allowed,
-                                Map<Integer, Double> out, boolean iExtension) {
-        // allowed == null: enumerate every item without filtering. Used while counting
-        // the raw search frontier, before IIP and EP are applied.
-        double peuS = sp.peu();
-        if (peuS <= 0) return;
-        boolean tighten = sp.peuAttainedAtFirst();
-        int p1 = sp.firstExIndex();
-        double remP1 = sp.sa.remUtil[p1];
-
-        // First valid position of each extension item in this sequence.
-        Map<Integer, Integer> firstPos = new HashMap<>();
-        for (Ins in : sp.exList) {
-            if (iExtension) {
-                // I-extension: the item must be in the SAME itemset as the extension
-                // position, and after it.
-                int es = sp.sa.elemStart[in.exIndex];
-                for (int i = in.exIndex + 1; i < sp.sa.len && sp.sa.elemStart[i] == es; i++) {
-                    int it = sp.sa.item[i];
-                    if (allowed != null && !allowed.contains(it)) continue;
-                    Integer cur = firstPos.get(it);
-                    if (cur == null || i < cur) firstPos.put(it, i);
-                }
-            } else {
-                // S-extension: the item must be in an itemset AFTER that of the extension position.
-                int es = sp.sa.elemStart[in.exIndex];
-                int i = in.exIndex + 1;
-                while (i < sp.sa.len && sp.sa.elemStart[i] == es) i++;
-                for (; i < sp.sa.len; i++) {
-                    int it = sp.sa.item[i];
-                    if (allowed != null && !allowed.contains(it)) continue;
-                    Integer cur = firstPos.get(it);
-                    if (cur == null || i < cur) firstPos.put(it, i);
-                }
+    private void trsuScan(SeqPro sp) {
+        SeqArray sa = sp.sa;
+        int p1 = sp.ex[0];
+        int ptr = 0;
+        double runMaxS = NONE;            // max acu over instances in earlier itemsets
+        double pendAcu = NONE;            // the latest instance before q...
+        int pendElem = -1;                // ...and its itemset
+        for (int q = p1 + 1; q < sa.len; q++) {
+            int it = sa.item[q];
+            if (deleted[it]) continue;
+            while (ptr < sp.size && sp.ex[ptr] < q) {
+                if (pendAcu > runMaxS) runMaxS = pendAcu;
+                pendAcu = sp.acu[ptr];
+                pendElem = sa.elemStart[sp.ex[ptr]];
+                ptr++;
+            }
+            double bestS = runMaxS, bestI = NONE;
+            if (pendElem == sa.elemStart[q]) bestI = pendAcu;
+            else if (pendAcu > bestS) bestS = pendAcu;
+            double tail = sa.remUtil[q - 1];  // u(S/(q-1)): utility from q onwards
+            if (bestI != NONE || bestS != NONE) {
+                if (seqMaxI[it] == NONE && seqMaxS[it] == NONE) seqTouched.add(it);
+                if (bestI != NONE && bestI + tail > seqMaxI[it]) seqMaxI[it] = bestI + tail;
+                if (bestS != NONE && bestS + tail > seqMaxS[it]) seqMaxS[it] = bestS + tail;
             }
         }
-
-        for (Map.Entry<Integer, Integer> e : firstPos.entrySet()) {
-            double contrib = peuS;
-            if (tighten) {
-                int q1 = e.getValue();
-                double remBeforeQ1 = (q1 - 1 >= 0) ? sp.sa.remUtil[q1 - 1] : sp.sa.seqUtility;
-                double cut = remP1 - remBeforeQ1;
-                if (cut > 0) contrib = peuS - cut;
-                if (contrib < 0) contrib = 0;
-            }
-            out.merge(e.getKey(), contrib, Double::sum);
+        for (int k = 0; k < seqTouched.n; k++) {
+            int it = seqTouched.a[k];
+            if (!nodeOn[it]) { nodeOn[it] = true; trsuI[it] = NONE; trsuS[it] = NONE; nodeTouched.add(it); }
+            if (seqMaxI[it] != NONE) trsuI[it] = (trsuI[it] == NONE ? 0 : trsuI[it]) + seqMaxI[it];
+            if (seqMaxS[it] != NONE) trsuS[it] = (trsuS[it] == NONE ? 0 : trsuS[it]) + seqMaxS[it];
+            seqMaxI[it] = NONE; seqMaxS[it] = NONE;
         }
+        seqTouched.n = 0;
     }
 
     /**
-     * Projects the seqPro of the prefix to the seqPro of the pattern extended by one item.
-     * The utility of a pattern in a sequence is the MAXIMUM over its instances, but every
-     * instance must be kept because any of them can lead to a better extension later.
-     * That is why exList keeps all instances, not only the best one.
+     * EP on one side: returns the candidates with TRSU* >= threshold in ascending item
+     * order and counts the others. The S side runs second and clears the node scratch.
      */
-    private List<SeqPro> project(List<SeqPro> proj, int item, boolean iExtension) {
+    private int[] collect(double[] trsu, boolean iSide) {
+        int[] keep = new int[nodeTouched.n];
+        int n = 0;
+        TreeMap<Integer, Double> tr = (trace != null) ? new TreeMap<>() : null;
+        for (int k = 0; k < nodeTouched.n; k++) {
+            int it = nodeTouched.a[k];
+            if (trsu[it] == NONE) continue;
+            if (tr != null) tr.put(codeToId[it], trsu[it]);
+            if (trsu[it] >= minUtility) keep[n++] = it;
+            else prunedEP++;
+        }
+        if (tr != null) trace.accept("   TRSU*-" + (iSide ? "I " : "S ") + tr);
+        if (!iSide) {
+            for (int k = 0; k < nodeTouched.n; k++) nodeOn[nodeTouched.a[k]] = false;
+            nodeTouched.n = 0;
+        }
+        int[] out = Arrays.copyOf(keep, n);
+        Arrays.sort(out);
+        return out;
+    }
+
+    /**
+     * seqPro of prefix+item (Algorithm 3 lines 1-2): for each position q of the item, the
+     * best acu among the prefix instances it can extend, by a two-pointer merge of the
+     * item-indices table with the extension-list.
+     */
+    private List<SeqPro> project(List<SeqPro> proj, int code, boolean iExtension) {
         List<SeqPro> out = new ArrayList<>();
         for (SeqPro sp : proj) {
-            int[] pos = sp.sa.itemIndices.get(item);
+            SeqArray sa = sp.sa;
+            int[] pos = sa.positionsOf(code);
             if (pos == null) continue;
-
-            // For each position of the item, keep the LARGEST acu among the prefix
-            // instances that can be extended to that position.
-            List<Ins> next = null;
+            int p1 = sp.ex[0];
+            int[] ex = null;
+            double[] acu = null;
+            int n = 0, ptr = 0, pendElem = -1;
+            double runMaxS = NONE, pendAcu = NONE;
             for (int q : pos) {
-                double best = -1;
-                for (Ins in : sp.exList) {
-                    if (iExtension) {
-                        if (q > in.exIndex && sp.sa.sameElement(q, in.exIndex)) {
-                            if (in.acu > best) best = in.acu;
-                        }
-                    } else {
-                        if (sp.sa.elemStart[q] > sp.sa.elemStart[in.exIndex]) {
-                            if (in.acu > best) best = in.acu;
-                        }
-                    }
+                if (q <= p1) continue;
+                while (ptr < sp.size && sp.ex[ptr] < q) {
+                    if (pendAcu > runMaxS) runMaxS = pendAcu;
+                    pendAcu = sp.acu[ptr];
+                    pendElem = sa.elemStart[sp.ex[ptr]];
+                    ptr++;
                 }
-                if (best >= 0) {
-                    if (next == null) next = new ArrayList<>();
-                    next.add(new Ins(best + sp.sa.util[q], q));
-                }
+                double best;
+                if (iExtension) best = (pendElem == sa.elemStart[q]) ? pendAcu : NONE;
+                else best = (pendElem == sa.elemStart[q] || pendAcu < runMaxS) ? runMaxS : pendAcu;
+                if (best == NONE) continue;
+                if (ex == null) { ex = new int[pos.length]; acu = new double[pos.length]; }
+                ex[n] = q; acu[n] = best + sa.util[q]; n++;
             }
-            if (next != null && !next.isEmpty()) out.add(new SeqPro(sp.sa, next));
+            if (n > 0) out.add(new SeqPro(sa, ex, acu, n));
         }
         return out;
+    }
+
+    private void clearSeqSeen() {
+        for (int k = 0; k < seqTouched.n; k++) seqSeen[seqTouched.a[k]] = false;
+        seqTouched.n = 0;
+    }
+
+    private String byId(double[] v, boolean[] only) {
+        TreeMap<Integer, Double> m = new TreeMap<>();
+        for (int k = 0; k < v.length; k++) if (only == null || only[k]) m.put(codeToId[k], v[k]);
+        return m.toString();
+    }
+
+    private String deletedIds(boolean[] keep) {
+        List<Integer> r = new ArrayList<>();
+        for (int k = 0; k < keep.length; k++) if (!keep[k]) r.add(codeToId[k]);
+        return r.toString();
     }
 
     private void checkCancelled() {

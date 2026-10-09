@@ -32,7 +32,7 @@ every sum.
 | file | scenario | content |
 |---|---|---|
 | `fig_scalability_SC3_runtime_ms.pdf` | SC3 | runtime against UUT, six algorithms, SIGN / LEVIATHAN / C8T1S5I8N5K |
-| `fig_scalability_SC3_explored_nodes.pdf` | SC3 | explored nodes against UUT, same panels |
+| `fig_scalability_SC3_explored_nodes.pdf` | SC3 | explored nodes against UUT, same panels; each algorithm counts the nodes of its own search (`docs/result-columns.md`, "Work counters by algorithm") |
 | `fig_incremental_cumulative.pdf` | SC2 | cumulative runtime over the 100 increments (initial mine excluded), five arms, seven databases; a curve that stops early ends in a cross, and arms with no curve are named under the panels |
 | `fig_C5_ablation.pdf` | SC7 | runtime summed over the 100 increments and number of rescans, adaptive rescan decision against a rescan at every increment, SIGN and C8T1S5I8N5K |
 | `fig_sl_sensitivity_prelarge_count.pdf` | SC4 | pre-large set size against `r_l`, Pre-HUSPM and the proposal, SIGN / LEVIATHAN / C8T1S5I8N5K |
@@ -44,7 +44,8 @@ every sum.
 `fig_scalability_SC1_explored_nodes.pdf` (SC1 on all eight databases) and
 `fig_sl_sensitivity_runtime_ms.pdf` (SC4 runtime against `r_l`).
 
-The proposal's SC4 cells on C8T1S5I8N5K at `r_l` = 0.3 and 0.5 are being re-measured.
+The USpan, HUSP-ULL, HUSP-SP, IncUSP-Miner+ and Pre-HUSPM arms, and the proposal's SC4 arm on
+C8T1S5I8N5K, are being re-measured.
 
 ## Tables
 

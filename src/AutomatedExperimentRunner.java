@@ -1333,11 +1333,11 @@ public class AutomatedExperimentRunner {
         // -------- Arm: Pre-HUSPM, BOTH VARIANTS (each in its own scope) --------
         // (-Dalgo.only is applied in the inner loop because the two variants are separate arms)
         //
-        // Yan et al. define two rescan trigger rules and compare both. Both run here, so the
-        // baseline is not represented by its weaker variant alone:
-        //   Pre-HUSPM      = SWUmax trigger, not sound (label kept so existing CSVs still match)
-        //   Pre-HUSPM-TSU  = TSU(d) trigger, sound
-        // In STATIC mining the two variants are identical; they differ only in SC2/SC5.
+        // Yan et al. define two rescan tests and compare both; both run here, under the names
+        // of their paper:
+        //   Pre-HUSPM-SWUmax = test of Theorem 2 (largest sequence-weighted utility of an item)
+        //   Pre-HUSPM-TSU    = test of Theorem 1 (total utility of the inserted sequences)
+        // Static mining is the same for both, so the static scenarios run one arm, "Pre-HUSPM".
         if (!ADAPTIVE_ONLY) {
             PreHUSPMAlgorithm.PreHUSPMAlgo.Variant[] variants = {
                     PreHUSPMAlgorithm.PreHUSPMAlgo.Variant.SWUMAX,
@@ -1345,7 +1345,7 @@ public class AutomatedExperimentRunner {
             };
             for (PreHUSPMAlgorithm.PreHUSPMAlgo.Variant variant : variants) {
                 final String label = (variant == PreHUSPMAlgorithm.PreHUSPMAlgo.Variant.TSU)
-                        ? "Pre-HUSPM-TSU" : "Pre-HUSPM";
+                        ? "Pre-HUSPM-TSU" : "Pre-HUSPM-SWUmax";
                 if (!algoEnabled(label)) continue;
                 beginMemArm();
                 final PreHUSPMAlgorithm.PreHUSPMAlgo preh = new PreHUSPMAlgorithm.PreHUSPMAlgo(
@@ -1570,8 +1570,8 @@ public class AutomatedExperimentRunner {
      */
     private static void attachPreHuspm(ExperimentMetrics m, PreHUSPMAlgorithm.PreHUSPMAlgo pre) {
         if (m == null || m.runtimeMs == -1) return;
-        m.exploredNodes        = pre.exploredNodes; // = candidateCount (materialises EVERY extension)
-        m.prunedPeu            = pre.prunedPEU; // pruning by SWU_proj (= PEU), as in Pre-HUSPM
+        m.exploredNodes        = pre.exploredNodes; // patterns that pass the bound (buffer size after a mine)
+        m.prunedPeu            = pre.prunedPEU; // candidates or buffered patterns discarded by the bound
         m.prelargePatternCount = pre.prelargeCount;
         m.rescanCount          = pre.rescanCount;
         m.sftValue             = pre.safetyBoundF; // pre-large safety bound (compare with Adaptive)
@@ -1653,9 +1653,9 @@ public class AutomatedExperimentRunner {
                             null, null, null, null, null, null, sp::cancel);
                     if (m != null && m.runtimeMs != -1) {
                         m.prunedSwu = sp.prunedSWU;
-                        m.prunedIip = sp.prunedIIP;      // IIP by RSU
-                        m.prunedPeu = sp.prunedPEU;      // branches stopped by the PEU bound
-                        m.prunedLar = sp.prunedEP;       // EP by TRSU, HUSP-SP's own strategy
+                        m.prunedIip = sp.prunedIIP;      // candidates removed by IIP (RSU below the threshold)
+                        m.prunedPeu = sp.prunedPEU;      // Algorithm 3 calls whose PEU is below the threshold
+                        m.prunedLar = sp.prunedEP;       // candidates removed by early pruning (sound bound in place of TRSU)
                         m.exploredNodes = sp.exploredNodes;
                     }
                     return logged(m);
@@ -1667,8 +1667,9 @@ public class AutomatedExperimentRunner {
                             () -> h.candidateCount, () -> h.patternCount, null, null);
                     if (m != null && m.runtimeMs != -1) {
                         m.prunedSwu = h.prunedSWU;
-                        m.prunedLar = h.prunedLAR;
-                        m.prunedIip = h.prunedIIP;
+                        m.prunedLar = h.prunedLAR;       // candidates discarded by the look-ahead strategy (LAS)
+                        m.prunedIip = h.prunedIIP;       // items removed by irrelevant item pruning (IPS)
+                        m.prunedPeu = h.prunedPEU;       // lists built whose PEU is below the threshold
                         m.exploredNodes = h.exploredNodes;
                     }
                     return logged(m);

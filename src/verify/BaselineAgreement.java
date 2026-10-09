@@ -85,7 +85,41 @@ public final class BaselineAgreement {
         int bad = 0;
         bad += compare("HUSP-SP", refSet, runHuspSp(copy(db), minUtil));
         bad += compare("HUSP-ULL", refSet, runHuspUll(copy(db), minUtil));
+        // Implementations that share no mining code with USpan, so a fault common to the
+        // three static baselines above would still show up here.
+        bad += compare("IncUSP-Miner+", refSet, runIncUsp(copy(db), uut, tsu));
+        bad += compare("Pre-HUSPM", refSet, runPreHuspm(copy(db), uut, tsu, name));
+        bad += compare("Adaptive", refSet, runAdaptive(copy(db), uut, tsu, name));
         return bad;
+    }
+
+    private static Map<String, Double> runIncUsp(List<Sequence> db, double uut, double tsu) {
+        algorithms.IncUSPMinerPlusAlgorithm a = new algorithms.IncUSPMinerPlusAlgorithm(uut);
+        a.runInitialMining(db, tsu);
+        System.out.printf("  %-10s HUSP=%-7d cand=%-12d explored=%d%n",
+                "IncUSP-Miner+", a.largeMap.size(), a.candidateCount, a.exploredNodes);
+        return asStrings(a.husps());
+    }
+
+    private static Map<String, Double> runPreHuspm(List<Sequence> db, double uut, double tsu, String name) {
+        algorithms.PreHUSPMAlgorithm.PreHUSPMAlgo a = new algorithms.PreHUSPMAlgorithm.PreHUSPMAlgo(
+                uut, common.Datasets.slMinRatio(name), false);
+        a.runInitialMining(db, tsu);
+        System.out.printf("  %-10s HUSP=%-7d cand=%-12d explored=%d%n",
+                "Pre-HUSPM", a.largeMap.size(), a.candidateCount, a.exploredNodes);
+        return asStrings(a.largeMap);
+    }
+
+    private static Map<String, Double> runAdaptive(List<Sequence> db, double uut, double tsu, String name) {
+        algorithms.PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo a =
+                new algorithms.PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo(uut, 0.5, 1e-4,
+                        common.Datasets.slMinRatio(name),
+                        algorithms.PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.AblationMode.FULL, false);
+        a.runInitialMining(db, tsu);
+        Map<String, Double> got = a.exportLargeAsStrings();
+        System.out.printf("  %-10s HUSP=%-7d cand=%-12d explored=%d%n",
+                "Adaptive", got.size(), a.candidateCount, a.exploredNodes);
+        return got;
     }
 
     private static Map<String, Double> runHuspSp(List<Sequence> db, double minUtil) {

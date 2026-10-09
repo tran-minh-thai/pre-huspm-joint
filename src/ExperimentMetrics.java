@@ -28,16 +28,18 @@ public class ExperimentMetrics {
     // 2. Performance Metrics
     public long runtimeMs;
     public long peakHeapMb;
-    public long candidateCount;   // candidates generated before pruning; equal across algorithms at one threshold
+    public long candidateCount;   // distinct extensions generated before pruning; each algorithm's own search
     public long exploredNodes;    // patterns actually materialised after pruning; measures pruning effectiveness
 
     // 3. Pruning counters
     //
-    //   USpan       : prunedSwu (SWU global+local), prunedDepth (depth bound)
-    //   HUSP-ULL    : prunedSwu (1-item only), prunedLar (subtree LAR),
-    //                 prunedIip (item-level PEU/IIP)
-    //   IncUSP-Miner+: prunedTsu (TSU upper bound)
-    //   Pre-HUSPM   : prunedPeu (PEU upper bound)
+    //   USpan       : prunedSwu (SWU width pruning), prunedDepth (depth bound)
+    //   HUSP-ULL    : prunedSwu (1-items by SWU), prunedLar (look-ahead strategy, LAS),
+    //                 prunedIip (items removed by IPS), prunedPeu (lists with PEU below threshold)
+    //   HUSP-SP     : prunedSwu (root items by SWU), prunedIip (IIP), prunedLar (early pruning),
+    //                 prunedPeu (Algorithm 3 PEU test)
+    //   IncUSP-Miner+: prunedTsu (low-TSU extensions)
+    //   Pre-HUSPM   : prunedPeu (candidates or buffered patterns below the bound)
     //   Adaptive    : prunedValueBound (PEU value bound), prunedIub (IUB branch pruning)
     public long prunedSwu, prunedDepth;          // USpan
     public long prunedLar, prunedIip;            // HUSP-ULL (besides prunedSwu)
@@ -133,7 +135,7 @@ public class ExperimentMetrics {
         sj.add(String.valueOf(totalPatternsFound));
         // Pruning counters, grouped by algorithm:
         //   USpan       extras: prunedSwu + prunedDepth
-        //   HUSP-ULL    extras: prunedLar + prunedIip
+        //   HUSP-ULL, HUSP-SP extras: prunedLar + prunedIip (+ prunedPeu)
         //   IncUSP+     : prunedTsu
         //   Pre-HUSPM   : prunedPeu
         //   Adaptive    : prunedValueBound + prunedIub

@@ -12,6 +12,8 @@ import java.util.*;
  * - candidateCount counts each extension when it is generated.
  * - prunedSWU counts candidates removed by the global and the local SWU bound.
  * - Width pruning (SWU) and depth pruning (prefix utility plus O(1) suffix-sum remaining utility).
+ * Assumes every itemset is sorted by item id with no repeated id (so a pattern ends at most once
+ * per itemset); instance lists are kept in increasing itemset order.
  */
 public class USpanAlgorithm {
 
@@ -50,7 +52,7 @@ public class USpanAlgorithm {
 
     // Counters written to the result log
     public long candidateCount = 0;
-    public long exploredNodes = 0; // recursion entries, counted before the node-level bound check
+    public long exploredNodes = 0; // nodes expanded, i.e. entered and not cut by depth pruning
     public long prunedSWU = 0; // candidates pruned by the sequence-weighted utilization bound
     public long prunedDepth = 0; // branches cut by depth pruning
 
@@ -140,9 +142,10 @@ public class USpanAlgorithm {
         // ==============================================================
         // STEP 2: PROJECTION AND RECURSION (PATTERN GROWTH)
         // ==============================================================
+        Map<Integer, List<ProjectedSequence>> initialPDBs = buildInitialProjectedDBs(database, promisingItems);
         for (Integer item : promisingItems) {
             Pattern pattern = new Pattern(item);
-            List<ProjectedSequence> projectedDB = buildInitialProjectedDB(database, item);
+            List<ProjectedSequence> projectedDB = initialPDBs.remove(item); // freed once its subtree is done
 
             double maxUtil = calculateMaxUtility(projectedDB);
             if (maxUtil >= minUtility) {
@@ -170,12 +173,13 @@ public class USpanAlgorithm {
         // not keep using CPU or holding heap and distort the next measurement. This only
         // fires after a timeout, when the result is discarded, so mining logic is unchanged.
         if (Thread.currentThread().isInterrupted()) return;
-        exploredNodes++; // this pattern is expanded; counted BEFORE depth pruning (the real expansion work)
         // Fair counting: candidateCount is not incremented on entry. Extensions are counted when
         // generated (before the local SWU filter) below, as in the adaptive algorithm.
         // ==============================================================
         // STRATEGY 1: DEPTH PRUNING (based on prefix utility + remaining utility)
         // ==============================================================
+        // Eq. (21) of the paper (utility at the pivot + rest after it) is not an upper bound (counterexample: Truong-Chi &
+        // Fournier-Viger 2019); as in ProUM (2020) a sound bound replaces it: sum over s of max over ending p of u(t,p)+u_rest(p).
         double maxPossibleUtility = 0;
         for (ProjectedSequence pSeq : projectedDB) {
             double seqMaxUB = 0;
@@ -194,6 +198,7 @@ public class USpanAlgorithm {
             prunedDepth++;
             return;
         }
+        exploredNodes++; // counted after depth pruning: only nodes that are expanded
 
         // ==============================================================
         // STRATEGY 2: WIDTH PRUNING ON THE PROJECTED DB (LOCAL SWU)
@@ -205,17 +210,21 @@ public class USpanAlgorithm {
             double seqUtil = pSeq.seq.sequenceUtility;
             Set<Integer> iSeen = new HashSet<>();
             Set<Integer> sSeen = new HashSet<>();
+            int pivotItemset = -1; // itemset of the pivot, the first ending position (p.665)
 
             for (Instance inst : pSeq.instances) {
                 if (!inBounds(pSeq.seq, inst.itemsetIdx, inst.itemIdx)) continue;
+                if (pivotItemset < 0 || inst.itemsetIdx < pivotItemset) pivotItemset = inst.itemsetIdx;
                 QItemset currentItemset = pSeq.seq.itemsets.get(inst.itemsetIdx);
 
-                // Collect I-extension candidates
+                // Collect I-extension candidates: larger items in the same itemset
                 for (int i = inst.itemIdx + 1; i < currentItemset.items.size(); i++) {
                     iSeen.add(currentItemset.items.get(i).id);
                 }
-                // Collect S-extension candidates
-                for (int i = inst.itemsetIdx + 1; i < pSeq.seq.itemsets.size(); i++) {
+            }
+            // Collect S-extension candidates in one scan: every item to the right of the pivot itemset
+            if (pivotItemset >= 0) {
+                for (int i = pivotItemset + 1; i < pSeq.seq.itemsets.size(); i++) {
                     for (QItem item : pSeq.seq.itemsets.get(i).items) {
                         sSeen.add(item.id);
                     }
@@ -290,72 +299,74 @@ public class USpanAlgorithm {
         return totalPatternUtility;
     }
 
-    private List<ProjectedSequence> buildInitialProjectedDB(List<Sequence> db, int targetItem) {
-        List<ProjectedSequence> pdb = new ArrayList<>();
+    /** All 1-item projections in one database scan; instances in increasing position order. */
+    private Map<Integer, List<ProjectedSequence>> buildInitialProjectedDBs(List<Sequence> db, List<Integer> items) {
+        Map<Integer, List<ProjectedSequence>> pdbs = new HashMap<>();
+        for (Integer item : items) pdbs.put(item, new ArrayList<>());
+        Map<Integer, List<Instance>> perSeq = new LinkedHashMap<>();
         for (Sequence seq : db) {
-            List<Instance> instances = new ArrayList<>();
             for (int i = 0; i < seq.itemsets.size(); i++) {
                 QItemset is = seq.itemsets.get(i);
                 for (int j = 0; j < is.items.size(); j++) {
-                    if (is.items.get(j).id == targetItem) {
-                        instances.add(new Instance(i, j, is.items.get(j).utility));
-                    }
+                    QItem qi = is.items.get(j);
+                    if (!pdbs.containsKey(qi.id)) continue; // not promising
+                    perSeq.computeIfAbsent(qi.id, k -> new ArrayList<>()).add(new Instance(i, j, qi.utility));
                 }
             }
-            if (!instances.isEmpty()) pdb.add(new ProjectedSequence(seq, instances));
+            for (Map.Entry<Integer, List<Instance>> e : perSeq.entrySet()) {
+                pdbs.get(e.getKey()).add(new ProjectedSequence(seq, e.getValue()));
+            }
+            perSeq.clear();
         }
-        return pdb;
+        return pdbs;
     }
 
     private List<ProjectedSequence> buildIProjectedDB(List<ProjectedSequence> pdb, int targetItem) {
         List<ProjectedSequence> newPdb = new ArrayList<>();
         for (ProjectedSequence pSeq : pdb) {
-            // 64-bit key (high 32 bits = itemsetIdx, low 32 bits = itemIdx) avoids collisions on long sequences
-            Map<Long, Instance> bestInstances = new HashMap<>();
+            // At most one instance per itemset and one match per instance, so no position repeats.
+            List<Instance> newInstances = new ArrayList<>();
             for (Instance inst : pSeq.instances) {
                 if (!inBounds(pSeq.seq, inst.itemsetIdx, inst.itemIdx)) continue;
                 QItemset is = pSeq.seq.itemsets.get(inst.itemsetIdx);
                 for (int j = inst.itemIdx + 1; j < is.items.size(); j++) {
                     if (is.items.get(j).id == targetItem) {
-                        double newUtil = inst.utility + is.items.get(j).utility;
-                        long key = ((long) inst.itemsetIdx << 32) | (j & 0xFFFFFFFFL);
-                        Instance prev = bestInstances.get(key);
-                        if (prev == null || prev.utility < newUtil) {
-                            bestInstances.put(key, new Instance(inst.itemsetIdx, j, newUtil));
-                        }
+                        newInstances.add(new Instance(inst.itemsetIdx, j, inst.utility + is.items.get(j).utility));
+                        break;
                     }
                 }
             }
-            if (!bestInstances.isEmpty()) {
-                newPdb.add(new ProjectedSequence(pSeq.seq, new ArrayList<>(bestInstances.values())));
-            }
+            if (!newInstances.isEmpty()) newPdb.add(new ProjectedSequence(pSeq.seq, newInstances));
         }
         return newPdb;
     }
 
+    /**
+     * One left-to-right pass from the pivot: an occurrence of the item in itemset i gets
+     * (max utility over instances in itemsets strictly before i) + its own utility.
+     */
     private List<ProjectedSequence> buildSProjectedDB(List<ProjectedSequence> pdb, int targetItem) {
         List<ProjectedSequence> newPdb = new ArrayList<>();
         for (ProjectedSequence pSeq : pdb) {
-            Map<Long, Instance> bestInstances = new HashMap<>();
-            for (Instance inst : pSeq.instances) {
-                if (!inBounds(pSeq.seq, inst.itemsetIdx, inst.itemIdx)) continue;
-                for (int i = inst.itemsetIdx + 1; i < pSeq.seq.itemsets.size(); i++) {
-                    QItemset is = pSeq.seq.itemsets.get(i);
-                    for (int j = 0; j < is.items.size(); j++) {
-                        if (is.items.get(j).id == targetItem) {
-                            double newUtil = inst.utility + is.items.get(j).utility;
-                            long key = ((long) i << 32) | (j & 0xFFFFFFFFL);
-                            Instance prev = bestInstances.get(key);
-                            if (prev == null || prev.utility < newUtil) {
-                                bestInstances.put(key, new Instance(i, j, newUtil));
-                            }
-                        }
+            List<Instance> insts = pSeq.instances; // increasing itemsetIdx
+            if (insts.isEmpty()) continue;
+            List<Instance> newInstances = new ArrayList<>();
+            int k = 0;
+            double runningMax = Double.NEGATIVE_INFINITY;
+            for (int i = insts.get(0).itemsetIdx + 1; i < pSeq.seq.itemsets.size(); i++) {
+                while (k < insts.size() && insts.get(k).itemsetIdx < i) {
+                    if (insts.get(k).utility > runningMax) runningMax = insts.get(k).utility;
+                    k++;
+                }
+                QItemset is = pSeq.seq.itemsets.get(i);
+                for (int j = 0; j < is.items.size(); j++) {
+                    if (is.items.get(j).id == targetItem) {
+                        newInstances.add(new Instance(i, j, runningMax + is.items.get(j).utility));
+                        break;
                     }
                 }
             }
-            if (!bestInstances.isEmpty()) {
-                newPdb.add(new ProjectedSequence(pSeq.seq, new ArrayList<>(bestInstances.values())));
-            }
+            if (!newInstances.isEmpty()) newPdb.add(new ProjectedSequence(pSeq.seq, newInstances));
         }
         return newPdb;
     }

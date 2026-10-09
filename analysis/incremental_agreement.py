@@ -16,7 +16,7 @@ import glob
 import os
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-OTHERS = ["Remine-from-scratch", "Pre-HUSPM", "Pre-HUSPM-TSU", "IncUSP-Miner+"]
+OTHERS = ["Remine-from-scratch", "Pre-HUSPM-SWUmax", "Pre-HUSPM-TSU", "IncUSP-Miner+"]
 
 
 def rows(sc, alg):

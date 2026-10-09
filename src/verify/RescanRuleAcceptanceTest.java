@@ -19,8 +19,8 @@ import java.util.Map;
  *   T3  Boundary: right after a rescan, LUT_dyn equals LUT_min * TSU_ref.
  *   T4  A modification that keeps the sequence utility but changes every item must still
  *       consume budget.
- *   T5  The two variants of the Pre-HUSPM baseline: the SWUmax rule misses a HUSP, the TSU
- *       rule does not.
+ *   T5  The two variants of the Pre-HUSPM baseline (Yan et al.'s Theorems 1 and 2) on the
+ *       pattern that the single-sequence rule of T1 misses: both rescan and find it.
  *   T6  The direct update under the default joint rule: a deletion followed by an
  *       insertion, one modification, and insertions alone where a dropped pattern's items
  *       have smaller counters than the largest. The unsound iaumax rule misses a HUSP in
@@ -82,7 +82,9 @@ public final class RescanRuleAcceptanceTest {
      * UUT = 0.25, LUT = 0.20, TSU(D) = 100, pattern X = <1> with u(X,D) = 19 (19 < 20, so
      * it is NOT tracked). Two sequences are inserted, each holding X with utility 6.
      *
-     * SWUmax rule: SWUmax(d) = 6 <= SFT_ins = (0.25-0.20)/(1-0.25) * 100 = 6.667
+     * swumax rule (largest utility of one inserted sequence; a comparison rule of this code,
+ *              not the item-level SWUmax of Yan et al., see T5):
+ *              max_{s in d} u(s) = 6 <= SFT_ins = (0.25-0.20)/(1-0.25) * 100 = 6.667
      *              => no rescan => X is missed.
      * IAU rule:    A_1 = 6 + 6 = 12 > 6.667 => rescan => X is found.
      * Truth:       TSU(D') = 112, u(X,D') = 31 > 0.25 * 112 = 28 => X IS a HUSP.
@@ -250,18 +252,14 @@ public final class RescanRuleAcceptanceTest {
     // T5 - the two variants of the Pre-HUSPM BASELINE
     // ================================================================
     /**
-     * Shows that the error lies in the original baseline rule, not in this port of it.
-     *
-     * The T1 counterexample does not expose the error on the Pre-HUSPM baseline, because
-     * its counters use PEU (projected SWU) rather than the actual utility: in the sequence
-     * "1[19] | 2[31]", PEU(<1>) = 19 + 31 = 50, above the floor Sl*TSU = 20, so X stays
-     * tracked and is updated even without a rescan. Loose counters hide the faulty trigger.
-     *
-     * To expose it, the pattern's PEU must be below the floor. X = <1> stands alone in the
-     * sequence "1[19]" (PEU = 19 < 20) and the rest of the utility lies in a sequence
-     * without item 1. Then:
-     *   SWUMAX: SWUmax(d) = 6 <= f = 6.667  -> no rescan -> X is missed
-     *   TSU   : TSU(d)    = 12 >  f         -> rescan    -> X is found
+     * The Pre-HUSPM baseline on a pattern below its pre-large floor: X = <1> stands alone in
+     * "1[19]" (projected SWU 19 < Sl*TSU = 20, so X is not buffered) and two inserted
+     * sequences each hold X with utility 6. SWUmax is the largest sequence-weighted utility
+     * of a pattern in the inserted sequences (Yan et al., Definition 8 and Eq. (14)), here
+     * SWU_d(<1>) = 12:
+     *   SWUmax: 12 > f = 6.667 -> rescan -> X is found
+     *   TSU   : TSU(d) = 12 > f -> rescan -> X is found
+     * The single-sequence quantity of T1 (6) would not rescan; both published tests do.
      */
     private static void testPreHuspmVariants() {
         System.out.println("T5 - the two variants of the Pre-HUSPM baseline (TSU rule vs SWUmax rule)");
@@ -276,7 +274,7 @@ public final class RescanRuleAcceptanceTest {
 
         PatternSetDiff dSwu = PatternSetDiff.of(ref, swu);
         PatternSetDiff dTsu = PatternSetDiff.of(ref, tsu);
-        check("  Pre-HUSPM-SWUmax misses a HUSP", dSwu.missing > 0, dSwu.toString());
+        check("  Pre-HUSPM-SWUmax misses nothing", dSwu.isClean(), dSwu.toString());
         check("  Pre-HUSPM-TSU misses nothing", dTsu.isClean(), dTsu.toString());
     }
 

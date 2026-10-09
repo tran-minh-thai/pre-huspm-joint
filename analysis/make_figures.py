@@ -102,28 +102,28 @@ plt.rcParams.update({
 
 # ---- Algorithms: order, labels, line styles, markers --------------------------
 STATIC_ORDER = ["USpan", "HUSP-ULL", "HUSP-SP", "IncUSP-Miner+", "Pre-HUSPM", "Adaptive-Full"]
-INC_ORDER    = ["IncUSP-Miner+", "Pre-HUSPM", "Pre-HUSPM-TSU", "Remine-from-scratch", "Adaptive-Full"]
+INC_ORDER    = ["IncUSP-Miner+", "Pre-HUSPM-SWUmax", "Pre-HUSPM-TSU", "Remine-from-scratch", "Adaptive-Full"]
 PROPOSED = "Adaptive-Full"
 PROPOSED_LABEL = "Pre-HUSPM-Adaptive"
 ALGO_LABEL = {
     "USpan": "USpan", "HUSP-ULL": "HUSP-ULL", "HUSP-SP": "HUSP-SP",
-    "IncUSP-Miner+": "IncUSP-Miner$^{+}$", "Pre-HUSPM": "Pre-HUSPM",
+    "IncUSP-Miner+": "IncUSP-Miner$^{+}$", "Pre-HUSPM": "Pre-HUSPM", "Pre-HUSPM-SWUmax": "Pre-HUSPM-SWUmax",
     "Pre-HUSPM-TSU": "Pre-HUSPM-TSU", "Remine-from-scratch": "Remine",
     "Adaptive-Full": PROPOSED_LABEL,
 }
 ALGO_LINESTYLE = {
     "USpan": (0, (1, 1.5)), "HUSP-ULL": (0, (4, 1.5)), "HUSP-SP": (0, (4, 1.5, 1, 1.5)),
-    "IncUSP-Miner+": (0, (6, 2)), "Pre-HUSPM": (0, (2, 1.5)), "Pre-HUSPM-TSU": (0, (6, 1.5, 1, 1.5, 1, 1.5)),
+    "IncUSP-Miner+": (0, (6, 2)), "Pre-HUSPM": (0, (2, 1.5)), "Pre-HUSPM-SWUmax": (0, (2, 1.5)), "Pre-HUSPM-TSU": (0, (6, 1.5, 1, 1.5, 1, 1.5)),
     "Remine-from-scratch": (0, (8, 2, 2, 2)), "Adaptive-Full": "-",
 }
 ALGO_MARKER = {
     "USpan": "o", "HUSP-ULL": "s", "HUSP-SP": "v", "IncUSP-Miner+": "^",
-    "Pre-HUSPM": "D", "Pre-HUSPM-TSU": "P", "Remine-from-scratch": "x",
+    "Pre-HUSPM": "D", "Pre-HUSPM-SWUmax": "D", "Pre-HUSPM-TSU": "P", "Remine-from-scratch": "x",
     "Adaptive-Full": "*",
 }
 ALGO_HATCH = {
     "USpan": "", "HUSP-ULL": "////", "HUSP-SP": "\\\\", "IncUSP-Miner+": "xxxx",
-    "Pre-HUSPM": "....", "Pre-HUSPM-TSU": "----", "Remine-from-scratch": "++",
+    "Pre-HUSPM": "....", "Pre-HUSPM-SWUmax": "....", "Pre-HUSPM-TSU": "----", "Remine-from-scratch": "++",
     "Adaptive-Full": "||||",
 }
 

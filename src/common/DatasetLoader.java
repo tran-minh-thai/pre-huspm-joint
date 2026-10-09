@@ -144,6 +144,19 @@ public class DatasetLoader {
             }
         }
         if (!addedAny) return null;
+        // Every miner here takes I-extensions from the later positions of an itemset and
+        // relies on items being sorted by id without repeats; a file that breaks this
+        // would give wrong patterns without any error, so it is refused here.
+        for (int k = 0; k < seq.itemsets.size(); k++) {
+            List<QItem> items = seq.itemsets.get(k).items;
+            for (int j = 1; j < items.size(); j++) {
+                if (items.get(j).id <= items.get(j - 1).id) {
+                    throw new IllegalStateException("sequence " + seqId + ", itemset " + k
+                            + ": items are not in strictly increasing id order ("
+                            + items.get(j - 1).id + " then " + items.get(j).id + ")");
+                }
+            }
+        }
         seq.calculateRemainingUtilities();
         return seq;
     }

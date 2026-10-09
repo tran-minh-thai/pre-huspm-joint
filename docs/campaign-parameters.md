@@ -1,8 +1,9 @@
 # Running the measurement campaign
 
-How the campaign is run, what it costs, and which arms do not finish. The costs are those
-measured on `PC-THAI` (AMD Ryzen 9 9950X, 64 GB, OpenJDK 25.0.4, `-Xmx48g`), the machine every
-result in `results/campaign` and `results/campaign-mem` comes from.
+How the campaign is run, which arms each scenario has, and what the arms of the proposal and
+of remining cost. The costs are those measured on `PC-THAI` (AMD Ryzen 9 9950X, 64 GB, OpenJDK
+25.0.4, `-Xmx48g`), the machine every result in `results/campaign` and `results/campaign-mem`
+comes from.
 
 ## The command
 
@@ -33,8 +34,8 @@ interrupted mid-run leaves only its `CLAIM`, which is offered again after `CapSe
 an hour.
 
 The session stops between arms, never inside one, so a session overruns by however long its
-last arm takes, bounded by `CapSeconds`. The longest arm that finishes is
-FIFA/Remine-from-scratch: 2.2 h in timing mode, 2.7 h in live memory mode.
+last arm takes, bounded by `CapSeconds`. Among the arms of the proposal and of remining, the
+longest is FIFA/Remine-from-scratch in SC2 (see "What each scenario costs").
 
 Several scenarios can share one sitting by chaining the commands; each takes its own
 `-SessionHours` budget, so give the later ones a smaller budget to keep the sitting bounded.
@@ -72,40 +73,23 @@ after each increment.
 
 ## What each scenario costs
 
-> The IncUSP-Miner+ arms of SC1, SC2, SC3 and SC5 (timing, memory and replicates) and the
-> proposal's SC4 arm on C8T1S5I8N5K are being re-measured; the costs and failures below that
-> name them refer to the previous implementation.
+The USpan, HUSP-ULL, HUSP-SP, IncUSP-Miner+ and Pre-HUSPM arms (`Pre-HUSPM`,
+`Pre-HUSPM-SWUmax` and `Pre-HUSPM-TSU`; timing, memory and replicates) and the proposal's SC4
+arm on C8T1S5I8N5K are being re-measured, so no cost or outcome is given for them here.
 
-Machine time on `PC-THAI`, summed over the arms that finished (from the `seconds` field of
-each `DONE`), one repeat.
+| scenario | arms | arms per database |
+|---|---:|---|
+| SC1 | 48 | the six static algorithms on eight databases |
+| SC2 | 35 | `Adaptive-Full`, `Pre-HUSPM-SWUmax`, `Pre-HUSPM-TSU`, `Remine-from-scratch`, `IncUSP-Miner+` on seven databases |
+| SC3 | 18 | the six static algorithms on SIGN, LEVIATHAN, C8T1S5I8N5K |
+| SC4 | 6 | `Pre-HUSPM` and `Adaptive-Full` on the same three |
+| SC5 | 15 | SC2's five arms on the same three |
+| SC6 | 6 | `Adaptive-Full` and `Remine-from-scratch` on the same three |
+| SC7 | 27 | `proposed_full`, `proposed_no_IUB`, `Pre-HUSPM` on seven databases; `proposed_C5_on`, `proposed_C5_off`, `proposed_no_block_index` on SIGN and C8T1S5I8N5K |
+| SC1, live memory | 48 | as SC1 |
+| SC2, live memory | 35 | as SC2 |
 
-| scenario | arms | timing campaign | longest arm |
-|---|---:|---:|---|
-| SC1 | 48 | 2.9 h | FIFA/IncUSP-Miner+, 0.7 h |
-| SC2 | 33 + 2 deferred | 9.0 h | FIFA/Remine-from-scratch, 2.2 h |
-| SC3 | 18 | 0.3 h | LEVIATHAN/IncUSP-Miner+, 3 min |
-| SC4 | 6 | 0.3 h for the five arms other than C8T1S5I8N5K/Adaptive-Full, which is being re-measured | C8T1S5I8N5K/Pre-HUSPM, 17 min |
-| SC5 | 15 | 9.1 h | LEVIATHAN/IncUSP-Miner+, 2.1 h |
-| SC6 | 6 | 2 min | |
-| SC7 | 27 | 0.6 h | FIFA/Pre-HUSPM, 0.2 h |
-| SC1, live memory | 48 | 5.6 h | LEVIATHAN/Pre-HUSPM, 2.0 h |
-| SC2, live memory | 31 + 4 deferred | 11.1 h | FIFA/Remine-from-scratch, 2.7 h |
-
-About 22 hours for the timing campaign without that SC4 arm, and 17 for the memory campaign.
-Live mode costs about twice timing mode on SC1 and 1.2 times on SC2, where the long arms are
-dominated by work the forced collections do not slow in proportion.
-
-SC5 costs about what SC2 costs although it runs four strategies at four K: the grid does not
-get cheap as K falls, because each increment carries a fixed cost and the rescans do not thin
-out in proportion.
-
-## Arms that do not finish
-
-These are results, not faults.
-
-| arm | what happens |
-|---|---|
-| IncUSP-Miner+ in SC2 on BIBLE, KOSARAK, LEVIATHAN, FIFA | Exhausts 48 GB. On BIBLE it completes 40 increments and runs out of memory on the 41st; on KOSARAK and LEVIATHAN the memory guard stops it before increments 12 and 75; on FIFA it does not finish the initial mine. The same holds in the memory campaign. |
-| Pre-HUSPM and Pre-HUSPM-TSU on LEVIATHAN in SC2 | Exhaust 48 GB on `D_init`. Pre-HUSPM completes SC4 on the whole database at `r_l` = 0.7 because the threshold is a ratio of total utility: `TSU(D_init)` is 4,960,437 against 10,502,159 for the whole database, so SC2's absolute floor (at `r_l` = 0.8) is the lower of the two. Deferred in the memory campaign. |
-| Pre-HUSPM on LEVIATHAN and C8T1S5I8N5K in SC4 at `r_l` = 0.3 and 0.5 | Exhausts 48 GB. Where both complete, its pre-large set is 18 to 69 times the proposal's at the same `r_l`. |
-| Pre-HUSPM-TSU on FIFA and KOSARAK in SC2 | Does not finish its 100 increments within the eight-hour cap: the `TSU(d)` test rescans far more often than the `SWUmax(d)` test, as Yan et al. (2025) report for it. Deferred in both campaigns; the `DEFERRED` file gives the reason. |
+Machine time on `PC-THAI`, from the `seconds` field of each `DONE`, one repeat: SC6, which
+runs only the proposal and remining, takes 2 min in all; the longest arm of the proposal or of
+remining is FIFA/Remine-from-scratch in SC2, 2.2 h in timing mode and 2.7 h in live memory
+mode.

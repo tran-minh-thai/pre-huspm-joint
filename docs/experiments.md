@@ -9,23 +9,59 @@ scenario are in `docs/campaign-parameters.md`; column definitions are in
 | Name in results | Role | Reference | Implementation |
 |---|---|---|---|
 | `Adaptive-Full` | proposed method | this repository | `PreHUSPMAdaptiveAlgorithm` |
-| `Pre-HUSPM` | pre-large incremental baseline, rescan test on `SWUmax(d)`, the largest sequence utility of a batch (Yan et al., 2025, Theorem 2) | Yan et al., J. Supercomputing 2025 | `PreHUSPMAlgorithm`, `Variant.SWUMAX` |
-| `Pre-HUSPM-TSU` | the same baseline with the rescan test on `TSU(d)`, the total utility of a batch (Yan et al., 2025, Theorem 1) | Yan et al., 2025 | `PreHUSPMAlgorithm`, `Variant.TSU` |
-| `IncUSP-Miner+` | candidate-tree incremental baseline | Wang et al., ACM TIST 2018 | `IncUSPMinerPlusAlgorithm` |
+| `Pre-HUSPM-SWUmax` | pre-large incremental baseline, rescan test on `SWUmax` (Theorem 2 of Yan et al.); SC2 and SC5 | Yan et al., J. Supercomputing 2025 | `PreHUSPMAlgorithm`, `Variant.SWUMAX` |
+| `Pre-HUSPM-TSU` | the same baseline with the rescan test on `TSU(d)` (Theorem 1 of Yan et al.); SC2 and SC5 | Yan et al., J. Supercomputing 2025 | `PreHUSPMAlgorithm`, `Variant.TSU` |
+| `Pre-HUSPM` | the same baseline in the static scenarios (SC1, SC3, SC4, SC7), where both tests mine alike | Yan et al., J. Supercomputing 2025 | `PreHUSPMAlgorithm`, `runInitialMining` |
+| `IncUSP-Miner+` | candidate-pattern-tree incremental baseline (Algorithms 1 and 2, HandleCase-1 and HandleCase-2, Strategies 1 to 6); insertions only | Wang and Huang, ACM TIST 2018 | `IncUSPMinerPlusAlgorithm` |
 | `Remine-from-scratch` | mines the whole current database after every operation | - | the proposal's own static miner, `runInitialMining`, on a new instance each time |
-| `USpan` | static baseline, SWU bound | Yin et al., KDD 2012 | `USpanAlgorithm` |
-| `HUSP-ULL` | static baseline, LAR and IIP pruning | Gan et al., IEEE TCYB 2021 | `HUSPULLAlgorithm` |
-| `HUSP-SP` | static baseline, seqPro and TRSU bound | Zhang et al., ACM TKDD 2023 | `HUSPSPAlgorithm` |
+| `USpan` | static baseline, width pruning by SWU and depth pruning by a sound bound | Yin et al., KDD 2012 | `USpanAlgorithm` |
+| `HUSP-ULL` | static baseline, UL-lists with irrelevant item pruning (IPS) and the look-ahead strategy (LAS), Algorithms 1 to 3 | Gan et al., IEEE Transactions on Cybernetics 2021 | `HUSPULLAlgorithm` |
+| `HUSP-SP` | static baseline, seq-array and seqPro with IIP, early pruning by a sound bound, and the PEU test | Zhang et al., ACM TKDD 2024 | `HUSPSPAlgorithm` |
 
 Every algorithm is implemented in Java in `src/algorithms/` and runs inside the same harness,
 so runtime, memory and the counters are measured under identical conditions. Numbers copied
 from other publications are never mixed into the tables.
 
-Both Pre-HUSPM variants compare the quantity accumulated since the last rescan with the bound
-`((UUT - LUT_min) / (1 - UUT)) * TSU_ref`, not the quantity of the current batch alone. The
-`TSU(d)` test is sound. The `SWUmax(d)` test is not: several inserted sequences that all
-contain a pattern can lift it above the threshold while the largest of them stays under the
-bound, so no rescan is made.
+**Pre-HUSPM.** Both incremental arms follow Algorithm 1 of Yan et al.: the quantity `q` of
+each inserted batch `d` is added to a buffer `buf` accumulated since the last rescan, and the
+database is rescanned when `buf + q > f`, with `f = ((UUT - LUT_min) / (1 - UUT)) * TSU_ref` and `TSU_ref` the total utility at
+the last rescan;
+otherwise the batch goes through the safe update and `buf` grows by `q`. `Pre-HUSPM-TSU` takes
+`q = TSU(d)`, the total utility of the inserted sequences (Theorem 1). `Pre-HUSPM-SWUmax` takes
+`q = SWUmax`, the largest sequence-weighted utility (Definition 8) of an item in the inserted
+sequences (Theorem 2). Both tests are sound: by Eq. (14), `SWU_d(X) <= SWUmax <= TSU(d)` for
+every pattern `X`, so over the batches absorbed since the last rescan no pattern gains more
+than `buf <= f`. The buffer holds every pattern whose projected sequence-weighted utility
+(`SWU_proj`, the PEU computed on the projected database as in the worked example of Yan et
+al.) reaches `LUT_min * TSU`, `TSU` being the total utility of the current database, as a
+prefix tree. Occurrence lists keep one entry per position
+with the largest utility of the pattern ending there. A rescan removes the items whose
+sequence-weighted utility (Definition 8) is below `LUT_min * TSU` (Algorithm 3, line 13) and
+mines the reduced database. Between rescans the buffer is updated as in Algorithm 2: every
+buffered pattern adds its values in `d` and is discarded, with its extensions, when its
+`SWU_proj` falls below `LUT_min * TSU`; a pattern not already buffered is not added.
+
+**USpan.** The depth pruning of Yin et al. (Eq. (21): the utility at the pivot plus the
+remaining utility after it) is not an upper bound (Truong-Chi and Fournier-Viger, 2019).
+`USpanAlgorithm` replaces it, as ProUM (2020) does, by the sum over the sequences of the
+largest `u(t, p) + rest(p)` over the ending positions `p` of the pattern `t`.
+
+**HUSP-ULL.** Algorithms 1 to 3 of Gan et al. with both pruning strategies, IPS and LAS. A
+projected sequence keeps one entry per concatenation point, holding the largest utility of the
+pattern ending there.
+
+**HUSP-SP.** HUSP-SP of Zhang et al.: the database is reduced by SWU, IIP removes irrelevant
+items and reduces the remaining-utility array, early pruning is applied at the root and at
+every node, and the PEU test follows Eq. (4). Early pruning uses a sound bound, the largest
+`acu_j + remUtil[q - 1]` over the prefix instances `j` and the valid positions `q` of the
+extension item, in place of TRSU (Definition 4.11), because Theorem 4.12 does not hold: for the
+sequence `<{a}:1, {b}:1, {a}:50, {e}:1, {b}:1, {e}:1>` and `t = <a, b>`, the TRSU of
+`<a, b, e>` is 5 while its utility is 52. Everything else follows the paper.
+
+**IncUSP-Miner+.** Algorithms 1 and 2 of Wang and Huang with HandleCase-1, HandleCase-2 and
+Strategies 1 to 6, including `LM_TSU` and the rescan of the old sequences where a strategy
+requires it. `min_util` is the threshold ratio times the total utility of the current
+database, so it follows the database as it grows.
 
 ## 2. Datasets
 
@@ -96,14 +132,16 @@ total utility at the last rescan, the proposal rescans when
 `max_i A_i - UUT*I + UUT*D > (UUT - LUT_min) * TSU_ref`, and on an operation that does not
 rescan it drops a tracked pattern `X` only when `u(X) < LUT_min * TSU_ref + min_{i in X} A_i`.
 The rules `iaumax`, `cub` and `swumax` remain selectable for comparison only; `iaumax` and
-`swumax` can miss patterns on a direct update.
+`swumax` can miss patterns on a direct update. The proposal's `swumax` rule compares the
+utility of the largest single inserted sequence; it is not the `SWUmax` of Yan et al., which
+`Pre-HUSPM-SWUmax` uses.
 
 ## 4. Scenarios
 
 | Scenario | Setup | Databases | Output file |
 |---|---|---|---|
 | SC1 | static mining of `D_init`, four UUT levels, six algorithms | all eight | `SC1_static.csv` |
-| SC2 | `D_init` then `K = 100` equal increments; the proposal, remining, both Pre-HUSPM variants and IncUSP-Miner+ | seven (not BMS1) | `SC2_incremental.csv` |
+| SC2 | `D_init` then `K = 100` equal increments; the proposal, remining, `Pre-HUSPM-SWUmax`, `Pre-HUSPM-TSU` and IncUSP-Miner+ | seven (not BMS1) | `SC2_incremental.csv` |
 | SC3 | static mining of the whole database, four UUT levels, six algorithms | SIGN, LEVIATHAN, C8T1S5I8N5K | `SC3_su.csv` |
 | SC4 | static mining of the whole database at `r_l` in {0.3, 0.5, 0.7, 0.9}, Pre-HUSPM and the proposal at the same `r_l` | SIGN, LEVIATHAN, C8T1S5I8N5K | `SC4_sl_sensitivity.csv` |
 | SC5 | the increments cut EVEN, INCREASING, DECREASING and BURST at `K` in {100, 67, 50, 25}; the SC2 arms | SIGN, LEVIATHAN, C8T1S5I8N5K | `SC5_batch_strategy.csv` |
@@ -115,7 +153,8 @@ database. In SC5 only BURST draws from the seed; EVEN, INCREASING and DECREASING
 deterministic. SC7's arms are `proposed_full`, `proposed_no_IUB`, `Pre-HUSPM` (one mine each)
 and `proposed_C5_on`, `proposed_C5_off`, `proposed_no_block_index` (over the increments).
 
-The proposal's SC4 cells on C8T1S5I8N5K at `r_l` = 0.3 and 0.5 are being re-measured.
+The USpan, HUSP-ULL, HUSP-SP, IncUSP-Miner+ and Pre-HUSPM arms, and the proposal's SC4 arm on
+C8T1S5I8N5K, are being re-measured.
 
 ## 5. Measurement
 
@@ -125,10 +164,10 @@ minutes (`-Dtimeout.min`), and each arm a limit of 8 hours (`campaign.ps1 -CapSe
 Before each increment the harness forces a collection and skips the increment, and the rest of
 the arm, when less than 10 percent of the heap is free.
 
-* `candidate_count` counts every extension generated, before any pruning.
-* `explored_nodes` counts the patterns actually materialised and recursed into, after the
-  extension filter; it measures pruning.
-* The miners keep every pattern that reaches their floor; a run that exhausts the heap is
+* `candidate_count` counts the candidates an algorithm generates on its own search, before its
+  pruning rules; `explored_nodes` counts the nodes it expands. What each algorithm counts is
+  given per algorithm in `docs/result-columns.md`.
+* The miners keep every pattern that reaches their floor; a run that runs out of heap is
   recorded as out of memory.
 * The memory campaign (`results/campaign-mem`) measures the live set: a full collection is
   forced at every sample and the heap read right after, so its runtimes are void. See

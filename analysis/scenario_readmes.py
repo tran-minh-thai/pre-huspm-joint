@@ -21,8 +21,8 @@ import make_figures as mf  # noqa: E402
 
 P = mf.PROPOSED
 REM = "Remine-from-scratch"
-INC = ["Pre-HUSPM", "Pre-HUSPM-TSU", REM, "IncUSP-Miner+"]
-LABEL = {P: "Pre-HUSPM-Adaptive", "Pre-HUSPM": "Pre-HUSPM-SWUmax", "Pre-HUSPM-TSU": "Pre-HUSPM-TSU",
+INC = ["Pre-HUSPM-SWUmax", "Pre-HUSPM-TSU", REM, "IncUSP-Miner+"]
+LABEL = {P: "Pre-HUSPM-Adaptive", "Pre-HUSPM-SWUmax": "Pre-HUSPM-SWUmax", "Pre-HUSPM-TSU": "Pre-HUSPM-TSU",
          REM: "Remine", "IncUSP-Miner+": "IncUSP-Miner+"}
 STATUS = {"OOM": "out of memory", "Skip": "out of memory", "OT": "over the time limit",
           "Fail": "failed", "MemSkip": "refused by the memory guard"}
@@ -127,7 +127,7 @@ def sc2():
     import re
     src = open(os.path.join(mf.REPO_DIR, "src", "common", "Datasets.java"), encoding="utf-8").read()
     rl = {d: (0.85 if re.search(rf'new Entry\("{d}",(?:(?!new Entry).)*?true, 0\.85\)', src, re.S) else 0.8) for d in dbs}
-    swu_faster = [d for d in dbs if totals[(d, "Pre-HUSPM")][1] == 100 and totals[(d, "Pre-HUSPM")][0] < totals[(d, P)][0]]
+    swu_faster = [d for d in dbs if totals[(d, "Pre-HUSPM-SWUmax")][1] == 100 and totals[(d, "Pre-HUSPM-SWUmax")][0] < totals[(d, P)][0]]
     kos = "KOSARAK"
     s1 = mf.parse_su(mf.load_scenario("SC1", replicates=True))
     s1 = s1[s1["finished"]].pivot_table(index=["dataset", "su", "algorithm"], columns="replicate",
@@ -138,15 +138,22 @@ def sc2():
     reg_rows = [[d, f"{reg.loc[d,'ratio_median']:.2f}", f"{reg.loc[d,'ratio_min']:.2f}", f"{reg.loc[d,'ratio_max']:.2f}",
                  f"{int(reg.loc[d,'within_budget'])}/{int(reg.loc[d,'increments'])}", int(reg.loc[d, "rescans"]),
                  reg.loc[d, "check"]] for d in sorted(dbs, key=lambda d: reg.loc[d, "ratio_median"])]
+    if swu_faster:
+        swu_line = ("Pre-HUSPM-SWUmax is faster than the proposal on " + ", ".join(
+            f"{d} ({secs(totals[(d,'Pre-HUSPM-SWUmax')][0])} s against {secs(totals[(d,P)][0])} s, "
+            f"{plural(int(df[(df['dataset']==d)&(df['algorithm']=='Pre-HUSPM-SWUmax')&mf.is_inc(df)]['rescan_count'].iloc[-1]), 'rescan')} "
+            f"against {int(reg.loc[d,'rescans'])})" for d in swu_faster) + ".")
+    else:
+        swu_line = "Neither Pre-HUSPM variant is faster than the proposal on any database where both complete."
     text = f"""# SC2, one hundred increments
 
 Seven databases against five arms; `D_init` per `common.Datasets`, the remainder cut into 100
 equal increments in file order. BMS1 is absent: no threshold mines it once the database grows
 past `D_init`, so it appears in SC1 alone. {HEAD}
 
-Pre-HUSPM-SWUmax is the arm `Pre-HUSPM`: Yan et al.'s Theorem 2 test, which compares the largest
-inserted sequence utility with the safety bound and is not sound. Pre-HUSPM-TSU is their Theorem 1
-test, which is. Both accumulate since the last rescan.
+Pre-HUSPM-SWUmax and Pre-HUSPM-TSU are the two rescan tests of Yan et al.: their Theorem 2, on the
+largest sequence-weighted utility of an item in the inserted sequences, and their Theorem 1, on the
+total utility of the inserted sequences. Both accumulate since the last rescan and both are sound.
 
 ## What completed
 
@@ -203,10 +210,7 @@ set directly.
 
 ## What this does not show
 
-Pre-HUSPM-SWUmax is faster than the proposal on {", ".join(f"{d} ({secs(totals[(d,'Pre-HUSPM')][0])} s against {secs(totals[(d,P)][0])} s, {plural(int(df[(df['dataset']==d)&(df['algorithm']=='Pre-HUSPM')&mf.is_inc(df)]['rescan_count'].iloc[-1]), 'rescan')} against {int(reg.loc[d,'rescans'])})" for d in swu_faster)}.
-Its test rescans rarely because it under-counts what an increment can add to a pattern; it is not
-sound, and its sound counterpart, Pre-HUSPM-TSU, does not finish these two streams within the
-eight-hour cap.
+{swu_line}
 """
     write("campaign/SC2/README.md", text)
 
@@ -219,7 +223,7 @@ def sc5():
     tot = cells.apply(lambda g: mf.ms_to_s(g["runtime_ms"]).sum() if g["finished"].all() else np.nan)
     resc = inc[inc["algorithm"] == P].groupby(["dataset", "K", "strat"])["rescan_count"].max()
     rows = []
-    for b in ["Pre-HUSPM-TSU", "Pre-HUSPM", "IncUSP-Miner+", REM]:
+    for b in ["Pre-HUSPM-TSU", "Pre-HUSPM-SWUmax", "IncUSP-Miner+", REM]:
         r = []
         for (ds, k, s, a), v in tot.items():
             if a != b:
@@ -390,7 +394,7 @@ Over the increments that do not rescan, the only ones on which the index is read
 def mem_sc2():
     df = mf.load_scenario("SC2", tree=mf.MEMORY_TREE)
     dbs = [d for d in mf.SC2_DATASETS if d in set(df["dataset"])]
-    algos = [P, "Pre-HUSPM", "Pre-HUSPM-TSU", REM, "IncUSP-Miner+"]
+    algos = [P, "Pre-HUSPM-SWUmax", "Pre-HUSPM-TSU", REM, "IncUSP-Miner+"]
     held, peak = [], []
     for ds in dbs:
         hr, pr = [ds], [ds]

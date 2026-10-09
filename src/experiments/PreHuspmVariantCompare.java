@@ -21,9 +21,9 @@ import java.util.Map;
 /**
  * Compares the two variants of the Pre-HUSPM baseline.
  *
- * Yan et al. give two rescan trigger rules: one bounded by TSU(d), which is sound, and one
- * bounded by SWUmax(d), which is not. This study measures the COST of the sound variant
- * under the authors' own protocol: an original database of OD.Num sequences, with the rest
+ * Yan et al. give two rescan tests, on TSU(d) (Theorem 1) and on SWUmax, the largest
+ * sequence-weighted utility of an item in the inserted sequences (Theorem 2); both are
+ * sound. This tool measures both under the authors' own protocol: an original database of OD.Num sequences, with the rest
  * split into 100 batches (their Table 16).
  *
  * For each variant: rescan count, runtime, and the pattern-set difference from

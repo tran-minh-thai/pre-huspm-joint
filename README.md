@@ -138,9 +138,11 @@ Scenarios, one at a time or all:
 
 Algorithm names, as used by `-Dalgo.only` and in the `algorithm` column: `Adaptive-Full`
 (the proposed method), `Remine-from-scratch` (the same miner run on the whole database after
-every operation), `Pre-HUSPM` (rescan test on the largest sequence utility of a batch, as in
-Yan et al., 2025), `Pre-HUSPM-TSU` (the same algorithm with the test on the total utility of
-a batch), `IncUSP-Miner+`, `USpan`, `HUSP-ULL`, `HUSP-SP`.
+every operation), `Pre-HUSPM-SWUmax` and `Pre-HUSPM-TSU` (the two variants of Yan et al., 2025:
+the rescan test of their Theorem 2, on the largest sequence-weighted utility of an item in the
+inserted sequences, and of their Theorem 1, on the total utility of the inserted sequences, both
+accumulated since the last rescan), `IncUSP-Miner+`, `USpan`, `HUSP-ULL`, `HUSP-SP`. In the
+static scenarios the two Pre-HUSPM variants mine identically and run as one arm, `Pre-HUSPM`.
 
 ## Results
 

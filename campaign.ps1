@@ -94,7 +94,7 @@ $all7    = @('SIGN','LEVIATHAN','TAFENG','BIBLE','C8T1S5I8N5K','KOSARAK','FIFA')
 $all8    = @('SIGN','LEVIATHAN','TAFENG','BIBLE','BMS1','C8T1S5I8N5K','KOSARAK','FIFA')
 $subset3 = @('SIGN','LEVIATHAN','C8T1S5I8N5K')
 $static  = @('USpan','HUSP-ULL','HUSP-SP','IncUSP-Miner+','Pre-HUSPM','Adaptive-Full')
-$incr    = @('Adaptive-Full','Pre-HUSPM','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+')
+$incr    = @('Adaptive-Full','Pre-HUSPM-SWUmax','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+')
 
 # Arms that exist on some databases only. SC7's incremental ablations (the block index and
 # the adaptive rescan) run in the runner on C5_ABLATION_SET, which is SIGN and C8T1S5I8N5K
@@ -135,7 +135,7 @@ if (-not $Datasets) {
 # Check the names before anything uses them. Passed through -File, PowerShell hands an
 # array parameter the whole comma-joined string, so -Algorithms A,B arrives as one name
 # "A,B", which matches no algorithm. Use -Command "& { .\campaign.ps1 -Algorithms 'A','B' }".
-$knownAlgos = @('Adaptive-Full','Pre-HUSPM','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+',
+$knownAlgos = @('Adaptive-Full','Pre-HUSPM','Pre-HUSPM-SWUmax','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+',
                 'USpan','HUSP-ULL','HUSP-SP',
                 'proposed_full','proposed_no_block_index','proposed_no_IUB',
                 'proposed_C5_on','proposed_C5_off')
