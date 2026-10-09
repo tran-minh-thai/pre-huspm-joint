@@ -12,13 +12,13 @@ the adaptive decision or the block index off as with both on (yes).
 
 | database | HUSPs | full | IUB off | Pre-HUSPM | explored, full | explored, IUB off | IUB cuts |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| SIGN | 141 | 0.68 s | 0.52 s | 1.57 s | 38,372 | 38,372 | 152 |
-| LEVIATHAN | 135 | 1.82 s | 1.87 s | 15.45 s | 39,313 | 39,313 | 8,830 |
-| FIFA | 17 | 101.44 s | 99.04 s | 630.45 s | 473,004 | 473,004 | 2,889 |
-| BIBLE | 129 | 2.33 s | 2.26 s | 31.76 s | 18,939 | 18,939 | 13,805 |
-| KOSARAK | 9 | 81.30 s | 80.75 s | 391.22 s | 84,913 | 84,913 | 40,948 |
-| C8T1S5I8N5K | 3438 | 1.96 s | 2.16 s | 3.97 s | 383,747 | 383,747 | 66,925 |
-| TAFENG | 9 | 0.48 s | 0.54 s | 0.38 s | 23,847 | 23,847 | 22,911 |
+| SIGN | 141 | 0.68 s | 0.52 s | not run | 38,372 | 38,372 | 152 |
+| LEVIATHAN | 135 | 1.82 s | 1.87 s | not run | 39,313 | 39,313 | 8,830 |
+| FIFA | 17 | 101.44 s | 99.04 s | not run | 473,004 | 473,004 | 2,889 |
+| BIBLE | 129 | 2.33 s | 2.26 s | not run | 18,939 | 18,939 | 13,805 |
+| KOSARAK | 9 | 81.30 s | 80.75 s | not run | 84,913 | 84,913 | 40,948 |
+| C8T1S5I8N5K | 3438 | 1.96 s | 2.16 s | not run | 383,747 | 383,747 | 66,925 |
+| TAFENG | 9 | 0.48 s | 0.54 s | not run | 23,847 | 23,847 | 22,911 |
 
 ## The adaptive rescan decision
 

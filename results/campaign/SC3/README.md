@@ -1,8 +1,8 @@
 # SC3, static mining on the whole database
 
-> IncUSP-Miner+ is being re-measured after its reimplementation (commit 0cad934, checked in
-> `results/invariant-incusp-correctness`). Its columns below come from the previous
-> implementation and are replaced when the re-measurement is in.
+> The baselines (USpan, HUSP-ULL, HUSP-SP, IncUSP-Miner+, Pre-HUSPM) are being re-measured after
+> being implemented as published (`docs/experiments.md`, checks in `results/invariant-*`). Their
+> columns below come from the previous implementations and are replaced when the re-measurement is in.
 
 SC1 mines `D_init`; SC3 mines the whole database, at the same four thresholds per database.
 SUBSET_3: SIGN, LEVIATHAN, C8T1S5I8N5K. Six algorithms, 72 runs, `PC-THAI`, JDK 25,

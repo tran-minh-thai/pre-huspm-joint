@@ -4,21 +4,21 @@ Seven databases against five arms; `D_init` per `common.Datasets`, the remainder
 equal increments in file order. BMS1 is absent: no threshold mines it once the database grows
 past `D_init`, so it appears in SC1 alone. Measured on `PC-THAI` (see `results/machine/PC-THAI.json` and `environment.lock.json`), `-Xmx48g`, one JVM per arm. Written by `analysis/scenario_readmes.py` from the arms' CSVs; rerun it rather than editing numbers here.
 
-Pre-HUSPM-SWUmax is the arm `Pre-HUSPM`: Yan et al.'s Theorem 2 test, which compares the largest
-inserted sequence utility with the safety bound and is not sound. Pre-HUSPM-TSU is their Theorem 1
-test, which is. Both accumulate since the last rescan.
+Pre-HUSPM-SWUmax and Pre-HUSPM-TSU are the two rescan tests of Yan et al.: their Theorem 2, on the
+largest sequence-weighted utility of an item in the inserted sequences, and their Theorem 1, on the
+total utility of the inserted sequences. Both accumulate since the last rescan and both are sound.
 
 ## What completed
 
 | database | Pre-HUSPM-Adaptive | Pre-HUSPM-SWUmax | Pre-HUSPM-TSU | Remine | IncUSP-Miner+ |
 |---|---|---|---|---|---|
-| SIGN | 100/100 | 100/100 | 100/100 | 100/100 | 0/100, not run |
-| LEVIATHAN | 100/100 | 0/100, out of memory on `D_init` | 0/100, out of memory on `D_init` | 100/100 | 0/100, not run |
-| FIFA | 100/100 | 100/100 | 0/100, deferred, not finished within 8 h | 100/100 | 0/100, not run |
-| BIBLE | 100/100 | 100/100 | 100/100 | 100/100 | 0/100, not run |
-| KOSARAK | 100/100 | 100/100 | 0/100, deferred, not finished within 8 h | 100/100 | 0/100, not run |
-| C8T1S5I8N5K | 100/100 | 100/100 | 100/100 | 100/100 | 0/100, not run |
-| TAFENG | 100/100 | 100/100 | 100/100 | 100/100 | 0/100, not run |
+| SIGN | 100/100 | 0/100, not run | 0/100, not run | 100/100 | 0/100, not run |
+| LEVIATHAN | 100/100 | 0/100, not run | 0/100, not run | 100/100 | 0/100, not run |
+| FIFA | 100/100 | 0/100, not run | 0/100, not run | 100/100 | 0/100, not run |
+| BIBLE | 100/100 | 0/100, not run | 0/100, not run | 100/100 | 0/100, not run |
+| KOSARAK | 100/100 | 0/100, not run | 0/100, not run | 100/100 | 0/100, not run |
+| C8T1S5I8N5K | 100/100 | 0/100, not run | 0/100, not run | 100/100 | 0/100, not run |
+| TAFENG | 100/100 | 0/100, not run | 0/100, not run | 100/100 | 0/100, not run |
 
 ## Runtime, summed over the increments that completed
 
@@ -29,13 +29,13 @@ proposal and Remine over three runs is in the next table.
 
 | database | Pre-HUSPM-Adaptive | rescans | Pre-HUSPM-SWUmax | Pre-HUSPM-TSU | Remine | IncUSP-Miner+ |
 |---|---:|---:|---:|---:|---:|---:|
-| SIGN | **17.5** | 59 | 26.5 | 61.0 | 30.0 | - |
+| SIGN | **17.5** | 59 | - | - | 30.0 | - |
 | LEVIATHAN | 95.2 | 98 | - | - | **89.9** | - |
-| FIFA | 2,095 | 27 | **1,310** | - | 7,726 | - |
-| BIBLE | **109** | 63 | 139 | 2,920 | 181 | - |
-| KOSARAK | 4,673 | 100 | **1,677** | - | 4,563 | - |
-| C8T1S5I8N5K | **55.7** | 77 | 230 | 309 | 81.0 | - |
-| TAFENG | **5.8** | 52 | 7.0 | 26.4 | 18.8 | - |
+| FIFA | **2,095** | 27 | - | - | 7,726 | - |
+| BIBLE | **109** | 63 | - | - | 181 | - |
+| KOSARAK | 4,673 | 100 | - | - | **4,563** | - |
+| C8T1S5I8N5K | **55.7** | 77 | - | - | 81.0 | - |
+| TAFENG | **5.8** | 52 | - | - | 18.8 | - |
 
 ### Three runs
 
@@ -80,7 +80,7 @@ of 100 increments and still finish faster than remining.
 **Beyond it**: LEVIATHAN, 2 of 100 within budget, KOSARAK, 0 of 100 within budget.
 Maintenance degenerates into remining: LEVIATHAN 95.2 s against remining's 89.9 s (+5.8 %); KOSARAK 4,673 s against remining's 4,563 s (+2.4 %),
 one run each. Two runs of one SC1 configuration on the same JDK differ by a factor between
-0.83 and 1.17 (109 configurations of at least one second), so differences
+0.97 and 1.17 (10 configurations of at least one second), so differences
 of a few percent between single runs are not resolved here.
 
 ## KOSARAK cannot be moved by tuning
@@ -95,7 +95,4 @@ set directly.
 
 ## What this does not show
 
-Pre-HUSPM-SWUmax is faster than the proposal on FIFA (1,310 s against 2,095 s, 1 rescan against 27), KOSARAK (1,677 s against 4,673 s, 8 rescans against 100).
-Its test rescans rarely because it under-counts what an increment can add to a pattern; it is not
-sound, and its sound counterpart, Pre-HUSPM-TSU, does not finish these two streams within the
-eight-hour cap.
+Neither Pre-HUSPM variant is faster than the proposal on any database where both complete.

@@ -1,5 +1,8 @@
 # SC4, the pre-large floor
 
+> The Pre-HUSPM arm and the proposal's arm on C8T1S5I8N5K are being re-measured. The Pre-HUSPM
+> column below comes from the previous implementation and is replaced when the re-measurement is in.
+
 A single mine of the whole database at four floors, `r_l` in {0.3, 0.5, 0.7, 0.9}, for
 Pre-HUSPM and the proposal side by side at the same `r_l`. SUBSET_3 only: SIGN, LEVIATHAN,
 C8T1S5I8N5K. Two arms per database, one per algorithm, each holding its four floors.

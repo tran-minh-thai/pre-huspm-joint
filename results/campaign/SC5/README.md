@@ -12,8 +12,8 @@ The proposal is the fastest arm in 46 of 48 cells.
 
 | baseline | baseline time / proposal time | cells | cells where the baseline is faster |
 |---|---:|---:|---:|
-| Pre-HUSPM-TSU | 3.88 | 32 | 0 |
-| Pre-HUSPM-SWUmax | 2.98 | 32 | 0 |
+| Pre-HUSPM-TSU | nan | 0 | 0 |
+| Pre-HUSPM-SWUmax | nan | 0 | 0 |
 | IncUSP-Miner+ | nan | 0 | 0 |
 | Remine | 1.30 | 48 | 2 |
 

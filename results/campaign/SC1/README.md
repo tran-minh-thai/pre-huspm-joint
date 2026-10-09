@@ -1,8 +1,8 @@
 # SC1, static mining on `D_init`
 
-> IncUSP-Miner+ is being re-measured after its reimplementation (commit 0cad934, checked in
-> `results/invariant-incusp-correctness`). Its columns below come from the previous
-> implementation and are replaced when the re-measurement is in.
+> The baselines (USpan, HUSP-ULL, HUSP-SP, IncUSP-Miner+, Pre-HUSPM) are being re-measured after
+> being implemented as published (`docs/experiments.md`, checks in `results/invariant-*`). Their
+> columns below come from the previous implementations and are replaced when the re-measurement is in.
 
 Eight databases, six algorithms, four thresholds each: 192 runs. `D_init` and the thresholds
 come from `common.Datasets`. Measured on `PC-THAI`, JDK 25, `-Xmx48g`, one JVM per arm, one

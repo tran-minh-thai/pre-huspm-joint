@@ -1,5 +1,8 @@
 # Two builds of JDK 25 on the measurement machine
 
+> The baseline arms compared here were measured with their previous implementations and have
+> since been removed for re-measurement; the comparison stands for the code it was run on.
+
 Every arm ran on `PC-THAI`. Part of the arms ran on Microsoft OpenJDK 25.0.4 and part on
 Eclipse Temurin 25.0.4.1+1, the build pinned in `environment.lock.json`; each arm's `run.log`
 names its JVM where it was recorded.

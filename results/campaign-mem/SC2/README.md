@@ -14,13 +14,13 @@ MB.
 
 | database | Pre-HUSPM-Adaptive | Pre-HUSPM-SWUmax | Pre-HUSPM-TSU | Remine | IncUSP-Miner+ |
 |---|---:|---:|---:|---:|---:|
-| SIGN | 13 | 36 | 37 | 17 | not run |
-| LEVIATHAN | 47 | deferred, out of memory on `D_init` | deferred, out of memory on `D_init` | 34 | not run |
-| FIFA | 42 | 503 | deferred, not finished within 8 h | 45 | not run |
-| BIBLE | 84 | 379 | 1,199 | 53 | not run |
-| KOSARAK | 532 | 874 | deferred, not finished within 8 h | 400 | not run |
-| C8T1S5I8N5K | 81 | 163 | 161 | 98 | not run |
-| TAFENG | 90 | 52 | 58 | 65 | not run |
+| SIGN | 13 | not run | not run | 17 | not run |
+| LEVIATHAN | 47 | not run | not run | 34 | not run |
+| FIFA | 42 | not run | not run | 45 | not run |
+| BIBLE | 84 | not run | not run | 53 | not run |
+| KOSARAK | 532 | not run | not run | 400 | not run |
+| C8T1S5I8N5K | 81 | not run | not run | 98 | not run |
+| TAFENG | 90 | not run | not run | 65 | not run |
 
 ## Peak live set over the stream
 
@@ -28,10 +28,10 @@ MB.
 
 | database | Pre-HUSPM-Adaptive | Pre-HUSPM-SWUmax | Pre-HUSPM-TSU | Remine | IncUSP-Miner+ |
 |---|---:|---:|---:|---:|---:|
-| SIGN | 17 | 89 | 95 | 21 | not run |
-| LEVIATHAN | 70 | deferred, out of memory on `D_init` | deferred, out of memory on `D_init` | 61 | not run |
-| FIFA | 153 | 946 | deferred, not finished within 8 h | 163 | not run |
-| BIBLE | 183 | 2,105 | 2,527 | 170 | not run |
-| KOSARAK | 1,675 | 2,811 | deferred, not finished within 8 h | 1,539 | not run |
-| C8T1S5I8N5K | 189 | 441 | 448 | 213 | not run |
-| TAFENG | 96 | 167 | 182 | 69 | not run |
+| SIGN | 17 | not run | not run | 21 | not run |
+| LEVIATHAN | 70 | not run | not run | 61 | not run |
+| FIFA | 153 | not run | not run | 163 | not run |
+| BIBLE | 183 | not run | not run | 170 | not run |
+| KOSARAK | 1,675 | not run | not run | 1,539 | not run |
+| C8T1S5I8N5K | 189 | not run | not run | 213 | not run |
+| TAFENG | 96 | not run | not run | 69 | not run |

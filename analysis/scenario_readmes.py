@@ -344,7 +344,7 @@ def sc7():
              ["proposed_full", "proposed_no_IUB", "Pre-HUSPM"] if len(st[(st["dataset"] == ds) & (st["algorithm"] == a)])}
         f = r["proposed_full"]
         c3.append([ds, int(f["total_patterns_found"]), f"{f['runtime_ms']/1000:.2f} s",
-                   f"{r['proposed_no_IUB']['runtime_ms']/1000:.2f} s", f"{r['Pre-HUSPM']['runtime_ms']/1000:.2f} s",
+                   f"{r['proposed_no_IUB']['runtime_ms']/1000:.2f} s", (f"{r['Pre-HUSPM']['runtime_ms']/1000:.2f} s" if 'Pre-HUSPM' in r else "not run"),
                    f"{int(f['explored_nodes']):,}", f"{int(r['proposed_no_IUB']['explored_nodes']):,}", f"{int(f['pruned_iub']):,}"])
     inc = df[df["algorithm"].isin(["proposed_C5_on", "proposed_C5_off", "proposed_no_block_index"]) & mf.is_inc(df)]
     c5, c4 = [], []

@@ -1,5 +1,8 @@
 # Do the incremental algorithms report the same HUSPs after every operation?
 
+> This check describes the implementations of IncUSP-Miner+ and Pre-HUSPM before they were
+> implemented as published; rerun `analysis/incremental_agreement.py` on the re-measured arms.
+
 Kind: invariant (pattern counts read from the timing campaign; machine-independent).
 
 `analysis/incremental_agreement.py` compares `total_patterns_found` of each incremental
