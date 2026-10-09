@@ -448,6 +448,88 @@ MB.
     write("campaign-mem/SC2/README.md", text)
 
 
+# What each scenario measures, written while it has no finished arm; the numbers come only
+# from the arms' CSVs once there are some.
+SCOPE = {
+    "campaign/SC1/README.md": (
+        "SC1, static mining on `D_init`",
+        "Eight databases, six algorithms (USpan, HUSP-ULL, HUSP-SP, IncUSP-Miner+, Pre-HUSPM and "
+        "Pre-HUSPM-Adaptive), four thresholds per database from `common.Datasets`. One JVM per arm; "
+        "the four thresholds run lowest first in the same JVM."),
+    "campaign/SC2/README.md": (
+        "SC2, one hundred increments",
+        "`D_init` per `common.Datasets`, the remainder cut into 100 equal increments in file order, "
+        "against Pre-HUSPM-SWUmax, Pre-HUSPM-TSU, remining from scratch and IncUSP-Miner+. BMS1 is "
+        "not in this scenario: no threshold mines it once the database grows past `D_init`."),
+    "campaign/SC3/README.md": (
+        "SC3, static mining on the whole database",
+        "The six algorithms of SC1 on the whole database at the same four thresholds, on SIGN, "
+        "LEVIATHAN and C8T1S5I8N5K."),
+    "campaign/SC4/README.md": (
+        "SC4, the pre-large floor",
+        "One mine of the whole database at four floors, `r_l` in {0.3, 0.5, 0.7, 0.9}, for Pre-HUSPM "
+        "and the proposal at the same `r_l`, on SIGN, LEVIATHAN and C8T1S5I8N5K."),
+    "campaign/SC5/README.md": (
+        "SC5, how the stream is cut",
+        "The incremental stream cut four ways (EVEN, INCREASING, DECREASING, BURST) at four increment "
+        "counts, `K` in {100, 67, 50, 25}, the total incremental data fixed; SIGN, LEVIATHAN and "
+        "C8T1S5I8N5K."),
+    "campaign/SC6/README.md": (
+        "SC6, insertion, deletion and modification mixed",
+        "Twenty operations per database and seed (14 insertions, 3 deletions, 3 modifications in an "
+        "order drawn from the seed), replayed by the proposal and by remining; SIGN, LEVIATHAN and "
+        "C8T1S5I8N5K, five seeds."),
+    "campaign/SC7/README.md": (
+        "SC7, what each component contributes",
+        "The IUB bound ablated on one mine of the whole database, with Pre-HUSPM beside it; the block "
+        "index and the adaptive rescan decision ablated on `D_init` and 100 increments, on SIGN and "
+        "C8T1S5I8N5K."),
+    "campaign-mem/SC1/README.md": (
+        "SC1 memory: the live set of a static mine on `D_init`",
+        "The runs of SC1 measured for memory instead of time: at every sample the runner forces a full "
+        "collection and reads the heap right after, so runtimes are void."),
+    "campaign-mem/SC2/README.md": (
+        "SC2 memory: the state an incremental method holds over 100 increments",
+        "The streams of SC2 measured in live mode, so the runtimes of these rows are void."),
+}
+
+# (path, scenario, tree, read replicates, generator or None)
+README_SOURCES = [
+    ("campaign/SC1/README.md", "SC1", mf.TIMING_TREE, False, None),
+    ("campaign/SC2/README.md", "SC2", mf.TIMING_TREE, False, sc2),
+    ("campaign/SC3/README.md", "SC3", mf.TIMING_TREE, False, None),
+    ("campaign/SC4/README.md", "SC4", mf.TIMING_TREE, False, None),
+    ("campaign/SC5/README.md", "SC5", mf.TIMING_TREE, False, sc5),
+    ("campaign/SC6/README.md", "SC6", mf.TIMING_TREE, True, sc6),
+    ("campaign/SC7/README.md", "SC7", mf.TIMING_TREE, False, sc7),
+    ("campaign-mem/SC1/README.md", "SC1", mf.MEMORY_TREE, False, None),
+    ("campaign-mem/SC2/README.md", "SC2", mf.MEMORY_TREE, False, mem_sc2),
+]
+
+
+def no_results(path, sc):
+    title, scope = SCOPE[path]
+    write(path, f"""# {title}
+
+{scope}
+
+No arm of this scenario has finished yet. Its tables are written here from the arms' CSVs by
+`analysis/scenario_readmes.py` once they have: `.\\campaign.ps1 -Scenario {sc}`.
+""")
+
+
 if __name__ == "__main__":
-    for f in (sc2, sc5, sc6, sc7, mem_sc2):
-        f()
+    missing = []
+    for path, sc, tree, reps, gen in README_SOURCES:
+        df = mf.load_scenario(sc, tree=tree, replicates=reps)
+        if df is None or df.empty:
+            no_results(path, sc)
+        elif gen is None:
+            missing.append(path)
+        else:
+            gen()
+    if missing:
+        # Results exist but nothing writes their tables: typing them by hand is what this
+        # script is here to prevent, so it fails instead of leaving the old file in place.
+        print("ERROR: results exist but no generator writes " + ", ".join(missing), file=sys.stderr)
+        sys.exit(1)

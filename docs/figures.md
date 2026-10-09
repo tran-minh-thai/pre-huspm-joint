@@ -44,9 +44,6 @@ every sum.
 `fig_scalability_SC1_explored_nodes.pdf` (SC1 on all eight databases) and
 `fig_sl_sensitivity_runtime_ms.pdf` (SC4 runtime against `r_l`).
 
-The USpan, HUSP-ULL, HUSP-SP, IncUSP-Miner+ and Pre-HUSPM arms, and the proposal's SC4 arm on
-C8T1S5I8N5K, are being re-measured.
-
 ## Tables
 
 | file | content |

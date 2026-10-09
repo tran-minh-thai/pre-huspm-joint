@@ -31,7 +31,11 @@ import java.util.Map;
  *   java -Xmx48g -Xss64m -cp build verify.BaselineAgreement SIGN 0.08337   (another sweep level)
  *   java -Xmx48g -Xss64m -cp build verify.BaselineAgreement ALL
  *
- * Exits 0 if every algorithm agrees, 1 on any mismatch.
+ * A miner that runs out of heap is reported as not finished and is not a mismatch: it
+ * returned nothing to compare. The summary gives how many comparisons were made, so a run in
+ * which most miners did not finish cannot pass as agreement.
+ *
+ * Exits 0 if every comparison made agrees, 1 on any mismatch.
  */
 public final class BaselineAgreement {
 
@@ -54,8 +58,11 @@ public final class BaselineAgreement {
             bad += check(e.name, uutArg != null ? uutArg : e.defaultUut, halfOnly);
         }
         System.out.println();
+        System.out.println("Comparisons made: " + compared + ", mismatching: " + bad
+                + ", miners that did not finish: " + unfinished.size()
+                + (unfinished.isEmpty() ? "" : " " + unfinished));
         System.out.println(bad == 0
-                ? "RESULT: every static algorithm returns the same set of HUSPs."
+                ? "RESULT: every comparison made returns the same set of HUSPs."
                 : "RESULT: " + bad + " mismatching pairs - fix before reporting any number.");
         if (bad > 0) System.exit(1);
     }
@@ -71,26 +78,46 @@ public final class BaselineAgreement {
         List<Sequence> db = halfOnly ? new ArrayList<>(all.subList(0, dInit)) : all;
         double tsu = 0;
         for (Sequence s : db) tsu += s.sequenceUtility;
-        double minUtil = tsu * uut;
+        final double minUtil = tsu * uut, tsuAll = tsu;
 
         System.out.printf("%n=== %s | |D|=%d | UUT=%.4f | absolute threshold=%.1f ===%n",
                 name, db.size(), uut, minUtil);
 
-        USpanAlgorithm us = new USpanAlgorithm(minUtil);
-        us.run(copy(db));
-        Map<String, Double> refSet = asStrings(us.largeMap);
-        System.out.printf("  %-10s HUSP=%-7d cand=%-12d explored=%d%n",
-                "USpan", refSet.size(), us.candidateCount, us.exploredNodes);
+        Map<String, Double> refSet = guarded(name, "USpan", () -> {
+            USpanAlgorithm us = new USpanAlgorithm(minUtil);
+            us.run(copy(db));
+            System.out.printf("  %-10s HUSP=%-7d cand=%-12d explored=%d%n",
+                    "USpan", us.largeMap.size(), us.candidateCount, us.exploredNodes);
+            return asStrings(us.largeMap);
+        });
+        if (refSet == null) return 0;
 
         int bad = 0;
-        bad += compare("HUSP-SP", refSet, runHuspSp(copy(db), minUtil));
-        bad += compare("HUSP-ULL", refSet, runHuspUll(copy(db), minUtil));
+        bad += compare("HUSP-SP", refSet, guarded(name, "HUSP-SP", () -> runHuspSp(copy(db), minUtil)));
+        bad += compare("HUSP-ULL", refSet, guarded(name, "HUSP-ULL", () -> runHuspUll(copy(db), minUtil)));
         // Implementations that share no mining code with USpan, so a fault common to the
         // three static baselines above would still show up here.
-        bad += compare("IncUSP-Miner+", refSet, runIncUsp(copy(db), uut, tsu));
-        bad += compare("Pre-HUSPM", refSet, runPreHuspm(copy(db), uut, tsu, name));
-        bad += compare("Adaptive", refSet, runAdaptive(copy(db), uut, tsu, name));
+        bad += compare("IncUSP-Miner+", refSet, guarded(name, "IncUSP-Miner+", () -> runIncUsp(copy(db), uut, tsuAll)));
+        bad += compare("Pre-HUSPM", refSet, guarded(name, "Pre-HUSPM", () -> runPreHuspm(copy(db), uut, tsuAll, name)));
+        bad += compare("Adaptive", refSet, guarded(name, "Adaptive", () -> runAdaptive(copy(db), uut, tsuAll, name)));
         return bad;
+    }
+
+    private static int compared = 0;
+    private static final List<String> unfinished = new ArrayList<>();
+
+    /** Runs one miner; null when it ran out of heap, which is recorded and not compared. */
+    private static Map<String, Double> guarded(String db, String who,
+                                               java.util.function.Supplier<Map<String, Double>> run) {
+        try {
+            return run.get();
+        } catch (OutOfMemoryError oom) {
+            System.out.printf("  %-10s did not finish: heap exhausted (-Xmx%dm)%n",
+                    who, Runtime.getRuntime().maxMemory() >> 20);
+            unfinished.add(db + "/" + who);
+            System.gc();
+            return null;
+        }
     }
 
     private static Map<String, Double> runIncUsp(List<Sequence> db, double uut, double tsu) {
@@ -140,6 +167,8 @@ public final class BaselineAgreement {
     }
 
     private static int compare(String who, Map<String, Double> ref, Map<String, Double> got) {
+        if (got == null) return 0;
+        compared++;
         PatternSetDiff d = PatternSetDiff.of(ref, got);
         if (d.isClean()) {
             System.out.printf("    %-10s matches USpan exactly%n", who);

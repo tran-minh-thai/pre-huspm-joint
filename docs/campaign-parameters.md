@@ -73,10 +73,6 @@ after each increment.
 
 ## What each scenario costs
 
-The USpan, HUSP-ULL, HUSP-SP, IncUSP-Miner+ and Pre-HUSPM arms (`Pre-HUSPM`,
-`Pre-HUSPM-SWUmax` and `Pre-HUSPM-TSU`; timing, memory and replicates) and the proposal's SC4
-arm on C8T1S5I8N5K are being re-measured, so no cost or outcome is given for them here.
-
 | scenario | arms | arms per database |
 |---|---:|---|
 | SC1 | 48 | the six static algorithms on eight databases |
@@ -88,8 +84,3 @@ arm on C8T1S5I8N5K are being re-measured, so no cost or outcome is given for the
 | SC7 | 27 | `proposed_full`, `proposed_no_IUB`, `Pre-HUSPM` on seven databases; `proposed_C5_on`, `proposed_C5_off`, `proposed_no_block_index` on SIGN and C8T1S5I8N5K |
 | SC1, live memory | 48 | as SC1 |
 | SC2, live memory | 35 | as SC2 |
-
-Machine time on `PC-THAI`, from the `seconds` field of each `DONE`, one repeat: SC6, which
-runs only the proposal and remining, takes 2 min in all; the longest arm of the proposal or of
-remining is FIFA/Remine-from-scratch in SC2, 2.2 h in timing mode and 2.7 h in live memory
-mode.
