@@ -2,7 +2,7 @@
   "command": "python3 -I analysis/insertion_alpha.py --out results/invariant-insertion-alpha",
   "path_substitutions": 0,
   "build_dir": "build-alpha",
-  "git_commit": "f5b32b82a7962be8c46590cfbd5a71337a94e5ce",
+  "git_commit": "b62f29645f752402276d0f313a4de8e3f1b45075",
   "tree": "src clean, other files modified",
   "source_sha256": "ef3d3dc5016b162a3ba0a7cc5621c8941feb2d14d70904fcbd9d48733bf79f9d",
   "source_files": 34,
@@ -10,7 +10,7 @@
   "os": "Darwin 27.0.0 (macOS-27.0.1-arm64-arm-64bit-Mach-O)",
   "machine": "ThaiTMs-MacBook-Pro.local",
   "role": "development machine: counters only, no timings",
-  "start": "2026-10-10T20:43:10",
-  "end": "2026-10-10T20:43:17",
+  "start": "2026-10-10T21:10:49",
+  "end": "2026-10-10T21:10:56",
   "exit_code": 0
 }

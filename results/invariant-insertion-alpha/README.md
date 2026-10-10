@@ -13,6 +13,10 @@ rescanned while alpha <= UUT, and otherwise rescanned exactly when
   100 decisions, and `joint_over_tsu` = (1 - UUT) / (alpha - UUT), the inserted utility the
   joint rule absorbs before a rescan relative to a test on the total inserted utility.
 - `alpha_batches.csv`: per database and increment, alpha at the decision and the decision.
+- `sim_rescans_*` in `alpha_stream.csv`: rescans over the 100 increments of the joint rule and of
+  Pre-HUSPM's two tests, simulated from the data. On SIGN, LEVIATHAN, TAFENG and C8T1S5I8N5K the
+  simulated Pre-HUSPM counts equal those of the implementation in
+  `results/invariant-baseline-fidelity/prehuspm-real-*` (8 of 8).
 
 On all seven databases alpha exceeds UUT at every one of the 700 decisions, so the branch
 alpha <= UUT never applies here; the rescans follow the second condition. `make_figures.py`
