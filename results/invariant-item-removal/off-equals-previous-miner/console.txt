@@ -1,0 +1,29 @@
+commit 9b8a922   : SIGN init patterns=583 prelarge=1368 explored=69792 candidates=9425036 prunedValue=9355244 prunedIub=117 digest=1492086897
+adapt.iip=off: SIGN init patterns=583 prelarge=1368 explored=69792 candidates=9425036 prunedValue=9355244 prunedIub=117 digest=1492086897
+commit 9b8a922   : SIGN whole patterns=141 prelarge=392 explored=38372 candidates=7294276 prunedValue=7255904 prunedIub=152 digest=-1187446673
+adapt.iip=off: SIGN whole patterns=141 prelarge=392 explored=38372 candidates=7294276 prunedValue=7255904 prunedIub=152 digest=-1187446673
+commit 9b8a922   : LEVIATHAN init patterns=107 prelarge=165 explored=34820 candidates=16362407 prunedValue=16327587 prunedIub=6130 digest=-734214805
+adapt.iip=off: LEVIATHAN init patterns=107 prelarge=165 explored=34820 candidates=16362407 prunedValue=16327587 prunedIub=6130 digest=-734214805
+commit 9b8a922   : LEVIATHAN whole patterns=135 prelarge=179 explored=39313 candidates=29437666 prunedValue=29398353 prunedIub=8830 digest=1065919425
+adapt.iip=off: LEVIATHAN whole patterns=135 prelarge=179 explored=39313 candidates=29437666 prunedValue=29398353 prunedIub=8830 digest=1065919425
+commit 9b8a922   : TAFENG init patterns=6 prelarge=4 explored=22832 candidates=1986136 prunedValue=1963304 prunedIub=21866 digest=1453148665
+adapt.iip=off: TAFENG init patterns=6 prelarge=4 explored=22832 candidates=1986136 prunedValue=1963304 prunedIub=21866 digest=1453148665
+commit 9b8a922   : TAFENG whole patterns=9 prelarge=9 explored=23847 candidates=2469476 prunedValue=2445629 prunedIub=22911 digest=-1351486271
+adapt.iip=off: TAFENG whole patterns=9 prelarge=9 explored=23847 candidates=2469476 prunedValue=2445629 prunedIub=22911 digest=-1351486271
+commit 9b8a922   : BIBLE init patterns=192 prelarge=172 explored=17313 candidates=10238341 prunedValue=10221028 prunedIub=10748 digest=1192752330
+adapt.iip=off: BIBLE init patterns=192 prelarge=172 explored=17313 candidates=10238341 prunedValue=10221028 prunedIub=10748 digest=1192752330
+commit 9b8a922   : BIBLE whole patterns=129 prelarge=130 explored=18939 candidates=11691939 prunedValue=11673000 prunedIub=13805 digest=1044175253
+adapt.iip=off: BIBLE whole patterns=129 prelarge=130 explored=18939 candidates=11691939 prunedValue=11673000 prunedIub=13805 digest=1044175253
+commit 9b8a922   : BMS1 init patterns=21 prelarge=13 explored=22745 candidates=5454171 prunedValue=5431426 prunedIub=229 digest=-1938643565
+adapt.iip=off: BMS1 init patterns=21 prelarge=13 explored=22745 candidates=5454171 prunedValue=5431426 prunedIub=229 digest=-1938643565
+commit 9b8a922   : C8T1S5I8N5K init patterns=5067 prelarge=10562 explored=464852 candidates=31050488 prunedValue=30585636 prunedIub=62607 digest=-1432468090
+adapt.iip=off: C8T1S5I8N5K init patterns=5067 prelarge=10562 explored=464852 candidates=31050488 prunedValue=30585636 prunedIub=62607 digest=-1432468090
+commit 9b8a922   : C8T1S5I8N5K whole patterns=3438 prelarge=9244 explored=383747 candidates=32211305 prunedValue=31827558 prunedIub=66925 digest=-1230782684
+adapt.iip=off: C8T1S5I8N5K whole patterns=3438 prelarge=9244 explored=383747 candidates=32211305 prunedValue=31827558 prunedIub=66925 digest=-1230782684
+commit 9b8a922   : KOSARAK init patterns=10 prelarge=3 explored=33355 candidates=37941354 prunedValue=37907999 prunedIub=22490 digest=848111671
+adapt.iip=off: KOSARAK init patterns=10 prelarge=3 explored=33355 candidates=37941354 prunedValue=37907999 prunedIub=22490 digest=848111671
+commit 9b8a922   : KOSARAK whole patterns=9 prelarge=3 explored=84913 candidates=424629084 prunedValue=424544171 prunedIub=40948 digest=-948583094
+adapt.iip=off: KOSARAK whole patterns=9 prelarge=3 explored=84913 candidates=424629084 prunedValue=424544171 prunedIub=40948 digest=-948583094
+commit 9b8a922   : FIFA init patterns=18 prelarge=194 explored=571028 candidates=441827778 prunedValue=441256750 prunedIub=2632 digest=188094971
+adapt.iip=off: FIFA init patterns=18 prelarge=194 explored=571028 candidates=441827778 prunedValue=441256750 prunedIub=2632 digest=188094971
+identical lines: 14 of 14

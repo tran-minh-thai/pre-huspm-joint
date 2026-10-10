@@ -1,0 +1,16 @@
+{
+  "command": "bash -c for db in SIGN LEVIATHAN TAFENG BIBLE BMS1 C8T1S5I8N5K KOSARAK FIFA; do for sc in init whole; do if [ $db = BMS1 -o $db = FIFA ] && [ $sc = whole ]; then continue; fi; java -Xmx24g -Xss64m -cp build-iip verify.ItemRemovalCheck real $db $sc floor || exit 1; done; done",
+  "path_substitutions": 0,
+  "build_dir": "build-iip",
+  "git_commit": "884290f062f7b3a1bafae2d37505cf6b175f8c0b",
+  "tree": "src clean, other files modified",
+  "source_sha256": "55d55ea958ea829173ee9a5a2c6175b07b71c2613f5b0f0eb3a0b01eb10198ec",
+  "source_files": 34,
+  "java": "openjdk version \"26.0.1\" 2026-04-21",
+  "os": "Darwin 27.0.0 (macOS-27.0.1-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-10-10T19:17:31",
+  "end": "2026-10-10T19:21:10",
+  "exit_code": 0
+}

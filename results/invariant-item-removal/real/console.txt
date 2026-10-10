@@ -1,0 +1,70 @@
+real SIGN scope=init |D|=230 TU=572074.0000 level=floor UUT=0.065911 ratio=0.8 cutoff=30164.7755 singlePassCap=default
+  off      patterns=1951 large=583 explored=69792 candidates=9425036 prunedIub=117 prunedValue=9355244 removed=0 removedRoot=0 removedNode=0 | reference | development-machine probe time 505 ms
+  once     patterns=1951 large=583 explored=12273 candidates=70528 prunedIub=48 prunedValue=58255 removed=654289 removedRoot=71 removedNode=654218 | identical (missing=0 extra=0 maxGap=0.0) | development-machine probe time 410 ms
+  fixpoint patterns=1951 large=583 explored=8784 candidates=15950 prunedIub=43 prunedValue=7166 removed=511043 removedRoot=76 removedNode=510967 | identical (missing=0 extra=0 maxGap=0.0) | development-machine probe time 186 ms
+RESULT every mode returns the identical pattern set
+real SIGN scope=whole |D|=730 TU=1796483.0000 level=floor UUT=0.065911 ratio=0.8 cutoff=94726.3928 singlePassCap=default
+  off      patterns=533 large=141 explored=38372 candidates=7294276 prunedIub=152 prunedValue=7255904 removed=0 removedRoot=0 removedNode=0 | reference | development-machine probe time 713 ms
+  once     patterns=533 large=141 explored=8071 candidates=51598 prunedIub=44 prunedValue=43527 removed=549909 removedRoot=113 removedNode=549796 | identical (missing=0 extra=0 maxGap=0.0) | development-machine probe time 453 ms
+  fixpoint patterns=533 large=141 explored=5935 candidates=11656 prunedIub=41 prunedValue=5721 removed=451973 removedRoot=116 removedNode=451857 | identical (missing=0 extra=0 maxGap=0.0) | development-machine probe time 342 ms
+RESULT every mode returns the identical pattern set
+real LEVIATHAN scope=init |D|=2834 TU=4960437.0000 level=floor UUT=0.01553 ratio=0.8 cutoff=61628.4693 singlePassCap=default
+  off      patterns=272 large=107 explored=34820 candidates=16362407 prunedIub=6130 prunedValue=16327587 removed=0 removedRoot=0 removedNode=0 | reference | development-machine probe time 1058 ms
+  once     patterns=272 large=107 explored=3807 candidates=15377 prunedIub=186 prunedValue=11570 removed=180596 removedRoot=5985 removedNode=174611 | identical (missing=0 extra=0 maxGap=0.0) | development-machine probe time 392 ms
+  fixpoint patterns=272 large=107 explored=2531 candidates=4187 prunedIub=113 prunedValue=1656 removed=129999 removedRoot=6068 removedNode=123931 | identical (missing=0 extra=0 maxGap=0.0) | development-machine probe time 316 ms
+RESULT every mode returns the identical pattern set
+real LEVIATHAN scope=whole |D|=5834 TU=10502159.0000 level=floor UUT=0.01553 ratio=0.8 cutoff=130478.8234 singlePassCap=default
+  off      patterns=314 large=135 explored=39313 candidates=29437666 prunedIub=8830 prunedValue=29398353 removed=0 removedRoot=0 removedNode=0 | reference | development-machine probe time 1843 ms
+  once     patterns=314 large=135 explored=3796 candidates=15139 prunedIub=199 prunedValue=11343 removed=184796 removedRoot=8667 removedNode=176129 | identical (missing=0 extra=0 maxGap=0.0) | development-machine probe time 913 ms
+  fixpoint patterns=314 large=135 explored=2533 candidates=4106 prunedIub=122 prunedValue=1573 removed=135910 removedRoot=8752 removedNode=127158 | identical (missing=0 extra=0 maxGap=0.0) | development-machine probe time 632 ms
+RESULT every mode returns the identical pattern set
+real TAFENG scope=init |D|=40665 TU=73902451.2900 level=floor UUT=0.003557 ratio=0.8 cutoff=210296.8154 singlePassCap=default
+  off      patterns=10 large=6 explored=22832 candidates=1986136 prunedIub=21866 prunedValue=1963304 removed=0 removedRoot=0 removedNode=0 | reference | development-machine probe time 328 ms
+  once     patterns=10 large=6 explored=2068 candidates=2123 prunedIub=1677 prunedValue=55 removed=487840 removedRoot=20712 removedNode=467128 | identical (missing=0 extra=0 maxGap=0.0) | development-machine probe time 225 ms
+  fixpoint patterns=10 large=6 explored=302 candidates=302 prunedIub=186 prunedValue=0 removed=53978 removedRoot=22478 removedNode=31500 | identical (missing=0 extra=0 maxGap=0.0) | development-machine probe time 298 ms
+RESULT every mode returns the identical pattern set
+real TAFENG scope=whole |D|=60665 TU=106639000.5600 level=floor UUT=0.003557 ratio=0.8 cutoff=303451.9400 singlePassCap=default
+  off      patterns=18 large=9 explored=23847 candidates=2469476 prunedIub=22911 prunedValue=2445629 removed=0 removedRoot=0 removedNode=0 | reference | development-machine probe time 397 ms
+  once     patterns=18 large=9 explored=1984 candidates=2035 prunedIub=1613 prunedValue=51 removed=524249 removedRoot=21808 removedNode=502441 | identical (missing=0 extra=0 maxGap=0.0) | development-machine probe time 295 ms
+  fixpoint patterns=18 large=9 explored=317 candidates=317 prunedIub=187 prunedValue=0 removed=60693 removedRoot=23475 removedNode=37218 | identical (missing=0 extra=0 maxGap=0.0) | development-machine probe time 310 ms
+RESULT every mode returns the identical pattern set
+real BIBLE scope=init |D|=21369 TU=20857125.0000 level=floor UUT=0.022895 ratio=0.8 cutoff=382019.1015 singlePassCap=default
+  off      patterns=364 large=192 explored=17313 candidates=10238341 prunedIub=10748 prunedValue=10221028 removed=0 removedRoot=0 removedNode=0 | reference | development-machine probe time 1715 ms
+  once     patterns=364 large=192 explored=1298 candidates=2918 prunedIub=90 prunedValue=1620 removed=42908 removedRoot=10681 removedNode=32227 | identical (missing=0 extra=0 maxGap=0.0) | development-machine probe time 920 ms
+  fixpoint patterns=364 large=192 explored=1140 candidates=1610 prunedIub=43 prunedValue=470 removed=33939 removedRoot=10733 removedNode=23206 | identical (missing=0 extra=0 maxGap=0.0) | development-machine probe time 1087 ms
+RESULT every mode returns the identical pattern set
+real BIBLE scope=whole |D|=36369 TU=35550162.0000 level=floor UUT=0.022895 ratio=0.8 cutoff=651136.7672 singlePassCap=default
+  off      patterns=259 large=129 explored=18939 candidates=11691939 prunedIub=13805 prunedValue=11673000 removed=0 removedRoot=0 removedNode=0 | reference | development-machine probe time 2396 ms
+  once     patterns=259 large=129 explored=1025 candidates=2392 prunedIub=100 prunedValue=1367 removed=44479 removedRoot=13725 removedNode=30754 | identical (missing=0 extra=0 maxGap=0.0) | development-machine probe time 1452 ms
+  fixpoint patterns=259 large=129 explored=871 candidates=1221 prunedIub=43 prunedValue=350 removed=34537 removedRoot=13785 removedNode=20752 | identical (missing=0 extra=0 maxGap=0.0) | development-machine probe time 1656 ms
+RESULT every mode returns the identical pattern set
+real BMS1 scope=init |D|=39601 TU=4615708.0000 level=floor UUT=0.013597 ratio=0.8 cutoff=50207.8253 singlePassCap=default
+  off      patterns=34 large=21 explored=22745 candidates=5454171 prunedIub=229 prunedValue=5431426 removed=0 removedRoot=0 removedNode=0 | reference | development-machine probe time 344 ms
+  once     patterns=34 large=21 explored=652 candidates=6978 prunedIub=121 prunedValue=6326 removed=58708 removedRoot=114 removedNode=58594 | identical (missing=0 extra=0 maxGap=0.0) | development-machine probe time 77 ms
+  fixpoint patterns=34 large=21 explored=257 candidates=274 prunedIub=94 prunedValue=17 removed=23891 removedRoot=145 removedNode=23746 | identical (missing=0 extra=0 maxGap=0.0) | development-machine probe time 80 ms
+RESULT every mode returns the identical pattern set
+real C8T1S5I8N5K scope=init |D|=27133 TU=27378519.0000 level=floor UUT=0.001132 ratio=0.8 cutoff=24793.9868 singlePassCap=default
+  off      patterns=15629 large=5067 explored=464852 candidates=31050488 prunedIub=62607 prunedValue=30585636 removed=0 removedRoot=0 removedNode=0 | reference | development-machine probe time 1207 ms
+  once     patterns=15629 large=5067 explored=31495 candidates=47013 prunedIub=5381 prunedValue=15518 removed=79598 removedRoot=58214 removedNode=21384 | identical (missing=0 extra=0 maxGap=0.0) | development-machine probe time 315 ms
+  fixpoint patterns=15629 large=5067 explored=26380 candidates=39403 prunedIub=528 prunedValue=13023 removed=69295 removedRoot=63290 removedNode=6005 | identical (missing=0 extra=0 maxGap=0.0) | development-machine probe time 209 ms
+RESULT every mode returns the identical pattern set
+real C8T1S5I8N5K scope=whole |D|=47132 TU=47416411.0000 level=floor UUT=0.001132 ratio=0.8 cutoff=42940.3018 singlePassCap=default
+  off      patterns=12682 large=3438 explored=383747 candidates=32211305 prunedIub=66925 prunedValue=31827558 removed=0 removedRoot=0 removedNode=0 | reference | development-machine probe time 1831 ms
+  once     patterns=12682 large=3438 explored=26813 candidates=40109 prunedIub=5063 prunedValue=13296 removed=81101 removedRoot=62788 removedNode=18313 | identical (missing=0 extra=0 maxGap=0.0) | development-machine probe time 550 ms
+  fixpoint patterns=12682 large=3438 explored=21992 candidates=33026 prunedIub=464 prunedValue=11034 removed=72601 removedRoot=67586 removedNode=5015 | identical (missing=0 extra=0 maxGap=0.0) | development-machine probe time 628 ms
+RESULT every mode returns the identical pattern set
+real KOSARAK scope=init |D|=90002 TU=34956968.0000 level=floor UUT=0.025 ratio=0.85 cutoff=742835.5700 singlePassCap=default
+  off      patterns=13 large=10 explored=33355 candidates=37941354 prunedIub=22490 prunedValue=37907999 removed=0 removedRoot=0 removedNode=0 | reference | development-machine probe time 1445 ms
+  once     patterns=13 large=10 explored=916 candidates=1936 prunedIub=744 prunedValue=1020 removed=88560 removedRoot=21945 removedNode=66615 | identical (missing=0 extra=0 maxGap=0.0) | development-machine probe time 551 ms
+  fixpoint patterns=13 large=10 explored=35 candidates=41 prunedIub=7 prunedValue=6 removed=22897 removedRoot=22773 removedNode=124 | identical (missing=0 extra=0 maxGap=0.0) | development-machine probe time 370 ms
+RESULT every mode returns the identical pattern set
+real KOSARAK scope=whole |D|=990002 TU=385921994.0000 level=floor UUT=0.025 ratio=0.85 cutoff=8200842.3725 singlePassCap=default
+  off      patterns=12 large=9 explored=84913 candidates=424629084 prunedIub=40948 prunedValue=424544171 removed=0 removedRoot=0 removedNode=0 | reference | development-machine probe time 83685 ms
+  once     patterns=12 large=9 explored=961 candidates=2045 prunedIub=785 prunedValue=1084 removed=114456 removedRoot=40378 removedNode=74078 | identical (missing=0 extra=0 maxGap=0.0) | development-machine probe time 9714 ms
+  fixpoint patterns=12 large=9 explored=33 candidates=39 prunedIub=6 prunedValue=6 removed=41371 removedRoot=41254 removedNode=117 | identical (missing=0 extra=0 maxGap=0.0) | development-machine probe time 5114 ms
+RESULT every mode returns the identical pattern set
+real FIFA scope=init |D|=10450 TU=22085287.0000 level=floor UUT=0.059637 ratio=0.8 cutoff=1053680.2087 singlePassCap=default
+  off      patterns=212 large=18 explored=571028 candidates=441827778 prunedIub=2632 prunedValue=441256750 removed=0 removedRoot=0 removedNode=0 | reference | development-machine probe time 71506 ms
+  once     patterns=212 large=18 explored=15099 candidates=122154 prunedIub=112 prunedValue=107055 removed=405814 removedRoot=2536 removedNode=403278 | identical (missing=0 extra=0 maxGap=0.0) | development-machine probe time 7227 ms
+  fixpoint patterns=212 large=18 explored=13917 candidates=48782 prunedIub=78 prunedValue=34865 removed=380620 removedRoot=2572 removedNode=378048 | identical (missing=0 extra=0 maxGap=0.0) | development-machine probe time 7803 ms
+RESULT every mode returns the identical pattern set

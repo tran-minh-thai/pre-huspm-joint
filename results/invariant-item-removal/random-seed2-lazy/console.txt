@@ -1,0 +1,7 @@
+random trials=2000 seed=2 sequences=28170 itemsets=81856 (multi-item 59617) sequences-with-a-repeated-item=19270 databases-with-floor-below-UUT=1313 reference-patterns: at-cutoff=5376099 at-UUT=3862680 databases-with->=1-pattern=1427
+  off      mismatching-databases=0 missing=0 extra=0 | dbs-with-root-removal=0 root-removed=0 dbs-with-node-removal=0 node-removed=0 | explored=6200853 candidates=7599442 dbs-with-fewer-explored-than-off=0
+  once     mismatching-databases=0 missing=0 extra=0 | dbs-with-root-removal=841 root-removed=2243 dbs-with-node-removal=1947 node-removed=313294 | explored=6174457 candidates=6981555 dbs-with-fewer-explored-than-off=1465
+  fixpoint mismatching-databases=0 missing=0 extra=0 | dbs-with-root-removal=841 root-removed=2600 dbs-with-node-removal=1925 node-removed=335573 | explored=6171976 candidates=6929752 dbs-with-fewer-explored-than-off=1465
+  sequences with flat arrays inconsistent with their itemsets after mining: 0
+  off runs with a non-zero removal counter: 0
+RESULT every mode matches the brute force on every database

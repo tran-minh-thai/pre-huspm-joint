@@ -1,0 +1,48 @@
+fault: none (control)
+  singlePassCap=default: once     mismatching-databases=0 missing=0 extra=0 | dbs-with-root-removal=174 root-removed=445 dbs-with-node-removal=387 node-removed=62858 | explore
+  singlePassCap=default: fixpoint mismatching-databases=0 missing=0 extra=0 | dbs-with-root-removal=174 root-removed=530 dbs-with-node-removal=378 node-removed=67406 | explore
+  singlePassCap=default: RESULT every mode matches the brute force on every database
+  singlePassCap=0: once     mismatching-databases=0 missing=0 extra=0 | dbs-with-root-removal=174 root-removed=445 dbs-with-node-removal=387 node-removed=62858 | explore
+  singlePassCap=0: fixpoint mismatching-databases=0 missing=0 extra=0 | dbs-with-root-removal=174 root-removed=530 dbs-with-node-removal=378 node-removed=67406 | explore
+  singlePassCap=0: RESULT every mode matches the brute force on every database
+  control passes: True
+fault: removal threshold raised by 30 percent
+  replaced: if (iipAcc[it] < theta) {
+      with: if (iipAcc[it] < theta * 1.3) {
+  singlePassCap=default: once     mismatching-databases=268 missing=100274 extra=0 | dbs-with-root-removal=198 root-removed=660 dbs-with-node-removal=388 node-removed=137537 |
+  singlePassCap=default: fixpoint mismatching-databases=272 missing=101348 extra=0 | dbs-with-root-removal=198 root-removed=815 dbs-with-node-removal=375 node-removed=137776 |
+  singlePassCap=default: RESULT MISMATCH
+  singlePassCap=0: once     mismatching-databases=268 missing=100274 extra=0 | dbs-with-root-removal=198 root-removed=660 dbs-with-node-removal=388 node-removed=137537 |
+  singlePassCap=0: fixpoint mismatching-databases=272 missing=101348 extra=0 | dbs-with-root-removal=198 root-removed=815 dbs-with-node-removal=375 node-removed=137776 |
+  singlePassCap=0: RESULT MISMATCH
+  caught: True
+fault: removals of a node not undone on return
+  replaced: while (iipTop > mark) iipRemoved[iipStack[--iipTop]] = false;
+      with: if (mark == 0) while (iipTop > mark) iipRemoved[iipStack[--iipTop]] = false;
+  singlePassCap=default: once     mismatching-databases=214 missing=138007 extra=0 | dbs-with-root-removal=174 root-removed=445 dbs-with-node-removal=387 node-removed=22681 | 
+  singlePassCap=default: fixpoint mismatching-databases=216 missing=138076 extra=0 | dbs-with-root-removal=174 root-removed=530 dbs-with-node-removal=378 node-removed=23502 | 
+  singlePassCap=default: RESULT MISMATCH
+  singlePassCap=0: once     mismatching-databases=214 missing=138007 extra=0 | dbs-with-root-removal=174 root-removed=445 dbs-with-node-removal=387 node-removed=22681 | 
+  singlePassCap=0: fixpoint mismatching-databases=216 missing=138076 extra=0 | dbs-with-root-removal=174 root-removed=530 dbs-with-node-removal=378 node-removed=23502 | 
+  singlePassCap=0: RESULT MISMATCH
+  caught: True
+fault: bound PEU^R with half the remaining utility
+  replaced: double v = tUtil[k] + ru[tFlat[k]];
+      with: double v = tUtil[k] + 0.5 * ru[tFlat[k]];
+  singlePassCap=default: once     mismatching-databases=269 missing=126597 extra=0 | dbs-with-root-removal=174 root-removed=445 dbs-with-node-removal=371 node-removed=59211 | 
+  singlePassCap=default: fixpoint mismatching-databases=272 missing=127583 extra=0 | dbs-with-root-removal=174 root-removed=530 dbs-with-node-removal=369 node-removed=60159 | 
+  singlePassCap=default: RESULT MISMATCH
+  singlePassCap=0: once     mismatching-databases=269 missing=126597 extra=0 | dbs-with-root-removal=174 root-removed=445 dbs-with-node-removal=371 node-removed=59211 | 
+  singlePassCap=0: fixpoint mismatching-databases=272 missing=127583 extra=0 | dbs-with-root-removal=174 root-removed=530 dbs-with-node-removal=369 node-removed=60159 | 
+  singlePassCap=0: RESULT MISMATCH
+  caught: True
+fault: bound summed over the sequences of the first occurrence only
+  replaced: for (int x = 0; x < nLocal; x++) iipAccAdd(local[x], best);
+      with: for (int x = 0; x < nLocal; x++) iipAccAdd(local[x], tUtil[0] + ru[tFlat[0]]);
+  singlePassCap=default: once     mismatching-databases=3 missing=3 extra=0 | dbs-with-root-removal=174 root-removed=445 dbs-with-node-removal=387 node-removed=62869 | explore
+  singlePassCap=default: fixpoint mismatching-databases=18 missing=25 extra=0 | dbs-with-root-removal=174 root-removed=530 dbs-with-node-removal=378 node-removed=67472 | explo
+  singlePassCap=default: RESULT MISMATCH
+  singlePassCap=0: once     mismatching-databases=3 missing=3 extra=0 | dbs-with-root-removal=174 root-removed=445 dbs-with-node-removal=387 node-removed=62869 | explore
+  singlePassCap=0: fixpoint mismatching-databases=18 missing=25 extra=0 | dbs-with-root-removal=174 root-removed=530 dbs-with-node-removal=378 node-removed=67472 | explo
+  singlePassCap=0: RESULT MISMATCH
+  caught: True
