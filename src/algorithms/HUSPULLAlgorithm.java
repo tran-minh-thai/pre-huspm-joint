@@ -9,8 +9,16 @@ import java.util.*;
 
 /**
  * Baseline: HUSP-ULL (Gan, Lin, Zhang, Fournier-Viger, Chao, Yu, "Fast Utility Mining on
- * Complex Sequences", IEEE Transactions on Cybernetics, 2021), following Algorithms 1-3 of
- * the paper with both pruning strategies:
+ * Complex Sequences", IEEE Transactions on Cybernetics, 2021).
+ *
+ * ---------------------------------------------------------------------------
+ * PROVENANCE
+ *
+ * Independent reimplementation from the definitions, Theorems 5 to 9 and Algorithms 1 to 3 of
+ * Gan et al. No code of the authors or of the SPMF library is used.
+ * ---------------------------------------------------------------------------
+ *
+ * Algorithms 1-3 of the paper with both pruning strategies:
  * - IPS (irrelevant item pruning, Theorem 9; Algorithm 2, line 1): an item i of I(t)_rest is
  *   irrelevant when sum{PEU(t,s) | <t+i>_I in s or <t+i>_S in s} < threshold. It is removed
  *   from the UL-lists of t and of every super-sequence of t (the whole subtree of t), and the

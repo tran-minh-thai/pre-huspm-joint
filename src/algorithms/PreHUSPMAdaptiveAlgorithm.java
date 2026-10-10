@@ -420,6 +420,12 @@ public class PreHUSPMAdaptiveAlgorithm {
         /**
          * Irrelevant-item removal in the static miner (initial mine and every rescan).
          *
+         * This is the irrelevant item pruning strategy (IPS) of HUSP-ULL (Gan et al., IEEE
+         * Transactions on Cybernetics 2021, Theorem 9), which HUSP-SP also adopts as IIP, applied
+         * with the mining cutoff as the threshold. The sequences in which i occurs after the first
+         * occurrence end of t are exactly those holding the I- or S-extension of t by i, so B^R
+         * below is the sum of their IPS.
+         *
          * Rule. For a node t with occurrence lists and a set R of removed items,
          *   PEU^R(t,s) = max over the occurrences (k,w) of t in s of w + ru^R_k,
          * where ru^R_k is the utility of the items after position k that are not in R. For an

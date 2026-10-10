@@ -11,6 +11,14 @@ import java.util.*;
  * Baseline: IncUSP-Miner+ (Wang and Huang, "On Incremental High Utility Sequential Pattern
  * Mining", ACM TIST 9(5), Article 55, 2018). Insertions only, as in the paper.
  *
+ * ---------------------------------------------------------------------------
+ * PROVENANCE
+ *
+ * Independent reimplementation from the definitions, lemmas, Theorems 3 and 4, Strategies 1
+ * to 6 and Algorithms 1 and 2 of Wang and Huang. No code of the authors or of the SPMF
+ * library is used.
+ * ---------------------------------------------------------------------------
+ *
  * References below are to that paper.
  * - Positions are flat indices of a sequence (Sequence.buildFlatRepresentation); within an
  *   itemset items are sorted, so an I-extension takes a later position of the same itemset.

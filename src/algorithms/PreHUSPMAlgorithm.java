@@ -9,6 +9,13 @@ import java.util.*;
 /**
  * Baseline: Pre-HUSPM (Yan et al., J. Supercomputing 2025, 81:81).
  *
+ * ---------------------------------------------------------------------------
+ * PROVENANCE
+ *
+ * Independent reimplementation from Definitions 8 and 12, Theorems 1 and 2 and Algorithms 1
+ * to 4 of Yan et al. No code of the authors or of the SPMF library is used.
+ * ---------------------------------------------------------------------------
+ *
  * ───────────────────────────────────────────────────────────────────────────
  * BUFFER = LSWU ∪ PSWU: every pattern X with SWU_proj(X) >= Sl·TSU, stored as (SWU_proj, su).
  *   SWU_proj is the SWU computed on the projected database, as in Yan et al.'s worked example

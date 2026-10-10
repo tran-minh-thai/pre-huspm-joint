@@ -1,0 +1,16 @@
+{
+  "command": "bash -c echo \"spmf.zip sha256: $(shasum -a 256 $REF/spmf/spmf.zip | cut -d\" \" -f1)\"; E=$(mktemp -d); python3 -I results/invariant-license-provenance/tools/provenance.py $E $REF/spmf/x $(git ls-files \"src/*.java\")",
+  "path_substitutions": 0,
+  "build_dir": "build-lic",
+  "git_commit": "8f48df7f61abe6b8dadbeb837fc27f189959ac1d",
+  "tree": "clean",
+  "source_sha256": "55d55ea958ea829173ee9a5a2c6175b07b71c2613f5b0f0eb3a0b01eb10198ec",
+  "source_files": 34,
+  "java": "openjdk version \"26.0.1\" 2026-04-21",
+  "os": "Darwin 27.0.0 (macOS-27.0.1-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-10-10T20:00:40",
+  "end": "2026-10-10T20:00:45",
+  "exit_code": 0
+}

@@ -124,7 +124,7 @@ file order, into `K` increments. `LUT_min = r_l * UUT`. Both the proposal and Pr
 | `K` | `Datasets.BATCH_COUNT`, `-Dbatch.count` | 100 (SC5: 100, 67, 50, 25) |
 | `B_sz` | `-Dblock.size`, `DEFAULT_BLOCK_SIZE` | 100 sequences per block |
 | rescan rule | `-Dadapt.trigger` | `joint` |
-| item removal in the proposal's miner | `-Dadapt.iip` | `off`, `once` or `fixpoint`; the campaign's value is set by calibration |
+| item removal in the proposal's miner | `-Dadapt.iip` | `off`, `once` or `fixpoint`; the irrelevant item pruning of HUSP-ULL (Theorem 9), at the mining cutoff; the campaign's value is set by calibration |
 | repeats | `-Drepeats` | 1 per arm in `campaign.ps1`; the runner's default is 3 |
 
 The rescan rule `joint`: with `I` and `D` the utility inserted and deleted since the last

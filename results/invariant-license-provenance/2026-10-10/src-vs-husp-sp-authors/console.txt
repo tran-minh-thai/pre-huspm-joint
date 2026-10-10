@@ -1,0 +1,172 @@
+github.com/DSI-Lab1/HUSPM commit 8b1f5f04c941fc2f7f4a0c14ae143d6bc67ffa4a
+SPMF files scanned: 7
+
+== AutomatedExperimentRunner.java
+  lines 0.001 (1/1465) HUSP-SP/HUSP_SP_Test.java; 0.000 (0/1465) HUSP-SP/HUSP_SP_Algo.java
+  raw   0.001 (15/11647) HUSP-SP/HUSP_SP_Algo.java; 0.001 (6/11647) HUSP-SP/HUSP_SP_Test.java
+  shape 0.093 (554/5986) HUSP-SP/HUSP_SP_Algo.java; 0.006 (33/5986) HUSP-SP/ULinkList.java
+
+== ExperimentMetrics.java
+  lines 0.000 (0/163) HUSP-SP/HUSP_SP_Algo.java; 0.000 (0/163) HUSP-SP/HUSP_SP_Test.java
+  raw   0.000 (0/615) HUSP-SP/HUSP_SP_Algo.java; 0.000 (0/615) HUSP-SP/HUSP_SP_Test.java
+  shape 0.169 (31/183) HUSP-SP/HUSP_SP_Algo.java; 0.060 (11/183) HUSP-SP/UItem.java
+
+== ResultCollector.java
+  lines 0.000 (0/24) HUSP-SP/HUSP_SP_Algo.java; 0.000 (0/24) HUSP-SP/HUSP_SP_Test.java
+  raw   0.000 (0/204) HUSP-SP/HUSP_SP_Algo.java; 0.000 (0/204) HUSP-SP/HUSP_SP_Test.java
+  shape 0.207 (38/184) HUSP-SP/HUSP_SP_Algo.java; 0.043 (8/184) HUSP-SP/HUSP_SP_Test.java
+
+== HUSPSPAlgorithm.java
+  lines 0.000 (0/360) HUSP-SP/HUSP_SP_Algo.java; 0.000 (0/360) HUSP-SP/HUSP_SP_Test.java
+  raw   0.002 (8/3468) HUSP-SP/HUSP_SP_Algo.java; 0.000 (0/3468) HUSP-SP/HUSP_SP_Test.java
+  shape 0.118 (289/2452) HUSP-SP/HUSP_SP_Algo.java; 0.011 (26/2452) HUSP-SP/ProjectULinkList.java
+
+== HUSPULLAlgorithm.java
+  lines 0.000 (0/371) HUSP-SP/HUSP_SP_Algo.java; 0.000 (0/371) HUSP-SP/HUSP_SP_Test.java
+  raw   0.001 (2/3440) HUSP-SP/HUSP_SP_Algo.java; 0.000 (0/3440) HUSP-SP/HUSP_SP_Test.java
+  shape 0.127 (268/2118) HUSP-SP/HUSP_SP_Algo.java; 0.008 (16/2118) HUSP-SP/ProjectULinkList.java
+
+== IncUSPMinerPlusAlgorithm.java
+  lines 0.000 (0/309) HUSP-SP/HUSP_SP_Algo.java; 0.000 (0/309) HUSP-SP/HUSP_SP_Test.java
+  raw   0.002 (7/3011) HUSP-SP/HUSP_SP_Algo.java; 0.000 (0/3011) HUSP-SP/HUSP_SP_Test.java
+  shape 0.159 (339/2129) HUSP-SP/HUSP_SP_Algo.java; 0.009 (20/2129) HUSP-SP/ProjectULinkList.java
+
+== PreHUSPMAdaptiveAlgorithm.java
+  lines 0.000 (0/1362) HUSP-SP/HUSP_SP_Algo.java; 0.000 (0/1362) HUSP-SP/HUSP_SP_Test.java
+  raw   0.002 (17/9856) HUSP-SP/HUSP_SP_Algo.java; 0.000 (0/9856) HUSP-SP/HUSP_SP_Test.java
+  shape 0.101 (587/5837) HUSP-SP/HUSP_SP_Algo.java; 0.011 (65/5837) HUSP-SP/ULinkList.java
+
+== PreHUSPMAlgorithm.java
+  lines 0.000 (0/491) HUSP-SP/HUSP_SP_Algo.java; 0.000 (0/491) HUSP-SP/HUSP_SP_Test.java
+  raw   0.002 (12/4866) HUSP-SP/HUSP_SP_Algo.java; 0.000 (0/4866) HUSP-SP/HUSP_SP_Test.java
+  shape 0.126 (416/3313) HUSP-SP/HUSP_SP_Algo.java; 0.010 (33/3313) HUSP-SP/ProjectULinkList.java
+
+== USpanAlgorithm.java
+  lines 0.004 (1/224) HUSP-SP/HUSP_SP_Algo.java; 0.004 (1/224) HUSP-SP/ProjectULinkList.java
+  raw   0.011 (22/1970) HUSP-SP/HUSP_SP_Algo.java; 0.001 (1/1970) HUSP-SP/ProjectULinkList.java
+  shape 0.243 (322/1324) HUSP-SP/HUSP_SP_Algo.java; 0.020 (26/1324) HUSP-SP/ProjectULinkList.java
+
+== DatasetLoader.java
+  lines 0.000 (0/106) HUSP-SP/HUSP_SP_Algo.java; 0.000 (0/106) HUSP-SP/HUSP_SP_Test.java
+  raw   0.004 (5/1115) HUSP-SP/HUSP_SP_Algo.java; 0.000 (0/1115) HUSP-SP/HUSP_SP_Test.java
+  shape 0.257 (221/861) HUSP-SP/HUSP_SP_Algo.java; 0.014 (12/861) HUSP-SP/ULinkList.java
+
+== Datasets.java
+  lines 0.005 (1/199) HUSP-SP/ULinkList.java; 0.000 (0/199) HUSP-SP/HUSP_SP_Algo.java
+  raw   0.000 (0/727) HUSP-SP/HUSP_SP_Algo.java; 0.000 (0/727) HUSP-SP/HUSP_SP_Test.java
+  shape 0.134 (64/478) HUSP-SP/HUSP_SP_Algo.java; 0.046 (22/478) HUSP-SP/ProjectULinkList.java
+
+== Density.java
+  lines 0.000 (0/56) HUSP-SP/HUSP_SP_Algo.java; 0.000 (0/56) HUSP-SP/HUSP_SP_Test.java
+  raw   0.000 (0/225) HUSP-SP/HUSP_SP_Algo.java; 0.000 (0/225) HUSP-SP/HUSP_SP_Test.java
+  shape 0.115 (25/218) HUSP-SP/HUSP_SP_Algo.java; 0.028 (6/218) HUSP-SP/ULinkList.java
+
+== Pattern.java
+  lines 0.000 (0/49) HUSP-SP/HUSP_SP_Algo.java; 0.000 (0/49) HUSP-SP/HUSP_SP_Test.java
+  raw   0.019 (9/479) HUSP-SP/HUSP_SP_Algo.java; 0.000 (0/479) HUSP-SP/HUSP_SP_Test.java
+  shape 0.298 (112/376) HUSP-SP/HUSP_SP_Algo.java; 0.043 (16/376) HUSP-SP/ULinkList.java
+
+== PrimitiveMaps.java
+  lines 0.000 (0/119) HUSP-SP/HUSP_SP_Algo.java; 0.000 (0/119) HUSP-SP/HUSP_SP_Test.java
+  raw   0.006 (6/1026) HUSP-SP/HUSP_SP_Algo.java; 0.000 (0/1026) HUSP-SP/HUSP_SP_Test.java
+  shape 0.100 (81/809) HUSP-SP/HUSP_SP_Algo.java; 0.015 (12/809) HUSP-SP/ULinkList.java
+
+== QItem.java
+  lines 0.167 (1/6) HUSP-SP/ProjectULinkList.java; 0.167 (1/6) HUSP-SP/UItem.java
+  raw   0.034 (1/29) HUSP-SP/ProjectULinkList.java; 0.034 (1/29) HUSP-SP/UItem.java
+  shape 0.414 (12/29) HUSP-SP/HUSP_SP_Algo.java; 0.414 (12/29) HUSP-SP/ProjectULinkList.java
+
+== QItemset.java
+  lines 0.000 (0/2) HUSP-SP/HUSP_SP_Algo.java; 0.000 (0/2) HUSP-SP/HUSP_SP_Test.java
+  raw   0.083 (1/12) HUSP-SP/HUSP_SP_Algo.java; 0.000 (0/12) HUSP-SP/HUSP_SP_Test.java
+  shape 0.500 (6/12) HUSP-SP/HUSP_SP_Algo.java; 0.000 (0/12) HUSP-SP/HUSP_SP_Test.java
+
+== Sequence.java
+  lines 0.000 (0/85) HUSP-SP/HUSP_SP_Algo.java; 0.000 (0/85) HUSP-SP/HUSP_SP_Test.java
+  raw   0.016 (9/558) HUSP-SP/HUSP_SP_Algo.java; 0.000 (0/558) HUSP-SP/HUSP_SP_Test.java
+  shape 0.246 (113/460) HUSP-SP/HUSP_SP_Algo.java; 0.033 (15/460) HUSP-SP/ULinkList.java
+
+== BatchSizeSweep.java
+  lines 0.010 (1/102) HUSP-SP/HUSP_SP_Test.java; 0.000 (0/102) HUSP-SP/HUSP_SP_Algo.java
+  raw   0.005 (6/1091) HUSP-SP/HUSP_SP_Test.java; 0.001 (1/1091) HUSP-SP/HUSP_SP_Algo.java
+  shape 0.184 (156/847) HUSP-SP/HUSP_SP_Algo.java; 0.018 (15/847) HUSP-SP/HUSP_SP_Test.java
+
+== CampaignCalibration.java
+  lines 0.000 (0/164) HUSP-SP/HUSP_SP_Algo.java; 0.000 (0/164) HUSP-SP/HUSP_SP_Test.java
+  raw   0.005 (11/2094) HUSP-SP/HUSP_SP_Algo.java; 0.000 (1/2094) HUSP-SP/HUSP_SP_Test.java
+  shape 0.166 (260/1562) HUSP-SP/HUSP_SP_Algo.java; 0.012 (19/1562) HUSP-SP/ULinkList.java
+
+== MachineCalibration.java
+  lines 0.012 (1/83) HUSP-SP/HUSP_SP_Test.java; 0.000 (0/83) HUSP-SP/HUSP_SP_Algo.java
+  raw   0.009 (6/696) HUSP-SP/HUSP_SP_Test.java; 0.006 (4/696) HUSP-SP/HUSP_SP_Algo.java
+  shape 0.186 (108/581) HUSP-SP/HUSP_SP_Algo.java; 0.034 (20/581) HUSP-SP/HUSP_SP_Test.java
+
+== PreHuspmVariantCompare.java
+  lines 0.012 (1/81) HUSP-SP/HUSP_SP_Test.java; 0.000 (0/81) HUSP-SP/HUSP_SP_Algo.java
+  raw   0.006 (6/958) HUSP-SP/HUSP_SP_Test.java; 0.001 (1/958) HUSP-SP/HUSP_SP_Algo.java
+  shape 0.198 (159/804) HUSP-SP/HUSP_SP_Algo.java; 0.021 (17/804) HUSP-SP/HUSP_SP_Test.java
+
+== ThresholdScan.java
+  lines 0.002 (1/438) HUSP-SP/HUSP_SP_Test.java; 0.000 (0/438) HUSP-SP/HUSP_SP_Algo.java
+  raw   0.002 (6/3433) HUSP-SP/HUSP_SP_Test.java; 0.001 (5/3433) HUSP-SP/HUSP_SP_Algo.java
+  shape 0.108 (272/2519) HUSP-SP/HUSP_SP_Algo.java; 0.010 (26/2519) HUSP-SP/HUSP_SP_Test.java
+
+== BaselineAgreement.java
+  lines 0.009 (1/114) HUSP-SP/HUSP_SP_Test.java; 0.009 (1/114) HUSP-SP/ULinkList.java
+  raw   0.005 (6/1291) HUSP-SP/HUSP_SP_Test.java; 0.004 (5/1291) HUSP-SP/HUSP_SP_Algo.java
+  shape 0.187 (167/895) HUSP-SP/HUSP_SP_Algo.java; 0.018 (16/895) HUSP-SP/ULinkList.java
+
+== CorrectnessVerifier.java
+  lines 0.007 (1/137) HUSP-SP/HUSP_SP_Test.java; 0.000 (0/137) HUSP-SP/HUSP_SP_Algo.java
+  raw   0.005 (6/1274) HUSP-SP/HUSP_SP_Test.java; 0.002 (2/1274) HUSP-SP/HUSP_SP_Algo.java
+  shape 0.193 (186/966) HUSP-SP/HUSP_SP_Algo.java; 0.020 (19/966) HUSP-SP/HUSP_SP_Test.java
+
+== DirectPathVerifier.java
+  lines 0.004 (1/230) HUSP-SP/HUSP_SP_Test.java; 0.004 (1/230) HUSP-SP/ULinkList.java
+  raw   0.002 (6/2494) HUSP-SP/HUSP_SP_Test.java; 0.002 (4/2494) HUSP-SP/HUSP_SP_Algo.java
+  shape 0.170 (300/1764) HUSP-SP/HUSP_SP_Algo.java; 0.014 (24/1764) HUSP-SP/HUSP_SP_Test.java
+
+== IncUspVerifier.java
+  lines 0.000 (0/146) HUSP-SP/HUSP_SP_Algo.java; 0.000 (0/146) HUSP-SP/HUSP_SP_Test.java
+  raw   0.007 (13/1853) HUSP-SP/HUSP_SP_Algo.java; 0.001 (1/1853) HUSP-SP/HUSP_SP_Test.java
+  shape 0.199 (267/1341) HUSP-SP/HUSP_SP_Algo.java; 0.017 (23/1341) HUSP-SP/HUSP_SP_Test.java
+
+== ItemRemovalCheck.java
+  lines 0.000 (0/177) HUSP-SP/HUSP_SP_Algo.java; 0.000 (0/177) HUSP-SP/HUSP_SP_Test.java
+  raw   0.004 (9/2339) HUSP-SP/HUSP_SP_Algo.java; 0.000 (1/2339) HUSP-SP/HUSP_SP_Test.java
+  shape 0.153 (260/1697) HUSP-SP/HUSP_SP_Algo.java; 0.011 (19/1697) HUSP-SP/ULinkList.java
+
+== MinerCounters.java
+  lines 0.000 (0/24) HUSP-SP/HUSP_SP_Algo.java; 0.000 (0/24) HUSP-SP/HUSP_SP_Test.java
+  raw   0.007 (2/290) HUSP-SP/HUSP_SP_Algo.java; 0.003 (1/290) HUSP-SP/HUSP_SP_Test.java
+  shape 0.251 (59/235) HUSP-SP/HUSP_SP_Algo.java; 0.034 (8/235) HUSP-SP/HUSP_SP_Test.java
+
+== MixedBudgetFuzz.java
+  lines 0.000 (0/72) HUSP-SP/HUSP_SP_Algo.java; 0.000 (0/72) HUSP-SP/HUSP_SP_Test.java
+  raw   0.006 (6/973) HUSP-SP/HUSP_SP_Algo.java; 0.001 (1/973) HUSP-SP/HUSP_SP_Test.java
+  shape 0.234 (159/680) HUSP-SP/HUSP_SP_Algo.java; 0.021 (14/680) HUSP-SP/HUSP_SP_Test.java
+
+== MixedBudgetProbe.java
+  lines 0.000 (0/76) HUSP-SP/HUSP_SP_Algo.java; 0.000 (0/76) HUSP-SP/HUSP_SP_Test.java
+  raw   0.007 (6/862) HUSP-SP/HUSP_SP_Algo.java; 0.001 (1/862) HUSP-SP/HUSP_SP_Test.java
+  shape 0.215 (117/545) HUSP-SP/HUSP_SP_Algo.java; 0.031 (17/545) HUSP-SP/HUSP_SP_Test.java
+
+== PatternSetDiff.java
+  lines 0.024 (1/41) HUSP-SP/HUSP_SP_Algo.java; 0.024 (1/41) HUSP-SP/ProjectULinkList.java
+  raw   0.012 (4/332) HUSP-SP/HUSP_SP_Algo.java; 0.012 (4/332) HUSP-SP/UItem.java
+  shape 0.186 (54/291) HUSP-SP/HUSP_SP_Algo.java; 0.062 (18/291) HUSP-SP/ProjectULinkList.java
+
+== PreHuspmVerifier.java
+  lines 0.000 (0/222) HUSP-SP/HUSP_SP_Algo.java; 0.000 (0/222) HUSP-SP/HUSP_SP_Test.java
+  raw   0.005 (15/3080) HUSP-SP/HUSP_SP_Algo.java; 0.000 (1/3080) HUSP-SP/HUSP_SP_Test.java
+  shape 0.165 (357/2164) HUSP-SP/HUSP_SP_Algo.java; 0.011 (24/2164) HUSP-SP/ULinkList.java
+
+== RescanRuleAcceptanceTest.java
+  lines 0.000 (0/234) HUSP-SP/HUSP_SP_Algo.java; 0.000 (0/234) HUSP-SP/HUSP_SP_Test.java
+  raw   0.004 (8/2025) HUSP-SP/HUSP_SP_Algo.java; 0.001 (3/2025) HUSP-SP/HUSP_SP_Test.java
+  shape 0.164 (182/1112) HUSP-SP/HUSP_SP_Algo.java; 0.016 (18/1112) HUSP-SP/HUSP_SP_Test.java
+
+== SyntheticDb.java
+  lines 0.000 (0/33) HUSP-SP/HUSP_SP_Algo.java; 0.000 (0/33) HUSP-SP/HUSP_SP_Test.java
+  raw   0.000 (0/367) HUSP-SP/HUSP_SP_Algo.java; 0.000 (0/367) HUSP-SP/HUSP_SP_Test.java
+  shape 0.265 (88/332) HUSP-SP/HUSP_SP_Algo.java; 0.018 (6/332) HUSP-SP/ULinkList.java

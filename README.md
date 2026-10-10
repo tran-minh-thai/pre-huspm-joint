@@ -205,7 +205,7 @@ Every constant that changes a result, with the value the scenarios use.
 | batch-count sweep | `Datasets.BATCH_COUNT_SWEEP` | 100, 67, 50, 25 | SC5 |
 | SC6 composition | `AutomatedExperimentRunner` | 14 / 3 / 3 | insertions / deletions / modifications, each 1/100 of the stream |
 | rescan rule | `-Dadapt.trigger` | `joint` | `iaumax`, `cub` and `swumax` are kept for comparison; `iaumax` and `swumax` can miss patterns on a direct update |
-| item removal | `-Dadapt.iip` | `once` | `off`, `once` or `fixpoint`; removes, for a subtree, items that cannot complete a pattern above the cutoff |
+| item removal | `-Dadapt.iip` | `once` | `off`, `once` or `fixpoint`; removes, for a subtree, items that cannot complete a pattern above the cutoff (the irrelevant item pruning of HUSP-ULL) |
 | block size `B_sz` | `-Dblock.size` | 100 | sequences per block of the block index |
 | seeds | `AutomatedExperimentRunner.SEEDS` | 42, 1337, 2024, 31415, 271828 | batch orders in SC2, SC5 and SC6; `-Dseeds=n` uses the first n |
 | repeats | `-Drepeats` | 3 (`run.ps1`), 1 per arm (`campaign.ps1`) | identical reruns; campaign replicates use `-Repeat` |

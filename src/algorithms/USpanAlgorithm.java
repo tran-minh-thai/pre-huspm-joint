@@ -8,7 +8,18 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * Baseline: USpan (Yin et al., KDD 2012), instrumented for measurement:
+ * Baseline: USpan (Yin et al., KDD 2012).
+ *
+ * ---------------------------------------------------------------------------
+ * PROVENANCE
+ *
+ * Independent reimplementation from the definitions, Theorems 1 and 2 and Algorithm 1 of
+ * Yin et al. The depth-pruning bound of their Theorem 2 (Eq. (21)) is replaced by a sound
+ * bound, as described at its use below. SPMF's AlgoUSpan.java (GPL-3.0) is not used; no line
+ * of this file is taken from it (results/invariant-license-provenance compares the two).
+ * ---------------------------------------------------------------------------
+ *
+ * Instrumented for measurement:
  * - candidateCount counts each extension when it is generated.
  * - prunedSWU counts candidates removed by the global and the local SWU bound.
  * - Width pruning (SWU) and depth pruning (prefix utility plus O(1) suffix-sum remaining utility).
