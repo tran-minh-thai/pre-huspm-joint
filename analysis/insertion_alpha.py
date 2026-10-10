@@ -210,12 +210,12 @@ def main():
             compared += n
             mismatched += bad
     with open(os.path.join(a.out, "alpha_stream.csv"), "w", newline="", encoding="utf-8") as fh:
-        w = csv.writer(fh)
+        w = csv.writer(fh, lineterminator="\n")
         w.writerow(["dataset", "insertion_sequences", "insertion_utility", "alpha_stream",
                     "alpha_median_at_decisions", "uut", "r_l", "joint_over_tsu"])
         w.writerows(stream_rows)
     with open(os.path.join(a.out, "alpha_batches.csv"), "w", newline="", encoding="utf-8") as fh:
-        w = csv.writer(fh)
+        w = csv.writer(fh, lineterminator="\n")
         w.writerow(["dataset", "increment", "alpha", "rescan"])
         w.writerows(batch_rows)
     if a.campaign:
