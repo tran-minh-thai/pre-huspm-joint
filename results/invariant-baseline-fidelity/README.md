@@ -30,13 +30,15 @@ of `common.Datasets`, the rest in 100 equal batches in file order.
 | seed 7 (repeated sequence) | Pre-HUSPM-TSU | 3300 | 0 | 867 | 0 | 2133 |
 | C8T1S5I8N5K (real) | Pre-HUSPM-SWUmax | 101 | 0 | 20 | 0 | 80 |
 | C8T1S5I8N5K (real) | Pre-HUSPM-TSU | 101 | 0 | 0 | 0 | 100 |
+| LEVIATHAN (real) | Pre-HUSPM-SWUmax | 101 | 0 | 2 | 0 | 98 |
+| LEVIATHAN (real) | Pre-HUSPM-TSU | 101 | 0 | 0 | 0 | 100 |
 | SIGN (real) | Pre-HUSPM-SWUmax | 101 | 0 | 41 | 0 | 59 |
 | SIGN (real) | Pre-HUSPM-TSU | 101 | 0 | 41 | 0 | 59 |
 | TAFENG (real) | Pre-HUSPM-SWUmax | 101 | 0 | 44 | 0 | 56 |
 | TAFENG (real) | Pre-HUSPM-TSU | 101 | 0 | 0 | 0 | 100 |
 
-On C8T1S5I8N5K and TAFENG the TSU test rescans at every batch, so its safe update is checked
-on the random streams and on SIGN only.
+On C8T1S5I8N5K, LEVIATHAN and TAFENG the TSU test rescans at every batch, so its safe update is
+checked on the random streams and on SIGN only.
 
 ## Static agreement at the default thresholds - `agreement-all/`
 
