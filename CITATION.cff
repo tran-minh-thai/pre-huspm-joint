@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-title: Pre-HUSPM-Adaptive
+title: Pre-HUSPM-Joint
 message: If you use this software, please cite the accompanying paper.
 type: software
 authors:
@@ -13,4 +13,4 @@ authors:
   - family-names: Huynh
     given-names: Bao
 license: MIT
-repository-code: https://github.com/tran-minh-thai/pre-huspm-adaptive
+repository-code: https://github.com/tran-minh-thai/pre-huspm-joint

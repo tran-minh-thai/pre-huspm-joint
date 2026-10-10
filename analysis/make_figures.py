@@ -104,7 +104,7 @@ plt.rcParams.update({
 STATIC_ORDER = ["USpan", "HUSP-ULL", "HUSP-SP", "IncUSP-Miner+", "Pre-HUSPM", "Adaptive-Full"]
 INC_ORDER    = ["IncUSP-Miner+", "Pre-HUSPM-SWUmax", "Pre-HUSPM-TSU", "Remine-from-scratch", "Adaptive-Full"]
 PROPOSED = "Adaptive-Full"
-PROPOSED_LABEL = "Pre-HUSPM-Adaptive"
+PROPOSED_LABEL = "Pre-HUSPM-Joint"
 ALGO_LABEL = {
     "USpan": "USpan", "HUSP-ULL": "HUSP-ULL", "HUSP-SP": "HUSP-SP",
     "IncUSP-Miner+": "IncUSP-Miner$^{+}$", "Pre-HUSPM": "Pre-HUSPM", "Pre-HUSPM-SWUmax": "Pre-HUSPM-SWUmax",
@@ -310,7 +310,7 @@ SOURCE_COMMIT = _source_commit()
 def save(fig, name):
     path = os.path.join(OUT_DIR, name)
     fig.savefig(path, format="pdf",
-                metadata={"Title": name, "Subject": f"pre-huspm-adaptive {SOURCE_COMMIT}",
+                metadata={"Title": name, "Subject": f"pre-huspm-joint {SOURCE_COMMIT}",
                           "Creator": "analysis/make_figures.py"})
     plt.close(fig)
     print(f"[saved] {path}")

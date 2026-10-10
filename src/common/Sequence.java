@@ -13,7 +13,7 @@ public class Sequence {
     public List<List<Double>> remainingUtilities = new ArrayList<>();
 
     // ====================================================================
-    //  FLATTENED REPRESENTATION (used by Pre-HUSPM-Adaptive)
+    //  FLATTENED REPRESENTATION (used by Pre-HUSPM-Joint)
     //
     //  The itemsets are flattened into 1-D primitive arrays, which keeps the
     //  recursive hot path cache-friendly and free of object and iterator

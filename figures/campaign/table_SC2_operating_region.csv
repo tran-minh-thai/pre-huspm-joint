@@ -1,8 +1,0 @@
-dataset,rule,increments,ratio_median,ratio_min,ratio_max,within_budget,rescans,check
-BIBLE,joint,100,1.201,0.56,2.136,37,63,ok
-C8T1S5I8N5K,joint,100,1.442,0.378,5.048,23,77,ok
-FIFA,joint,100,0.762,0.18,1.513,73,27,ok
-KOSARAK,joint,100,3.775,1.916,21.39,0,100,ok
-LEVIATHAN,joint,100,2.077,0.942,4.036,2,98,ok
-SIGN,joint,100,1.103,0.408,2.508,41,59,ok
-TAFENG,joint,100,1.008,0.315,6.519,48,52,ok

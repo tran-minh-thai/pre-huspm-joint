@@ -6,7 +6,7 @@ import java.util.*;
 import java.util.concurrent.*;
 
 /**
- * Automated experiment runner for the Pre-HUSPM-Adaptive framework (scenarios SC1-SC7).
+ * Automated experiment runner for the Pre-HUSPM-Joint framework (scenarios SC1-SC7).
  *
  * Run from the repository root, with the shared databases in datasets/ (see DATASET_DIR).
  * Dense databases (SIGN, LEVIATHAN, ...) need -Xmx8g or more.

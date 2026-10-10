@@ -1,4 +1,0 @@
-dataset,seeds,counts_agree_all,seeds_with_ratio,ratio_mean,ratio_std,ratio_min,ratio_max
-C8T1S5I8N5K,5,True,5,0.686,0.009,0.674,0.696
-LEVIATHAN,5,True,5,0.833,0.035,0.775,0.87
-SIGN,5,True,5,0.773,0.026,0.728,0.793

@@ -1,16 +1,17 @@
-# Pre-HUSPM-Adaptive
+# Pre-HUSPM-Joint
 
-Incremental high-utility sequential pattern mining. Pre-HUSPM-Adaptive maintains the set of
+Incremental high-utility sequential pattern mining. Pre-HUSPM-Joint maintains the set of
 high-utility sequential patterns of a database under insertions, deletions and
 modifications, and remines only when a joint utility budget is exceeded. The repository
 contains the algorithm, five baselines, the experiment harness, the correctness checks and
-the measured results.
+the measured results. In the code and the result files the method is the class
+`PreHUSPMAdaptiveAlgorithm` and the arm `Adaptive-Full`.
 
 ## Repository layout
 
 ```
 src/
-  algorithms/                 Pre-HUSPM-Adaptive and the baselines
+  algorithms/                 Pre-HUSPM-Joint and the baselines
   common/                     sequences, loader, patterns, dataset table (Datasets.java)
   experiments/                standalone studies (threshold calibration, batch-size sweep)
   verify/                     correctness checks against remining from scratch

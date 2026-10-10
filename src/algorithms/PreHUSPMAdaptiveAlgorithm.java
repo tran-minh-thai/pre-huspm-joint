@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * Pre-HUSPM-Adaptive: incremental high-utility sequential pattern mining with pre-large
+ * Pre-HUSPM-Joint: incremental high-utility sequential pattern mining with pre-large
  * maintenance. Components:
  * - aggregated PEU value bound applied before child occurrence lists are built
  *   (survey, filter, then materialize);

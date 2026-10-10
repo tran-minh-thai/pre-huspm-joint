@@ -22,7 +22,7 @@ import make_figures as mf  # noqa: E402
 P = mf.PROPOSED
 REM = "Remine-from-scratch"
 INC = ["Pre-HUSPM-SWUmax", "Pre-HUSPM-TSU", REM, "IncUSP-Miner+"]
-LABEL = {P: "Pre-HUSPM-Adaptive", "Pre-HUSPM-SWUmax": "Pre-HUSPM-SWUmax", "Pre-HUSPM-TSU": "Pre-HUSPM-TSU",
+LABEL = {P: "Pre-HUSPM-Joint", "Pre-HUSPM-SWUmax": "Pre-HUSPM-SWUmax", "Pre-HUSPM-TSU": "Pre-HUSPM-TSU",
          REM: "Remine", "IncUSP-Miner+": "IncUSP-Miner+"}
 STATUS = {"OOM": "out of memory", "Skip": "out of memory", "OT": "over the time limit",
           "Fail": "failed", "MemSkip": "refused by the memory guard"}
@@ -515,7 +515,7 @@ SCOPE = {
     "campaign/SC1/README.md": (
         "SC1, static mining on `D_init`",
         "Eight databases, six algorithms (USpan, HUSP-ULL, HUSP-SP, IncUSP-Miner+, Pre-HUSPM and "
-        "Pre-HUSPM-Adaptive), four thresholds per database from `common.Datasets`. One JVM per arm; "
+        "Pre-HUSPM-Joint), four thresholds per database from `common.Datasets`. One JVM per arm; "
         "the four thresholds run lowest first in the same JVM."),
     "campaign/SC2/README.md": (
         "SC2, one hundred increments",
