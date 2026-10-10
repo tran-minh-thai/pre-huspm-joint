@@ -16,7 +16,10 @@ joint rule's decision at every increment, and alpha at that decision. Writes int
     alpha_stream.csv   per database, alpha over the whole insertion stream, the median alpha at
                        the decisions, and joint_over_tsu = (1 - UUT) / (alpha - UUT): how much
                        more inserted utility the joint rule absorbs before a rescan than a test
-                       on the total inserted utility (Hong et al.; Pre-HUSPM-TSU) at that alpha
+                       on the total inserted utility (Hong et al.; Pre-HUSPM-TSU) at that alpha;
+                       and the rescans over the 100 increments of the joint rule and of the two
+                       Pre-HUSPM tests (buf accumulating TSU_d or SWUmax_d against
+                       f = (UUT - LUT_min) / (1 - UUT) * TSU at the last rescan), simulated here
     alpha_batches.csv  per database and increment, alpha and the rescan decision
 
 With --campaign, the SC2 rows of the proposal under that tree are compared with this
@@ -150,6 +153,32 @@ def simulate(seqs, d_init, uut, rl):
     return rows
 
 
+def simulate_prehuspm(seqs, d_init, uut, rl, variant):
+    """Rescans of Pre-HUSPM's test (Yan et al., Algorithm 1) on the SC2 stream."""
+    init, rest = seqs[:d_init], seqs[d_init:]
+    rolling = sum(u for _, u in init)
+    f = (uut - rl * uut) / (1 - uut) * rolling
+    buf, n = 0.0, 0
+    for batch in even_batches(rest):
+        bt = sum(u for _, u in batch)
+        rolling += bt
+        if variant == "tsu":
+            q = bt
+        else:
+            a = {}
+            for items, u in batch:
+                for i in items:
+                    a[i] = a.get(i, 0.0) + u
+            q = max(a.values()) if a else 0.0
+        if buf + q > f:
+            n += 1
+            buf = 0.0
+            f = (uut - rl * uut) / (1 - uut) * rolling
+        else:
+            buf += q
+    return n
+
+
 def campaign_rows(tree, name):
     paths = glob.glob(os.path.join(tree, "SC2", name, "Adaptive-Full", "*.csv"))
     rows = []
@@ -182,8 +211,10 @@ def main():
         alphas = sorted(al for _, al, _ in sim)
         med = (alphas[len(alphas) // 2] + alphas[(len(alphas) - 1) // 2]) / 2
         ratio = (1 - uut) / (alpha_s - uut) if alpha_s > uut else float("inf")
+        sw = simulate_prehuspm(seqs, d_init, uut, rl, "swumax")
+        ts = simulate_prehuspm(seqs, d_init, uut, rl, "tsu")
         stream_rows.append([name, len(seqs) - d_init, f"{total:.6f}", repr(alpha_s), repr(med), uut, rl,
-                            repr(ratio)])
+                            repr(ratio), sum(r for _, _, r in sim), sw, ts])
         for b, al, rs in sim:
             batch_rows.append([name, b, repr(al), "true" if rs else "false"])
         print(f"{name}: insertion sequences={len(seqs) - d_init} alpha(stream)={alpha_s:.6f} UUT={uut} "
@@ -212,7 +243,8 @@ def main():
     with open(os.path.join(a.out, "alpha_stream.csv"), "w", newline="", encoding="utf-8") as fh:
         w = csv.writer(fh, lineterminator="\n")
         w.writerow(["dataset", "insertion_sequences", "insertion_utility", "alpha_stream",
-                    "alpha_median_at_decisions", "uut", "r_l", "joint_over_tsu"])
+                    "alpha_median_at_decisions", "uut", "r_l", "joint_over_tsu",
+                    "sim_rescans_joint", "sim_rescans_swumax", "sim_rescans_tsu"])
         w.writerows(stream_rows)
     with open(os.path.join(a.out, "alpha_batches.csv"), "w", newline="", encoding="utf-8") as fh:
         w = csv.writer(fh, lineterminator="\n")
