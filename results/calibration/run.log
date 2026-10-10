@@ -1,0 +1,425 @@
+  SIGN sc1 adapt.iip=off r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,1.367,3616,6815,308484,39811447,0
+  SIGN sc1 adapt.iip=once r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,0.786,3616,6815,55090,305372,2780143
+  SIGN sc1 adapt.iip=fixpoint r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,0.735,3616,6815,40617,72111,2177328
+  SIGN sc1 adapt.iip=once r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,0.592,3616,6815,55090,305372,2780143
+  SIGN sc1 adapt.iip=fixpoint r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,0.765,3616,6815,40617,72111,2177328
+  SIGN sc1 adapt.iip=off r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,1.421,3616,6815,308484,39811447,0
+  SIGN sc1 adapt.iip=fixpoint r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,0.753,3616,6815,40617,72111,2177328
+  SIGN sc1 adapt.iip=off r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,1.289,3616,6815,308484,39811447,0
+  SIGN sc1 adapt.iip=once r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,0.666,3616,6815,55090,305372,2780143
+  SIGN whole@0.065911 adapt.iip=off r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,0.638,141,392,38372,7294276,0
+  SIGN whole@0.065911 adapt.iip=once r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,0.459,141,392,8071,51598,549909
+  SIGN whole@0.065911 adapt.iip=fixpoint r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,0.400,141,392,5935,11656,451973
+  SIGN whole@0.065911 adapt.iip=once r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,0.452,141,392,8071,51598,549909
+  SIGN whole@0.065911 adapt.iip=fixpoint r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,0.408,141,392,5935,11656,451973
+  SIGN whole@0.065911 adapt.iip=off r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,0.708,141,392,38372,7294276,0
+  SIGN whole@0.065911 adapt.iip=fixpoint r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,0.356,141,392,5935,11656,451973
+  SIGN whole@0.065911 adapt.iip=off r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,0.671,141,392,38372,7294276,0
+  SIGN whole@0.065911 adapt.iip=once r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,0.571,141,392,8071,51598,549909
+  LEVIATHAN sc1 adapt.iip=off r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,2.601,395,572,131387,62075671,0
+  LEVIATHAN sc1 adapt.iip=once r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,1.262,395,572,14105,57268,668471
+  LEVIATHAN sc1 adapt.iip=fixpoint r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,1.277,395,572,9368,15453,482974
+  LEVIATHAN sc1 adapt.iip=once r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,1.299,395,572,14105,57268,668471
+  LEVIATHAN sc1 adapt.iip=fixpoint r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,1.370,395,572,9368,15453,482974
+  LEVIATHAN sc1 adapt.iip=off r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,2.528,395,572,131387,62075671,0
+  LEVIATHAN sc1 adapt.iip=fixpoint r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,1.350,395,572,9368,15453,482974
+  LEVIATHAN sc1 adapt.iip=off r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,2.610,395,572,131387,62075671,0
+  LEVIATHAN sc1 adapt.iip=once r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,1.265,395,572,14105,57268,668471
+  LEVIATHAN whole@0.01553 adapt.iip=off r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,1.779,135,179,39313,29437666,0
+  LEVIATHAN whole@0.01553 adapt.iip=once r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,0.852,135,179,3796,15139,184796
+  LEVIATHAN whole@0.01553 adapt.iip=fixpoint r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,0.813,135,179,2533,4106,135910
+  LEVIATHAN whole@0.01553 adapt.iip=once r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,0.859,135,179,3796,15139,184796
+  LEVIATHAN whole@0.01553 adapt.iip=fixpoint r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,0.845,135,179,2533,4106,135910
+  LEVIATHAN whole@0.01553 adapt.iip=off r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,1.711,135,179,39313,29437666,0
+  LEVIATHAN whole@0.01553 adapt.iip=fixpoint r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,0.821,135,179,2533,4106,135910
+  LEVIATHAN whole@0.01553 adapt.iip=off r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,1.803,135,179,39313,29437666,0
+  LEVIATHAN whole@0.01553 adapt.iip=once r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,0.893,135,179,3796,15139,184796
+  TAFENG sc1 adapt.iip=off r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,0.975,24,14,91301,7261660,0
+  TAFENG sc1 adapt.iip=once r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,0.983,24,14,7529,7752,1703348
+  TAFENG sc1 adapt.iip=fixpoint r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,0.920,24,14,1256,1261,347279
+  TAFENG sc1 adapt.iip=once r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,0.955,24,14,7529,7752,1703348
+  TAFENG sc1 adapt.iip=fixpoint r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,0.927,24,14,1256,1261,347279
+  TAFENG sc1 adapt.iip=off r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,0.978,24,14,91301,7261660,0
+  TAFENG sc1 adapt.iip=fixpoint r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,0.921,24,14,1256,1261,347279
+  TAFENG sc1 adapt.iip=off r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,1.004,24,14,91301,7261660,0
+  TAFENG sc1 adapt.iip=once r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,0.977,24,14,7529,7752,1703348
+  TAFENG whole@0.003557 adapt.iip=off r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,0.525,9,9,23847,2469476,0
+  TAFENG whole@0.003557 adapt.iip=once r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,0.442,9,9,1984,2035,524249
+  TAFENG whole@0.003557 adapt.iip=fixpoint r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,0.445,9,9,317,317,60693
+  TAFENG whole@0.003557 adapt.iip=once r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,0.455,9,9,1984,2035,524249
+  TAFENG whole@0.003557 adapt.iip=fixpoint r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,0.458,9,9,317,317,60693
+  TAFENG whole@0.003557 adapt.iip=off r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,0.477,9,9,23847,2469476,0
+  TAFENG whole@0.003557 adapt.iip=fixpoint r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,0.463,9,9,317,317,60693
+  TAFENG whole@0.003557 adapt.iip=off r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,0.557,9,9,23847,2469476,0
+  TAFENG whole@0.003557 adapt.iip=once r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,0.449,9,9,1984,2035,524249
+  BIBLE sc1 adapt.iip=off r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,5.523,722,650,67518,37854218,0
+  BIBLE sc1 adapt.iip=once r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,3.172,722,650,4927,10897,165317
+  BIBLE sc1 adapt.iip=fixpoint r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,3.642,722,650,4267,6053,130783
+  BIBLE sc1 adapt.iip=once r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,3.156,722,650,4927,10897,165317
+  BIBLE sc1 adapt.iip=fixpoint r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,3.761,722,650,4267,6053,130783
+  BIBLE sc1 adapt.iip=off r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,5.713,722,650,67518,37854218,0
+  BIBLE sc1 adapt.iip=fixpoint r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,3.547,722,650,4267,6053,130783
+  BIBLE sc1 adapt.iip=off r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,5.421,722,650,67518,37854218,0
+  BIBLE sc1 adapt.iip=once r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,3.160,722,650,4927,10897,165317
+  BIBLE whole@0.022895 adapt.iip=off r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,2.235,129,130,18939,11691939,0
+  BIBLE whole@0.022895 adapt.iip=once r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,1.627,129,130,1025,2392,44479
+  BIBLE whole@0.022895 adapt.iip=fixpoint r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,1.751,129,130,871,1221,34537
+  BIBLE whole@0.022895 adapt.iip=once r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,1.547,129,130,1025,2392,44479
+  BIBLE whole@0.022895 adapt.iip=fixpoint r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,1.900,129,130,871,1221,34537
+  BIBLE whole@0.022895 adapt.iip=off r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,2.237,129,130,18939,11691939,0
+  BIBLE whole@0.022895 adapt.iip=fixpoint r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,1.879,129,130,871,1221,34537
+  BIBLE whole@0.022895 adapt.iip=off r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,2.237,129,130,18939,11691939,0
+  BIBLE whole@0.022895 adapt.iip=once r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,1.393,129,130,1025,2392,44479
+  BMS1 sc1 adapt.iip=off r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,1.233,76,43,81349,19490960,0
+  BMS1 sc1 adapt.iip=once r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,0.457,76,43,2248,22920,199545
+  BMS1 sc1 adapt.iip=fixpoint r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,0.407,76,43,1025,1083,94528
+  BMS1 sc1 adapt.iip=once r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,0.443,76,43,2248,22920,199545
+  BMS1 sc1 adapt.iip=fixpoint r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,0.394,76,43,1025,1083,94528
+  BMS1 sc1 adapt.iip=off r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,0.838,76,43,81349,19490960,0
+  BMS1 sc1 adapt.iip=fixpoint r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,0.414,76,43,1025,1083,94528
+  BMS1 sc1 adapt.iip=off r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,0.729,76,43,81349,19490960,0
+  BMS1 sc1 adapt.iip=once r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,0.448,76,43,2248,22920,199545
+  C8T1S5I8N5K sc1 adapt.iip=off r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,3.393,17306,38959,1652139,112250752,0
+  C8T1S5I8N5K sc1 adapt.iip=once r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,0.690,17306,38959,115569,172426,310100
+  C8T1S5I8N5K sc1 adapt.iip=fixpoint r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,0.893,17306,38959,96323,144185,275168
+  C8T1S5I8N5K sc1 adapt.iip=once r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,0.709,17306,38959,115569,172426,310100
+  C8T1S5I8N5K sc1 adapt.iip=fixpoint r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,1.020,17306,38959,96323,144185,275168
+  C8T1S5I8N5K sc1 adapt.iip=off r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,3.389,17306,38959,1652139,112250752,0
+  C8T1S5I8N5K sc1 adapt.iip=fixpoint r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,0.816,17306,38959,96323,144185,275168
+  C8T1S5I8N5K sc1 adapt.iip=off r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,3.908,17306,38959,1652139,112250752,0
+  C8T1S5I8N5K sc1 adapt.iip=once r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,0.718,17306,38959,115569,172426,310100
+  C8T1S5I8N5K whole@0.001132 adapt.iip=off r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,2.089,3438,9244,383747,32211305,0
+  C8T1S5I8N5K whole@0.001132 adapt.iip=once r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,0.672,3438,9244,26813,40109,81101
+  C8T1S5I8N5K whole@0.001132 adapt.iip=fixpoint r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,0.530,3438,9244,21992,33026,72601
+  C8T1S5I8N5K whole@0.001132 adapt.iip=once r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,0.762,3438,9244,26813,40109,81101
+  C8T1S5I8N5K whole@0.001132 adapt.iip=fixpoint r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,0.893,3438,9244,21992,33026,72601
+  C8T1S5I8N5K whole@0.001132 adapt.iip=off r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,1.990,3438,9244,383747,32211305,0
+  C8T1S5I8N5K whole@0.001132 adapt.iip=fixpoint r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,0.550,3438,9244,21992,33026,72601
+  C8T1S5I8N5K whole@0.001132 adapt.iip=off r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,2.461,3438,9244,383747,32211305,0
+  C8T1S5I8N5K whole@0.001132 adapt.iip=once r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,0.915,3438,9244,26813,40109,81101
+  KOSARAK sc1 adapt.iip=off r_l=0.85
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,5.868,33,15,165066,252482216,0
+  KOSARAK sc1 adapt.iip=once r_l=0.85
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,1.957,33,15,3401,7245,331985
+  KOSARAK sc1 adapt.iip=fixpoint r_l=0.85
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,2.042,33,15,125,151,91485
+  KOSARAK sc1 adapt.iip=once r_l=0.85
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,1.912,33,15,3401,7245,331985
+  KOSARAK sc1 adapt.iip=fixpoint r_l=0.85
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,1.786,33,15,125,151,91485
+  KOSARAK sc1 adapt.iip=off r_l=0.85
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,5.803,33,15,165066,252482216,0
+  KOSARAK sc1 adapt.iip=fixpoint r_l=0.85
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,1.766,33,15,125,151,91485
+  KOSARAK sc1 adapt.iip=off r_l=0.85
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,5.923,33,15,165066,252482216,0
+  KOSARAK sc1 adapt.iip=once r_l=0.85
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,1.710,33,15,3401,7245,331985
+  KOSARAK whole@0.025 adapt.iip=off r_l=0.85
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,84.160,9,3,84913,424629084,0
+  KOSARAK whole@0.025 adapt.iip=once r_l=0.85
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,10.743,9,3,961,2045,114456
+  KOSARAK whole@0.025 adapt.iip=fixpoint r_l=0.85
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,5.949,9,3,33,39,41371
+  KOSARAK whole@0.025 adapt.iip=once r_l=0.85
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,9.273,9,3,961,2045,114456
+  KOSARAK whole@0.025 adapt.iip=fixpoint r_l=0.85
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,6.363,9,3,33,39,41371
+  KOSARAK whole@0.025 adapt.iip=off r_l=0.85
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,82.268,9,3,84913,424629084,0
+  KOSARAK whole@0.025 adapt.iip=fixpoint r_l=0.85
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,6.387,9,3,33,39,41371
+  KOSARAK whole@0.025 adapt.iip=off r_l=0.85
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,91.592,9,3,84913,424629084,0
+  KOSARAK whole@0.025 adapt.iip=once r_l=0.85
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,10.642,9,3,961,2045,114456
+  FIFA sc1 adapt.iip=off r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,184.251,66,601,1852062,1442566285,0
+  FIFA sc1 adapt.iip=once r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,15.036,66,601,48980,401899,1319281
+  FIFA sc1 adapt.iip=fixpoint r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,17.802,66,601,45126,164172,1220842
+  FIFA sc1 adapt.iip=once r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,14.903,66,601,48980,401899,1319281
+  FIFA sc1 adapt.iip=fixpoint r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,17.810,66,601,45126,164172,1220842
+  FIFA sc1 adapt.iip=off r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,186.113,66,601,1852062,1442566285,0
+  FIFA sc1 adapt.iip=fixpoint r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,17.671,66,601,45126,164172,1220842
+  FIFA sc1 adapt.iip=off r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,184.707,66,601,1852062,1442566285,0
+  FIFA sc1 adapt.iip=once r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,15.058,66,601,48980,401899,1319281
+  FIFA whole@0.059637 adapt.iip=off r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,102.975,17,174,473004,443122856,0
+  FIFA whole@0.059637 adapt.iip=once r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,9.583,17,174,13738,111094,391400
+  FIFA whole@0.059637 adapt.iip=fixpoint r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,11.111,17,174,12497,44489,351939
+  FIFA whole@0.059637 adapt.iip=once r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,9.313,17,174,13738,111094,391400
+  FIFA whole@0.059637 adapt.iip=fixpoint r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,11.327,17,174,12497,44489,351939
+  FIFA whole@0.059637 adapt.iip=off r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,100.317,17,174,473004,443122856,0
+  FIFA whole@0.059637 adapt.iip=fixpoint r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=fixpoint
+    RESULT OK,11.203,17,174,12497,44489,351939
+  FIFA whole@0.059637 adapt.iip=off r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=off
+    RESULT OK,99.990,17,174,473004,443122856,0
+  FIFA whole@0.059637 adapt.iip=once r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,9.583,17,174,13738,111094,391400
+  KOSARAK dinit@0.022228 adapt.iip=once r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,0.944,11,8,1299,3623,184857
+  KOSARAK whole@0.025 adapt.iip=once r_l=0.8
+    Platform: os=Windows 11 10.0 | java=25.0.4.1+1-LTS (Eclipse Adoptium) | adapt.iip=once
+    RESULT OK,14.323,9,3,1077,2504,140691
+adapt.iip=once
+kosarak.r_l=0.8
+
+Rule 1: sum over databases of the per-database score: off 397.053 s, once 48.474 s, fixpoint 49.228 s; once vs fixpoint relative difference 0.0153 (tie below 0.02).
+  SIGN          off 2.038 s  once 1.125 s  fixpoint 1.153 s
+  LEVIATHAN     off 4.380 s  once 2.124 s  fixpoint 2.171 s
+  TAFENG        off 1.503 s  once 1.426 s  fixpoint 1.379 s
+  BIBLE         off 7.760 s  once 4.707 s  fixpoint 5.521 s
+  BMS1          off 0.838 s  once 0.448 s  fixpoint 0.407 s
+  C8T1S5I8N5K   off 5.482 s  once 1.471 s  fixpoint 1.443 s
+  KOSARAK       off 90.028 s  once 12.554 s  fixpoint 8.149 s
+  FIFA          off 285.024 s  once 24.619 s  fixpoint 29.005 s
+Rule 2: KOSARAK at r_l 0.8 with adapt.iip=once: D_init at 0.022228 OK (0.944 s), whole at 0.025 OK (14.323 s).
+Every run, with its JVM and operating system: calibration.csv and run.log beside this file.

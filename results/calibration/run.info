@@ -1,0 +1,7 @@
+host=PC-THAI commit=884290f062f7b3a1bafae2d37505cf6b175f8c0b java=java.exe : openjdk version "25.0.4.1" 2026-08-18 LTS
+At D:\pre-huspm-adaptive\campaign.ps1:225 char:9
++ $ver = (& $java -version 2>&1 | Select-Object -First 1 | Out-String). ...
++         ~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (openjdk version... 2026-08-18 LTS:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError heap=48g os="Microsoft Windows NT 10.0.26300.0" start=2026-10-10 19:40:16
+end=2026-10-10 20:27:41 rc=0

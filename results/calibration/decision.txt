@@ -1,0 +1,14 @@
+adapt.iip=once
+kosarak.r_l=0.8
+
+Rule 1: sum over databases of the per-database score: off 397.053 s, once 48.474 s, fixpoint 49.228 s; once vs fixpoint relative difference 0.0153 (tie below 0.02).
+  SIGN          off 2.038 s  once 1.125 s  fixpoint 1.153 s
+  LEVIATHAN     off 4.380 s  once 2.124 s  fixpoint 2.171 s
+  TAFENG        off 1.503 s  once 1.426 s  fixpoint 1.379 s
+  BIBLE         off 7.760 s  once 4.707 s  fixpoint 5.521 s
+  BMS1          off 0.838 s  once 0.448 s  fixpoint 0.407 s
+  C8T1S5I8N5K   off 5.482 s  once 1.471 s  fixpoint 1.443 s
+  KOSARAK       off 90.028 s  once 12.554 s  fixpoint 8.149 s
+  FIFA          off 285.024 s  once 24.619 s  fixpoint 29.005 s
+Rule 2: KOSARAK at r_l 0.8 with adapt.iip=once: D_init at 0.022228 OK (0.944 s), whole at 0.025 OK (14.323 s).
+Every run, with its JVM and operating system: calibration.csv and run.log beside this file.

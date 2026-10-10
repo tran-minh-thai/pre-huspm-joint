@@ -1,0 +1,107 @@
+
+=== SIGN | |D|=230 | UUT=0.0659 | absolute threshold=37706.0 ===
+  USpan      HUSP=583     cand=4811015      explored=33132
+  HUSP-SP    HUSP=583     cand=368036       explored=5480       swu=84 iip=332701 ep=29771 peu=0
+    HUSP-SP    matches USpan exactly
+  HUSP-ULL   HUSP=583     cand=384337       explored=5552
+    HUSP-ULL   matches USpan exactly
+  IncUSP-Miner+ HUSP=583     cand=4789442      explored=33133
+    IncUSP-Miner+ matches USpan exactly
+  Pre-HUSPM  HUSP=583     cand=7169506      explored=61818
+    Pre-HUSPM  matches USpan exactly
+  Adaptive   HUSP=583     cand=70528        explored=12273
+    Adaptive   matches USpan exactly
+
+=== LEVIATHAN | |D|=2834 | UUT=0.0155 | absolute threshold=77035.6 ===
+  USpan      HUSP=107     cand=11318030     explored=16843
+  HUSP-SP    HUSP=107     cand=113619       explored=2041       swu=6040 iip=98632 ep=6906 peu=0
+    HUSP-SP    matches USpan exactly
+  HUSP-ULL   HUSP=107     cand=342823       explored=2298
+    HUSP-ULL   matches USpan exactly
+  IncUSP-Miner+ HUSP=107     cand=11299411     explored=25736
+    IncUSP-Miner+ matches USpan exactly
+  Pre-HUSPM  HUSP=107     cand=3991582      explored=16782
+    Pre-HUSPM  matches USpan exactly
+  Adaptive   HUSP=107     cand=15377        explored=3807
+    Adaptive   matches USpan exactly
+
+=== BIBLE | |D|=21369 | UUT=0.0229 | absolute threshold=477523.9 ===
+  USpan      HUSP=192     cand=7063729      explored=3931
+  HUSP-SP    HUSP=192     cand=29769        explored=710        swu=10706 iip=17372 ep=981 peu=0
+    HUSP-SP    matches USpan exactly
+  HUSP-ULL   HUSP=192     cand=335596       explored=817
+    HUSP-ULL   matches USpan exactly
+  IncUSP-Miner+ HUSP=192     cand=7037385      explored=5477
+    IncUSP-Miner+ matches USpan exactly
+  Pre-HUSPM  HUSP=192     cand=575676       explored=3516
+    Pre-HUSPM  matches USpan exactly
+  Adaptive   HUSP=192     cand=2918         explored=1298
+    Adaptive   matches USpan exactly
+
+=== BMS1 | |D|=39601 | UUT=0.0136 | absolute threshold=62759.8 ===
+  USpan      HUSP=21      cand=632364       explored=2545
+  HUSP-SP    HUSP=21      cand=26868        explored=203        swu=147 iip=24587 ep=1931 peu=0
+    HUSP-SP    matches USpan exactly
+  HUSP-ULL   HUSP=21      cand=52877        explored=337
+    HUSP-ULL   matches USpan exactly
+  IncUSP-Miner+ HUSP=21      cand=625272       explored=2546
+    IncUSP-Miner+ matches USpan exactly
+  Pre-HUSPM  HUSP=21      cand=2989256      explored=14316
+    Pre-HUSPM  matches USpan exactly
+  Adaptive   HUSP=21      cand=6978         explored=652
+    Adaptive   matches USpan exactly
+
+=== FIFA | |D|=10450 | UUT=0.0596 | absolute threshold=1317100.3 ===
+  USpan      HUSP=18      cand=175918193    explored=211221
+  HUSP-SP    HUSP=18      cand=199847       explored=5584       swu=2561 iip=145965 ep=45737 peu=0
+    HUSP-SP    matches USpan exactly
+  HUSP-ULL   HUSP=18      cand=372754       explored=5762
+    HUSP-ULL   matches USpan exactly
+  IncUSP-Miner+ HUSP=18      cand=172331644    explored=215448
+    IncUSP-Miner+ matches USpan exactly
+  Pre-HUSPM  HUSP=18      cand=62054305     explored=326612
+    Pre-HUSPM  matches USpan exactly
+  Adaptive   HUSP=18      cand=122154       explored=15099
+    Adaptive   matches USpan exactly
+
+=== KOSARAK | |D|=90002 | UUT=0.0250 | absolute threshold=873924.2 ===
+  USpan      HUSP=10      cand=16216965     explored=4312
+  HUSP-SP    HUSP=10      cand=53964        explored=91         swu=22139 iip=30623 ep=1111 peu=0
+    HUSP-SP    matches USpan exactly
+  HUSP-ULL   HUSP=10      cand=1833375      explored=759
+    HUSP-ULL   matches USpan exactly
+  IncUSP-Miner+ HUSP=10      cand=16201634     explored=4313
+    IncUSP-Miner+ matches USpan exactly
+  Pre-HUSPM  HUSP=10      cand=583854       explored=1010
+    Pre-HUSPM  matches USpan exactly
+  Adaptive   HUSP=10      cand=1936         explored=916
+    Adaptive   matches USpan exactly
+
+=== C8T1S5I8N5K | |D|=27133 | UUT=0.0011 | absolute threshold=30992.5 ===
+  USpan      HUSP=5067    cand=12426814     explored=112765
+  HUSP-SP    HUSP=5067    cand=87237        explored=10152      swu=60773 iip=6212 ep=10100 peu=0
+    HUSP-SP    matches USpan exactly
+  HUSP-ULL   HUSP=5067    cand=419535       explored=13295
+    HUSP-ULL   matches USpan exactly
+  IncUSP-Miner+ HUSP=5067    cand=10664790     explored=112766
+    IncUSP-Miner+ matches USpan exactly
+  Pre-HUSPM  HUSP=5067    cand=5209403      explored=163002
+    Pre-HUSPM  matches USpan exactly
+  Adaptive   HUSP=5067    cand=47013        explored=31495
+    Adaptive   matches USpan exactly
+
+=== TAFENG | |D|=40665 | UUT=0.0036 | absolute threshold=262871.0 ===
+  USpan      HUSP=6       cand=1618028      explored=689
+  HUSP-SP    HUSP=6       cand=272015       explored=219        swu=21167 iip=249220 ep=1409 peu=0
+    HUSP-SP    matches USpan exactly
+  HUSP-ULL   HUSP=6       cand=2611537      explored=1613
+    HUSP-ULL   matches USpan exactly
+  IncUSP-Miner+ HUSP=6       cand=1607145      explored=694
+    IncUSP-Miner+ matches USpan exactly
+  Pre-HUSPM  HUSP=6       cand=478215       explored=399
+    Pre-HUSPM  matches USpan exactly
+  Adaptive   HUSP=6       cand=2123         explored=2068
+    Adaptive   matches USpan exactly
+
+Comparisons made: 40, mismatching: 0, miners that did not finish: 0
+RESULT: every comparison made returns the same set of HUSPs.
