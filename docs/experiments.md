@@ -111,7 +111,7 @@ Per database, from `common.Datasets`:
 | BIBLE | 21,369 | 0.022895 | 0.018100, 0.022895, 0.028960, 0.032570 | 0.80 |
 | BMS1 | 39,601 | 0.013597 | 0.012821, 0.013597, 0.015293, 0.016218 | 0.80 |
 | FIFA | 10,450 | 0.059637 | 0.056234, 0.059637, 0.067073, 0.075436 | 0.80 |
-| KOSARAK | 90,002 | 0.025000 | 0.022228, 0.025000, 0.028117, 0.031623 | 0.85 |
+| KOSARAK | 90,002 | 0.025000 | 0.022228, 0.025000, 0.028117, 0.031623 | 0.80 |
 | C8T1S5I8N5K | 27,133 | 0.001132 | 0.001099, 0.001132, 0.001200, 0.001236 | 0.80 |
 | TAFENG | 40,665 | 0.003557 | 0.002812, 0.003557, 0.004499, 0.005691 | 0.80 |
 
@@ -124,7 +124,7 @@ file order, into `K` increments. `LUT_min = r_l * UUT`. Both the proposal and Pr
 | `K` | `Datasets.BATCH_COUNT`, `-Dbatch.count` | 100 (SC5: 100, 67, 50, 25) |
 | `B_sz` | `-Dblock.size`, `DEFAULT_BLOCK_SIZE` | 100 sequences per block |
 | rescan rule | `-Dadapt.trigger` | `joint` |
-| item removal in the proposal's miner | `-Dadapt.iip` | `off`, `once` or `fixpoint`; the irrelevant item pruning of HUSP-ULL (Theorem 9), at the mining cutoff; the campaign's value is set by calibration |
+| item removal in the proposal's miner | `-Dadapt.iip` | `off`, `once` or `fixpoint`; the irrelevant item pruning of HUSP-ULL (Theorem 9), at the mining cutoff; `once`, set by calibration |
 | repeats | `-Drepeats` | 1 per arm in `campaign.ps1`; the runner's default is 3 |
 
 The rescan rule `joint`: with `I` and `D` the utility inserted and deleted since the last
@@ -143,7 +143,7 @@ in `results/calibration`): the item-removal variant of the proposal's miner, `on
 `fixpoint`, by the total time of the SC1 sweep and of a whole-database mine on every database;
 and KOSARAK's `r_l`, 0.80 if the proposal mines KOSARAK at that floor within 120 minutes and
 0.85 otherwise. The rules are stated in the class comment and the outcome in
-`results/calibration/decision.txt`.
+`results/calibration/decision.txt`: `once`, and 0.80 for KOSARAK.
 
 ## 4. Scenarios
 

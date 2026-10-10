@@ -222,7 +222,6 @@ function Get-NextArm {
 # ---- java, data, build -------------------------------------------------------
 $java = if ($env:JAVA_HOME) { Join-Path $env:JAVA_HOME 'bin\java.exe' } else { $null }
 if (-not ($java -and (Test-Path $java))) { $java = (Get-Command java).Source }
-$ver = (& $java -version 2>&1 | Select-Object -First 1 | Out-String).Trim()
 # One exact JVM for the whole campaign, checked here rather than trusted. Runtimes from two
 # JVMs do not belong in one table, and arms may run on several machines. The pin is about
 # comparability, not compilation. Changing the pinned JDK invalidates every arm already
@@ -241,6 +240,9 @@ if ("$runtime".Trim() -ne $JdkRuntime) {
 if ("$vendor".Trim() -ne $JdkVendor) {
     throw "This study is pinned to JDK vendor '$JdkVendor'. $java reports java.vendor '$vendor'."
 }
+# From the properties, not from 'java -version': under Windows PowerShell its stderr line comes
+# back wrapped in an error record, and that record is what ends up in the logs.
+$ver = "$("$runtime".Trim()) ($("$vendor".Trim()))"
 
 if ($List) {
     Sync-Repo

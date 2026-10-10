@@ -126,7 +126,11 @@ def sc2():
     boundary = [d for d in dbs if d not in inside and d not in beyond]
     import re
     src = open(os.path.join(mf.REPO_DIR, "src", "common", "Datasets.java"), encoding="utf-8").read()
-    rl = {d: (0.85 if re.search(rf'new Entry\("{d}",(?:(?!new Entry).)*?true, 0\.85\)', src, re.S) else 0.8) for d in dbs}
+    def entry_rl(d):
+        # The seven-argument Entry takes the default 0.8; the eight-argument one ends with r_l.
+        m = re.search(rf'new Entry\("{d}",(?:(?!new Entry).)*?true, (0\.\d+)\)', src, re.S)
+        return float(m.group(1)) if m else 0.8
+    rl = {d: entry_rl(d) for d in dbs}
     swu_faster = [d for d in dbs if totals[(d, "Pre-HUSPM-SWUmax")][1] == 100 and totals[(d, "Pre-HUSPM-SWUmax")][0] < totals[(d, P)][0]]
     kos = "KOSARAK"
     s1 = mf.parse_su(mf.load_scenario("SC1", replicates=True))

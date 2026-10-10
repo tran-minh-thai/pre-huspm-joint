@@ -52,7 +52,7 @@ public final class ThresholdScan {
 
     /**
      * The pre-large floor the gate probes at, which has to be the one the database is
-     * measured at or the gate is testing a threshold nothing ever mines. KOSARAK is 0.85.
+     * measured at or the gate is testing a threshold nothing ever mines.
      */
     private static double rl(String name) { return common.Datasets.slMinRatio(name); }
 

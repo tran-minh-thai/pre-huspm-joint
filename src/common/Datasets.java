@@ -76,26 +76,24 @@ public final class Datasets {
          * The pre-large floor for this database, as a fraction of Su.
          *
          * Sl_min = slMinRatio * Su is the lowest LUT_dyn may fall to, so it is the threshold
-         * the algorithm actually mines at once the adaptive lower bound has settled. 0.8
-         * everywhere it works, which is seven of the eight.
+         * the algorithm actually mines at once the adaptive lower bound has settled. 0.8 on
+         * all eight databases.
          *
-         * KOSARAK needs 0.85 and the cliff is sheer: 0.8 x its lowest threshold is 0.017783,
-         * which exceeds three billion candidates and is abandoned after 103 s, while 0.85 x
-         * the same threshold is 0.018896 and returns 16 patterns in 29 s. Nothing structural
-         * predicts this. KOSARAK's item alphabet is 22790 against TAFENG's 22779 and TAFENG
-         * is fine at 0.8; C8T1S5I8N5K has 64054 and is fine; repetition puts KOSARAK at 31.8,
-         * below the 90 at which Density raises the floor by itself. It is a local property of
-         * the cost curve and only a measurement finds it.
+         * KOSARAK was set to 0.85 while the miner had no irrelevant item pruning: 0.8 x its
+         * lowest threshold then exceeded three billion candidates. With the pruning, the
+         * calibration on the measurement machine (results/calibration, rule 2) mines KOSARAK's
+         * D_init at its lowest threshold and the whole database at its default threshold,
+         * both at 0.8, in 0.9 s and 14.3 s, so the eight databases share one value.
          *
-         * 0.85 rather than more because a higher floor is not free: it thins the pre-large
+         * Not higher than needed because a higher floor is not free: it thins the pre-large
          * buffer and buys rescans, which is what Yan et al. warn of when they write that too
          * large an Sl "will waste a lot of time by rescanning the database too many times".
          * Their section 6.3.1 treats Sl as a per-database choice throughout, so carrying one
          * value per database here follows their method rather than departing from it.
          *
-         * PreHUSPMAdaptiveAlgorithm would reach 0.85 unaided - it raises the floor by 0.05
-         * whenever a mining attempt exceeds its budget - but only after paying for the
-         * attempt that fails. This starts it where that retry would have landed.
+         * PreHUSPMAdaptiveAlgorithm raises the floor by 0.05 by itself whenever a mining
+         * attempt exceeds its budget, but only after paying for the attempt that fails; a
+         * per-database value here starts it where that retry would land.
          */
         public final double slMinRatio;
 
@@ -167,8 +165,8 @@ public final class Datasets {
         // rather than a preference.
         new Entry("KOSARAK",   90002, 0.025000,
                 new double[]{0.022228, 0.025000, 0.028117, 0.031623},
-                true,  "11 10 7 5; r_l is 0.85 here, not 0.8 - see slMinRatio",
-                true, 0.85),
+                true,  "11 10 7 5",
+                true),
 
         // The one database here that reaches within-event extension, at 7.97 items per
         // event; the other seven hold exactly one item per event and exercise across-event

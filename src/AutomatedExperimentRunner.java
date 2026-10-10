@@ -1066,8 +1066,7 @@ public class AutomatedExperimentRunner {
     /**
      * The pre-large floor this database is measured at.
      *
-     * Seven of the eight use 0.8; KOSARAK needs 0.85 because 0.8 times its lowest threshold
-     * exceeds the candidate budget outright. Both the proposal and the Pre-HUSPM baseline
+     * 0.8 on all eight databases (common.Datasets.Entry.slMinRatio). Both the proposal and the Pre-HUSPM baseline
      * read it from here, because giving one of them a floor the other cannot use would not
      * be a comparison.
      */

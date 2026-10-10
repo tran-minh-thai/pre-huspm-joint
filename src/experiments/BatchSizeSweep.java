@@ -79,8 +79,8 @@ public final class BatchSizeSweep {
         List<Sequence> all = DatasetLoader.loadDataset(
                 DATASET_DIR + name + "_seq.txt", DATASET_DIR + name + "_eui.txt");
         // D_init and r_l come from common.Datasets: the thresholds are calibrated on exactly
-        // this scope, and KOSARAK uses r_l = 0.85 rather than 0.8. Half the database or a
-        // shared r_l would measure at an operating point nobody chose.
+        // this scope, and r_l is read per database. Half the database or a hand-set r_l would
+        // measure at an operating point nobody chose.
         double rl = common.Datasets.slMinRatio(name);
         int dInit = common.Datasets.dInitCount(name, all.size());
         List<Sequence> init = new ArrayList<>(all.subList(0, dInit));

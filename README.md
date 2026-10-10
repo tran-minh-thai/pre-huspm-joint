@@ -69,7 +69,7 @@ It forms one sequence per customer and month, uses `AMOUNT` as quantity and
 | FIFA | 20,450 | 2,990 | 36.24 | 1.00 | generated | 10,450 | 0.80 | 0.059637 |
 | BIBLE | 36,369 | 13,905 | 21.64 | 1.00 | generated | 21,369 | 0.80 | 0.022895 |
 | BMS1 | 59,601 | 497 | 2.51 | 1.00 | generated | 39,601 | 0.80 | 0.013597 |
-| KOSARAK | 990,002 | 41,270 | 8.10 | 1.00 | generated | 90,002 | 0.85 | 0.025000 |
+| KOSARAK | 990,002 | 41,270 | 8.10 | 1.00 | generated | 90,002 | 0.80 | 0.025000 |
 | C8T1S5I8N5K | 47,132 | 68,240 | 18.83 | 7.97 | generated | 27,133 | 0.80 | 0.001132 |
 | TAFENG | 60,665 | 23,812 | 13.40 | 1.00 | measured | 40,665 | 0.80 | 0.003557 |
 
@@ -199,7 +199,7 @@ Every constant that changes a result, with the value the scenarios use.
 | Parameter | Where | Default | Meaning |
 |---|---|---|---|
 | UUT | `Datasets.java` | per database, table above | upper utility threshold, as a fraction of total utility |
-| `r_l` | `Datasets.java` | 0.80; KOSARAK 0.85 | floor ratio, `LUT_min = r_l * UUT`; SC4 overrides it |
+| `r_l` | `Datasets.java` | 0.80 | floor ratio, `LUT_min = r_l * UUT`; SC4 overrides it |
 | `D_init` | `Datasets.java` | per database, table above | sequences mined before the update stream |
 | batch count | `Datasets.BATCH_COUNT`, `-Dbatch.count` | 100 | equal insertion batches in SC2 |
 | batch-count sweep | `Datasets.BATCH_COUNT_SWEEP` | 100, 67, 50, 25 | SC5 |

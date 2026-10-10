@@ -447,7 +447,7 @@ public class PreHUSPMAdaptiveAlgorithm {
          * -Dadapt.iip=off|once|fixpoint
          */
         public enum IipMode { OFF, ONCE, FIXPOINT }
-        /** The campaign's value, set from results/calibration/decision.txt. */
+        /** The campaign's value: "once", chosen by the calibration (results/calibration/decision.txt). */
         public static final String IIP_DEFAULT = "once";
         public IipMode iipMode = configuredIipMode();
 
