@@ -14,6 +14,12 @@ For each fault it runs verify.MixedBudgetFuzz (random streams on small databases
 verify.MixedBudgetProbe (the hand-built cases) and prints their verdicts; with --real it also
 runs verify.DirectPathVerifier --adversarial on the named databases of datasets/. Exit status is
 0 when every fault is caught by at least one of the two, 1 otherwise.
+
+    python3 analysis/fault_injection.py --item-removal [--trials N] [--seed S]
+
+injects faults into irrelevant-item removal instead and runs verify.ItemRemovalCheck random
+(brute-force reference) on each, with both child-building strategies; the unmodified copy is
+run first and must pass, so a check that fails on everything is not read as catching.
 """
 import argparse
 import pathlib
@@ -34,6 +40,68 @@ FAULTS = [
      "return Sl_min * tsuAtLastRescan + iauMax;"),
 ]
 
+FAULTS_IIP = [
+    ("removal threshold raised by 30 percent",
+     "if (iipAcc[it] < theta) {",
+     "if (iipAcc[it] < theta * 1.3) {"),
+    ("removals of a node not undone on return",
+     "while (iipTop > mark) iipRemoved[iipStack[--iipTop]] = false;",
+     "if (mark == 0) while (iipTop > mark) iipRemoved[iipStack[--iipTop]] = false;"),
+    ("bound PEU^R with half the remaining utility",
+     "double v = tUtil[k] + ru[tFlat[k]];",
+     "double v = tUtil[k] + 0.5 * ru[tFlat[k]];"),
+    ("bound summed over the sequences of the first occurrence only",
+     "for (int x = 0; x < nLocal; x++) iipAccAdd(local[x], best);",
+     "for (int x = 0; x < nLocal; x++) iipAccAdd(local[x], tUtil[0] + ru[tFlat[0]]);"),
+]
+
+
+def copy_build(tmp, old=None, new=None, name="unmodified"):
+    shutil.copytree(ROOT / "src", tmp / "src")
+    if old is not None:
+        f = tmp / TARGET
+        text = f.read_text(encoding="utf-8")
+        n = text.count(old)
+        if n != 1:
+            sys.exit(f"fault '{name}': the original text occurs {n} times, expected 1")
+        text = text.replace(old, new)
+        if text.count(new) != 1:
+            sys.exit(f"fault '{name}': the faulty text is not in the copy")
+        f.write_text(text, encoding="utf-8")
+    sources = [str(p) for p in sorted((tmp / "src").rglob("*.java"))]
+    rc, out = run(["javac", "-encoding", "UTF-8", "-nowarn", "-d", str(tmp / "build"), *sources], tmp)
+    if rc != 0:
+        sys.exit(f"fault '{name}': the copy does not compile\n{out}")
+
+
+def item_removal(trials, seed):
+    caught_all = True
+    for name, old, new in [("none (control)", None, None)] + FAULTS_IIP:
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp = pathlib.Path(tmp)
+            copy_build(tmp, old, new, name)
+            print(f"fault: {name}")
+            if old is not None:
+                print(f"  replaced: {old}")
+                print(f"      with: {new}")
+            failed = False
+            for cap in ("default", "0"):
+                cmd = ["java", "-Xmx4g", "-cp", "build"]
+                if cap == "0":
+                    cmd.append("-Dadapt.singlePassCap=0")
+                rc, out = run(cmd + ["verify.ItemRemovalCheck", "random", str(trials), str(seed)], tmp)
+                failed |= rc != 0
+                for l in out.splitlines():
+                    if l.startswith("  once") or l.startswith("  fixpoint") or l.startswith("RESULT"):
+                        print(f"  singlePassCap={cap}: {l.strip()[:150]}")
+            if old is None:
+                print(f"  control passes: {not failed}")
+                caught_all &= not failed
+            else:
+                print(f"  caught: {failed}")
+                caught_all &= failed
+    sys.exit(0 if caught_all else 1)
+
 
 def run(cmd, cwd):
     p = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True)
@@ -45,7 +113,10 @@ def main():
     ap.add_argument("--trials", type=int, default=2000)
     ap.add_argument("--seed", type=int, default=7)
     ap.add_argument("--real", default="", help="comma-separated databases for the adversarial run")
+    ap.add_argument("--item-removal", action="store_true")
     a = ap.parse_args()
+    if a.item_removal:
+        item_removal(a.trials, a.seed)
 
     caught_all = True
     for name, old, new in FAULTS:
