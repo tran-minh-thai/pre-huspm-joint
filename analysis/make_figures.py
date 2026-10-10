@@ -160,7 +160,8 @@ STATUS_ORDER = ["OT", "OOM", "Fail", "MemSkip", "Skip"]
 # %% ------------------------------------------------------------------ Cell 2
 #    DATABASES (from common.Datasets) + LOADING
 def load_datasets_table():
-    """name -> dict(d_init, default_uut, sweep) parsed from src/common/Datasets.java."""
+    """name -> dict(d_init, default_uut, sweep, sl_ratio) parsed from src/common/Datasets.java.
+    sl_ratio is the last argument of the eight-argument Entry, else DEFAULT_SL_MIN_RATIO."""
     path = os.path.join(REPO_DIR, "src", "common", "Datasets.java")
     if not os.path.exists(path):
         warnings.warn(f"{path} not found; default thresholds unavailable")
@@ -168,10 +169,17 @@ def load_datasets_table():
     text = open(path, encoding="utf-8").read()
     pat = re.compile(r'new Entry\("([A-Za-z0-9_]+)",\s*(\d+),\s*([0-9.]+),\s*'
                      r'new double\[\]\{([^}]*)\}')
+    default_rl = re.search(r'DEFAULT_SL_MIN_RATIO\s*=\s*([0-9.]+)', text)
+    default_rl = float(default_rl.group(1)) if default_rl else 0.8
     out = {}
-    for name, dinit, uut, sweep in pat.findall(text):
+    for m in pat.finditer(text):
+        name, dinit, uut, sweep = m.groups()
+        rest = text[m.end():]
+        body = rest[:rest.find("new Entry(")] if "new Entry(" in rest else rest
+        rl = re.search(r'true,\s*(0\.\d+)\)', body)
         out[name] = dict(d_init=int(dinit), default_uut=float(uut),
-                         sweep=[float(v) for v in sweep.split(",")])
+                         sweep=[float(v) for v in sweep.split(",")],
+                         sl_ratio=float(rl.group(1)) if rl else default_rl)
     return out
 
 
@@ -574,6 +582,7 @@ def operating_region(df):
                          increments_alpha_le_uut=int(np.sum(alpha <= uut)),
                          alpha_stream=stream.get(ds, np.nan), joint_over_tsu=factor.get(ds, np.nan),
                          alpha_check=alpha_check,
+                         sl_min_eff_max=float(ok["sl_min_eff"].max()),
                          **baseline_rescans(df, ds),
                          check="ok" if above == rescans == triggered
                                else f"MISMATCH above={above} triggered={triggered} rescans={rescans}"))
@@ -627,6 +636,19 @@ def rescan_hypothesis(tab):
                        f"smallest-gap part {'holds' if small_ok else 'fails'}")
 
 
+def rescan_order_check(tab):
+    """On an insertion-only stream with the same UUT and r_l, the joint rule never rescans more
+    often than the SWUmax test (proved in the paper; checked here, not predicted). Returns
+    (databases compared, databases where the proposal rescans more, databases where the
+    proposal's floor rose above its configured r_l, which voids the comparison there)."""
+    t = tab.set_index("dataset")
+    raised = [d for d in t.index if t.loc[d, "sl_min_eff_max"] > DATASETS.get(d, {}).get("sl_ratio", 0.8) + 1e-12]
+    pairs = [d for d in t.index if pd.notna(t.loc[d, "rescans_swumax"]) and t.loc[d, "increments"] == 100
+             and d not in raised]
+    more = [d for d in pairs if t.loc[d, "rescans"] > t.loc[d, "rescans_swumax"]]
+    return pairs, more, raised
+
+
 def export_operating_region():
     df = load_scenario("SC2")
     if df is None:
@@ -640,6 +662,10 @@ def export_operating_region():
     bad = tab[tab["check"] != "ok"]
     for _, r in bad.iterrows():
         print(f"      {r['dataset']}: {r['check']}")
+    pairs, more, raised = rescan_order_check(tab)
+    print(f"      rescans of the proposal <= Pre-HUSPM-SWUmax: {len(pairs) - len(more)} of {len(pairs)} databases"
+          + (f"; MORE on {', '.join(more)}" if more else "")
+          + (f"; floor raised above r_l on {', '.join(raised)}, not compared" if raised else ""))
     h = rescan_hypothesis(tab)
     print(f"      registered rescan prediction: {h['verdict']} ({h['reason']}); "
           f"gaps TSU - proposal: {h['gap']}")

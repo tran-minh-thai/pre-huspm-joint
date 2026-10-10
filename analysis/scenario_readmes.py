@@ -152,6 +152,7 @@ def sc2():
         v = reg.loc[d, f"rescans_{key}"]
         return int(v) if pd.notna(v) else f"incomplete ({int(reg.loc[d, f'increments_{key}'])}/100)"
     hyp = mf.rescan_hypothesis(reg.reset_index())
+    ord_pairs, ord_more, ord_raised = mf.rescan_order_check(reg.reset_index())
     hyp_rows = [[d, (f"{reg.loc[d,'alpha_stream']:.4f}" if pd.notna(reg.loc[d, "alpha_stream"]) else "not computed"),
                  (f"{reg.loc[d,'joint_over_tsu']:.2f}" if pd.notna(reg.loc[d, "joint_over_tsu"]) else "not computed"),
                  int(reg.loc[d, "rescans"]), rescans_of(d, "tsu"), rescans_of(d, "swumax"),
@@ -227,6 +228,12 @@ completed the 100 increments.
        ["---", "---:", "---:", "---:", "---:", "---:", "---:"])}
 
 Verdict: **{hyp["verdict"]}** ({hyp["reason"]}).
+
+The joint rule never rescans more often than the SWUmax test on an insertion-only stream with the
+same UUT and floor ratio (a proved property, checked here): the proposal rescans no more than
+Pre-HUSPM-SWUmax on {len(ord_pairs) - len(ord_more)} of {len(ord_pairs)} databases where both completed{
+"" if not ord_more else "; it rescans MORE on " + ", ".join(ord_more)}{
+"" if not ord_raised else "; " + ", ".join(ord_raised) + " not compared, its floor rose above r_l"}.
 
 **Inside the budget** (median ratio at most one): {", ".join(f"{d}, {ratio(d):.2f} times faster than remining" for d in inside) or "none"}.
 

@@ -129,12 +129,12 @@ def alpha_of(seqs):
     return (max(a.values()) / total if total > 0 else float("nan")), total
 
 
-def simulate(seqs, d_init, uut, rl):
-    init, rest = seqs[:d_init], seqs[d_init:]
-    tsu_ref = rolling = sum(u for _, u in init)
+def joint_decisions(init_total, batches, uut, rl):
+    """The joint rule on an insertion-only stream: (increment, alpha, rescan) per batch."""
+    tsu_ref = rolling = init_total
     a, a_max, u_plus = {}, 0.0, 0.0
     rows = []
-    for b, batch in enumerate(even_batches(rest), start=1):
+    for b, batch in enumerate(batches, start=1):
         bt = 0.0
         for items, u in batch:
             bt += u
@@ -153,13 +153,14 @@ def simulate(seqs, d_init, uut, rl):
     return rows
 
 
-def simulate_prehuspm(seqs, d_init, uut, rl, variant):
-    """Rescans of Pre-HUSPM's test (Yan et al., Algorithm 1) on the SC2 stream."""
-    init, rest = seqs[:d_init], seqs[d_init:]
-    rolling = sum(u for _, u in init)
+def prehuspm_rescans(init_total, batches, uut, rl, variant):
+    """Increments at which Pre-HUSPM's test rescans (Yan et al., Algorithm 1): buf + q > f with
+    q = TSU_d or SWUmax_d = max_i (utility of the sequences of d holding i), buf reset to 0 and
+    f = (UUT - LUT_min) / (1 - UUT) * TU at every rescan."""
+    rolling = init_total
     f = (uut - rl * uut) / (1 - uut) * rolling
-    buf, n = 0.0, 0
-    for batch in even_batches(rest):
+    buf, out = 0.0, []
+    for b, batch in enumerate(batches, start=1):
         bt = sum(u for _, u in batch)
         rolling += bt
         if variant == "tsu":
@@ -171,12 +172,60 @@ def simulate_prehuspm(seqs, d_init, uut, rl, variant):
                     a[i] = a.get(i, 0.0) + u
             q = max(a.values()) if a else 0.0
         if buf + q > f:
-            n += 1
+            out.append(b)
             buf = 0.0
             f = (uut - rl * uut) / (1 - uut) * rolling
         else:
             buf += q
-    return n
+    return out
+
+
+def rescan_order(joint, swumax):
+    """(comparisons, violations) of: the k-th rescan of the joint rule is not earlier than the
+    k-th rescan of the SWUmax test, for every k, and the joint rule has no more rescans."""
+    n = min(len(joint), len(swumax))
+    bad = sum(1 for k in range(n) if joint[k] < swumax[k])
+    bad += 1 if len(joint) > len(swumax) else 0
+    return n + 1, bad
+
+
+def simulate(seqs, d_init, uut, rl):
+    init, rest = seqs[:d_init], seqs[d_init:]
+    return joint_decisions(sum(u for _, u in init), even_batches(rest), uut, rl)
+
+
+def simulate_prehuspm(seqs, d_init, uut, rl, variant):
+    """Rescans of Pre-HUSPM's test on the SC2 stream."""
+    init, rest = seqs[:d_init], seqs[d_init:]
+    return len(prehuspm_rescans(sum(u for _, u in init), even_batches(rest), uut, rl, variant))
+
+
+def random_order_check(trials, seed):
+    """rescan_order on random insertion-only streams: varying item alphabets (so alpha varies
+    from near UUT to 1), batch counts and sizes, thresholds and floor ratios."""
+    import random
+    r = random.Random(seed)
+    comps = bad = trials_with_rescans = 0
+    first = None
+    for t in range(trials):
+        n_items = r.choice([2, 3, 5, 10, 50, 500])
+        uut = r.choice([0.001, 0.01, 0.05, 0.1, 0.2])
+        rl = r.choice([0.3, 0.5, 0.8, 0.9])
+        def seq():
+            k = r.randint(1, min(8, n_items))
+            return frozenset(r.sample(range(n_items), k)), float(r.randint(1, 100))
+        init_total = sum(seq()[1] for _ in range(r.randint(1, 50)))
+        batches = [[seq() for _ in range(r.randint(0, 6))] for _ in range(r.randint(1, 60))]
+        j = [b for b, _, rs in joint_decisions(init_total, batches, uut, rl) if rs]
+        s = prehuspm_rescans(init_total, batches, uut, rl, "swumax")
+        c, v = rescan_order(j, s)
+        comps += c
+        bad += v
+        if j and s:
+            trials_with_rescans += 1
+        if v and first is None:
+            first = f"trial {t}: joint {j[:8]} swumax {s[:8]} UUT={uut} r_l={rl}"
+    return trials, comps, bad, trials_with_rescans, first
 
 
 def campaign_rows(tree, name):
@@ -195,6 +244,8 @@ def main():
     ap.add_argument("--out", default=os.path.join(ROOT, "results", "invariant-insertion-alpha"))
     ap.add_argument("--campaign", default=None, help="a tree holding SC2/<DB>/Adaptive-Full/*.csv")
     ap.add_argument("--data", default=os.path.join(ROOT, "datasets"))
+    ap.add_argument("--random-order", nargs=2, metavar=("TRIALS", "SEED"),
+                    help="check the rescan order of the joint rule and the SWUmax test on random streams")
     ap.add_argument("databases", nargs="*")
     a = ap.parse_args()
     tab = table()
@@ -202,6 +253,15 @@ def main():
     os.makedirs(a.out, exist_ok=True)
     stream_rows, batch_rows = [], []
     compared = mismatched = 0
+    order_comparisons = order_violations = 0
+    if a.random_order:
+        tr, sd = a.random_order
+        n, c, v, w, first = random_order_check(int(tr), int(sd))
+        print(f"random streams: {n} trials, {w} with rescans under both tests, {c} comparisons "
+              f"(k-th rescans and totals), {v} with the joint rule's rescan earlier")
+        if first:
+            print("  first: " + first)
+        sys.exit(1 if v or w == 0 else 0)
     for name in names:
         d_init, uut, rl = tab[name]
         seqs = load(name, a.data)
@@ -211,7 +271,11 @@ def main():
         alphas = sorted(al for _, al, _ in sim)
         med = (alphas[len(alphas) // 2] + alphas[(len(alphas) - 1) // 2]) / 2
         ratio = (1 - uut) / (alpha_s - uut) if alpha_s > uut else float("inf")
-        sw = simulate_prehuspm(seqs, d_init, uut, rl, "swumax")
+        sw_list = prehuspm_rescans(sum(u for _, u in seqs[:d_init]), even_batches(seqs[d_init:]), uut, rl, "swumax")
+        sw = len(sw_list)
+        oc, ov = rescan_order([b for b, _, rs in sim if rs], sw_list)
+        order_comparisons += oc
+        order_violations += ov
         ts = simulate_prehuspm(seqs, d_init, uut, rl, "tsu")
         stream_rows.append([name, len(seqs) - d_init, f"{total:.6f}", repr(alpha_s), repr(med), uut, rl,
                             repr(ratio), sum(r for _, _, r in sim), sw, ts])
@@ -250,6 +314,10 @@ def main():
         w = csv.writer(fh, lineterminator="\n")
         w.writerow(["dataset", "increment", "alpha", "rescan"])
         w.writerows(batch_rows)
+    print(f"rescan order (k-th rescan of the joint rule not earlier than that of the SWUmax test, and no "
+          f"more rescans): {order_comparisons} comparisons, {order_violations} violations")
+    if order_violations:
+        sys.exit(1)
     if a.campaign:
         print(f"campaign comparison: {compared} increments, {mismatched} mismatching")
         if compared == 0 or mismatched:
