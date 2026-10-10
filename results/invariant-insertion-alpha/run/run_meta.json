@@ -1,0 +1,16 @@
+{
+  "command": "python3 -I analysis/insertion_alpha.py --out results/invariant-insertion-alpha",
+  "path_substitutions": 0,
+  "build_dir": "build-alpha",
+  "git_commit": "f8bfb49a0cbad6c2d829922785732ceeeadfef3a",
+  "tree": "clean",
+  "source_sha256": "ef3d3dc5016b162a3ba0a7cc5621c8941feb2d14d70904fcbd9d48733bf79f9d",
+  "source_files": 34,
+  "java": "openjdk version \"26.0.1\" 2026-04-21",
+  "os": "Darwin 27.0.0 (macOS-27.0.1-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-10-10T20:42:45",
+  "end": "2026-10-10T20:42:52",
+  "exit_code": 0
+}
