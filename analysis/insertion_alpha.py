@@ -13,7 +13,10 @@ the miner: the SC2 stream (D_init, then the rest in 100 equal increments in file
 joint rule's decision at every increment, and alpha at that decision. Writes into --out
 (default results/invariant-insertion-alpha):
 
-    alpha_stream.csv   per database, alpha over the whole insertion stream
+    alpha_stream.csv   per database, alpha over the whole insertion stream, the median alpha at
+                       the decisions, and joint_over_tsu = (1 - UUT) / (alpha - UUT): how much
+                       more inserted utility the joint rule absorbs before a rescan than a test
+                       on the total inserted utility (Hong et al.; Pre-HUSPM-TSU) at that alpha
     alpha_batches.csv  per database and increment, alpha and the rescan decision
 
 With --campaign, the SC2 rows of the proposal under that tree are compared with this
@@ -175,8 +178,12 @@ def main():
         seqs = load(name, a.data)
         d_init = max(1, min(d_init, len(seqs)))
         alpha_s, total = alpha_of(seqs[d_init:])
-        stream_rows.append([name, len(seqs) - d_init, f"{total:.6f}", repr(alpha_s), uut, rl])
         sim = simulate(seqs, d_init, uut, rl)
+        alphas = sorted(al for _, al, _ in sim)
+        med = (alphas[len(alphas) // 2] + alphas[(len(alphas) - 1) // 2]) / 2
+        ratio = (1 - uut) / (alpha_s - uut) if alpha_s > uut else float("inf")
+        stream_rows.append([name, len(seqs) - d_init, f"{total:.6f}", repr(alpha_s), repr(med), uut, rl,
+                            repr(ratio)])
         for b, al, rs in sim:
             batch_rows.append([name, b, repr(al), "true" if rs else "false"])
         print(f"{name}: insertion sequences={len(seqs) - d_init} alpha(stream)={alpha_s:.6f} UUT={uut} "
@@ -204,7 +211,8 @@ def main():
             mismatched += bad
     with open(os.path.join(a.out, "alpha_stream.csv"), "w", newline="", encoding="utf-8") as fh:
         w = csv.writer(fh)
-        w.writerow(["dataset", "insertion_sequences", "insertion_utility", "alpha_stream", "uut", "r_l"])
+        w.writerow(["dataset", "insertion_sequences", "insertion_utility", "alpha_stream",
+                    "alpha_median_at_decisions", "uut", "r_l", "joint_over_tsu"])
         w.writerows(stream_rows)
     with open(os.path.join(a.out, "alpha_batches.csv"), "w", newline="", encoding="utf-8") as fh:
         w = csv.writer(fh)
