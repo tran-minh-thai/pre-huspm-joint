@@ -74,7 +74,11 @@ param(
     [string]   $JdkRuntime = '',
     [string]   $JdkVendor  = '',
     [switch]   $List,
-    [switch]   $NoGit
+    [switch]   $NoGit,
+    # Measure the two settings experiments.CampaignCalibration decides (item removal in the
+    # proposal's miner, KOSARAK's floor ratio) under its pre-set rules, after checking that
+    # every miner returns the same patterns as USpan. Writes results/calibration and pushes it.
+    [switch]   $Calibrate
 )
 # 'Continue', not 'Stop'. Native tools write progress to stderr - java -version does, git
 # does - and under 'Stop' PowerShell turns every such line into a terminating error. The
@@ -271,6 +275,37 @@ New-Item -ItemType Directory build | Out-Null
 & (Join-Path (Split-Path $java) 'javac.exe') -encoding UTF-8 -d build `
     (Get-ChildItem -Recurse -Filter *.java src | ForEach-Object { $_.FullName })
 if ($LASTEXITCODE -ne 0) { throw "compile failed" }
+
+if ($Calibrate) {
+    if ((git status --porcelain -- src 2>$null | Out-String).Trim()) { throw "src/ has uncommitted changes; calibrate from a commit." }
+    $cal = 'results/calibration'
+    if (Test-Path $cal) { throw "$cal exists. Delete it to calibrate again." }
+    New-Item -ItemType Directory -Force $cal | Out-Null
+    $commit = (git log -1 --format=%H -- src 2>$null | Out-String).Trim()
+    "host=$host_ commit=$commit java=$ver heap=${HeapGb}g os=`"$([Environment]::OSVersion.VersionString)`" start=$(Get-Date -f 'yyyy-MM-dd HH:mm:ss')" | Set-Content "$cal/run.info"
+    Write-Host "=== agreement of every miner with USpan, default thresholds ==="
+    $p = Start-Process -FilePath $java -PassThru -Wait -NoNewWindow `
+         -RedirectStandardOutput "$cal/agreement.log" -RedirectStandardError "$cal/agreement.err" `
+         -ArgumentList @("-Xmx${HeapGb}g", '-Xss64m', '-cp', 'build', 'verify.BaselineAgreement', 'ALL')
+    if ($p.ExitCode -ne 0) { Get-Content "$cal/agreement.log" -Tail 30; Get-Content "$cal/agreement.err" -Tail 30; throw "miners disagree or failed; see $cal/agreement.log" }
+    Write-Host "=== calibration ==="
+    $p = Start-Process -FilePath $java -PassThru -Wait -NoNewWindow `
+         -RedirectStandardOutput "$cal/run.log" -RedirectStandardError "$cal/run.err" `
+         -ArgumentList @('-Xmx4g', '-cp', 'build', "-Dcalib.childHeap=${HeapGb}g",
+                         'experiments.CampaignCalibration', 'all', $cal, 'datasets/')
+    $rc = $p.ExitCode
+    Get-Content "$cal/run.log" -Tail 20
+    "end=$(Get-Date -f 'yyyy-MM-dd HH:mm:ss') rc=$rc" | Add-Content "$cal/run.info"
+    if (-not $NoGit) {
+        git add $cal 2>&1 | Out-Null
+        git commit -q -m "Calibration on $host_ (rc=$rc)" 2>&1 | Out-Null
+        git push -q 2>&1 | Out-Null
+        if ($LASTEXITCODE -ne 0) { git pull --rebase --autostash -q 2>&1 | Out-Null; git push -q 2>&1 | Out-Null }
+        if ($LASTEXITCODE -ne 0) { throw "calibration results committed but not pushed; run git push" }
+    }
+    if ($rc -ne 0) { throw "calibration failed; see $cal/run.log" }
+    return
+}
 
 # ---- the loop ---------------------------------------------------------------
 Write-Host "=== $Scenario campaign on $host_ - $(Get-Date -f 'yyyy-MM-dd HH:mm:ss') ==="

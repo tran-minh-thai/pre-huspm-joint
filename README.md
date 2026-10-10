@@ -114,6 +114,8 @@ java -Xmx12g -Xss64m -cp build verify.DirectPathVerifier ALL --adversarial --ops
 java -cp build verify.MixedBudgetFuzz joint 5000 11                         # random insert, delete and modify streams: rule, trials, seed
 java -Xmx24g -Xss64m -cp build verify.IncUspVerifier random 300 7           # IncUSP-Miner+ after every insertion batch
 java -Xmx24g -Xss64m -cp build verify.IncUspVerifier real SIGN 100          # the same on a real database, 100 batches
+java -Xmx4g -cp build verify.ItemRemovalCheck random 2000 1                 # item removal in the proposal's miner against brute force
+java -Xmx24g -Xss64m -cp build verify.ItemRemovalCheck real SIGN whole      # off, once and fixpoint return the same patterns
 ```
 
 Scenarios, one at a time or all:
@@ -124,6 +126,7 @@ Scenarios, one at a time or all:
 .\campaign.ps1 -Scenario SC1 -MemMode live                # memory campaign (live set)
 .\campaign.ps1 -Scenario SC2 -Repeat 1                    # a replicate, in a fresh JVM
 .\campaign.ps1 -List                                      # arms not yet measured
+.\campaign.ps1 -Calibrate                                 # settings fixed by measurement before the campaign
 ```
 
 | Scenario | What it measures | Databases | Output file |
@@ -202,6 +205,7 @@ Every constant that changes a result, with the value the scenarios use.
 | batch-count sweep | `Datasets.BATCH_COUNT_SWEEP` | 100, 67, 50, 25 | SC5 |
 | SC6 composition | `AutomatedExperimentRunner` | 14 / 3 / 3 | insertions / deletions / modifications, each 1/100 of the stream |
 | rescan rule | `-Dadapt.trigger` | `joint` | `iaumax`, `cub` and `swumax` are kept for comparison; `iaumax` and `swumax` can miss patterns on a direct update |
+| item removal | `-Dadapt.iip` | `once` | `off`, `once` or `fixpoint`; removes, for a subtree, items that cannot complete a pattern above the cutoff |
 | block size `B_sz` | `-Dblock.size` | 100 | sequences per block of the block index |
 | seeds | `AutomatedExperimentRunner.SEEDS` | 42, 1337, 2024, 31415, 271828 | batch orders in SC2, SC5 and SC6; `-Dseeds=n` uses the first n |
 | repeats | `-Drepeats` | 3 (`run.ps1`), 1 per arm (`campaign.ps1`) | identical reruns; campaign replicates use `-Repeat` |

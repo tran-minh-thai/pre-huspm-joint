@@ -550,7 +550,9 @@ public class AutomatedExperimentRunner {
                 + " | java=" + System.getProperty("java.runtime.version")
                 + " " + System.getProperty("java.vm.name") + " (" + System.getProperty("java.vendor") + ")"
                 + " | cpus=" + Runtime.getRuntime().availableProcessors()
-                + " | adapt.trigger=" + ADAPT_TRIGGER + " | block.size=" + DEFAULT_BLOCK_SIZE
+                + " | adapt.trigger=" + ADAPT_TRIGGER
+                + " | adapt.iip=" + PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.configuredIipMode().name().toLowerCase(Locale.ROOT)
+                + " | block.size=" + DEFAULT_BLOCK_SIZE
                 + " | timeout.min=" + TIMEOUT_MINUTES
                 + " | repeats=" + REPEATS + " repeat.index=" + REPEAT_INDEX
                 + " | seed.index=" + SEED_INDEX);

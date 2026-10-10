@@ -124,6 +124,7 @@ file order, into `K` increments. `LUT_min = r_l * UUT`. Both the proposal and Pr
 | `K` | `Datasets.BATCH_COUNT`, `-Dbatch.count` | 100 (SC5: 100, 67, 50, 25) |
 | `B_sz` | `-Dblock.size`, `DEFAULT_BLOCK_SIZE` | 100 sequences per block |
 | rescan rule | `-Dadapt.trigger` | `joint` |
+| item removal in the proposal's miner | `-Dadapt.iip` | `off`, `once` or `fixpoint`; the campaign's value is set by calibration |
 | repeats | `-Drepeats` | 1 per arm in `campaign.ps1`; the runner's default is 3 |
 
 The rescan rule `joint`: with `I` and `D` the utility inserted and deleted since the last
@@ -135,6 +136,14 @@ The rules `iaumax`, `cub` and `swumax` remain selectable for comparison only; `i
 `swumax` can miss patterns on a direct update. The proposal's `swumax` rule compares the
 utility of the largest single inserted sequence; it is not the `SWUmax` of Yan et al., which
 `Pre-HUSPM-SWUmax` uses.
+
+Two settings are fixed on the measurement machine before the campaign, by rules set before
+the measurement (`experiments.CampaignCalibration`, run by `.\campaign.ps1 -Calibrate`, output
+in `results/calibration`): the item-removal variant of the proposal's miner, `once` or
+`fixpoint`, by the total time of the SC1 sweep and of a whole-database mine on every database;
+and KOSARAK's `r_l`, 0.80 if the proposal mines KOSARAK at that floor within 120 minutes and
+0.85 otherwise. The rules are stated in the class comment and the outcome in
+`results/calibration/decision.txt`.
 
 ## 4. Scenarios
 
@@ -152,9 +161,6 @@ BMS1 takes part in SC1 only: no threshold that returns patterns can be mined on 
 database. In SC5 only BURST draws from the seed; EVEN, INCREASING and DECREASING are
 deterministic. SC7's arms are `proposed_full`, `proposed_no_IUB`, `Pre-HUSPM` (one mine each)
 and `proposed_C5_on`, `proposed_C5_off`, `proposed_no_block_index` (over the increments).
-
-The USpan, HUSP-ULL, HUSP-SP, IncUSP-Miner+ and Pre-HUSPM arms, and the proposal's SC4 arm on
-C8T1S5I8N5K, are being re-measured.
 
 ## 5. Measurement
 

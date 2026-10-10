@@ -416,6 +416,50 @@ public class PreHUSPMAdaptiveAlgorithm {
 
         /** IUB branch pruning ablation: if false, branches are never cut by IUB. */
         public boolean useIub = true;
+
+        /**
+         * Irrelevant-item removal in the static miner (initial mine and every rescan).
+         *
+         * Rule. For a node t with occurrence lists and a set R of removed items,
+         *   PEU^R(t,s) = max over the occurrences (k,w) of t in s of w + ru^R_k,
+         * where ru^R_k is the utility of the items after position k that are not in R. For an
+         * item i not in R,
+         *   B^R(i,t) = sum, over the sequences s in which i occurs after the first occurrence
+         *              end of t, of PEU^R(t,s).
+         * If B^R(i,t) < theta, no pattern below t whose extension part contains i reaches theta
+         * (its utility in s is at most PEU^R(t,s), and only those sequences can contain it), so
+         * i is removed for the whole subtree of t: it is never an extension candidate there and
+         * its utility is excluded from ru for every bound computed in that subtree. At the root
+         * (empty pattern) B^R(i) is the sequence-weighted utility of i over the non-removed
+         * utility. Applying the test once per node or repeating it to a fixpoint are both exact.
+         * theta is the mining cutoff passed to the miner.
+         *
+         *   OFF       the miner as before, bit for bit
+         *   ONCE      one pass at the root and one pass per node (default)
+         *   FIXPOINT  repeat each pass until no item is removed
+         *
+         * -Dadapt.iip=off|once|fixpoint
+         */
+        public enum IipMode { OFF, ONCE, FIXPOINT }
+        /** The campaign's value, set from results/calibration/decision.txt. */
+        public static final String IIP_DEFAULT = "once";
+        public IipMode iipMode = configuredIipMode();
+
+        /** The mode a new miner takes: -Dadapt.iip, else IIP_DEFAULT. */
+        public static IipMode configuredIipMode() {
+            return parseIipMode(System.getProperty("adapt.iip", IIP_DEFAULT));
+        }
+
+        public static IipMode parseIipMode(String s) {
+            switch (s.trim().toLowerCase(java.util.Locale.ROOT)) {
+                case "off":      return IipMode.OFF;
+                case "once":     return IipMode.ONCE;
+                case "fixpoint": return IipMode.FIXPOINT;
+                default: throw new IllegalArgumentException(
+                        "adapt.iip must be off|once|fixpoint, got: " + s);
+            }
+        }
+
         /** Adaptive rescan ablation: if false, every batch triggers a rescan. */
         public boolean useAdaptiveRescan = true;
 
@@ -445,6 +489,11 @@ public class PreHUSPMAdaptiveAlgorithm {
         public long exploredNodes = 0; // nodes actually expanded; the PEU bound is applied before materialization, so this is far below candidate_count
         // prunedValueBound = items removed by the aggregated PEU value bound.
         public long prunedValueBound = 0, prunedIub = 0;
+        // removedItems = items removed by irrelevant-item removal, summed over the root and every
+        // node (an item removed at a node stays removed below it and is not counted again there).
+        public long removedItems = 0;
+        // removedItemsRoot = the part of removedItems removed at the root (sequence-weighted utility).
+        public long removedItemsRoot = 0;
 
         // --- Counters and adaptive band ---
         public double lutDynValue, deltaDValue, sigmaDSquared, rhoD;
@@ -801,7 +850,7 @@ public class PreHUSPMAdaptiveAlgorithm {
             cancelled = false;
             rescanCount = 0; patternCount = 0;
             candidateCount = 0; exploredNodes = 0; blocksReadCount = 0; numBlocksSkipped = 0;
-            prunedValueBound = 0; prunedIub = 0;
+            prunedValueBound = 0; prunedIub = 0; removedItems = 0; removedItemsRoot = 0;
             cubValue = 0; cubTriggeredRescan = false;
             resetIau();
             insertedSinceRescan = 0; deletedSinceRescan = 0;
@@ -852,7 +901,7 @@ public class PreHUSPMAdaptiveAlgorithm {
             cancelled = false; // clear a cancellation left by an earlier measurement
             // candidateCount is reset every batch: the candidate budget applies per batch,
             // and candidate_count reports the cost of each batch.
-            candidateCount = 0; exploredNodes = 0;
+            candidateCount = 0; exploredNodes = 0; removedItems = 0; removedItemsRoot = 0;
             globalBlockIndex.buildFromBatch(deltaD);
             double batchTotalUtil = 0;
             double swuMax = 0;
@@ -1387,6 +1436,127 @@ public class PreHUSPMAdaptiveAlgorithm {
             return result;
         }
 
+        // ====================================================================
+        //  Irrelevant-item removal state (see IipMode for the rule)
+        //
+        //  iipRemoved[item] marks the items removed on the current path; iipStack records them
+        //  in removal order, and a node unmarks what it pushed when it returns (also on an
+        //  exception), so sibling subtrees see only their ancestors' removals. ru under the
+        //  removals in force is recomputed per sequence into iipRu (one sequence at a time),
+        //  so no per-node or per-sequence copy exists. Sequence objects are never written.
+        // ====================================================================
+        private transient boolean[] iipRemoved;
+        private transient int[] iipStack;
+        private int iipTop = 0;
+        private transient double[] iipRu;        // flat-indexed, one sequence
+        private transient int[] iipLocal;        // flat-indexed: distinct items of one sequence
+        private transient double[] iipAcc;       // item-indexed: B per item
+        private transient long[] iipAccStamp;    // item-indexed: iipAcc[item] valid iff == iipAccGen
+        private transient long[] iipSeqStamp;    // item-indexed: item seen in the current sequence
+        private transient int[] iipAccUsed;      // items with a valid iipAcc entry
+        private int iipAccUsedCount = 0;
+        private long iipAccGen = 0, iipSeqGen = 0;
+
+        private void ensureIipCapacity(int items, int flat) {
+            items = Math.max(1, items); flat = Math.max(1, flat);
+            if (iipRemoved == null || iipRemoved.length < items) {
+                // Only grown between mining passes, when no item is marked.
+                iipRemoved = new boolean[items]; iipStack = new int[items];
+                iipAcc = new double[items]; iipAccStamp = new long[items];
+                iipSeqStamp = new long[items]; iipAccUsed = new int[items];
+                iipTop = 0;
+            }
+            if (iipRu == null || iipRu.length < flat) { iipRu = new double[flat]; iipLocal = new int[flat]; }
+        }
+
+        private void iipUndo(int mark) {
+            while (iipTop > mark) iipRemoved[iipStack[--iipTop]] = false;
+        }
+
+        private void iipAccBegin() { iipAccGen++; iipAccUsedCount = 0; }
+
+        private void iipAccAdd(int item, double v) {
+            if (iipAccStamp[item] != iipAccGen) {
+                iipAccStamp[item] = iipAccGen; iipAcc[item] = 0; iipAccUsed[iipAccUsedCount++] = item;
+            }
+            iipAcc[item] += v;
+        }
+
+        /** Removes every accumulated item whose bound is below theta; returns how many. */
+        private int iipRemoveBelow(double theta) {
+            int newly = 0;
+            for (int u = 0; u < iipAccUsedCount; u++) {
+                int it = iipAccUsed[u];
+                if (iipAcc[it] < theta) { iipRemoved[it] = true; iipStack[iipTop++] = it; newly++; }
+            }
+            return newly;
+        }
+
+        /** iipRu[q] for from <= q < flatLen: utility of the non-removed items after q. */
+        private void iipComputeRu(Sequence seq, int from) {
+            final int[] items = seq.flatItems;
+            final double[] utils = seq.flatUtilities;
+            final boolean[] removed = iipRemoved;
+            final double[] ru = iipRu;
+            double running = 0;
+            for (int q = seq.flatLen - 1; q >= from; q--) {
+                ru[q] = running;
+                if (!removed[items[q]]) running += utils[q];
+            }
+        }
+
+        private static int firstEnd(Tracker t) {
+            final int[] f = t.flatIndices;
+            int m = f[0];
+            for (int k = 1; k < t.size; k++) if (f[k] < m) m = f[k];
+            return m;
+        }
+
+        /**
+         * One backward pass per sequence: ru^R into iipRu, t.peu = PEU^R(t,s), and B^R(i,t)
+         * accumulated for every non-removed item after the first occurrence end of t.
+         * Returns the sum of PEU^R (the node's IUB under the removals in force).
+         */
+        private double iipPeuAndBound(ArrayList<Tracker> ptList) {
+            iipAccBegin();
+            final boolean[] removed = iipRemoved;
+            final double[] ru = iipRu;
+            final long[] seen = iipSeqStamp;
+            final int[] local = iipLocal;
+            double iub = 0;
+            for (int pi = 0, n = ptList.size(); pi < n; pi++) {
+                Tracker t = ptList.get(pi);
+                Sequence seq = dbGet(t.seqId);
+                if (seq == null) { iub += t.peu; continue; }
+                final int[] items = seq.flatItems;
+                final double[] utils = seq.flatUtilities;
+                final int first = firstEnd(t);
+                final long sg = ++iipSeqGen;
+                int nLocal = 0;
+                double running = 0;
+                for (int q = seq.flatLen - 1; q > first; q--) {
+                    ru[q] = running;
+                    int it = items[q];
+                    if (!removed[it]) {
+                        running += utils[q];
+                        if (seen[it] != sg) { seen[it] = sg; local[nLocal++] = it; }
+                    }
+                }
+                ru[first] = running;
+                final int[] tFlat = t.flatIndices;
+                final double[] tUtil = t.utility;
+                double best = 0;
+                for (int k = 0; k < t.size; k++) {
+                    double v = tUtil[k] + ru[tFlat[k]];
+                    if (v > best) best = v;
+                }
+                t.peu = best;
+                iub += best;
+                for (int x = 0; x < nLocal; x++) iipAccAdd(local[x], best);
+            }
+            return iub;
+        }
+
         private Map<CompactPattern, Double> mineBatchWithIUB(List<Sequence> batch, double minThreshold) {
             Map<CompactPattern, Double> results = new HashMap<>();
 
@@ -1395,6 +1565,37 @@ public class PreHUSPMAdaptiveAlgorithm {
             // is used directly. Lists and trackers come from the pools and are returned
             // after expansion.
             final int sz = Math.max(1, maxItemId + 1);
+            final boolean iip = iipMode != IipMode.OFF;
+            if (iip) {
+                for (Sequence seq : batch) if (seq.flatItems == null) seq.buildFlatRepresentation();
+                ensureIipCapacity(sz, maxFlatLen);
+                iipUndo(0);
+            }
+            try {
+            // === Root removal: B(i) = sum of the non-removed utility of the sequences containing i ===
+            if (iip) {
+                for (;;) {
+                    iipAccBegin();
+                    for (Sequence seq : batch) {
+                        final int[] flatItems = seq.flatItems;
+                        final double[] flatUtils = seq.flatUtilities;
+                        final int flatLen = seq.flatLen;
+                        double us = 0;
+                        for (int k = 0; k < flatLen; k++) if (!iipRemoved[flatItems[k]]) us += flatUtils[k];
+                        final long sg = ++iipSeqGen;
+                        for (int k = 0; k < flatLen; k++) {
+                            int it = flatItems[k];
+                            if (iipRemoved[it] || iipSeqStamp[it] == sg) continue;
+                            iipSeqStamp[it] = sg;
+                            iipAccAdd(it, us);
+                        }
+                    }
+                    int newly = iipRemoveBelow(minThreshold);
+                    removedItems += newly; removedItemsRoot += newly;
+                    if (newly == 0 || iipMode != IipMode.FIXPOINT) break;
+                }
+            }
+
             TrackerList[] l1Trackers = new TrackerList[sz];
             int[] l1Used = new int[sz];
             int l1UsedCount = 0;
@@ -1408,6 +1609,7 @@ public class PreHUSPMAdaptiveAlgorithm {
                 for (int k = 0; k < flatLen; k++) {
                     int idx = flatItems[k];
                     if (idx < 0 || idx >= sz) continue;
+                    if (iip && iipRemoved[idx]) continue;   // removed at the root: not generated
                     TrackerList tl = l1Trackers[idx];
                     if (tl == null) {
                         tl = borrowTrackerList();
@@ -1443,6 +1645,11 @@ public class PreHUSPMAdaptiveAlgorithm {
                 // Return tl and its trackers to the pool.
                 releaseTrackerList(tl);
             }
+            } finally {
+                // Also on CancellationSignal / PatternBudgetExceeded: a retry mines the same
+                // sequences with no item marked.
+                if (iip) iipUndo(0);
+            }
             return results;
         }
 
@@ -1463,14 +1670,23 @@ public class PreHUSPMAdaptiveAlgorithm {
 
             exploredNodes++; // this node passed the PEU bound and is expanded
             // candidateCount counts every item generated in the survey below, as the baselines do.
+            final boolean iip = iipMode != IipMode.OFF;
+            final int iipMark = iipTop;   // removals pushed by this node are undone on return
+            try {
             double exactUtilityD = 0, IUB = 0;
 
             ArrayList<Tracker> ptList = parentTrackers.trackers;
             final int ptSize = ptList.size();
-            for (int pi = 0; pi < ptSize; pi++) {
-                Tracker t = ptList.get(pi);
-                exactUtilityD += t.exactUtility;
-                IUB += t.peu; // per-sequence PEU summed into IUB
+            if (!iip) {
+                for (int pi = 0; pi < ptSize; pi++) {
+                    Tracker t = ptList.get(pi);
+                    exactUtilityD += t.exactUtility;
+                    IUB += t.peu; // per-sequence PEU summed into IUB
+                }
+            } else {
+                for (int pi = 0; pi < ptSize; pi++) exactUtilityD += ptList.get(pi).exactUtility;
+                // PEU and IUB under the removals in force; B^R(i,t) accumulated in the same pass.
+                IUB = iipPeuAndBound(ptList);
             }
 
             if (exactUtilityD >= minThreshold) {
@@ -1485,6 +1701,19 @@ public class PreHUSPMAdaptiveAlgorithm {
                 prunedIub++; // branch removed by the IUB bound
                 return;
             }
+
+            // --- Irrelevant-item removal at this node (removal threshold = the cutoff) ---
+            if (iip) {
+                int newly = iipRemoveBelow(minThreshold);
+                removedItems += newly;
+                while (newly > 0 && iipMode == IipMode.FIXPOINT) {
+                    iipPeuAndBound(ptList);
+                    newly = iipRemoveBelow(minThreshold);
+                    removedItems += newly;
+                }
+            }
+            // Removals in force on this path: the survey skips removed items and reads ru^R.
+            final boolean reduced = iip && iipTop > 0;
 
             allocateScratch(maxItemId + 1);
 
@@ -1539,6 +1768,49 @@ public class PreHUSPMAdaptiveAlgorithm {
                 final boolean[] isItemsetEnd = seq.isItemsetEnd;
                 final int flatLen = seq.flatLen;
 
+                if (reduced) {
+                    // Same scan with removed items skipped and ru^R in place of the stored ru.
+                    iipComputeRu(seq, firstEnd(t));
+                    final double[] ru = iipRu;
+                    final boolean[] removed = iipRemoved;
+                    for (int k = 0; k < tSize; k++) {
+                        int parentFlatIdx = tFlat[k];
+                        double instUtility = tUtil[k];
+                        int q = parentFlatIdx + 1;
+                        if (!isItemsetEnd[parentFlatIdx]) {
+                            while (q < flatLen) {
+                                int idx = flatItems[q];
+                                boolean endOfItemset = isItemsetEnd[q];
+                                if (!removed[idx]) {
+                                    double localPeu = instUtility + flatUtils[q] + ru[q];
+                                    if (!scratchLocalSeenI[idx]) {
+                                        scratchLocalSeenI[idx] = true;
+                                        scratchLocalUsedI[scratchLocalUsedICount++] = idx;
+                                        scratchLocalI[idx] = localPeu;
+                                    } else if (scratchLocalI[idx] < localPeu) {
+                                        scratchLocalI[idx] = localPeu;
+                                    }
+                                }
+                                q++;
+                                if (endOfItemset) break;
+                            }
+                        }
+                        while (q < flatLen) {
+                            int idx = flatItems[q];
+                            if (!removed[idx]) {
+                                double localPeu = instUtility + flatUtils[q] + ru[q];
+                                if (!scratchLocalSeenS[idx]) {
+                                    scratchLocalSeenS[idx] = true;
+                                    scratchLocalUsedS[scratchLocalUsedSCount++] = idx;
+                                    scratchLocalS[idx] = localPeu;
+                                } else if (scratchLocalS[idx] < localPeu) {
+                                    scratchLocalS[idx] = localPeu;
+                                }
+                            }
+                            q++;
+                        }
+                    }
+                } else
                 for (int k = 0; k < tSize; k++) {
                     int parentFlatIdx = tFlat[k];
                     double instUtility = tUtil[k];
@@ -1911,6 +2183,9 @@ public class PreHUSPMAdaptiveAlgorithm {
                 }
             }
             } // end else (lazy Pass 2)
+            } finally {
+                if (iipTop > iipMark) iipUndo(iipMark);
+            }
         }
 
         /**
