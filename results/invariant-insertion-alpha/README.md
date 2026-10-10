@@ -22,3 +22,13 @@ On all seven databases alpha exceeds UUT at every one of the 700 decisions, so t
 alpha <= UUT never applies here; the rescans follow the second condition. `make_figures.py`
 reads these files for `table_SC2_operating_region.csv` and checks the campaign's recorded
 alpha (1 / `iau_tightness`) and decisions against `alpha_batches.csv`.
+
+## Rescan order of the joint rule and the SWUmax test
+
+On an insertion-only stream with the same UUT and floor ratio, the k-th rescan of the joint rule
+is never earlier than the k-th rescan of Pre-HUSPM's SWUmax test, so it never rescans more often.
+`insertion_alpha.py` checks this on the seven SC2 streams (`run/`, last line) and on 20,000 random
+streams with alphabets from 2 to 500 items, several thresholds and floor ratios
+(`random-order/`), with no violation. `random-order-faults/` gives the check two faults, the joint
+rule without the -UUT*U+ term and a SWUmax budget 1.5 times too large; both are caught.
+

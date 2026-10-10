@@ -1,0 +1,16 @@
+{
+  "command": "bash -c for fault in \"s/rescan = (a_max - uut \\* u_plus) > /rescan = (a_max) > /\" \"s|f = (uut - rl \\* uut) / (1 - uut) \\* rolling|f = (uut - rl * uut) / (1 - uut) * rolling * 1.5|g\"; do sed \"$fault\" analysis/insertion_alpha.py > analysis/_fault_order.py; echo \"fault: $fault; lines changed: $(diff analysis/insertion_alpha.py analysis/_fault_order.py | grep -c \"^>\")\"; python3 -I analysis/_fault_order.py --random-order 3000 2 | head -1; done; rm -f analysis/_fault_order.py; true",
+  "path_substitutions": 0,
+  "build_dir": "build-alpha",
+  "git_commit": "a68967edda1b4848d9e83be858f828771e704403",
+  "tree": "src clean, other files modified",
+  "source_sha256": "d9f03f38569f0b36a6d353974d0113f9798c08adeda4fa8b745c9e011ce85feb",
+  "source_files": 34,
+  "java": "openjdk version \"26.0.1\" 2026-04-21",
+  "os": "Darwin 27.0.0 (macOS-27.0.1-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-10-10T21:22:37",
+  "end": "2026-10-10T21:22:38",
+  "exit_code": 0
+}

@@ -1,0 +1,1 @@
+random streams: 20000 trials, 19165 with rescans under both tests, 395663 comparisons (k-th rescans and totals), 0 with the joint rule's rescan earlier

@@ -5,3 +5,4 @@ FIFA: insertion sequences=10000 alpha(stream)=0.621257 UUT=0.059637 increments=1
 KOSARAK: insertion sequences=900000 alpha(stream)=0.869385 UUT=0.025 increments=100 rescans=100 increments with alpha<=UUT=0
 C8T1S5I8N5K: insertion sequences=19999 alpha(stream)=0.058839 UUT=0.001132 increments=100 rescans=77 increments with alpha<=UUT=0
 TAFENG: insertion sequences=20000 alpha(stream)=0.147234 UUT=0.003557 increments=100 rescans=52 increments with alpha<=UUT=0
+rescan order (k-th rescan of the joint rule not earlier than that of the SWUmax test, and no more rescans): 483 comparisons, 0 violations

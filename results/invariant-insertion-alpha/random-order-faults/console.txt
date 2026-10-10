@@ -1,0 +1,4 @@
+fault: s/rescan = (a_max - uut \* u_plus) > /rescan = (a_max) > /; lines changed: 1
+random streams: 3000 trials, 2976 with rescans under both tests, 59900 comparisons (k-th rescans and totals), 5622 with the joint rule's rescan earlier
+fault: s|f = (uut - rl \* uut) / (1 - uut) \* rolling|f = (uut - rl * uut) / (1 - uut) * rolling * 1.5|g; lines changed: 2
+random streams: 3000 trials, 2885 with rescans under both tests, 54845 comparisons (k-th rescans and totals), 14591 with the joint rule's rescan earlier
