@@ -1,0 +1,209 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC2]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC2] Incremental sequence (100 batches, EVEN; D_init per Yan et al. Table 16) ---
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INIT#0  (heap free=2368MB / total=6624MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INIT#0] OK t=8586ms cand=16201634 pat=10 heapDelta=8094MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#1  (heap free=7803MB / total=10560MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#1] OK t=3957ms cand=7797265 pat=10 heapDelta=6304MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#2  (heap free=7768MB / total=10560MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#2] OK t=4480ms cand=8764311 pat=10 heapDelta=6243MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#3  (heap free=7556MB / total=10368MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#3] OK t=5465ms cand=10749720 pat=9 heapDelta=6048MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#4  (heap free=7509MB / total=10368MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#4] OK t=4893ms cand=7927019 pat=10 heapDelta=8256MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#5  (heap free=8310MB / total=11200MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#5] OK t=9132ms cand=17364384 pat=9 heapDelta=6656MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#6  (heap free=8240MB / total=11200MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#6] OK t=7072ms cand=12576090 pat=9 heapDelta=6720MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#7  (heap free=8185MB / total=11200MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#7] OK t=8475ms cand=15158076 pat=9 heapDelta=6678MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#8  (heap free=8581MB / total=11648MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#8] OK t=7145ms cand=11109391 pat=9 heapDelta=6967MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#9  (heap free=8538MB / total=11648MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#9] OK t=8483ms cand=13588976 pat=9 heapDelta=6906MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#10  (heap free=8496MB / total=11648MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#10] OK t=8292ms cand=12393416 pat=9 heapDelta=6912MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#11  (heap free=8325MB / total=11520MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#11] OK t=7982ms cand=9979875 pat=9 heapDelta=12117MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#12  (heap free=9246MB / total=12480MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#12] OK t=7906ms cand=10529906 pat=9 heapDelta=7376MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#13  (heap free=8573MB / total=11840MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#13] OK t=6414ms cand=7968870 pat=9 heapDelta=6991MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#14  (heap free=8532MB / total=11840MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#14] OK t=10023ms cand=13377473 pat=9 heapDelta=7104MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#15  (heap free=8490MB / total=11840MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#15] OK t=8452ms cand=9000084 pat=9 heapDelta=11596MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#16  (heap free=9217MB / total=12608MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#16] OK t=9242ms cand=10988038 pat=9 heapDelta=7748MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#17  (heap free=9183MB / total=12608MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#17] OK t=8142ms cand=8805832 pat=9 heapDelta=7507MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#18  (heap free=9146MB / total=12608MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#18] OK t=10173ms cand=11741454 pat=9 heapDelta=7831MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#19  (heap free=9114MB / total=12608MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#19] OK t=17356ms cand=21512952 pat=9 heapDelta=15586MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#20  (heap free=9674MB / total=13248MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#20] OK t=10028ms cand=10040191 pat=9 heapDelta=8152MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#21  (heap free=9634MB / total=13248MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#21] OK t=9971ms cand=9540457 pat=9 heapDelta=8148MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#22  (heap free=9597MB / total=13248MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#22] OK t=10503ms cand=10138833 pat=9 heapDelta=8243MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#23  (heap free=9558MB / total=13248MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#23] OK t=9992ms cand=8647423 pat=9 heapDelta=10884MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#24  (heap free=9838MB / total=13568MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#24] OK t=15139ms cand=15724944 pat=9 heapDelta=8308MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#25  (heap free=9791MB / total=13568MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#25] OK t=12367ms cand=11693386 pat=9 heapDelta=8441MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#26  (heap free=9744MB / total=13568MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#26] OK t=11306ms cand=10115678 pat=9 heapDelta=8251MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#27  (heap free=9700MB / total=13568MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#27] OK t=9768ms cand=7927055 pat=9 heapDelta=11579MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#28  (heap free=10302MB / total=14208MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#28] OK t=12309ms cand=11060790 pat=9 heapDelta=8704MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#29  (heap free=10262MB / total=14208MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#29] OK t=11651ms cand=10498803 pat=9 heapDelta=8770MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#30  (heap free=10226MB / total=14208MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#30] OK t=11232ms cand=9025478 pat=9 heapDelta=8639MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#31  (heap free=10185MB / total=14208MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#31] OK t=13422ms cand=10829852 pat=9 heapDelta=12640MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#32  (heap free=10556MB / total=14624MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#32] OK t=13214ms cand=10955606 pat=9 heapDelta=9080MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#33  (heap free=10512MB / total=14624MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#33] OK t=11039ms cand=8636058 pat=9 heapDelta=8704MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#34  (heap free=10470MB / total=14624MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#34] OK t=13916ms cand=11684610 pat=9 heapDelta=9072MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#35  (heap free=10425MB / total=14624MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#35] OK t=11826ms cand=8077438 pat=9 heapDelta=10310MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#36  (heap free=10804MB / total=15040MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#36] OK t=13624ms cand=10549135 pat=9 heapDelta=9278MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#37  (heap free=10760MB / total=15040MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#37] OK t=14879ms cand=11362570 pat=9 heapDelta=9369MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#38  (heap free=10720MB / total=15040MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#38] OK t=13343ms cand=9508827 pat=9 heapDelta=9202MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#39  (heap free=10675MB / total=15040MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#39] OK t=14200ms cand=9892328 pat=9 heapDelta=12952MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#40  (heap free=11083MB / total=15488MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#40] OK t=15058ms cand=12014610 pat=9 heapDelta=9498MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#41  (heap free=11032MB / total=15488MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#41] OK t=12059ms cand=8107375 pat=9 heapDelta=9264MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#42  (heap free=10992MB / total=15488MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#42] OK t=12308ms cand=8662860 pat=9 heapDelta=9232MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#43  (heap free=10953MB / total=15488MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#43] OK t=11142ms cand=6639042 pat=9 heapDelta=10042MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#44  (heap free=11436MB / total=16000MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#44] OK t=14656ms cand=10252562 pat=9 heapDelta=9528MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#45  (heap free=11389MB / total=16000MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#45] OK t=12587ms cand=8666321 pat=9 heapDelta=9670MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#46  (heap free=11347MB / total=16000MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#46] OK t=13208ms cand=8972496 pat=9 heapDelta=9600MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#47  (heap free=11300MB / total=16000MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#47] OK t=13657ms cand=8594973 pat=9 heapDelta=10322MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#48  (heap free=11900MB / total=16640MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#48] OK t=16040ms cand=11506600 pat=9 heapDelta=9765MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#49  (heap free=11845MB / total=16640MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#49] OK t=15579ms cand=10028172 pat=9 heapDelta=9965MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#50  (heap free=11802MB / total=16640MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#50] OK t=15473ms cand=10672052 pat=9 heapDelta=9949MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#51  (heap free=11752MB / total=16640MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#51] OK t=15506ms cand=9477901 pat=9 heapDelta=13223MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#52  (heap free=12663MB / total=17600MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#52] OK t=16176ms cand=10242993 pat=9 heapDelta=10629MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#53  (heap free=12523MB / total=17504MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#53] OK t=12312ms cand=6565006 pat=9 heapDelta=10464MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#54  (heap free=12480MB / total=17504MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#54] OK t=14357ms cand=7987636 pat=9 heapDelta=10510MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#55  (heap free=12761MB / total=17824MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#55] OK t=11593ms cand=6394712 pat=9 heapDelta=10528MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#56  (heap free=12720MB / total=17824MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#56] OK t=12331ms cand=7098262 pat=9 heapDelta=10531MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#57  (heap free=12680MB / total=17824MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#57] OK t=12777ms cand=7037191 pat=9 heapDelta=10586MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#58  (heap free=12644MB / total=17824MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#58] OK t=19242ms cand=13419153 pat=9 heapDelta=12352MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#59  (heap free=13336MB / total=18560MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#59] OK t=16543ms cand=9405343 pat=9 heapDelta=11096MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#60  (heap free=13289MB / total=18560MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#60] OK t=14576ms cand=7220798 pat=9 heapDelta=11238MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#61  (heap free=13246MB / total=18560MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#61] OK t=16297ms cand=8611436 pat=9 heapDelta=11286MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#62  (heap free=13207MB / total=18560MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#62] OK t=17935ms cand=9122660 pat=9 heapDelta=14644MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#63  (heap free=13606MB / total=19008MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#63] OK t=17301ms cand=9460796 pat=9 heapDelta=11544MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#64  (heap free=13565MB / total=19008MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#64] OK t=17810ms cand=10018079 pat=9 heapDelta=11630MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#65  (heap free=13515MB / total=19008MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#65] OK t=23526ms cand=14227918 pat=9 heapDelta=15005MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#66  (heap free=13872MB / total=19424MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#66] OK t=16216ms cand=8559401 pat=9 heapDelta=11793MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#67  (heap free=13827MB / total=19424MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#67] OK t=13888ms cand=6601649 pat=9 heapDelta=11632MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#68  (heap free=13793MB / total=19424MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#68] OK t=17978ms cand=9308280 pat=9 heapDelta=14567MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#69  (heap free=14167MB / total=19840MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#69] OK t=15783ms cand=7620604 pat=9 heapDelta=11979MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#70  (heap free=14128MB / total=19840MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#70] OK t=17671ms cand=9095055 pat=9 heapDelta=11926MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#71  (heap free=14089MB / total=19840MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#71] OK t=22218ms cand=12677138 pat=9 heapDelta=14624MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#72  (heap free=14483MB / total=20288MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#72] OK t=19704ms cand=10406523 pat=9 heapDelta=12334MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#73  (heap free=14442MB / total=20288MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#73] OK t=34789ms cand=21467357 pat=9 heapDelta=14383MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#74  (heap free=15238MB / total=21248MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#74] OK t=18786ms cand=9343095 pat=9 heapDelta=13033MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#75  (heap free=15199MB / total=21248MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#75] OK t=22963ms cand=11396340 pat=9 heapDelta=12962MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#76  (heap free=15153MB / total=21248MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#76] OK t=40444ms cand=26235439 pat=9 heapDelta=20935MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#77  (heap free=15916MB / total=22208MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#77] OK t=26973ms cand=13136383 pat=9 heapDelta=13905MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#78  (heap free=16188MB / total=22528MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#78] OK t=29793ms cand=16523342 pat=9 heapDelta=13536MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#79  (heap free=16122MB / total=22528MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#79] OK t=25175ms cand=12760239 pat=9 heapDelta=13327MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#80  (heap free=16070MB / total=22528MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#80] OK t=26505ms cand=12608405 pat=9 heapDelta=16581MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#81  (heap free=16442MB / total=22944MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#81] OK t=21631ms cand=9397181 pat=9 heapDelta=14056MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#82  (heap free=16402MB / total=22944MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#82] OK t=24188ms cand=11608819 pat=9 heapDelta=17716MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#83  (heap free=16576MB / total=23168MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#83] OK t=25299ms cand=12708667 pat=9 heapDelta=14354MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#84  (heap free=16528MB / total=23168MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#84] OK t=22141ms cand=10140832 pat=9 heapDelta=17093MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#85  (heap free=16585MB / total=23264MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#85] OK t=29366ms cand=14919469 pat=9 heapDelta=14359MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#86  (heap free=16507MB / total=23264MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#86] OK t=19141ms cand=8106819 pat=9 heapDelta=14184MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#87  (heap free=16473MB / total=23264MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#87] OK t=20454ms cand=7944826 pat=9 heapDelta=16643MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#88  (heap free=16979MB / total=23808MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#88] OK t=19445ms cand=7915009 pat=9 heapDelta=14645MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#89  (heap free=16949MB / total=23808MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#89] OK t=22000ms cand=10000853 pat=9 heapDelta=17013MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#90  (heap free=17231MB / total=24128MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#90] OK t=17626ms cand=6562084 pat=9 heapDelta=14614MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#91  (heap free=17064MB / total=24000MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#91] OK t=25322ms cand=12794077 pat=9 heapDelta=14770MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#92  (heap free=17032MB / total=24000MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#92] OK t=22627ms cand=8706745 pat=9 heapDelta=14738MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#93  (heap free=17306MB / total=24320MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#93] OK t=21212ms cand=8671362 pat=9 heapDelta=14240MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#94  (heap free=17263MB / total=24320MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#94] OK t=23907ms cand=9839974 pat=9 heapDelta=13952MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#95  (heap free=17764MB / total=24864MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#95] OK t=23729ms cand=9446520 pat=9 heapDelta=13728MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#96  (heap free=17717MB / total=24864MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#96] OK t=24619ms cand=9923850 pat=9 heapDelta=15119MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#97  (heap free=18219MB / total=25408MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#97] OK t=21747ms cand=8040991 pat=8 heapDelta=14480MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#98  (heap free=18179MB / total=25408MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#98] OK t=25737ms cand=10681342 pat=9 heapDelta=13819MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#99  (heap free=17823MB / total=25088MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#99] OK t=27822ms cand=12902743 pat=8 heapDelta=15170MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC2_INC#100  (heap free=17781MB / total=25088MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC2_INC#100] OK t=19779ms cand=5965079 pat=9 heapDelta=15197MB
+=== ALL SCENARIOS DONE (1806.3s) ===
