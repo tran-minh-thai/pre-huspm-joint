@@ -119,7 +119,7 @@ if (-not $Algorithms) {
         'SC3'   { $static }
         'SC4'   { @('Pre-HUSPM','Adaptive-Full') }
         'SC6'   { @('Adaptive-Full','Remine-from-scratch') }
-        'SC7'   { @('proposed_full','proposed_no_block_index','proposed_no_IUB',
+        'SC7'   { @('proposed_full','proposed_no_block_index','proposed_no_IUB','proposed_no_IPS',
                     'proposed_C5_on','proposed_C5_off','Pre-HUSPM') }
         default { $incr }                          # SC2, SC5
     }
@@ -141,7 +141,7 @@ if (-not $Datasets) {
 # "A,B", which matches no algorithm. Use -Command "& { .\campaign.ps1 -Algorithms 'A','B' }".
 $knownAlgos = @('Adaptive-Full','Pre-HUSPM','Pre-HUSPM-SWUmax','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+',
                 'USpan','HUSP-ULL','HUSP-SP',
-                'proposed_full','proposed_no_block_index','proposed_no_IUB',
+                'proposed_full','proposed_no_block_index','proposed_no_IUB','proposed_no_IPS',
                 'proposed_C5_on','proposed_C5_off')
 $knownSets  = @('SIGN','LEVIATHAN','TAFENG','BIBLE','BMS1','C8T1S5I8N5K','KOSARAK','FIFA')
 foreach ($a in $Algorithms) {

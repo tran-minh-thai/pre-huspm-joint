@@ -137,7 +137,7 @@ Scenarios, one at a time or all:
 | SC4 | floor ratio `r_l` in {0.3, 0.5, 0.7, 0.9} on the whole database | SIGN, LEVIATHAN, C8T1S5I8N5K | `SC4_sl_sensitivity.csv` |
 | SC5 | batch count K in {100, 67, 50, 25} under four batch-size strategies | SIGN, LEVIATHAN, C8T1S5I8N5K | `SC5_batch_strategy.csv` |
 | SC6 | 20 operations (14 insertions, 3 deletions, 3 modifications) in seeded order | SIGN, LEVIATHAN, C8T1S5I8N5K | `SC6_idm_mixed.csv` |
-| SC7 | ablations: IUB pruning on one mine of the whole database; block index and adaptive rescan over `D_init` and 100 batches | all but BMS1; SIGN and C8T1S5I8N5K for the last two | `SC7_ablation.csv` |
+| SC7 | ablations: IUB pruning and irrelevant item pruning on one mine of the whole database; block index and adaptive rescan over `D_init` and 100 batches | all but BMS1; SIGN and C8T1S5I8N5K for the last two | `SC7_ablation.csv` |
 
 Algorithm names, as used by `-Dalgo.only` and in the `algorithm` column: `Adaptive-Full`
 (the proposed method), `Remine-from-scratch` (the same miner run on the whole database after

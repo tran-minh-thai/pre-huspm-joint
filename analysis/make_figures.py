@@ -24,7 +24,7 @@
 #   SC4 pre-large floor    : algorithm "<Pre-HUSPM|Adaptive>[sl=<v>]", r_l in {.3,.5,.7,.9}
 #   SC5 batch grid         : op_type "SC5_K=<k>_strat=<S>_(INIT|INC)", K in {100,67,50,25}
 #   SC6 mixed I/D/M        : op_type "SC6_(INIT|INS|DEL|MOD)", Adaptive and Remine
-#   SC7 ablation           : static  proposed_full / proposed_no_IUB / Pre-HUSPM (one mine);
+#   SC7 ablation           : static  proposed_full / proposed_no_IUB / proposed_no_IPS / Pre-HUSPM (one mine);
 #                            incremental proposed_C5_on / proposed_C5_off /
 #                            proposed_no_block_index ("SC7_C5_*" / "SC7_C4_*", 101 rows)
 #  Status suffixes on op_type: _OOM, _OT, _FAILED, _BUDGET, _SKIPPED_POISONED.
@@ -589,13 +589,14 @@ def figset_c5_ablation(tag="fig_C5_ablation"):
 
 
 def export_ablation_table():
-    """SC7 as a table. Static: full, IUB off (C3) and Pre-HUSPM on one mine of the
-    whole database - runtime, explored nodes, IUB cuts. Incremental: C5 and C4 arms
+    """SC7 as a table. Static: full, IUB off (C3), item removal off (IPS) and Pre-HUSPM on
+    one mine of the whole database - runtime, explored nodes, IUB cuts. Incremental: C5 and C4 arms
     summed over the 100 increments - runtime, rescans, block reads."""
     df = load_scenario("SC7")
     if df is None:
         return
-    static = {"proposed_full": "Full", "proposed_no_IUB": "-IUB (C3)", "Pre-HUSPM": "Pre-HUSPM"}
+    static = {"proposed_full": "Full", "proposed_no_IUB": "-IUB (C3)", "proposed_no_IPS": "-IPS",
+              "Pre-HUSPM": "Pre-HUSPM"}
     rows = []
     for ds in [d for d in ALL_DATASETS if d in set(df["dataset"])]:
         for arm, label in static.items():
@@ -629,7 +630,7 @@ def export_ablation_table():
     write_csv(pd.DataFrame(rows), os.path.join(OUT_DIR, "table_SC7_incremental.csv"))
 
     lines = ["\\begin{table}[t]", "\\centering",
-             "\\caption{Runtime and explored nodes with and without the IUB bound.}",
+             "\\caption{Runtime and explored nodes with the IUB bound or the irrelevant item pruning switched off.}",
              "\\label{tab:sc7_ablation}",
              "\\begin{tabular}{llrr}", "\\toprule",
              "Dataset & Variant & Runtime (s) & Explored \\\\", "\\midrule"]

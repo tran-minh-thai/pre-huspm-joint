@@ -81,6 +81,6 @@ after each increment.
 | SC4 | 6 | `Pre-HUSPM` and `Adaptive-Full` on the same three |
 | SC5 | 15 | SC2's five arms on the same three |
 | SC6 | 6 | `Adaptive-Full` and `Remine-from-scratch` on the same three |
-| SC7 | 27 | `proposed_full`, `proposed_no_IUB`, `Pre-HUSPM` on seven databases; `proposed_C5_on`, `proposed_C5_off`, `proposed_no_block_index` on SIGN and C8T1S5I8N5K |
+| SC7 | 34 | `proposed_full`, `proposed_no_IUB`, `proposed_no_IPS`, `Pre-HUSPM` on seven databases; `proposed_C5_on`, `proposed_C5_off`, `proposed_no_block_index` on SIGN and C8T1S5I8N5K |
 | SC1, live memory | 48 | as SC1 |
 | SC2, live memory | 35 | as SC2 |

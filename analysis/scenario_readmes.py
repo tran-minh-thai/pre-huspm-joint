@@ -337,15 +337,31 @@ replay the same plan at a seed, so the ratio is paired by seed.
 # ------------------------------------------------------------------------------ SC7
 def sc7():
     df = mf.load_scenario("SC7")
-    st = df[df["algorithm"].isin(["proposed_full", "proposed_no_IUB", "Pre-HUSPM"])]
+    arms = ["proposed_full", "proposed_no_IUB", "proposed_no_IPS", "Pre-HUSPM"]
+    st = df[df["algorithm"].isin(arms)]
+
+    def cell(r, a, col, fmt):
+        # An arm that did not run, or did not finish, is named rather than left out.
+        if a not in r:
+            return "not run"
+        if not bool(r[a]["finished"]):
+            return STATUS.get(r[a]["status"], r[a]["status"])
+        return fmt(r[a][col])
+
+    secs3 = lambda v: f"{v / 1000:.2f} s"
+    count = lambda v: f"{int(v):,}"
     c3 = []
     for ds in [d for d in mf.ALL_DATASETS if d in set(st["dataset"])]:
-        r = {a: st[(st["dataset"] == ds) & (st["algorithm"] == a)].iloc[-1] for a in
-             ["proposed_full", "proposed_no_IUB", "Pre-HUSPM"] if len(st[(st["dataset"] == ds) & (st["algorithm"] == a)])}
-        f = r["proposed_full"]
-        c3.append([ds, int(f["total_patterns_found"]), f"{f['runtime_ms']/1000:.2f} s",
-                   f"{r['proposed_no_IUB']['runtime_ms']/1000:.2f} s", (f"{r['Pre-HUSPM']['runtime_ms']/1000:.2f} s" if 'Pre-HUSPM' in r else "not run"),
-                   f"{int(f['explored_nodes']):,}", f"{int(r['proposed_no_IUB']['explored_nodes']):,}", f"{int(f['pruned_iub']):,}"])
+        r = {a: st[(st["dataset"] == ds) & (st["algorithm"] == a)].iloc[-1] for a in arms
+             if len(st[(st["dataset"] == ds) & (st["algorithm"] == a)])}
+        c3.append([ds, cell(r, "proposed_full", "total_patterns_found", count),
+                   cell(r, "proposed_full", "runtime_ms", secs3), cell(r, "proposed_no_IUB", "runtime_ms", secs3),
+                   cell(r, "proposed_no_IPS", "runtime_ms", secs3), cell(r, "Pre-HUSPM", "runtime_ms", secs3),
+                   cell(r, "proposed_full", "explored_nodes", count), cell(r, "proposed_no_IUB", "explored_nodes", count),
+                   cell(r, "proposed_no_IPS", "explored_nodes", count)])
+    fin = st[st["finished"]]
+    static_pairs = sum(max(0, g["algorithm"].nunique() - 1) for _, g in fin.groupby("dataset"))
+    static_agree = all(g["total_patterns_found"].nunique() == 1 for _, g in fin.groupby("dataset"))
     inc = df[df["algorithm"].isin(["proposed_C5_on", "proposed_C5_off", "proposed_no_block_index"]) & mf.is_inc(df)]
     c5, c4 = [], []
     for ds in [d for d in mf.ALL_DATASETS if d in set(inc["dataset"])]:
@@ -365,17 +381,20 @@ def sc7():
         for ds in set(inc["dataset"]) for a in ["proposed_C5_off", "proposed_no_block_index"])
     text = f"""# SC7, what each component contributes
 
-The IUB bound acts inside the miner, so it is ablated on one mine of the whole database, with
-Pre-HUSPM beside it. The block index and the adaptive rescan decision act only while the
+The IUB bound and the irrelevant item pruning (IPS) act inside the miner, so each is ablated on
+one mine of the whole database, with Pre-HUSPM beside them. The block index and the adaptive rescan decision act only while the
 database grows, so they are ablated on `D_init` and 100 increments, one row per increment, on
 SIGN and C8T1S5I8N5K. {HEAD}
 
 Switching a component off changes no answer: the HUSP count of every increment is the same with
 the adaptive decision or the block index off as with both on ({"yes" if agree else "NO"}).
 
-## The IUB bound
+## The IUB bound and the irrelevant item pruning
 
-{table(["database", "HUSPs", "full", "IUB off", "Pre-HUSPM", "explored, full", "explored, IUB off", "IUB cuts"], c3)}
+Every finished arm of a database reports the same HUSP count: {"yes" if static_agree else "NO"}, over
+{static_pairs} comparisons.
+
+{table(["database", "HUSPs", "full", "IUB off", "IPS off", "Pre-HUSPM", "explored, full", "explored, IUB off", "explored, IPS off"], c3)}
 
 ## The adaptive rescan decision
 
@@ -481,7 +500,7 @@ SCOPE = {
         "C8T1S5I8N5K, five seeds."),
     "campaign/SC7/README.md": (
         "SC7, what each component contributes",
-        "The IUB bound ablated on one mine of the whole database, with Pre-HUSPM beside it; the block "
+        "The IUB bound and the irrelevant item pruning ablated on one mine of the whole database, with Pre-HUSPM beside them; the block "
         "index and the adaptive rescan decision ablated on `D_init` and 100 increments, on SIGN and "
         "C8T1S5I8N5K."),
     "campaign-mem/SC1/README.md": (

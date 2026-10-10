@@ -189,6 +189,7 @@ The SC7 ablation arms switch these components off one at a time.
 | C1, the value bound applied before materialisation | `pruned_value`, `explored_nodes` against `candidate_count` |
 | C2, the adaptive floor (rules other than `joint`) | `lut_dyn`, `sigma2`, `rho` |
 | C3, the IUB bound (`proposed_no_IUB` switches it off) | `pruned_iub`, `explored_nodes`, `runtime_ms` |
+| the irrelevant item pruning (`proposed_no_IPS` switches it off) | `explored_nodes`, `candidate_count`, `runtime_ms` |
 | C4, the block index (`proposed_no_block_index`) | `blocks_read`, `blocks_skipped`, `runtime_ms` |
 | C5, the adaptive rescan decision (`proposed_C5_off` rescans every increment) | `rescan_count`, `cub_triggered`, `iau_max`, `sft_val`, `runtime_ms` |
 

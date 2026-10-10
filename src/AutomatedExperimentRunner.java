@@ -27,7 +27,7 @@ import java.util.concurrent.*;
  * SC4 - Pre-large floor sensitivity (Sl/Su) for Pre-HUSPM and Adaptive.
  * SC5 - Batch strategy grid (K from common.Datasets.BATCH_COUNT_SWEEP x {EVEN, INC, DEC, BURST}).
  * SC6 - Mixed insert/delete/modify stream (Adaptive vs Remine-from-scratch).
- * SC7 - Ablation: proposed_full, proposed_no_IUB, the incremental block-index and adaptive-rescan
+ * SC7 - Ablation: proposed_full, proposed_no_IUB, proposed_no_IPS, the incremental block-index and adaptive-rescan
  *       ablations, and a Pre-HUSPM reference.
  *
  * Each scenario writes one CSV file in RESULTS_DIR in the ExperimentMetrics format.
@@ -1145,9 +1145,11 @@ public class AutomatedExperimentRunner {
 
                 // --- Static ablation (one mine of the whole database): the IUB bound acts inside
                 //     the miner, so a single mine is where it shows. The PEU bound is always on. ---
-                logAblation(col, ds, full, totalUtil, "proposed_full", true, true);        // full proposal
+                logAblation(col, ds, full, totalUtil, "proposed_full", true, true, true);     // full proposal
                 forceFullGC();
-                logAblation(col, ds, full, totalUtil, "proposed_no_IUB", true, false);     // IUB pruning off
+                logAblation(col, ds, full, totalUtil, "proposed_no_IUB", true, false, true);  // IUB pruning off
+                forceFullGC();
+                logAblation(col, ds, full, totalUtil, "proposed_no_IPS", true, true, false);  // item removal (IPS) off
                 forceFullGC();
 
                 // --- Incremental ablations, on the representative set: adaptive rescan and
@@ -1186,7 +1188,7 @@ public class AutomatedExperimentRunner {
 
     private static void logAblation(ResultCollector col, DatasetConfig ds, List<Sequence> full,
                                     double totalUtil, String tag, boolean useBlockIndex,
-                                    boolean useIub) {
+                                    boolean useIub, boolean useIps) {
         endMemArm();   // static: one mine, measured against the heap at the start of the call
         // SC7's arms carry their own names (proposed_full, proposed_no_IUB, ...) and answer
         // to -Dalgo.only. campaign.ps1 gives each arm its own JVM; without this gate every
@@ -1198,6 +1200,7 @@ public class AutomatedExperimentRunner {
                 ENABLE_PATTERN_EXPORT);
         adp.useBlockIndex = useBlockIndex; // block index
         adp.useIub = useIub;            // IUB pruning
+        if (!useIps) adp.iipMode = PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.IipMode.OFF;  // item removal
         announce(tag, ds.name, "SC7", 0);
         ExperimentMetrics m = measure(tag, ds.name, 0, "SC7",
                 () -> adp.runInitialMining(full, totalUtil),
