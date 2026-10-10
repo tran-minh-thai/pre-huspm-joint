@@ -1,0 +1,15 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC4]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC4] Pre-large threshold (Sl) sensitivity: Pre-HUSPM vs Adaptive ---
+>> RUNNING Adaptive[sl=0.3]/LEVIATHAN/SC4#0  (heap free=845MB / total=1024MB / max=49152MB)
+[Adaptive[sl=0.3]/LEVIATHAN/SC4#0] OK t=2306ms cand=162723 pat=135 heapDelta=87MB
+>> RUNNING Adaptive[sl=0.5]/LEVIATHAN/SC4#0  (heap free=209MB / total=288MB / max=49152MB)
+[Adaptive[sl=0.5]/LEVIATHAN/SC4#0] OK t=1045ms cand=48284 pat=135 heapDelta=91MB
+>> RUNNING Adaptive[sl=0.7]/LEVIATHAN/SC4#0  (heap free=243MB / total=320MB / max=49152MB)
+[Adaptive[sl=0.7]/LEVIATHAN/SC4#0] OK t=662ms cand=21214 pat=135 heapDelta=64MB
+>> RUNNING Adaptive[sl=0.9]/LEVIATHAN/SC4#0  (heap free=148MB / total=224MB / max=49152MB)
+[Adaptive[sl=0.9]/LEVIATHAN/SC4#0] OK t=470ms cand=11357 pat=135 heapDelta=65MB
+=== ALL SCENARIOS DONE (6.6s) ===
