@@ -17,5 +17,4 @@ rescanned while alpha <= UUT, and otherwise rescanned exactly when
 On all seven databases alpha exceeds UUT at every one of the 700 decisions, so the branch
 alpha <= UUT never applies here; the rescans follow the second condition. `make_figures.py`
 reads these files for `table_SC2_operating_region.csv` and checks the campaign's recorded
-alpha (1 / `iau_tightness`) and decisions against `alpha_batches.csv`; on the development
-machine's SC2 runs of SIGN and TAFENG all 200 increments agree.
+alpha (1 / `iau_tightness`) and decisions against `alpha_batches.csv`.
