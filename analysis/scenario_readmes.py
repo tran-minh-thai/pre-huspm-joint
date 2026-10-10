@@ -147,6 +147,16 @@ def sc2():
                    f"{int(reg.loc[d,'increments_alpha_le_uut'])}/{int(reg.loc[d,'increments'])}",
                    (f"{reg.loc[d,'alpha_stream']:.4f}" if pd.notna(reg.loc[d, "alpha_stream"]) else "not computed"),
                    reg.loc[d, "alpha_check"]] for d in sorted(dbs, key=lambda d: reg.loc[d, "ratio_median"])]
+
+    def rescans_of(d, key):
+        v = reg.loc[d, f"rescans_{key}"]
+        return int(v) if pd.notna(v) else f"incomplete ({int(reg.loc[d, f'increments_{key}'])}/100)"
+    hyp = mf.rescan_hypothesis(reg.reset_index())
+    hyp_rows = [[d, (f"{reg.loc[d,'alpha_stream']:.4f}" if pd.notna(reg.loc[d, "alpha_stream"]) else "not computed"),
+                 (f"{reg.loc[d,'joint_over_tsu']:.2f}" if pd.notna(reg.loc[d, "joint_over_tsu"]) else "not computed"),
+                 int(reg.loc[d, "rescans"]), rescans_of(d, "tsu"), rescans_of(d, "swumax"),
+                 (f"{int(hyp['gap'][d])}" if d in hyp["gap"] else "-")]
+                for d in sorted(dbs, key=lambda d: -reg.loc[d, "joint_over_tsu"] if pd.notna(reg.loc[d, "joint_over_tsu"]) else 0)]
     if swu_faster:
         swu_line = ("Pre-HUSPM-SWUmax is faster than the proposal on " + ", ".join(
             f"{d} ({secs(totals[(d,'Pre-HUSPM-SWUmax')][0])} s against {secs(totals[(d,P)][0])} s, "
@@ -203,6 +213,20 @@ decisions with `analysis/insertion_alpha.py`, which computes both from the data 
 
 {table(["database", "UUT", "median alpha", "min", "max", "increments with alpha <= UUT", "stream", "check"], alpha_rows,
        ["---", "---:", "---:", "---:", "---:", "---:", "---:", "---"])}
+
+## The prediction registered before the campaign
+
+From the data alone, the joint rule absorbs (1 - UUT) / (alpha - UUT) times the inserted utility
+that a test on the total inserted utility (Pre-HUSPM-TSU) absorbs before a rescan, with alpha
+over the insertion stream. Registered before the campaign ran: the gap in rescans between
+Pre-HUSPM-TSU and the proposal is largest on {" and ".join(mf.PREDICTED_LARGEST)} and smallest on
+{", ".join(mf.PREDICTED_SMALLEST)}. Gap = Pre-HUSPM-TSU's rescans minus the proposal's, where both
+completed the 100 increments.
+
+{table(["database", "alpha, stream", "budget factor", "rescans, proposal", "Pre-HUSPM-TSU", "Pre-HUSPM-SWUmax", "gap"], hyp_rows,
+       ["---", "---:", "---:", "---:", "---:", "---:", "---:"])}
+
+Verdict: **{hyp["verdict"]}** ({hyp["reason"]}).
 
 **Inside the budget** (median ratio at most one): {", ".join(f"{d}, {ratio(d):.2f} times faster than remining" for d in inside) or "none"}.
 

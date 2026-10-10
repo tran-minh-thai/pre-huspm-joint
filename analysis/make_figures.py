@@ -527,10 +527,12 @@ def operating_region(df):
     per-increment alpha and decisions with that computation (alpha_batches.csv)."""
     inv = os.path.join(DATA_DIR, "invariant-insertion-alpha")
     stream = {}
+    factor = {}
     batches = {}
     if os.path.exists(os.path.join(inv, "alpha_stream.csv")):
         for _, r in pd.read_csv(os.path.join(inv, "alpha_stream.csv")).iterrows():
             stream[r["dataset"]] = float(r["alpha_stream"])
+            factor[r["dataset"]] = float(r["joint_over_tsu"])
         for _, r in pd.read_csv(os.path.join(inv, "alpha_batches.csv")).iterrows():
             batches[(r["dataset"], int(r["increment"]))] = (float(r["alpha"]), str(r["rescan"]).lower() == "true")
     else:
@@ -570,10 +572,59 @@ def operating_region(df):
                          alpha_median=float(np.nanmedian(alpha)), alpha_min=float(np.nanmin(alpha)),
                          alpha_max=float(np.nanmax(alpha)), uut=uut,
                          increments_alpha_le_uut=int(np.sum(alpha <= uut)),
-                         alpha_stream=stream.get(ds, np.nan), alpha_check=alpha_check,
+                         alpha_stream=stream.get(ds, np.nan), joint_over_tsu=factor.get(ds, np.nan),
+                         alpha_check=alpha_check,
+                         **baseline_rescans(df, ds),
                          check="ok" if above == rescans == triggered
                                else f"MISMATCH above={above} triggered={triggered} rescans={rescans}"))
     return pd.DataFrame(rows)
+
+
+def baseline_rescans(df, ds):
+    """Rescans of the two Pre-HUSPM arms on one database, and how many of the 100 increments
+    each completed; a count over an incomplete stream is not comparable and is left empty."""
+    out = {}
+    for arm, key in (("Pre-HUSPM-TSU", "tsu"), ("Pre-HUSPM-SWUmax", "swumax")):
+        g = df[(df["dataset"] == ds) & (df["algorithm"] == arm) & is_inc(df)]
+        ok = g[g["finished"]]
+        done = len(ok)
+        out[f"increments_{key}"] = done
+        out[f"rescans_{key}"] = int(ok["rescan_count"].iloc[-1]) if done == 100 else np.nan
+    return out
+
+
+# Registered before the campaign ran (handoff of 2026-10-10): from the data alone, the joint
+# rule's budget is (1 - UUT) / (alpha - UUT) times that of a test on the total inserted utility,
+# with alpha over the insertion stream. So the gap in rescans between Pre-HUSPM-TSU and the
+# proposal should be largest on the two databases with the lowest alpha and smallest on the
+# three with the highest.
+PREDICTED_LARGEST = ("C8T1S5I8N5K", "TAFENG")
+PREDICTED_SMALLEST = ("SIGN", "LEVIATHAN", "KOSARAK")
+
+
+def rescan_hypothesis(tab):
+    """The registered prediction read off the operating-region table.
+
+    gap = rescans of Pre-HUSPM-TSU - rescans of the proposal, on databases where both
+    completed the 100 increments. The prediction holds when every database in
+    PREDICTED_LARGEST has a larger gap than every other database, and every database in
+    PREDICTED_SMALLEST a smaller gap than every database outside it. Ties at either
+    boundary do not count as holding. A database the prediction names without a complete
+    pair makes it undecidable, and the verdict names it."""
+    t = tab.set_index("dataset")
+    gap = {d: t.loc[d, "rescans_tsu"] - t.loc[d, "rescans"] for d in t.index
+           if pd.notna(t.loc[d, "rescans_tsu"]) and t.loc[d, "increments"] == 100}
+    missing = [d for d in PREDICTED_LARGEST + PREDICTED_SMALLEST if d not in gap]
+    if missing:
+        return dict(verdict="undecidable", gap=gap, missing=missing,
+                    reason="no complete Pre-HUSPM-TSU and proposal pair on " + ", ".join(missing))
+    others_l = [gap[d] for d in gap if d not in PREDICTED_LARGEST]
+    others_s = [gap[d] for d in gap if d not in PREDICTED_SMALLEST]
+    large_ok = all(gap[d] > max(others_l) for d in PREDICTED_LARGEST) if others_l else True
+    small_ok = all(gap[d] < min(others_s) for d in PREDICTED_SMALLEST) if others_s else True
+    return dict(verdict="holds" if large_ok and small_ok else "refuted", gap=gap, missing=[],
+                reason=f"largest-gap part {'holds' if large_ok else 'fails'}, "
+                       f"smallest-gap part {'holds' if small_ok else 'fails'}")
 
 
 def export_operating_region():
@@ -589,6 +640,9 @@ def export_operating_region():
     bad = tab[tab["check"] != "ok"]
     for _, r in bad.iterrows():
         print(f"      {r['dataset']}: {r['check']}")
+    h = rescan_hypothesis(tab)
+    print(f"      registered rescan prediction: {h['verdict']} ({h['reason']}); "
+          f"gaps TSU - proposal: {h['gap']}")
 
 
 # %% ------------------------------------------------------------------ Cell 5
