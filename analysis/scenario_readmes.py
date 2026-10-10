@@ -142,6 +142,11 @@ def sc2():
     reg_rows = [[d, f"{reg.loc[d,'ratio_median']:.2f}", f"{reg.loc[d,'ratio_min']:.2f}", f"{reg.loc[d,'ratio_max']:.2f}",
                  f"{int(reg.loc[d,'within_budget'])}/{int(reg.loc[d,'increments'])}", int(reg.loc[d, "rescans"]),
                  reg.loc[d, "check"]] for d in sorted(dbs, key=lambda d: reg.loc[d, "ratio_median"])]
+    alpha_rows = [[d, f"{reg.loc[d,'uut']:.6f}", f"{reg.loc[d,'alpha_median']:.4f}", f"{reg.loc[d,'alpha_min']:.4f}",
+                   f"{reg.loc[d,'alpha_max']:.4f}",
+                   f"{int(reg.loc[d,'increments_alpha_le_uut'])}/{int(reg.loc[d,'increments'])}",
+                   (f"{reg.loc[d,'alpha_stream']:.4f}" if pd.notna(reg.loc[d, "alpha_stream"]) else "not computed"),
+                   reg.loc[d, "alpha_check"]] for d in sorted(dbs, key=lambda d: reg.loc[d, "ratio_median"])]
     if swu_faster:
         swu_line = ("Pre-HUSPM-SWUmax is faster than the proposal on " + ", ".join(
             f"{d} ({secs(totals[(d,'Pre-HUSPM-SWUmax')][0])} s against {secs(totals[(d,P)][0])} s, "
@@ -189,6 +194,15 @@ that the increments above one, the triggered flags and the rescan counter agree.
 
 {table(["database", "median ratio", "min", "max", "increments within budget", "rescans", "check"], reg_rows,
        ["---", "---:", "---:", "---:", "---:", "---:", "---"])}
+
+The share alpha = max_i A_i / U+ of the inserted utility that one item reaches, at each decision
+(U+ inserted since the last rescan): an insertion-only stream is never rescanned while
+alpha <= UUT, and otherwise rescanned exactly when (alpha - UUT) * U+ > (UUT - LUT_min) * TSU_ref.
+"stream" is alpha over the whole insertion stream; "check" compares the recorded alpha and
+decisions with `analysis/insertion_alpha.py`, which computes both from the data files.
+
+{table(["database", "UUT", "median alpha", "min", "max", "increments with alpha <= UUT", "stream", "check"], alpha_rows,
+       ["---", "---:", "---:", "---:", "---:", "---:", "---:", "---"])}
 
 **Inside the budget** (median ratio at most one): {", ".join(f"{d}, {ratio(d):.2f} times faster than remining" for d in inside) or "none"}.
 

@@ -517,7 +517,25 @@ def operating_region(df):
     minimum and maximum, the increments within budget, and the rescans. An increment
     rescans exactly when the ratio exceeds 1, so the rescan count read from the
     counter must equal the number of increments above 1; `check` says whether it does,
-    and a mismatch is reported rather than smoothed over."""
+    and a mismatch is reported rather than smoothed over.
+
+    alpha = max_i A_i / U+ at each decision, read as 1 / iau_tightness (iau_tightness is
+    U+ / max_i A_i at the decision): its median, minimum and maximum, and the increments with
+    alpha <= UUT, which the joint rule never rescans. alpha_stream is alpha over the whole
+    insertion stream, from results/invariant-insertion-alpha/alpha_stream.csv, which
+    analysis/insertion_alpha.py computes from the data files; alpha_check compares the
+    per-increment alpha and decisions with that computation (alpha_batches.csv)."""
+    inv = os.path.join(DATA_DIR, "invariant-insertion-alpha")
+    stream = {}
+    batches = {}
+    if os.path.exists(os.path.join(inv, "alpha_stream.csv")):
+        for _, r in pd.read_csv(os.path.join(inv, "alpha_stream.csv")).iterrows():
+            stream[r["dataset"]] = float(r["alpha_stream"])
+        for _, r in pd.read_csv(os.path.join(inv, "alpha_batches.csv")).iterrows():
+            batches[(r["dataset"], int(r["increment"]))] = (float(r["alpha"]), str(r["rescan"]).lower() == "true")
+    else:
+        print(f"[warn] {inv} is missing: alpha_stream and alpha_check are left empty; "
+              "run python3 analysis/insertion_alpha.py")
     rows = []
     for ds, g in df[(df["algorithm"] == PROPOSED) & is_inc(df)].groupby("dataset", sort=False):
         g = g.sort_values("iteration")
@@ -529,10 +547,30 @@ def operating_region(df):
         above = int(np.sum(ratio > 1.0))
         triggered = int(ok["cub_triggered"].astype(str).str.lower().eq("true").sum())
         rescans = int(ok["rescan_count"].iloc[-1])
+        tight = ok["iau_tightness"].to_numpy(float)
+        alpha = np.where(tight > 0, 1.0 / np.where(tight > 0, tight, 1.0), np.nan)
+        uut = default_su(ds)
+        if batches:
+            n_cmp = n_bad = 0
+            for it, al, trig in zip(ok["iteration"].astype(int), alpha,
+                                    ok["cub_triggered"].astype(str).str.lower().eq("true")):
+                ref = batches.get((ds, it))
+                if ref is None:
+                    continue
+                n_cmp += 1
+                if abs(ref[0] - al) > 1e-9 * max(1.0, abs(ref[0])) or ref[1] != bool(trig):
+                    n_bad += 1
+            alpha_check = f"{n_bad} of {n_cmp} differ" if n_cmp else "0 compared"
+        else:
+            alpha_check = "not computed"
         rows.append(dict(dataset=ds, rule="/".join(rules), increments=len(ok),
                          ratio_median=float(np.median(ratio)), ratio_min=float(np.min(ratio)),
                          ratio_max=float(np.max(ratio)), within_budget=len(ok) - above,
                          rescans=rescans,
+                         alpha_median=float(np.nanmedian(alpha)), alpha_min=float(np.nanmin(alpha)),
+                         alpha_max=float(np.nanmax(alpha)), uut=uut,
+                         increments_alpha_le_uut=int(np.sum(alpha <= uut)),
+                         alpha_stream=stream.get(ds, np.nan), alpha_check=alpha_check,
                          check="ok" if above == rescans == triggered
                                else f"MISMATCH above={above} triggered={triggered} rescans={rescans}"))
     return pd.DataFrame(rows)
