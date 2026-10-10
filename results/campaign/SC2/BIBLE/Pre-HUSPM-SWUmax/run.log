@@ -1,0 +1,209 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC2]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC2] Incremental sequence (100 batches, EVEN; D_init per Yan et al. Table 16) ---
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INIT#0  (heap free=641MB / total=864MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INIT#0] OK t=1261ms cand=575676 pat=192 heapDelta=348MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#1  (heap free=599MB / total=864MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#1] OK t=1184ms cand=570120 pat=190 heapDelta=346MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#2  (heap free=687MB / total=960MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#2] OK t=1144ms cand=558427 pat=190 heapDelta=325MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#3  (heap free=684MB / total=960MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#3] OK t=6ms cand=81135 pat=189 heapDelta=12MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#4  (heap free=683MB / total=960MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#4] OK t=1136ms cand=554186 pat=188 heapDelta=343MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#5  (heap free=679MB / total=960MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#5] OK t=7ms cand=118491 pat=186 heapDelta=11MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#6  (heap free=679MB / total=960MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#6] OK t=1129ms cand=536770 pat=183 heapDelta=335MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#7  (heap free=675MB / total=960MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#7] OK t=1124ms cand=530083 pat=182 heapDelta=333MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#8  (heap free=895MB / total=1184MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#8] OK t=7ms cand=130325 pat=181 heapDelta=14MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#9  (heap free=798MB / total=1088MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#9] OK t=1136ms cand=522438 pat=180 heapDelta=352MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#10  (heap free=796MB / total=1088MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#10] OK t=1126ms cand=524564 pat=180 heapDelta=334MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#11  (heap free=792MB / total=1088MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#11] OK t=1134ms cand=524458 pat=177 heapDelta=335MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#12  (heap free=789MB / total=1088MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#12] OK t=1170ms cand=531612 pat=180 heapDelta=342MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#13  (heap free=1107MB / total=1408MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#13] OK t=1192ms cand=545782 pat=181 heapDelta=416MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#14  (heap free=784MB / total=1088MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#14] OK t=1218ms cand=560189 pat=184 heapDelta=341MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#15  (heap free=780MB / total=1088MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#15] OK t=1278ms cand=596270 pat=191 heapDelta=370MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#16  (heap free=778MB / total=1088MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#16] OK t=1335ms cand=629441 pat=195 heapDelta=384MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#17  (heap free=1095MB / total=1408MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#17] OK t=1381ms cand=643124 pat=195 heapDelta=416MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#18  (heap free=964MB / total=1280MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#18] OK t=6ms cand=86757 pat=195 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#19  (heap free=964MB / total=1280MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#19] OK t=1372ms cand=641335 pat=196 heapDelta=400MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#20  (heap free=962MB / total=1280MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#20] OK t=4ms cand=67749 pat=195 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#21  (heap free=962MB / total=1280MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#21] OK t=1381ms cand=635791 pat=196 heapDelta=408MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#22  (heap free=958MB / total=1280MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#22] OK t=1395ms cand=635299 pat=196 heapDelta=408MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#23  (heap free=958MB / total=1280MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#23] OK t=1417ms cand=643175 pat=197 heapDelta=408MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#24  (heap free=859MB / total=1184MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#24] OK t=1426ms cand=644829 pat=194 heapDelta=405MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#25  (heap free=857MB / total=1184MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#25] OK t=1416ms cand=632963 pat=193 heapDelta=415MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#26  (heap free=854MB / total=1184MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#26] OK t=1447ms cand=636466 pat=192 heapDelta=413MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#27  (heap free=1075MB / total=1408MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#27] OK t=1485ms cand=651441 pat=193 heapDelta=442MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#28  (heap free=851MB / total=1184MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#28] OK t=1472ms cand=657092 pat=192 heapDelta=426MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#29  (heap free=849MB / total=1184MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#29] OK t=1478ms cand=647256 pat=191 heapDelta=425MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#30  (heap free=847MB / total=1184MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#30] OK t=1506ms cand=656715 pat=196 heapDelta=436MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#31  (heap free=1068MB / total=1408MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#31] OK t=1515ms cand=653383 pat=196 heapDelta=433MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#32  (heap free=1067MB / total=1408MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#32] OK t=1530ms cand=641367 pat=196 heapDelta=433MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#33  (heap free=1066MB / total=1408MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#33] OK t=1509ms cand=640778 pat=197 heapDelta=433MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#34  (heap free=1062MB / total=1408MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#34] OK t=8ms cand=142470 pat=197 heapDelta=17MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#35  (heap free=1062MB / total=1408MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#35] OK t=1533ms cand=632149 pat=192 heapDelta=442MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#36  (heap free=1060MB / total=1408MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#36] OK t=5ms cand=76546 pat=192 heapDelta=19MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#37  (heap free=1059MB / total=1408MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#37] OK t=1521ms cand=625360 pat=190 heapDelta=476MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#38  (heap free=1059MB / total=1408MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#38] OK t=1524ms cand=625018 pat=191 heapDelta=442MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#39  (heap free=1058MB / total=1408MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#39] OK t=8ms cand=140736 pat=190 heapDelta=19MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#40  (heap free=1058MB / total=1408MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#40] OK t=1526ms cand=611421 pat=191 heapDelta=476MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#41  (heap free=1054MB / total=1408MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#41] OK t=1591ms cand=630723 pat=190 heapDelta=476MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#42  (heap free=1052MB / total=1408MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#42] OK t=1584ms cand=626559 pat=190 heapDelta=480MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#43  (heap free=1052MB / total=1408MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#43] OK t=12ms cand=217924 pat=191 heapDelta=19MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#44  (heap free=1052MB / total=1408MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#44] OK t=1588ms cand=623318 pat=190 heapDelta=467MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#45  (heap free=1050MB / total=1408MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#45] OK t=4ms cand=60984 pat=188 heapDelta=19MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#46  (heap free=1050MB / total=1408MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#46] OK t=1582ms cand=610081 pat=187 heapDelta=467MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#47  (heap free=1047MB / total=1408MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#47] OK t=5ms cand=84277 pat=186 heapDelta=20MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#48  (heap free=1047MB / total=1408MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#48] OK t=1605ms cand=604372 pat=183 heapDelta=510MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#49  (heap free=1141MB / total=1504MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#49] OK t=8ms cand=161640 pat=182 heapDelta=20MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#50  (heap free=1141MB / total=1504MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#50] OK t=1587ms cand=595800 pat=181 heapDelta=510MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#51  (heap free=1044MB / total=1408MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#51] OK t=6ms cand=116612 pat=177 heapDelta=19MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#52  (heap free=1044MB / total=1408MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#52] OK t=1566ms cand=588871 pat=176 heapDelta=476MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#53  (heap free=1043MB / total=1408MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#53] OK t=5ms cand=96788 pat=175 heapDelta=19MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#54  (heap free=1043MB / total=1408MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#54] OK t=1575ms cand=581464 pat=175 heapDelta=477MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#55  (heap free=1041MB / total=1408MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#55] OK t=5ms cand=86073 pat=170 heapDelta=19MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#56  (heap free=1041MB / total=1408MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#56] OK t=1581ms cand=568814 pat=169 heapDelta=476MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#57  (heap free=1231MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#57] OK t=11ms cand=223274 pat=169 heapDelta=21MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#58  (heap free=1231MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#58] OK t=1589ms cand=565389 pat=167 heapDelta=544MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#59  (heap free=1038MB / total=1408MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#59] OK t=4ms cand=75974 pat=164 heapDelta=19MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#60  (heap free=1038MB / total=1408MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#60] OK t=1567ms cand=547914 pat=164 heapDelta=479MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#61  (heap free=1035MB / total=1408MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#61] OK t=6ms cand=99880 pat=163 heapDelta=19MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#62  (heap free=1035MB / total=1408MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#62] OK t=1580ms cand=550142 pat=162 heapDelta=496MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#63  (heap free=1032MB / total=1408MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#63] OK t=7ms cand=138275 pat=160 heapDelta=19MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#64  (heap free=1032MB / total=1408MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#64] OK t=1583ms cand=548146 pat=157 heapDelta=506MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#65  (heap free=1128MB / total=1504MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#65] OK t=4ms cand=72464 pat=157 heapDelta=19MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#66  (heap free=1128MB / total=1504MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#66] OK t=1569ms cand=539465 pat=154 heapDelta=514MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#67  (heap free=1126MB / total=1504MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#67] OK t=3ms cand=31370 pat=151 heapDelta=19MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#68  (heap free=1126MB / total=1504MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#68] OK t=1552ms cand=535376 pat=150 heapDelta=511MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#69  (heap free=1123MB / total=1504MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#69] OK t=3ms cand=46267 pat=150 heapDelta=19MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#70  (heap free=1123MB / total=1504MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#70] OK t=1557ms cand=535790 pat=150 heapDelta=515MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#71  (heap free=1123MB / total=1504MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#71] OK t=3ms cand=56590 pat=150 heapDelta=19MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#72  (heap free=1123MB / total=1504MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#72] OK t=1570ms cand=525959 pat=148 heapDelta=517MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#73  (heap free=1438MB / total=1824MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#73] OK t=7ms cand=133505 pat=149 heapDelta=21MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#74  (heap free=1214MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#74] OK t=1558ms cand=525315 pat=147 heapDelta=533MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#75  (heap free=1119MB / total=1504MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#75] OK t=6ms cand=133398 pat=146 heapDelta=20MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#76  (heap free=1118MB / total=1504MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#76] OK t=1545ms cand=515198 pat=145 heapDelta=519MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#77  (heap free=1118MB / total=1504MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#77] OK t=5ms cand=109256 pat=144 heapDelta=19MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#78  (heap free=1117MB / total=1504MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#78] OK t=1547ms cand=508921 pat=142 heapDelta=527MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#79  (heap free=1114MB / total=1504MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#79] OK t=8ms cand=160809 pat=142 heapDelta=19MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#80  (heap free=1113MB / total=1504MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#80] OK t=1589ms cand=504074 pat=140 heapDelta=536MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#81  (heap free=1432MB / total=1824MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#81] OK t=3ms cand=48786 pat=140 heapDelta=21MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#82  (heap free=1208MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#82] OK t=1560ms cand=493085 pat=140 heapDelta=533MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#83  (heap free=1208MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#83] OK t=3ms cand=46374 pat=139 heapDelta=21MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#84  (heap free=1208MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#84] OK t=1544ms cand=482088 pat=135 heapDelta=533MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#85  (heap free=1205MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#85] OK t=4ms cand=71096 pat=134 heapDelta=21MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#86  (heap free=1205MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#86] OK t=1537ms cand=471605 pat=133 heapDelta=533MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#87  (heap free=1203MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#87] OK t=5ms cand=76939 pat=133 heapDelta=21MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#88  (heap free=1203MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#88] OK t=1585ms cand=482555 pat=133 heapDelta=544MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#89  (heap free=1329MB / total=1728MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#89] OK t=9ms cand=170202 pat=132 heapDelta=23MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#90  (heap free=1329MB / total=1728MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#90] OK t=1561ms cand=485417 pat=131 heapDelta=567MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#91  (heap free=1201MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#91] OK t=1563ms cand=481520 pat=129 heapDelta=531MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#92  (heap free=1102MB / total=1504MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#92] OK t=7ms cand=161562 pat=128 heapDelta=20MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#93  (heap free=1101MB / total=1504MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#93] OK t=1571ms cand=479372 pat=128 heapDelta=554MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#94  (heap free=1100MB / total=1504MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#94] OK t=6ms cand=120862 pat=127 heapDelta=20MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#95  (heap free=1100MB / total=1504MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#95] OK t=1582ms cand=472566 pat=127 heapDelta=561MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#96  (heap free=1417MB / total=1824MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#96] OK t=7ms cand=131435 pat=127 heapDelta=21MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#97  (heap free=1193MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#97] OK t=1587ms cand=470150 pat=127 heapDelta=569MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#98  (heap free=1191MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#98] OK t=14ms cand=226976 pat=127 heapDelta=21MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#99  (heap free=1191MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#99] OK t=1588ms cand=471933 pat=128 heapDelta=579MB
+>> RUNNING Pre-HUSPM-SWUmax/BIBLE/SC2_INC#100  (heap free=1095MB / total=1504MB / max=49152MB)
+[Pre-HUSPM-SWUmax/BIBLE/SC2_INC#100] OK t=12ms cand=201927 pat=129 heapDelta=20MB
+=== ALL SCENARIOS DONE (147.6s) ===
