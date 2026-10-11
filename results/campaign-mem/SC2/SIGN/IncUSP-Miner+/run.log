@@ -1,0 +1,211 @@
+### LIVE HEAP: forced collection, interval >= 20 ms | arm = IncUSP-Miner+
+### runtime_ms is written as -3 (perturbed by forced GC); the wall time is in wall_ms_perturbed. NOT a performance figure.
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC2]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC2] Incremental sequence (100 batches, EVEN; D_init per Yan et al. Table 16) ---
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INIT#0  (heap free=115MB / total=128MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INIT#0] OK t=2149ms cand=4789442 pat=583 heapDelta=1303MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#1  (heap free=798MB / total=1088MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#1] OK t=866ms cand=2048163 pat=611 heapDelta=551MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#2  (heap free=770MB / total=1088MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#2] OK t=927ms cand=2333809 pat=684 heapDelta=830MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#3  (heap free=1153MB / total=1504MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#3] OK t=239ms cand=434527 pat=663 heapDelta=672MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#4  (heap free=1148MB / total=1504MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#4] OK t=167ms cand=276710 pat=631 heapDelta=432MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#5  (heap free=1146MB / total=1504MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#5] OK t=381ms cand=1119764 pat=652 heapDelta=601MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#6  (heap free=1044MB / total=1408MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#6] OK t=437ms cand=1174154 pat=695 heapDelta=110MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#7  (heap free=1032MB / total=1408MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#7] OK t=793ms cand=1820167 pat=664 heapDelta=65MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#8  (heap free=1208MB / total=1600MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#8] OK t=459ms cand=1183893 pat=660 heapDelta=761MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#9  (heap free=1198MB / total=1600MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#9] OK t=390ms cand=979050 pat=632 heapDelta=490MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#10  (heap free=1188MB / total=1600MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#10] OK t=249ms cand=499319 pat=594 heapDelta=752MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#11  (heap free=1184MB / total=1600MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#11] OK t=227ms cand=336366 pat=564 heapDelta=576MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#12  (heap free=1181MB / total=1600MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#12] OK t=272ms cand=494626 pat=571 heapDelta=848MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#13  (heap free=1176MB / total=1600MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#13] OK t=326ms cand=788416 pat=556 heapDelta=107MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#14  (heap free=1168MB / total=1600MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#14] OK t=273ms cand=476675 pat=528 heapDelta=768MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#15  (heap free=1163MB / total=1600MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#15] OK t=227ms cand=345587 pat=506 heapDelta=592MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#16  (heap free=1160MB / total=1600MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#16] OK t=185ms cand=195155 pat=480 heapDelta=384MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#17  (heap free=1158MB / total=1600MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#17] OK t=406ms cand=888432 pat=461 heapDelta=395MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#18  (heap free=1469MB / total=1920MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#18] OK t=570ms cand=1228945 pat=503 heapDelta=111MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#19  (heap free=1456MB / total=1920MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#19] OK t=250ms cand=463722 pat=471 heapDelta=816MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#20  (heap free=1452MB / total=1920MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#20] OK t=221ms cand=355961 pat=434 heapDelta=656MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#21  (heap free=1450MB / total=1920MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#21] OK t=201ms cand=338212 pat=415 heapDelta=528MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#22  (heap free=1445MB / total=1920MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#22] OK t=303ms cand=759631 pat=423 heapDelta=1072MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#23  (heap free=1436MB / total=1920MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#23] OK t=428ms cand=1000281 pat=434 heapDelta=525MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#24  (heap free=1426MB / total=1920MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#24] OK t=460ms cand=1135344 pat=470 heapDelta=651MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#25  (heap free=1416MB / total=1920MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#25] OK t=282ms cand=565813 pat=456 heapDelta=944MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#26  (heap free=1411MB / total=1920MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#26] OK t=374ms cand=742615 pat=475 heapDelta=154MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#27  (heap free=1404MB / total=1920MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#27] OK t=343ms cand=726011 pat=442 heapDelta=75MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#28  (heap free=1396MB / total=1920MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#28] OK t=523ms cand=1123712 pat=425 heapDelta=924MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#29  (heap free=1386MB / total=1920MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#29] OK t=357ms cand=715142 pat=435 heapDelta=124MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#30  (heap free=1383MB / total=1920MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#30] OK t=432ms cand=818508 pat=416 heapDelta=380MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#31  (heap free=1695MB / total=2240MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#31] OK t=334ms cand=615004 pat=394 heapDelta=1042MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#32  (heap free=1687MB / total=2240MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#32] OK t=332ms cand=635454 pat=373 heapDelta=1152MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#33  (heap free=1682MB / total=2240MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#33] OK t=323ms cand=562667 pat=337 heapDelta=1024MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#34  (heap free=1676MB / total=2240MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#34] OK t=330ms cand=592862 pat=333 heapDelta=1088MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#35  (heap free=1670MB / total=2240MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#35] OK t=330ms cand=645467 pat=316 heapDelta=1088MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#36  (heap free=1667MB / total=2240MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#36] OK t=382ms cand=757674 pat=323 heapDelta=28MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#37  (heap free=1662MB / total=2240MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#37] OK t=270ms cand=342598 pat=308 heapDelta=768MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#38  (heap free=1658MB / total=2240MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#38] OK t=353ms cand=564546 pat=298 heapDelta=1168MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#39  (heap free=1653MB / total=2240MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#39] OK t=297ms cand=415918 pat=293 heapDelta=896MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#40  (heap free=1650MB / total=2240MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#40] OK t=275ms cand=354864 pat=276 heapDelta=784MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#41  (heap free=1646MB / total=2240MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#41] OK t=317ms cand=454009 pat=269 heapDelta=976MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#42  (heap free=1643MB / total=2240MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#42] OK t=215ms cand=178633 pat=269 heapDelta=432MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#43  (heap free=1640MB / total=2240MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#43] OK t=275ms cand=375213 pat=276 heapDelta=752MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#44  (heap free=1635MB / total=2240MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#44] OK t=313ms cand=532276 pat=289 heapDelta=928MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#45  (heap free=1628MB / total=2240MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#45] OK t=263ms cand=293144 pat=275 heapDelta=704MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#46  (heap free=1626MB / total=2240MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#46] OK t=248ms cand=298856 pat=280 heapDelta=608MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#47  (heap free=1621MB / total=2240MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#47] OK t=276ms cand=430967 pat=279 heapDelta=768MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#48  (heap free=1616MB / total=2240MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#48] OK t=206ms cand=184281 pat=271 heapDelta=448MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#49  (heap free=1614MB / total=2240MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#49] OK t=245ms cand=319367 pat=269 heapDelta=624MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#50  (heap free=1610MB / total=2240MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#50] OK t=296ms cand=421691 pat=253 heapDelta=848MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#51  (heap free=1606MB / total=2240MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#51] OK t=343ms cand=459358 pat=244 heapDelta=1072MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#52  (heap free=1601MB / total=2240MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#52] OK t=264ms cand=334255 pat=239 heapDelta=720MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#53  (heap free=1597MB / total=2240MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#53] OK t=345ms cand=496322 pat=243 heapDelta=1072MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#54  (heap free=1592MB / total=2240MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#54] OK t=370ms cand=495581 pat=245 heapDelta=1184MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#55  (heap free=1589MB / total=2240MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#55] OK t=314ms cand=388218 pat=243 heapDelta=864MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#56  (heap free=1584MB / total=2240MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#56] OK t=289ms cand=336044 pat=236 heapDelta=768MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#57  (heap free=1580MB / total=2240MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#57] OK t=239ms cand=230260 pat=230 heapDelta=544MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#58  (heap free=1578MB / total=2240MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#58] OK t=326ms cand=508009 pat=223 heapDelta=992MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#59  (heap free=1575MB / total=2240MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#59] OK t=403ms cand=681117 pat=226 heapDelta=27MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#60  (heap free=1571MB / total=2240MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#60] OK t=320ms cand=415596 pat=217 heapDelta=912MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#61  (heap free=1566MB / total=2240MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#61] OK t=279ms cand=280090 pat=205 heapDelta=704MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#62  (heap free=1563MB / total=2240MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#62] OK t=255ms cand=263534 pat=206 heapDelta=592MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#63  (heap free=1559MB / total=2240MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#63] OK t=287ms cand=306487 pat=200 heapDelta=736MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#64  (heap free=1555MB / total=2240MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#64] OK t=315ms cand=338696 pat=197 heapDelta=816MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#65  (heap free=1551MB / total=2240MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#65] OK t=404ms cand=595039 pat=199 heapDelta=1296MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#66  (heap free=1544MB / total=2240MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#66] OK t=493ms cand=825352 pat=190 heapDelta=461MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#67  (heap free=1539MB / total=2240MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#67] OK t=417ms cand=563066 pat=188 heapDelta=1312MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#68  (heap free=1532MB / total=2240MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#68] OK t=370ms cand=514255 pat=185 heapDelta=1120MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#69  (heap free=1527MB / total=2240MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#69] OK t=486ms cand=664779 pat=185 heapDelta=269MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#70  (heap free=2285MB / total=3008MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#70] OK t=445ms cand=608667 pat=183 heapDelta=1392MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#71  (heap free=2277MB / total=3008MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#71] OK t=376ms cand=559976 pat=172 heapDelta=1312MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#72  (heap free=2273MB / total=3008MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#72] OK t=302ms cand=341732 pat=166 heapDelta=928MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#73  (heap free=2270MB / total=3008MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#73] OK t=251ms cand=229877 pat=162 heapDelta=688MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#74  (heap free=2267MB / total=3008MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#74] OK t=234ms cand=190058 pat=157 heapDelta=608MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#75  (heap free=2265MB / total=3008MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#75] OK t=271ms cand=301487 pat=151 heapDelta=784MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#76  (heap free=2263MB / total=3008MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#76] OK t=429ms cand=613863 pat=155 heapDelta=1568MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#77  (heap free=2260MB / total=3008MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#77] OK t=368ms cand=448412 pat=155 heapDelta=1232MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#78  (heap free=2256MB / total=3008MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#78] OK t=270ms cand=241461 pat=151 heapDelta=736MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#79  (heap free=2253MB / total=3008MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#79] OK t=309ms cand=407759 pat=144 heapDelta=960MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#80  (heap free=2250MB / total=3008MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#80] OK t=325ms cand=420121 pat=145 heapDelta=1024MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#81  (heap free=2244MB / total=3008MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#81] OK t=343ms cand=475994 pat=148 heapDelta=1088MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#82  (heap free=2238MB / total=3008MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#82] OK t=257ms cand=261278 pat=144 heapDelta=688MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#83  (heap free=2234MB / total=3008MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#83] OK t=357ms cand=499489 pat=139 heapDelta=1152MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#84  (heap free=2229MB / total=3008MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#84] OK t=446ms cand=627136 pat=139 heapDelta=1584MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#85  (heap free=2225MB / total=3008MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#85] OK t=283ms cand=263810 pat=132 heapDelta=816MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#86  (heap free=2222MB / total=3008MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#86] OK t=295ms cand=273763 pat=124 heapDelta=832MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#87  (heap free=2220MB / total=3008MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#87] OK t=432ms cand=613345 pat=123 heapDelta=1536MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#88  (heap free=2212MB / total=3008MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#88] OK t=385ms cand=472479 pat=123 heapDelta=1264MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#89  (heap free=2208MB / total=3008MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#89] OK t=460ms cand=646701 pat=118 heapDelta=1648MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#90  (heap free=2203MB / total=3008MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#90] OK t=393ms cand=514288 pat=119 heapDelta=1296MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#91  (heap free=2197MB / total=3008MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#91] OK t=501ms cand=721725 pat=115 heapDelta=32MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#92  (heap free=2190MB / total=3008MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#92] OK t=365ms cand=404321 pat=113 heapDelta=1184MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#93  (heap free=2188MB / total=3008MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#93] OK t=649ms cand=958191 pat=116 heapDelta=722MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#94  (heap free=2178MB / total=3008MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#94] OK t=557ms cand=819925 pat=119 heapDelta=307MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#95  (heap free=2168MB / total=3008MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#95] OK t=640ms cand=883856 pat=124 heapDelta=495MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#96  (heap free=2573MB / total=3424MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#96] OK t=463ms cand=520397 pat=139 heapDelta=1568MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#97  (heap free=2564MB / total=3424MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#97] OK t=298ms cand=316571 pat=143 heapDelta=864MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#98  (heap free=2560MB / total=3424MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#98] OK t=530ms cand=819105 pat=146 heapDelta=2016MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#99  (heap free=2458MB / total=3328MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#99] OK t=382ms cand=457419 pat=142 heapDelta=1296MB
+>> RUNNING IncUSP-Miner+/SIGN/SC2_INC#100  (heap free=2456MB / total=3328MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC2_INC#100] OK t=300ms cand=239835 pat=141 heapDelta=896MB
+=== ALL SCENARIOS DONE (123.7s) ===
