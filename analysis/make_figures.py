@@ -965,6 +965,15 @@ def export_summary_tables():
 
 
 def export_memory_ratios():
+    tab = memory_ratios()
+    if tab is None:
+        return
+    path = os.path.join(OUT_DIR, "table_SC1_memory_ratios.csv")
+    write_csv(tab, path)
+    print(f"[saved] {path}")
+
+
+def memory_ratios():
     """SC1 live set, each baseline over the proposal, over every (database, threshold)
     cell where both completed: geometric mean, cells used, cells left out and why (the
     outcome of whichever did not finish), and the cells where the baseline holds less.
@@ -972,7 +981,7 @@ def export_memory_ratios():
     the proposal. Two scopes: all four thresholds, and the default threshold alone."""
     df = load_scenario("SC1", tree=MEMORY_TREE)
     if df is None:
-        return
+        return None
     df = parse_su(df)
     rows = []
     for base in [a for a in STATIC_ORDER if a != PROPOSED]:
@@ -992,15 +1001,18 @@ def export_memory_ratios():
                         who = base if not b["finished"] else PROPOSED
                         st = b["status"] if not b["finished"] else p["status"]
                         left_out.append(f"{ds}@{su:g}:{who} {st}"); continue
+                    if float(b["mem_live_mb"]) <= 0 or float(p["mem_live_mb"]) <= 0:
+                        # A live set read as 0 MB is below the 1 MB resolution of the column, or
+                        # a run that ended before its first sample; it has no ratio.
+                        who = base if float(b["mem_live_mb"]) <= 0 else PROPOSED
+                        left_out.append(f"{ds}@{su:g}:{who} 0 MB"); continue
                     ratios.append(float(b["mem_live_mb"]) / float(p["mem_live_mb"]))
             r = np.asarray(ratios, float)
             rows.append(dict(baseline=base, scope=scope, cells=cells, cells_used=len(r),
                              geomean_ratio=float(np.exp(np.mean(np.log(r)))) if len(r) else np.nan,
                              baseline_holds_less=int(np.sum(r < 1)),
                              left_out="; ".join(left_out)))
-    path = os.path.join(OUT_DIR, "table_SC1_memory_ratios.csv")
-    write_csv(pd.DataFrame(rows), path)
-    print(f"[saved] {path}")
+    return pd.DataFrame(rows)
 
 
 def spread(values):

@@ -516,6 +516,285 @@ MB.
     write("campaign-mem/SC2/README.md", text)
 
 
+# ------------------------------------------------------------------------------ static scenarios
+SLABEL = {"USpan": "USpan", "HUSP-ULL": "HUSP-ULL", "HUSP-SP": "HUSP-SP", "IncUSP-Miner+": "IncUSP-Miner+",
+          "Pre-HUSPM": "Pre-HUSPM", P: "Pre-HUSPM-Joint"}
+
+
+def static_cells(df):
+    """(database, threshold, algorithm) -> the row of that run."""
+    df = mf.parse_su(df)
+    cells = {}
+    for _, r in df.iterrows():
+        cells[(r["dataset"], float(r["su"]), r["algorithm"])] = r
+    return cells
+
+
+def static_summary(cells):
+    """Agreement of the HUSP counts, and the proposal's runtime against each baseline."""
+    pairs = sorted({(d, su) for d, su, _ in cells})
+    agree = n_pairs = 0
+    disagree = []
+    fastest = n_fast = 0
+    vs_best, excluded = [], []
+    per_base = {a: [] for a in mf.STATIC_ORDER if a != P}
+    for d, su in pairs:
+        fin = {a: cells[(d, su, a)] for a in mf.STATIC_ORDER
+               if (d, su, a) in cells and bool(cells[(d, su, a)]["finished"])}
+        counts = {int(r["total_patterns_found"]) for r in fin.values()}
+        if len(fin) >= 2:
+            n_pairs += 1
+            if len(counts) == 1:
+                agree += 1
+            else:
+                disagree.append(f"{d} at {su:g}")
+        if P not in fin:
+            continue
+        pm_ = float(fin[P]["runtime_ms"])
+        others = {a: float(r["runtime_ms"]) for a, r in fin.items() if a != P}
+        if pm_ <= 0 or any(v <= 0 for v in others.values()):
+            excluded.append(f"{d} at {su:g}")
+            continue
+        if others:
+            n_fast += 1
+            fastest += int(pm_ < min(others.values()))
+            vs_best.append(min(others.values()) / pm_)
+        for a, v in others.items():
+            per_base[a].append(v / pm_)
+    return dict(pairs=n_pairs, agree=agree, disagree=disagree, fastest=fastest, n_fast=n_fast,
+                vs_best=vs_best, per_base=per_base, excluded=excluded)
+
+
+def incomplete_runs(cells):
+    out = {}
+    for (d, su, a), r in cells.items():
+        if not bool(r["finished"]):
+            out.setdefault((d, a, STATUS.get(r["status"], r["status"])), []).append(su)
+    return [[d, SLABEL.get(a, a), f"{why} at {len(sus)} of the four thresholds"]
+            for (d, a, why), sus in sorted(out.items())]
+
+
+def runtime_cell(cells, d, su, a):
+    r = cells.get((d, su, a))
+    if r is None:
+        return "not run"
+    if not bool(r["finished"]):
+        return STATUS.get(r["status"], r["status"])
+    x = float(r["runtime_ms"]) / 1000
+    return f"{x:.2f}" if x < 10 else secs(x)
+
+
+def runtime_rows(cells, dss, sus_of):
+    rows = []
+    for d in dss:
+        for su in sus_of(d):
+            fin = {a: float(cells[(d, su, a)]["runtime_ms"]) for a in mf.STATIC_ORDER
+                   if (d, su, a) in cells and bool(cells[(d, su, a)]["finished"])}
+            best = min(fin, key=fin.get) if fin else None
+            husps = next((int(cells[(d, su, a)]["total_patterns_found"]) for a in mf.STATIC_ORDER if a in fin), "-")
+            row = [d, f"{su:g}", husps]
+            for a in mf.STATIC_ORDER:
+                c = runtime_cell(cells, d, su, a)
+                row.append(f"**{c}**" if a == best else c)
+            rows.append(row)
+    return rows
+
+
+def geo_rows(summ):
+    return [[SLABEL[a], f"{gmean(v):.2f}", len(v)] for a, v in
+            sorted(summ["per_base"].items(), key=lambda kv: -gmean(kv[1]) if kv[1] else 0)]
+
+
+def summary_text(summ):
+    vb = np.asarray(summ["vs_best"], float)
+    t = (f"For {summ['agree']} of the {summ['pairs']} (database, threshold) pairs, every algorithm that "
+         f"completed reports the same HUSP count"
+         + (f"; they differ on {', '.join(summ['disagree'])}" if summ["disagree"] else "") + ". "
+         "Counts alone do not prove the sets equal; `verify.BaselineAgreement` compares the sets "
+         "(`results/calibration/agreement.log`).\n\n")
+    if len(vb):
+        t += (f"The proposal is the fastest in {summ['fastest']} of {summ['n_fast']} cells. The fastest baseline's "
+              f"runtime over the proposal's, per cell: median {np.median(vb):.2f}, largest {vb.max():.2f}, "
+              f"smallest {vb.min():.2f}; above one, the proposal is faster.")
+    if summ["excluded"]:
+        t += f" Left out, a runtime read as 0 ms: {', '.join(summ['excluded'])}."
+    return t
+
+
+def sc1():
+    df = mf.load_scenario("SC1")
+    cells = static_cells(df)
+    dss = [d for d in mf.ALL_DATASETS if d in set(df["dataset"])]
+    summ = static_summary(cells)
+    inc = incomplete_runs(cells)
+    rows = runtime_rows(cells, dss, lambda d: [mf.default_su(d)])
+    text = f"""# SC1, static mining on `D_init`
+
+{SCOPE["campaign/SC1/README.md"][1]} {HEAD}
+
+## Answers
+
+{summary_text(summ)}
+
+{("Runs that did not complete:" + chr(10) + chr(10) + table(["database", "algorithm", "outcome"], inc, ["---", "---", "---"])) if inc else "Every run completed."}
+
+## Runtime at the default threshold
+
+Seconds; the fastest in bold.
+
+{table(["database", "threshold", "HUSPs"] + [SLABEL[a] for a in mf.STATIC_ORDER], rows,
+       ["---", "---:", "---:"] + ["---:"] * len(mf.STATIC_ORDER))}
+
+## Against each baseline, all cells
+
+Geometric mean of the baseline's runtime over the proposal's, on the cells where both completed.
+
+{table(["baseline", "baseline / proposal", "cells"], geo_rows(summ))}
+
+`peak_heap_mb` in these rows is used heap, garbage included, and is not the memory result; the
+live set is in `results/campaign-mem/SC1`.
+"""
+    write("campaign/SC1/README.md", text)
+
+
+def sc3():
+    df = mf.load_scenario("SC3")
+    cells = static_cells(df)
+    dss = [d for d in mf.ALL_DATASETS if d in set(df["dataset"])]
+    summ = static_summary(cells)
+    inc = incomplete_runs(cells)
+    rows = runtime_rows(cells, dss, lambda d: sorted({su for dd, su, _ in cells if dd == d}))
+    s1 = static_summary(static_cells(mf.load_scenario("SC1")))
+    comp = [[SLABEL[a], f"{gmean(v):.2f}", len(v), f"{gmean(s1['per_base'][a]):.2f}", len(s1["per_base"][a])]
+            for a, v in sorted(summ["per_base"].items(), key=lambda kv: -gmean(kv[1]) if kv[1] else 0)]
+    text = f"""# SC3, static mining on the whole database
+
+{SCOPE["campaign/SC3/README.md"][1]} {HEAD}
+
+## Answers
+
+{summary_text(summ)}
+
+{("Runs that did not complete:" + chr(10) + chr(10) + table(["database", "algorithm", "outcome"], inc, ["---", "---", "---"])) if inc else "Every run completed."}
+
+## Runtime
+
+Seconds; the fastest in bold.
+
+{table(["database", "threshold", "HUSPs"] + [SLABEL[a] for a in mf.STATIC_ORDER], rows,
+       ["---", "---:", "---:"] + ["---:"] * len(mf.STATIC_ORDER))}
+
+## Against each baseline, here and on `D_init`
+
+Geometric mean of the baseline's runtime over the proposal's, on the cells where both completed.
+
+{table(["baseline", "SC3, whole database", "cells", "SC1, `D_init`", "cells"], comp)}
+"""
+    write("campaign/SC3/README.md", text)
+
+
+def sc4():
+    df = mf.parse_sl(mf.load_scenario("SC4"))
+    dss = [d for d in mf.ALL_DATASETS if d in set(df["dataset"])]
+    names = {"Adaptive": "Pre-HUSPM-Joint", "Pre-HUSPM": "Pre-HUSPM"}
+    rows, counts, ratios = [], {}, []
+    for d in dss:
+        for sl in sorted(df.loc[df["dataset"] == d, "sl"].dropna().unique()):
+            row = [d, f"{sl:g}"]
+            got = {}
+            for base in ("Adaptive", "Pre-HUSPM"):
+                g = df[(df["dataset"] == d) & (df["base_algo"] == base) & np.isclose(df["sl"], sl)]
+                if g.empty:
+                    row.append("not run")
+                    continue
+                r = g.iloc[-1]
+                if not bool(r["finished"]):
+                    row.append(STATUS.get(r["status"], r["status"]))
+                    continue
+                got[base] = r
+                counts.setdefault(d, set()).add(int(r["total_patterns_found"]))
+                row.append(f"{int(r['prelarge_count']):,} / {int(r['peak_heap_mb']):,} MB / "
+                           f"{float(r['runtime_ms']) / 1000:.1f}")
+            if len(got) == 2 and got["Adaptive"]["prelarge_count"] > 0:
+                ratios.append(got["Pre-HUSPM"]["prelarge_count"] / got["Adaptive"]["prelarge_count"])
+            rows.append(row)
+    same = all(len(v) == 1 for v in counts.values())
+    husp = ", ".join(f"{next(iter(v))} on {d}" for d, v in counts.items() if len(v) == 1)
+    text = f"""# SC4, the pre-large floor
+
+{SCOPE["campaign/SC4/README.md"][1]} {HEAD}
+
+## Result
+
+The answer does not depend on the floor: {"every completed run reports the same HUSP count per database (" + husp + ")" if same else "the HUSP counts DIFFER across floors or algorithms: " + str(counts)}.
+
+{table(["database", "`r_l`", "Pre-HUSPM-Joint: pre-large / heap / s", "Pre-HUSPM: pre-large / heap / s"], rows,
+       ["---", "---", "---", "---"])}
+
+Heap is `peak_heap_mb`, used heap including garbage not yet collected; it orders the two
+algorithms but is not a live-set figure (`docs/result-columns.md`).
+
+{("Where both complete, Pre-HUSPM's pre-large set is " + f"{min(ratios):.0f} to {max(ratios):.0f}" + " times the proposal's, over " + str(len(ratios)) + " cells.") if ratios else "No cell where both complete."} The two sets are not one set measured
+twice: Pre-HUSPM admits a pattern by an upper bound on its utility, the proposal by the utility itself.
+"""
+    write("campaign/SC4/README.md", text)
+
+
+def mem_sc1():
+    df = mf.parse_su(mf.load_scenario("SC1", tree=mf.MEMORY_TREE))
+    dss = [d for d in mf.ALL_DATASETS if d in set(df["dataset"])]
+    rows, twice = [], 0
+    for d in dss:
+        su = mf.default_su(d)
+        row = [d]
+        for a in mf.STATIC_ORDER:
+            g = df[(df["dataset"] == d) & (df["algorithm"] == a) & np.isclose(df["su"], su)]
+            if g.empty:
+                row.append("not run")
+                continue
+            r = g.iloc[-1]
+            if not bool(r["finished"]):
+                row.append(STATUS.get(r["status"], r["status"]))
+                continue
+            mark = ""
+            if int(r["gc_forced"]) <= 2:
+                mark = " †"
+                twice += 1
+            row.append(f"{int(r['mem_live_mb']):,}{mark}")
+        rows.append(row)
+    rt = mf.memory_ratios()
+    rat = []
+    for base in [a for a in mf.STATIC_ORDER if a != P]:
+        g = rt[rt["baseline"] == base].set_index("scope")
+        al, df_ = g.loc["all four thresholds"], g.loc["default threshold"]
+        rat.append([SLABEL[base], f"{al['geomean_ratio']:.2f}", f"{int(al['cells_used'])} of {int(al['cells'])}",
+                    int(al["baseline_holds_less"]), f"{df_['geomean_ratio']:.2f}"])
+    inc = incomplete_runs(static_cells(mf.load_scenario("SC1", tree=mf.MEMORY_TREE)))
+    text = f"""# SC1 memory: the live set of a static mine on `D_init`
+
+{SCOPE["campaign-mem/SC1/README.md"][1]} The wait between samples is the larger of 20 ms and four
+times the last collection. {HEAD}
+
+{("Runs that did not complete:" + chr(10) + chr(10) + table(["database", "algorithm", "outcome"], inc, ["---", "---", "---"])) if inc else "Every run completed."}
+
+## Live set at the default threshold
+
+Megabytes. A dagger marks a run read at its start and end only ({twice} cells), because it ended
+before the first sample; a live set below 1 MB reads as 0.
+
+{table(["database"] + [SLABEL[a] for a in mf.STATIC_ORDER], rows, ["---"] + ["---:"] * len(mf.STATIC_ORDER))}
+
+## Against each baseline
+
+Geometric mean of the baseline's live set over the proposal's, on the cells where both completed
+and both read at least 1 MB; above one, the proposal holds less. Cells left out and why:
+`figures/campaign/table_SC1_memory_ratios.csv`.
+
+{table(["baseline", "all four thresholds", "cells used", "cells where the baseline holds less", "default threshold"], rat)}
+"""
+    write("campaign-mem/SC1/README.md", text)
+
+
 # What each scenario measures, written while it has no finished arm; the numbers come only
 # from the arms' CSVs once there are some.
 SCOPE = {
@@ -563,14 +842,14 @@ SCOPE = {
 
 # (path, scenario, tree, read replicates, generator or None)
 README_SOURCES = [
-    ("campaign/SC1/README.md", "SC1", mf.TIMING_TREE, False, None),
+    ("campaign/SC1/README.md", "SC1", mf.TIMING_TREE, False, sc1),
     ("campaign/SC2/README.md", "SC2", mf.TIMING_TREE, False, sc2),
-    ("campaign/SC3/README.md", "SC3", mf.TIMING_TREE, False, None),
-    ("campaign/SC4/README.md", "SC4", mf.TIMING_TREE, False, None),
+    ("campaign/SC3/README.md", "SC3", mf.TIMING_TREE, False, sc3),
+    ("campaign/SC4/README.md", "SC4", mf.TIMING_TREE, False, sc4),
     ("campaign/SC5/README.md", "SC5", mf.TIMING_TREE, False, sc5),
     ("campaign/SC6/README.md", "SC6", mf.TIMING_TREE, True, sc6),
     ("campaign/SC7/README.md", "SC7", mf.TIMING_TREE, False, sc7),
-    ("campaign-mem/SC1/README.md", "SC1", mf.MEMORY_TREE, False, None),
+    ("campaign-mem/SC1/README.md", "SC1", mf.MEMORY_TREE, False, mem_sc1),
     ("campaign-mem/SC2/README.md", "SC2", mf.MEMORY_TREE, False, mem_sc2),
 ]
 

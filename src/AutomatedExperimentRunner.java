@@ -734,7 +734,12 @@ public class AutomatedExperimentRunner {
     // ==================================================================
     private static void runSC4_SensitivitySl() throws IOException {
         System.out.println("\n--- [SC4] Pre-large threshold (Sl) sensitivity: Pre-HUSPM vs Adaptive ---");
-        double[] slRatios = {0.3, 0.5, 0.7, 0.9};
+        // Highest floor first. A lower floor mines a superset of the patterns of a higher one, so
+        // once a level runs out of heap every lower level needs at least as much; measured in this
+        // order, a level is never run in a JVM whose heap an earlier failure may still occupy
+        // unless that level is harder still. Ascending order once left three levels unmeasured
+        // after the JVM died at the level following an out-of-memory.
+        double[] slRatios = {0.9, 0.7, 0.5, 0.3};
 
         try (ResultCollector col = new ResultCollector(RESULTS_DIR + "SC4_sl_sensitivity.csv")) {
             for (DatasetConfig ds : DATASETS) {
@@ -762,32 +767,44 @@ public class AutomatedExperimentRunner {
                     // --- Pre-HUSPM @ slRatio ---
                     if (!ADAPTIVE_ONLY && algoEnabled("Pre-HUSPM")) {
                         String tag = "Pre-HUSPM[sl=" + slRatio + "]";
-                        PreHUSPMAlgorithm.PreHUSPMAlgo pre = new PreHUSPMAlgorithm.PreHUSPMAlgo(
-                                ds.defaultSu, slRatio, ENABLE_PATTERN_EXPORT);
-                        announce(tag, ds.name, "SC4", 0);
-                        ExperimentMetrics m = measure(tag, ds.name, 0, "SC4",
-                                () -> pre.runInitialMining(full, totalUtil),
-                                () -> pre.candidateCount, () -> pre.patternCount, null, null);
-                        attachPreHuspm(m, pre);
-                        col.log(m);
+                        try {
+                            PreHUSPMAlgorithm.PreHUSPMAlgo pre = new PreHUSPMAlgorithm.PreHUSPMAlgo(
+                                    ds.defaultSu, slRatio, ENABLE_PATTERN_EXPORT);
+                            announce(tag, ds.name, "SC4", 0);
+                            ExperimentMetrics m = measure(tag, ds.name, 0, "SC4",
+                                    () -> pre.runInitialMining(full, totalUtil),
+                                    () -> pre.candidateCount, () -> pre.patternCount, null, null);
+                            attachPreHuspm(m, pre);
+                            col.log(m);
+                        } catch (OutOfMemoryError outside) {
+                            // Out of heap outside the measured call (building the instance): the
+                            // level did not run; record it rather than end the arm.
+                            forceFullGC();
+                            col.log(outOfHeapMetric(tag, ds.name, 0, "SC4"));
+                        }
                         forceFullGC();
                     }
                     // --- Adaptive @ SAME slRatio (default kappa and delta0) ---
                     if (algoEnabled("Adaptive-Full")) {
                         String tag = "Adaptive[sl=" + slRatio + "]";
-                        PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp = new PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo(
-                                ds.defaultSu, DEFAULT_KAPPA, DEFAULT_DELTA0, slRatio,
-                                PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.AblationMode.FULL,
-                                ENABLE_PATTERN_EXPORT);
-                        announce(tag, ds.name, "SC4", 0);
-                        ExperimentMetrics m = measure(tag, ds.name, 0, "SC4",
-                                () -> adp.runInitialMining(full, totalUtil),
-                                () -> adp.candidateCount, () -> adp.patternCount,
-                                () -> adp.lutDynValue, () -> adp.cubValue, () -> adp.cubTriggeredRescan,
-                                null, () -> adp.prunedValueBound,
-                            () -> adp.prelargeCount, () -> adp.uutValue, () -> adp.sftValue, adp::cancel);
-                        attachAdaptive(m, adp);
-                        col.log(m);
+                        try {
+                            PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp = new PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo(
+                                    ds.defaultSu, DEFAULT_KAPPA, DEFAULT_DELTA0, slRatio,
+                                    PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.AblationMode.FULL,
+                                    ENABLE_PATTERN_EXPORT);
+                            announce(tag, ds.name, "SC4", 0);
+                            ExperimentMetrics m = measure(tag, ds.name, 0, "SC4",
+                                    () -> adp.runInitialMining(full, totalUtil),
+                                    () -> adp.candidateCount, () -> adp.patternCount,
+                                    () -> adp.lutDynValue, () -> adp.cubValue, () -> adp.cubTriggeredRescan,
+                                    null, () -> adp.prunedValueBound,
+                                () -> adp.prelargeCount, () -> adp.uutValue, () -> adp.sftValue, adp::cancel);
+                            attachAdaptive(m, adp);
+                            col.log(m);
+                        } catch (OutOfMemoryError outside) {
+                            forceFullGC();
+                            col.log(outOfHeapMetric(tag, ds.name, 0, "SC4"));
+                        }
                         forceFullGC();
                     }
                   }
@@ -2122,6 +2139,18 @@ public class AutomatedExperimentRunner {
     }
 
     /** Builds a "SKIPPED" row for an operation skipped because its algorithm is poisoned (an earlier call failed). */
+    /** A level that ran out of heap outside the measured call: recorded as out of memory. */
+    private static ExperimentMetrics outOfHeapMetric(String algo, String dataset, int iter, String opType) {
+        ExperimentMetrics m = new ExperimentMetrics();
+        m.runId = algo + "_" + dataset + "_" + opType + "_" + iter;
+        m.algorithm = algo;
+        m.dataset = dataset;
+        m.iteration = iter;
+        m.runtimeMs = -1;
+        m.opType = opType + "_OOM";
+        return m;
+    }
+
     private static ExperimentMetrics skippedMetric(String algo, String dataset, int iter, String opType) {
         ExperimentMetrics m = new ExperimentMetrics();
         m.runId = algo + "_" + dataset + "_" + opType + "_" + iter;

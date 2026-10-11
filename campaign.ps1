@@ -359,6 +359,10 @@ while ($true) {
          -ArgumentList (@("-Xmx${HeapGb}g",'-Xss64m','-cp','build',
              "-Ddataset.only=$d", "-Dalgo.only=$a", '-Drepeats=1',
              "-Dresults.dir=$dir/") + $memArgs + @('AutomatedExperimentRunner', $Scenario))
+    # Windows PowerShell reports ExitCode as empty for a process started this way unless its
+    # handle is read before the process ends; without this line rc= was empty for every arm,
+    # so an arm whose JVM died could not be told from one that finished.
+    $null = $p.Handle
     $capped = $false
     if (-not $p.WaitForExit($CapSeconds * 1000)) { $capped = $true; $p.Kill(); $p.WaitForExit() }
     $secs = [int]((Get-Date) - $start).TotalSeconds
