@@ -1,0 +1,15 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC1]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=2 | seed.index=0
+
+--- [SC1] Static baseline on D_init ---
+>> RUNNING Adaptive-Full/TAFENG/SC1_su=0.002812#0  (heap free=628MB / total=864MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC1_su=0.002812#0] OK t=356ms cand=2874 pat=10 heapDelta=247MB
+>> RUNNING Adaptive-Full/TAFENG/SC1_su=0.003557#0  (heap free=617MB / total=864MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC1_su=0.003557#0] OK t=191ms cand=2123 pat=6 heapDelta=183MB
+>> RUNNING Adaptive-Full/TAFENG/SC1_su=0.004499#0  (heap free=618MB / total=864MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC1_su=0.004499#0] OK t=213ms cand=1602 pat=5 heapDelta=220MB
+>> RUNNING Adaptive-Full/TAFENG/SC1_su=0.005691#0  (heap free=619MB / total=864MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC1_su=0.005691#0] OK t=140ms cand=1153 pat=3 heapDelta=165MB
+=== ALL SCENARIOS DONE (14.7s) ===
