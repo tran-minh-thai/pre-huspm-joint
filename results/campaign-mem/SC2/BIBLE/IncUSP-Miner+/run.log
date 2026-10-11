@@ -1,0 +1,211 @@
+### LIVE HEAP: forced collection, interval >= 20 ms | arm = IncUSP-Miner+
+### runtime_ms is written as -3 (perturbed by forced GC); the wall time is in wall_ms_perturbed. NOT a performance figure.
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC2]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC2] Incremental sequence (100 batches, EVEN; D_init per Yan et al. Table 16) ---
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INIT#0  (heap free=641MB / total=864MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INIT#0] OK t=5768ms cand=7037385 pat=192 heapDelta=1171MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#1  (heap free=1591MB / total=2688MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#1] OK t=930ms cand=604872 pat=190 heapDelta=549MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#2  (heap free=3600MB / total=4704MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#2] OK t=796ms cand=483738 pat=190 heapDelta=501MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#3  (heap free=3595MB / total=4704MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#3] OK t=472ms cand=329743 pat=189 heapDelta=1152MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#4  (heap free=3591MB / total=4704MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#4] OK t=507ms cand=396614 pat=188 heapDelta=1248MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#5  (heap free=3493MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#5] OK t=658ms cand=416896 pat=186 heapDelta=148MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#6  (heap free=3489MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#6] OK t=446ms cand=327311 pat=183 heapDelta=1104MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#7  (heap free=3485MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#7] OK t=764ms cand=516644 pat=182 heapDelta=312MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#8  (heap free=3483MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#8] OK t=511ms cand=409318 pat=181 heapDelta=1328MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#9  (heap free=3478MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#9] OK t=461ms cand=300604 pat=180 heapDelta=1152MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#10  (heap free=3476MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#10] OK t=780ms cand=528930 pat=180 heapDelta=403MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#11  (heap free=3475MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#11] OK t=729ms cand=526887 pat=177 heapDelta=152MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#12  (heap free=3472MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#12] OK t=1082ms cand=1105378 pat=180 heapDelta=1366MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#13  (heap free=3460MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#13] OK t=989ms cand=929792 pat=181 heapDelta=1060MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#14  (heap free=3451MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#14] OK t=1116ms cand=1133106 pat=184 heapDelta=1442MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#15  (heap free=3439MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#15] OK t=1921ms cand=2276340 pat=191 heapDelta=1571MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#16  (heap free=3403MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#16] OK t=1694ms cand=1880921 pat=195 heapDelta=765MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#17  (heap free=3373MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#17] OK t=1235ms cand=1296858 pat=195 heapDelta=1578MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#18  (heap free=3358MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#18] OK t=551ms cand=376577 pat=195 heapDelta=1376MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#19  (heap free=3354MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#19] OK t=1137ms cand=1064370 pat=196 heapDelta=1249MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#20  (heap free=3344MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#20] OK t=494ms cand=285138 pat=195 heapDelta=1136MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#21  (heap free=3341MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#21] OK t=948ms cand=696895 pat=196 heapDelta=657MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#22  (heap free=3334MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#22] OK t=990ms cand=785414 pat=196 heapDelta=728MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#23  (heap free=3325MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#23] OK t=1189ms cand=1123733 pat=197 heapDelta=1364MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#24  (heap free=3315MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#24] OK t=1073ms cand=959176 pat=194 heapDelta=941MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#25  (heap free=3305MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#25] OK t=600ms cand=388184 pat=193 heapDelta=1488MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#26  (heap free=3302MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#26] OK t=1148ms cand=967813 pat=192 heapDelta=1214MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#27  (heap free=3293MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#27] OK t=1304ms cand=1193455 pat=193 heapDelta=1552MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#28  (heap free=3278MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#28] OK t=1146ms cand=941071 pat=192 heapDelta=986MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#29  (heap free=3268MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#29] OK t=1109ms cand=788345 pat=191 heapDelta=987MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#30  (heap free=3260MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#30] OK t=1311ms cand=1139597 pat=196 heapDelta=1525MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#31  (heap free=3245MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#31] OK t=979ms cand=690993 pat=196 heapDelta=616MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#32  (heap free=3238MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#32] OK t=1253ms cand=1077542 pat=196 heapDelta=1358MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#33  (heap free=3227MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#33] OK t=1181ms cand=967583 pat=197 heapDelta=1061MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#34  (heap free=3217MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#34] OK t=711ms cand=500315 pat=197 heapDelta=1744MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#35  (heap free=3213MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#35] OK t=423ms cand=191487 pat=192 heapDelta=880MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#36  (heap free=3211MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#36] OK t=509ms cand=275565 pat=192 heapDelta=1120MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#37  (heap free=3209MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#37] OK t=947ms cand=564950 pat=190 heapDelta=167MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#38  (heap free=3202MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#38] OK t=1089ms cand=757383 pat=191 heapDelta=670MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#39  (heap free=3194MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#39] OK t=670ms cand=450114 pat=190 heapDelta=1616MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#40  (heap free=3188MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#40] OK t=551ms cand=303970 pat=191 heapDelta=1248MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#41  (heap free=3184MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#41] OK t=1492ms cand=1467128 pat=190 heapDelta=1957MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#42  (heap free=3173MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#42] OK t=1170ms cand=877966 pat=190 heapDelta=944MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#43  (heap free=3165MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#43] OK t=1131ms cand=798748 pat=191 heapDelta=698MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#44  (heap free=3154MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#44] OK t=687ms cand=443074 pat=190 heapDelta=1664MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#45  (heap free=3152MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#45] OK t=551ms cand=260882 pat=188 heapDelta=1232MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#46  (heap free=3149MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#46] OK t=550ms cand=273963 pat=187 heapDelta=1232MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#47  (heap free=3146MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#47] OK t=613ms cand=320687 pat=186 heapDelta=1408MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#48  (heap free=3143MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#48] OK t=553ms cand=255724 pat=183 heapDelta=1248MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#49  (heap free=3140MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#49] OK t=726ms cand=492391 pat=182 heapDelta=1744MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#50  (heap free=3135MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#50] OK t=650ms cand=355718 pat=181 heapDelta=1536MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#51  (heap free=3131MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#51] OK t=668ms cand=388962 pat=177 heapDelta=1584MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#52  (heap free=3127MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#52] OK t=652ms cand=348097 pat=176 heapDelta=1520MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#53  (heap free=3123MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#53] OK t=706ms cand=401475 pat=175 heapDelta=1664MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#54  (heap free=3119MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#54] OK t=606ms cand=308969 pat=175 heapDelta=1392MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#55  (heap free=3117MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#55] OK t=644ms cand=340542 pat=170 heapDelta=1488MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#56  (heap free=3114MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#56] OK t=665ms cand=387107 pat=169 heapDelta=1568MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#57  (heap free=3110MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#57] OK t=1061ms cand=636589 pat=169 heapDelta=182MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#58  (heap free=3102MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#58] OK t=631ms cand=377116 pat=167 heapDelta=1488MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#59  (heap free=3099MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#59] OK t=592ms cand=297342 pat=164 heapDelta=1344MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#60  (heap free=3095MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#60] OK t=574ms cand=278667 pat=164 heapDelta=1296MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#61  (heap free=3092MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#61] OK t=631ms cand=342609 pat=163 heapDelta=1456MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#62  (heap free=3089MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#62] OK t=524ms cand=231166 pat=162 heapDelta=1136MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#63  (heap free=3086MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#63] OK t=691ms cand=432904 pat=160 heapDelta=1632MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#64  (heap free=3082MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#64] OK t=602ms cand=295380 pat=157 heapDelta=1376MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#65  (heap free=3080MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#65] OK t=589ms cand=281642 pat=157 heapDelta=1344MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#66  (heap free=3079MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#66] OK t=479ms cand=201195 pat=154 heapDelta=1024MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#67  (heap free=3077MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#67] OK t=412ms cand=129761 pat=151 heapDelta=816MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#68  (heap free=3077MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#68] OK t=407ms cand=148129 pat=150 heapDelta=816MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#69  (heap free=3075MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#69] OK t=449ms cand=173774 pat=150 heapDelta=928MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#70  (heap free=3073MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#70] OK t=437ms cand=153839 pat=150 heapDelta=880MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#71  (heap free=3072MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#71] OK t=560ms cand=231166 pat=150 heapDelta=1216MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#72  (heap free=3069MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#72] OK t=1029ms cand=572146 pat=148 heapDelta=187MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#73  (heap free=3063MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#73] OK t=715ms cand=419066 pat=149 heapDelta=1680MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#74  (heap free=3057MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#74] OK t=675ms cand=350849 pat=147 heapDelta=1568MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#75  (heap free=3053MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#75] OK t=731ms cand=434892 pat=146 heapDelta=1744MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#76  (heap free=3048MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#76] OK t=728ms cand=400033 pat=145 heapDelta=1744MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#77  (heap free=3044MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#77] OK t=659ms cand=345875 pat=144 heapDelta=1536MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#78  (heap free=3040MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#78] OK t=704ms cand=385968 pat=142 heapDelta=1648MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#79  (heap free=3036MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#79] OK t=746ms cand=485825 pat=142 heapDelta=1776MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#80  (heap free=3031MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#80] OK t=499ms cand=232958 pat=140 heapDelta=1024MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#81  (heap free=3028MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#81] OK t=476ms cand=179372 pat=140 heapDelta=976MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#82  (heap free=3029MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#82] OK t=674ms cand=379996 pat=140 heapDelta=1520MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#83  (heap free=3024MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#83] OK t=460ms cand=179809 pat=139 heapDelta=912MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#84  (heap free=3022MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#84] OK t=527ms cand=220642 pat=135 heapDelta=1088MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#85  (heap free=3020MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#85] OK t=563ms cand=257815 pat=134 heapDelta=1232MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#86  (heap free=3017MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#86] OK t=622ms cand=343903 pat=133 heapDelta=1376MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#87  (heap free=3012MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#87] OK t=587ms cand=272638 pat=133 heapDelta=1280MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#88  (heap free=3009MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#88] OK t=823ms cand=533742 pat=133 heapDelta=1984MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#89  (heap free=3004MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#89] OK t=807ms cand=521093 pat=132 heapDelta=1920MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#90  (heap free=2997MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#90] OK t=689ms cand=344536 pat=131 heapDelta=1600MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#91  (heap free=2992MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#91] OK t=668ms cand=391435 pat=129 heapDelta=1536MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#92  (heap free=2988MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#92] OK t=794ms cand=503490 pat=128 heapDelta=1888MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#93  (heap free=2983MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#93] OK t=1135ms cand=633571 pat=128 heapDelta=279MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#94  (heap free=2977MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#94] OK t=609ms cand=344312 pat=127 heapDelta=1344MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#95  (heap free=2975MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#95] OK t=698ms cand=383168 pat=127 heapDelta=1568MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#96  (heap free=2970MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#96] OK t=616ms cand=348212 pat=127 heapDelta=1344MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#97  (heap free=2965MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#97] OK t=814ms cand=450174 pat=127 heapDelta=1904MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#98  (heap free=2961MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#98] OK t=1240ms cand=708177 pat=127 heapDelta=546MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#99  (heap free=2952MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#99] OK t=1265ms cand=709486 pat=128 heapDelta=707MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC2_INC#100  (heap free=2942MB / total=4608MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC2_INC#100] OK t=1218ms cand=654516 pat=129 heapDelta=535MB
+=== ALL SCENARIOS DONE (186.4s) ===
