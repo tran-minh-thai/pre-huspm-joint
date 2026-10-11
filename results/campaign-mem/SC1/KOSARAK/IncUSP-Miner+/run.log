@@ -1,0 +1,17 @@
+### LIVE HEAP: forced collection, interval >= 20 ms | arm = IncUSP-Miner+
+### runtime_ms is written as -3 (perturbed by forced GC); the wall time is in wall_ms_perturbed. NOT a performance figure.
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC1]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC1] Static baseline on D_init ---
+>> RUNNING IncUSP-Miner+/KOSARAK/SC1_su=0.022228#0  (heap free=2982MB / total=5376MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC1_su=0.022228#0] OK t=15340ms cand=26252433 pat=11 heapDelta=2110MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC1_su=0.025#0  (heap free=5918MB / total=8320MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC1_su=0.025#0] OK t=10095ms cand=16201634 pat=10 heapDelta=2113MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC1_su=0.028117#0  (heap free=5918MB / total=8320MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC1_su=0.028117#0] OK t=6920ms cand=9713530 pat=7 heapDelta=3558MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC1_su=0.031623#0  (heap free=5918MB / total=8320MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC1_su=0.031623#0] OK t=5222ms cand=5960953 pat=5 heapDelta=1490MB
+=== ALL SCENARIOS DONE (61.6s) ===
