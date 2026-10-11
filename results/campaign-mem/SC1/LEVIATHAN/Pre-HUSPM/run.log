@@ -1,0 +1,17 @@
+### LIVE HEAP: forced collection, interval >= 20 ms | arm = Pre-HUSPM
+### runtime_ms is written as -3 (perturbed by forced GC); the wall time is in wall_ms_perturbed. NOT a performance figure.
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC1]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC1] Static baseline on D_init ---
+>> RUNNING Pre-HUSPM/LEVIATHAN/SC1_su=0.014644#0  (heap free=166MB / total=224MB / max=49152MB)
+[Pre-HUSPM/LEVIATHAN/SC1_su=0.014644#0] OK t=1250ms cand=4637647 pat=136 heapDelta=149MB
+>> RUNNING Pre-HUSPM/LEVIATHAN/SC1_su=0.01553#0  (heap free=165MB / total=224MB / max=49152MB)
+[Pre-HUSPM/LEVIATHAN/SC1_su=0.01553#0] OK t=1115ms cand=3991582 pat=107 heapDelta=56MB
+>> RUNNING Pre-HUSPM/LEVIATHAN/SC1_su=0.01647#0  (heap free=165MB / total=224MB / max=49152MB)
+[Pre-HUSPM/LEVIATHAN/SC1_su=0.01647#0] OK t=946ms cand=3413308 pat=89 heapDelta=207MB
+>> RUNNING Pre-HUSPM/LEVIATHAN/SC1_su=0.017987#0  (heap free=166MB / total=224MB / max=49152MB)
+[Pre-HUSPM/LEVIATHAN/SC1_su=0.017987#0] OK t=798ms cand=2664461 pat=63 heapDelta=116MB
+=== ALL SCENARIOS DONE (13.9s) ===
