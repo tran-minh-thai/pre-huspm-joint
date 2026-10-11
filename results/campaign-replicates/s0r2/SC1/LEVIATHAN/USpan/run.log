@@ -1,0 +1,15 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC1]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=2 | seed.index=0
+
+--- [SC1] Static baseline on D_init ---
+>> RUNNING USpan/LEVIATHAN/SC1_su=0.014644#0  (heap free=845MB / total=1024MB / max=49152MB)
+[USpan/LEVIATHAN/SC1_su=0.014644#0] OK t=5957ms cand=12490468 pat=136 heapDelta=333MB
+>> RUNNING USpan/LEVIATHAN/SC1_su=0.01553#0  (heap free=167MB / total=224MB / max=49152MB)
+[USpan/LEVIATHAN/SC1_su=0.01553#0] OK t=5293ms cand=11318030 pat=107 heapDelta=324MB
+>> RUNNING USpan/LEVIATHAN/SC1_su=0.01647#0  (heap free=168MB / total=224MB / max=49152MB)
+[USpan/LEVIATHAN/SC1_su=0.01647#0] OK t=4824ms cand=10255896 pat=89 heapDelta=332MB
+>> RUNNING USpan/LEVIATHAN/SC1_su=0.017987#0  (heap free=168MB / total=224MB / max=49152MB)
+[USpan/LEVIATHAN/SC1_su=0.017987#0] OK t=4247ms cand=8881889 pat=63 heapDelta=331MB
+=== ALL SCENARIOS DONE (29.7s) ===
