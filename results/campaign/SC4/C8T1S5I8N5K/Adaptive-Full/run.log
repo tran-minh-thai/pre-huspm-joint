@@ -1,0 +1,15 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC4]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC4] Pre-large threshold (Sl) sensitivity: Pre-HUSPM vs Adaptive ---
+>> RUNNING Adaptive[sl=0.9]/C8T1S5I8N5K/SC4#0  (heap free=813MB / total=1024MB / max=49152MB)
+[Adaptive[sl=0.9]/C8T1S5I8N5K/SC4#0] OK t=635ms cand=24353 pat=3438 heapDelta=156MB
+>> RUNNING Adaptive[sl=0.7]/C8T1S5I8N5K/SC4#0  (heap free=308MB / total=448MB / max=49152MB)
+[Adaptive[sl=0.7]/C8T1S5I8N5K/SC4#0] OK t=977ms cand=79733 pat=3438 heapDelta=160MB
+>> RUNNING Adaptive[sl=0.5]/C8T1S5I8N5K/SC4#0  (heap free=304MB / total=448MB / max=49152MB)
+[Adaptive[sl=0.5]/C8T1S5I8N5K/SC4#0] OK t=46765ms cand=52190568 pat=3438 heapDelta=9252MB
+>> RUNNING Adaptive[sl=0.3]/C8T1S5I8N5K/SC4#0  (heap free=4860MB / total=11328MB / max=49152MB)
+[Adaptive[sl=0.3]/C8T1S5I8N5K/SC4#0] FAILED after 391455ms (OOM)
+=== ALL SCENARIOS DONE (444.9s) ===
