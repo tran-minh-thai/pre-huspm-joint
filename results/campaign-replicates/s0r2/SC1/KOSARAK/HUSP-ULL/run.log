@@ -1,0 +1,15 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC1]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=2 | seed.index=0
+
+--- [SC1] Static baseline on D_init ---
+>> RUNNING HUSP-ULL/KOSARAK/SC1_su=0.022228#0  (heap free=3158MB / total=5536MB / max=49152MB)
+[HUSP-ULL/KOSARAK/SC1_su=0.022228#0] OK t=858ms cand=2154814 pat=11 heapDelta=688MB
+>> RUNNING HUSP-ULL/KOSARAK/SC1_su=0.025#0  (heap free=3157MB / total=5536MB / max=49152MB)
+[HUSP-ULL/KOSARAK/SC1_su=0.025#0] OK t=594ms cand=1833375 pat=10 heapDelta=576MB
+>> RUNNING HUSP-ULL/KOSARAK/SC1_su=0.028117#0  (heap free=3157MB / total=5536MB / max=49152MB)
+[HUSP-ULL/KOSARAK/SC1_su=0.028117#0] OK t=443ms cand=1530498 pat=7 heapDelta=496MB
+>> RUNNING HUSP-ULL/KOSARAK/SC1_su=0.031623#0  (heap free=3157MB / total=5536MB / max=49152MB)
+[HUSP-ULL/KOSARAK/SC1_su=0.031623#0] OK t=336ms cand=1293340 pat=5 heapDelta=432MB
+=== ALL SCENARIOS DONE (26.1s) ===
