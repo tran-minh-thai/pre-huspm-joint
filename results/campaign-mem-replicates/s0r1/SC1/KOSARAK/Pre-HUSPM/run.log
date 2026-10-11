@@ -1,0 +1,17 @@
+### LIVE HEAP: forced collection, interval >= 20 ms | arm = Pre-HUSPM
+### runtime_ms is written as -3 (perturbed by forced GC); the wall time is in wall_ms_perturbed. NOT a performance figure.
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC1]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=1 | seed.index=0
+
+--- [SC1] Static baseline on D_init ---
+>> RUNNING Pre-HUSPM/KOSARAK/SC1_su=0.022228#0  (heap free=2532MB / total=4928MB / max=49152MB)
+[Pre-HUSPM/KOSARAK/SC1_su=0.022228#0] OK t=1841ms cand=2354191 pat=11 heapDelta=452MB
+>> RUNNING Pre-HUSPM/KOSARAK/SC1_su=0.025#0  (heap free=2528MB / total=4928MB / max=49152MB)
+[Pre-HUSPM/KOSARAK/SC1_su=0.025#0] OK t=985ms cand=868475 pat=10 heapDelta=672MB
+>> RUNNING Pre-HUSPM/KOSARAK/SC1_su=0.028117#0  (heap free=2533MB / total=4928MB / max=49152MB)
+[Pre-HUSPM/KOSARAK/SC1_su=0.028117#0] OK t=760ms cand=433835 pat=7 heapDelta=576MB
+>> RUNNING Pre-HUSPM/KOSARAK/SC1_su=0.031623#0  (heap free=2533MB / total=4928MB / max=49152MB)
+[Pre-HUSPM/KOSARAK/SC1_su=0.031623#0] OK t=632ms cand=221700 pat=5 heapDelta=496MB
+=== ALL SCENARIOS DONE (30.2s) ===
