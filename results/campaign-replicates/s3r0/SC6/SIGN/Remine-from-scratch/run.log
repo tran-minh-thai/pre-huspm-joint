@@ -1,0 +1,50 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC6]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=3
+
+--- [SC6] Mixed I/D/M, exactly 14:3:3 (Adaptive vs Remine-from-scratch) ---
+>> [SC6] SIGN seed=31415 opSize=5 plan=20 operations (14 insert, 3 delete, 3 modify)
+>> RUNNING Remine-from-scratch/SIGN/SC6_INIT#0  (heap free=1007MB / total=1024MB / max=49152MB)
+[Remine-from-scratch/SIGN/SC6_INIT#0] OK t=308ms cand=70528 pat=583 heapDelta=19MB
+>> RUNNING Remine-from-scratch/SIGN/SC6_INS#1  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-from-scratch/SIGN/SC6_INS#1] OK t=172ms cand=74614 pat=611 heapDelta=11MB
+>> RUNNING Remine-from-scratch/SIGN/SC6_INS#2  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-from-scratch/SIGN/SC6_INS#2] OK t=138ms cand=79907 pat=684 heapDelta=12MB
+>> RUNNING Remine-from-scratch/SIGN/SC6_INS#3  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-from-scratch/SIGN/SC6_INS#3] OK t=134ms cand=77786 pat=663 heapDelta=11MB
+>> RUNNING Remine-from-scratch/SIGN/SC6_MOD#4  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-from-scratch/SIGN/SC6_MOD#4] OK t=129ms cand=75260 pat=672 heapDelta=10MB
+>> RUNNING Remine-from-scratch/SIGN/SC6_MOD#5  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-from-scratch/SIGN/SC6_MOD#5] OK t=132ms cand=77598 pat=697 heapDelta=10MB
+>> RUNNING Remine-from-scratch/SIGN/SC6_INS#6  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-from-scratch/SIGN/SC6_INS#6] OK t=136ms cand=77862 pat=762 heapDelta=10MB
+>> RUNNING Remine-from-scratch/SIGN/SC6_INS#7  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-from-scratch/SIGN/SC6_INS#7] OK t=140ms cand=78560 pat=715 heapDelta=10MB
+>> RUNNING Remine-from-scratch/SIGN/SC6_INS#8  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-from-scratch/SIGN/SC6_INS#8] OK t=143ms cand=78112 pat=722 heapDelta=10MB
+>> RUNNING Remine-from-scratch/SIGN/SC6_INS#9  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-from-scratch/SIGN/SC6_INS#9] OK t=144ms cand=77234 pat=688 heapDelta=10MB
+>> RUNNING Remine-from-scratch/SIGN/SC6_INS#10  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-from-scratch/SIGN/SC6_INS#10] OK t=143ms cand=75550 pat=639 heapDelta=10MB
+>> RUNNING Remine-from-scratch/SIGN/SC6_INS#11  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-from-scratch/SIGN/SC6_INS#11] OK t=141ms cand=73404 pat=598 heapDelta=10MB
+>> RUNNING Remine-from-scratch/SIGN/SC6_DEL#12  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-from-scratch/SIGN/SC6_DEL#12] OK t=139ms cand=73485 pat=613 heapDelta=10MB
+>> RUNNING Remine-from-scratch/SIGN/SC6_DEL#13  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-from-scratch/SIGN/SC6_DEL#13] OK t=136ms cand=74037 pat=592 heapDelta=10MB
+>> RUNNING Remine-from-scratch/SIGN/SC6_DEL#14  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-from-scratch/SIGN/SC6_DEL#14] OK t=138ms cand=75595 pat=624 heapDelta=10MB
+>> RUNNING Remine-from-scratch/SIGN/SC6_MOD#15  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-from-scratch/SIGN/SC6_MOD#15] OK t=137ms cand=75621 pat=664 heapDelta=10MB
+>> RUNNING Remine-from-scratch/SIGN/SC6_INS#16  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-from-scratch/SIGN/SC6_INS#16] OK t=139ms cand=74859 pat=645 heapDelta=10MB
+>> RUNNING Remine-from-scratch/SIGN/SC6_INS#17  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-from-scratch/SIGN/SC6_INS#17] OK t=138ms cand=73393 pat=609 heapDelta=10MB
+>> RUNNING Remine-from-scratch/SIGN/SC6_INS#18  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-from-scratch/SIGN/SC6_INS#18] OK t=137ms cand=71426 pat=595 heapDelta=10MB
+>> RUNNING Remine-from-scratch/SIGN/SC6_INS#19  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-from-scratch/SIGN/SC6_INS#19] OK t=135ms cand=69816 pat=557 heapDelta=10MB
+>> RUNNING Remine-from-scratch/SIGN/SC6_INS#20  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-from-scratch/SIGN/SC6_INS#20] OK t=139ms cand=70741 pat=540 heapDelta=10MB
+=== ALL SCENARIOS DONE (10.0s) ===
