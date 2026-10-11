@@ -1,0 +1,17 @@
+### LIVE HEAP: forced collection, interval >= 20 ms | arm = HUSP-SP
+### runtime_ms is written as -3 (perturbed by forced GC); the wall time is in wall_ms_perturbed. NOT a performance figure.
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC1]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC1] Static baseline on D_init ---
+>> RUNNING HUSP-SP/TAFENG/SC1_su=0.002812#0  (heap free=627MB / total=864MB / max=49152MB)
+[HUSP-SP/TAFENG/SC1_su=0.002812#0] OK t=697ms cand=500729 pat=10 heapDelta=44MB
+>> RUNNING HUSP-SP/TAFENG/SC1_su=0.003557#0  (heap free=631MB / total=864MB / max=49152MB)
+[HUSP-SP/TAFENG/SC1_su=0.003557#0] OK t=361ms cand=272015 pat=6 heapDelta=107MB
+>> RUNNING HUSP-SP/TAFENG/SC1_su=0.004499#0  (heap free=631MB / total=864MB / max=49152MB)
+[HUSP-SP/TAFENG/SC1_su=0.004499#0] OK t=279ms cand=134438 pat=5 heapDelta=105MB
+>> RUNNING HUSP-SP/TAFENG/SC1_su=0.005691#0  (heap free=631MB / total=864MB / max=49152MB)
+[HUSP-SP/TAFENG/SC1_su=0.005691#0] OK t=213ms cand=62144 pat=3 heapDelta=81MB
+=== ALL SCENARIOS DONE (15.3s) ===
