@@ -1,0 +1,8 @@
+dataset,rule,increments,ratio_median,ratio_min,ratio_max,within_budget,rescans,alpha_median,alpha_min,alpha_max,uut,increments_alpha_le_uut,alpha_stream,joint_over_tsu,alpha_check,sl_min_eff_max,increments_tsu,rescans_tsu,increments_swumax,rescans_swumax,check
+BIBLE,joint,100,1.201,0.56,2.136,37,63,0.846,0.711,0.955,0.023,0,0.816,1.232,0 of 100 differ,0.8,100,77,100,63,ok
+C8T1S5I8N5K,joint,100,1.442,0.378,5.048,23,77,0.053,0.021,0.133,0.001,0,0.059,17.309,0 of 100 differ,0.8,100,100,100,80,ok
+FIFA,joint,100,0.762,0.18,1.513,73,27,0.623,0.539,0.728,0.06,0,0.621,1.674,0 of 100 differ,0.8,100,41,100,29,ok
+KOSARAK,joint,100,2.831,1.437,16.043,0,100,0.869,0.836,0.887,0.025,0,0.869,1.155,0 of 100 differ,0.8,100,100,100,100,ok
+LEVIATHAN,joint,100,2.077,0.942,4.036,2,98,0.902,0.727,1.0,0.016,0,0.886,1.131,0 of 100 differ,0.8,100,100,100,98,ok
+SIGN,joint,100,1.103,0.408,2.508,41,59,1.0,1.0,1.0,0.066,0,0.917,1.097,0 of 100 differ,0.8,100,59,100,59,ok
+TAFENG,joint,100,1.008,0.315,6.519,48,52,0.136,0.075,0.405,0.004,0,0.147,6.935,0 of 100 differ,0.8,100,100,100,56,ok

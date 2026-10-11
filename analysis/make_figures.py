@@ -1196,9 +1196,7 @@ def export_platform():
         os_name += f" {rec['os_display']}"
     if rec.get("os_build") not in (None, "unavailable"):
         os_name += f" (build {rec['os_build']})"
-    # The JDK is named by the environment lock, the one place it is pinned. The result trees
-    # hold arms from two builds of OpenJDK 25.0.4 (see results/jdk-comparison); the label
-    # covers both.
+    # The JDK is named by the environment lock, the one place it is pinned.
     lock_path = os.path.join(REPO_DIR, "environment.lock.json")
     if not os.path.exists(lock_path):
         print(f"[platform] not written: no {lock_path}")

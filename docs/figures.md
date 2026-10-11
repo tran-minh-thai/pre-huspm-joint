@@ -37,7 +37,7 @@ every sum.
 | `fig_C5_ablation.pdf` | SC7 | runtime summed over the 100 increments and number of rescans, adaptive rescan decision against a rescan at every increment, SIGN and C8T1S5I8N5K |
 | `fig_sl_sensitivity_prelarge_count.pdf` | SC4 | pre-large set size against `r_l`, Pre-HUSPM and the proposal, SIGN / LEVIATHAN / C8T1S5I8N5K |
 | `fig_batch_ratio.pdf` | SC5 | the proposal's runtime over remining's, summed over the increments, against K, one line per strategy; below one the proposal is faster |
-| `fig_memory_static.pdf` | memory SC1 | live set at each database's default threshold, six algorithms, eight databases |
+| `fig_memory_static.pdf` | memory SC1 | live set at each database's default threshold, six algorithms, eight databases; a live set read as 0 MB (below the column's 1 MB resolution) is drawn at 1 MB |
 | `fig_memory_incremental.pdf` | memory SC2 | state held after each increment (`mem_retained_mb`), five arms, seven databases |
 
 `main_all()` adds `fig_scalability_SC1_runtime_ms.pdf` and
