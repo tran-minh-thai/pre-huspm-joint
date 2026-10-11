@@ -1,0 +1,17 @@
+### LIVE HEAP: forced collection, interval >= 20 ms | arm = IncUSP-Miner+
+### runtime_ms is written as -3 (perturbed by forced GC); the wall time is in wall_ms_perturbed. NOT a performance figure.
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC1]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=1 | seed.index=0
+
+--- [SC1] Static baseline on D_init ---
+>> RUNNING IncUSP-Miner+/SIGN/SC1_su=0.049134#0  (heap free=114MB / total=128MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC1_su=0.049134#0] OK t=4127ms cand=11532321 pat=2814 heapDelta=655MB
+>> RUNNING IncUSP-Miner+/SIGN/SC1_su=0.065911#0  (heap free=114MB / total=128MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC1_su=0.065911#0] OK t=2071ms cand=4789442 pat=583 heapDelta=589MB
+>> RUNNING IncUSP-Miner+/SIGN/SC1_su=0.083371#0  (heap free=114MB / total=128MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC1_su=0.083371#0] OK t=1230ms cand=2308109 pat=140 heapDelta=362MB
+>> RUNNING IncUSP-Miner+/SIGN/SC1_su=0.091052#0  (heap free=114MB / total=128MB / max=49152MB)
+[IncUSP-Miner+/SIGN/SC1_su=0.091052#0] OK t=993ms cand=1730927 pat=79 heapDelta=597MB
+=== ALL SCENARIOS DONE (15.7s) ===
