@@ -1,0 +1,61 @@
+### LIVE HEAP: forced collection, interval >= 20 ms | arm = IncUSP-Miner+
+### runtime_ms is written as -3 (perturbed by forced GC); the wall time is in wall_ms_perturbed. NOT a performance figure.
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC2]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC2] Incremental sequence (100 batches, EVEN; D_init per Yan et al. Table 16) ---
+>> RUNNING IncUSP-Miner+/FIFA/SC2_INIT#0  (heap free=562MB / total=768MB / max=49152MB)
+[IncUSP-Miner+/FIFA/SC2_INIT#0] OK t=428146ms cand=172331644 pat=18 heapDelta=35520MB
+>> RUNNING IncUSP-Miner+/FIFA/SC2_INC#1  (heap free=14612MB / total=49152MB / max=49152MB)
+[IncUSP-Miner+/FIFA/SC2_INC#1] OK t=57071ms cand=54785171 pat=18 heapDelta=8039MB
+>> RUNNING IncUSP-Miner+/FIFA/SC2_INC#2  (heap free=13844MB / total=49152MB / max=49152MB)
+[IncUSP-Miner+/FIFA/SC2_INC#2] OK t=39102ms cand=33651662 pat=18 heapDelta=7164MB
+>> RUNNING IncUSP-Miner+/FIFA/SC2_INC#3  (heap free=13288MB / total=49152MB / max=49152MB)
+[IncUSP-Miner+/FIFA/SC2_INC#3] OK t=44949ms cand=40223313 pat=18 heapDelta=6400MB
+>> RUNNING IncUSP-Miner+/FIFA/SC2_INC#4  (heap free=12691MB / total=49152MB / max=49152MB)
+[IncUSP-Miner+/FIFA/SC2_INC#4] OK t=48167ms cand=41985706 pat=18 heapDelta=4955MB
+>> RUNNING IncUSP-Miner+/FIFA/SC2_INC#5  (heap free=12145MB / total=49152MB / max=49152MB)
+[IncUSP-Miner+/FIFA/SC2_INC#5] OK t=55968ms cand=51320370 pat=18 heapDelta=1687MB
+>> RUNNING IncUSP-Miner+/FIFA/SC2_INC#6  (heap free=11524MB / total=49152MB / max=49152MB)
+[IncUSP-Miner+/FIFA/SC2_INC#6] OK t=20403ms cand=25421807 pat=18 heapDelta=3913MB
+>> RUNNING IncUSP-Miner+/FIFA/SC2_INC#7  (heap free=11291MB / total=49152MB / max=49152MB)
+[IncUSP-Miner+/FIFA/SC2_INC#7] OK t=14158ms cand=22573158 pat=18 heapDelta=5549MB
+>> RUNNING IncUSP-Miner+/FIFA/SC2_INC#8  (heap free=11062MB / total=49152MB / max=49152MB)
+[IncUSP-Miner+/FIFA/SC2_INC#8] OK t=21280ms cand=25854565 pat=18 heapDelta=364MB
+>> RUNNING IncUSP-Miner+/FIFA/SC2_INC#9  (heap free=10775MB / total=49152MB / max=49152MB)
+[IncUSP-Miner+/FIFA/SC2_INC#9] OK t=18224ms cand=20924384 pat=18 heapDelta=2467MB
+>> RUNNING IncUSP-Miner+/FIFA/SC2_INC#10  (heap free=10491MB / total=49152MB / max=49152MB)
+[IncUSP-Miner+/FIFA/SC2_INC#10] OK t=34594ms cand=39368723 pat=18 heapDelta=3718MB
+>> RUNNING IncUSP-Miner+/FIFA/SC2_INC#11  (heap free=10093MB / total=49152MB / max=49152MB)
+[IncUSP-Miner+/FIFA/SC2_INC#11] OK t=25188ms cand=31035020 pat=17 heapDelta=2142MB
+>> RUNNING IncUSP-Miner+/FIFA/SC2_INC#12  (heap free=9817MB / total=49152MB / max=49152MB)
+[IncUSP-Miner+/FIFA/SC2_INC#12] OK t=38410ms cand=34019308 pat=18 heapDelta=1660MB
+>> RUNNING IncUSP-Miner+/FIFA/SC2_INC#13  (heap free=9299MB / total=49152MB / max=49152MB)
+[IncUSP-Miner+/FIFA/SC2_INC#13] OK t=38695ms cand=38981776 pat=18 heapDelta=4778MB
+>> RUNNING IncUSP-Miner+/FIFA/SC2_INC#14  (heap free=8794MB / total=49152MB / max=49152MB)
+[IncUSP-Miner+/FIFA/SC2_INC#14] OK t=23122ms cand=24866388 pat=18 heapDelta=3705MB
+>> RUNNING IncUSP-Miner+/FIFA/SC2_INC#15  (heap free=8491MB / total=49152MB / max=49152MB)
+[IncUSP-Miner+/FIFA/SC2_INC#15] OK t=13560ms cand=21692561 pat=19 heapDelta=3217MB
+>> RUNNING IncUSP-Miner+/FIFA/SC2_INC#16  (heap free=8316MB / total=49152MB / max=49152MB)
+[IncUSP-Miner+/FIFA/SC2_INC#16] OK t=55846ms cand=44739254 pat=19 heapDelta=2669MB
+>> RUNNING IncUSP-Miner+/FIFA/SC2_INC#17  (heap free=7832MB / total=49152MB / max=49152MB)
+[IncUSP-Miner+/FIFA/SC2_INC#17] OK t=34733ms cand=34668720 pat=18 heapDelta=1533MB
+>> RUNNING IncUSP-Miner+/FIFA/SC2_INC#18  (heap free=7531MB / total=49152MB / max=49152MB)
+[IncUSP-Miner+/FIFA/SC2_INC#18] OK t=37952ms cand=30767816 pat=17 heapDelta=3209MB
+>> RUNNING IncUSP-Miner+/FIFA/SC2_INC#19  (heap free=7156MB / total=49152MB / max=49152MB)
+[IncUSP-Miner+/FIFA/SC2_INC#19] OK t=37533ms cand=36136592 pat=17 heapDelta=3027MB
+>> RUNNING IncUSP-Miner+/FIFA/SC2_INC#20  (heap free=6815MB / total=49152MB / max=49152MB)
+[IncUSP-Miner+/FIFA/SC2_INC#20] OK t=24696ms cand=28527800 pat=17 heapDelta=1690MB
+>> RUNNING IncUSP-Miner+/FIFA/SC2_INC#21  (heap free=6519MB / total=49152MB / max=49152MB)
+[IncUSP-Miner+/FIFA/SC2_INC#21] OK t=43631ms cand=39367608 pat=17 heapDelta=1867MB
+>> RUNNING IncUSP-Miner+/FIFA/SC2_INC#22  (heap free=6124MB / total=49152MB / max=49152MB)
+[IncUSP-Miner+/FIFA/SC2_INC#22] OK t=40137ms cand=34117589 pat=17 heapDelta=1753MB
+>> RUNNING IncUSP-Miner+/FIFA/SC2_INC#23  (heap free=5703MB / total=49152MB / max=49152MB)
+[IncUSP-Miner+/FIFA/SC2_INC#23] OK t=15799ms cand=21925822 pat=17 heapDelta=736MB
+>> RUNNING IncUSP-Miner+/FIFA/SC2_INC#24  (heap free=5510MB / total=49152MB / max=49152MB)
+[IncUSP-Miner+/FIFA/SC2_INC#24] OK t=29545ms cand=31711743 pat=17 heapDelta=599MB
+>> RUNNING IncUSP-Miner+/FIFA/SC2_INC#25  (heap free=5216MB / total=49152MB / max=49152MB)
+[IncUSP-Miner+/FIFA/SC2_INC#25] OK t=22666ms cand=21640479 pat=17 heapDelta=921MB
+=== ALL SCENARIOS DONE (1661.0s) ===
