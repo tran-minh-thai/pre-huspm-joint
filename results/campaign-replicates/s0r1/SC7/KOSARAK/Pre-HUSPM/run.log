@@ -1,0 +1,9 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC7]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=1 | seed.index=0
+
+--- [SC7] Ablation: IUB pruning / block index / adaptive rescan ---
+>> RUNNING Pre-HUSPM/KOSARAK/SC7_ref#0  (heap free=2455MB / total=4832MB / max=49152MB)
+[Pre-HUSPM/KOSARAK/SC7_ref#0] OK t=15823ms cand=939770 pat=9 heapDelta=10399MB
+=== ALL SCENARIOS DONE (21.6s) ===
