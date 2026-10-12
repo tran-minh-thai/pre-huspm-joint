@@ -56,24 +56,27 @@ TIMING_TREE = "campaign"
 MEMORY_TREE = "campaign-mem"
 
 # ---- Journal aesthetics -------------------------------------------------------
-# Black and white, no fills: series are told apart by line style and hollow marker,
-# bars by hatching. Times New Roman throughout, to match a Times text font (mathptmx),
-# with every font embedded as TrueType. Figures are drawn at the width they are printed
-# at, so a 9 pt font here is 9 pt on the page; the target \linewidth is 324.36 pt.
+# No fills: series are told apart by colour, line style and hollow marker, bars by hatching.
+# Lettering follows the artwork rules of Data Mining and Knowledge Discovery (Springer): Arial,
+# a sans-serif face, consistently sized within 8-12 pt at final size, fonts embedded, lines at
+# least 0.3 pt. The journal prints at 155 x 235 mm and sizes figures to 119 mm wide and at
+# most 195 mm high, so every figure is drawn at 119 mm and a 9 pt font here is 9 pt in print.
+# The manuscript includes them at its \linewidth, which only scales them up.
 from matplotlib import font_manager
 try:
-    font_manager.findfont("Times New Roman", fallback_to_default=False)
+    font_manager.findfont("Arial", fallback_to_default=False)
 except Exception:
-    sys.exit("Times New Roman is not installed; refusing to draw with a substitute font.")
+    sys.exit("Arial is not installed; refusing to draw with a substitute font.")
 
-LINEWIDTH_IN = 324.36 / 72.27          # target \linewidth, in inches
+LINEWIDTH_IN = 119 / 25.4              # final figure width of the journal, in inches
+MAX_HEIGHT_IN = 195 / 25.4             # final figure height limit of the journal
 FONT_PT = 9
 plt.rcParams.update({
-    "font.family":        "Times New Roman",
+    "font.family":        "Arial",
     "mathtext.fontset":   "custom",
-    "mathtext.rm":        "Times New Roman",
-    "mathtext.it":        "Times New Roman:italic",
-    "mathtext.bf":        "Times New Roman:bold",
+    "mathtext.rm":        "Arial",
+    "mathtext.it":        "Arial:italic",
+    "mathtext.bf":        "Arial:bold",
     "font.size":          FONT_PT,
     "axes.titlesize":     FONT_PT,
     "axes.labelsize":     FONT_PT,
@@ -99,6 +102,14 @@ plt.rcParams.update({
     "pdf.fonttype":       42,
     "ps.fonttype":        42,
 })
+
+# Sub- and superscripts (10^3, D_init, B_sz, r_l, IncUSP-Miner^+) are drawn at 0.7 of the base
+# size by matplotlib, 6.3 pt here, below the journal's 8 pt. The factor is a module constant of
+# the pinned matplotlib (3.11.2); raise it so that they print at 8 pt.
+import matplotlib._mathtext as _mathtext
+if not hasattr(_mathtext, "SHRINK_FACTOR"):
+    sys.exit("matplotlib._mathtext.SHRINK_FACTOR is gone; sub- and superscripts would print below 8 pt.")
+_mathtext.SHRINK_FACTOR = 8 / FONT_PT
 
 # ---- Algorithms: order, labels, line styles, markers --------------------------
 STATIC_ORDER = ["USpan", "HUSP-ULL", "HUSP-SP", "IncUSP-Miner+", "Pre-HUSPM", "Adaptive-Full"]
@@ -344,10 +355,13 @@ def save(fig, name, full_width=False):
     above and below), for a figure whose panels are centred: cropping its side margins would
     make it narrower than the others, and it would be scaled up, text included, on the page."""
     path = os.path.join(OUT_DIR, name)
+    tb = fig.get_tightbbox(fig.canvas.get_renderer())
+    if tb.height > MAX_HEIGHT_IN or tb.width > LINEWIDTH_IN + 0.05:
+        raise ValueError(f"{name}: {tb.width * 25.4:.1f} x {tb.height * 25.4:.1f} mm exceeds the "
+                         f"journal's {LINEWIDTH_IN * 25.4:.0f} x {MAX_HEIGHT_IN * 25.4:.0f} mm")
     bbox = "tight"
     if full_width:
         from matplotlib.transforms import Bbox
-        tb = fig.get_tightbbox(fig.canvas.get_renderer())
         bbox = Bbox([[0, tb.y0 - 0.02], [fig.get_figwidth(), tb.y1 + 0.02]])
     fig.savefig(path, format="pdf", bbox_inches=bbox,
                 metadata={"Title": name, "Subject": f"pre-huspm-joint {SOURCE_COMMIT}",
@@ -980,7 +994,7 @@ def export_ablation_table():
     write_csv(pd.DataFrame(rows), os.path.join(OUT_DIR, "table_SC7_incremental.csv"))
 
     lines = ["\\begin{table}[!htbp]", "\\centering",
-             "\\caption{Ablation of the miner on the whole database.}",
+             "\\caption{Ablation of the miner on the whole database}",
              "\\label{tab:sc7_ablation}",
              "\\begin{tabular}{llrr}", "\\toprule",
              "Dataset & Variant & Runtime (s) & Explored \\\\", "\\midrule"]
@@ -1137,7 +1151,7 @@ def figset_memory_incremental(tag="fig_memory_incremental", datasets=None):
                         markerfacecolor="black", ms=5, linestyle="none")
         absent.append((i, ds, note_absent(sub, INC_ORDER, os.path.join(DATA_DIR, MEMORY_TREE, "SC2"), ds)))
         ax.set_xticks([0, 50, 100])
-        panel_xlabel(ax, i, ds, "Increment (0 = $D_{init}$)")
+        panel_xlabel(ax, i, ds, "Increment (0 = $D_{\\mathrm{init}}$)")
         safe_log(ax)
         if i % PANEL_COLS == 0:
             ax.set_ylabel("State held (MB)")
@@ -1319,7 +1333,7 @@ def export_replicate_tables():
         cols = [a for a in STATIC_ORDER if a in set(tab["algorithm"])]
         nmax = int(tab["n"].max()) if len(tab) else 0
         lines = ["\\begin{table}[!htbp]", "\\centering",
-                 "\\caption{Runtime (s) of SC1 at the default threshold.}",
+                 "\\caption{Runtime (s) of SC1 at the default threshold}",
                  "\\label{tab:sc1_runtime}",
                  "\\small\\setlength{\\tabcolsep}{4pt}",
                  "\\begin{tabular}{l" + "r" * len(cols) + "}", "\\toprule",

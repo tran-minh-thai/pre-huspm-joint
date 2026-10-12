@@ -29,7 +29,10 @@ every sum.
 
 ## Style
 
-Every figure is drawn at the printed width (324.36 pt), Times New Roman at 9 pt, fonts embedded.
+Every figure follows the artwork rules of Data Mining and Knowledge Discovery: drawn at the
+journal's figure width of 119 mm (the journal prints at 155 x 235 mm), at most 195 mm high,
+Arial at 9 pt (8 pt only where a legend would not fit otherwise), lines of at least 0.3 pt,
+fonts embedded. `save()` refuses a figure larger than 119 x 195 mm.
 Multi-panel figures use a grid of three equal columns, one legend placed where no data is drawn (in the empty grid cells when there are any, else inside a panel where a measured check finds no point, segment or bar under it, else above the panels), panel names
 under the axes as "(a) NAME", and the y label on the first column of each row; a two-panel figure
 is centred and keeps the full width. Each method has one line colour in every figure (Okabe-Ito):
