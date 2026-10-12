@@ -217,8 +217,8 @@ the seed in their own columns.
 
 | Scenario | Replicates | Spread reported for |
 |---|---|---|
-| SC1 | three repeats (`r0`, `r1`, `r2`), all algorithms, all eight databases | runtime at the default threshold |
-| SC2 | three repeats of the proposal and remining on SIGN, TAFENG, BIBLE and C8T1S5I8N5K; one run elsewhere | runtime summed over the increments |
+| SC1 | three repeats (`r0`, `r1`, `r2`), all algorithms, all eight databases, all four thresholds | runtime at the default threshold; every SC1 comparison (fastest counts, geometric means) uses the mean of the three |
+| SC2 | three repeats of the proposal and remining on SIGN, TAFENG, BIBLE and C8T1S5I8N5K, and of the proposal and the runner-up on LEVIATHAN and KOSARAK (remining) and BIBLE (IncUSP-Miner+); one run elsewhere | runtime summed over the increments; the SC2 table prints mean and deviation where three runs exist |
 | SC6 | five seeds (`s0` to `s4`: 42, 1337, 2024, 31415, 271828), both arms | the proposal-to-remining ratio, paired by seed |
 | memory | `s0r1`: SC1 on SIGN, TAFENG, C8T1S5I8N5K, BMS1 and KOSARAK, all six algorithms; SC2, all five arms, on SIGN and TAFENG | the live set between two runs |
 | others | one run | - |
@@ -229,6 +229,13 @@ in file order when one seed is active (with `-Dseeds` above 1 it shuffles the st
 seed); SC6 draws its operation order and the sequences it deletes and modifies from
 `Random(seed + name.hashCode())`. `analysis/make_figures.py` reports the sample standard
 deviation over the replicates that completed and counts those that did not.
+
+Generated tables set the lowest value of each row in bold (runtime, rescans; in the SC7
+ablation the lowest runtime and the fewest explored nodes of each database), comparing the
+values as printed, so two values that print alike are both bold; a run that did not finish
+takes no part. An SC2 arm that the runner's memory guard stopped (less than a tenth of the
+heap free after a full collection, before the next increment) is printed as "Stopped
+(done/100)"; its increments after the stop are recorded as `SKIPPED_POISONED`.
 
 ## 7. Measurement machine
 

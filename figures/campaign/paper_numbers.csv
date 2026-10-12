@@ -1,5 +1,5 @@
 key,value,source
-SC1_all_proposal_fastest,3/32,table_static_summary.csv
+SC1_all_proposal_fastest,1/32,table_static_summary.csv
 SC1_all_pairs_agree,32/32,table_static_summary.csv
 SC1_default_proposal_fastest,0/8,table_static_summary.csv
 SC1_default_pairs_agree,8/8,table_static_summary.csv
@@ -7,26 +7,56 @@ SC3_all_proposal_fastest,0/12,table_static_summary.csv
 SC3_all_pairs_agree,12/12,table_static_summary.csv
 SC3_default_proposal_fastest,0/3,table_static_summary.csv
 SC3_default_pairs_agree,3/3,table_static_summary.csv
-SC1_all_geomean_USpan,16.31,table_static_geomean.csv
-SC1_all_geomean_HUSP-ULL,0.84,table_static_geomean.csv
-SC1_all_geomean_HUSP-SP,0.93,table_static_geomean.csv
-SC1_all_geomean_IncUSP-Miner+,10.24,table_static_geomean.csv
-SC1_all_geomean_Pre-HUSPM,2.90,table_static_geomean.csv
-SC1_default_geomean_USpan,15.98,table_static_geomean.csv
-SC1_default_geomean_HUSP-ULL,0.79,table_static_geomean.csv
-SC1_default_geomean_HUSP-SP,0.85,table_static_geomean.csv
+SC1_all_geomean_USpan,16.32,table_static_geomean.csv
+SC1_all_baseline_faster_USpan,0/32,table_static_geomean.csv
+SC1_all_geomean_HUSP-ULL,0.82,table_static_geomean.csv
+SC1_all_baseline_faster_HUSP-ULL,26/32,table_static_geomean.csv
+SC1_all_baseline_faster_on_HUSP-ULL,BIBLE at 0.0181 0.66; BIBLE at 0.022895 0.79; BIBLE at 0.02896 0.78; BIBLE at 0.03257 0.78; BMS1 at 0.012821 0.73; BMS1 at 0.013597 0.54; BMS1 at 0.015293 0.98; BMS1 at 0.016218 0.75; C8T1S5I8N5K at 0.001099 0.77; C8T1S5I8N5K at 0.001132 0.55; C8T1S5I8N5K at 0.0012 0.71; C8T1S5I8N5K at 0.001236 0.71; FIFA at 0.056234 0.89; FIFA at 0.059637 0.93; FIFA at 0.067073 0.95; FIFA at 0.075436 0.97; LEVIATHAN at 0.014644 0.55; LEVIATHAN at 0.01553 0.86; SIGN at 0.049134 0.71; SIGN at 0.065911 0.79; SIGN at 0.083371 0.73; SIGN at 0.091052 0.89; TAFENG at 0.002812 0.78; TAFENG at 0.003557 0.68; TAFENG at 0.004499 0.71; TAFENG at 0.005691 0.84,table_static_geomean.csv
+SC1_all_geomean_HUSP-SP,0.91,table_static_geomean.csv
+SC1_all_baseline_faster_HUSP-SP,21/32,table_static_geomean.csv
+SC1_all_baseline_faster_on_HUSP-SP,BIBLE at 0.0181 0.69; BIBLE at 0.022895 0.80; BIBLE at 0.02896 0.76; BIBLE at 0.03257 0.77; C8T1S5I8N5K at 0.001099 0.87; C8T1S5I8N5K at 0.001132 0.62; C8T1S5I8N5K at 0.0012 0.96; FIFA at 0.056234 0.72; FIFA at 0.059637 0.72; FIFA at 0.067073 0.72; FIFA at 0.075436 0.73; KOSARAK at 0.022228 0.77; KOSARAK at 0.025 0.89; KOSARAK at 0.031623 0.85; LEVIATHAN at 0.014644 0.59; LEVIATHAN at 0.01553 0.93; LEVIATHAN at 0.017987 0.97; SIGN at 0.049134 0.79; SIGN at 0.065911 0.81; SIGN at 0.083371 0.77; SIGN at 0.091052 0.97,table_static_geomean.csv
+SC1_all_geomean_IncUSP-Miner+,10.15,table_static_geomean.csv
+SC1_all_baseline_faster_IncUSP-Miner+,0/32,table_static_geomean.csv
+SC1_all_geomean_Pre-HUSPM,2.88,table_static_geomean.csv
+SC1_all_baseline_faster_Pre-HUSPM,4/32,table_static_geomean.csv
+SC1_all_baseline_faster_on_Pre-HUSPM,TAFENG at 0.002812 0.61; TAFENG at 0.003557 0.54; TAFENG at 0.004499 0.48; TAFENG at 0.005691 0.45,table_static_geomean.csv
+SC1_default_geomean_USpan,16.32,table_static_geomean.csv
+SC1_default_baseline_faster_USpan,0/8,table_static_geomean.csv
+SC1_default_geomean_HUSP-ULL,0.78,table_static_geomean.csv
+SC1_default_baseline_faster_HUSP-ULL,7/8,table_static_geomean.csv
+SC1_default_baseline_faster_on_HUSP-ULL,BIBLE 0.79; BMS1 0.54; C8T1S5I8N5K 0.55; FIFA 0.93; LEVIATHAN 0.86; SIGN 0.79; TAFENG 0.68,table_static_geomean.csv
+SC1_default_geomean_HUSP-SP,0.87,table_static_geomean.csv
+SC1_default_baseline_faster_HUSP-SP,6/8,table_static_geomean.csv
+SC1_default_baseline_faster_on_HUSP-SP,BIBLE 0.80; C8T1S5I8N5K 0.62; FIFA 0.72; KOSARAK 0.89; LEVIATHAN 0.93; SIGN 0.81,table_static_geomean.csv
 SC1_default_geomean_IncUSP-Miner+,10.48,table_static_geomean.csv
+SC1_default_baseline_faster_IncUSP-Miner+,0/8,table_static_geomean.csv
 SC1_default_geomean_Pre-HUSPM,3.15,table_static_geomean.csv
+SC1_default_baseline_faster_Pre-HUSPM,1/8,table_static_geomean.csv
+SC1_default_baseline_faster_on_Pre-HUSPM,TAFENG 0.54,table_static_geomean.csv
 SC3_all_geomean_USpan,13.70,table_static_geomean.csv
+SC3_all_baseline_faster_USpan,0/12,table_static_geomean.csv
 SC3_all_geomean_HUSP-ULL,0.72,table_static_geomean.csv
+SC3_all_baseline_faster_HUSP-ULL,11/12,table_static_geomean.csv
+SC3_all_baseline_faster_on_HUSP-ULL,C8T1S5I8N5K at 0.001099 0.40; C8T1S5I8N5K at 0.001132 0.47; C8T1S5I8N5K at 0.0012 0.42; C8T1S5I8N5K at 0.001236 0.69; LEVIATHAN at 0.014644 0.61; LEVIATHAN at 0.01553 0.94; LEVIATHAN at 0.01647 0.94; LEVIATHAN at 0.017987 0.91; SIGN at 0.049134 0.78; SIGN at 0.083371 0.96; SIGN at 0.091052 0.98,table_static_geomean.csv
 SC3_all_geomean_HUSP-SP,0.74,table_static_geomean.csv
+SC3_all_baseline_faster_HUSP-SP,11/12,table_static_geomean.csv
+SC3_all_baseline_faster_on_HUSP-SP,C8T1S5I8N5K at 0.001099 0.43; C8T1S5I8N5K at 0.001132 0.54; C8T1S5I8N5K at 0.0012 0.45; C8T1S5I8N5K at 0.001236 0.65; LEVIATHAN at 0.014644 0.65; LEVIATHAN at 0.01553 0.89; LEVIATHAN at 0.01647 0.92; LEVIATHAN at 0.017987 0.90; SIGN at 0.049134 0.84; SIGN at 0.083371 0.96; SIGN at 0.091052 0.98,table_static_geomean.csv
 SC3_all_geomean_IncUSP-Miner+,10.98,table_static_geomean.csv
+SC3_all_baseline_faster_IncUSP-Miner+,0/12,table_static_geomean.csv
 SC3_all_geomean_Pre-HUSPM,2.83,table_static_geomean.csv
+SC3_all_baseline_faster_Pre-HUSPM,0/12,table_static_geomean.csv
 SC3_default_geomean_USpan,14.29,table_static_geomean.csv
+SC3_default_baseline_faster_USpan,0/3,table_static_geomean.csv
 SC3_default_geomean_HUSP-ULL,0.76,table_static_geomean.csv
+SC3_default_baseline_faster_HUSP-ULL,2/3,table_static_geomean.csv
+SC3_default_baseline_faster_on_HUSP-ULL,C8T1S5I8N5K 0.47; LEVIATHAN 0.94,table_static_geomean.csv
 SC3_default_geomean_HUSP-SP,0.79,table_static_geomean.csv
+SC3_default_baseline_faster_HUSP-SP,2/3,table_static_geomean.csv
+SC3_default_baseline_faster_on_HUSP-SP,C8T1S5I8N5K 0.54; LEVIATHAN 0.89,table_static_geomean.csv
 SC3_default_geomean_IncUSP-Miner+,12.18,table_static_geomean.csv
+SC3_default_baseline_faster_IncUSP-Miner+,0/3,table_static_geomean.csv
 SC3_default_geomean_Pre-HUSPM,3.28,table_static_geomean.csv
+SC3_default_baseline_faster_Pre-HUSPM,0/3,table_static_geomean.csv
 SC4_prelarge_ratio_min,3,table_SC4_cells.csv
 SC4_prelarge_ratio_max,49,table_SC4_cells.csv
 SC4_prelarge_ratio_cells,10,table_SC4_cells.csv
@@ -195,14 +225,31 @@ BMS1_whole_uut_3.000_patterns,1,thresholds/bms1-whole
 BMS1_whole_uut_2.500_patterns,2,thresholds/bms1-whole
 BMS1_whole_uut_2.000_status,abandoned:patternbudgetexceeded,thresholds/bms1-whole
 BMS1_whole_candidate_budget,"3,000,000,000",thresholds/bms1-whole
+SC2_FIFA_IncUSP-Miner+_guard_increments_done,25,campaign/SC2/FIFA/IncUSP-Miner+/run.err
+SC2_FIFA_IncUSP-Miner+_guard_free_mb,4855,campaign/SC2/FIFA/IncUSP-Miner+/run.err
+SC2_FIFA_IncUSP-Miner+_guard_free_pct,9.9,campaign/SC2/FIFA/IncUSP-Miner+/run.err
+SC2_FIFA_IncUSP-Miner+_guard_live_gb,43.3,campaign/SC2/FIFA/IncUSP-Miner+/run.err
+SC2_mem_FIFA_IncUSP-Miner+_guard_increments_done,25,campaign-mem/SC2/FIFA/IncUSP-Miner+/run.err
+SC2_mem_FIFA_IncUSP-Miner+_guard_free_mb,4864,campaign-mem/SC2/FIFA/IncUSP-Miner+/run.err
+SC2_mem_FIFA_IncUSP-Miner+_guard_free_pct,9.9,campaign-mem/SC2/FIFA/IncUSP-Miner+/run.err
+SC2_mem_FIFA_IncUSP-Miner+_guard_live_gb,43.2,campaign-mem/SC2/FIFA/IncUSP-Miner+/run.err
 noise_SC1_live_set_cells,106,table_noise.csv
-noise_SC1_live_set_median,0.000,table_noise.csv
-noise_SC1_live_set_max,1.429,table_noise.csv
+noise_SC1_live_set_median,0.0000,table_noise.csv
+noise_SC1_live_set_median_pct,0.0,table_noise.csv
+noise_SC1_live_set_max,1.4286,table_noise.csv
+noise_SC1_live_set_max_pct,142.9,table_noise.csv
 noise_SC1_runtime_cells,192,table_noise.csv
-noise_SC1_runtime_median,0.017,table_noise.csv
-noise_SC1_runtime_max,0.534,table_noise.csv
-noise_SC1_runtime_over_1s_median,0.011,table_noise.csv
-noise_SC1_runtime_over_1s_max,0.214,table_noise.csv
+noise_SC1_runtime_median,0.0174,table_noise.csv
+noise_SC1_runtime_median_pct,1.7,table_noise.csv
+noise_SC1_runtime_max,0.5341,table_noise.csv
+noise_SC1_runtime_max_pct,53.4,table_noise.csv
+noise_SC1_runtime_over_1s_cells,67,table_noise.csv
+noise_SC1_runtime_over_1s_median,0.0108,table_noise.csv
+noise_SC1_runtime_over_1s_median_pct,1.1,table_noise.csv
+noise_SC1_runtime_over_1s_max,0.2137,table_noise.csv
+noise_SC1_runtime_over_1s_max_pct,21.4,table_noise.csv
 noise_SC2_state_after_last_increment_cells,10,table_noise.csv
-noise_SC2_state_after_last_increment_median,0.007,table_noise.csv
-noise_SC2_state_after_last_increment_max,0.095,table_noise.csv
+noise_SC2_state_after_last_increment_median,0.0069,table_noise.csv
+noise_SC2_state_after_last_increment_median_pct,0.7,table_noise.csv
+noise_SC2_state_after_last_increment_max,0.0952,table_noise.csv
+noise_SC2_state_after_last_increment_max_pct,9.5,table_noise.csv

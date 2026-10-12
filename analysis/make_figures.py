@@ -998,12 +998,22 @@ def export_ablation_table():
              "\\label{tab:sc7_ablation}",
              "\\begin{tabular}{llrr}", "\\toprule",
              "Dataset & Variant & Runtime (s) & Explored \\\\", "\\midrule"]
+    # the lowest runtime and the fewest explored nodes of each database in bold, compared as
+    # printed; a variant that did not finish takes no part
+    bold = {}
+    for ds, g in tab.groupby("dataset", sort=False):
+        rt = [f"{v:.2f}" if pd.notna(v) else None for v in g["runtime_s"]]
+        ex = [f"{int(v)}" if pd.notna(v) else None for v in g["explored_bound"]]
+        for i, a, b in zip(g.index, lowest(rt), lowest(ex)):
+            bold[i] = (a, b)
     prev = None
-    for _, r in tab.iterrows():
+    for i, r in tab.iterrows():
         ds = r["dataset"] if r["dataset"] != prev else ""
         prev = r["dataset"]
         rt = f"{r['runtime_s']:.2f}" if pd.notna(r["runtime_s"]) else r["status"]
         ex = f"{int(r['explored_bound']):,}" if pd.notna(r["explored_bound"]) else r["status"]
+        rt = f"\\textbf{{{rt}}}" if bold[i][0] else rt
+        ex = f"\\textbf{{{ex}}}" if bold[i][1] else ex
         lines.append(f"{ds} & {r['variant']} & {rt} & {ex} \\\\")
     lines += ["\\bottomrule", "\\end{tabular}", "\\end{table}", ""]
     with open(os.path.join(OUT_DIR, "table_SC7_ablation.tex"), "w", encoding="utf-8") as fh:
@@ -1270,23 +1280,42 @@ def spread(values):
                 min=float(np.min(v)) if n else np.nan, max=float(np.max(v)) if n else np.nan)
 
 
-def pm(st, digits=None):
+def pm_digits(mean):
+    """Decimals for a mean: none from 100, one from 10, two below."""
+    return 0 if mean >= 100 else (1 if mean >= 10 else 2)
+
+
+def lowest(printed):
+    """Which of a row's printed values are its lowest, compared as printed: two values that
+    print alike are tied and both marked. None stands for a cell that takes no part (a run
+    that did not finish, a missing cell)."""
+    vals = [float(v.replace(",", "")) if v is not None else None for v in printed]
+    finite = [v for v in vals if v is not None]
+    best = min(finite) if finite else None
+    return [v is not None and v == best for v in vals]
+
+
+def pm(st, digits=None, bold=False):
     """'mean +- std' for LaTeX, or the mean alone when there is one replicate. Decimals
     follow the size of the mean - none from 100, one from 10, two below - so that a row
-    of six algorithms fits the column width."""
+    of six algorithms fits the column width. bold sets the mean in bold, for the lowest
+    value of a row."""
     if not np.isfinite(st["mean"]):
         return "--"
     if digits is None:
-        digits = 0 if st["mean"] >= 100 else (1 if st["mean"] >= 10 else 2)
+        digits = pm_digits(st["mean"])
     if st["n"] > 1 and np.isfinite(st["std"]):
         # a deviation below the printed resolution reads as no spread at all; say so
         dev = (f"{st['std']:.{digits}f}" if round(st["std"], digits) > 0 or st["std"] == 0
                else f"<{10 ** -digits:.{digits}f}")
         # mean above, the deviation below in a smaller size: one column holds the wider of
         # the two rather than both side by side, which is what lets six columns fit
-        return (f"\\begin{{tabular}}[t]{{@{{}}r@{{}}}}{st['mean']:.{digits}f}\\\\"
+        mean = f"{st['mean']:,.{digits}f}"
+        mean = f"\\textbf{{{mean}}}" if bold else mean
+        return (f"\\begin{{tabular}}[t]{{@{{}}r@{{}}}}{mean}\\\\"
                 f"{{\\scriptsize $\\pm${dev}}}\\end{{tabular}}")
-    return f"{st['mean']:.{digits}f}"
+    mean = f"{st['mean']:,.{digits}f}"
+    return f"\\textbf{{{mean}}}" if bold else mean
 
 
 def stacked_header(label):
@@ -1340,14 +1369,22 @@ def export_replicate_tables():
                  "Dataset & " + " & ".join(stacked_header(ALGO_LABEL[c]) for c in cols) + " \\\\",
                  "\\midrule"]
         for ds in [d for d in ALL_DATASETS if d in set(tab["dataset"])]:
+            stats = {}
+            for c in cols:
+                r = tab[(tab["dataset"] == ds) & (tab["algorithm"] == c)]
+                if not r.empty and r.iloc[0]["n"] > 0:
+                    r = r.iloc[0]
+                    stats[c] = dict(n=r["n"], mean=r["runtime_s_mean"], std=r["runtime_s_std"])
+            # the lowest mean of the row in bold, compared as printed; a run that did not
+            # finish takes no part
+            low = dict(zip(cols, lowest([f"{stats[c]['mean']:.{pm_digits(stats[c]['mean'])}f}"
+                                         if c in stats else None for c in cols])))
             cells = []
             for c in cols:
                 r = tab[(tab["dataset"] == ds) & (tab["algorithm"] == c)]
                 if r.empty:
                     cells.append("--"); continue
-                r = r.iloc[0]
-                cells.append(r["status"] if r["n"] == 0 else
-                             pm(dict(n=r["n"], mean=r["runtime_s_mean"], std=r["runtime_s_std"])))
+                cells.append(pm(stats[c], bold=low[c]) if c in stats else r.iloc[0]["status"])
             lines.append(f"{ds} & " + " & ".join(cells) + " \\\\")
         lines += ["\\bottomrule", "\\end{tabular}", "\\end{table}", ""]
         with open(os.path.join(OUT_DIR, "table_SC1_runtime.tex"), "w", encoding="utf-8") as fh:

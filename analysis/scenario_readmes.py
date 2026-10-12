@@ -24,7 +24,9 @@ REM = "Remine-from-scratch"
 INC = ["Pre-HUSPM-SWUmax", "Pre-HUSPM-TSU", REM, "IncUSP-Miner+"]
 LABEL = {P: "Pre-HUSPM-Joint", "Pre-HUSPM-SWUmax": "Pre-HUSPM-SWUmax", "Pre-HUSPM-TSU": "Pre-HUSPM-TSU",
          REM: "Remine", "IncUSP-Miner+": "IncUSP-Miner+"}
-STATUS = {"OOM": "out of memory", "Skip": "out of memory", "OT": "over the time limit",
+# "Skip" as the first failure of an arm is the runner's memory guard: after a full collection
+# less than a tenth of the heap was free, so the arm was stopped before its next increment.
+STATUS = {"OOM": "out of memory", "Skip": "stopped by the memory guard", "OT": "over the time limit",
           "Fail": "failed", "MemSkip": "refused by the memory guard"}
 HEAD = ("Measured on `PC-THAI` (see `results/machine/PC-THAI.json` and `environment.lock.json`), "
         "`-Xmx48g`, one JVM per arm. Written by `analysis/scenario_readmes.py` from the arms' "
@@ -497,14 +499,16 @@ def mem_sc2():
             if len(ok) and len(inc[inc["finished"]]) == len(inc):
                 hr.append(f"{last['mem_retained_mb']:,.0f}")
             elif len(ok):
-                hr.append(f"{last['mem_retained_mb']:,.0f} at {int(last['iteration'])}, then out of memory")
+                hr.append(f"{last['mem_retained_mb']:,.0f} at {int(last['iteration'])}, then "
+                          + STATUS.get(g.loc[~g["finished"], "status"].iloc[0], "failed"))
             else:
                 hr.append("out of memory on `D_init`")
             failed = (~g["finished"]).any()
+            why = STATUS.get(g.loc[~g["finished"], "status"].iloc[0], "failed") if failed else ""
             if not len(ok):
                 pr.append("out of memory on `D_init`")
             elif failed:
-                pr.append(f"{ok['mem_live_mb'].max():,.0f} before running out of memory")
+                pr.append(f"{ok['mem_live_mb'].max():,.0f}, then {why}")
             else:
                 pr.append(f"{ok['mem_live_mb'].max():,.0f}")
         held.append(hr)

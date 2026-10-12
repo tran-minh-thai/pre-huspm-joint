@@ -1,0 +1,10 @@
+dataset,profit_items,profit_min,profit_max,profit_le0,occurrences,quantity_min,quantity_max,quantity_le0,quantity_non_integer,occurrences_without_profit,items_without_profit,unparsable_tokens
+SIGN,267,1,132,0,37958,1,10,0,0,0,0,0
+LEVIATHAN,9025,1,540,0,197251,1,10,0,0,0,0,0
+FIFA,2990,1,429,0,741092,1,10,0,0,0,0,0
+BIBLE,13905,1,466,0,787066,1,10,0,0,0,0,0
+BMS1,497,1,189,0,149638,1,10,0,0,0,0,0
+KOSARAK,41270,1,485,0,8019015,1,10,0,0,0,0,0
+C8T1S5I8N5K,68240,1,725,0,887332,1,10,0,0,0,0,0
+TAFENG,23812,4,8990,0,812710,1,1200,0,0,0,0,0
+8 databases; breaking p(i) > 0, q > 0 or unparsable: none

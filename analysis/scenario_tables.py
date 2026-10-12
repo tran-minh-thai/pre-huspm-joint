@@ -45,9 +45,21 @@ def gmean(x):
 
 # ------------------------------------------------------------------------------ static
 def static_cells(df):
-    """(database, threshold, algorithm) -> the row of that run."""
+    """(database, threshold, algorithm) -> the row of that run. With several replicates per
+    cell (SC1) the row carries the mean runtime of the replicates that finished, and the cell
+    counts as finished when at least one did; the pattern count must agree over them."""
     df = mf.parse_su(df)
-    return {(r["dataset"], float(r["su"]), r["algorithm"]): r for _, r in df.iterrows()}
+    cells = {}
+    for key, g in df.groupby(["dataset", "su", "algorithm"]):
+        ok = g[g["finished"]]
+        r = (ok if len(ok) else g).iloc[0].copy()
+        if len(ok):
+            if ok["total_patterns_found"].nunique() != 1:
+                raise ValueError(f"{key}: the replicates disagree on the pattern count")
+            r["runtime_ms"] = float(ok["runtime_ms"].mean())
+        r["replicates"] = len(ok)
+        cells[(key[0], float(key[1]), key[2])] = r
+    return cells
 
 
 def static_summary(cells, default_only=False):
@@ -58,6 +70,7 @@ def static_summary(cells, default_only=False):
     agree = n_pairs = fastest = n_fast = 0
     disagree, vs_best, excluded = [], [], []
     per_base = {a: [] for a in mf.STATIC_ORDER if a != P}
+    faster_on = {a: [] for a in mf.STATIC_ORDER if a != P}   # cells where the baseline wins
     for d, su in pairs:
         fin = {a: cells[(d, su, a)] for a in mf.STATIC_ORDER
                if (d, su, a) in cells and bool(cells[(d, su, a)]["finished"])}
@@ -80,14 +93,18 @@ def static_summary(cells, default_only=False):
             vs_best.append(min(others.values()) / pm_)
         for a, v in others.items():
             per_base[a].append(v / pm_)
+            if v < pm_:
+                faster_on[a].append((d, su, v / pm_))
     return dict(pairs=n_pairs, agree=agree, disagree=disagree, fastest=fastest, n_fast=n_fast,
-                vs_best=vs_best, per_base=per_base, excluded=excluded)
+                vs_best=vs_best, per_base=per_base, faster_on=faster_on, excluded=excluded)
 
 
 def static_tables():
     summ_rows, geo_rows = [], []
     for sc in ("SC1", "SC3"):
-        df = mf.load_scenario(sc)
+        # SC1 was measured three times in fresh JVMs; its comparisons use the mean of the three,
+        # as its table does. SC3 has one run per cell.
+        df = mf.load_scenario(sc, replicates=(sc == "SC1"))
         if df is None:
             continue
         cells = static_cells(df)
@@ -101,8 +118,11 @@ def static_tables():
                                   best_over_proposal_max=float(vb.max()) if len(vb) else np.nan,
                                   excluded="; ".join(s["excluded"])))
             for a, v in s["per_base"].items():
+                won = s["faster_on"][a]
                 geo_rows.append(dict(scenario=sc, scope=scope, baseline=a, geomean_over_proposal=gmean(v),
-                                     cells=len(v), cells_baseline_faster=int(sum(x < 1 for x in v))))
+                                     cells=len(v), cells_baseline_faster=int(sum(x < 1 for x in v)),
+                                     baseline_faster_on="; ".join(
+                                         f"{d}{'' if default_only else f' at {su:g}'} {x:.2f}" for d, su, x in won)))
     return pd.DataFrame(summ_rows), pd.DataFrame(geo_rows)
 
 
@@ -509,32 +529,62 @@ def noise():
 
 
 # ------------------------------------------------------------------------------ paper
-def sc2_tex(totals, region):
+def sc2_tex(totals, region, reps=None):
+    """The SC2 runtime and rescan-rule tables. A cell measured three times (reps, from
+    table_SC2_replicates.csv) prints the mean and standard deviation of its runs; the
+    others print their one run. The lowest time of each row and the fewest rescans of the
+    three rules are set in bold; a run that did not finish takes no part."""
     T = {(r["dataset"], r["algorithm"]): r for _, r in totals.iterrows()}
+    R = {} if reps is None else {(r["dataset"], r["algorithm"]): r for _, r in reps.iterrows()
+                                 if int(r["n"]) >= 2 and int(r["n_failed"]) == 0}
     op = region.set_index("dataset")
     order = [d for d in ["SIGN", "TAFENG", "C8T1S5I8N5K", "BIBLE", "LEVIATHAN", "FIFA", "KOSARAK"] if d in op.index]
 
-    def cell(d, a):
+    def stat(d, a):
         r = T.get((d, a))
-        if r is None:
-            return "--"
-        if r["increments_done"] == r["increments"]:
-            return f"{float(r['runtime_s']):,.1f}"
-        return f"OOM ({int(r['increments_done'])}/{int(r['increments'])})"
+        if r is None or r["increments_done"] != r["increments"]:
+            return None
+        if (d, a) in R:
+            q = R[(d, a)]
+            return dict(n=int(q["n"]), mean=float(q["total_s_mean"]), std=float(q["total_s_std"]))
+        return dict(n=1, mean=float(r["runtime_s"]), std=np.nan)
+
+    def row(d):
+        st = {a: stat(d, a) for a in INC_ARMS}
+        low = dict(zip(INC_ARMS, mf.lowest([f"{st[a]['mean']:.{mf.pm_digits(st[a]['mean'])}f}"
+                                            if st[a] else None for a in INC_ARMS])))
+        cells = []
+        for a in INC_ARMS:
+            r = T.get((d, a))
+            if r is None:
+                cells.append("--")
+            elif st[a] is None:
+                # "Skip" with no failed row before it is the harness's memory guard: after a
+                # full collection less than a tenth of the heap was free, so the arm was
+                # stopped before the next increment rather than left to run out of memory
+                why = "Stopped" if r.get("first_failure") == "Skip" else str(r.get("first_failure"))
+                cells.append(f"{why} ({int(r['increments_done'])}/{int(r['increments'])})")
+            else:
+                cells.append(mf.pm(st[a], bold=low[a]))
+        return cells
 
     head = ("Database & \\begin{tabular}[b]{@{}r@{}}Pre-HUSPM-\\\\Joint\\end{tabular} & "
             "\\begin{tabular}[b]{@{}r@{}}Pre-HUSPM-\\\\SWUmax\\end{tabular} & "
             "\\begin{tabular}[b]{@{}r@{}}Pre-HUSPM-\\\\TSU\\end{tabular} & Remine & "
             "\\begin{tabular}[b]{@{}r@{}}IncUSP-\\\\Miner$^{+}$\\end{tabular} \\\\\\midrule")
-    rows = [f"{d} & " + " & ".join(cell(d, a) for a in INC_ARMS) + " \\\\" for d in order]
+    rows = [f"{d} & " + " & ".join(row(d)) + " \\\\" for d in order]
     time_tex = "\n".join(["\\begin{table}[!htbp]\\centering",
-                          "\\caption{Runtime (s) of SC2 over 100 increments}\\label{tab:sc2_time}",
+                          "\\caption{Runtime (s) of SC2 over 100 increments; mean and standard deviation where "
+                          "three runs were made}\\label{tab:sc2_time}",
                           "\\small\\setlength{\\tabcolsep}{3pt}",
                           "\\begin{tabular}{lrrrrr}\\toprule", head] + rows +
                          ["\\bottomrule\\end{tabular}", "\\end{table}", ""])
+    def rescans(d):
+        v = [str(int(op.loc[d, c])) for c in ("rescans", "rescans_swumax", "rescans_tsu")]
+        return " & ".join(f"\\textbf{{{x}}}" if b else x for x, b in zip(v, mf.lowest(v)))
     rows = [f"{d} & {100 * op.loc[d, 'alpha_stream']:.1f} & {op.loc[d, 'joint_over_tsu']:.2f} & "
-            f"{100 * op.loc[d, 'ratio_median']:.0f} & {int(op.loc[d, 'within_budget'])} & {int(op.loc[d, 'rescans'])} & "
-            f"{int(op.loc[d, 'rescans_swumax'])} & {int(op.loc[d, 'rescans_tsu'])} \\\\" for d in order]
+            f"{100 * op.loc[d, 'ratio_median']:.0f} & {int(op.loc[d, 'within_budget'])} & {rescans(d)} \\\\"
+            for d in order]
     rule_tex = "\n".join(["\\begin{table}[!htbp]\\centering",
                           "\\caption{Rescan rule in SC2}\\label{tab:sc2_rule}",
                           "\\small\\setlength{\\tabcolsep}{3pt}",
@@ -554,6 +604,33 @@ def pct4(value):
     exp = d.adjusted() - 3                       # keep four significant digits
     q = d.quantize(Decimal(1).scaleb(exp), rounding=ROUND_HALF_UP)
     return format(q, "f")
+
+
+def memory_guard_stops(put):
+    """SC2 arms stopped by the harness's memory guard (AutomatedExperimentRunner, MEM_SAFE_FRACTION):
+    the increment after which they stopped and the heap free at that point, read from the
+    warning the guard writes to run.err."""
+    for tree in (mf.TIMING_TREE, mf.MEMORY_TREE):
+        for err in sorted(glob.glob(os.path.join(mf.DATA_DIR, tree, "SC2", "*", "*", "run.err"))):
+            m = re.search(r"protect the main thread \[(.+?)/(.+?)/SC2_INC\] availableMB=(\d+)",
+                          open(err, encoding="utf-8", errors="replace").read())
+            if not m:
+                continue
+            algo, ds, free = m.group(1), m.group(2), int(m.group(3))
+            h = re.search(r"Heap max: (\d+) MB", open(os.path.join(os.path.dirname(err), "run.log"),
+                                                     encoding="utf-8", errors="replace").read())
+            if not h:
+                raise ValueError(f"no heap size in the run.log next to {err}")
+            heap_mb = int(h.group(1))
+            csv = glob.glob(os.path.join(os.path.dirname(err), "*.csv"))[0]
+            rows = pd.read_csv(csv)
+            done = int((rows["op_type"].astype(str) == "SC2_INC").sum())
+            src = os.path.relpath(err, mf.DATA_DIR).replace(os.sep, "/")
+            k = f"SC2_{'mem_' if tree == mf.MEMORY_TREE else ''}{ds}_{algo}_guard"
+            put(f"{k}_increments_done", done, src)
+            put(f"{k}_free_mb", free, src)
+            put(f"{k}_free_pct", f"{100 * free / heap_mb:.1f}", src)
+            put(f"{k}_live_gb", f"{(heap_mb - free) / 1024:.1f}", src)
 
 
 def bms1_whole(put):
@@ -595,6 +672,10 @@ def export_all(out_dir=None):
     for _, r in geo.iterrows():
         k = f"{r['scenario']}_{'all' if r['scope'].startswith('all') else 'default'}"
         put(f"{k}_geomean_{r['baseline']}", f"{r['geomean_over_proposal']:.2f}", "table_static_geomean.csv")
+        put(f"{k}_baseline_faster_{r['baseline']}", f"{r['cells_baseline_faster']}/{r['cells']}",
+            "table_static_geomean.csv")
+        if r["baseline_faster_on"]:
+            put(f"{k}_baseline_faster_on_{r['baseline']}", r["baseline_faster_on"], "table_static_geomean.csv")
 
     c4 = sc4_cells()
     mf.write_csv(c4, os.path.join(out, "table_SC4_cells.csv"))
@@ -724,7 +805,8 @@ def export_all(out_dir=None):
         totals = pd.read_csv(os.path.join(out, "table_SC2_totals.csv")) \
             if os.path.exists(os.path.join(out, "table_SC2_totals.csv")) else None
         if totals is not None and len(region):
-            time_tex, rule_tex = sc2_tex(totals, region)
+            rp = os.path.join(out, "table_SC2_replicates.csv")
+            time_tex, rule_tex = sc2_tex(totals, region, pd.read_csv(rp) if os.path.exists(rp) else None)
             open(os.path.join(out, "table_SC2_time.tex"), "w", encoding="utf-8").write(time_tex)
             open(os.path.join(out, "table_SC2_rule.tex"), "w", encoding="utf-8").write(rule_tex)
             h = mf.rescan_hypothesis(region)
@@ -746,18 +828,23 @@ def export_all(out_dir=None):
     open(os.path.join(out, "table_thresholds.tex"), "w", encoding="utf-8").write("\n".join(lines))
 
     bms1_whole(put)
+    memory_guard_stops(put)
 
     nz = noise()
     mf.write_csv(nz, os.path.join(out, "table_noise.csv"))
     for m, g in nz.groupby("measure"):
         key = m.replace(" ", "_")
         put(f"noise_{key}_cells", len(g), "table_noise.csv")
-        put(f"noise_{key}_median", f"{g['relative_spread'].median():.3f}", "table_noise.csv")
-        put(f"noise_{key}_max", f"{g['relative_spread'].max():.3f}", "table_noise.csv")
+        # as a ratio to four decimals and as a percentage to one, both from the unrounded spread
+        for stat, v in (("median", g["relative_spread"].median()), ("max", g["relative_spread"].max())):
+            put(f"noise_{key}_{stat}", f"{v:.4f}", "table_noise.csv")
+            put(f"noise_{key}_{stat}_pct", f"{100 * v:.1f}", "table_noise.csv")
         if m == "SC1 runtime":
             big = g[g["mean"] >= 1]
-            put("noise_SC1_runtime_over_1s_median", f"{big['relative_spread'].median():.3f}", "table_noise.csv")
-            put("noise_SC1_runtime_over_1s_max", f"{big['relative_spread'].max():.3f}", "table_noise.csv")
+            put("noise_SC1_runtime_over_1s_cells", len(big), "table_noise.csv")
+            for stat, v in (("median", big["relative_spread"].median()), ("max", big["relative_spread"].max())):
+                put(f"noise_SC1_runtime_over_1s_{stat}", f"{v:.4f}", "table_noise.csv")
+                put(f"noise_SC1_runtime_over_1s_{stat}_pct", f"{100 * v:.1f}", "table_noise.csv")
 
     mf.write_csv(pd.DataFrame(nums), os.path.join(out, "paper_numbers.csv"))
     print(f"[saved] scenario tables and paper_numbers.csv ({len(nums)} numbers) in {out}")
