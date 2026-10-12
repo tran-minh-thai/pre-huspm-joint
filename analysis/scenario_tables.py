@@ -20,6 +20,8 @@ make_figures.main() calls export_all(). Writes:
     paper_numbers.csv            every number the paper quotes, key -> value
     table_SC2_time.tex, table_SC2_rule.tex   the two SC2 tables of the paper
 """
+import glob
+import json
 import os
 import re
 import sys
@@ -287,6 +289,18 @@ def _console(name):
     return open(path, encoding="utf-8").read() if os.path.exists(path) else None
 
 
+def _status(name):
+    """From the run record that analysis/record_run.py writes when the command ends: 'missing'
+    with no output, 'not finished' while the record is absent, 'exit <n>' on a non-zero exit."""
+    meta = os.path.join(VERIFY_DIR, name, "run_meta.json")
+    if not os.path.isdir(os.path.join(VERIFY_DIR, name)):
+        return "missing"
+    if not os.path.exists(meta):
+        return "not finished"
+    code = json.load(open(meta, encoding="utf-8")).get("exit_code")
+    return "finished" if code == 0 else f"exit {code}"
+
+
 def verification():
     """The correctness checks of results/verify-joint, read from their outputs.
 
@@ -296,13 +310,13 @@ def verification():
     kind and path."""
     rows, per_db = [], []
     fuzz = _console("fuzz")
-    if fuzz is None:
-        rows.append(dict(check="random streams (MixedBudgetFuzz)", status="missing"))
+    if _status("fuzz") != "finished":
+        rows.append(dict(check="random streams (MixedBudgetFuzz)", status=_status("fuzz")))
     else:
         for rule in ("joint", "iaumax"):
             lines = [l for l in fuzz.splitlines() if l.startswith(f"rule={rule} ")]
             num = lambda pat: sum(int(re.search(pat, l).group(1)) for l in lines)
-            rows.append(dict(check=f"random streams (MixedBudgetFuzz), rule {rule}", status="finished",
+            rows.append(dict(check=f"random streams (MixedBudgetFuzz), rule {rule}", status=_status("fuzz"),
                              runs=len(lines), operations=num(r"ops=(\d+)"),
                              direct_delete=num(r"direct-update=\{delete=(\d+)"),
                              direct_insert=num(r"direct-update=\{[^}]*insert=(\d+)"),
@@ -311,32 +325,34 @@ def verification():
         probes = [l for l in fuzz.splitlines() if "total mismatching patterns over" in l]
         for rule, l in zip(("joint", "iaumax"), probes):
             m = re.search(r"over (\d+) checks = (\d+)", l)
-            rows.append(dict(check=f"hand-built cases (MixedBudgetProbe), rule {rule}", status="finished",
+            rows.append(dict(check=f"hand-built cases (MixedBudgetProbe), rule {rule}", status=_status("fuzz"),
                              operations=int(m.group(1)), mismatches=int(m.group(2))))
     acc = _console("acceptance")
     m = re.search(r"acceptance: (\d+) passed, (\d+) failed", acc or "")
     rows.append(dict(check="rescan rule acceptance (RescanRuleAcceptanceTest)",
-                     status="finished" if m else "missing",
+                     status=_status("acceptance") if m else "missing",
                      operations=int(m.group(1)) + int(m.group(2)) if m else None,
                      mismatches=int(m.group(2)) if m else None))
     for name, label in (("fault-injection", "fault injection, random streams and hand-built cases"),
                         ("fault-injection-real", "fault injection, adversarial runs on real databases")):
         out = _console(name)
-        if out is None:
-            rows.append(dict(check=label, status="missing"))
+        if _status(name) != "finished":
+            rows.append(dict(check=label, status=_status(name)))
             continue
         faults = re.findall(r"^  caught: (True|False)", out, flags=re.M)
-        unfinished = "did not finish" in out
-        rows.append(dict(check=label, status="did not finish" if unfinished else "finished",
+        rows.append(dict(check=label, status=_status(name),
                          operations=len(faults), caught=sum(f == "True" for f in faults)))
-    for name in ("random", "adversarial"):
+    # Every DirectPathVerifier run, found by its output file rather than by name.
+    runs = sorted(os.path.basename(os.path.dirname(f))
+                  for f in glob.glob(os.path.join(VERIFY_DIR, "*", "verification.csv")))
+    for name in runs or ["random", "adversarial"]:
         path = os.path.join(VERIFY_DIR, name, "verification.csv")
         out = _console(name)
         if not os.path.exists(path):
             rows.append(dict(check=f"direct path on real databases, {name} operations", status="missing"))
             continue
         v = pd.read_csv(path)
-        finished = out is not None and "mismatching operations:" in out
+        finished = _status(name) == "finished" and out is not None and "mismatching operations:" in out
         for d, g in v.groupby("dataset", sort=False):
             r = dict(check=name, dataset=d, operations=len(g),
                      with_target=int(g["target"].fillna("").astype(str).str.len().gt(0).sum()),
@@ -346,8 +362,9 @@ def verification():
                     r[f"{op}_{path_kind}"] = int(((g["op_type"] == op) & (g["path"] == path_kind)).sum())
             per_db.append(r)
         rows.append(dict(check=f"direct path on real databases, {name} operations",
-                         status="finished" if finished else "did not finish",
+                         status="finished" if finished else _status(name),
                          runs=v["dataset"].nunique(), operations=len(v),
+                         with_target=int(v["target"].fillna("").astype(str).str.len().gt(0).sum()),
                          direct_delete=int(((v["op_type"] == "delete") & (v["path"] == "direct")).sum()),
                          direct_insert=int(((v["op_type"] == "insert") & (v["path"] == "direct")).sum()),
                          direct_modify=int(((v["op_type"] == "modify") & (v["path"] == "direct")).sum()),
@@ -529,7 +546,8 @@ def export_all(out_dir=None):
     for _, r in vs.iterrows():
         key = "verify_" + re.sub(r"[^a-z0-9]+", "_", r["check"].lower()).strip("_")
         put(f"{key}_status", r["status"], "table_verification.csv")
-        for col in ("operations", "direct_delete", "direct_insert", "direct_modify", "mismatches", "caught"):
+        for col in ("operations", "with_target", "direct_delete", "direct_insert", "direct_modify", "mismatches",
+                    "caught"):
             if col in r and pd.notna(r[col]):
                 put(f"{key}_{col}", int(r[col]), "table_verification.csv")
 
