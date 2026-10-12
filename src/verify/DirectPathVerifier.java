@@ -245,9 +245,24 @@ public final class DirectPathVerifier {
         return violations;
     }
 
-    /** The untracked pattern of highest utility, from a reference mine at PROBE_RL * UUT. */
+    /**
+     * The untracked pattern of highest utility, from a reference mine at PROBE_RL * UUT; null
+     * when the mine does not finish or the heap cannot hold it and its pattern set. The mine only
+     * chooses the target: the instance under test shares no state with it.
+     */
     private static Map.Entry<String, Double> pickTarget(PreHUSPMAdaptiveAlgo algo, List<Sequence> current,
                                                         double uut, String rule) {
+        try {
+            return pickTargetOrThrow(algo, current, uut, rule);
+        } catch (OutOfMemoryError e) {
+            System.gc();
+            System.out.println("  no target: the reference mine ran out of heap");
+            return null;
+        }
+    }
+
+    private static Map.Entry<String, Double> pickTargetOrThrow(PreHUSPMAdaptiveAlgo algo, List<Sequence> current,
+                                                               double uut, String rule) {
         PreHUSPMAdaptiveAlgo probe = new PreHUSPMAdaptiveAlgo(uut, KAPPA, DELTA0, PROBE_RL, AblationMode.FULL, false);
         if (rule != null) probe.triggerRule = PreHUSPMAdaptiveAlgo.TriggerRule.valueOf(rule.toUpperCase());
         probe.rescanCandidateBudget = PROBE_CANDIDATE_BUDGET;
@@ -255,13 +270,6 @@ public final class DirectPathVerifier {
             probe.runInitialMining(new ArrayList<>(current), tsu(current));
         } catch (RuntimeException e) {
             System.out.println("  no target: the reference mine did not finish (" + e.getClass().getSimpleName() + ")");
-            return null;
-        } catch (OutOfMemoryError e) {
-            // The reference mine only chooses the target; the instance under test holds no
-            // state it shares with the probe, so dropping the probe frees what it allocated.
-            probe = null;
-            System.gc();
-            System.out.println("  no target: the reference mine ran out of heap");
             return null;
         }
         if (probe.rescanRetries > 0) {
