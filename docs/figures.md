@@ -30,7 +30,7 @@ every sum.
 ## Style
 
 Every figure is drawn at the printed width (324.36 pt), Times New Roman at 9 pt, fonts embedded.
-Multi-panel figures use a grid of three equal columns, one legend above the panels, panel names
+Multi-panel figures use a grid of three equal columns, one legend placed where no data is drawn (in the empty grid cells when there are any, else inside a panel where a measured check finds no point, segment or bar under it, else above the panels), panel names
 under the axes as "(a) NAME", and the y label on the first column of each row; a two-panel figure
 is centred and keeps the full width. Each method has one line colour in every figure (Okabe-Ito):
 Pre-HUSPM-Joint `#D55E00`, Pre-HUSPM and Pre-HUSPM-SWUmax `#0072B2`, Pre-HUSPM-TSU `#56B4E9`,

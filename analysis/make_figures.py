@@ -418,6 +418,111 @@ def absent_footnote(fig, absent, width_chars=72):
              transform=fig.transFigure)
 
 
+def _legend_entries(axes):
+    """Every series once, in the order first drawn, then the outcome symbols."""
+    handles, labels = [], []
+    for ax in np.atleast_1d(axes).ravel():
+        for h, l in zip(*ax.get_legend_handles_labels()):
+            if l not in labels:
+                handles.append(h); labels.append(l)
+    outcome = {lbl for _, lbl in STATUS_MARK.values()}
+    order = [i for i, l in enumerate(labels) if l not in outcome] + \
+            [i for i, l in enumerate(labels) if l in outcome]
+    return [handles[i] for i in order], [labels[i] for i in order]
+
+
+def _data_points(ax):
+    """Display coordinates of what the axis draws: line vertices with the segments between
+    them sampled, marker positions, and the corners and interior of every bar."""
+    from matplotlib.patches import Rectangle
+    pts = []
+    for ln in ax.get_lines():
+        xy = ln.get_xydata()
+        if len(xy) == 0:
+            continue
+        xy = ln.get_transform().transform(np.asarray(xy, float))
+        xy = xy[np.isfinite(xy).all(axis=1)]
+        pts.append(xy)
+        if ln.get_linestyle() not in ("None", "none", "", " ") and len(xy) > 1:
+            for a, b in zip(xy[:-1], xy[1:]):
+                t = np.linspace(0, 1, 25)[:, None]
+                pts.append(a + t * (b - a))
+    for p in ax.patches:
+        if isinstance(p, Rectangle) and p.get_visible() and p.get_height() != 0:
+            bb = p.get_window_extent()
+            xs = np.linspace(bb.x0, bb.x1, 6); ys = np.linspace(bb.y0, bb.y1, 12)
+            pts.append(np.array([(x, y) for x in xs for y in ys]))
+    return np.vstack(pts) if pts else np.empty((0, 2))
+
+
+def _legend_clear(fig, ax, leg, pad=2.0):
+    """True when the legend lies inside the axis and covers no drawn point (pad in pixels)."""
+    fig.canvas.draw()
+    lb = leg.get_window_extent()
+    ab = ax.get_window_extent()
+    if lb.x0 < ab.x0 or lb.x1 > ab.x1 or lb.y0 < ab.y0 or lb.y1 > ab.y1:
+        return False
+    pts = _data_points(ax)
+    if len(pts) == 0:
+        return True
+    inside = ((pts[:, 0] >= lb.x0 - pad) & (pts[:, 0] <= lb.x1 + pad) &
+              (pts[:, 1] >= lb.y0 - pad) & (pts[:, 1] <= lb.y1 + pad))
+    return not inside.any()
+
+
+LEGEND_LOCS = ["upper right", "upper left", "lower right", "lower left", "upper center",
+               "lower center", "center right", "center left", "center"]
+
+
+def place_legend(fig, axes, tag, spare=None, ncol=None):
+    """One legend for the whole figure, placed where no data is drawn.
+
+    spare: hidden grid cells; the legend goes there when given. Otherwise the panels are
+    tried in turn, each at the positions of LEGEND_LOCS, at 9 pt then 8 pt, with one or more
+    columns; the first placement inside a panel that covers no point, segment or bar is kept,
+    as measured on the drawn figure. When none is clear the legend goes above the panels and
+    the figure is named."""
+    handles, labels = _legend_entries(axes)
+    if not handles:
+        return
+    kw = dict(frameon=False, handlelength=2.6, columnspacing=0.8, handletextpad=0.4,
+              borderaxespad=0.3)
+    # Inside a panel the line sample is shorter: a third of the column is about 74 pt wide.
+    kw_in = dict(kw, handlelength=1.5, columnspacing=0.6, handletextpad=0.3, borderaxespad=0.2)
+    if spare:
+        # The empty grid cells: the legend must stay inside them, or the figure grows wider
+        # than the column and is scaled down, text included, on the page.
+        fig.canvas.draw()
+        bb = spare[0].get_position()
+        for a in spare[1:]:
+            bb = bb.union([bb, a.get_position()])
+        region = bb.transformed(fig.transFigure)
+        for nc in sorted({ncol or 2, 1}, reverse=True):
+            leg = fig.legend(handles, labels, loc="center", bbox_to_anchor=(bb.x0, bb.y0, bb.width, bb.height),
+                             bbox_transform=fig.transFigure, ncol=nc, **kw_in)
+            fig.canvas.draw()
+            lb = leg.get_window_extent()
+            if (lb.x0 >= region.x0 and lb.x1 <= region.x1 and lb.y0 >= region.y0 and lb.y1 <= region.y1
+                    and lb.x1 <= fig.bbox.x1):
+                return
+            leg.remove()
+        print(f"[legend] {tag}: the legend does not fit the empty cells; legend above the panels")
+        shared_legend(fig, axes, ncol=ncol)
+        return
+    axes = list(np.atleast_1d(axes).ravel())
+    ncols = sorted({1, 2, min(3, len(labels)), ncol or 1}, reverse=True)
+    for fs in (FONT_PT, 8):
+        for ax in axes[::-1]:
+            for loc in LEGEND_LOCS:
+                for nc in ncols:
+                    leg = ax.legend(handles, labels, loc=loc, ncol=nc, fontsize=fs, **kw_in)
+                    if _legend_clear(fig, ax, leg):
+                        return
+                    leg.remove()
+    print(f"[legend] {tag}: no clear area inside a panel; legend above the panels")
+    shared_legend(fig, axes, ncol=ncol)
+
+
 def shared_legend(fig, axes, ncol=None, y=0.97):
     """One legend for the whole figure, above the panels: every series once, in the
     order first drawn, then the outcome symbols of runs that did not finish."""
@@ -492,7 +597,8 @@ def figset_scalability(sc="SC3", tag="fig_scalability", datasets=None,
                 for _, r in a[~a["finished"]].iterrows():
                     annotate_fail(ax, level[r["su"]], r["status"])
             ax.set_xticks(range(len(sus)))
-            ax.set_xticklabels([f"{v:.4g}" for v in sus], rotation=45, ha="right")
+            # Lowest and highest threshold only, flat; the four values are in the threshold table.
+            ax.set_xticklabels([f"{v:.4g}" if k in (0, len(sus) - 1) else "" for k, v in enumerate(sus)])
             ax.set_xlim(-0.3, len(sus) - 0.7)
             ax.minorticks_off()
             panel_xlabel(ax, i, ds, "UUT")
@@ -500,7 +606,7 @@ def figset_scalability(sc="SC3", tag="fig_scalability", datasets=None,
             if i % ncols == 0:
                 ax.set_ylabel(ylab)
         fig.tight_layout(w_pad=0.6)
-        shared_legend(fig, axes, ncol=3)
+        place_legend(fig, axes, f"{tag}_{sc}_{metric}", ncol=3)
         save(fig, f"{tag}_{sc}_{metric}.pdf")
 
 
@@ -539,7 +645,7 @@ def figset_incremental(tag="fig_incremental_cumulative", datasets=None):
         if i % PANEL_COLS == 0:
             ax.set_ylabel("Cumulative runtime (s)")
     fig.tight_layout(w_pad=0.6)
-    shared_legend(fig, axes, ncol=3)
+    place_legend(fig, axes, tag, spare=[a for a in fig.axes if not a.get_visible()], ncol=2)
     absent_footnote(fig, absent)
     save(fig, f"{tag}.pdf")
 
@@ -750,7 +856,7 @@ def figset_c5_ablation(tag="fig_C5_ablation"):
         ax.set_xlabel(f"({chr(ord('a') + i)}) " + ("Runtime over 100 increments" if metric == "runtime_ms" else "Rescans"))
         ax.set_ylabel(ylab)
     fig.tight_layout(w_pad=1.0)
-    shared_legend(fig, axes, ncol=2)
+    place_legend(fig, axes, tag, ncol=2)
     save(fig, f"{tag}.pdf", full_width=True)
 
 
@@ -793,7 +899,7 @@ def figset_block_size(tag="fig_block_size"):
         ax.set_ylabel(ylab)
         panel_xlabel(ax, i, name, "$B_{\\mathrm{sz}}$")
     fig.tight_layout(w_pad=0.8)
-    shared_legend(fig, axes, ncol=2)
+    place_legend(fig, axes, tag, ncol=2)
     save(fig, f"{tag}.pdf")
 
 
@@ -913,7 +1019,7 @@ def figset_sl_sensitivity(tag="fig_sl_sensitivity", metrics=("prelarge_count",))
             if i == 0:
                 ax.set_ylabel(ylab)
         fig.tight_layout(w_pad=0.6)
-        shared_legend(fig, axes, ncol=2)
+        place_legend(fig, axes, f"{tag}_{metric}", ncol=2)
         save(fig, f"{tag}_{metric}.pdf")
 
 
@@ -947,7 +1053,7 @@ def figset_batch_ratio(tag="fig_batch_ratio"):
         if i == 0:
             ax.set_ylabel(f"{PROPOSED_LABEL} / Remine")
     fig.tight_layout(w_pad=0.6)
-    shared_legend(fig, axes, ncol=4)
+    place_legend(fig, axes, tag, ncol=2)
     save(fig, f"{tag}.pdf")
 
 
@@ -983,7 +1089,7 @@ def figset_memory_static(tag="fig_memory_static", datasets=None):
     ax.set_ylabel("Live set (MB)")
     safe_log(ax)
     fig.tight_layout()
-    shared_legend(fig, [ax], ncol=3)
+    place_legend(fig, [ax], tag, ncol=3)
     save(fig, f"{tag}.pdf")
 
 
@@ -1018,7 +1124,7 @@ def figset_memory_incremental(tag="fig_memory_incremental", datasets=None):
         if i % PANEL_COLS == 0:
             ax.set_ylabel("State held (MB)")
     fig.tight_layout(w_pad=0.6)
-    shared_legend(fig, axes, ncol=3)
+    place_legend(fig, axes, tag, spare=[a for a in fig.axes if not a.get_visible()], ncol=2)
     absent_footnote(fig, absent)
     save(fig, f"{tag}.pdf")
 
