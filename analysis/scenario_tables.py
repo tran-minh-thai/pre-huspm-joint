@@ -21,6 +21,7 @@ make_figures.main() calls export_all(). Writes:
     table_SC2_time.tex, table_SC2_rule.tex   the two SC2 tables of the paper
 """
 import os
+import re
 import sys
 
 import numpy as np
@@ -277,6 +278,86 @@ def sc7_block_size():
     return out
 
 
+# ------------------------------------------------------------------------------ verification
+VERIFY_DIR = os.path.join(mf.DATA_DIR, "verify-joint")
+
+
+def _console(name):
+    path = os.path.join(VERIFY_DIR, name, "console.txt")
+    return open(path, encoding="utf-8").read() if os.path.exists(path) else None
+
+
+def verification():
+    """The correctness checks of results/verify-joint, read from their outputs.
+
+    Returns (summary, by_database). summary has one row per check; a check whose output is
+    missing or did not finish is a row with status 'missing' or 'did not finish', never left
+    out. by_database counts the operations of the two DirectPathVerifier runs per database,
+    kind and path."""
+    rows, per_db = [], []
+    fuzz = _console("fuzz")
+    if fuzz is None:
+        rows.append(dict(check="random streams (MixedBudgetFuzz)", status="missing"))
+    else:
+        for rule in ("joint", "iaumax"):
+            lines = [l for l in fuzz.splitlines() if l.startswith(f"rule={rule} ")]
+            num = lambda pat: sum(int(re.search(pat, l).group(1)) for l in lines)
+            rows.append(dict(check=f"random streams (MixedBudgetFuzz), rule {rule}", status="finished",
+                             runs=len(lines), operations=num(r"ops=(\d+)"),
+                             direct_delete=num(r"direct-update=\{delete=(\d+)"),
+                             direct_insert=num(r"direct-update=\{[^}]*insert=(\d+)"),
+                             direct_modify=num(r"direct-update=\{[^}]*modify=(\d+)"),
+                             mismatches=num(r"mismatching-ops=(\d+)")))
+        probes = [l for l in fuzz.splitlines() if "total mismatching patterns over" in l]
+        for rule, l in zip(("joint", "iaumax"), probes):
+            m = re.search(r"over (\d+) checks = (\d+)", l)
+            rows.append(dict(check=f"hand-built cases (MixedBudgetProbe), rule {rule}", status="finished",
+                             operations=int(m.group(1)), mismatches=int(m.group(2))))
+    acc = _console("acceptance")
+    m = re.search(r"acceptance: (\d+) passed, (\d+) failed", acc or "")
+    rows.append(dict(check="rescan rule acceptance (RescanRuleAcceptanceTest)",
+                     status="finished" if m else "missing",
+                     operations=int(m.group(1)) + int(m.group(2)) if m else None,
+                     mismatches=int(m.group(2)) if m else None))
+    for name, label in (("fault-injection", "fault injection, random streams and hand-built cases"),
+                        ("fault-injection-real", "fault injection, adversarial runs on real databases")):
+        out = _console(name)
+        if out is None:
+            rows.append(dict(check=label, status="missing"))
+            continue
+        faults = re.findall(r"^  caught: (True|False)", out, flags=re.M)
+        unfinished = "did not finish" in out
+        rows.append(dict(check=label, status="did not finish" if unfinished else "finished",
+                         operations=len(faults), caught=sum(f == "True" for f in faults)))
+    for name in ("random", "adversarial"):
+        path = os.path.join(VERIFY_DIR, name, "verification.csv")
+        out = _console(name)
+        if not os.path.exists(path):
+            rows.append(dict(check=f"direct path on real databases, {name} operations", status="missing"))
+            continue
+        v = pd.read_csv(path)
+        finished = out is not None and "mismatching operations:" in out
+        for d, g in v.groupby("dataset", sort=False):
+            r = dict(check=name, dataset=d, operations=len(g),
+                     with_target=int(g["target"].fillna("").astype(str).str.len().gt(0).sum()),
+                     mismatches=int((g["clean"].astype(str).str.lower() != "true").sum()))
+            for op in ("insert", "delete", "modify"):
+                for path_kind in ("direct", "rescan"):
+                    r[f"{op}_{path_kind}"] = int(((g["op_type"] == op) & (g["path"] == path_kind)).sum())
+            per_db.append(r)
+        rows.append(dict(check=f"direct path on real databases, {name} operations",
+                         status="finished" if finished else "did not finish",
+                         runs=v["dataset"].nunique(), operations=len(v),
+                         direct_delete=int(((v["op_type"] == "delete") & (v["path"] == "direct")).sum()),
+                         direct_insert=int(((v["op_type"] == "insert") & (v["path"] == "direct")).sum()),
+                         direct_modify=int(((v["op_type"] == "modify") & (v["path"] == "direct")).sum()),
+                         mismatches=int((v["clean"].astype(str).str.lower() != "true").sum())))
+    summary = pd.DataFrame(rows)
+    for col in summary.columns.drop(["check", "status"]):
+        summary[col] = summary[col].astype("Int64")
+    return summary, pd.DataFrame(per_db)
+
+
 # ------------------------------------------------------------------------------ agreement
 def agreement():
     """Rows (per database and threshold, or per increment) where every finished arm reports
@@ -441,6 +522,16 @@ def export_all(out_dir=None):
                 "table_SC7_block_size.csv")
             put(f"SC7_block_size_{r['dataset']}_{r['block_size']}_direct_ms", f"{r['direct_ms']:.0f}",
                 "table_SC7_block_size.csv")
+
+    vs, vd = verification()
+    mf.write_csv(vs, os.path.join(out, "table_verification.csv"))
+    mf.write_csv(vd, os.path.join(out, "table_verification_by_database.csv"))
+    for _, r in vs.iterrows():
+        key = "verify_" + re.sub(r"[^a-z0-9]+", "_", r["check"].lower()).strip("_")
+        put(f"{key}_status", r["status"], "table_verification.csv")
+        for col in ("operations", "direct_delete", "direct_insert", "direct_modify", "mismatches", "caught"):
+            if col in r and pd.notna(r[col]):
+                put(f"{key}_{col}", int(r[col]), "table_verification.csv")
 
     ag = agreement()
     mf.write_csv(ag, os.path.join(out, "table_agreement.csv"))
