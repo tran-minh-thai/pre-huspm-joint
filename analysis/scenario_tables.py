@@ -635,6 +635,13 @@ def sc2_tex(totals, region, reps=None):
     return time_tex, rule_tex
 
 
+def half_up(value, digits=2):
+    """value to the given decimals, rounded half up on its decimal string: in binary 8.995
+    lies just below itself and would print 8.99."""
+    from decimal import Decimal, ROUND_HALF_UP
+    return format(Decimal(repr(float(value))).quantize(Decimal(1).scaleb(-digits), rounding=ROUND_HALF_UP), "f")
+
+
 def pct4(value):
     """A ratio written as a percentage with four significant digits, rounded half up on its
     decimal string (not on the binary float)."""
@@ -775,6 +782,24 @@ def export_all(out_dir=None):
                     "caught"):
             if col in r and pd.notna(r[col]):
                 put(f"{key}_{col}", int(r[col]), "table_verification.csv")
+        parts = [r.get(c) for c in ("direct_delete", "direct_insert", "direct_modify")]
+        if all(pd.notna(v) for v in parts):
+            put(f"{key}_direct_total", int(sum(parts)), "table_verification.csv")
+
+    # SC7 over the incremental stream: the time of each variant summed over the 100 increments,
+    # and what the block index saves
+    st7i = os.path.join(out, "table_SC7_incremental.csv")
+    if os.path.exists(st7i):
+        t7i = pd.read_csv(st7i)
+        short = {"Full": "full", "-C5 (rescan every increment)": "rescan_every_increment",
+                 "-C4 (no block index)": "no_block_index"}
+        for ds, g in t7i.groupby("dataset"):
+            v = {short[x]: float(y) for x, y in zip(g["variant"], g["runtime_s"]) if x in short}
+            for k, y in v.items():
+                put(f"SC7_stream_{ds}_{k}_s", half_up(y), "table_SC7_incremental.csv")
+            if "full" in v and "no_block_index" in v:
+                put(f"SC7_stream_{ds}_block_index_saves_s", half_up(round(v["no_block_index"] - v["full"], 9)),
+                    "table_SC7_incremental.csv")
 
     ex = explored_one_convention()
     ex_path = os.path.join(out, "table_explored_nodes.csv")
