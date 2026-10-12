@@ -615,9 +615,9 @@ def sc2_tex(totals, region, reps=None):
     time_tex = "\n".join(["\\begin{table}[!htbp]\\centering",
                           "\\caption{Runtime (s) of SC2 over 100 increments; mean and standard deviation where "
                           "three runs were made}\\label{tab:sc2_time}",
-                          "\\small\\setlength{\\tabcolsep}{3pt}",
-                          "\\begin{tabular}{lrrrrr}\\toprule", head] + rows +
-                         ["\\bottomrule\\end{tabular}", "\\end{table}", ""])
+                          "\\setlength{\\tabcolsep}{4pt}",
+                          "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}lrrrrr}\\toprule", head] + rows +
+                         ["\\bottomrule\\end{tabular*}", "\\end{table}", ""])
     def rescans(d):
         v = [str(int(op.loc[d, c])) for c in ("rescans", "rescans_swumax", "rescans_tsu")]
         return " & ".join(f"\\textbf{{{x}}}" if b else x for x, b in zip(v, mf.lowest(v)))
@@ -626,12 +626,11 @@ def sc2_tex(totals, region, reps=None):
             for d in order]
     rule_tex = "\n".join(["\\begin{table}[!htbp]\\centering",
                           "\\caption{Rescan rule in SC2}\\label{tab:sc2_rule}",
-                          "\\small\\setlength{\\tabcolsep}{3pt}",
-                          "\\begin{tabular}{lrrrrrrr}\\toprule",
+                          "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}lrrrrrrr}\\toprule",
                           " & & & & & \\multicolumn{3}{c}{Rescans} \\\\\\cmidrule(l){6-8}",
                           "Database & $\\alpha$ (\\%) & Gain & \\begin{tabular}[b]{@{}r@{}}Median\\\\$\\Phi/\\beta$ (\\%)\\end{tabular} & "
                           "\\begin{tabular}[b]{@{}r@{}}No\\\\rescan\\end{tabular} & Joint & SWUmax & TSU \\\\\\midrule"]
-                         + rows + ["\\bottomrule\\end{tabular}", "\\end{table}", ""])
+                         + rows + ["\\bottomrule\\end{tabular*}", "\\end{table}", ""])
     return time_tex, rule_tex
 
 
@@ -884,13 +883,13 @@ def export_all(out_dir=None):
                thresholds=" ".join(f"{x:.6f}" for x in v["sweep"])) for d, v in mf.DATASETS.items()]
     mf.write_csv(pd.DataFrame(th), os.path.join(out, "table_thresholds.csv"))
     lines = ["\\begin{table}[!htbp]\\centering", "\\caption{Thresholds of SC1 and SC3}\\label{tab:thresholds}",
-             "\\begin{tabular}{lrrrr}\\toprule",
+             "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}lrrrr}\\toprule",
              "Database & \\multicolumn{4}{c}{$\\UUT$ (\\%)} \\\\\\midrule"]
     for r in th:
         # In percent, four significant digits, rounded half up on the decimal value: in binary
         # 0.022895 * 100 falls just below 2.2895 and would print 2.289.
         lines.append(r["dataset"] + " & " + " & ".join(pct4(v) for v in r["thresholds"].split()) + " \\\\")
-    lines += ["\\bottomrule\\end{tabular}", "\\end{table}", ""]
+    lines += ["\\bottomrule\\end{tabular*}", "\\end{table}", ""]
     open(os.path.join(out, "table_thresholds.tex"), "w", encoding="utf-8").write("\n".join(lines))
 
     bms1_whole(put)

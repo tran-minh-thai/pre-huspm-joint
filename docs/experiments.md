@@ -230,7 +230,10 @@ seed); SC6 draws its operation order and the sequences it deletes and modifies f
 `Random(seed + name.hashCode())`. `analysis/make_figures.py` reports the sample standard
 deviation over the replicates that completed and counts those that did not.
 
-Generated tables set the lowest value of each row in bold (runtime, rescans; in the SC7
+Generated tables span the full text width (`tabular*` with `\extracolsep\fill`, as the
+Springer Nature template does) in the class's table font; a mean and its standard deviation
+share one line, except in the SC1 table, whose six algorithms only fit with the deviation
+below the mean. Generated tables set the lowest value of each row in bold (runtime, rescans; in the SC7
 ablation the lowest runtime and the fewest explored nodes of each database), comparing the
 values as printed, so two values that print alike are both bold; a run that did not finish
 takes no part. An SC2 arm that the runner's memory guard stopped (less than a tenth of the

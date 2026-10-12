@@ -996,8 +996,8 @@ def export_ablation_table():
     lines = ["\\begin{table}[!htbp]", "\\centering",
              "\\caption{Ablation of the miner on the whole database}",
              "\\label{tab:sc7_ablation}",
-             "\\begin{tabular}{llrr}", "\\toprule",
-             "Dataset & Variant & Runtime (s) & Explored \\\\", "\\midrule"]
+             "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}llrr}", "\\toprule",
+             "Database & Variant & Runtime (s) & Explored \\\\", "\\midrule"]
     # the lowest runtime and the fewest explored nodes of each database in bold, compared as
     # printed; a variant that did not finish takes no part
     bold = {}
@@ -1015,7 +1015,7 @@ def export_ablation_table():
         rt = f"\\textbf{{{rt}}}" if bold[i][0] else rt
         ex = f"\\textbf{{{ex}}}" if bold[i][1] else ex
         lines.append(f"{ds} & {r['variant']} & {rt} & {ex} \\\\")
-    lines += ["\\bottomrule", "\\end{tabular}", "\\end{table}", ""]
+    lines += ["\\bottomrule", "\\end{tabular*}", "\\end{table}", ""]
     with open(os.path.join(OUT_DIR, "table_SC7_ablation.tex"), "w", encoding="utf-8") as fh:
         fh.write("\n".join(lines))
     print(f"[saved] {os.path.join(OUT_DIR, 'table_SC7_static.csv')}  (+ incremental csv + LaTeX)")
@@ -1295,23 +1295,24 @@ def lowest(printed):
     return [v is not None and v == best for v in vals]
 
 
-def pm(st, digits=None, bold=False):
-    """'mean +- std' for LaTeX, or the mean alone when there is one replicate. Decimals
-    follow the size of the mean - none from 100, one from 10, two below - so that a row
-    of six algorithms fits the column width. bold sets the mean in bold, for the lowest
-    value of a row."""
+def pm(st, digits=None, bold=False, inline=True):
+    """'mean +- std' for LaTeX, or the mean alone when there is one replicate. Decimals follow
+    the size of the mean - none from 100, one from 10, two below. bold sets the mean in bold,
+    for the lowest value of a row. inline puts the deviation after the mean; otherwise it goes
+    below it in a smaller size, for a table whose columns would not fit side by side."""
     if not np.isfinite(st["mean"]):
         return "--"
     if digits is None:
         digits = pm_digits(st["mean"])
     if st["n"] > 1 and np.isfinite(st["std"]):
-        # a deviation below the printed resolution reads as no spread at all; say so
+        # a deviation below the printed resolution reads as no spread at all; say so. The
+        # "<" goes in math mode: in the text font of the class it prints as an inverted "!"
         dev = (f"{st['std']:.{digits}f}" if round(st["std"], digits) > 0 or st["std"] == 0
-               else f"<{10 ** -digits:.{digits}f}")
-        # mean above, the deviation below in a smaller size: one column holds the wider of
-        # the two rather than both side by side, which is what lets six columns fit
+               else f"$<${10 ** -digits:.{digits}f}")
         mean = f"{st['mean']:,.{digits}f}"
         mean = f"\\textbf{{{mean}}}" if bold else mean
+        if inline:
+            return f"{mean} $\\pm$ {dev}"
         return (f"\\begin{{tabular}}[t]{{@{{}}r@{{}}}}{mean}\\\\"
                 f"{{\\scriptsize $\\pm${dev}}}\\end{{tabular}}")
     mean = f"{st['mean']:,.{digits}f}"
@@ -1364,9 +1365,8 @@ def export_replicate_tables():
         lines = ["\\begin{table}[!htbp]", "\\centering",
                  "\\caption{Runtime (s) of SC1 at the default threshold}",
                  "\\label{tab:sc1_runtime}",
-                 "\\small\\setlength{\\tabcolsep}{4pt}",
-                 "\\begin{tabular}{l" + "r" * len(cols) + "}", "\\toprule",
-                 "Dataset & " + " & ".join(stacked_header(ALGO_LABEL[c]) for c in cols) + " \\\\",
+                 "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}l" + "r" * len(cols) + "}", "\\toprule",
+                 "Database & " + " & ".join(stacked_header(ALGO_LABEL[c]) for c in cols) + " \\\\",
                  "\\midrule"]
         for ds in [d for d in ALL_DATASETS if d in set(tab["dataset"])]:
             stats = {}
@@ -1384,9 +1384,10 @@ def export_replicate_tables():
                 r = tab[(tab["dataset"] == ds) & (tab["algorithm"] == c)]
                 if r.empty:
                     cells.append("--"); continue
-                cells.append(pm(stats[c], bold=low[c]) if c in stats else r.iloc[0]["status"])
+                # six algorithms side by side do not fit with the deviation inline
+                cells.append(pm(stats[c], bold=low[c], inline=False) if c in stats else r.iloc[0]["status"])
             lines.append(f"{ds} & " + " & ".join(cells) + " \\\\")
-        lines += ["\\bottomrule", "\\end{tabular}", "\\end{table}", ""]
+        lines += ["\\bottomrule", "\\end{tabular*}", "\\end{table}", ""]
         with open(os.path.join(OUT_DIR, "table_SC1_runtime.tex"), "w", encoding="utf-8") as fh:
             fh.write("\n".join(lines))
         out.append("table_SC1_runtime.tex")
