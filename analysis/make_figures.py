@@ -713,7 +713,7 @@ def export_ablation_table():
     df = load_scenario("SC7")
     if df is None:
         return
-    static = {"proposed_full": "Full", "proposed_no_IUB": "-IUB (C3)", "proposed_no_IPS": "-IPS",
+    static = {"proposed_full": "Full", "proposed_no_IUB": "-IUB", "proposed_no_IPS": "-IPS",
               "Pre-HUSPM": "Pre-HUSPM"}
     rows = []
     for ds in [d for d in ALL_DATASETS if d in set(df["dataset"])]:
@@ -739,16 +739,19 @@ def export_ablation_table():
             if g.empty:
                 continue
             ok = g[g["finished"]]
+            # blocks_read counts sequences read on a direct update and is carried unchanged
+            # on a row that rescanned, so only the rows without a rescan are summed.
+            direct = ok[ok["cub_triggered"].astype(str).str.lower() == "false"]
             rows.append(dict(dataset=ds, variant=label, increments_done=len(ok),
                              runtime_s=ms_to_s(ok["runtime_ms"]).sum(),
                              rescans=ok["rescan_count"].iloc[-1] if len(ok) else np.nan,
-                             blocks_read=ok["blocks_read"].sum(),
+                             sequences_read=direct["blocks_read"].sum(),
                              mean_prelarge=ok["prelarge_count"].mean(),
                              final_patterns=ok["total_patterns_found"].iloc[-1] if len(ok) else np.nan))
     write_csv(pd.DataFrame(rows), os.path.join(OUT_DIR, "table_SC7_incremental.csv"))
 
     lines = ["\\begin{table}[t]", "\\centering",
-             "\\caption{Runtime and explored nodes with the IUB bound or the irrelevant item pruning switched off.}",
+             "\\caption{Ablation of the miner on the whole database.}",
              "\\label{tab:sc7_ablation}",
              "\\begin{tabular}{llrr}", "\\toprule",
              "Dataset & Variant & Runtime (s) & Explored \\\\", "\\midrule"]
@@ -799,7 +802,7 @@ def figset_sl_sensitivity(tag="fig_sl_sensitivity", metrics=("prelarge_count",))
                     if st:
                         annotate_fail(ax, pp, st)
             ax.set_xticks(x); ax.set_xticklabels([f"{v:g}" for v in sls])
-            panel_xlabel(ax, i, ds, r"$r_l$")
+            panel_xlabel(ax, i, ds, r"$r_\ell$")
             safe_log(ax)
             if i == 0:
                 ax.set_ylabel(ylab)
@@ -1087,8 +1090,7 @@ def export_replicate_tables():
         cols = [a for a in STATIC_ORDER if a in set(tab["algorithm"])]
         nmax = int(tab["n"].max()) if len(tab) else 0
         lines = ["\\begin{table}[t]", "\\centering",
-                 f"\\caption{{Runtime (s) on $D_{{\\mathrm{{init}}}}$ at the default threshold"
-                 + (f", mean $\\pm$ standard deviation over {nmax} runs" if nmax > 1 else "") + ".}",
+                 "\\caption{Runtime (s) of SC1 at the default threshold.}",
                  "\\label{tab:sc1_runtime}",
                  "\\small\\setlength{\\tabcolsep}{4pt}",
                  "\\begin{tabular}{l" + "r" * len(cols) + "}", "\\toprule",
@@ -1268,6 +1270,8 @@ def main():
     export_operating_region()                          # SC2 rescan test, ratio to budget
     export_ablation_table()                            # SC7 static + incremental
     export_status_summary()                            # every non-OK row, by outcome
+    import scenario_tables                             # summary CSVs, paper_numbers.csv, SC2 LaTeX tables
+    scenario_tables.export_all()
     print("\nDONE.")
 
 

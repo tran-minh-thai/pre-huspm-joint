@@ -1,0 +1,21 @@
+scenario,scope,baseline,geomean_over_proposal,cells,cells_baseline_faster
+SC1,all thresholds,USpan,16.307,32,0
+SC1,all thresholds,HUSP-ULL,0.841,32,25
+SC1,all thresholds,HUSP-SP,0.926,32,21
+SC1,all thresholds,IncUSP-Miner+,10.236,32,0
+SC1,all thresholds,Pre-HUSPM,2.903,32,4
+SC1,default threshold,USpan,15.982,8,0
+SC1,default threshold,HUSP-ULL,0.787,8,7
+SC1,default threshold,HUSP-SP,0.849,8,6
+SC1,default threshold,IncUSP-Miner+,10.476,8,0
+SC1,default threshold,Pre-HUSPM,3.154,8,1
+SC3,all thresholds,USpan,13.7,12,0
+SC3,all thresholds,HUSP-ULL,0.72,12,11
+SC3,all thresholds,HUSP-SP,0.739,12,11
+SC3,all thresholds,IncUSP-Miner+,10.978,12,0
+SC3,all thresholds,Pre-HUSPM,2.834,12,0
+SC3,default threshold,USpan,14.288,3,0
+SC3,default threshold,HUSP-ULL,0.759,3,2
+SC3,default threshold,HUSP-SP,0.787,3,2
+SC3,default threshold,IncUSP-Miner+,12.177,3,0
+SC3,default threshold,Pre-HUSPM,3.285,3,0

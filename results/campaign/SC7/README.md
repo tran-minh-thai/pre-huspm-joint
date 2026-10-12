@@ -34,7 +34,7 @@ Every finished arm of a database reports the same HUSP count: yes, over
 
 Over the increments that do not rescan, the only ones on which the index is read.
 
-| database | increments without a rescan | with the index | without it | block reads with | block reads without |
+| database | increments without a rescan | with the index | without it | sequences read with | sequences read without |
 |---|---:|---:|---:|---:|---:|
 | SIGN | 41 | 47 ms | 47 ms | 147,405 | 183,010 |
 | C8T1S5I8N5K | 23 | 258 ms | 750 ms | 6,822,900 | 64,221,200 |

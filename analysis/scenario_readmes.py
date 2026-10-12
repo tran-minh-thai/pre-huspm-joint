@@ -428,6 +428,24 @@ def sc7():
         (inc[(inc["dataset"] == ds) & (inc["algorithm"] == a)].sort_values("iteration")["total_patterns_found"].to_numpy()
          == inc[(inc["dataset"] == ds) & (inc["algorithm"] == "proposed_C5_on")].sort_values("iteration")["total_patterns_found"].to_numpy()).all()
         for ds in set(inc["dataset"]) for a in ["proposed_C5_off", "proposed_no_block_index"])
+    bs = sc7_block_size()
+    block_size_text = ""
+    if len(bs):
+        rows = [[r["dataset"], f"{r['block_size']}" + (" (default)" if r["default"] else ""),
+                 f"{r['sequences_read']:,}", f"{r['direct_ms']:,.0f} ms", f"{r['total_s']:.2f} s", r["counts_equal"],
+                 "yes" if r["same_direct_increments"] else "NO"] for _, r in bs.iterrows()]
+        block_size_text = f"""
+## Block size
+
+The same stream with blocks of n sequences. A block never spans two increments, so the effective
+block size is the smaller of n and the increment size (5 sequences on SIGN, 199 or 200 on
+C8T1S5I8N5K). The expectations were stated in
+`docs/experiments.md` before the measurement. Sequences read do not decrease from one block size
+to the next where the smaller divides the larger: {bs.attrs["nested_pairs_monotone"]} of
+{bs.attrs["nested_pairs"]} such pairs.
+
+{table(["database", "block size", "sequences read", "direct updates", "whole stream", "counts equal to the default", "same increments without a rescan"], rows)}
+"""
     text = f"""# SC7, what each component contributes
 
 The IUB bound and the irrelevant item pruning (IPS) act inside the miner, so each is ablated on
@@ -453,8 +471,8 @@ Every finished arm of a database reports the same HUSP count: {"yes" if static_a
 
 Over the increments that do not rescan, the only ones on which the index is read.
 
-{table(["database", "increments without a rescan", "with the index", "without it", "block reads with", "block reads without"], c4)}
-"""
+{table(["database", "increments without a rescan", "with the index", "without it", "sequences read with", "sequences read without"], c4)}
+{block_size_text}"""
     write("campaign/SC7/README.md", text)
 
 
@@ -521,48 +539,8 @@ SLABEL = {"USpan": "USpan", "HUSP-ULL": "HUSP-ULL", "HUSP-SP": "HUSP-SP", "IncUS
           "Pre-HUSPM": "Pre-HUSPM", P: "Pre-HUSPM-Joint"}
 
 
-def static_cells(df):
-    """(database, threshold, algorithm) -> the row of that run."""
-    df = mf.parse_su(df)
-    cells = {}
-    for _, r in df.iterrows():
-        cells[(r["dataset"], float(r["su"]), r["algorithm"])] = r
-    return cells
-
-
-def static_summary(cells):
-    """Agreement of the HUSP counts, and the proposal's runtime against each baseline."""
-    pairs = sorted({(d, su) for d, su, _ in cells})
-    agree = n_pairs = 0
-    disagree = []
-    fastest = n_fast = 0
-    vs_best, excluded = [], []
-    per_base = {a: [] for a in mf.STATIC_ORDER if a != P}
-    for d, su in pairs:
-        fin = {a: cells[(d, su, a)] for a in mf.STATIC_ORDER
-               if (d, su, a) in cells and bool(cells[(d, su, a)]["finished"])}
-        counts = {int(r["total_patterns_found"]) for r in fin.values()}
-        if len(fin) >= 2:
-            n_pairs += 1
-            if len(counts) == 1:
-                agree += 1
-            else:
-                disagree.append(f"{d} at {su:g}")
-        if P not in fin:
-            continue
-        pm_ = float(fin[P]["runtime_ms"])
-        others = {a: float(r["runtime_ms"]) for a, r in fin.items() if a != P}
-        if pm_ <= 0 or any(v <= 0 for v in others.values()):
-            excluded.append(f"{d} at {su:g}")
-            continue
-        if others:
-            n_fast += 1
-            fastest += int(pm_ < min(others.values()))
-            vs_best.append(min(others.values()) / pm_)
-        for a, v in others.items():
-            per_base[a].append(v / pm_)
-    return dict(pairs=n_pairs, agree=agree, disagree=disagree, fastest=fastest, n_fast=n_fast,
-                vs_best=vs_best, per_base=per_base, excluded=excluded)
+# One computation for the paper tables and these pages.
+from scenario_tables import sc7_block_size, static_cells, static_summary  # noqa: E402
 
 
 def incomplete_runs(cells):
