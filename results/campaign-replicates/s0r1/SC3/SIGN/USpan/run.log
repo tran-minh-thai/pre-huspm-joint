@@ -1,0 +1,15 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC3]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=1 | seed.index=0
+
+--- [SC3] Su sensitivity ---
+>> RUNNING USpan/SIGN/SC3_su=0.049134#0  (heap free=1008MB / total=1024MB / max=49152MB)
+[USpan/SIGN/SC3_su=0.049134#0] OK t=11097ms cand=8954325 pat=793 heapDelta=328MB
+>> RUNNING USpan/SIGN/SC3_su=0.065911#0  (heap free=114MB / total=128MB / max=49152MB)
+[USpan/SIGN/SC3_su=0.065911#0] OK t=5785ms cand=3751105 pat=141 heapDelta=291MB
+>> RUNNING USpan/SIGN/SC3_su=0.083371#0  (heap free=114MB / total=128MB / max=49152MB)
+[USpan/SIGN/SC3_su=0.083371#0] OK t=3488ms cand=1798469 pat=31 heapDelta=292MB
+>> RUNNING USpan/SIGN/SC3_su=0.091052#0  (heap free=115MB / total=128MB / max=49152MB)
+[USpan/SIGN/SC3_su=0.091052#0] OK t=2828ms cand=1358703 pat=16 heapDelta=294MB
+=== ALL SCENARIOS DONE (30.0s) ===
