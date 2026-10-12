@@ -70,7 +70,7 @@ after each increment.
 | repeats | 1 per arm; replicates as separate arms | `-Repeat n` and `-SeedIndex k` measure a replicate in a fresh JVM, into `results/campaign-replicates/s<k>r<n>`. Three repeats for SC1 and for SC2's proposal and remining on SIGN, TAFENG, BIBLE and C8T1S5I8N5K; five seeds for SC6. See `docs/experiments.md`, "Repetition". |
 | `SUBSET_3` | SIGN, LEVIATHAN, C8T1S5I8N5K | Small and dense, medium, and the one database with more than one item per event. Used by SC3, SC4, SC5 and SC6. |
 | `C5_ABLATION_SET` | SIGN, C8T1S5I8N5K (BMS1 listed, filtered out by scope) | The databases of SC7's incremental ablations (block index and adaptive rescan). `proposed_C5_off` rescans every increment, so it costs a hundred full mines. |
-| BMS1 | SC1 only | No threshold that returns patterns can be mined on the whole database. |
+| BMS1 | SC1 only | On the whole database 0.025 returns two patterns and 0.020 exceeds three billion candidates (`results/thresholds/bms1-whole`); its four levels lie below 0.020. |
 
 ## What each scenario costs
 

@@ -157,8 +157,9 @@ and KOSARAK's `r_l`, 0.80 if the proposal mines KOSARAK at that floor within 120
 | SC6 | twenty operations, 14 insertions, 3 deletions and 3 modifications in a seeded order, each a hundredth of the incremental stream; the proposal and remining replay the same plan | SIGN, LEVIATHAN, C8T1S5I8N5K | `SC6_idm_mixed.csv` |
 | SC7 | ablation. The IUB bound (C3) and the irrelevant item pruning (`-Dadapt.iip=off`) on one mine of the whole database, with Pre-HUSPM for reference; the block index (C4) and the adaptive rescan decision (C5) on `D_init` and 100 increments, one row per increment | C3: seven (not BMS1); C4, C5: SIGN, C8T1S5I8N5K | `SC7_ablation.csv` |
 
-BMS1 takes part in SC1 only: no threshold that returns patterns can be mined on the whole
-database. In SC5 only BURST draws from the seed; EVEN, INCREASING and DECREASING are
+BMS1 takes part in SC1 only: on the whole database 0.025 returns two patterns and 0.020
+exceeds three billion candidates (`results/thresholds/bms1-whole`), and its four levels lie
+below 0.020. In SC5 only BURST draws from the seed; EVEN, INCREASING and DECREASING are
 deterministic. SC7's arms are `proposed_full`, `proposed_no_IUB`, `proposed_no_IPS`, `Pre-HUSPM` (one mine each)
 and `proposed_C5_on`, `proposed_C5_off`, `proposed_no_block_index`, `proposed_bsz_<n>` (over the increments).
 

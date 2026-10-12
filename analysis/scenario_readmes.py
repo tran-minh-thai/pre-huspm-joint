@@ -168,8 +168,8 @@ def sc2():
     text = f"""# SC2, one hundred increments
 
 Seven databases against five arms; `D_init` per `common.Datasets`, the remainder cut into 100
-equal increments in file order. BMS1 is absent: no threshold mines it once the database grows
-past `D_init`, so it appears in SC1 alone. {HEAD}
+equal increments in file order. BMS1 is absent: none of its four thresholds can be mined once the
+database grows past `D_init`, so it appears in SC1 alone. {HEAD}
 
 Pre-HUSPM-SWUmax and Pre-HUSPM-TSU are the two rescan tests of Yan et al.: their Theorem 2, on the
 largest sequence-weighted utility of an item in the inserted sequences, and their Theorem 1, on the
@@ -785,7 +785,7 @@ SCOPE = {
         "SC2, one hundred increments",
         "`D_init` per `common.Datasets`, the remainder cut into 100 equal increments in file order, "
         "against Pre-HUSPM-SWUmax, Pre-HUSPM-TSU, remining from scratch and IncUSP-Miner+. BMS1 is "
-        "not in this scenario: no threshold mines it once the database grows past `D_init`."),
+        "not in this scenario: none of its four thresholds can be mined once the database grows past `D_init`."),
     "campaign/SC3/README.md": (
         "SC3, static mining on the whole database",
         "The six algorithms of SC1 on the whole database at the same four thresholds, on SIGN, "

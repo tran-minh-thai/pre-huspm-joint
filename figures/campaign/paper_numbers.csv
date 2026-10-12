@@ -191,6 +191,10 @@ SC3_count_agreement,12/12,table_agreement.csv
 SC5_count_agreement,2904/2904,table_agreement.csv
 SC2_prediction,holds,table_SC2_operating_region.csv
 SC2_joint_le_swumax,7/7,table_SC2_operating_region.csv
+BMS1_whole_uut_3.000_patterns,1,thresholds/bms1-whole
+BMS1_whole_uut_2.500_patterns,2,thresholds/bms1-whole
+BMS1_whole_uut_2.000_status,abandoned:patternbudgetexceeded,thresholds/bms1-whole
+BMS1_whole_candidate_budget,"3,000,000,000",thresholds/bms1-whole
 noise_SC1_live_set_cells,106,table_noise.csv
 noise_SC1_live_set_median,0.000,table_noise.csv
 noise_SC1_live_set_max,1.429,table_noise.csv

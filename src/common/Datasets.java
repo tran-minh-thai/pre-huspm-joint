@@ -41,11 +41,11 @@ public final class Datasets {
          * is measurable in SC1 alone however well it behaves on the half.
          *
          * BMS1 is that case and it is not a near miss. On D_init it returns 18 patterns in
-         * 3.5 s; on the whole database no threshold works at all. 0.030 exceeds three billion
-         * candidates and 0.032 returns the empty set in 1.8 s, so the region that holds
-         * patterns lies entirely behind the wall - the shape that removed ONLINE_RETAIL_II
-         * from the study. Unlike that database, BMS1 is well behaved on D_init, so it stays
-         * in SC1.
+         * 3.5 s; on the whole database 0.030 returns one pattern, 0.025 two, and 0.020 exceeds
+         * three billion candidates (results/thresholds/bms1-whole). Its four levels,
+         * 0.0128 to 0.0162, lie below 0.020, and a lower threshold only explores more, so no
+         * level of the sweep can be mined on the whole database. Unlike ONLINE_RETAIL_II,
+         * BMS1 is well behaved on D_init, so it stays in SC1.
          *
          * This flag makes the choice of databases for the whole-database scenarios explicit
          * and checkable.

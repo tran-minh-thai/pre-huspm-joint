@@ -32,3 +32,22 @@ never to be reported.
 
 A database whose thresholds are not calibrated is skipped by the runner rather than measured
 at an operating point chosen for different data.
+
+## `bms1-whole`
+
+BMS1 on the whole database at three thresholds, run on the measurement machine from commit
+`2050fabc` (the parent of the commit that added this directory):
+
+```
+java -Xmx48g -Xss64m -cp build experiments.ThresholdScan BMS1 --full --grid 0.030,0.025,0.020 --max-candidates 3000000000 --budget-sec 3600 --out results\thresholds\bms1-whole
+```
+
+| UUT | patterns |
+|---|---|
+| 0.030 | 1 |
+| 0.025 | 2 |
+| 0.020 | over three billion candidates, abandoned |
+
+The four SC1 levels of BMS1 (0.012821 to 0.016218) lie below 0.020, and a lower threshold only
+explores more, so none of them can be mined on the whole database. This is why BMS1 is measured
+in SC1 alone. The counts do not depend on the machine; `mine_ms` is not reported.

@@ -1,8 +1,8 @@
 # SC2, one hundred increments
 
 Seven databases against five arms; `D_init` per `common.Datasets`, the remainder cut into 100
-equal increments in file order. BMS1 is absent: no threshold mines it once the database grows
-past `D_init`, so it appears in SC1 alone. Measured on `PC-THAI` (see `results/machine/PC-THAI.json` and `environment.lock.json`), `-Xmx48g`, one JVM per arm. Written by `analysis/scenario_readmes.py` from the arms' CSVs; rerun it rather than editing numbers here.
+equal increments in file order. BMS1 is absent: none of its four thresholds can be mined once the
+database grows past `D_init`, so it appears in SC1 alone. Measured on `PC-THAI` (see `results/machine/PC-THAI.json` and `environment.lock.json`), `-Xmx48g`, one JVM per arm. Written by `analysis/scenario_readmes.py` from the arms' CSVs; rerun it rather than editing numbers here.
 
 Pre-HUSPM-SWUmax and Pre-HUSPM-TSU are the two rescan tests of Yan et al.: their Theorem 2, on the
 largest sequence-weighted utility of an item in the inserted sequences, and their Theorem 1, on the

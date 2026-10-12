@@ -556,6 +556,27 @@ def pct4(value):
     return format(q, "f")
 
 
+def bms1_whole(put):
+    """BMS1 on the whole database, the reason it is measured in SC1 alone."""
+    d = os.path.join(mf.DATA_DIR, "thresholds", "bms1-whole")
+    path = os.path.join(d, "thresholds-pc-thai.csv")
+    if not os.path.exists(path):
+        print(f"[missing] {path}: no BMS1 whole-database keys")
+        return
+    src = "thresholds/bms1-whole"
+    for _, r in pd.read_csv(path).iterrows():
+        tag = pct4(r["uut"])
+        if r["status"] == "ok":
+            put(f"BMS1_whole_uut_{tag}_patterns", int(r["patterns"]), src)
+        else:
+            put(f"BMS1_whole_uut_{tag}_status", r["status"], src)
+    first = open(os.path.join(d, "console.txt"), encoding="utf-8").readline()
+    m = re.match(r"budgets: ([\d,]+) candidates", first)
+    if not m:
+        raise ValueError(f"no candidate budget in the first line of {d}/console.txt: {first!r}")
+    put("BMS1_whole_candidate_budget", m.group(1), src)
+
+
 def export_all(out_dir=None):
     out = out_dir or mf.OUT_DIR
     os.makedirs(out, exist_ok=True)
@@ -723,6 +744,8 @@ def export_all(out_dir=None):
         lines.append(r["dataset"] + " & " + " & ".join(pct4(v) for v in r["thresholds"].split()) + " \\\\")
     lines += ["\\bottomrule\\end{tabular}", "\\end{table}", ""]
     open(os.path.join(out, "table_thresholds.tex"), "w", encoding="utf-8").write("\n".join(lines))
+
+    bms1_whole(put)
 
     nz = noise()
     mf.write_csv(nz, os.path.join(out, "table_noise.csv"))
