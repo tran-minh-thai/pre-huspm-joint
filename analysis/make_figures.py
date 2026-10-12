@@ -706,6 +706,48 @@ def figset_c5_ablation(tag="fig_C5_ablation"):
     save(fig, f"{tag}.pdf")
 
 
+def figset_block_size(tag="fig_block_size"):
+    """SC7 block-size arms on the SC2 stream, three panels against B_sz: sequences read on the
+    direct updates, the time of the direct updates, and the time of the whole stream. One line
+    per database; the default block size is marked."""
+    import scenario_tables
+    bs = scenario_tables.sc7_block_size()
+    if bs.empty:
+        print(f"[not drawn] {tag}.pdf: no proposed_bsz_<n> arm in results/campaign/SC7")
+        path = os.path.join(OUT_DIR, f"{tag}.pdf")
+        if os.path.exists(path):
+            os.remove(path)
+        return
+    default = int(bs.loc[bs["default"], "block_size"].iloc[0])
+    styles = {"SIGN": dict(linestyle="-", marker="o"), "C8T1S5I8N5K": dict(linestyle=(0, (4, 1.5)), marker="s")}
+    panels = [("sequences_read", "Sequences read", "Sequences read", 1.0),
+              ("direct_ms", "Direct updates", "Time (ms)", 1.0),
+              ("total_s", "Whole stream", "Time (s)", 1.0)]
+    # The block sizes are a few discrete settings, drawn at even spacing in increasing order.
+    ticks = sorted(set(bs["block_size"]))
+    pos = {b: k for k, b in enumerate(ticks)}
+    fig, axes = plt.subplots(1, 3, figsize=(LINEWIDTH_IN, 2.0))
+    for i, (ax, (col, name, ylab, scale)) in enumerate(zip(axes, panels)):
+        for d in [x for x in ALL_DATASETS if x in set(bs["dataset"])]:
+            g = bs[bs["dataset"] == d].sort_values("block_size")
+            st = styles.get(d, dict(linestyle=":", marker="^"))
+            ax.plot([pos[b] for b in g["block_size"]], g[col] * scale, color="black", markerfacecolor="none",
+                    markeredgecolor="black", markeredgewidth=0.7, lw=0.9, ms=4, label=d, **st)
+        ax.axvline(pos[default], color="0.5", lw=0.6, linestyle=":")
+        ax.set_xticks(range(len(ticks)))
+        # Tilted: six labels at 9 pt do not fit flat in a third of the column.
+        ax.set_xticklabels([str(t) for t in ticks], rotation=45, ha="right", rotation_mode="anchor")
+        if col == "sequences_read":
+            ax.set_yscale("log")
+        else:
+            ax.set_ylim(bottom=0)
+        ax.set_ylabel(ylab)
+        panel_xlabel(ax, i, name, "$B_{\\mathrm{sz}}$")
+    fig.tight_layout(w_pad=0.8)
+    shared_legend(fig, axes, ncol=2)
+    save(fig, f"{tag}.pdf")
+
+
 def export_ablation_table():
     """SC7 as a table. Static: full, IUB off (C3), item removal off (IPS) and Pre-HUSPM on
     one mine of the whole database - runtime, explored nodes, IUB cuts. Incremental: C5 and C4 arms
@@ -1257,6 +1299,7 @@ def main():
     figset_scalability("SC3", "fig_scalability")       # runtime + explored vs su, whole DB
     figset_incremental()                               # SC2 cumulative runtime, 7 databases
     figset_c5_ablation()                               # SC7 C5 on / off
+    figset_block_size()                                # SC7 block size, three panels
     figset_sl_sensitivity()                            # SC4 pre-large set vs r_l
     figset_batch_ratio()                               # SC5 proposed / remine against K
     figset_memory_static()                             # SC1 live set, default threshold

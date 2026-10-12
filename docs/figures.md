@@ -35,6 +35,7 @@ every sum.
 | `fig_scalability_SC3_explored_nodes.pdf` | SC3 | explored nodes against UUT, same panels; each algorithm counts the nodes of its own search (`docs/result-columns.md`, "Work counters by algorithm") |
 | `fig_incremental_cumulative.pdf` | SC2 | cumulative runtime over the 100 increments (initial mine excluded), five arms, seven databases; a curve that stops early ends in a cross, and arms with no curve are named under the panels |
 | `fig_C5_ablation.pdf` | SC7 | runtime summed over the 100 increments and number of rescans, adaptive rescan decision against a rescan at every increment, SIGN and C8T1S5I8N5K |
+| `fig_block_size.pdf` | SC7 | against the block size `B_sz` (the default marked): (a) sequences read on the increments without a rescan, (b) their time, (c) the time of the whole stream; SIGN and C8T1S5I8N5K |
 | `fig_sl_sensitivity_prelarge_count.pdf` | SC4 | pre-large set size against `r_l`, Pre-HUSPM and the proposal, SIGN / LEVIATHAN / C8T1S5I8N5K |
 | `fig_batch_ratio.pdf` | SC5 | the proposal's runtime over remining's, summed over the increments, against K, one line per strategy; below one the proposal is faster |
 | `fig_memory_static.pdf` | memory SC1 | live set at each database's default threshold, six algorithms, eight databases; a live set read as 0 MB (below the column's 1 MB resolution) is drawn at 1 MB |
