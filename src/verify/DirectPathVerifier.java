@@ -65,7 +65,8 @@ public final class DirectPathVerifier {
     // which keeps BMS1 - where a floor of 0.6 * UUT does not finish - from stalling the run;
     // whatever floor it settles on, the target is still the untracked pattern of highest
     // utility below the HUSP threshold among those it found.
-    private static final double PROBE_RL = 0.6;
+    /** Floor ratio of the reference mine; -Dverify.probeRl overrides (a target must stay below r_l = 0.8). */
+    private static final double PROBE_RL = Double.parseDouble(System.getProperty("verify.probeRl", "0.6"));
     private static final long PROBE_CANDIDATE_BUDGET = 500_000_000L;
 
     public static void main(String[] args) throws IOException {
