@@ -1,0 +1,4 @@
+dataset,scope,level,target_patterns,uut,patterns,probes,mine_ms,status
+BMS1,full,grid,,0.030000,1,1,178,ok
+BMS1,full,grid,,0.025000,2,1,310,ok
+BMS1,full,grid,,0.020000,-1,1,386931,abandoned:patternbudgetexceeded

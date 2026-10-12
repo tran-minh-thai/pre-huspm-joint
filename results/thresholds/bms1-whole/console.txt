@@ -1,0 +1,9 @@
+budgets: 3,000,000,000 candidates, 3600 s per probe, 900 s per level
+
+=== BMS1 | full | |D|=59,601 | TSU=7,229,030 ===
+       uut     patterns         ms  status
+   0.03000            1        178  ok
+   0.02500            2        310  ok
+   0.02000      >budget     386931  abandoned:patternbudgetexceeded
+
+-> D:\pre-huspm-adaptive\results\thresholds\bms1-whole\thresholds-pc-thai.csv
