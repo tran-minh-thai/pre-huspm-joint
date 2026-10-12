@@ -442,9 +442,21 @@ def figset_scalability(sc="SC3", tag="fig_scalability", datasets=None,
                 if a.empty:
                     continue
                 ok = a[a["finished"]]
+                ys = conv(ok[metric])
+                if metric == "explored_nodes" and algo == PROPOSED:
+                    # Counted as the baselines count: a node only when it passes the bound. The
+                    # proposal also counts the root items stopped at once by its node bound.
+                    import scenario_tables
+                    stop = scenario_tables.root_stopped()
+                    keys = [(sc, ds, round(float(v), 9), "once") for v in ok["su"]]
+                    missing = [k for k in keys if k not in stop]
+                    if missing:
+                        sys.exit(f"{tag}_{sc}_{metric}: no root count for {missing}; "
+                                 "run analysis/root_items.py")
+                    ys = ys - np.array([stop[k] for k in keys], float)
                 # the four levels are evenly spaced on the axis and labelled with their
                 # values: they are not evenly spaced in value, and their labels collide
-                ax.plot([level[v] for v in ok["su"]], conv(ok[metric]), **line_style(algo))
+                ax.plot([level[v] for v in ok["su"]], ys, **line_style(algo))
                 for _, r in a[~a["finished"]].iterrows():
                     annotate_fail(ax, level[r["su"]], r["status"])
             ax.set_xticks(range(len(sus)))
@@ -770,6 +782,20 @@ def export_ablation_table():
                              explored=r["explored_nodes"] if r["finished"] else np.nan,
                              iub_cuts=r["pruned_iub"] if r["finished"] else np.nan))
     tab = pd.DataFrame(rows)
+    # explored_bound: as the baselines count, a node only when it passes the bound. The proposal's
+    # arms also count the root items stopped at once (analysis/root_items.py); Pre-HUSPM counts
+    # this way already.
+    import scenario_tables
+    stop = scenario_tables.root_stopped()
+    ips_of = {"Full": "once", "-IUB": "once", "-IPS": "off"}
+    def bound(r):
+        if pd.isna(r["explored"]) or r["variant"] not in ips_of:
+            return r["explored"]
+        k = ("SC7", r["dataset"], round(float(DATASETS[r["dataset"]]["default_uut"]), 9), ips_of[r["variant"]])
+        if k not in stop:
+            sys.exit(f"table_SC7_static: no root count for {k}; run analysis/root_items.py")
+        return r["explored"] - stop[k]
+    tab["explored_bound"] = tab.apply(bound, axis=1) if len(tab) else []
     write_csv(tab, os.path.join(OUT_DIR, "table_SC7_static.csv"))
 
     inc = {"proposed_C5_on": "Full", "proposed_C5_off": "-C5 (rescan every increment)",
@@ -802,7 +828,7 @@ def export_ablation_table():
         ds = r["dataset"] if r["dataset"] != prev else ""
         prev = r["dataset"]
         rt = f"{r['runtime_s']:.2f}" if pd.notna(r["runtime_s"]) else r["status"]
-        ex = f"{int(r['explored']):,}" if pd.notna(r["explored"]) else r["status"]
+        ex = f"{int(r['explored_bound']):,}" if pd.notna(r["explored_bound"]) else r["status"]
         lines.append(f"{ds} & {r['variant']} & {rt} & {ex} \\\\")
     lines += ["\\bottomrule", "\\end{tabular}", "\\end{table}", ""]
     with open(os.path.join(OUT_DIR, "table_SC7_ablation.tex"), "w", encoding="utf-8") as fh:

@@ -280,6 +280,54 @@ def sc7_block_size():
     return out
 
 
+# ------------------------------------------------------------------------------ explored nodes, one convention
+ROOT_ITEMS = os.path.join(mf.DATA_DIR, "invariant-root-items", "root_items.csv")
+
+
+def root_stopped():
+    """(scenario, database, threshold, ips) -> root items that receive a list and are stopped
+    at once by the node bound (analysis/root_items.py); empty when the file is missing."""
+    if not os.path.exists(ROOT_ITEMS):
+        return {}
+    r = pd.read_csv(ROOT_ITEMS)
+    return {(x["scenario"], x["dataset"], round(float(x["su"]), 9), x["ips"]): int(x["root_stopped"])
+            for _, x in r.iterrows()}
+
+
+def explored_one_convention():
+    """Explored nodes of SC1 and SC3 with the proposal counted as the baselines count: a node only
+    when it passes the bound, i.e. explored_nodes minus the root items stopped at once. Ratios of
+    each baseline's count over the proposal's, per database and threshold; a cell whose root count
+    is missing is named in `missing`, not dropped."""
+    stop = root_stopped()
+    rows = []
+    for sc in ("SC1", "SC3"):
+        df = mf.load_scenario(sc)
+        if df is None:
+            continue
+        cells = static_cells(df)
+        for d, su in sorted({(d, su) for d, su, _ in cells}):
+            pr = cells.get((d, su, P))
+            if pr is None or not bool(pr["finished"]):
+                continue
+            k = (sc, d, round(su, 9), "once")
+            row = dict(scenario=sc, dataset=d, su=su, default=bool(np.isclose(su, mf.default_su(d))),
+                       proposal_explored=int(pr["explored_nodes"]),
+                       root_stopped=stop.get(k), missing=k not in stop)
+            row["proposal_explored_bound"] = (row["proposal_explored"] - row["root_stopped"]
+                                              if row["root_stopped"] is not None else None)
+            for a in mf.STATIC_ORDER:
+                if a == P:
+                    continue
+                r = cells.get((d, su, a))
+                ok = r is not None and bool(r["finished"])
+                row[f"explored_{a}"] = int(r["explored_nodes"]) if ok else None
+                pb = row["proposal_explored_bound"]
+                row[f"ratio_{a}"] = (int(r["explored_nodes"]) / pb) if ok and pb else None
+            rows.append(row)
+    return pd.DataFrame(rows)
+
+
 # ------------------------------------------------------------------------------ verification
 VERIFY_DIR = os.path.join(mf.DATA_DIR, "verify-joint")
 
@@ -552,6 +600,28 @@ def export_all(out_dir=None):
                     "caught"):
             if col in r and pd.notna(r[col]):
                 put(f"{key}_{col}", int(r[col]), "table_verification.csv")
+
+    ex = explored_one_convention()
+    ex_path = os.path.join(out, "table_explored_nodes.csv")
+    if ex.empty or ex["missing"].all():
+        if os.path.exists(ex_path):
+            os.remove(ex_path)
+        print(f"[not written] table_explored_nodes.csv: no root counts in {ROOT_ITEMS}")
+    else:
+        if ex["missing"].any():
+            print("[warning] table_explored_nodes.csv: no root count for "
+                  + ", ".join(f"{r.scenario} {r.dataset} {r.su:g}" for r in ex[ex["missing"]].itertuples()))
+        mf.write_csv(ex, ex_path)
+        for sc in ("SC1", "SC3"):
+            for scope, g in (("default", ex[(ex.scenario == sc) & ex["default"]]), ("all", ex[ex.scenario == sc])):
+                for a in ("HUSP-SP", "HUSP-ULL", "Pre-HUSPM"):
+                    v = g[f"ratio_{a}"].dropna()
+                    if len(v):
+                        lo, hi = g.loc[v.idxmin()], g.loc[v.idxmax()]
+                        put(f"{sc}_{scope}_explored_{a}_over_proposal_min", f"{v.min():.2f} ({lo['dataset']})",
+                            "table_explored_nodes.csv")
+                        put(f"{sc}_{scope}_explored_{a}_over_proposal_max", f"{v.max():.2f} ({hi['dataset']})",
+                            "table_explored_nodes.csv")
 
     ag = agreement()
     mf.write_csv(ag, os.path.join(out, "table_agreement.csv"))

@@ -117,6 +117,30 @@ verify_direct_path_on_real_databases_random_operations_direct_delete,30,table_ve
 verify_direct_path_on_real_databases_random_operations_direct_insert,58,table_verification.csv
 verify_direct_path_on_real_databases_random_operations_direct_modify,28,table_verification.csv
 verify_direct_path_on_real_databases_random_operations_mismatches,0,table_verification.csv
+SC1_default_explored_HUSP-SP_over_proposal_min,0.37 (FIFA),table_explored_nodes.csv
+SC1_default_explored_HUSP-SP_over_proposal_max,0.59 (BIBLE),table_explored_nodes.csv
+SC1_default_explored_HUSP-ULL_over_proposal_min,0.38 (FIFA),table_explored_nodes.csv
+SC1_default_explored_HUSP-ULL_over_proposal_max,4.13 (TAFENG),table_explored_nodes.csv
+SC1_default_explored_Pre-HUSPM_over_proposal_min,1.02 (TAFENG),table_explored_nodes.csv
+SC1_default_explored_Pre-HUSPM_over_proposal_max,26.96 (BMS1),table_explored_nodes.csv
+SC1_all_explored_HUSP-SP_over_proposal_min,0.32 (C8T1S5I8N5K),table_explored_nodes.csv
+SC1_all_explored_HUSP-SP_over_proposal_max,0.61 (TAFENG),table_explored_nodes.csv
+SC1_all_explored_HUSP-ULL_over_proposal_min,0.38 (FIFA),table_explored_nodes.csv
+SC1_all_explored_HUSP-ULL_over_proposal_max,7.47 (TAFENG),table_explored_nodes.csv
+SC1_all_explored_Pre-HUSPM_over_proposal_min,1.01 (TAFENG),table_explored_nodes.csv
+SC1_all_explored_Pre-HUSPM_over_proposal_max,45.01 (BMS1),table_explored_nodes.csv
+SC3_default_explored_HUSP-SP_over_proposal_min,0.33 (C8T1S5I8N5K),table_explored_nodes.csv
+SC3_default_explored_HUSP-SP_over_proposal_max,0.56 (LEVIATHAN),table_explored_nodes.csv
+SC3_default_explored_HUSP-ULL_over_proposal_min,0.47 (C8T1S5I8N5K),table_explored_nodes.csv
+SC3_default_explored_HUSP-ULL_over_proposal_max,0.63 (LEVIATHAN),table_explored_nodes.csv
+SC3_default_explored_Pre-HUSPM_over_proposal_min,3.94 (SIGN),table_explored_nodes.csv
+SC3_default_explored_Pre-HUSPM_over_proposal_max,4.95 (C8T1S5I8N5K),table_explored_nodes.csv
+SC3_all_explored_HUSP-SP_over_proposal_min,0.27 (C8T1S5I8N5K),table_explored_nodes.csv
+SC3_all_explored_HUSP-SP_over_proposal_max,0.57 (LEVIATHAN),table_explored_nodes.csv
+SC3_all_explored_HUSP-ULL_over_proposal_min,0.42 (C8T1S5I8N5K),table_explored_nodes.csv
+SC3_all_explored_HUSP-ULL_over_proposal_max,0.66 (LEVIATHAN),table_explored_nodes.csv
+SC3_all_explored_Pre-HUSPM_over_proposal_min,3.19 (C8T1S5I8N5K),table_explored_nodes.csv
+SC3_all_explored_Pre-HUSPM_over_proposal_max,5.62 (C8T1S5I8N5K),table_explored_nodes.csv
 SC1_count_agreement,32/32,table_agreement.csv
 SC3_count_agreement,12/12,table_agreement.csv
 SC5_count_agreement,2904/2904,table_agreement.csv

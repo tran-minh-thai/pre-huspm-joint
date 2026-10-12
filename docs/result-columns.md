@@ -69,6 +69,14 @@ columns mean different things for different algorithms. "Pre-HUSPM" covers the a
 | Pre-HUSPM, a batch absorbed by the safe update | the 1-sequences of the batch plus the extensions in the batch of every buffered pattern kept | buffered patterns kept |
 | proposal | every distinct 1-item plus, at every expanded node, the distinct I- and S-extension items, before the aggregated PEU value bound | nodes entered for expansion with a non-empty occurrence list, counted before the IUB test |
 
+To compare explored nodes across algorithms, count a node when its candidate extensions are
+scanned. USpan, Pre-HUSPM and HUSP-SP count after their node bound; HUSP-ULL calls PGrowth for
+every 1-item that passes SWU and scans its candidates. The proposal counts before its IUB test,
+and the only nodes that test stops are root items, which receive a list and return before any
+scan. `results/invariant-root-items` counts them for every static configuration, and
+`table_explored_nodes.csv`, the SC3 explored-node figure and the SC7 ablation table use
+`explored_nodes - root_stopped` for the proposal.
+
 ### Pruning counters
 
 Each column counts one pruning rule. Only the algorithms listed write a non-zero value.

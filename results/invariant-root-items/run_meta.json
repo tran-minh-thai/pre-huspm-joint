@@ -1,0 +1,16 @@
+{
+  "command": "~/.venvs/pre-huspm-adaptive/bin/python analysis/root_items.py",
+  "path_substitutions": 1,
+  "build_dir": "build-vj",
+  "git_commit": "0c8f12a2bfc1378ed4ff969922e765f68c679768",
+  "tree": "src clean, other files modified",
+  "source_sha256": "29c2355da1942f5aa7d4fef2b78df0bc1ee5c5cae2177c52f08b1698bb18a666",
+  "source_files": 34,
+  "java": "openjdk version \"26.0.1\" 2026-04-21",
+  "os": "Darwin 27.0.0 (macOS-27.0.1-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-10-12T14:30:31",
+  "end": "2026-10-12T14:30:43",
+  "exit_code": 0
+}
