@@ -1,11 +1,22 @@
 key,value,source
 SC1_all_proposal_fastest,1/32,table_static_summary.csv
+SC1_all_proposal_fastest_separated,1/32,table_static_summary.csv
+SC1_all_ties_with_fastest_baseline,2/32,table_static_summary.csv
+SC1_all_tie_cells,BMS1 at 0.015293 (HUSP-ULL); KOSARAK at 0.028117 (HUSP-SP),table_static_summary.csv
 SC1_all_pairs_agree,32/32,table_static_summary.csv
 SC1_default_proposal_fastest,0/8,table_static_summary.csv
+SC1_default_proposal_fastest_separated,0/8,table_static_summary.csv
+SC1_default_ties_with_fastest_baseline,0/8,table_static_summary.csv
 SC1_default_pairs_agree,8/8,table_static_summary.csv
-SC3_all_proposal_fastest,0/12,table_static_summary.csv
+SC3_all_proposal_fastest,1/12,table_static_summary.csv
+SC3_all_proposal_fastest_separated,0/12,table_static_summary.csv
+SC3_all_ties_with_fastest_baseline,3/12,table_static_summary.csv
+SC3_all_tie_cells,SIGN at 0.065911 (HUSP-ULL); SIGN at 0.083371 (HUSP-SP); SIGN at 0.091052 (HUSP-ULL),table_static_summary.csv
 SC3_all_pairs_agree,12/12,table_static_summary.csv
 SC3_default_proposal_fastest,0/3,table_static_summary.csv
+SC3_default_proposal_fastest_separated,0/3,table_static_summary.csv
+SC3_default_ties_with_fastest_baseline,1/3,table_static_summary.csv
+SC3_default_tie_cells,SIGN at 0.065911 (HUSP-ULL),table_static_summary.csv
 SC3_default_pairs_agree,3/3,table_static_summary.csv
 SC1_all_geomean_USpan,16.32,table_static_geomean.csv
 SC1_all_baseline_faster_USpan,0/32,table_static_geomean.csv
@@ -33,35 +44,69 @@ SC1_default_baseline_faster_IncUSP-Miner+,0/8,table_static_geomean.csv
 SC1_default_geomean_Pre-HUSPM,3.15,table_static_geomean.csv
 SC1_default_baseline_faster_Pre-HUSPM,1/8,table_static_geomean.csv
 SC1_default_baseline_faster_on_Pre-HUSPM,TAFENG 0.54,table_static_geomean.csv
-SC3_all_geomean_USpan,13.70,table_static_geomean.csv
+SC3_all_geomean_USpan,13.77,table_static_geomean.csv
 SC3_all_baseline_faster_USpan,0/12,table_static_geomean.csv
-SC3_all_geomean_HUSP-ULL,0.72,table_static_geomean.csv
-SC3_all_baseline_faster_HUSP-ULL,11/12,table_static_geomean.csv
-SC3_all_baseline_faster_on_HUSP-ULL,C8T1S5I8N5K at 0.001099 0.40; C8T1S5I8N5K at 0.001132 0.47; C8T1S5I8N5K at 0.0012 0.42; C8T1S5I8N5K at 0.001236 0.69; LEVIATHAN at 0.014644 0.61; LEVIATHAN at 0.01553 0.94; LEVIATHAN at 0.01647 0.94; LEVIATHAN at 0.017987 0.91; SIGN at 0.049134 0.78; SIGN at 0.083371 0.96; SIGN at 0.091052 0.98,table_static_geomean.csv
-SC3_all_geomean_HUSP-SP,0.74,table_static_geomean.csv
-SC3_all_baseline_faster_HUSP-SP,11/12,table_static_geomean.csv
-SC3_all_baseline_faster_on_HUSP-SP,C8T1S5I8N5K at 0.001099 0.43; C8T1S5I8N5K at 0.001132 0.54; C8T1S5I8N5K at 0.0012 0.45; C8T1S5I8N5K at 0.001236 0.65; LEVIATHAN at 0.014644 0.65; LEVIATHAN at 0.01553 0.89; LEVIATHAN at 0.01647 0.92; LEVIATHAN at 0.017987 0.90; SIGN at 0.049134 0.84; SIGN at 0.083371 0.96; SIGN at 0.091052 0.98,table_static_geomean.csv
-SC3_all_geomean_IncUSP-Miner+,10.98,table_static_geomean.csv
+SC3_all_geomean_HUSP-ULL,0.74,table_static_geomean.csv
+SC3_all_baseline_faster_HUSP-ULL,10/12,table_static_geomean.csv
+SC3_all_baseline_faster_on_HUSP-ULL,C8T1S5I8N5K at 0.001099 0.31; C8T1S5I8N5K at 0.001132 0.59; C8T1S5I8N5K at 0.0012 0.48; C8T1S5I8N5K at 0.001236 0.73; LEVIATHAN at 0.014644 0.70; LEVIATHAN at 0.01553 0.92; LEVIATHAN at 0.01647 0.96; LEVIATHAN at 0.017987 0.89; SIGN at 0.049134 0.79; SIGN at 0.065911 0.90,table_static_geomean.csv
+SC3_all_geomean_HUSP-SP,0.81,table_static_geomean.csv
+SC3_all_baseline_faster_HUSP-SP,10/12,table_static_geomean.csv
+SC3_all_baseline_faster_on_HUSP-SP,C8T1S5I8N5K at 0.001099 0.36; C8T1S5I8N5K at 0.001132 0.56; C8T1S5I8N5K at 0.0012 0.68; LEVIATHAN at 0.014644 0.74; LEVIATHAN at 0.01553 0.89; LEVIATHAN at 0.01647 0.97; LEVIATHAN at 0.017987 0.85; SIGN at 0.049134 0.83; SIGN at 0.065911 0.94; SIGN at 0.083371 0.98,table_static_geomean.csv
+SC3_all_geomean_IncUSP-Miner+,10.95,table_static_geomean.csv
 SC3_all_baseline_faster_IncUSP-Miner+,0/12,table_static_geomean.csv
-SC3_all_geomean_Pre-HUSPM,2.83,table_static_geomean.csv
+SC3_all_geomean_Pre-HUSPM,2.82,table_static_geomean.csv
 SC3_all_baseline_faster_Pre-HUSPM,0/12,table_static_geomean.csv
-SC3_default_geomean_USpan,14.29,table_static_geomean.csv
+SC3_default_geomean_USpan,14.08,table_static_geomean.csv
 SC3_default_baseline_faster_USpan,0/3,table_static_geomean.csv
-SC3_default_geomean_HUSP-ULL,0.76,table_static_geomean.csv
-SC3_default_baseline_faster_HUSP-ULL,2/3,table_static_geomean.csv
-SC3_default_baseline_faster_on_HUSP-ULL,C8T1S5I8N5K 0.47; LEVIATHAN 0.94,table_static_geomean.csv
-SC3_default_geomean_HUSP-SP,0.79,table_static_geomean.csv
-SC3_default_baseline_faster_HUSP-SP,2/3,table_static_geomean.csv
-SC3_default_baseline_faster_on_HUSP-SP,C8T1S5I8N5K 0.54; LEVIATHAN 0.89,table_static_geomean.csv
-SC3_default_geomean_IncUSP-Miner+,12.18,table_static_geomean.csv
+SC3_default_geomean_HUSP-ULL,0.79,table_static_geomean.csv
+SC3_default_baseline_faster_HUSP-ULL,3/3,table_static_geomean.csv
+SC3_default_baseline_faster_on_HUSP-ULL,C8T1S5I8N5K 0.59; LEVIATHAN 0.92; SIGN 0.90,table_static_geomean.csv
+SC3_default_geomean_HUSP-SP,0.77,table_static_geomean.csv
+SC3_default_baseline_faster_HUSP-SP,3/3,table_static_geomean.csv
+SC3_default_baseline_faster_on_HUSP-SP,C8T1S5I8N5K 0.56; LEVIATHAN 0.89; SIGN 0.94,table_static_geomean.csv
+SC3_default_geomean_IncUSP-Miner+,11.99,table_static_geomean.csv
 SC3_default_baseline_faster_IncUSP-Miner+,0/3,table_static_geomean.csv
-SC3_default_geomean_Pre-HUSPM,3.28,table_static_geomean.csv
+SC3_default_geomean_Pre-HUSPM,3.26,table_static_geomean.csv
 SC3_default_baseline_faster_Pre-HUSPM,0/3,table_static_geomean.csv
 SC4_prelarge_ratio_min,3,table_SC4_cells.csv
 SC4_prelarge_ratio_max,49,table_SC4_cells.csv
 SC4_prelarge_ratio_cells,10,table_SC4_cells.csv
 SC2_memory_proposal_least,7/7,table_SC2_memory.csv
 SC5_proposal_fastest,48/48,table_SC5_cells.csv
+SC5_runs_vs_closest_separated,32/48,table_SC5_cells.csv
+SC5_runs_vs_closest_overlapping,0/48,table_SC5_cells.csv
+SC5_runs_vs_closest_behind,0/48,table_SC5_cells.csv
+SC5_runs_vs_closest_one_run,16/48,table_SC5_cells.csv
+SC5_cells_within_10pct,15/48,table_SC5_cells.csv
+SC5_closest_over_proposal_min,1.031,table_SC5_cells.csv
+SC5_cells_within_10pct_runs,separated,table_SC5_cells.csv
+SC5_C8T1S5I8N5K_K25_remine_over_proposal_median,1.38,table_SC5_cells.csv
+SC5_C8T1S5I8N5K_K25_rescan_share_range,92-100%,table_SC5_cells.csv
+SC5_C8T1S5I8N5K_K50_remine_over_proposal_median,1.57,table_SC5_cells.csv
+SC5_C8T1S5I8N5K_K50_rescan_share_range,82-100%,table_SC5_cells.csv
+SC5_C8T1S5I8N5K_K67_remine_over_proposal_median,1.70,table_SC5_cells.csv
+SC5_C8T1S5I8N5K_K67_rescan_share_range,66-93%,table_SC5_cells.csv
+SC5_C8T1S5I8N5K_K100_remine_over_proposal_median,1.99,table_SC5_cells.csv
+SC5_C8T1S5I8N5K_K100_rescan_share_range,54-77%,table_SC5_cells.csv
+SC5_LEVIATHAN_K25_remine_over_proposal_median,1.03,table_SC5_cells.csv
+SC5_LEVIATHAN_K25_rescan_share_range,96-100%,table_SC5_cells.csv
+SC5_LEVIATHAN_K50_remine_over_proposal_median,1.06,table_SC5_cells.csv
+SC5_LEVIATHAN_K50_rescan_share_range,90-100%,table_SC5_cells.csv
+SC5_LEVIATHAN_K67_remine_over_proposal_median,1.08,table_SC5_cells.csv
+SC5_LEVIATHAN_K67_rescan_share_range,88-100%,table_SC5_cells.csv
+SC5_LEVIATHAN_K100_remine_over_proposal_median,1.26,table_SC5_cells.csv
+SC5_LEVIATHAN_K100_rescan_share_range,76-98%,table_SC5_cells.csv
+SC5_SIGN_K25_remine_over_proposal_median,1.07,table_SC5_cells.csv
+SC5_SIGN_K25_rescan_share_range,88-100%,table_SC5_cells.csv
+SC5_SIGN_K50_remine_over_proposal_median,1.34,table_SC5_cells.csv
+SC5_SIGN_K50_rescan_share_range,70-98%,table_SC5_cells.csv
+SC5_SIGN_K67_remine_over_proposal_median,1.58,table_SC5_cells.csv
+SC5_SIGN_K67_rescan_share_range,60-87%,table_SC5_cells.csv
+SC5_SIGN_K100_remine_over_proposal_median,2.06,table_SC5_cells.csv
+SC5_SIGN_K100_rescan_share_range,45-59%,table_SC5_cells.csv
+SC5_cells_within_5pct,6/48,table_SC5_cells.csv
+SC5_cells_within_5pct_range,1.031 to 1.037,table_SC5_cells.csv
+SC5_cells_within_5pct_list,LEVIATHAN K=25 increasing separated; LEVIATHAN K=25 burst separated; LEVIATHAN K=50 even separated; LEVIATHAN K=25 even separated; LEVIATHAN K=67 even separated; LEVIATHAN K=50 burst separated,table_SC5_cells.csv
 SC7_block_index_SIGN_ms,47/47,table_SC7_block_index.csv
 SC7_block_index_SIGN_sequences_read,147405/183010,table_SC7_block_index.csv
 SC7_block_index_C8T1S5I8N5K_ms,258/750,table_SC7_block_index.csv
@@ -224,6 +269,57 @@ SC3_all_explored_proposal_over_Pre-HUSPM_min,0.18 (C8T1S5I8N5K),table_explored_n
 SC3_all_explored_proposal_over_Pre-HUSPM_max,0.31 (C8T1S5I8N5K),table_explored_nodes.csv
 SC7_no_IPS_explored_over_full_min,2.52 (TAFENG),table_SC7_static.csv
 SC7_no_IPS_explored_over_full_max,350.94 (KOSARAK),table_SC7_static.csv
+SC7_IUB_over_full_SIGN,0.89 (overlapping),table_SC7_static.csv
+SC7_IUB_SIGN_s,0.48 vs 0.53,table_SC7_static.csv
+SC7_IUB_over_full_LEVIATHAN,1.00 (overlapping),table_SC7_static.csv
+SC7_IUB_LEVIATHAN_s,0.77 vs 0.78,table_SC7_static.csv
+SC7_IUB_over_full_FIFA,1.00 (overlapping),table_SC7_static.csv
+SC7_IUB_FIFA_s,9.49 vs 9.48,table_SC7_static.csv
+SC7_IUB_over_full_BIBLE,1.12 (separated),table_SC7_static.csv
+SC7_IUB_BIBLE_s,1.60 vs 1.42,table_SC7_static.csv
+SC7_IUB_over_full_KOSARAK,1.07 (overlapping),table_SC7_static.csv
+SC7_IUB_KOSARAK_s,13.47 vs 12.63,table_SC7_static.csv
+SC7_IUB_over_full_C8T1S5I8N5K,0.77 (overlapping),table_SC7_static.csv
+SC7_IUB_C8T1S5I8N5K_s,0.47 vs 0.61,table_SC7_static.csv
+SC7_IUB_over_full_TAFENG,1.11 (separated),table_SC7_static.csv
+SC7_IUB_TAFENG_s,0.48 vs 0.43,table_SC7_static.csv
+SC7_IUB_slower_on,4 (1.00 FIFA to 1.12 BIBLE),table_SC7_static.csv
+SC7_IUB_faster_on,C8T1S5I8N5K 0.77; LEVIATHAN 1.00; SIGN 0.89,table_SC7_static.csv
+SC7_IUB_runs_overlapping,C8T1S5I8N5K; FIFA; KOSARAK; LEVIATHAN; SIGN,table_SC7_static.csv
+SC7_IPS_over_full_SIGN,1.28 (separated),table_SC7_static.csv
+SC7_IPS_SIGN_s,0.68 vs 0.53,table_SC7_static.csv
+SC7_IPS_over_full_LEVIATHAN,2.28 (separated),table_SC7_static.csv
+SC7_IPS_LEVIATHAN_s,1.77 vs 0.78,table_SC7_static.csv
+SC7_IPS_over_full_FIFA,10.78 (separated),table_SC7_static.csv
+SC7_IPS_FIFA_s,102.21 vs 9.48,table_SC7_static.csv
+SC7_IPS_over_full_BIBLE,1.64 (separated),table_SC7_static.csv
+SC7_IPS_BIBLE_s,2.33 vs 1.42,table_SC7_static.csv
+SC7_IPS_over_full_KOSARAK,8.89 (separated),table_SC7_static.csv
+SC7_IPS_KOSARAK_s,112.34 vs 12.63,table_SC7_static.csv
+SC7_IPS_over_full_C8T1S5I8N5K,4.09 (separated),table_SC7_static.csv
+SC7_IPS_C8T1S5I8N5K_s,2.47 vs 0.61,table_SC7_static.csv
+SC7_IPS_over_full_TAFENG,1.17 (separated),table_SC7_static.csv
+SC7_IPS_TAFENG_s,0.51 vs 0.43,table_SC7_static.csv
+SC7_IPS_slower_on,7 (1.17 TAFENG to 10.78 FIFA),table_SC7_static.csv
+SC7_IPS_faster_on,none,table_SC7_static.csv
+SC7_IPS_runs_overlapping,none,table_SC7_static.csv
+SC7_Pre_HUSPM_over_full_SIGN,2.49 (separated),table_SC7_static.csv
+SC7_Pre_HUSPM_SIGN_s,1.33 vs 0.53,table_SC7_static.csv
+SC7_Pre_HUSPM_over_full_LEVIATHAN,2.20 (separated),table_SC7_static.csv
+SC7_Pre_HUSPM_LEVIATHAN_s,1.71 vs 0.78,table_SC7_static.csv
+SC7_Pre_HUSPM_over_full_FIFA,25.55 (separated),table_SC7_static.csv
+SC7_Pre_HUSPM_FIFA_s,242.28 vs 9.48,table_SC7_static.csv
+SC7_Pre_HUSPM_over_full_BIBLE,1.29 (separated),table_SC7_static.csv
+SC7_Pre_HUSPM_BIBLE_s,1.84 vs 1.42,table_SC7_static.csv
+SC7_Pre_HUSPM_over_full_KOSARAK,1.24 (separated),table_SC7_static.csv
+SC7_Pre_HUSPM_KOSARAK_s,15.73 vs 12.63,table_SC7_static.csv
+SC7_Pre_HUSPM_over_full_C8T1S5I8N5K,1.55 (separated),table_SC7_static.csv
+SC7_Pre_HUSPM_C8T1S5I8N5K_s,0.94 vs 0.61,table_SC7_static.csv
+SC7_Pre_HUSPM_over_full_TAFENG,0.58 (separated),table_SC7_static.csv
+SC7_Pre_HUSPM_TAFENG_s,0.25 vs 0.43,table_SC7_static.csv
+SC7_Pre_HUSPM_slower_on,6 (1.24 KOSARAK to 25.55 FIFA),table_SC7_static.csv
+SC7_Pre_HUSPM_faster_on,TAFENG 0.58,table_SC7_static.csv
+SC7_Pre_HUSPM_runs_overlapping,none,table_SC7_static.csv
 verify_ips_vs_exhaustive_databases,2000,table_verification.csv
 verify_ips_vs_exhaustive_databases_with_patterns,1444,table_verification.csv
 verify_ips_vs_exhaustive_mismatches,0,table_verification.csv

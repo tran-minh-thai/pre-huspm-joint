@@ -1,5 +1,5 @@
-scenario,scope,pairs,pairs_agree,cells,proposal_fastest,best_over_proposal_median,best_over_proposal_min,best_over_proposal_max,excluded
-SC1,all thresholds,32,32,32,1,0.731,0.446,1.036,
-SC1,default threshold,8,8,8,0,0.751,0.54,0.895,
-SC3,all thresholds,12,12,12,0,0.839,0.403,1.0,
-SC3,default threshold,3,3,3,0,0.894,0.468,1.0,
+scenario,scope,pairs,pairs_agree,cells,proposal_fastest,proposal_fastest_separated,ties,tie_cells,best_over_proposal_median,best_over_proposal_min,best_over_proposal_max,excluded
+SC1,all thresholds,32,32,32,1,1,2,BMS1 at 0.015293 (HUSP-ULL); KOSARAK at 0.028117 (HUSP-SP),0.731,0.446,1.036,
+SC1,default threshold,8,8,8,0,0,0,,0.751,0.54,0.895,
+SC3,all thresholds,12,12,12,1,0,3,SIGN at 0.065911 (HUSP-ULL); SIGN at 0.083371 (HUSP-SP); SIGN at 0.091052 (HUSP-ULL),0.821,0.308,1.058,
+SC3,default threshold,3,3,3,0,0,1,SIGN at 0.065911 (HUSP-ULL),0.889,0.557,0.898,

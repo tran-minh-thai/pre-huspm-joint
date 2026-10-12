@@ -57,6 +57,8 @@ def static_cells(df):
             if ok["total_patterns_found"].nunique() != 1:
                 raise ValueError(f"{key}: the replicates disagree on the pattern count")
             r["runtime_ms"] = float(ok["runtime_ms"].mean())
+            r["runtime_min"] = float(ok["runtime_ms"].min())
+            r["runtime_max"] = float(ok["runtime_ms"].max())
         r["replicates"] = len(ok)
         cells[(key[0], float(key[1]), key[2])] = r
     return cells
@@ -68,6 +70,8 @@ def static_summary(cells, default_only=False):
     if default_only:
         pairs = [(d, su) for d, su in pairs if np.isclose(su, mf.default_su(d))]
     agree = n_pairs = fastest = n_fast = 0
+    separated, ties = [], []     # wins every run of which beats every run of the best baseline;
+                                 # cells whose runs overlap those of the best baseline
     disagree, vs_best, excluded = [], [], []
     per_base = {a: [] for a in mf.STATIC_ORDER if a != P}
     faster_on = {a: [] for a in mf.STATIC_ORDER if a != P}   # cells where the baseline wins
@@ -91,20 +95,28 @@ def static_summary(cells, default_only=False):
             n_fast += 1
             fastest += int(pm_ < min(others.values()))
             vs_best.append(min(others.values()) / pm_)
+            best = min(others, key=others.get)
+            p_r, b_r = fin[P], fin[best]
+            if p_r.get("replicates", 1) >= 2 and b_r.get("replicates", 1) >= 2:
+                if p_r["runtime_max"] < b_r["runtime_min"]:
+                    separated.append(f"{d} at {su:g}")
+                elif not b_r["runtime_max"] < p_r["runtime_min"]:
+                    ties.append(f"{d} at {su:g} ({best})")
         for a, v in others.items():
             per_base[a].append(v / pm_)
             if v < pm_:
                 faster_on[a].append((d, su, v / pm_))
     return dict(pairs=n_pairs, agree=agree, disagree=disagree, fastest=fastest, n_fast=n_fast,
-                vs_best=vs_best, per_base=per_base, faster_on=faster_on, excluded=excluded)
+                vs_best=vs_best, per_base=per_base, faster_on=faster_on, excluded=excluded,
+                separated=separated, ties=ties)
 
 
 def static_tables():
     summ_rows, geo_rows = [], []
     for sc in ("SC1", "SC3"):
-        # SC1 was measured three times in fresh JVMs; its comparisons use the mean of the three,
-        # as its table does. SC3 has one run per cell.
-        df = mf.load_scenario(sc, replicates=(sc == "SC1"))
+        # SC1 and SC3 were measured three times in fresh JVMs; every comparison uses the mean
+        # of the three, as the tables do
+        df = mf.load_scenario(sc, replicates=True)
         if df is None:
             continue
         cells = static_cells(df)
@@ -113,6 +125,8 @@ def static_tables():
             vb = np.asarray(s["vs_best"], float)
             summ_rows.append(dict(scenario=sc, scope=scope, pairs=s["pairs"], pairs_agree=s["agree"],
                                   cells=s["n_fast"], proposal_fastest=s["fastest"],
+                                  proposal_fastest_separated=len(s["separated"]),
+                                  ties=len(s["ties"]), tie_cells="; ".join(s["ties"]),
                                   best_over_proposal_median=float(np.median(vb)) if len(vb) else np.nan,
                                   best_over_proposal_min=float(vb.min()) if len(vb) else np.nan,
                                   best_over_proposal_max=float(vb.max()) if len(vb) else np.nan,
@@ -180,12 +194,28 @@ def sc2_memory():
 
 
 # ------------------------------------------------------------------------------ SC5
+def sc5_run_totals():
+    """(database, K, shape, algorithm) -> the time summed over the increments, one value per
+    replicate that finished every increment."""
+    df = mf.load_scenario("SC5", replicates=True)
+    if df is None:
+        return {}
+    df = mf.parse_batch(df)
+    inc = df[df["phase"] == "INC"]
+    out = {}
+    for (d, k, s, a, r), g in inc.groupby(["dataset", "K", "strat", "algorithm", "replicate"]):
+        if g["finished"].all():
+            out.setdefault((d, int(k), s, a), []).append(float(mf.ms_to_s(g["runtime_ms"]).sum()))
+    return out
+
+
 def sc5_cells():
-    df = mf.load_scenario("SC5")
+    df = mf.load_mean("SC5")
     if df is None:
         return pd.DataFrame()
     df = mf.parse_batch(df)
     inc = df[df["phase"] == "INC"]
+    runs = sc5_run_totals()
     rows = []
     for (d, k, s), g in inc.groupby(["dataset", "K", "strat"]):
         tot = {}
@@ -193,6 +223,13 @@ def sc5_cells():
             tot[a] = mf.ms_to_s(ga["runtime_ms"]).sum() if ga["finished"].all() else np.nan
         done = {a: v for a, v in tot.items() if np.isfinite(v)}
         fastest = min(done, key=done.get) if done else ""
+        # the closest other arm, and whether every run of the proposal beats every run of it
+        others = {a: v for a, v in done.items() if a != P}
+        close = min(others, key=others.get) if others else ""
+        rp, rc = runs.get((d, int(k), s, P), []), runs.get((d, int(k), s, close), [])
+        runs_vs_closest = ("one run" if len(rp) < 2 or len(rc) < 2 else
+                           "separated" if max(rp) < min(rc) else
+                           "behind" if max(rc) < min(rp) else "overlapping")
         pr = g[g["algorithm"] == P]
         rows.append(dict(dataset=d, K=int(k), shape=s,
                          **{f"total_s_{a}": tot.get(a, np.nan) for a in INC_ARMS},
@@ -200,7 +237,9 @@ def sc5_cells():
                          proposal_rescan_share=float(pr["rescan_count"].max()) / int(k) if len(pr) else np.nan,
                          remine_over_proposal=tot.get(REM, np.nan) / tot.get(P, np.nan)
                          if tot.get(P) else np.nan,
-                         fastest=fastest))
+                         fastest=fastest, closest=close,
+                         closest_over_proposal=others[close] / tot[P] if close and tot.get(P) else np.nan,
+                         runs_proposal=len(rp), runs_closest=len(rc), runs_vs_closest=runs_vs_closest))
     return pd.DataFrame(rows)
 
 
@@ -608,7 +647,9 @@ def sc2_tex(totals, region, reps=None):
     def row(d):
         st = {a: stat(d, a) for a in INC_ARMS}
         low = dict(zip(INC_ARMS, mf.lowest([f"{st[a]['mean']:.{mf.pm_digits(st[a]['mean'])}f}"
-                                            if st[a] else None for a in INC_ARMS])))
+                                            if st[a] else None for a in INC_ARMS],
+                                           [(st[a]["min"], st[a]["max"], st[a]["n"]) if st[a] else None
+                                            for a in INC_ARMS])))
         cells = []
         for a in INC_ARMS:
             r = T.get((d, a))
@@ -649,6 +690,40 @@ def sc2_tex(totals, region, reps=None):
                           "\\begin{tabular}[b]{@{}r@{}}No\\\\rescan\\end{tabular} & Joint & SWUmax & TSU \\\\\\midrule"]
                          + rows + ["\\bottomrule\\end{tabular*}", "\\end{table}", ""])
     return time_tex, rule_tex
+
+
+def sc7_static_runtime(put, t7):
+    """SC7, one mine of the whole database: each variant's mean runtime against the full
+    miner's, per database, and whether the runs of the two separate."""
+    runs = {}
+    df = mf.load_scenario("SC7", replicates=True)
+    if df is not None:
+        for (d, a), g in df[df["finished"]].groupby(["dataset", "algorithm"]):
+            runs[(d, a)] = mf.ms_to_s(g["runtime_ms"]).tolist()
+    arm = {"Full": "proposed_full", "-IUB": "proposed_no_IUB", "-IPS": "proposed_no_IPS", "Pre-HUSPM": "Pre-HUSPM"}
+    full = t7[t7["variant"] == "Full"].set_index("dataset")["runtime_s"]
+    for v in ("-IUB", "-IPS", "Pre-HUSPM"):
+        x = t7[t7["variant"] == v].set_index("dataset")["runtime_s"]
+        tag = v.strip("-").replace("-", "_")
+        slower, faster, state = {}, {}, {}
+        for d in x.index.intersection(full.index):
+            if not (pd.notna(x[d]) and pd.notna(full[d]) and full[d] > 0):
+                continue
+            ratio = x[d] / full[d]
+            (slower if ratio > 1 else faster)[d] = ratio
+            rv, rf = runs.get((d, arm[v]), []), runs.get((d, arm["Full"]), [])
+            state[d] = ("one run" if len(rv) < 2 or len(rf) < 2 else
+                        "separated" if max(rv) < min(rf) or max(rf) < min(rv) else "overlapping")
+            put(f"SC7_{tag}_over_full_{d}", f"{ratio:.2f} ({state[d]})", "table_SC7_static.csv")
+            put(f"SC7_{tag}_{d}_s", f"{half_up(x[d])} vs {half_up(full[d])}", "table_SC7_static.csv")
+        if slower:
+            lo, hi = min(slower, key=slower.get), max(slower, key=slower.get)
+            put(f"SC7_{tag}_slower_on", f"{len(slower)} ({slower[lo]:.2f} {lo} to {slower[hi]:.2f} {hi})",
+                "table_SC7_static.csv")
+        put(f"SC7_{tag}_faster_on", "; ".join(f"{d} {r:.2f}" for d, r in sorted(faster.items())) or "none",
+            "table_SC7_static.csv")
+        put(f"SC7_{tag}_runs_overlapping", "; ".join(d for d, st_ in sorted(state.items()) if st_ == "overlapping")
+            or "none", "table_SC7_static.csv")
 
 
 def half_up(value, digits=2):
@@ -730,6 +805,13 @@ def export_all(out_dir=None):
     for _, r in summ.iterrows():
         k = f"{r['scenario']}_{'all' if r['scope'].startswith('all') else 'default'}"
         put(f"{k}_proposal_fastest", f"{r['proposal_fastest']}/{r['cells']}", "table_static_summary.csv")
+        # a win counts as separated when every run of the proposal beats every run of the
+        # fastest baseline; a tie is a cell whose runs overlap those of the fastest baseline
+        put(f"{k}_proposal_fastest_separated", f"{r['proposal_fastest_separated']}/{r['cells']}",
+            "table_static_summary.csv")
+        put(f"{k}_ties_with_fastest_baseline", f"{r['ties']}/{r['cells']}", "table_static_summary.csv")
+        if r["tie_cells"]:
+            put(f"{k}_tie_cells", r["tie_cells"], "table_static_summary.csv")
         put(f"{k}_pairs_agree", f"{r['pairs_agree']}/{r['pairs']}", "table_static_summary.csv")
     for _, r in geo.iterrows():
         k = f"{r['scenario']}_{'all' if r['scope'].startswith('all') else 'default'}"
@@ -758,6 +840,28 @@ def export_all(out_dir=None):
     mf.write_csv(c5, os.path.join(out, "table_SC5_cells.csv"))
     if len(c5):
         put("SC5_proposal_fastest", f"{int((c5['fastest'] == P).sum())}/{len(c5)}", "table_SC5_cells.csv")
+        for state in ("separated", "overlapping", "behind", "one run"):
+            put(f"SC5_runs_vs_closest_{state.replace(' ', '_')}", f"{int((c5['runs_vs_closest'] == state).sum())}/{len(c5)}",
+                "table_SC5_cells.csv")
+        near = c5[c5["closest_over_proposal"] < 1.10]
+        put("SC5_cells_within_10pct", f"{len(near)}/{len(c5)}", "table_SC5_cells.csv")
+        if len(near):
+            put("SC5_closest_over_proposal_min", f"{near['closest_over_proposal'].min():.3f}", "table_SC5_cells.csv")
+            put("SC5_cells_within_10pct_runs", "; ".join(sorted(set(near["runs_vs_closest"]))), "table_SC5_cells.csv")
+        # median over the four shapes of Remine's time over the proposal's, per database and K,
+        # and the share of increments the proposal rescans
+        for (d, k), g in c5.groupby(["dataset", "K"]):
+            put(f"SC5_{d}_K{k}_remine_over_proposal_median", f"{g['remine_over_proposal'].median():.2f}",
+                "table_SC5_cells.csv")
+            put(f"SC5_{d}_K{k}_rescan_share_range", f"{100 * g['proposal_rescan_share'].min():.0f}-"
+                f"{100 * g['proposal_rescan_share'].max():.0f}%", "table_SC5_cells.csv")
+        n5 = c5[c5["closest_over_proposal"] < 1.05].sort_values("closest_over_proposal")
+        put("SC5_cells_within_5pct", f"{len(n5)}/{len(c5)}", "table_SC5_cells.csv")
+        if len(n5):
+            put("SC5_cells_within_5pct_range", f"{n5['closest_over_proposal'].min():.3f} to "
+                f"{n5['closest_over_proposal'].max():.3f}", "table_SC5_cells.csv")
+            put("SC5_cells_within_5pct_list", "; ".join(f"{r.dataset} K={r.K} {r.shape.lower()} {r.runs_vs_closest}"
+                                                       for r in n5.itertuples()), "table_SC5_cells.csv")
 
     o6 = sc6_by_op()
     mf.write_csv(o6, os.path.join(out, "table_SC6_by_op.csv"))
@@ -854,6 +958,7 @@ def export_all(out_dir=None):
             if len(r):
                 put("SC7_no_IPS_explored_over_full_min", f"{r.min():.2f} ({r.idxmin()})", "table_SC7_static.csv")
                 put("SC7_no_IPS_explored_over_full_max", f"{r.max():.2f} ({r.idxmax()})", "table_SC7_static.csv")
+        sc7_static_runtime(put, t7)
 
     # The keys the manuscript asked for by name.
     def row_of(prefix):

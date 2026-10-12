@@ -219,6 +219,9 @@ the seed in their own columns.
 |---|---|---|
 | SC1 | three repeats (`r0`, `r1`, `r2`), all algorithms, all eight databases, all four thresholds | runtime at the default threshold; every SC1 comparison (fastest counts, geometric means) uses the mean of the three |
 | SC2 | three repeats of the proposal and remining on SIGN, TAFENG, BIBLE and C8T1S5I8N5K, and of the proposal and the runner-up on LEVIATHAN and KOSARAK (remining) and BIBLE (IncUSP-Miner+); one run elsewhere | runtime summed over the increments; the SC2 table prints mean and deviation where three runs exist |
+| SC3 | three repeats, all six algorithms, the three databases | runtime and every SC3 comparison |
+| SC5 | three repeats of the proposal and remining on LEVIATHAN and SIGN, every K and shape; one run on C8T1S5I8N5K, whose closest margin is 1.36 | runtime summed over the increments |
+| SC7 | three repeats of the four one-mine arms (full, IUB off, IPS off, Pre-HUSPM) on the seven databases | runtime of one mine |
 | SC6 | five seeds (`s0` to `s4`: 42, 1337, 2024, 31415, 271828), both arms | the proposal-to-remining ratio, paired by seed |
 | memory | `s0r1`: SC1 on SIGN, TAFENG, C8T1S5I8N5K, BMS1 and KOSARAK, all six algorithms; SC2, all five arms, on SIGN and TAFENG | the live set between two runs |
 | others | one run | - |
@@ -235,8 +238,11 @@ Springer Nature template does) in the class's table font; a mean and its standar
 share one line, except in the SC1 table, whose six algorithms only fit with the deviation
 below the mean. Generated tables set the lowest value of each row in bold (runtime, rescans; in the SC7
 ablation the lowest runtime and the fewest explored nodes of each database), comparing the
-values as printed, so two values that print alike are both bold; a run that did not finish
-takes no part. An SC2 arm that the runner's memory guard stopped (less than a tenth of the
+values as printed, so two values that print alike are both bold; a cell measured three times
+whose runs overlap those of the lowest is a tie and is bold as well; a run that did not finish
+takes no part. Every table, figure and number on runtime reads the mean of the replicates
+(`load_mean` in `analysis/make_figures.py`); SC1, SC3, SC5 and SC7 count a win as separated
+only when every run of the proposal beats every run of the closest arm. An SC2 arm that the runner's memory guard stopped (less than a tenth of the
 heap free after a full collection, before the next increment) is printed as "Stopped
 (done/100)"; its increments after the stop are recorded as `SKIPPED_POISONED`.
 

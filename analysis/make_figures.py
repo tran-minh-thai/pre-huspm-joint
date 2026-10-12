@@ -277,6 +277,35 @@ def load_scenario(sc, tree=TIMING_TREE, finished_only=True, replicates=False):
     return df
 
 
+def load_mean(sc, tree=TIMING_TREE):
+    """One row per measurement (database, algorithm, arm, operation, iteration) of a scenario,
+    with its runtime the mean over the replicates that finished it: what every table, figure
+    and number of the scenario reports, so that they agree with each other. Counters (patterns,
+    explored nodes, rescans, pre-large set) are deterministic and are taken from the main run;
+    the replicates agree with it on every row (checked when they arrive). Adds `runs`, the
+    number of replicates averaged, and `runtime_ms_std`. A measurement no replicate finished
+    keeps the main run's row and status."""
+    df = load_scenario(sc, tree=tree, replicates=True)
+    if df is None:
+        return None
+    key = ["dataset", "algorithm", "arm", "op_type", "iteration"]
+    ok = df[df["finished"]]
+    agg = ok.groupby(key)["runtime_ms"].agg(["mean", "std", "count", "min", "max"])
+    main = df[df["replicate"] == "s0r0"].set_index(key).copy()
+    main["runtime_ms"] = main["runtime_ms"].astype(float)
+    idx = main.index.intersection(agg.index)
+    main.loc[idx, "runtime_ms"] = agg.loc[idx, "mean"]
+    main["runtime_ms_std"] = np.nan
+    main.loc[idx, "runtime_ms_std"] = agg.loc[idx, "std"]
+    main["runs"] = 0
+    main.loc[idx, "runs"] = agg.loc[idx, "count"].astype(int)
+    main["runtime_ms_min"] = main["runtime_ms"]
+    main["runtime_ms_max"] = main["runtime_ms"]
+    main.loc[idx, "runtime_ms_min"] = agg.loc[idx, "min"]
+    main.loc[idx, "runtime_ms_max"] = agg.loc[idx, "max"]
+    return main.reset_index()
+
+
 def parse_su(df):
     df["su"] = df["op_type"].astype(str).str.extract(r"su=([0-9.]+)")[0].astype(float)
     return df
@@ -580,7 +609,7 @@ def panel_grid(n, ncols=PANEL_COLS, h=PANEL_H, width=LINEWIDTH_IN):
 #    STATIC MINING (SC1 on D_init, SC3 on the whole database): metric vs threshold
 def figset_scalability(sc="SC3", tag="fig_scalability", datasets=None,
                        metrics=("runtime_ms", "explored_nodes")):
-    df = load_scenario(sc)
+    df = load_mean(sc)
     if df is None:
         return
     df = parse_su(df)
@@ -645,9 +674,10 @@ def figset_scalability(sc="SC3", tag="fig_scalability", datasets=None,
 # %% ------------------------------------------------------------------ Cell 4
 #    INCREMENTAL (SC2): cumulative runtime along the stream, one panel per database
 def figset_incremental(tag="fig_incremental_cumulative", datasets=None):
-    """Cumulative runtime over the 100 increments, the initial mine excluded. A curve
-    that stops early is an arm that ran out of memory; its end is marked."""
-    df = load_scenario("SC2")
+    """Cumulative runtime over the 100 increments, the initial mine excluded, from the mean of
+    the replicates where an arm has them. A curve that stops early is an arm that did not
+    finish (out of memory, or stopped by the runner's memory guard); its end is marked."""
+    df = load_mean("SC2")
     if df is None:
         return
     datasets = [d for d in (datasets or SC2_DATASETS) if d in set(df["dataset"])]
@@ -939,7 +969,7 @@ def export_ablation_table():
     """SC7 as a table. Static: full, IUB off (C3), item removal off (IPS) and Pre-HUSPM on
     one mine of the whole database - runtime, explored nodes, IUB cuts. Incremental: C5 and C4 arms
     summed over the 100 increments - runtime, rescans, block reads."""
-    df = load_scenario("SC7")
+    df = load_mean("SC7")
     if df is None:
         return
     static = {"proposed_full": "Full", "proposed_no_IUB": "-IUB", "proposed_no_IPS": "-IPS",
@@ -954,6 +984,10 @@ def export_ablation_table():
             rows.append(dict(dataset=ds, variant=label, status=r["status"],
                              patterns=r["total_patterns_found"],
                              runtime_s=r["runtime_ms"] / 1000 if r["finished"] else np.nan,
+                             runtime_s_std=r["runtime_ms_std"] / 1000 if r["finished"] else np.nan,
+                             runs=int(r["runs"]),
+                             runtime_s_min=r["runtime_ms_min"] / 1000 if r["finished"] else np.nan,
+                             runtime_s_max=r["runtime_ms_max"] / 1000 if r["finished"] else np.nan,
                              explored=r["explored_nodes"] if r["finished"] else np.nan,
                              iub_cuts=r["pruned_iub"] if r["finished"] else np.nan))
     tab = pd.DataFrame(rows)
@@ -994,7 +1028,8 @@ def export_ablation_table():
     write_csv(pd.DataFrame(rows), os.path.join(OUT_DIR, "table_SC7_incremental.csv"))
 
     lines = ["\\begin{table}[!htbp]", "\\centering",
-             "\\caption{Ablation of the miner on the whole database}",
+             "\\caption{Ablation of the miner on the whole database; runtime as mean and standard deviation "
+             "of three runs}",
              "\\label{tab:sc7_ablation}",
              "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}llrr}", "\\toprule",
              "Database & Variant & Runtime (s) & Explored \\\\", "\\midrule"]
@@ -1003,16 +1038,17 @@ def export_ablation_table():
     bold = {}
     for ds, g in tab.groupby("dataset", sort=False):
         rt = [f"{v:.2f}" if pd.notna(v) else None for v in g["runtime_s"]]
+        rg = [(a, b, n) if pd.notna(a) else None for a, b, n in zip(g["runtime_s_min"], g["runtime_s_max"], g["runs"])]
         ex = [f"{int(v)}" if pd.notna(v) else None for v in g["explored_bound"]]
-        for i, a, b in zip(g.index, lowest(rt), lowest(ex)):
+        for i, a, b in zip(g.index, lowest(rt, rg), lowest(ex)):
             bold[i] = (a, b)
     prev = None
     for i, r in tab.iterrows():
         ds = r["dataset"] if r["dataset"] != prev else ""
         prev = r["dataset"]
-        rt = f"{r['runtime_s']:.2f}" if pd.notna(r["runtime_s"]) else r["status"]
+        rt = (pm(dict(n=r["runs"], mean=r["runtime_s"], std=r["runtime_s_std"]), digits=2, bold=bold[i][0])
+              if pd.notna(r["runtime_s"]) else r["status"])
         ex = f"{int(r['explored_bound']):,}" if pd.notna(r["explored_bound"]) else r["status"]
-        rt = f"\\textbf{{{rt}}}" if bold[i][0] else rt
         ex = f"\\textbf{{{ex}}}" if bold[i][1] else ex
         lines.append(f"{ds} & {r['variant']} & {rt} & {ex} \\\\")
     lines += ["\\bottomrule", "\\end{tabular*}", "\\end{table}", ""]
@@ -1072,7 +1108,7 @@ STRAT_STYLE = {"EVEN": ("-", "o"), "INCREASING": ((0, (4, 1.5)), "s"),
 def figset_batch_ratio(tag="fig_batch_ratio"):
     """SC5: the proposal's time over remine-from-scratch's, summed over the increments,
     against K, one line per strategy. Below one, the proposal is faster."""
-    df = load_scenario("SC5")
+    df = load_mean("SC5")
     if df is None:
         return
     df = parse_batch(df)
@@ -1177,7 +1213,7 @@ def export_summary_tables():
     """SC1 at each database's default threshold: runtime, explored nodes, patterns
     and status per algorithm, the proposal's speedup over each, and live set from
     the memory campaign. CSV + LaTeX."""
-    df = load_scenario("SC1")
+    df = load_mean("SC1")
     if df is None:
         return
     df = parse_su(df)
@@ -1285,14 +1321,25 @@ def pm_digits(mean):
     return 0 if mean >= 100 else (1 if mean >= 10 else 2)
 
 
-def lowest(printed):
+def lowest(printed, ranges=None):
     """Which of a row's printed values are its lowest, compared as printed: two values that
     print alike are tied and both marked. None stands for a cell that takes no part (a run
-    that did not finish, a missing cell)."""
+    that did not finish, a missing cell). With ranges, one (min, max, runs) per cell, a cell
+    measured at least twice whose runs overlap those of a lowest cell measured at least
+    twice is a tie and is marked too: a difference within the spread of the runs is not a
+    win."""
     vals = [float(v.replace(",", "")) if v is not None else None for v in printed]
     finite = [v for v in vals if v is not None]
     best = min(finite) if finite else None
-    return [v is not None and v == best for v in vals]
+    mark = [v is not None and v == best for v in vals]
+    if ranges:
+        heads = [ranges[i] for i, m in enumerate(mark) if m and ranges[i] and ranges[i][2] >= 2]
+        for i, v in enumerate(vals):
+            r = ranges[i]
+            if v is None or mark[i] or not r or r[2] < 2:
+                continue
+            mark[i] = any(r[0] <= h[1] and h[0] <= r[1] for h in heads)
+    return mark
 
 
 def pm(st, digits=None, bold=False, inline=True):
@@ -1374,11 +1421,14 @@ def export_replicate_tables():
                 r = tab[(tab["dataset"] == ds) & (tab["algorithm"] == c)]
                 if not r.empty and r.iloc[0]["n"] > 0:
                     r = r.iloc[0]
-                    stats[c] = dict(n=r["n"], mean=r["runtime_s_mean"], std=r["runtime_s_std"])
+                    stats[c] = dict(n=r["n"], mean=r["runtime_s_mean"], std=r["runtime_s_std"],
+                                    min=r["runtime_s_min"], max=r["runtime_s_max"])
             # the lowest mean of the row in bold, compared as printed; a run that did not
             # finish takes no part
             low = dict(zip(cols, lowest([f"{stats[c]['mean']:.{pm_digits(stats[c]['mean'])}f}"
-                                         if c in stats else None for c in cols])))
+                                         if c in stats else None for c in cols],
+                                        [(stats[c]["min"], stats[c]["max"], stats[c]["n"]) if c in stats else None
+                                         for c in cols])))
             cells = []
             for c in cols:
                 r = tab[(tab["dataset"] == ds) & (tab["algorithm"] == c)]

@@ -29,12 +29,12 @@ proposal and Remine over three runs is in the next table.
 
 | database | Pre-HUSPM-Joint | rescans | Pre-HUSPM-SWUmax | Pre-HUSPM-TSU | Remine | IncUSP-Miner+ |
 |---|---:|---:|---:|---:|---:|---:|
-| SIGN | **9.7** | 59 | 51.0 | 50.2 | 17.2 | 23.8 |
-| LEVIATHAN | **35.1** | 98 | 112 | 114 | 37.4 | 71.6 |
+| SIGN | **9.7** | 59 | 51.0 | 50.2 | 17.8 | 23.8 |
+| LEVIATHAN | **35.3** | 98 | 112 | 114 | 37.2 | 71.6 |
 | FIFA | **174** | 27 | 4,995 | 6,956 | 667 | (598, 25 increments) |
-| BIBLE | **54.0** | 63 | 92.1 | 109 | 93.1 | 57.3 |
-| KOSARAK | **633** | 100 | 695 | 711 | 685 | 1,594 |
-| C8T1S5I8N5K | **9.2** | 77 | 51.2 | 63.2 | 15.7 | 18.5 |
+| BIBLE | **53.8** | 63 | 92.1 | 109 | 93.7 | 57.5 |
+| KOSARAK | **627** | 100 | 695 | 711 | 685 | 1,594 |
+| C8T1S5I8N5K | **9.1** | 77 | 51.2 | 63.2 | 15.5 | 18.5 |
 | TAFENG | **5.9** | 52 | 7.3 | 13.0 | 18.9 | 13.8 |
 
 ### Three runs
@@ -47,8 +47,12 @@ increments, mean ± sample standard deviation.
 |---|---|---:|---:|---:|---:|
 | SIGN | Pre-HUSPM-Joint | 3 | 9.71 ± 0.12 | 9.61 | 9.85 |
 | SIGN | Remine | 3 | 17.78 ± 0.58 | 17.17 | 18.31 |
+| LEVIATHAN | Pre-HUSPM-Joint | 3 | 35.33 ± 0.33 | 35.12 | 35.71 |
+| LEVIATHAN | Remine | 3 | 37.19 ± 0.17 | 37.06 | 37.39 |
 | BIBLE | Pre-HUSPM-Joint | 3 | 53.77 ± 0.20 | 53.60 | 53.99 |
 | BIBLE | Remine | 3 | 93.66 ± 0.54 | 93.14 | 94.22 |
+| KOSARAK | Pre-HUSPM-Joint | 3 | 626.85 ± 6.17 | 620.40 | 632.71 |
+| KOSARAK | Remine | 3 | 684.92 ± 0.46 | 684.61 | 685.45 |
 | C8T1S5I8N5K | Pre-HUSPM-Joint | 3 | 9.06 ± 0.12 | 8.96 | 9.20 |
 | C8T1S5I8N5K | Remine | 3 | 15.51 ± 0.16 | 15.34 | 15.67 |
 | TAFENG | Pre-HUSPM-Joint | 3 | 5.91 ± 0.01 | 5.90 | 5.92 |
@@ -114,12 +118,12 @@ Pre-HUSPM-SWUmax on 7 of 7 databases where both completed.
 
 **Inside the budget** (median ratio at most one): FIFA, 3.84 times faster than remining.
 
-**At the boundary**: SIGN (1.77x), BIBLE (1.72x), C8T1S5I8N5K (1.70x), TAFENG (3.20x). They rescan on
+**At the boundary**: SIGN (1.83x), BIBLE (1.74x), C8T1S5I8N5K (1.71x), TAFENG (3.20x). They rescan on
 52 to 77
 of 100 increments and still finish faster than remining.
 
 **Beyond it**: LEVIATHAN, 2 of 100 within budget, KOSARAK, 0 of 100 within budget.
-Maintenance degenerates into remining: LEVIATHAN 35.1 s against remining's 37.4 s (-6.1 %); KOSARAK 633 s against remining's 685 s (-7.6 %),
+Maintenance degenerates into remining: LEVIATHAN 35.3 s against remining's 37.2 s (-5.0 %); KOSARAK 627 s against remining's 685 s (-8.5 %),
 one run each. Two runs of one SC1 configuration on the same JDK differ by a factor between
 0.69 and 1.25 (66 configurations of at least one second), so differences
 of a few percent between single runs are not resolved here.

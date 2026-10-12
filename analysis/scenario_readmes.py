@@ -82,7 +82,7 @@ def arm_outcome(g, tree, sc, ds, algo):
 
 # ------------------------------------------------------------------------------ SC2
 def sc2():
-    df = mf.load_scenario("SC2")
+    df = mf.load_mean("SC2")
     dbs = [d for d in mf.SC2_DATASETS if d in set(df["dataset"])]
     algos = [P] + INC
     comp, rt, totals = [], [], {}
@@ -268,7 +268,7 @@ set directly.
 
 # ------------------------------------------------------------------------------ SC5
 def sc5():
-    df = mf.parse_batch(mf.load_scenario("SC5"))
+    df = mf.parse_batch(mf.load_mean("SC5"))
     inc = df[df["phase"] == "INC"]
     cells = inc.groupby(["dataset", "K", "strat", "algorithm"])
     tot = cells.apply(lambda g: mf.ms_to_s(g["runtime_ms"]).sum() if g["finished"].all() else np.nan)
@@ -387,7 +387,7 @@ replay the same plan at a seed, so the ratio is paired by seed.
 
 # ------------------------------------------------------------------------------ SC7
 def sc7():
-    df = mf.load_scenario("SC7")
+    df = mf.load_mean("SC7")
     arms = ["proposed_full", "proposed_no_IUB", "proposed_no_IPS", "Pre-HUSPM"]
     st = df[df["algorithm"].isin(arms)]
 
@@ -595,7 +595,10 @@ def summary_text(summ):
          "Counts alone do not prove the sets equal; `verify.BaselineAgreement` compares the sets "
          "(`results/calibration/agreement.log`).\n\n")
     if len(vb):
-        t += (f"The proposal is the fastest in {summ['fastest']} of {summ['n_fast']} cells. The fastest baseline's "
+        sep, ties = summ.get("separated", []), summ.get("ties", [])
+        t += (f"The proposal is the fastest in {summ['fastest']} of {summ['n_fast']} cells on the mean of the runs; "
+              f"every run of it beats every run of the fastest baseline in {len(sep)}, and in {len(ties)} its runs "
+              f"overlap those of the fastest baseline ({'; '.join(ties) if ties else 'none'}). The fastest baseline's "
               f"runtime over the proposal's, per cell: median {np.median(vb):.2f}, largest {vb.max():.2f}, "
               f"smallest {vb.min():.2f}; above one, the proposal is faster.")
     if summ["excluded"]:
@@ -604,7 +607,7 @@ def summary_text(summ):
 
 
 def sc1():
-    df = mf.load_scenario("SC1")
+    df = mf.load_scenario("SC1", replicates=True)   # static_cells averages the runs
     cells = static_cells(df)
     dss = [d for d in mf.ALL_DATASETS if d in set(df["dataset"])]
     summ = static_summary(cells)
@@ -640,13 +643,13 @@ live set is in `results/campaign-mem/SC1`.
 
 
 def sc3():
-    df = mf.load_scenario("SC3")
+    df = mf.load_scenario("SC3", replicates=True)   # static_cells averages the runs
     cells = static_cells(df)
     dss = [d for d in mf.ALL_DATASETS if d in set(df["dataset"])]
     summ = static_summary(cells)
     inc = incomplete_runs(cells)
     rows = runtime_rows(cells, dss, lambda d: sorted({su for dd, su, _ in cells if dd == d}))
-    s1 = static_summary(static_cells(mf.load_scenario("SC1")))
+    s1 = static_summary(static_cells(mf.load_scenario("SC1", replicates=True)))
     comp = [[SLABEL[a], f"{gmean(v):.2f}", len(v), f"{gmean(s1['per_base'][a]):.2f}", len(s1["per_base"][a])]
             for a, v in sorted(summ["per_base"].items(), key=lambda kv: -gmean(kv[1]) if kv[1] else 0)]
     text = f"""# SC3, static mining on the whole database
