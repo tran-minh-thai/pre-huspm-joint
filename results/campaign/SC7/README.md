@@ -38,3 +38,27 @@ Over the increments that do not rescan, the only ones on which the index is read
 |---|---:|---:|---:|---:|---:|
 | SIGN | 41 | 47 ms | 47 ms | 147,405 | 183,010 |
 | C8T1S5I8N5K | 23 | 258 ms | 750 ms | 6,822,900 | 64,221,200 |
+
+## Block size
+
+The same stream with blocks of n sequences. A block never spans two increments, so the effective
+block size is the smaller of n and the increment size (5 sequences on SIGN, 199 or 200 on
+C8T1S5I8N5K). The expectations were stated in
+`docs/experiments.md` before the measurement. Sequences read do not decrease from one block size
+to the next where the smaller divides the larger: 10 of
+10 such pairs.
+
+| database | block size | sequences read | direct updates | whole stream | counts equal to the default | same increments without a rescan |
+|---|---:|---:|---:|---:|---:|---:|
+| SIGN | 1 | 45,596 | 47 ms | 10.32 s | 101/101 | yes |
+| SIGN | 5 | 147,405 | 51 ms | 10.01 s | 101/101 | yes |
+| SIGN | 10 | 147,405 | 52 ms | 10.04 s | 101/101 | yes |
+| SIGN | 50 | 147,405 | 45 ms | 10.00 s | 101/101 | yes |
+| SIGN | 100 (default) | 147,405 | 47 ms | 9.96 s | 101/101 | yes |
+| SIGN | 200 | 147,405 | 48 ms | 9.93 s | 101/101 | yes |
+| C8T1S5I8N5K | 1 | 76,037 | 346 ms | 9.61 s | 101/101 | yes |
+| C8T1S5I8N5K | 5 | 380,140 | 212 ms | 9.45 s | 101/101 | yes |
+| C8T1S5I8N5K | 10 | 760,170 | 223 ms | 9.64 s | 101/101 | yes |
+| C8T1S5I8N5K | 50 | 3,799,150 | 224 ms | 9.33 s | 101/101 | yes |
+| C8T1S5I8N5K | 100 (default) | 6,822,900 | 258 ms | 9.26 s | 101/101 | yes |
+| C8T1S5I8N5K | 200 | 12,407,800 | 305 ms | 9.50 s | 101/101 | yes |

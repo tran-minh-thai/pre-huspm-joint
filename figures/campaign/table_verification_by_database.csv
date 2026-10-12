@@ -7,6 +7,8 @@ adversarial,FIFA,16,16,0,6,2,4,0,4,0
 adversarial,KOSARAK,16,16,0,6,2,4,0,4,0
 adversarial,C8T1S5I8N5K,16,12,0,5,3,4,0,3,1
 adversarial,TAFENG,16,0,0,8,0,4,0,4,0
+adversarial-tafeng,TAFENG,16,0,0,8,0,4,0,4,0
+adversarial-tafeng-probe0.7,TAFENG,16,12,0,6,2,4,0,4,0
 random,SIGN,16,0,0,7,1,3,1,3,1
 random,LEVIATHAN,16,0,0,7,1,3,1,3,1
 random,BIBLE,16,0,0,7,1,4,0,3,1

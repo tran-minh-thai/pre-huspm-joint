@@ -17,10 +17,11 @@ checked against USpan, HUSP-ULL and HUSP-SP by `verify.BaselineAgreement`.
 * `random`, `adversarial`, `adversarial-tafeng`: `verify.DirectPathVerifier` on the real
   databases, the first half as `D_init`, 16 operations sized to spend a sixth of the rescan
   budget. In adversarial mode each operation is shaped around a target, the untracked pattern of
-  highest utility from a reference mine at 0.6 UUT: deletions take only sequences that miss one
-  of its items, insertions only sequences that hold all of them. Where the reference mine does not
-  finish or runs out of heap the operation has no target and is drawn at random; the
-  `with a target` column counts the operations that had one.
+  highest utility from a reference mine at 0.6 UUT (`-Dverify.probeRl`, 0.7 in
+  `adversarial-tafeng-probe0.7`): deletions take only sequences that miss one of its items,
+  insertions only sequences that hold all of them. Where the reference mine does not finish or
+  runs out of heap the operation has no target and is drawn at random; the `with a target`
+  column counts the operations that had one.
 
 ## Summary
 
@@ -34,6 +35,8 @@ checked against USpan, HUSP-ULL and HUSP-SP by `verify.BaselineAgreement`.
 | fault injection, random streams and hand-built cases | finished | 2 |  |  |  |  |  | 2 |
 | fault injection, adversarial runs on real databases | finished | 2 |  |  |  |  |  | 2 |
 | direct path on real databases, adversarial operations | finished | 128 | 108 | 30 | 49 | 30 | 0 |  |
+| direct path on real databases, adversarial-tafeng operations | finished | 16 | 0 | 4 | 8 | 4 | 0 |  |
+| direct path on real databases, adversarial-tafeng-probe0.7 operations | finished | 16 | 12 | 4 | 6 | 4 | 0 |  |
 | direct path on real databases, random operations | finished | 128 | 0 | 30 | 58 | 28 | 0 |  |
 
 ## Direct path on the real databases, per database
@@ -50,6 +53,18 @@ checked against USpan, HUSP-ULL and HUSP-SP by `verify.BaselineAgreement`.
 | KOSARAK | 16 | 16 | 6 | 2 | 4 | 0 | 4 | 0 | 0 |
 | C8T1S5I8N5K | 16 | 12 | 5 | 3 | 4 | 0 | 3 | 1 | 0 |
 | TAFENG | 16 | 0 | 8 | 0 | 4 | 0 | 4 | 0 | 0 |
+
+### adversarial-tafeng
+
+| database | operations | with a target | insert direct | insert rescan | delete direct | delete rescan | modify direct | modify rescan | mismatches |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| TAFENG | 16 | 0 | 8 | 0 | 4 | 0 | 4 | 0 | 0 |
+
+### adversarial-tafeng-probe0.7
+
+| database | operations | with a target | insert direct | insert rescan | delete direct | delete rescan | modify direct | modify rescan | mismatches |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| TAFENG | 16 | 12 | 6 | 2 | 4 | 0 | 4 | 0 | 0 |
 
 ### random
 
@@ -70,6 +85,10 @@ checked against USpan, HUSP-ULL and HUSP-SP by `verify.BaselineAgreement`.
     java -cp build-vj verify.RescanRuleAcceptanceTest
     # adversarial: exit 0, commit d7e8bf8e, 2026-10-12T10:17:56
     java -Xmx24g -Xss64m -cp build-vj verify.DirectPathVerifier ALL --adversarial --ops 16 --out results/verify-joint/adversarial
+    # adversarial-tafeng: exit 0, commit f47b234c, 2026-10-12T13:10:29
+    java -Xmx48g -Xss64m -cp build verify.DirectPathVerifier TAFENG --adversarial --ops 16 --out results/verify-joint/adversarial-tafeng
+    # adversarial-tafeng-probe0.7: exit 0, commit 8c427953, 2026-10-12T14:07:38
+    java -Dverify.probeRl=0.7 -Xmx24g -Xss64m -cp build-vj verify.DirectPathVerifier TAFENG --adversarial --ops 16 --out results/verify-joint/adversarial-tafeng-probe0.7
     # fault-injection: exit 0, commit b1ea30af, 2026-10-12T08:12:02
     python3 analysis/fault_injection.py --trials 2000 --seed 7
     # fault-injection-real: exit 0, commit e954773c, 2026-10-12T10:38:57

@@ -1,0 +1,26 @@
+
+=== TAFENG | UUT=0.003557 | r_l=0.80 | rule=JOINT | 16 operations | budget share 1/6 ===
+  target after 0 rescans: <19371> u=151940.0 (L_r=158443.4)
+  op  1 delete n=1099  path=direct after=init          ref=6 got=6 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  2 insert n=4     path=direct after=delete/direct ref=6 got=6 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  3 modify n=4     path=direct after=insert/direct ref=6 got=6 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  4 insert n=2     path=direct after=modify/direct ref=6 got=6 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  5 delete n=1036  path=direct after=insert/direct ref=6 got=6 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  6 insert n=2     path=rescan after=delete/direct ref=6 got=6 missing=0 extra=0 maxUtilGap=0.000000  OK
+  target after 1 rescans: <7929> u=138635.0 (L_r=147944.7)
+  op  7 modify n=3     path=direct after=insert/rescan ref=6 got=6 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  8 insert n=3     path=direct after=modify/direct ref=6 got=6 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  9 delete n=1021  path=direct after=insert/direct ref=7 got=7 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 10 insert n=4     path=direct after=delete/direct ref=7 got=7 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 11 modify n=2     path=direct after=insert/direct ref=7 got=7 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 12 insert n=5     path=rescan after=modify/direct ref=7 got=7 missing=0 extra=0 maxUtilGap=0.000000  OK
+  no target: the reference mine ran out of heap
+  target after 2 rescans: <> u=0.0 (L_r=143110.8)
+  op 13 delete n=704   path=direct after=insert/rescan ref=5 got=5 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 14 insert n=3     path=direct after=delete/direct ref=5 got=5 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 15 modify n=3     path=direct after=insert/direct ref=5 got=5 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 16 insert n=3     path=direct after=modify/direct ref=5 got=5 missing=0 extra=0 maxUtilGap=0.000000  OK
+
+operations by kind/path: {delete/direct=4, insert/direct=6, insert/direct after direct delete=3, insert/direct after direct modify=3, insert/rescan=2, modify/direct=4}
+mismatching operations: 0
+verification.csv -> results/verify-joint/adversarial-tafeng-probe0.7/verification.csv

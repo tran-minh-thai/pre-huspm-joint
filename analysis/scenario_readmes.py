@@ -892,10 +892,11 @@ checked against USpan, HUSP-ULL and HUSP-SP by `verify.BaselineAgreement`.
 * `random`, `adversarial`, `adversarial-tafeng`: `verify.DirectPathVerifier` on the real
   databases, the first half as `D_init`, 16 operations sized to spend a sixth of the rescan
   budget. In adversarial mode each operation is shaped around a target, the untracked pattern of
-  highest utility from a reference mine at 0.6 UUT: deletions take only sequences that miss one
-  of its items, insertions only sequences that hold all of them. Where the reference mine does not
-  finish or runs out of heap the operation has no target and is drawn at random; the
-  `with a target` column counts the operations that had one.
+  highest utility from a reference mine at 0.6 UUT (`-Dverify.probeRl`, 0.7 in
+  `adversarial-tafeng-probe0.7`): deletions take only sequences that miss one of its items,
+  insertions only sequences that hold all of them. Where the reference mine does not finish or
+  runs out of heap the operation has no target and is drawn at random; the `with a target`
+  column counts the operations that had one.
 
 ## Summary
 

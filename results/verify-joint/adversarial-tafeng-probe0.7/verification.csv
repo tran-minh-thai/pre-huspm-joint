@@ -1,0 +1,17 @@
+dataset,uut,r_l,trigger_rule,seed,mode,target,target_utility,op_index,op_type,n_sequences,op_utility,budget,trigger_quantity,path,previous_path,ref_husp,got_husp,missing,extra,max_utility_gap,rescans,clean
+TAFENG,0.003557,0.80,joint,42,adversarial,"19371",151940.000,1,delete,1099,1856249.590,39610.842,6602.680,direct,init,6,6,0,0,0.000000000,0,true
+TAFENG,0.003557,0.80,joint,42,adversarial,"19371",151940.000,2,insert,4,8055.500,39610.842,14629.526,direct,delete/direct,6,6,0,0,0.000000000,0,true
+TAFENG,0.003557,0.80,joint,42,adversarial,"19371",151940.000,3,modify,4,12879.500,39610.842,22174.110,direct,insert/direct,6,6,0,0,0.000000000,0,true
+TAFENG,0.003557,0.80,joint,42,adversarial,"19371",151940.000,4,insert,2,8358.500,39610.842,30502.879,direct,modify/direct,6,6,0,0,0.000000000,0,true
+TAFENG,0.003557,0.80,joint,42,adversarial,"19371",151940.000,5,delete,1036,1858534.750,39610.842,37113.687,direct,insert/direct,6,6,0,0,0.000000000,0,true
+TAFENG,0.003557,0.80,joint,42,adversarial,"19371",151940.000,6,insert,2,6719.000,39610.842,43808.788,rescan,delete/direct,6,6,0,0,0.000000000,1,true
+TAFENG,0.003557,0.80,joint,42,adversarial,"7929",138635.000,7,modify,3,12331.000,36986.185,6198.762,direct,insert/rescan,6,6,0,0,0.000000000,1,true
+TAFENG,0.003557,0.80,joint,42,adversarial,"7929",138635.000,8,insert,3,10448.000,36986.185,16609.598,direct,modify/direct,6,6,0,0,0.000000000,1,true
+TAFENG,0.003557,0.80,joint,42,adversarial,"7929",138635.000,9,delete,1021,1733513.950,36986.185,22775.707,direct,insert/direct,7,7,0,0,0.000000000,1,true
+TAFENG,0.003557,0.80,joint,42,adversarial,"7929",138635.000,10,insert,4,6360.000,36986.185,29113.085,direct,delete/direct,7,7,0,0,0.000000000,1,true
+TAFENG,0.003557,0.80,joint,42,adversarial,"7929",138635.000,11,modify,2,10080.500,36986.185,35553.056,direct,insert/direct,7,7,0,0,0.000000000,1,true
+TAFENG,0.003557,0.80,joint,42,adversarial,"7929",138635.000,12,insert,5,15063.750,36986.185,50563.224,rescan,modify/direct,7,7,0,0,0.000000000,2,true
+TAFENG,0.003557,0.80,joint,42,adversarial,"",0.000,13,delete,704,1676900.040,35777.690,5964.733,direct,insert/rescan,5,5,0,0,0.000000000,2,true
+TAFENG,0.003557,0.80,joint,42,adversarial,"",0.000,14,insert,3,7437.000,35777.690,13375.280,direct,delete/direct,5,5,0,0,0.000000000,2,true
+TAFENG,0.003557,0.80,joint,42,adversarial,"",0.000,15,modify,3,15612.000,35777.690,14856.993,direct,insert/direct,5,5,0,0,0.000000000,2,true
+TAFENG,0.003557,0.80,joint,42,adversarial,"",0.000,16,insert,3,6915.500,35777.690,14832.395,direct,modify/direct,5,5,0,0,0.000000000,2,true
