@@ -11,6 +11,14 @@ checked against USpan, HUSP-ULL and HUSP-SP by `verify.BaselineAgreement`.
   (`verify.MixedBudgetFuzz`), for the joint rule and, as a control, for the `iaumax` rule, which
   is unsound; and hand-built cases (`verify.MixedBudgetProbe`).
 * `acceptance`: the rescan rule on hand-built cases (`verify.RescanRuleAcceptanceTest`).
+* `ips-random`: the proposal's miner with item pruning off, once and to a fixpoint against
+  exhaustive enumeration on small random databases (`verify.ItemRemovalCheck random`): pattern
+  sets and utilities, at the cutoff and at UUT.
+* `ips-real`: the same miner with the pruning off, once and to a fixpoint on the real databases,
+  on `D_init` and on the whole database at the mining floor; the pattern sets and every utility
+  must be identical (`verify.ItemRemovalCheck real`).
+* `fault-injection-ips`: faults written into the pruning, each run through `ips-random`; a
+  control without a fault must pass.
 * `fault-injection`, `fault-injection-real`: each fault is written into a copy of the source and
   the checks are run on it; a fault counts as caught when a check reports a mismatch. A run that
   does not finish catches nothing.
