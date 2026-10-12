@@ -1,0 +1,15 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC3]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=2 | seed.index=0
+
+--- [SC3] Su sensitivity ---
+>> RUNNING IncUSP-Miner+/LEVIATHAN/SC3_su=0.014644#0  (heap free=168MB / total=224MB / max=49152MB)
+[IncUSP-Miner+/LEVIATHAN/SC3_su=0.014644#0] OK t=7389ms cand=22392552 pat=173 heapDelta=3317MB
+>> RUNNING IncUSP-Miner+/LEVIATHAN/SC3_su=0.01553#0  (heap free=163MB / total=224MB / max=49152MB)
+[IncUSP-Miner+/LEVIATHAN/SC3_su=0.01553#0] OK t=6826ms cand=20349511 pat=135 heapDelta=3293MB
+>> RUNNING IncUSP-Miner+/LEVIATHAN/SC3_su=0.01647#0  (heap free=163MB / total=224MB / max=49152MB)
+[IncUSP-Miner+/LEVIATHAN/SC3_su=0.01647#0] OK t=6247ms cand=18385058 pat=116 heapDelta=2855MB
+>> RUNNING IncUSP-Miner+/LEVIATHAN/SC3_su=0.017987#0  (heap free=163MB / total=224MB / max=49152MB)
+[IncUSP-Miner+/LEVIATHAN/SC3_su=0.017987#0] OK t=5544ms cand=15941701 pat=81 heapDelta=2583MB
+=== ALL SCENARIOS DONE (35.5s) ===
