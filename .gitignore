@@ -32,3 +32,5 @@ run.txt
 
 # per-run build directories of analysis/record_run.py
 build-*/
+__pycache__/
+*.pyc

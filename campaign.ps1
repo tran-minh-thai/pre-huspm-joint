@@ -360,8 +360,7 @@ while ($true) {
              "-Ddataset.only=$d", "-Dalgo.only=$a", '-Drepeats=1',
              "-Dresults.dir=$dir/") + $memArgs + @('AutomatedExperimentRunner', $Scenario))
     # Windows PowerShell reports ExitCode as empty for a process started this way unless its
-    # handle is read before the process ends; without this line rc= was empty for every arm,
-    # so an arm whose JVM died could not be told from one that finished.
+    # handle is read before the process ends; rc= in DONE depends on it.
     $null = $p.Handle
     $capped = $false
     if (-not $p.WaitForExit($CapSeconds * 1000)) { $capped = $true; $p.Kill(); $p.WaitForExit() }

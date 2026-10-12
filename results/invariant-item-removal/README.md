@@ -42,10 +42,10 @@ are mined on `D_init` only, as in the campaign.
 | KOSARAK | whole | 12 | 84,913 / 961 / 33 | 424,629,084 / 2,045 / 39 | 114,456 / 41,371 | identical, identical |
 | FIFA | `D_init` | 212 | 571,028 / 15,099 / 13,917 | 441,827,778 / 122,154 / 48,782 | 405,814 / 380,620 | identical, identical |
 
-## Removal off is the previous miner - `off-equals-previous-miner/`
+## Removal off is the miner without removal - `off-equals-previous-miner/`
 
 `verify.MinerCounters` prints the work counters and a digest of the pattern set of one mine.
-Built from commit `9b8a922` (before removal) and run with `-Dadapt.iip=off` on the current
+Built from commit `9b8a922`, which has no item removal, and run with `-Dadapt.iip=off` on the current
 code, it prints the same line on all 14 mines of the table above.
 
 ## The checks can fail - `fault-injection/`

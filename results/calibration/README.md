@@ -10,7 +10,7 @@ The rules were fixed before the run in `experiments.CampaignCalibration`.
 | `calibration.csv` | every calibration run: workload, variant, status, seconds and counters |
 | `decision.txt` | the two settings and the numbers they rest on |
 | `run.log` | the output of every child JVM, each opening with its platform line |
-| `run.info` | host, commit, start and end; its `java` field holds a PowerShell error record around the version line, so the JVM is read from `run.log` (fixed in `campaign.ps1` since) |
+| `run.info` | host, commit, start and end; the JVM of each run is in its platform line in `run.log` |
 
 Outcome:
 

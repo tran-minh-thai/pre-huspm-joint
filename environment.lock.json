@@ -13,8 +13,7 @@
       "name": "OpenJDK25U-jdk_x64_windows_hotspot_25.0.4.1_1.zip",
       "url": "https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.4.1%2B1/OpenJDK25U-jdk_x64_windows_hotspot_25.0.4.1_1.zip",
       "sha256": "00c847d804f4a78e9f04f2683faf14fed898535b177b7fc704486cb0284e9283"
-    },
-    "note": "Arms measured up to 2026-10-05 ran on Microsoft OpenJDK 25.0.4; results/jdk-comparison measures the two builds against each other."
+    }
   },
   "jvm_flags": "-Xmx48g -Xss64m",
   "datasets": {

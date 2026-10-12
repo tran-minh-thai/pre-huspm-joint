@@ -498,7 +498,7 @@ forced at every sample and the heap read right after), so the runtimes of these 
 `mem_retained_mb` is what the algorithm holds after an increment, against a baseline taken before
 the algorithm exists; `mem_live_mb` the peak during it. {HEAD}
 
-A single cell's live set can move between two measurements (`results/jdk-comparison`), so these
+A single cell's live set can move between two measurements (`results/campaign-mem-replicates`), so these
 tables support comparisons of orders of magnitude, not of a few percent.
 
 ## State held after the last increment

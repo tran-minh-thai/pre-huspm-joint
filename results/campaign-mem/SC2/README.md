@@ -5,7 +5,7 @@ forced at every sample and the heap read right after), so the runtimes of these 
 `mem_retained_mb` is what the algorithm holds after an increment, against a baseline taken before
 the algorithm exists; `mem_live_mb` the peak during it. Measured on `PC-THAI` (see `results/machine/PC-THAI.json` and `environment.lock.json`), `-Xmx48g`, one JVM per arm. Written by `analysis/scenario_readmes.py` from the arms' CSVs; rerun it rather than editing numbers here.
 
-A single cell's live set can move between two measurements (`results/jdk-comparison`), so these
+A single cell's live set can move between two measurements (`results/campaign-mem-replicates`), so these
 tables support comparisons of orders of magnitude, not of a few percent.
 
 ## State held after the last increment

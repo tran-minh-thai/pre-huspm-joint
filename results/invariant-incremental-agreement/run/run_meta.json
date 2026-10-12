@@ -1,0 +1,16 @@
+{
+  "command": "python3 -I analysis/incremental_agreement.py --out results/invariant-incremental-agreement",
+  "path_substitutions": 0,
+  "build_dir": "build-ia",
+  "git_commit": "7f0797e0fe5466fd95b5c546e67c379d851196f8",
+  "tree": "src clean, other files modified",
+  "source_sha256": "5cc614c99b2c34bc807efc144d7f211f2788c407afcbb5bc6c5ca00006e0d92c",
+  "source_files": 34,
+  "java": "openjdk version \"26.0.1\" 2026-04-21",
+  "os": "Darwin 27.0.0 (macOS-27.0.1-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-10-12T06:47:38",
+  "end": "2026-10-12T06:47:39",
+  "exit_code": 0
+}

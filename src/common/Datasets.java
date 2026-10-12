@@ -79,11 +79,10 @@ public final class Datasets {
          * the algorithm actually mines at once the adaptive lower bound has settled. 0.8 on
          * all eight databases.
          *
-         * KOSARAK was set to 0.85 while the miner had no irrelevant item pruning: 0.8 x its
-         * lowest threshold then exceeded three billion candidates. With the pruning, the
-         * calibration on the measurement machine (results/calibration, rule 2) mines KOSARAK's
-         * D_init at its lowest threshold and the whole database at its default threshold,
-         * both at 0.8, in 0.9 s and 14.3 s, so the eight databases share one value.
+         * KOSARAK is the database where 0.8 is closest to infeasible; the calibration on the
+         * measurement machine (results/calibration, rule 2) mines its D_init at its lowest
+         * threshold and the whole database at its default threshold, both at 0.8, within the
+         * limit, so the eight databases share one value.
          *
          * Not higher than needed because a higher floor is not free: it thins the pre-large
          * buffer and buys rescans, which is what Yan et al. warn of when they write that too

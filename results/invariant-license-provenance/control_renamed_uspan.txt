@@ -1,6 +1,0 @@
-SPMF files scanned: 3051
-
-== RenamedUSpan.java
-  lines 0.000 (0/689) ca/pfv/spmf/algorithmmanager/AlgorithmManager.java; 0.000 (0/689) ca/pfv/spmf/algorithmmanager/AlgorithmType.java
-  raw   0.016 (49/2986) ca/pfv/spmf/algorithms/sequentialpatterns/uspan/AlgoUSpan.java; 0.006 (17/2986) ca/pfv/spmf/algorithms/episodes/poerm/AlgoPOERM.java
-  shape 1.000 (1949/1949) ca/pfv/spmf/algorithms/sequentialpatterns/uspan/AlgoUSpan.java; 0.363 (707/1949) ca/pfv/spmf/algorithms/frequentpatterns/UFH/AlgoUFH.java

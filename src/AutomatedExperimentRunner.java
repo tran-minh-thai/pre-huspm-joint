@@ -737,8 +737,7 @@ public class AutomatedExperimentRunner {
         // Highest floor first. A lower floor mines a superset of the patterns of a higher one, so
         // once a level runs out of heap every lower level needs at least as much; measured in this
         // order, a level is never run in a JVM whose heap an earlier failure may still occupy
-        // unless that level is harder still. Ascending order once left three levels unmeasured
-        // after the JVM died at the level following an out-of-memory.
+        // unless that level is harder still.
         double[] slRatios = {0.9, 0.7, 0.5, 0.3};
 
         try (ResultCollector col = new ResultCollector(RESULTS_DIR + "SC4_sl_sensitivity.csv")) {

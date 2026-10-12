@@ -1,2 +1,0 @@
-SC1 counters total_patterns_found, candidate_count, explored_nodes, prelarge_count: 0 of 748 differ across the three runs
-memory SC1 counters: 0 of 480 differ

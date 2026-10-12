@@ -196,7 +196,7 @@ the seed in their own columns.
 | SC1 | three repeats (`r0`, `r1`, `r2`), all algorithms, all eight databases | runtime at the default threshold |
 | SC2 | three repeats of the proposal and remining on SIGN, TAFENG, BIBLE and C8T1S5I8N5K; one run elsewhere | runtime summed over the increments |
 | SC6 | five seeds (`s0` to `s4`: 42, 1337, 2024, 31415, 271828), both arms | the proposal-to-remining ratio, paired by seed |
-| memory | `s0r1`: SC1 on SIGN, TAFENG, C8T1S5I8N5K, BMS1 and KOSARAK, all six algorithms; SC2 baselines on SIGN and TAFENG | used by `results/jdk-comparison` |
+| memory | `s0r1`: SC1 on SIGN, TAFENG, C8T1S5I8N5K, BMS1 and KOSARAK, all six algorithms; SC2, all five arms, on SIGN and TAFENG | the live set between two runs |
 | others | one run | - |
 
 Counters (pattern counts, rescans, explored nodes) are deterministic for a given stream, so
@@ -210,9 +210,7 @@ deviation over the replicates that completed and counts those that did not.
 
 Every runtime and memory figure comes from one machine, `PC-THAI` (`results/machine/PC-THAI.json`):
 AMD Ryzen 9 9950X, 16 cores and 32 threads, 64 GB, Windows 11, `-Xmx48g -Xss64m`, one JVM per
-arm. The arms ran on two builds of OpenJDK 25.0.4, Microsoft OpenJDK 25.0.4 and Eclipse Temurin
-25.0.4.1+1; `results/jdk-comparison` compares the two builds on the same configurations.
-Each arm's `run.log` names its JVM where it was recorded. `environment.lock.json` pins
+arm, Eclipse Temurin 25.0.4.1+1. Each arm's `run.log` names its JVM. `environment.lock.json` pins
 Temurin 25.0.4.1+1, and `campaign.ps1` refuses any JVM whose `java.runtime.version` or
 `java.vendor` differs. Numbers measured on different machines are never compared.
 

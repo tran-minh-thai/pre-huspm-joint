@@ -602,7 +602,7 @@ def baseline_rescans(df, ds):
     return out
 
 
-# Registered before the campaign ran (handoff of 2026-10-10): from the data alone, the joint
+# Registered before the campaign ran (commit c24fcd3): from the data alone, the joint
 # rule's budget is (1 - UUT) / (alpha - UUT) times that of a test on the total inserted utility,
 # with alpha over the insertion stream. So the gap in rescans between Pre-HUSPM-TSU and the
 # proposal should be largest on the two databases with the lowest alpha and smallest on the
