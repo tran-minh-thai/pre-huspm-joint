@@ -32,8 +32,12 @@ checked against USpan, HUSP-ULL and HUSP-SP by `verify.BaselineAgreement`.
 | hand-built cases (MixedBudgetProbe), rule joint | finished | 8 |  |  |  |  | 0 |  |
 | hand-built cases (MixedBudgetProbe), rule iaumax | finished | 8 |  |  |  |  | 3 |  |
 | rescan rule acceptance (RescanRuleAcceptanceTest) | finished | 23 |  |  |  |  | 0 |  |
+| item pruning against exhaustive enumeration (ItemRemovalCheck random) | finished | 1,444 | 1,951 |  |  |  | 0 |  |
+| item pruning on and off on real databases, init (ItemRemovalCheck real) | finished | 8 |  |  |  |  | 0 |  |
+| item pruning on and off on real databases, whole (ItemRemovalCheck real) | finished | 7 |  |  |  |  | 0 |  |
 | fault injection, random streams and hand-built cases | finished | 2 |  |  |  |  |  | 2 |
 | fault injection, adversarial runs on real databases | finished | 2 |  |  |  |  |  | 2 |
+| fault injection into the item pruning | finished | 4 |  |  |  |  |  | 4 |
 | direct path on real databases, adversarial operations | finished | 128 | 108 | 30 | 49 | 30 | 0 |  |
 | direct path on real databases, adversarial-tafeng operations | finished | 16 | 0 | 4 | 8 | 4 | 0 |  |
 | direct path on real databases, adversarial-tafeng-probe0.7 operations | finished | 16 | 12 | 4 | 6 | 4 | 0 |  |
@@ -91,9 +95,15 @@ checked against USpan, HUSP-ULL and HUSP-SP by `verify.BaselineAgreement`.
     java -Dverify.probeRl=0.7 -Xmx24g -Xss64m -cp build-vj verify.DirectPathVerifier TAFENG --adversarial --ops 16 --out results/verify-joint/adversarial-tafeng-probe0.7
     # fault-injection: exit 0, commit b1ea30af, 2026-10-12T08:12:02
     python3 analysis/fault_injection.py --trials 2000 --seed 7
+    # fault-injection-ips: exit 0, commit 41f3af39, 2026-10-12T15:08:58
+    python3 analysis/fault_injection.py --item-removal --trials 2000 --seed 1
     # fault-injection-real: exit 0, commit e954773c, 2026-10-12T10:38:57
     python3 analysis/fault_injection.py --real SIGN,LEVIATHAN,BIBLE,C8T1S5I8N5K,TAFENG
     # fuzz: exit 0, commit b1ea30af, 2026-10-12T08:11:48
     bash -c for s in "2000 7" "5000 11" "5000 23" "5000 101"; do set -- $s; for r in joint iaumax; do java -cp build-vj verify.MixedBudgetFuzz $r $1 $2; done; done; java -cp build-vj verify.MixedBudgetProbe joint; java -cp build-vj verify.MixedBudgetProbe iaumax; true
+    # ips-random: exit 0, commit 41f3af39, 2026-10-12T14:58:58
+    java -Xmx8g -Xss64m -cp build-vj verify.ItemRemovalCheck random 2000 1
+    # ips-real: exit 0, commit 41f3af39, 2026-10-12T15:04:42
+    bash -c rc=0; for d in SIGN LEVIATHAN FIFA BIBLE BMS1 KOSARAK C8T1S5I8N5K TAFENG; do java -Xmx24g -Xss64m -cp build-vj verify.ItemRemovalCheck real $d init floor || rc=1; done; for d in SIGN LEVIATHAN FIFA BIBLE KOSARAK C8T1S5I8N5K TAFENG; do java -Xmx24g -Xss64m -cp build-vj verify.ItemRemovalCheck real $d whole floor || rc=1; done; exit $rc
     # random: exit 0, commit b1ea30af, 2026-10-12T08:19:08
     java -Xmx24g -Xss64m -cp build-vj verify.DirectPathVerifier ALL --ops 16 --out results/verify-joint/random

@@ -27,6 +27,19 @@ memory guard). A runtime of -3 is a completed run of the memory campaign, whose 
 A configuration that did not finish is marked with its outcome on the figure and left out of
 every sum.
 
+## Style
+
+Every figure is drawn at the printed width (324.36 pt), Times New Roman at 9 pt, fonts embedded.
+Multi-panel figures use a grid of three equal columns, one legend above the panels, panel names
+under the axes as "(a) NAME", and the y label on the first column of each row; a two-panel figure
+is centred and keeps the full width. Each method has one line colour in every figure (Okabe-Ito):
+Pre-HUSPM-Joint `#D55E00`, Pre-HUSPM and Pre-HUSPM-SWUmax `#0072B2`, Pre-HUSPM-TSU `#56B4E9`,
+Remine-from-scratch `#000000`, IncUSP-Miner+ `#009E73`, HUSP-ULL `#E69F00`, HUSP-SP `#CC79A7`,
+USpan `#7F7F7F`. Series that are not methods (variants, stream cuts, databases) take
+`SERIES_COLORS` in drawing order, starting with the proposal's colour. Nothing is filled: markers
+are hollow, bars are white with a coloured outline and hatch, and every series keeps its own dash
+pattern and marker, so a black-and-white print still reads.
+
 ## Figures (`main()`)
 
 | file | scenario | content |

@@ -381,8 +381,32 @@ def verification():
                      status=_status("acceptance") if m else "missing",
                      operations=int(m.group(1)) + int(m.group(2)) if m else None,
                      mismatches=int(m.group(2)) if m else None))
+    # Irrelevant item pruning against exhaustive enumeration, and with the pruning on and off.
+    out = _console("ips-random")
+    if _status("ips-random") != "finished":
+        rows.append(dict(check="item pruning against exhaustive enumeration (ItemRemovalCheck random)",
+                         status=_status("ips-random")))
+    else:
+        m = re.search(r"trials=(\d+).*databases-with->=1-pattern=(\d+)", out)
+        bad = sum(int(x) for x in re.findall(r"^  (?:once|fixpoint)\s+mismatching-databases=(\d+)", out, flags=re.M))
+        nodes = re.search(r"^  once .*dbs-with-node-removal=(\d+)", out, flags=re.M)
+        rows.append(dict(check="item pruning against exhaustive enumeration (ItemRemovalCheck random)",
+                         status="finished", runs=int(m.group(1)), operations=int(m.group(2)),
+                         with_target=int(nodes.group(1)) if nodes else None, mismatches=bad))
+    out = _console("ips-real")
+    if _status("ips-real") != "finished":
+        rows.append(dict(check="item pruning on and off on real databases (ItemRemovalCheck real)",
+                         status=_status("ips-real")))
+    else:
+        for scope in ("init", "whole"):
+            blocks = re.findall(r"^real (\S+) scope=" + scope + r" .*?\nRESULT ([^\n]*)", out, flags=re.M | re.S)
+            rows.append(dict(check=f"item pruning on and off on real databases, {scope} (ItemRemovalCheck real)",
+                             status="finished", runs=len(blocks),
+                             operations=sum(1 for _, r in blocks if r.startswith("every mode returns")),
+                             mismatches=sum(1 for _, r in blocks if not r.startswith("every mode returns"))))
     for name, label in (("fault-injection", "fault injection, random streams and hand-built cases"),
-                        ("fault-injection-real", "fault injection, adversarial runs on real databases")):
+                        ("fault-injection-real", "fault injection, adversarial runs on real databases"),
+                        ("fault-injection-ips", "fault injection into the item pruning")):
         out = _console(name)
         if _status(name) != "finished":
             rows.append(dict(check=label, status=_status(name)))
@@ -638,6 +662,24 @@ def export_all(out_dir=None):
             if len(r):
                 put("SC7_no_IPS_explored_over_full_min", f"{r.min():.2f} ({r.idxmin()})", "table_SC7_static.csv")
                 put("SC7_no_IPS_explored_over_full_max", f"{r.max():.2f} ({r.idxmax()})", "table_SC7_static.csv")
+
+    # The keys the manuscript asked for by name.
+    def row_of(prefix):
+        hit = vs[vs["check"].str.startswith(prefix)]
+        return hit.iloc[0] if len(hit) else None
+    r = row_of("item pruning against exhaustive enumeration")
+    if r is not None and r["status"] == "finished":
+        put("verify_ips_vs_exhaustive_databases", int(r["runs"]), "table_verification.csv")
+        put("verify_ips_vs_exhaustive_databases_with_patterns", int(r["operations"]), "table_verification.csv")
+        put("verify_ips_vs_exhaustive_mismatches", int(r["mismatches"]), "table_verification.csv")
+    for scope in ("init", "whole"):
+        r = row_of(f"item pruning on and off on real databases, {scope}")
+        if r is not None and r["status"] == "finished":
+            put(f"verify_ips_vs_noips_real_{scope}_equal", f"{int(r['operations'])}/{int(r['runs'])}",
+                "table_verification.csv")
+    r = row_of("fault injection into the item pruning")
+    if r is not None and r["status"] == "finished":
+        put("verify_ips_faults_caught", f"{int(r['caught'])}/{int(r['operations'])}", "table_verification.csv")
 
     ag = agreement()
     mf.write_csv(ag, os.path.join(out, "table_agreement.csv"))

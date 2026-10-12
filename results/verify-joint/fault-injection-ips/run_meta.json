@@ -1,0 +1,16 @@
+{
+  "command": "python3 analysis/fault_injection.py --item-removal --trials 2000 --seed 1",
+  "path_substitutions": 0,
+  "build_dir": "build-vj",
+  "git_commit": "41f3af392b7b6f7b64a65c24002fb9ba45953a43",
+  "tree": "src clean, other files modified",
+  "source_sha256": "29c2355da1942f5aa7d4fef2b78df0bc1ee5c5cae2177c52f08b1698bb18a666",
+  "source_files": 34,
+  "java": "openjdk version \"26.0.1\" 2026-04-21",
+  "os": "Darwin 27.0.0 (macOS-27.0.1-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-10-12T15:04:43",
+  "end": "2026-10-12T15:08:58",
+  "exit_code": 0
+}
