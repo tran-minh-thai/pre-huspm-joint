@@ -47,6 +47,7 @@ echo "==> writing manifest"
   echo "  \"dataset_sha256\": {"
   first=1
   for f in datasets/*.txt; do
+    [ -e "$f" ] || continue      # no databases fetched yet (the TEST grid reads examples/)
     sum="$( (shasum -a 256 "$f" 2>/dev/null || sha256sum "$f") | cut -d' ' -f1)"
     [ $first -eq 0 ] && echo ","
     printf '    "%s": "%s"' "$(basename "$f")" "$sum"
