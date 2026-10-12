@@ -622,6 +622,22 @@ def export_all(out_dir=None):
                             "table_explored_nodes.csv")
                         put(f"{sc}_{scope}_explored_{a}_over_proposal_max", f"{v.max():.2f} ({hi['dataset']})",
                             "table_explored_nodes.csv")
+                        inv = 1.0 / v
+                        lo, hi = g.loc[inv.idxmin()], g.loc[inv.idxmax()]
+                        put(f"{sc}_{scope}_explored_proposal_over_{a}_min", f"{inv.min():.2f} ({lo['dataset']})",
+                            "table_explored_nodes.csv")
+                        put(f"{sc}_{scope}_explored_proposal_over_{a}_max", f"{inv.max():.2f} ({hi['dataset']})",
+                            "table_explored_nodes.csv")
+    st7 = os.path.join(out, "table_SC7_static.csv")
+    if os.path.exists(st7):
+        t7 = pd.read_csv(st7)
+        if "explored_bound" in t7:
+            f = t7[t7["variant"] == "Full"].set_index("dataset")["explored_bound"]
+            n = t7[t7["variant"] == "-IPS"].set_index("dataset")["explored_bound"]
+            r = (n / f).dropna()
+            if len(r):
+                put("SC7_no_IPS_explored_over_full_min", f"{r.min():.2f} ({r.idxmin()})", "table_SC7_static.csv")
+                put("SC7_no_IPS_explored_over_full_max", f"{r.max():.2f} ({r.idxmax()})", "table_SC7_static.csv")
 
     ag = agreement()
     mf.write_csv(ag, os.path.join(out, "table_agreement.csv"))
