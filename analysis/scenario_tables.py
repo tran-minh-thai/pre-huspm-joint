@@ -529,25 +529,64 @@ def noise():
 
 
 # ------------------------------------------------------------------------------ paper
+def sc2_stats(totals, reps=None):
+    """(database, arm) -> n, mean and standard deviation of the SC2 runtime summed over the
+    increments: the mean of the replicates where at least two finished without a failure,
+    else the one run; None for an arm that did not finish all increments."""
+    R = {} if reps is None else {(r["dataset"], r["algorithm"]): r for _, r in reps.iterrows()
+                                 if int(r["n"]) >= 2 and int(r["n_failed"]) == 0}
+    out = {}
+    for _, r in totals.iterrows():
+        k = (r["dataset"], r["algorithm"])
+        if r["increments_done"] != r["increments"]:
+            out[k] = None
+        elif k in R:
+            q = R[k]
+            out[k] = dict(n=int(q["n"]), mean=float(q["total_s_mean"]), std=float(q["total_s_std"]))
+        else:
+            out[k] = dict(n=1, mean=float(r["runtime_s"]), std=np.nan)
+    return out
+
+
+def sc2_speedups(put, totals, reps=None):
+    """How many streams the proposal is the fastest arm on, and each baseline's time over the
+    proposal's per database, from the values the SC2 table prints (means where three runs exist)."""
+    S = sc2_stats(totals, reps)
+    dbs = sorted({d for d, _ in S})
+    fastest = [d for d in dbs if S.get((d, P)) and all(
+        S[(d, a)] is None or S[(d, a)]["mean"] > S[(d, P)]["mean"] for a in INC_ARMS if a != P and (d, a) in S)]
+    put("SC2_proposal_fastest", f"{len(fastest)}/{len(dbs)}", "table_SC2_totals.csv")
+    for a in INC_ARMS:
+        if a == P:
+            continue
+        r = {d: S[(d, a)]["mean"] / S[(d, P)]["mean"] for d in dbs
+             if S.get((d, a)) and S.get((d, P))}
+        if not r:
+            continue
+        lo, hi = min(r, key=r.get), max(r, key=r.get)
+        put(f"SC2_{a}_over_proposal_min", f"{r[lo]:.2f} ({lo})", "table_SC2_totals.csv")
+        put(f"SC2_{a}_over_proposal_max", f"{r[hi]:.2f} ({hi})", "table_SC2_totals.csv")
+        put(f"SC2_{a}_over_proposal_databases", len(r), "table_SC2_totals.csv")
+    second = {d: min((S[(d, b)]["mean"] for b in INC_ARMS if b != P and S.get((d, b))), default=None)
+              for d in dbs}
+    rr = {d: second[d] / S[(d, P)]["mean"] for d in dbs if second.get(d) and S.get((d, P))}
+    lo, hi = min(rr, key=rr.get), max(rr, key=rr.get)
+    put("SC2_runner_up_over_proposal_min", f"{rr[lo]:.2f} ({lo})", "table_SC2_totals.csv")
+    put("SC2_runner_up_over_proposal_max", f"{rr[hi]:.2f} ({hi})", "table_SC2_totals.csv")
+
+
 def sc2_tex(totals, region, reps=None):
     """The SC2 runtime and rescan-rule tables. A cell measured three times (reps, from
     table_SC2_replicates.csv) prints the mean and standard deviation of its runs; the
     others print their one run. The lowest time of each row and the fewest rescans of the
     three rules are set in bold; a run that did not finish takes no part."""
     T = {(r["dataset"], r["algorithm"]): r for _, r in totals.iterrows()}
-    R = {} if reps is None else {(r["dataset"], r["algorithm"]): r for _, r in reps.iterrows()
-                                 if int(r["n"]) >= 2 and int(r["n_failed"]) == 0}
+    S = sc2_stats(totals, reps)
     op = region.set_index("dataset")
     order = [d for d in ["SIGN", "TAFENG", "C8T1S5I8N5K", "BIBLE", "LEVIATHAN", "FIFA", "KOSARAK"] if d in op.index]
 
     def stat(d, a):
-        r = T.get((d, a))
-        if r is None or r["increments_done"] != r["increments"]:
-            return None
-        if (d, a) in R:
-            q = R[(d, a)]
-            return dict(n=int(q["n"]), mean=float(q["total_s_mean"]), std=float(q["total_s_std"]))
-        return dict(n=1, mean=float(r["runtime_s"]), std=np.nan)
+        return S.get((d, a))
 
     def row(d):
         st = {a: stat(d, a) for a in INC_ARMS}
@@ -806,7 +845,9 @@ def export_all(out_dir=None):
             if os.path.exists(os.path.join(out, "table_SC2_totals.csv")) else None
         if totals is not None and len(region):
             rp = os.path.join(out, "table_SC2_replicates.csv")
-            time_tex, rule_tex = sc2_tex(totals, region, pd.read_csv(rp) if os.path.exists(rp) else None)
+            reps = pd.read_csv(rp) if os.path.exists(rp) else None
+            time_tex, rule_tex = sc2_tex(totals, region, reps)
+            sc2_speedups(put, totals, reps)
             open(os.path.join(out, "table_SC2_time.tex"), "w", encoding="utf-8").write(time_tex)
             open(os.path.join(out, "table_SC2_rule.tex"), "w", encoding="utf-8").write(rule_tex)
             h = mf.rescan_hypothesis(region)
