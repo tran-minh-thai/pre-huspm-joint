@@ -234,19 +234,26 @@ SC1_count_agreement,32/32,table_agreement.csv
 SC3_count_agreement,12/12,table_agreement.csv
 SC5_count_agreement,2904/2904,table_agreement.csv
 SC2_proposal_fastest,7/7,table_SC2_totals.csv
-SC2_Pre-HUSPM-SWUmax_over_proposal_min,1.10 (KOSARAK),table_SC2_totals.csv
+SC2_Pre-HUSPM-SWUmax_over_proposal_min,1.11 (KOSARAK),table_SC2_totals.csv
 SC2_Pre-HUSPM-SWUmax_over_proposal_max,28.79 (FIFA),table_SC2_totals.csv
 SC2_Pre-HUSPM-SWUmax_over_proposal_databases,7,table_SC2_totals.csv
-SC2_Pre-HUSPM-TSU_over_proposal_min,1.12 (KOSARAK),table_SC2_totals.csv
+SC2_Pre-HUSPM-TSU_over_proposal_min,1.13 (KOSARAK),table_SC2_totals.csv
 SC2_Pre-HUSPM-TSU_over_proposal_max,40.09 (FIFA),table_SC2_totals.csv
 SC2_Pre-HUSPM-TSU_over_proposal_databases,7,table_SC2_totals.csv
-SC2_Remine-from-scratch_over_proposal_min,1.06 (LEVIATHAN),table_SC2_totals.csv
+SC2_Remine-from-scratch_over_proposal_min,1.05 (LEVIATHAN),table_SC2_totals.csv
 SC2_Remine-from-scratch_over_proposal_max,3.84 (FIFA),table_SC2_totals.csv
 SC2_Remine-from-scratch_over_proposal_databases,7,table_SC2_totals.csv
 SC2_IncUSP-Miner+_over_proposal_min,1.07 (BIBLE),table_SC2_totals.csv
-SC2_IncUSP-Miner+_over_proposal_max,2.52 (KOSARAK),table_SC2_totals.csv
+SC2_IncUSP-Miner+_over_proposal_max,2.54 (KOSARAK),table_SC2_totals.csv
 SC2_IncUSP-Miner+_over_proposal_databases,6,table_SC2_totals.csv
-SC2_runner_up_over_proposal_min,1.06 (LEVIATHAN),table_SC2_totals.csv
+SC2_runner_up_BIBLE,1.07 (IncUSP-Miner+; runs 3 and 3; separated),table_SC2_totals.csv
+SC2_runner_up_C8T1S5I8N5K,1.71 (Remine-from-scratch; runs 3 and 3; separated),table_SC2_totals.csv
+SC2_runner_up_FIFA,"3.84 (Remine-from-scratch; runs 1 and 1; not comparable, a side has one run)",table_SC2_totals.csv
+SC2_runner_up_KOSARAK,1.09 (Remine-from-scratch; runs 3 and 3; separated),table_SC2_totals.csv
+SC2_runner_up_LEVIATHAN,1.05 (Remine-from-scratch; runs 3 and 3; separated),table_SC2_totals.csv
+SC2_runner_up_SIGN,1.83 (Remine-from-scratch; runs 3 and 3; separated),table_SC2_totals.csv
+SC2_runner_up_TAFENG,"1.23 (Pre-HUSPM-SWUmax; runs 3 and 1; not comparable, a side has one run)",table_SC2_totals.csv
+SC2_runner_up_over_proposal_min,1.05 (LEVIATHAN),table_SC2_totals.csv
 SC2_runner_up_over_proposal_max,3.84 (FIFA),table_SC2_totals.csv
 SC2_prediction,holds,table_SC2_operating_region.csv
 SC2_joint_le_swumax,7/7,table_SC2_operating_region.csv

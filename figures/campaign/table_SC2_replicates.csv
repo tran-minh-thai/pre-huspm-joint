@@ -1,8 +1,13 @@
 dataset,algorithm,n_failed,n,total_s_mean,total_s_std,total_s_min,total_s_max
 BIBLE,Adaptive-Full,0,3,53.768,0.204,53.596,53.993
+BIBLE,IncUSP-Miner+,0,3,57.516,0.223,57.288,57.733
 BIBLE,Remine-from-scratch,0,3,93.665,0.545,93.136,94.224
 C8T1S5I8N5K,Adaptive-Full,0,3,9.063,0.12,8.964,9.197
 C8T1S5I8N5K,Remine-from-scratch,0,3,15.511,0.164,15.344,15.672
+KOSARAK,Adaptive-Full,0,3,626.849,6.173,620.402,632.705
+KOSARAK,Remine-from-scratch,0,3,684.921,0.464,684.609,685.454
+LEVIATHAN,Adaptive-Full,0,3,35.329,0.329,35.119,35.708
+LEVIATHAN,Remine-from-scratch,0,3,37.193,0.173,37.062,37.389
 SIGN,Adaptive-Full,0,3,9.711,0.123,9.609,9.848
 SIGN,Remine-from-scratch,0,3,17.776,0.576,17.166,18.311
 TAFENG,Adaptive-Full,0,3,5.908,0.008,5.903,5.917

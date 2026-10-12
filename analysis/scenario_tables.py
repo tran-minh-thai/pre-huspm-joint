@@ -542,9 +542,11 @@ def sc2_stats(totals, reps=None):
             out[k] = None
         elif k in R:
             q = R[k]
-            out[k] = dict(n=int(q["n"]), mean=float(q["total_s_mean"]), std=float(q["total_s_std"]))
+            out[k] = dict(n=int(q["n"]), mean=float(q["total_s_mean"]), std=float(q["total_s_std"]),
+                          min=float(q["total_s_min"]), max=float(q["total_s_max"]))
         else:
-            out[k] = dict(n=1, mean=float(r["runtime_s"]), std=np.nan)
+            v = float(r["runtime_s"])
+            out[k] = dict(n=1, mean=v, std=np.nan, min=v, max=v)
     return out
 
 
@@ -569,6 +571,21 @@ def sc2_speedups(put, totals, reps=None):
         put(f"SC2_{a}_over_proposal_databases", len(r), "table_SC2_totals.csv")
     second = {d: min((S[(d, b)]["mean"] for b in INC_ARMS if b != P and S.get((d, b))), default=None)
               for d in dbs}
+    # per database: the runner-up, its time over the proposal's, the runs behind both, and
+    # whether every run of the proposal is faster than every run of the runner-up
+    for d in dbs:
+        if not S.get((d, P)):
+            continue
+        rivals = {b: S[(d, b)] for b in INC_ARMS if b != P and S.get((d, b))}
+        if not rivals:
+            continue
+        b = min(rivals, key=lambda x: rivals[x]["mean"])
+        if S[(d, P)]["n"] < 2 or rivals[b]["n"] < 2:
+            sep = "not comparable, a side has one run"
+        else:
+            sep = "separated" if S[(d, P)]["max"] < rivals[b]["min"] else "overlapping"
+        put(f"SC2_runner_up_{d}", f"{rivals[b]['mean'] / S[(d, P)]['mean']:.2f} ({b}; runs {S[(d, P)]['n']} "
+            f"and {rivals[b]['n']}; {sep})", "table_SC2_totals.csv")
     rr = {d: second[d] / S[(d, P)]["mean"] for d in dbs if second.get(d) and S.get((d, P))}
     lo, hi = min(rr, key=rr.get), max(rr, key=rr.get)
     put("SC2_runner_up_over_proposal_min", f"{rr[lo]:.2f} ({lo})", "table_SC2_totals.csv")
