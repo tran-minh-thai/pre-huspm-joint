@@ -1,0 +1,17 @@
+check,dataset,operations,with_target,mismatches,insert_direct,insert_rescan,delete_direct,delete_rescan,modify_direct,modify_rescan
+adversarial,SIGN,16,16,0,7,1,2,2,4,0
+adversarial,LEVIATHAN,16,16,0,6,2,4,0,3,1
+adversarial,BIBLE,16,16,0,6,2,4,0,4,0
+adversarial,BMS1,16,16,0,5,3,4,0,4,0
+adversarial,FIFA,16,16,0,6,2,4,0,4,0
+adversarial,KOSARAK,16,16,0,6,2,4,0,4,0
+adversarial,C8T1S5I8N5K,16,12,0,5,3,4,0,3,1
+adversarial,TAFENG,16,0,0,8,0,4,0,4,0
+random,SIGN,16,0,0,7,1,3,1,3,1
+random,LEVIATHAN,16,0,0,7,1,3,1,3,1
+random,BIBLE,16,0,0,7,1,4,0,3,1
+random,BMS1,16,0,0,8,0,4,0,4,0
+random,FIFA,16,0,0,7,1,4,0,4,0
+random,KOSARAK,16,0,0,7,1,4,0,3,1
+random,C8T1S5I8N5K,16,0,0,7,1,4,0,4,0
+random,TAFENG,16,0,0,8,0,4,0,4,0

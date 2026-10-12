@@ -1,0 +1,16 @@
+{
+  "command": "bash -c for s in \"2000 7\" \"5000 11\" \"5000 23\" \"5000 101\"; do set -- $s; for r in joint iaumax; do java -cp build-vj verify.MixedBudgetFuzz $r $1 $2; done; done; java -cp build-vj verify.MixedBudgetProbe joint; java -cp build-vj verify.MixedBudgetProbe iaumax; true",
+  "path_substitutions": 0,
+  "build_dir": "build-vj",
+  "git_commit": "b1ea30af1671a29a1ac362e2168e624a8e1b242c",
+  "tree": "clean",
+  "source_sha256": "8157a823ca05b2cf46257df37be4bad28b5e7f34d04aeec284bbe932afe25b21",
+  "source_files": 34,
+  "java": "openjdk version \"26.0.1\" 2026-04-21",
+  "os": "Darwin 27.0.0 (macOS-27.0.1-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-10-12T08:10:17",
+  "end": "2026-10-12T08:11:48",
+  "exit_code": 0
+}

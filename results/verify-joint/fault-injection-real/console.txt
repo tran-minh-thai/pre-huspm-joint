@@ -1,0 +1,22 @@
+fault: trigger without the deletion term
+  replaced: return iauMax - Su * insertedSinceRescan + Su * deletedSinceRescan;
+      with: return iauMax - Su * insertedSinceRescan;
+  fuzz : rule=joint trials=2000 seed=7 ops=20000 per-kind={delete=6582, insert=6702, modify=6716} direct-update={delete=6582, insert=2051, modify=2773} mismatching-ops=519 {delete/direct=417, insert/direct=22, modify/direct=80} trials-with-mismatch=315
+  probe: caseD mismatch=false ; cases with a mismatch: A=true B=true ; total mismatching patterns over 8 checks = 2
+  real : SIGN: mismatching operations: 1
+  real : LEVIATHAN: mismatching operations: 0
+  real : BIBLE: mismatching operations: 1
+  real : C8T1S5I8N5K: mismatching operations: 0
+  real : TAFENG: mismatching operations: 0
+  caught: True (by fuzz, probe, real)
+fault: drop floor with the largest counter instead of the pattern's smallest
+  replaced: return Sl_min * tsuAtLastRescan + minIauOf(p);
+      with: return Sl_min * tsuAtLastRescan + iauMax;
+  fuzz : rule=joint trials=2000 seed=7 ops=20000 per-kind={delete=6582, insert=6702, modify=6716} direct-update={delete=5573, insert=1804, modify=1694} mismatching-ops=6 {insert/direct=4, modify/direct=2} trials-with-mismatch=6
+  probe: caseD mismatch=true ; cases with a mismatch: A=false B=false ; total mismatching patterns over 8 checks = 1
+  real : SIGN: mismatching operations: 0
+  real : LEVIATHAN: mismatching operations: 0
+  real : BIBLE: mismatching operations: 0
+  real : C8T1S5I8N5K: mismatching operations: 0
+  real : TAFENG: mismatching operations: 0
+  caught: True (by fuzz, probe)

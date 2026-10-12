@@ -540,7 +540,7 @@ SLABEL = {"USpan": "USpan", "HUSP-ULL": "HUSP-ULL", "HUSP-SP": "HUSP-SP", "IncUS
 
 
 # One computation for the paper tables and these pages.
-from scenario_tables import sc7_block_size, static_cells, static_summary  # noqa: E402
+from scenario_tables import sc7_block_size, static_cells, static_summary, verification  # noqa: E402
 
 
 def incomplete_runs(cells):
@@ -843,7 +843,75 @@ No arm of this scenario has finished yet. Its tables are written here from the a
 """)
 
 
+# ------------------------------------------------------------------------------ verify-joint
+def verify_joint():
+    """results/verify-joint/README.md, from the outputs of the correctness checks."""
+    import json
+    summ, per_db = verification()
+    base = os.path.join(mf.DATA_DIR, "verify-joint")
+    if summ.empty:
+        return
+    cmds = []
+    for name in sorted(os.listdir(base)):
+        meta = os.path.join(base, name, "run_meta.json")
+        if os.path.exists(meta):
+            m = json.load(open(meta, encoding="utf-8"))
+            cmds.append(f"    # {name}: exit {m.get('exit_code')}, commit {m.get('git_commit', '')[:8]}, {m.get('end', '')}\n"
+                        f"    {m['command']}")
+    num = lambda v: "" if pd.isna(v) else f"{int(v):,}"
+    rows = [[r["check"], r["status"], num(r.get("operations")), num(r.get("with_target")),
+             num(r.get("direct_delete")), num(r.get("direct_insert")), num(r.get("direct_modify")),
+             num(r.get("mismatches")), num(r.get("caught"))] for _, r in summ.iterrows()]
+    db_text = ""
+    for check, g in per_db.groupby("check", sort=False):
+        db_rows = [[r["dataset"], r["operations"], r["with_target"], r["insert_direct"], r["insert_rescan"],
+                    r["delete_direct"], r["delete_rescan"], r["modify_direct"], r["modify_rescan"], r["mismatches"]]
+                   for _, r in g.iterrows()]
+        db_text += f"""
+### {check}
+
+{table(["database", "operations", "with a target", "insert direct", "insert rescan", "delete direct",
+        "delete rescan", "modify direct", "modify rescan", "mismatches"], db_rows)}
+"""
+    write("verify-joint/README.md", f"""# Correctness of the joint rule
+
+Counters measured on the development machine; no timing in this tree. Each subdirectory holds
+`console.txt`, the full output, and `run_meta.json` (command, commit, source digest, JVM, exit code).
+
+Every check compares the pattern set and the utility of every pattern with remining from
+scratch after every operation, so it verifies the incremental maintenance; the miner itself is
+checked against USpan, HUSP-ULL and HUSP-SP by `verify.BaselineAgreement`.
+
+* `fuzz`: random insertion, deletion and modification streams on small generated databases
+  (`verify.MixedBudgetFuzz`), for the joint rule and, as a control, for the `iaumax` rule, which
+  is unsound; and hand-built cases (`verify.MixedBudgetProbe`).
+* `acceptance`: the rescan rule on hand-built cases (`verify.RescanRuleAcceptanceTest`).
+* `fault-injection`, `fault-injection-real`: each fault is written into a copy of the source and
+  the checks are run on it; a fault counts as caught when a check reports a mismatch. A run that
+  does not finish catches nothing.
+* `random`, `adversarial`, `adversarial-tafeng`: `verify.DirectPathVerifier` on the real
+  databases, the first half as `D_init`, 16 operations sized to spend a sixth of the rescan
+  budget. In adversarial mode each operation is shaped around a target, the untracked pattern of
+  highest utility from a reference mine at 0.6 UUT: deletions take only sequences that miss one
+  of its items, insertions only sequences that hold all of them. Where the reference mine does not
+  finish or runs out of heap the operation has no target and is drawn at random; the
+  `with a target` column counts the operations that had one.
+
+## Summary
+
+{table(["check", "status", "operations", "with a target", "direct deletions", "direct insertions",
+        "direct modifications", "mismatches", "faults caught"], rows)}
+
+## Direct path on the real databases, per database
+{db_text}
+## Commands
+
+{chr(10).join(cmds)}
+""")
+
+
 if __name__ == "__main__":
+    verify_joint()
     missing = []
     for path, sc, tree, reps, gen in README_SOURCES:
         df = mf.load_scenario(sc, tree=tree, replicates=reps)
