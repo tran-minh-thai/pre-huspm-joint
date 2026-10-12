@@ -527,20 +527,20 @@ def sc2_tex(totals, region):
             "\\begin{tabular}[b]{@{}r@{}}Pre-HUSPM-\\\\TSU\\end{tabular} & Remine & "
             "\\begin{tabular}[b]{@{}r@{}}IncUSP-\\\\Miner$^{+}$\\end{tabular} \\\\\\midrule")
     rows = [f"{d} & " + " & ".join(cell(d, a) for a in INC_ARMS) + " \\\\" for d in order]
-    time_tex = "\n".join(["\\begin{table}[!ht]\\centering",
+    time_tex = "\n".join(["\\begin{table}[!htbp]\\centering",
                           "\\caption{Runtime (s) of SC2 over 100 increments.}\\label{tab:sc2_time}",
                           "\\small\\setlength{\\tabcolsep}{3pt}",
                           "\\begin{tabular}{lrrrrr}\\toprule", head] + rows +
                          ["\\bottomrule\\end{tabular}", "\\end{table}", ""])
     rows = [f"{d} & {100 * op.loc[d, 'alpha_stream']:.1f} & {op.loc[d, 'joint_over_tsu']:.2f} & "
-            f"{op.loc[d, 'ratio_median']:.2f} & {int(op.loc[d, 'within_budget'])} & {int(op.loc[d, 'rescans'])} & "
+            f"{100 * op.loc[d, 'ratio_median']:.0f} & {int(op.loc[d, 'within_budget'])} & {int(op.loc[d, 'rescans'])} & "
             f"{int(op.loc[d, 'rescans_swumax'])} & {int(op.loc[d, 'rescans_tsu'])} \\\\" for d in order]
-    rule_tex = "\n".join(["\\begin{table}[!ht]\\centering",
+    rule_tex = "\n".join(["\\begin{table}[!htbp]\\centering",
                           "\\caption{Rescan rule in SC2.}\\label{tab:sc2_rule}",
                           "\\small\\setlength{\\tabcolsep}{3pt}",
                           "\\begin{tabular}{lrrrrrrr}\\toprule",
                           " & & & & & \\multicolumn{3}{c}{Rescans} \\\\\\cmidrule(l){6-8}",
-                          "Database & $\\alpha$ (\\%) & Gain & \\begin{tabular}[b]{@{}r@{}}Median\\\\$\\Phi/\\beta$\\end{tabular} & "
+                          "Database & $\\alpha$ (\\%) & Gain & \\begin{tabular}[b]{@{}r@{}}Median\\\\$\\Phi/\\beta$ (\\%)\\end{tabular} & "
                           "\\begin{tabular}[b]{@{}r@{}}No\\\\rescan\\end{tabular} & Joint & SWUmax & TSU \\\\\\midrule"]
                          + rows + ["\\bottomrule\\end{tabular}", "\\end{table}", ""])
     return time_tex, rule_tex
@@ -714,7 +714,7 @@ def export_all(out_dir=None):
     th = [dict(dataset=d, d_init=v["d_init"], default_uut=v["default_uut"], r_l=v["sl_ratio"],
                thresholds=" ".join(f"{x:.6f}" for x in v["sweep"])) for d, v in mf.DATASETS.items()]
     mf.write_csv(pd.DataFrame(th), os.path.join(out, "table_thresholds.csv"))
-    lines = ["\\begin{table}[!ht]\\centering", "\\caption{Thresholds of SC1 and SC3.}\\label{tab:thresholds}",
+    lines = ["\\begin{table}[!htbp]\\centering", "\\caption{Thresholds of SC1 and SC3.}\\label{tab:thresholds}",
              "\\begin{tabular}{lrrrr}\\toprule",
              "Database & \\multicolumn{4}{c}{$\\UUT$ (\\%)} \\\\\\midrule"]
     for r in th:

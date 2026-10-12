@@ -979,7 +979,7 @@ def export_ablation_table():
                              final_patterns=ok["total_patterns_found"].iloc[-1] if len(ok) else np.nan))
     write_csv(pd.DataFrame(rows), os.path.join(OUT_DIR, "table_SC7_incremental.csv"))
 
-    lines = ["\\begin{table}[t]", "\\centering",
+    lines = ["\\begin{table}[!htbp]", "\\centering",
              "\\caption{Ablation of the miner on the whole database.}",
              "\\label{tab:sc7_ablation}",
              "\\begin{tabular}{llrr}", "\\toprule",
@@ -1318,7 +1318,7 @@ def export_replicate_tables():
         out.append("table_SC1_runtime_replicates.csv")
         cols = [a for a in STATIC_ORDER if a in set(tab["algorithm"])]
         nmax = int(tab["n"].max()) if len(tab) else 0
-        lines = ["\\begin{table}[t]", "\\centering",
+        lines = ["\\begin{table}[!htbp]", "\\centering",
                  "\\caption{Runtime (s) of SC1 at the default threshold.}",
                  "\\label{tab:sc1_runtime}",
                  "\\small\\setlength{\\tabcolsep}{4pt}",
