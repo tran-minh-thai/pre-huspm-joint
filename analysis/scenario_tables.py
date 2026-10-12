@@ -311,7 +311,7 @@ def explored_one_convention():
             if pr is None or not bool(pr["finished"]):
                 continue
             k = (sc, d, round(su, 9), "once")
-            row = dict(scenario=sc, dataset=d, su=su, default=bool(np.isclose(su, mf.default_su(d))),
+            row = dict(scenario=sc, dataset=d, su=f"{su:g}", default=bool(np.isclose(su, mf.default_su(d))),
                        proposal_explored=int(pr["explored_nodes"]),
                        root_stopped=stop.get(k), missing=k not in stop)
             row["proposal_explored_bound"] = (row["proposal_explored"] - row["root_stopped"]
@@ -546,6 +546,16 @@ def sc2_tex(totals, region):
     return time_tex, rule_tex
 
 
+def pct4(value):
+    """A ratio written as a percentage with four significant digits, rounded half up on its
+    decimal string (not on the binary float)."""
+    from decimal import Decimal, ROUND_HALF_UP
+    d = Decimal(str(value)) * 100
+    exp = d.adjusted() - 3                       # keep four significant digits
+    q = d.quantize(Decimal(1).scaleb(exp), rounding=ROUND_HALF_UP)
+    return format(q, "f")
+
+
 def export_all(out_dir=None):
     out = out_dir or mf.OUT_DIR
     os.makedirs(out, exist_ok=True)
@@ -708,9 +718,9 @@ def export_all(out_dir=None):
              "\\begin{tabular}{lrrrr}\\toprule",
              "Database & \\multicolumn{4}{c}{$\\UUT$ (\\%)} \\\\\\midrule"]
     for r in th:
-        # In percent, four significant digits (trailing zeros kept).
-        lines.append(r["dataset"] + " & " + " & ".join(f"{100 * float(v):#.4g}" for v in r["thresholds"].split())
-                     + " \\\\")
+        # In percent, four significant digits, rounded half up on the decimal value: in binary
+        # 0.022895 * 100 falls just below 2.2895 and would print 2.289.
+        lines.append(r["dataset"] + " & " + " & ".join(pct4(v) for v in r["thresholds"].split()) + " \\\\")
     lines += ["\\bottomrule\\end{tabular}", "\\end{table}", ""]
     open(os.path.join(out, "table_thresholds.tex"), "w", encoding="utf-8").write("\n".join(lines))
 
