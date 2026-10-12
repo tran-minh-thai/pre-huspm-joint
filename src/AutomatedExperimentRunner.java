@@ -73,6 +73,14 @@ public class AutomatedExperimentRunner {
     public static final double DEFAULT_DELTA0 = Double.parseDouble(System.getProperty("delta0", "1e-4"));
     /** Block size of the block index. Override with -Dblock.size=... */
     public static final int DEFAULT_BLOCK_SIZE = Integer.getInteger("block.size", 100);
+    /**
+     * Block sizes of the SC7 block-size arms (proposed_bsz_<n>), beside the default.
+     * A block never spans two increments, so the effective block size is
+     * min(B_sz, increment size): 5 sequences on SIGN, 199 or 200 on C8T1S5I8N5K. Each value
+     * divides the next, so the blocks of a smaller size refine those of a larger one and the
+     * sequences read can only grow along the list; 200 covers a whole increment of both.
+     */
+    static final int[] B_SZ_SWEEP = {1, 5, 10, 50, 200};
     /** Repeats per configuration, for measurement noise (JIT/GC). Override with -Drepeats=... */
     public static final int REPEATS = Integer.getInteger("repeats", 3);
     /** Number of seeds used (at most SEEDS.length). Override with -Dseeds=5 */
@@ -1178,6 +1186,12 @@ public class AutomatedExperimentRunner {
                     forceFullGC();
                     logIncrementalAblation(col, ds, full, "proposed_no_block_index", "SC7_C4", true, false, true); // block index off
                     forceFullGC();
+                    // Block size: the same stream with the index on and blocks of B_SZ_SWEEP
+                    // sequences; proposed_C5_on is the default of DEFAULT_BLOCK_SIZE.
+                    for (int bsz : B_SZ_SWEEP) {
+                        logIncrementalAblation(col, ds, full, "proposed_bsz_" + bsz, "SC7_BSZ", true, true, true, bsz);
+                        forceFullGC();
+                    }
                 }
 
                 // Pre-HUSPM reference. algoEnabled as well as ADAPTIVE_ONLY: campaign.ps1
@@ -1242,6 +1256,14 @@ public class AutomatedExperimentRunner {
                                                String tag, String opTag,
                                                boolean useAdaptiveRescan, boolean useBlockIndex,
                                                boolean useAdaptiveBand) {
+        logIncrementalAblation(col, ds, full, tag, opTag, useAdaptiveRescan, useBlockIndex, useAdaptiveBand,
+                DEFAULT_BLOCK_SIZE);
+    }
+
+    private static void logIncrementalAblation(ResultCollector col, DatasetConfig ds, List<Sequence> full,
+                                               String tag, String opTag,
+                                               boolean useAdaptiveRescan, boolean useBlockIndex,
+                                               boolean useAdaptiveBand, int blockSize) {
         if (!algoEnabled(tag)) return;
         List<Sequence> dInit = dInitFor(ds, full);
         List<Sequence> rest = tailFrom(full, dInit.size());
@@ -1254,6 +1276,7 @@ public class AutomatedExperimentRunner {
                 ENABLE_PATTERN_EXPORT);
         adp.useAdaptiveRescan = useAdaptiveRescan; // adaptive rescan on/off
         adp.useBlockIndex = useBlockIndex;         // block index on/off
+        adp.blockSize = blockSize;                 // sequences per block of the index
         // Adaptive band off: the pre-large band is fixed at the hard floor LUT_min, as in Pre-HUSPM,
         // instead of following the batch statistics. Still sound: on insertion TSU' >= TSU_ref,
         // so the fixed margin (UUT - LUT_min) * TSU' is never below the safety lower bound.
@@ -1563,6 +1586,7 @@ public class AutomatedExperimentRunner {
         m.repetition    = adp.repetition;
         m.slMinEff      = adp.slMinRatioEff;
         m.rescanRetries = adp.rescanRetries;
+        m.blockSize     = adp.blockSize;            // the instance's own value, not the default
         // The work counters are not: a run that broke off leaves partial counts, and a
         // partial count in the record is worse than none.
         if (m.runtimeMs == -1) return;

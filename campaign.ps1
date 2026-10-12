@@ -104,7 +104,8 @@ $incr    = @('Adaptive-Full','Pre-HUSPM-SWUmax','Pre-HUSPM-TSU','Remine-from-scr
 # the adaptive rescan) run in the runner on C5_ABLATION_SET, which is SIGN and C8T1S5I8N5K
 # once BMS1 is filtered out by scope. This list repeats that set; if the two drift apart the
 # stray arm is recorded as EMPTY and named by -List.
-$sc7Incremental = @('proposed_C5_on','proposed_C5_off','proposed_no_block_index')
+$sc7Incremental = @('proposed_C5_on','proposed_C5_off','proposed_no_block_index',
+                    'proposed_bsz_1','proposed_bsz_5','proposed_bsz_10','proposed_bsz_50','proposed_bsz_200')
 $sc7IncSets     = @('SIGN','C8T1S5I8N5K')
 function Test-Arm($d, $a) {
     if ($Scenario -eq 'SC7' -and $sc7Incremental -contains $a -and $sc7IncSets -notcontains $d) {
@@ -120,6 +121,7 @@ if (-not $Algorithms) {
         'SC4'   { @('Pre-HUSPM','Adaptive-Full') }
         'SC6'   { @('Adaptive-Full','Remine-from-scratch') }
         'SC7'   { @('proposed_full','proposed_no_block_index','proposed_no_IUB','proposed_no_IPS',
+                    'proposed_bsz_1','proposed_bsz_5','proposed_bsz_10','proposed_bsz_50','proposed_bsz_200',
                     'proposed_C5_on','proposed_C5_off','Pre-HUSPM') }
         default { $incr }                          # SC2, SC5
     }
@@ -142,6 +144,7 @@ if (-not $Datasets) {
 $knownAlgos = @('Adaptive-Full','Pre-HUSPM','Pre-HUSPM-SWUmax','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+',
                 'USpan','HUSP-ULL','HUSP-SP',
                 'proposed_full','proposed_no_block_index','proposed_no_IUB','proposed_no_IPS',
+                'proposed_bsz_1','proposed_bsz_5','proposed_bsz_10','proposed_bsz_50','proposed_bsz_200',
                 'proposed_C5_on','proposed_C5_off')
 $knownSets  = @('SIGN','LEVIATHAN','TAFENG','BIBLE','BMS1','C8T1S5I8N5K','KOSARAK','FIFA')
 foreach ($a in $Algorithms) {

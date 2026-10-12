@@ -122,7 +122,7 @@ file order, into `K` increments. `LUT_min = r_l * UUT`. Both the proposal and Pr
 | Symbol | Name in code | Value |
 |---|---|---|
 | `K` | `Datasets.BATCH_COUNT`, `-Dbatch.count` | 100 (SC5: 100, 67, 50, 25) |
-| `B_sz` | `-Dblock.size`, `DEFAULT_BLOCK_SIZE` | 100 sequences per block |
+| `B_sz` | `-Dblock.size`, `DEFAULT_BLOCK_SIZE` | 100 sequences per block. A block never spans two increments, so the effective size is min(`B_sz`, increment size). SC7 also runs 1, 5, 10, 50 and 200 (`B_SZ_SWEEP`) |
 | rescan rule | `-Dadapt.trigger` | `joint` |
 | item removal in the proposal's miner | `-Dadapt.iip` | `off`, `once` or `fixpoint`; the irrelevant item pruning of HUSP-ULL (Theorem 9), at the mining cutoff; `once`, set by calibration |
 | repeats | `-Drepeats` | 1 per arm in `campaign.ps1`; the runner's default is 3 |
@@ -160,7 +160,30 @@ and KOSARAK's `r_l`, 0.80 if the proposal mines KOSARAK at that floor within 120
 BMS1 takes part in SC1 only: no threshold that returns patterns can be mined on the whole
 database. In SC5 only BURST draws from the seed; EVEN, INCREASING and DECREASING are
 deterministic. SC7's arms are `proposed_full`, `proposed_no_IUB`, `proposed_no_IPS`, `Pre-HUSPM` (one mine each)
-and `proposed_C5_on`, `proposed_C5_off`, `proposed_no_block_index` (over the increments).
+and `proposed_C5_on`, `proposed_C5_off`, `proposed_no_block_index`, `proposed_bsz_<n>` (over the increments).
+
+### Block size, stated before the measurement
+
+The `proposed_bsz_<n>` arms repeat `proposed_C5_on` with blocks of n sequences, n in
+{1, 5, 10, 50, 200}, beside the default 100. Blocks are cut inside each increment and never
+span two, so the effective block size is min(n, increment size): 5 sequences on SIGN, 199 or 200
+on C8T1S5I8N5K. Expected, for every n:
+
+1. The same increments take the direct update as with the default, since the rescan decision
+   does not read the index (`same_direct_increments`).
+2. The HUSP and pre-large counts equal those of the default on every row (`counts_equal`):
+   the index skips only sequences that miss an item of the pattern.
+3. The sequences read on direct updates do not decrease along 1, 5, 10, 50, 100, 200. Each
+   value divides the next, so the smaller blocks refine the larger ones: a block that holds
+   every item of a pattern lies inside a larger block that holds them too.
+4. On each database the sequences read are the same for every n at least the increment size
+   (SIGN: 5 and above; C8T1S5I8N5K: 200).
+
+No direction is stated for time. Fewer sequences are read with smaller blocks, but each
+pattern intersects one bitmap per item whose length is the number of blocks of the whole
+database, which grows as the blocks shrink.
+
+`analysis/scenario_tables.py` (`sc7_block_size`) reports the four checks with their counts.
 
 ## 5. Measurement
 
