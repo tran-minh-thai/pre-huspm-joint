@@ -78,7 +78,11 @@ param(
     # Measure the two settings experiments.CampaignCalibration decides (item removal in the
     # proposal's miner, KOSARAK's floor ratio) under its pre-set rules, after checking that
     # every miner returns the same patterns as USpan. Writes results/calibration and pushes it.
-    [switch]   $Calibrate
+    [switch]   $Calibrate,
+    # Run verify.DirectPathVerifier in adversarial mode on one database, with this machine's
+    # heap. Writes results/verify-joint/adversarial-<database> (console.txt, run_meta.json in
+    # the format of analysis/record_run.py) and pushes it.
+    [string]   $VerifyAdversarial = ''
 )
 # 'Continue', not 'Stop'. Native tools write progress to stderr - java -version does, git
 # does - and under 'Stop' PowerShell turns every such line into a terminating error. The
@@ -309,6 +313,48 @@ if ($Calibrate) {
         if ($LASTEXITCODE -ne 0) { throw "calibration results committed but not pushed; run git push" }
     }
     if ($rc -ne 0) { throw "calibration failed; see $cal/run.log" }
+    return
+}
+
+if ($VerifyAdversarial) {
+    if ((git status --porcelain -- src 2>$null | Out-String).Trim()) { throw "src/ has uncommitted changes; verify from a commit." }
+    $db  = $VerifyAdversarial.ToUpper()
+    $out = "results/verify-joint/adversarial-$($db.ToLower())"
+    if (Test-Path $out) { throw "$out exists. Delete it to run again." }
+    New-Item -ItemType Directory -Force $out | Out-Null
+    $vargs = @("-Xmx${HeapGb}g", '-Xss64m', '-cp', 'build', 'verify.DirectPathVerifier', $db,
+               '--adversarial', '--ops', '16', '--out', $out)
+    $start = Get-Date -Format 's'
+    Write-Host "=== adversarial verification on $db, heap ${HeapGb}g ==="
+    $p = Start-Process -FilePath $java -PassThru -NoNewWindow `
+         -RedirectStandardOutput "$out/console.txt" -RedirectStandardError "$out/run.err" -ArgumentList $vargs
+    $null = $p.Handle
+    $p.WaitForExit()
+    $rc = $p.ExitCode
+    $meta = [ordered]@{
+        command     = "java " + ($vargs -join ' ')
+        build_dir   = 'build'
+        git_commit  = (git rev-parse HEAD 2>$null | Out-String).Trim()
+        tree        = if ((git status --porcelain 2>$null | Out-String).Trim()) { 'src clean, other files modified' } else { 'clean' }
+        java        = $ver
+        os          = [Environment]::OSVersion.VersionString
+        machine     = $host_
+        role        = 'measurement machine: counters only, no timings'
+        start       = $start
+        end         = Get-Date -Format 's'
+        exit_code   = $rc
+    }
+    [IO.File]::WriteAllText((Join-Path $PWD "$out/run_meta.json"), ($meta | ConvertTo-Json) + "`n")
+    if ((Get-Item "$out/run.err").Length -eq 0) { Remove-Item "$out/run.err" }
+    Get-Content "$out/console.txt" -Tail 5
+    if (-not $NoGit) {
+        git add $out 2>&1 | Out-Null
+        git commit -q -m "Adversarial verification on $db, $host_ (rc=$rc)" 2>&1 | Out-Null
+        git push -q 2>&1 | Out-Null
+        if ($LASTEXITCODE -ne 0) { git pull --rebase --autostash -q 2>&1 | Out-Null; git push -q 2>&1 | Out-Null }
+        if ($LASTEXITCODE -ne 0) { throw "verification committed but not pushed; run git push" }
+    }
+    if ($rc -ne 0) { throw "verification failed (exit $rc); see $out/console.txt" }
     return
 }
 
