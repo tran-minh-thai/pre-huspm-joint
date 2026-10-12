@@ -1,0 +1,209 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC2]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=1 | seed.index=0
+
+--- [SC2] Incremental sequence (100 batches, EVEN; D_init per Yan et al. Table 16) ---
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INIT#0  (heap free=3050MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INIT#0] OK t=824ms cand=2431 pat=10 heapDelta=368MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#1  (heap free=3008MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#1] OK t=450ms cand=2321 pat=10 heapDelta=304MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#2  (heap free=3004MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#2] OK t=474ms cand=2287 pat=10 heapDelta=368MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#3  (heap free=3002MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#3] OK t=497ms cand=2289 pat=9 heapDelta=320MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#4  (heap free=3000MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#4] OK t=532ms cand=2206 pat=10 heapDelta=352MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#5  (heap free=2997MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#5] OK t=596ms cand=2372 pat=9 heapDelta=384MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#6  (heap free=2995MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#6] OK t=631ms cand=2250 pat=9 heapDelta=400MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#7  (heap free=2995MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#7] OK t=696ms cand=2389 pat=9 heapDelta=416MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#8  (heap free=2992MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#8] OK t=733ms cand=2359 pat=9 heapDelta=448MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#9  (heap free=2988MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#9] OK t=1447ms cand=2372 pat=9 heapDelta=448MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#10  (heap free=2989MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#10] OK t=1505ms cand=2412 pat=9 heapDelta=480MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#11  (heap free=2985MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#11] OK t=1570ms cand=2385 pat=9 heapDelta=496MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#12  (heap free=2982MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#12] OK t=1640ms cand=2367 pat=9 heapDelta=528MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#13  (heap free=2981MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#13] OK t=1734ms cand=2309 pat=9 heapDelta=544MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#14  (heap free=2979MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#14] OK t=1840ms cand=2443 pat=9 heapDelta=576MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#15  (heap free=2978MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#15] OK t=1950ms cand=2393 pat=9 heapDelta=592MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#16  (heap free=2974MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#16] OK t=2031ms cand=2459 pat=9 heapDelta=624MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#17  (heap free=2972MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#17] OK t=2155ms cand=2457 pat=9 heapDelta=640MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#18  (heap free=2970MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#18] OK t=2264ms cand=2463 pat=9 heapDelta=656MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#19  (heap free=2969MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#19] OK t=2376ms cand=2716 pat=9 heapDelta=688MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#20  (heap free=2966MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#20] OK t=2469ms cand=2633 pat=9 heapDelta=720MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#21  (heap free=2969MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#21] OK t=3271ms cand=2634 pat=9 heapDelta=704MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#22  (heap free=2968MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#22] OK t=3439ms cand=2604 pat=9 heapDelta=720MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#23  (heap free=2968MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#23] OK t=3498ms cand=2522 pat=9 heapDelta=736MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#24  (heap free=2967MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#24] OK t=3676ms cand=2682 pat=9 heapDelta=768MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#25  (heap free=2963MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#25] OK t=3876ms cand=2679 pat=9 heapDelta=768MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#26  (heap free=2961MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#26] OK t=4013ms cand=2678 pat=9 heapDelta=800MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#27  (heap free=2961MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#27] OK t=4132ms cand=2608 pat=9 heapDelta=816MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#28  (heap free=2958MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#28] OK t=4255ms cand=2642 pat=9 heapDelta=848MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#29  (heap free=2955MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#29] OK t=4379ms cand=2607 pat=9 heapDelta=864MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#30  (heap free=2952MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#30] OK t=4518ms cand=2576 pat=9 heapDelta=880MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#31  (heap free=2950MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#31] OK t=4584ms cand=2600 pat=9 heapDelta=912MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#32  (heap free=2945MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#32] OK t=4777ms cand=2606 pat=9 heapDelta=928MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#33  (heap free=2946MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#33] OK t=4906ms cand=2563 pat=9 heapDelta=944MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#34  (heap free=2941MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#34] OK t=5033ms cand=2615 pat=9 heapDelta=976MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#35  (heap free=2940MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#35] OK t=5096ms cand=2580 pat=9 heapDelta=992MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#36  (heap free=2938MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#36] OK t=5210ms cand=2588 pat=9 heapDelta=1024MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#37  (heap free=2934MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#37] OK t=5408ms cand=2603 pat=9 heapDelta=1040MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#38  (heap free=2934MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#38] OK t=5509ms cand=2596 pat=9 heapDelta=1072MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#39  (heap free=2930MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#39] OK t=5588ms cand=2603 pat=9 heapDelta=1088MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#40  (heap free=2927MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#40] OK t=5731ms cand=2598 pat=9 heapDelta=1104MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#41  (heap free=2924MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#41] OK t=5868ms cand=2563 pat=9 heapDelta=1136MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#42  (heap free=2918MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#42] OK t=5948ms cand=2539 pat=9 heapDelta=1152MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#43  (heap free=2915MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#43] OK t=6097ms cand=2482 pat=9 heapDelta=1168MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#44  (heap free=2914MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#44] OK t=6185ms cand=2501 pat=9 heapDelta=1184MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#45  (heap free=2912MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#45] OK t=6298ms cand=2474 pat=9 heapDelta=1216MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#46  (heap free=2908MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#46] OK t=6445ms cand=2476 pat=9 heapDelta=1232MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#47  (heap free=2903MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#47] OK t=6559ms cand=2458 pat=9 heapDelta=1248MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#48  (heap free=2899MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#48] OK t=6644ms cand=2470 pat=9 heapDelta=1280MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#49  (heap free=2897MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#49] OK t=6860ms cand=2505 pat=9 heapDelta=1312MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#50  (heap free=2892MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#50] OK t=6516ms cand=2477 pat=9 heapDelta=1280MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#51  (heap free=2890MB / total=5440MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#51] OK t=5693ms cand=2479 pat=9 heapDelta=1104MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#52  (heap free=6632MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#52] OK t=7408ms cand=2501 pat=9 heapDelta=1376MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#53  (heap free=6630MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#53] OK t=7339ms cand=2455 pat=9 heapDelta=1392MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#54  (heap free=6628MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#54] OK t=7477ms cand=2446 pat=9 heapDelta=1408MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#55  (heap free=6624MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#55] OK t=7427ms cand=2412 pat=9 heapDelta=1440MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#56  (heap free=6624MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#56] OK t=7311ms cand=2378 pat=9 heapDelta=1456MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#57  (heap free=6619MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#57] OK t=7452ms cand=2382 pat=9 heapDelta=1472MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#58  (heap free=6619MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#58] OK t=7960ms cand=2478 pat=9 heapDelta=1504MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#59  (heap free=6614MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#59] OK t=7968ms cand=2460 pat=9 heapDelta=1520MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#60  (heap free=6614MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#60] OK t=8059ms cand=2434 pat=9 heapDelta=1552MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#61  (heap free=6613MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#61] OK t=8120ms cand=2421 pat=9 heapDelta=1552MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#62  (heap free=6610MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#62] OK t=8136ms cand=2428 pat=9 heapDelta=1568MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#63  (heap free=6605MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#63] OK t=8223ms cand=2422 pat=9 heapDelta=1600MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#64  (heap free=6599MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#64] OK t=8602ms cand=2414 pat=9 heapDelta=1616MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#65  (heap free=6598MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#65] OK t=8872ms cand=2440 pat=9 heapDelta=1648MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#66  (heap free=6590MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#66] OK t=8731ms cand=2411 pat=9 heapDelta=1664MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#67  (heap free=6589MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#67] OK t=8689ms cand=2388 pat=9 heapDelta=1680MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#68  (heap free=6588MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#68] OK t=9016ms cand=2414 pat=9 heapDelta=1712MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#69  (heap free=6586MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#69] OK t=8908ms cand=2374 pat=9 heapDelta=1728MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#70  (heap free=6580MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#70] OK t=9230ms cand=2396 pat=9 heapDelta=1744MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#71  (heap free=6579MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#71] OK t=9419ms cand=2435 pat=9 heapDelta=1776MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#72  (heap free=6577MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#72] OK t=9714ms cand=2436 pat=9 heapDelta=1792MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#73  (heap free=6577MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#73] OK t=9851ms cand=2507 pat=9 heapDelta=1824MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#74  (heap free=6576MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#74] OK t=9957ms cand=2501 pat=9 heapDelta=1840MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#75  (heap free=6571MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#75] OK t=10139ms cand=2510 pat=9 heapDelta=1872MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#76  (heap free=6567MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#76] OK t=10383ms cand=2584 pat=9 heapDelta=1888MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#77  (heap free=6565MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#77] OK t=10556ms cand=2597 pat=9 heapDelta=1920MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#78  (heap free=6560MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#78] OK t=10677ms cand=2623 pat=9 heapDelta=1936MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#79  (heap free=6559MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#79] OK t=10873ms cand=2629 pat=9 heapDelta=1968MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#80  (heap free=6558MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#80] OK t=10955ms cand=2632 pat=9 heapDelta=1984MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#81  (heap free=6561MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#81] OK t=11066ms cand=2617 pat=9 heapDelta=2016MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#82  (heap free=6558MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#82] OK t=11169ms cand=2599 pat=9 heapDelta=2048MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#83  (heap free=6554MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#83] OK t=11302ms cand=2610 pat=9 heapDelta=2064MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#84  (heap free=6551MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#84] OK t=11344ms cand=2575 pat=9 heapDelta=2080MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#85  (heap free=6552MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#85] OK t=11501ms cand=2578 pat=9 heapDelta=2112MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#86  (heap free=6548MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#86] OK t=11518ms cand=2554 pat=9 heapDelta=2128MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#87  (heap free=6546MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#87] OK t=11465ms cand=2521 pat=9 heapDelta=2144MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#88  (heap free=6546MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#88] OK t=11460ms cand=2503 pat=9 heapDelta=2160MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#89  (heap free=6541MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#89] OK t=11627ms cand=2514 pat=9 heapDelta=2192MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#90  (heap free=6539MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#90] OK t=11708ms cand=2516 pat=9 heapDelta=2224MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#91  (heap free=6539MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#91] OK t=12071ms cand=2537 pat=9 heapDelta=2240MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#92  (heap free=6534MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#92] OK t=12225ms cand=2538 pat=9 heapDelta=2272MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#93  (heap free=6533MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#93] OK t=12216ms cand=2518 pat=9 heapDelta=2288MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#94  (heap free=6530MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#94] OK t=12552ms cand=2541 pat=9 heapDelta=2304MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#95  (heap free=6528MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#95] OK t=12550ms cand=2528 pat=9 heapDelta=2336MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#96  (heap free=6523MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#96] OK t=12716ms cand=2539 pat=9 heapDelta=2352MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#97  (heap free=6522MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#97] OK t=12832ms cand=2530 pat=8 heapDelta=2368MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#98  (heap free=6520MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#98] OK t=12828ms cand=2519 pat=9 heapDelta=2400MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#99  (heap free=6516MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#99] OK t=13188ms cand=2539 pat=8 heapDelta=2416MB
+>> RUNNING Remine-from-scratch/KOSARAK/SC2_INC#100  (heap free=6517MB / total=9184MB / max=49152MB)
+[Remine-from-scratch/KOSARAK/SC2_INC#100] OK t=13062ms cand=2504 pat=9 heapDelta=2432MB
+=== ALL SCENARIOS DONE (900.2s) ===
