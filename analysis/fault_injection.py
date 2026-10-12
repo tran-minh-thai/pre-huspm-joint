@@ -13,7 +13,8 @@ src/ is never touched.
 For each fault it runs verify.MixedBudgetFuzz (random streams on small databases) and
 verify.MixedBudgetProbe (the hand-built cases) and prints their verdicts; with --real it also
 runs verify.DirectPathVerifier --adversarial on the named databases of datasets/. Exit status is
-0 when every fault is caught by at least one of the two, 1 otherwise.
+0 when every fault is caught by at least one of them, 1 otherwise, and 2 when a run on a
+database did not finish (it is named, and counts as catching nothing).
 
     python3 analysis/fault_injection.py --item-removal [--trials N] [--seed S]
 
@@ -119,6 +120,7 @@ def main():
         item_removal(a.trials, a.seed)
 
     caught_all = True
+    unfinished = []
     for name, old, new in FAULTS:
         with tempfile.TemporaryDirectory() as tmp:
             tmp = pathlib.Path(tmp)
@@ -140,6 +142,7 @@ def main():
                                str(a.trials), str(a.seed)], tmp)
             rc_p, out_p = run(["java", "-cp", "build", "verify.MixedBudgetProbe", "joint"], tmp)
             real_lines = []
+            real_caught = False
             if a.real:
                 (tmp / "datasets").symlink_to(ROOT / "datasets")
                 for db in a.real.split(","):
@@ -147,11 +150,16 @@ def main():
                                        "verify.DirectPathVerifier", db, "--adversarial", "--ops", "16",
                                        "--out", str(tmp / "real" / db)], tmp)
                     mm = [l for l in out_r.splitlines() if l.startswith("mismatching operations")]
-                    real_lines.append(f"{db}: {mm[0] if mm else out_r.strip()[-200:]}")
-                    rc_f = rc_f or rc_r
+                    if not mm:
+                        # A run that did not finish has caught nothing; it is named, not counted.
+                        unfinished.append(f"{name} / {db}")
+                        real_lines.append(f"{db}: did not finish (exit {rc_r}): {out_r.strip()[-200:]}")
+                        continue
+                    real_lines.append(f"{db}: {mm[0]}")
+                    real_caught |= int(mm[0].split(":")[1]) > 0
             fuzz_line = [l for l in out_f.splitlines() if l.startswith("rule=")]
             probe_line = [l for l in out_p.splitlines() if "cases with a mismatch" in l]
-            caught = rc_f != 0 or rc_p != 0
+            caught = rc_f != 0 or rc_p != 0 or real_caught
             caught_all &= caught
             print(f"fault: {name}")
             print(f"  replaced: {old}")
@@ -160,7 +168,11 @@ def main():
             print(f"  probe: {probe_line[0] if probe_line else out_p.strip()[-300:]}")
             for line in real_lines:
                 print(f"  real : {line}")
-            print(f"  caught: {caught}")
+            by = [k for k, v in (("fuzz", rc_f != 0), ("probe", rc_p != 0), ("real", real_caught)) if v]
+            print(f"  caught: {caught}" + (f" (by {', '.join(by)})" if by else ""))
+    if unfinished:
+        print("runs that did not finish: " + "; ".join(unfinished))
+        sys.exit(2)
     sys.exit(0 if caught_all else 1)
 
 
