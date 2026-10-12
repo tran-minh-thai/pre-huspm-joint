@@ -452,11 +452,12 @@ def sc2_tex(totals, region):
 
     head = ("Database & \\begin{tabular}[b]{@{}r@{}}Pre-HUSPM-\\\\Joint\\end{tabular} & "
             "\\begin{tabular}[b]{@{}r@{}}Pre-HUSPM-\\\\SWUmax\\end{tabular} & "
-            "\\begin{tabular}[b]{@{}r@{}}Pre-HUSPM-\\\\TSU\\end{tabular} & Remine & IncUSP-Miner$^{+}$ \\\\\\midrule")
+            "\\begin{tabular}[b]{@{}r@{}}Pre-HUSPM-\\\\TSU\\end{tabular} & Remine & "
+            "\\begin{tabular}[b]{@{}r@{}}IncUSP-\\\\Miner$^{+}$\\end{tabular} \\\\\\midrule")
     rows = [f"{d} & " + " & ".join(cell(d, a) for a in INC_ARMS) + " \\\\" for d in order]
     time_tex = "\n".join(["\\begin{table}[!ht]\\centering",
                           "\\caption{Runtime (s) of SC2 over 100 increments.}\\label{tab:sc2_time}",
-                          "\\setlength{\\tabcolsep}{4pt}",
+                          "\\small\\setlength{\\tabcolsep}{3pt}",
                           "\\begin{tabular}{lrrrrr}\\toprule", head] + rows +
                          ["\\bottomrule\\end{tabular}", "\\end{table}", ""])
     rows = [f"{d} & {op.loc[d, 'alpha_stream']:.3f} & {op.loc[d, 'joint_over_tsu']:.2f} & "
@@ -464,10 +465,11 @@ def sc2_tex(totals, region):
             f"{int(op.loc[d, 'rescans_swumax'])} & {int(op.loc[d, 'rescans_tsu'])} \\\\" for d in order]
     rule_tex = "\n".join(["\\begin{table}[!ht]\\centering",
                           "\\caption{Rescan rule in SC2.}\\label{tab:sc2_rule}",
-                          "\\setlength{\\tabcolsep}{4pt}",
+                          "\\small\\setlength{\\tabcolsep}{3pt}",
                           "\\begin{tabular}{lrrrrrrr}\\toprule",
                           " & & & & & \\multicolumn{3}{c}{Rescans} \\\\\\cmidrule(l){6-8}",
-                          "Database & $\\alpha$ & Gain & Median $\\Phi/\\beta$ & No rescan & Joint & SWUmax & TSU \\\\\\midrule"]
+                          "Database & $\\alpha$ & Gain & \\begin{tabular}[b]{@{}r@{}}Median\\\\$\\Phi/\\beta$\\end{tabular} & "
+                          "\\begin{tabular}[b]{@{}r@{}}No\\\\rescan\\end{tabular} & Joint & SWUmax & TSU \\\\\\midrule"]
                          + rows + ["\\bottomrule\\end{tabular}", "\\end{table}", ""])
     return time_tex, rule_tex
 
