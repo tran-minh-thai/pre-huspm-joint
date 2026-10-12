@@ -1,0 +1,13 @@
+{
+    "command":  "java -Xmx48g -Xss64m -cp build verify.DirectPathVerifier TAFENG --adversarial --ops 16 --out results/verify-joint/adversarial-tafeng",
+    "build_dir":  "build",
+    "git_commit":  "f47b234cf0a62ed4251def6e159f42543d54068e",
+    "tree":  "src clean, other files modified",
+    "java":  "25.0.4.1+1-LTS (Eclipse Adoptium)",
+    "os":  "Microsoft Windows NT 10.0.26300.0",
+    "machine":  "PC-THAI",
+    "role":  "measurement machine: counters only, no timings",
+    "start":  "2026-10-12T13:08:13",
+    "end":  "2026-10-12T13:10:29",
+    "exit_code":  0
+}
