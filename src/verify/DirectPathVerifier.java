@@ -256,6 +256,13 @@ public final class DirectPathVerifier {
         } catch (RuntimeException e) {
             System.out.println("  no target: the reference mine did not finish (" + e.getClass().getSimpleName() + ")");
             return null;
+        } catch (OutOfMemoryError e) {
+            // The reference mine only chooses the target; the instance under test holds no
+            // state it shares with the probe, so dropping the probe frees what it allocated.
+            probe = null;
+            System.gc();
+            System.out.println("  no target: the reference mine ran out of heap");
+            return null;
         }
         if (probe.rescanRetries > 0) {
             System.out.printf("  reference mine raised its floor %d times, to %.2f * UUT%n",
