@@ -497,7 +497,7 @@ def place_legend(fig, axes, tag, spare=None, ncol=None):
         for a in spare[1:]:
             bb = bb.union([bb, a.get_position()])
         region = bb.transformed(fig.transFigure)
-        for nc in sorted({ncol or 2, 1}, reverse=True):
+        for nc in range(len(labels), 0, -1):     # fewest rows that fit the cells
             leg = fig.legend(handles, labels, loc="center", bbox_to_anchor=(bb.x0, bb.y0, bb.width, bb.height),
                              bbox_transform=fig.transFigure, ncol=nc, **kw_in)
             fig.canvas.draw()
@@ -510,7 +510,7 @@ def place_legend(fig, axes, tag, spare=None, ncol=None):
         shared_legend(fig, axes, ncol=ncol)
         return
     axes = list(np.atleast_1d(axes).ravel())
-    ncols = sorted({1, 2, min(3, len(labels)), ncol or 1}, reverse=True)
+    ncols = list(range(len(labels), 0, -1))       # fewest rows first
     for fs in (FONT_PT, 8):
         for ax in axes[::-1]:
             for loc in LEGEND_LOCS:
@@ -535,10 +535,17 @@ def shared_legend(fig, axes, ncol=None, y=0.97):
     order = [i for i, l in enumerate(labels) if l not in outcome] + \
             [i for i, l in enumerate(labels) if l in outcome]
     handles = [handles[i] for i in order]; labels = [labels[i] for i in order]
-    if handles:
-        fig.legend(handles, labels, loc="lower center", ncol=ncol or min(len(labels), 3),
-                   frameon=False, bbox_to_anchor=(0.5, y), handlelength=2.6, columnspacing=0.8,
-                   handletextpad=0.4)
+    if not handles:
+        return
+    # As few rows as fit the figure width.
+    for nc in range(len(labels), 0, -1):
+        leg = fig.legend(handles, labels, loc="lower center", ncol=nc,
+                         frameon=False, bbox_to_anchor=(0.5, y), handlelength=2.6, columnspacing=0.8,
+                         handletextpad=0.4)
+        fig.canvas.draw()
+        if leg.get_window_extent().width <= fig.bbox.width or nc == 1:
+            return
+        leg.remove()
 
 
 def panel_xlabel(ax, i, name, xlabel):
@@ -597,15 +604,26 @@ def figset_scalability(sc="SC3", tag="fig_scalability", datasets=None,
                 for _, r in a[~a["finished"]].iterrows():
                     annotate_fail(ax, level[r["su"]], r["status"])
             ax.set_xticks(range(len(sus)))
-            # Lowest and highest threshold only, flat; the four values are in the threshold table.
-            ax.set_xticklabels([f"{v:.4g}" if k in (0, len(sus) - 1) else "" for k, v in enumerate(sus)])
+            # UUT in percent, three significant digits (trailing zeros kept), flat. Where the
+            # four labels overlap at 9 pt (measured on the drawn figure), only the two ends are
+            # labelled and the figure is named.
+            ax.set_xticklabels([f"{100 * v:#.3g}" for v in sus])
             ax.set_xlim(-0.3, len(sus) - 0.7)
             ax.minorticks_off()
-            panel_xlabel(ax, i, ds, "UUT")
+            panel_xlabel(ax, i, ds, "UUT (%)")
             safe_log(ax)
             if i % ncols == 0:
                 ax.set_ylabel(ylab)
         fig.tight_layout(w_pad=0.6)
+        # Measured after the layout: where the labels of a panel overlap, keep the two ends.
+        fig.canvas.draw()
+        for i, (ax, ds) in enumerate(zip(axes, datasets)):
+            texts = [t.get_text() for t in ax.get_xticklabels()]
+            ex = [t.get_window_extent() for t in ax.get_xticklabels() if t.get_text()]
+            if any(b.x0 - a.x1 < 1.0 for a, b in zip(ex, ex[1:])):
+                ax.set_xticklabels([t if k in (0, len(texts) - 1) else "" for k, t in enumerate(texts)])
+                print(f"[labels] {tag}_{sc}_{metric} ({chr(ord('a') + i)}) {ds}: the UUT labels overlap "
+                      "at 9 pt; only the lowest and highest are labelled")
         place_legend(fig, axes, f"{tag}_{sc}_{metric}", ncol=3)
         save(fig, f"{tag}_{sc}_{metric}.pdf")
 
@@ -1044,14 +1062,14 @@ def figset_batch_ratio(tag="fig_batch_ratio"):
                 cell = inc[(inc["dataset"] == ds) & (inc["K"] == k) & (inc["strat"] == strat)]
                 p = cell[cell["algorithm"] == PROPOSED]["runtime_ms"].sum()
                 q = cell[cell["algorithm"] == "Remine-from-scratch"]["runtime_ms"].sum()
-                ys.append(p / q if p > 0 and q > 0 else np.nan)
+                ys.append(100.0 * p / q if p > 0 and q > 0 else np.nan)
             ls, mk = STRAT_STYLE[strat]
             ax.plot(KS, ys, **series_style(si, linestyle=ls, marker=mk, label=strat.capitalize()))
-        ax.axhline(1.0, color="black", lw=0.5)
+        ax.axhline(100.0, color="black", lw=0.5)
         ax.set_xticks(KS)
         panel_xlabel(ax, i, ds, "Increments $K$")
         if i == 0:
-            ax.set_ylabel(f"{PROPOSED_LABEL} / Remine")
+            ax.set_ylabel("Time relative to Remine (%)")
     fig.tight_layout(w_pad=0.6)
     place_legend(fig, axes, tag, ncol=2)
     save(fig, f"{tag}.pdf")

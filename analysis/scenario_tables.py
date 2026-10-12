@@ -532,7 +532,7 @@ def sc2_tex(totals, region):
                           "\\small\\setlength{\\tabcolsep}{3pt}",
                           "\\begin{tabular}{lrrrrr}\\toprule", head] + rows +
                          ["\\bottomrule\\end{tabular}", "\\end{table}", ""])
-    rows = [f"{d} & {op.loc[d, 'alpha_stream']:.3f} & {op.loc[d, 'joint_over_tsu']:.2f} & "
+    rows = [f"{d} & {100 * op.loc[d, 'alpha_stream']:.1f} & {op.loc[d, 'joint_over_tsu']:.2f} & "
             f"{op.loc[d, 'ratio_median']:.2f} & {int(op.loc[d, 'within_budget'])} & {int(op.loc[d, 'rescans'])} & "
             f"{int(op.loc[d, 'rescans_swumax'])} & {int(op.loc[d, 'rescans_tsu'])} \\\\" for d in order]
     rule_tex = "\n".join(["\\begin{table}[!ht]\\centering",
@@ -540,7 +540,7 @@ def sc2_tex(totals, region):
                           "\\small\\setlength{\\tabcolsep}{3pt}",
                           "\\begin{tabular}{lrrrrrrr}\\toprule",
                           " & & & & & \\multicolumn{3}{c}{Rescans} \\\\\\cmidrule(l){6-8}",
-                          "Database & $\\alpha$ & Gain & \\begin{tabular}[b]{@{}r@{}}Median\\\\$\\Phi/\\beta$\\end{tabular} & "
+                          "Database & $\\alpha$ (\\%) & Gain & \\begin{tabular}[b]{@{}r@{}}Median\\\\$\\Phi/\\beta$\\end{tabular} & "
                           "\\begin{tabular}[b]{@{}r@{}}No\\\\rescan\\end{tabular} & Joint & SWUmax & TSU \\\\\\midrule"]
                          + rows + ["\\bottomrule\\end{tabular}", "\\end{table}", ""])
     return time_tex, rule_tex
@@ -706,9 +706,11 @@ def export_all(out_dir=None):
     mf.write_csv(pd.DataFrame(th), os.path.join(out, "table_thresholds.csv"))
     lines = ["\\begin{table}[!ht]\\centering", "\\caption{Thresholds of SC1 and SC3.}\\label{tab:thresholds}",
              "\\begin{tabular}{lrrrr}\\toprule",
-             "Database & \\multicolumn{4}{c}{$\\UUT$} \\\\\\midrule"]
+             "Database & \\multicolumn{4}{c}{$\\UUT$ (\\%)} \\\\\\midrule"]
     for r in th:
-        lines.append(r["dataset"] + " & " + " & ".join(r["thresholds"].split()) + " \\\\")
+        # In percent, four significant digits (trailing zeros kept).
+        lines.append(r["dataset"] + " & " + " & ".join(f"{100 * float(v):#.4g}" for v in r["thresholds"].split())
+                     + " \\\\")
     lines += ["\\bottomrule\\end{tabular}", "\\end{table}", ""]
     open(os.path.join(out, "table_thresholds.tex"), "w", encoding="utf-8").write("\n".join(lines))
 
