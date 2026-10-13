@@ -1275,10 +1275,28 @@ def memory_ratios():
     if df is None:
         return None
     df = parse_su(df)
+    # the second measurement of the live set, where there is one: (database, threshold,
+    # algorithm) -> its value
+    again = {}
+    for rd in sorted(glob.glob(os.path.join(DATA_DIR, "campaign-mem-replicates", "s*r*"))):
+        r = load_scenario("SC1", tree=os.path.relpath(rd, DATA_DIR))
+        if r is None:
+            continue
+        for x in parse_su(r).itertuples():
+            if x.finished:
+                again.setdefault((x.dataset, round(x.su, 9), x.algorithm), []).append(float(x.mem_live_mb))
+
+    def runs(row):
+        return [float(row["mem_live_mb"])] + again.get((row["dataset"], round(row["su"], 9), row["algorithm"]), [])
+
     rows = []
     for base in [a for a in STATIC_ORDER if a != PROPOSED]:
         for scope in ("all four thresholds", "default threshold"):
             ratios, left_out, cells = [], [], 0
+            # each cell used: the baseline below or above the proposal, and whether every
+            # measurement of one side lies beyond every measurement of the other
+            state = {"less separated": [], "less overlapping": [], "more separated": [],
+                     "more overlapping": [], "equal": [], "less one run": [], "more one run": []}
             for ds in [d for d in ALL_DATASETS if d in set(df["dataset"])]:
                 sub = df[df["dataset"] == ds]
                 sus = sorted(sub["su"].dropna().unique()) if scope.startswith("all") else [default_su(ds)]
@@ -1299,10 +1317,23 @@ def memory_ratios():
                         who = base if float(b["mem_live_mb"]) <= 0 else PROPOSED
                         left_out.append(f"{ds}@{su:g}:{who} 0 MB"); continue
                     ratios.append(float(b["mem_live_mb"]) / float(p["mem_live_mb"]))
+                    rb, rp = runs(b), runs(p)
+                    side = ("less" if ratios[-1] < 1 else "more" if ratios[-1] > 1 else "equal")
+                    if side == "equal":
+                        how = "equal"
+                    elif len(rb) < 2 or len(rp) < 2:
+                        how = f"{side} one run"
+                    elif max(rb) < min(rp) or min(rb) > max(rp):
+                        how = f"{side} separated"
+                    else:
+                        how = f"{side} overlapping"
+                    state[how].append(f"{ds}@{su:g}")
             r = np.asarray(ratios, float)
             rows.append(dict(baseline=base, scope=scope, cells=cells, cells_used=len(r),
                              geomean_ratio=float(np.exp(np.mean(np.log(r)))) if len(r) else np.nan,
                              baseline_holds_less=int(np.sum(r < 1)),
+                             **{k.replace(" ", "_"): len(v) for k, v in state.items()},
+                             overlapping_cells="; ".join(state["less overlapping"] + state["more overlapping"]),
                              left_out="; ".join(left_out)))
     return pd.DataFrame(rows)
 

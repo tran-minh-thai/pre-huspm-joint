@@ -878,6 +878,23 @@ def export_all(out_dir=None):
             "table_SC2_memory.csv")
         sc2_memory_keys(put, m2)
 
+    # SC1 live set, each baseline over the proposal: geometric mean, and the cells where the
+    # baseline holds less or more, split by whether its measurements and the proposal's
+    # overlap (two measurements per cell where the live set was measured twice)
+    mr = mf.memory_ratios()
+    if mr is not None:
+        for r in mr.itertuples():
+            k = f"SC1_mem_{'all' if r.scope.startswith('all') else 'default'}_{r.baseline}"
+            src = "table_SC1_memory_ratios.csv"
+            put(f"{k}_geomean", f"{r.geomean_ratio:.3g}", src)
+            put(f"{k}_cells_used", f"{r.cells_used}/{r.cells}", src)
+            put(f"{k}_holds_less", f"{r.baseline_holds_less}/{r.cells_used}", src)
+            for col in ("less_separated", "less_overlapping", "less_one_run",
+                        "more_separated", "more_overlapping", "more_one_run", "equal"):
+                put(f"{k}_{col}", int(getattr(r, col)), src)
+            if r.overlapping_cells:
+                put(f"{k}_overlapping_cells", r.overlapping_cells, src)
+
     c5 = sc5_cells()
     mf.write_csv(c5, os.path.join(out, "table_SC5_cells.csv"))
     if len(c5):
