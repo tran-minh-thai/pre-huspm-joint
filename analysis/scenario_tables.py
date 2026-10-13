@@ -194,6 +194,45 @@ def sc2_memory():
 
 
 # ------------------------------------------------------------------------------ SC5
+def sc2_memory_keys(put, m2):
+    """The memory run of SC2: per database and arm, the state held after the last increment and
+    the peak live set during an increment; for each arm, the range over the databases it
+    completes; and, for an arm that stopped early, the state it held at its last increment."""
+    src = "table_SC2_memory.csv"
+    for r in m2.itertuples():
+        k = f"SC2_mem_{r.dataset}_{r.algorithm}"
+        if r.increments_done == r.increments:
+            put(f"{k}_retained_mb", f"{r.retained_after_last_mb:,.0f}", src)
+            put(f"{k}_peak_mb", f"{r.peak_live_mb:,.0f}", src)
+        elif pd.notna(r.retained_after_last_mb):
+            put(f"{k}_increments_done", int(r.increments_done), src)
+            put(f"{k}_retained_at_stop_mb", f"{r.retained_after_last_mb:,.0f}", src)
+            # GB as the heap size is written: 48 GB is 49,152 MB
+            put(f"{k}_retained_at_stop_gb", half_up(r.retained_after_last_mb / 1024, 1), src)
+    full = m2[m2["increments_done"] == m2["increments"]]
+    groups = {a: [a] for a in INC_ARMS}
+    groups["Pre-HUSPM-both"] = ["Pre-HUSPM-SWUmax", "Pre-HUSPM-TSU"]
+    for name, arms in groups.items():
+        g = full[full["algorithm"].isin(arms)]
+        if len(g):
+            lo, hi = g.loc[g["retained_after_last_mb"].idxmin()], g.loc[g["retained_after_last_mb"].idxmax()]
+            put(f"SC2_mem_{name}_retained_range", f"{lo.retained_after_last_mb:,.0f} ({lo.dataset}) to "
+                f"{hi.retained_after_last_mb:,.0f} ({hi.dataset})", src)
+    # where an arm holds less than the proposal at its peak, or comes within 10% of it after the
+    # last increment
+    for d, g in full.groupby("dataset"):
+        pr = g[g["algorithm"] == P]
+        if pr.empty:
+            continue
+        pr = pr.iloc[0]
+        for r in g[g["algorithm"] != P].itertuples():
+            if r.peak_live_mb < pr.peak_live_mb:
+                put(f"SC2_mem_{d}_{r.algorithm}_peak_below_proposal", f"{r.peak_live_mb:,.0f} vs {pr.peak_live_mb:,.0f}", src)
+            if r.retained_after_last_mb < 1.10 * pr.retained_after_last_mb:
+                put(f"SC2_mem_{d}_{r.algorithm}_retained_within_10pct",
+                    f"{r.retained_after_last_mb:,.0f} vs {pr.retained_after_last_mb:,.0f}", src)
+
+
 def sc5_run_totals():
     """(database, K, shape, algorithm) -> the time summed over the increments, one value per
     replicate that finished every increment."""
@@ -604,6 +643,8 @@ def sc2_speedups(put, totals, reps=None):
              if S.get((d, a)) and S.get((d, P))}
         if not r:
             continue
+        for d, v in r.items():
+            put(f"SC2_{a}_over_proposal_{d}", f"{v:.2f}", "table_SC2_totals.csv")
         lo, hi = min(r, key=r.get), max(r, key=r.get)
         put(f"SC2_{a}_over_proposal_min", f"{r[lo]:.2f} ({lo})", "table_SC2_totals.csv")
         put(f"SC2_{a}_over_proposal_max", f"{r[hi]:.2f} ({hi})", "table_SC2_totals.csv")
@@ -835,6 +876,7 @@ def export_all(out_dir=None):
         lead = m2[m2["least_retained"]]
         put("SC2_memory_proposal_least", f"{int((lead['algorithm'] == P).sum())}/{lead['dataset'].nunique()}",
             "table_SC2_memory.csv")
+        sc2_memory_keys(put, m2)
 
     c5 = sc5_cells()
     mf.write_csv(c5, os.path.join(out, "table_SC5_cells.csv"))

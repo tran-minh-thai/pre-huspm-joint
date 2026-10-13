@@ -72,6 +72,87 @@ SC4_prelarge_ratio_min,3,table_SC4_cells.csv
 SC4_prelarge_ratio_max,49,table_SC4_cells.csv
 SC4_prelarge_ratio_cells,10,table_SC4_cells.csv
 SC2_memory_proposal_least,7/7,table_SC2_memory.csv
+SC2_mem_SIGN_Adaptive-Full_retained_mb,13,table_SC2_memory.csv
+SC2_mem_SIGN_Adaptive-Full_peak_mb,16,table_SC2_memory.csv
+SC2_mem_SIGN_Pre-HUSPM-SWUmax_retained_mb,32,table_SC2_memory.csv
+SC2_mem_SIGN_Pre-HUSPM-SWUmax_peak_mb,63,table_SC2_memory.csv
+SC2_mem_SIGN_Pre-HUSPM-TSU_retained_mb,32,table_SC2_memory.csv
+SC2_mem_SIGN_Pre-HUSPM-TSU_peak_mb,57,table_SC2_memory.csv
+SC2_mem_SIGN_Remine-from-scratch_retained_mb,17,table_SC2_memory.csv
+SC2_mem_SIGN_Remine-from-scratch_peak_mb,20,table_SC2_memory.csv
+SC2_mem_SIGN_IncUSP-Miner+_retained_mb,861,table_SC2_memory.csv
+SC2_mem_SIGN_IncUSP-Miner+_peak_mb,865,table_SC2_memory.csv
+SC2_mem_LEVIATHAN_Adaptive-Full_retained_mb,21,table_SC2_memory.csv
+SC2_mem_LEVIATHAN_Adaptive-Full_peak_mb,35,table_SC2_memory.csv
+SC2_mem_LEVIATHAN_Pre-HUSPM-SWUmax_retained_mb,79,table_SC2_memory.csv
+SC2_mem_LEVIATHAN_Pre-HUSPM-SWUmax_peak_mb,130,table_SC2_memory.csv
+SC2_mem_LEVIATHAN_Pre-HUSPM-TSU_retained_mb,79,table_SC2_memory.csv
+SC2_mem_LEVIATHAN_Pre-HUSPM-TSU_peak_mb,130,table_SC2_memory.csv
+SC2_mem_LEVIATHAN_Remine-from-scratch_retained_mb,30,table_SC2_memory.csv
+SC2_mem_LEVIATHAN_Remine-from-scratch_peak_mb,44,table_SC2_memory.csv
+SC2_mem_LEVIATHAN_IncUSP-Miner+_retained_mb,"1,238",table_SC2_memory.csv
+SC2_mem_LEVIATHAN_IncUSP-Miner+_peak_mb,"1,267",table_SC2_memory.csv
+SC2_mem_FIFA_Adaptive-Full_retained_mb,34,table_SC2_memory.csv
+SC2_mem_FIFA_Adaptive-Full_peak_mb,112,table_SC2_memory.csv
+SC2_mem_FIFA_Pre-HUSPM-SWUmax_retained_mb,283,table_SC2_memory.csv
+SC2_mem_FIFA_Pre-HUSPM-SWUmax_peak_mb,510,table_SC2_memory.csv
+SC2_mem_FIFA_Pre-HUSPM-TSU_retained_mb,269,table_SC2_memory.csv
+SC2_mem_FIFA_Pre-HUSPM-TSU_peak_mb,509,table_SC2_memory.csv
+SC2_mem_FIFA_Remine-from-scratch_retained_mb,42,table_SC2_memory.csv
+SC2_mem_FIFA_Remine-from-scratch_peak_mb,127,table_SC2_memory.csv
+SC2_mem_FIFA_IncUSP-Miner+_increments_done,25,table_SC2_memory.csv
+SC2_mem_FIFA_IncUSP-Miner+_retained_at_stop_mb,"44,081",table_SC2_memory.csv
+SC2_mem_FIFA_IncUSP-Miner+_retained_at_stop_gb,43.0,table_SC2_memory.csv
+SC2_mem_BIBLE_Adaptive-Full_retained_mb,36,table_SC2_memory.csv
+SC2_mem_BIBLE_Adaptive-Full_peak_mb,99,table_SC2_memory.csv
+SC2_mem_BIBLE_Pre-HUSPM-SWUmax_retained_mb,202,table_SC2_memory.csv
+SC2_mem_BIBLE_Pre-HUSPM-SWUmax_peak_mb,390,table_SC2_memory.csv
+SC2_mem_BIBLE_Pre-HUSPM-TSU_retained_mb,198,table_SC2_memory.csv
+SC2_mem_BIBLE_Pre-HUSPM-TSU_peak_mb,412,table_SC2_memory.csv
+SC2_mem_BIBLE_Remine-from-scratch_retained_mb,50,table_SC2_memory.csv
+SC2_mem_BIBLE_Remine-from-scratch_peak_mb,98,table_SC2_memory.csv
+SC2_mem_BIBLE_IncUSP-Miner+_retained_mb,"1,451",table_SC2_memory.csv
+SC2_mem_BIBLE_IncUSP-Miner+_peak_mb,"1,659",table_SC2_memory.csv
+SC2_mem_KOSARAK_Adaptive-Full_retained_mb,349,table_SC2_memory.csv
+SC2_mem_KOSARAK_Adaptive-Full_peak_mb,"1,070",table_SC2_memory.csv
+SC2_mem_KOSARAK_Pre-HUSPM-SWUmax_retained_mb,"2,848",table_SC2_memory.csv
+SC2_mem_KOSARAK_Pre-HUSPM-SWUmax_peak_mb,"4,753",table_SC2_memory.csv
+SC2_mem_KOSARAK_Pre-HUSPM-TSU_retained_mb,"2,857",table_SC2_memory.csv
+SC2_mem_KOSARAK_Pre-HUSPM-TSU_peak_mb,"4,837",table_SC2_memory.csv
+SC2_mem_KOSARAK_Remine-from-scratch_retained_mb,353,table_SC2_memory.csv
+SC2_mem_KOSARAK_Remine-from-scratch_peak_mb,975,table_SC2_memory.csv
+SC2_mem_KOSARAK_IncUSP-Miner+_retained_mb,"4,957",table_SC2_memory.csv
+SC2_mem_KOSARAK_IncUSP-Miner+_peak_mb,"6,791",table_SC2_memory.csv
+SC2_mem_C8T1S5I8N5K_Adaptive-Full_retained_mb,58,table_SC2_memory.csv
+SC2_mem_C8T1S5I8N5K_Adaptive-Full_peak_mb,58,table_SC2_memory.csv
+SC2_mem_C8T1S5I8N5K_Pre-HUSPM-SWUmax_retained_mb,84,table_SC2_memory.csv
+SC2_mem_C8T1S5I8N5K_Pre-HUSPM-SWUmax_peak_mb,155,table_SC2_memory.csv
+SC2_mem_C8T1S5I8N5K_Pre-HUSPM-TSU_retained_mb,85,table_SC2_memory.csv
+SC2_mem_C8T1S5I8N5K_Pre-HUSPM-TSU_peak_mb,152,table_SC2_memory.csv
+SC2_mem_C8T1S5I8N5K_Remine-from-scratch_retained_mb,79,table_SC2_memory.csv
+SC2_mem_C8T1S5I8N5K_Remine-from-scratch_peak_mb,80,table_SC2_memory.csv
+SC2_mem_C8T1S5I8N5K_IncUSP-Miner+_retained_mb,"1,587",table_SC2_memory.csv
+SC2_mem_C8T1S5I8N5K_IncUSP-Miner+_peak_mb,"1,590",table_SC2_memory.csv
+SC2_mem_TAFENG_Adaptive-Full_retained_mb,55,table_SC2_memory.csv
+SC2_mem_TAFENG_Adaptive-Full_peak_mb,56,table_SC2_memory.csv
+SC2_mem_TAFENG_Pre-HUSPM-SWUmax_retained_mb,74,table_SC2_memory.csv
+SC2_mem_TAFENG_Pre-HUSPM-SWUmax_peak_mb,78,table_SC2_memory.csv
+SC2_mem_TAFENG_Pre-HUSPM-TSU_retained_mb,85,table_SC2_memory.csv
+SC2_mem_TAFENG_Pre-HUSPM-TSU_peak_mb,87,table_SC2_memory.csv
+SC2_mem_TAFENG_Remine-from-scratch_retained_mb,57,table_SC2_memory.csv
+SC2_mem_TAFENG_Remine-from-scratch_peak_mb,61,table_SC2_memory.csv
+SC2_mem_TAFENG_IncUSP-Miner+_retained_mb,87,table_SC2_memory.csv
+SC2_mem_TAFENG_IncUSP-Miner+_peak_mb,118,table_SC2_memory.csv
+SC2_mem_Adaptive-Full_retained_range,13 (SIGN) to 349 (KOSARAK),table_SC2_memory.csv
+SC2_mem_Pre-HUSPM-SWUmax_retained_range,"32 (SIGN) to 2,848 (KOSARAK)",table_SC2_memory.csv
+SC2_mem_Pre-HUSPM-TSU_retained_range,"32 (SIGN) to 2,857 (KOSARAK)",table_SC2_memory.csv
+SC2_mem_Remine-from-scratch_retained_range,17 (SIGN) to 353 (KOSARAK),table_SC2_memory.csv
+SC2_mem_IncUSP-Miner+_retained_range,"87 (TAFENG) to 4,957 (KOSARAK)",table_SC2_memory.csv
+SC2_mem_Pre-HUSPM-both_retained_range,"32 (SIGN) to 2,857 (KOSARAK)",table_SC2_memory.csv
+SC2_mem_BIBLE_Remine-from-scratch_peak_below_proposal,98 vs 99,table_SC2_memory.csv
+SC2_mem_KOSARAK_Remine-from-scratch_peak_below_proposal,"975 vs 1,070",table_SC2_memory.csv
+SC2_mem_KOSARAK_Remine-from-scratch_retained_within_10pct,353 vs 349,table_SC2_memory.csv
+SC2_mem_TAFENG_Remine-from-scratch_retained_within_10pct,57 vs 55,table_SC2_memory.csv
 SC5_proposal_fastest,48/48,table_SC5_cells.csv
 SC5_runs_vs_closest_separated,32/48,table_SC5_cells.csv
 SC5_runs_vs_closest_overlapping,0/48,table_SC5_cells.csv
@@ -330,15 +411,42 @@ SC1_count_agreement,32/32,table_agreement.csv
 SC3_count_agreement,12/12,table_agreement.csv
 SC5_count_agreement,2904/2904,table_agreement.csv
 SC2_proposal_fastest,7/7,table_SC2_totals.csv
+SC2_Pre-HUSPM-SWUmax_over_proposal_BIBLE,1.71,table_SC2_totals.csv
+SC2_Pre-HUSPM-SWUmax_over_proposal_C8T1S5I8N5K,5.65,table_SC2_totals.csv
+SC2_Pre-HUSPM-SWUmax_over_proposal_FIFA,28.79,table_SC2_totals.csv
+SC2_Pre-HUSPM-SWUmax_over_proposal_KOSARAK,1.11,table_SC2_totals.csv
+SC2_Pre-HUSPM-SWUmax_over_proposal_LEVIATHAN,3.18,table_SC2_totals.csv
+SC2_Pre-HUSPM-SWUmax_over_proposal_SIGN,5.25,table_SC2_totals.csv
+SC2_Pre-HUSPM-SWUmax_over_proposal_TAFENG,1.23,table_SC2_totals.csv
 SC2_Pre-HUSPM-SWUmax_over_proposal_min,1.11 (KOSARAK),table_SC2_totals.csv
 SC2_Pre-HUSPM-SWUmax_over_proposal_max,28.79 (FIFA),table_SC2_totals.csv
 SC2_Pre-HUSPM-SWUmax_over_proposal_databases,7,table_SC2_totals.csv
+SC2_Pre-HUSPM-TSU_over_proposal_BIBLE,2.03,table_SC2_totals.csv
+SC2_Pre-HUSPM-TSU_over_proposal_C8T1S5I8N5K,6.98,table_SC2_totals.csv
+SC2_Pre-HUSPM-TSU_over_proposal_FIFA,40.09,table_SC2_totals.csv
+SC2_Pre-HUSPM-TSU_over_proposal_KOSARAK,1.13,table_SC2_totals.csv
+SC2_Pre-HUSPM-TSU_over_proposal_LEVIATHAN,3.23,table_SC2_totals.csv
+SC2_Pre-HUSPM-TSU_over_proposal_SIGN,5.17,table_SC2_totals.csv
+SC2_Pre-HUSPM-TSU_over_proposal_TAFENG,2.21,table_SC2_totals.csv
 SC2_Pre-HUSPM-TSU_over_proposal_min,1.13 (KOSARAK),table_SC2_totals.csv
 SC2_Pre-HUSPM-TSU_over_proposal_max,40.09 (FIFA),table_SC2_totals.csv
 SC2_Pre-HUSPM-TSU_over_proposal_databases,7,table_SC2_totals.csv
+SC2_Remine-from-scratch_over_proposal_BIBLE,1.74,table_SC2_totals.csv
+SC2_Remine-from-scratch_over_proposal_C8T1S5I8N5K,1.71,table_SC2_totals.csv
+SC2_Remine-from-scratch_over_proposal_FIFA,3.84,table_SC2_totals.csv
+SC2_Remine-from-scratch_over_proposal_KOSARAK,1.09,table_SC2_totals.csv
+SC2_Remine-from-scratch_over_proposal_LEVIATHAN,1.05,table_SC2_totals.csv
+SC2_Remine-from-scratch_over_proposal_SIGN,1.83,table_SC2_totals.csv
+SC2_Remine-from-scratch_over_proposal_TAFENG,3.20,table_SC2_totals.csv
 SC2_Remine-from-scratch_over_proposal_min,1.05 (LEVIATHAN),table_SC2_totals.csv
 SC2_Remine-from-scratch_over_proposal_max,3.84 (FIFA),table_SC2_totals.csv
 SC2_Remine-from-scratch_over_proposal_databases,7,table_SC2_totals.csv
+SC2_IncUSP-Miner+_over_proposal_BIBLE,1.07,table_SC2_totals.csv
+SC2_IncUSP-Miner+_over_proposal_C8T1S5I8N5K,2.04,table_SC2_totals.csv
+SC2_IncUSP-Miner+_over_proposal_KOSARAK,2.54,table_SC2_totals.csv
+SC2_IncUSP-Miner+_over_proposal_LEVIATHAN,2.03,table_SC2_totals.csv
+SC2_IncUSP-Miner+_over_proposal_SIGN,2.45,table_SC2_totals.csv
+SC2_IncUSP-Miner+_over_proposal_TAFENG,2.33,table_SC2_totals.csv
 SC2_IncUSP-Miner+_over_proposal_min,1.07 (BIBLE),table_SC2_totals.csv
 SC2_IncUSP-Miner+_over_proposal_max,2.54 (KOSARAK),table_SC2_totals.csv
 SC2_IncUSP-Miner+_over_proposal_databases,6,table_SC2_totals.csv
