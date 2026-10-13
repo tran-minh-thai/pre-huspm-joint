@@ -1,0 +1,209 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC2]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=2 | seed.index=0
+
+--- [SC2] Incremental sequence (100 batches, EVEN; D_init per Yan et al. Table 16) ---
+>> RUNNING Remine-from-scratch/FIFA/SC2_INIT#0  (heap free=562MB / total=768MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INIT#0] OK t=4622ms cand=122154 pat=18 heapDelta=323MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#1  (heap free=543MB / total=768MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#1] OK t=4471ms cand=122473 pat=18 heapDelta=512MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#2  (heap free=637MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#2] OK t=4517ms cand=122819 pat=18 heapDelta=357MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#3  (heap free=637MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#3] OK t=4537ms cand=123410 pat=18 heapDelta=402MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#4  (heap free=638MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#4] OK t=4634ms cand=123375 pat=18 heapDelta=441MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#5  (heap free=637MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#5] OK t=4708ms cand=123349 pat=18 heapDelta=476MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#6  (heap free=636MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#6] OK t=4656ms cand=121691 pat=18 heapDelta=439MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#7  (heap free=637MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#7] OK t=4664ms cand=120641 pat=18 heapDelta=447MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#8  (heap free=638MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#8] OK t=4698ms cand=120158 pat=18 heapDelta=445MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#9  (heap free=636MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#9] OK t=4756ms cand=119298 pat=18 heapDelta=507MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#10  (heap free=639MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#10] OK t=4776ms cand=119523 pat=18 heapDelta=436MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#11  (heap free=637MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#11] OK t=4786ms cand=118394 pat=17 heapDelta=406MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#12  (heap free=637MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#12] OK t=4883ms cand=120086 pat=18 heapDelta=443MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#13  (heap free=637MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#13] OK t=5099ms cand=121023 pat=18 heapDelta=568MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#14  (heap free=637MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#14] OK t=5035ms cand=120266 pat=18 heapDelta=441MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#15  (heap free=638MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#15] OK t=4998ms cand=118740 pat=19 heapDelta=443MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#16  (heap free=637MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#16] OK t=5119ms cand=120159 pat=19 heapDelta=433MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#17  (heap free=635MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#17] OK t=5210ms cand=119717 pat=18 heapDelta=650MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#18  (heap free=638MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#18] OK t=5203ms cand=119490 pat=17 heapDelta=438MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#19  (heap free=637MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#19] OK t=5194ms cand=118685 pat=17 heapDelta=435MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#20  (heap free=637MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#20] OK t=5243ms cand=118064 pat=17 heapDelta=438MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#21  (heap free=637MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#21] OK t=5365ms cand=118243 pat=17 heapDelta=716MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#22  (heap free=733MB / total=960MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#22] OK t=5379ms cand=118573 pat=17 heapDelta=462MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#23  (heap free=637MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#23] OK t=5377ms cand=117317 pat=17 heapDelta=436MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#24  (heap free=636MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#24] OK t=5410ms cand=117005 pat=17 heapDelta=411MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#25  (heap free=635MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#25] OK t=5521ms cand=116625 pat=17 heapDelta=720MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#26  (heap free=637MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#26] OK t=5455ms cand=116477 pat=17 heapDelta=424MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#27  (heap free=635MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#27] OK t=5435ms cand=115040 pat=17 heapDelta=426MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#28  (heap free=636MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#28] OK t=5545ms cand=115465 pat=17 heapDelta=448MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#29  (heap free=635MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#29] OK t=5654ms cand=115675 pat=17 heapDelta=782MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#30  (heap free=637MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#30] OK t=5685ms cand=116090 pat=17 heapDelta=469MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#31  (heap free=637MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#31] OK t=5753ms cand=116198 pat=17 heapDelta=442MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#32  (heap free=637MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#32] OK t=5849ms cand=116590 pat=17 heapDelta=468MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#33  (heap free=636MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#33] OK t=6042ms cand=117606 pat=17 heapDelta=822MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#34  (heap free=636MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#34] OK t=5940ms cand=116867 pat=17 heapDelta=459MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#35  (heap free=635MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#35] OK t=5914ms cand=115614 pat=17 heapDelta=481MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#36  (heap free=634MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#36] OK t=5912ms cand=114802 pat=17 heapDelta=474MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#37  (heap free=634MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#37] OK t=6087ms cand=115542 pat=17 heapDelta=863MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#38  (heap free=730MB / total=960MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#38] OK t=6144ms cand=117309 pat=17 heapDelta=512MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#39  (heap free=633MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#39] OK t=6186ms cand=116886 pat=17 heapDelta=457MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#40  (heap free=633MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#40] OK t=6248ms cand=116640 pat=17 heapDelta=465MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#41  (heap free=633MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#41] OK t=6413ms cand=117043 pat=17 heapDelta=932MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#42  (heap free=634MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#42] OK t=6296ms cand=116068 pat=17 heapDelta=460MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#43  (heap free=634MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#43] OK t=6318ms cand=115845 pat=17 heapDelta=431MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#44  (heap free=634MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#44] OK t=6386ms cand=115283 pat=17 heapDelta=428MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#45  (heap free=635MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#45] OK t=6479ms cand=114495 pat=17 heapDelta=1033MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#46  (heap free=729MB / total=960MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#46] OK t=6351ms cand=113805 pat=17 heapDelta=470MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#47  (heap free=634MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#47] OK t=6345ms cand=113355 pat=17 heapDelta=446MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#48  (heap free=632MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#48] OK t=6439ms cand=113637 pat=17 heapDelta=440MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#49  (heap free=633MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#49] OK t=6482ms cand=113413 pat=17 heapDelta=450MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#50  (heap free=632MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#50] OK t=6472ms cand=113187 pat=17 heapDelta=453MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#51  (heap free=632MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#51] OK t=6556ms cand=112499 pat=17 heapDelta=505MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#52  (heap free=632MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#52] OK t=6590ms cand=112904 pat=17 heapDelta=450MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#53  (heap free=631MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#53] OK t=6623ms cand=112548 pat=17 heapDelta=444MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#54  (heap free=631MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#54] OK t=6757ms cand=113067 pat=17 heapDelta=552MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#55  (heap free=632MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#55] OK t=6749ms cand=113471 pat=17 heapDelta=440MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#56  (heap free=633MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#56] OK t=6828ms cand=113557 pat=17 heapDelta=441MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#57  (heap free=633MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#57] OK t=6914ms cand=113338 pat=17 heapDelta=535MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#58  (heap free=633MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#58] OK t=6913ms cand=113142 pat=17 heapDelta=459MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#59  (heap free=632MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#59] OK t=6892ms cand=112419 pat=17 heapDelta=459MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#60  (heap free=633MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#60] OK t=6980ms cand=112323 pat=17 heapDelta=608MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#61  (heap free=632MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#61] OK t=7037ms cand=112351 pat=17 heapDelta=465MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#62  (heap free=632MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#62] OK t=7032ms cand=112061 pat=17 heapDelta=463MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#63  (heap free=632MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#63] OK t=7187ms cand=112499 pat=17 heapDelta=633MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#64  (heap free=632MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#64] OK t=7139ms cand=112191 pat=17 heapDelta=434MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#65  (heap free=633MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#65] OK t=7191ms cand=112407 pat=16 heapDelta=472MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#66  (heap free=633MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#66] OK t=7335ms cand=112583 pat=16 heapDelta=1239MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#67  (heap free=632MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#67] OK t=7335ms cand=113648 pat=16 heapDelta=469MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#68  (heap free=630MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#68] OK t=7551ms cand=114655 pat=17 heapDelta=1125MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#69  (heap free=631MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#69] OK t=7536ms cand=114341 pat=17 heapDelta=447MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#70  (heap free=631MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#70] OK t=7609ms cand=114173 pat=17 heapDelta=986MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#71  (heap free=725MB / total=960MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#71] OK t=7626ms cand=114535 pat=17 heapDelta=477MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#72  (heap free=631MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#72] OK t=7628ms cand=114146 pat=17 heapDelta=449MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#73  (heap free=632MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#73] OK t=7714ms cand=113849 pat=17 heapDelta=808MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#74  (heap free=632MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#74] OK t=7712ms cand=114295 pat=17 heapDelta=445MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#75  (heap free=631MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#75] OK t=7772ms cand=114431 pat=17 heapDelta=459MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#76  (heap free=631MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#76] OK t=7918ms cand=114036 pat=17 heapDelta=1057MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#77  (heap free=729MB / total=960MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#77] OK t=7860ms cand=114031 pat=17 heapDelta=503MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#78  (heap free=633MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#78] OK t=7894ms cand=113217 pat=17 heapDelta=450MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#79  (heap free=632MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#79] OK t=8055ms cand=113162 pat=17 heapDelta=1063MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#80  (heap free=728MB / total=960MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#80] OK t=8021ms cand=113246 pat=17 heapDelta=482MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#81  (heap free=632MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#81] OK t=8042ms cand=112660 pat=17 heapDelta=946MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#82  (heap free=631MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#82] OK t=8043ms cand=112289 pat=17 heapDelta=460MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#83  (heap free=631MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#83] OK t=8089ms cand=112877 pat=17 heapDelta=446MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#84  (heap free=631MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#84] OK t=8286ms cand=113037 pat=17 heapDelta=972MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#85  (heap free=630MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#85] OK t=8220ms cand=112752 pat=17 heapDelta=461MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#86  (heap free=630MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#86] OK t=8317ms cand=112325 pat=17 heapDelta=926MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#87  (heap free=629MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#87] OK t=8234ms cand=111831 pat=17 heapDelta=434MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#88  (heap free=630MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#88] OK t=8345ms cand=111985 pat=17 heapDelta=558MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#89  (heap free=725MB / total=960MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#89] OK t=8252ms cand=111295 pat=17 heapDelta=516MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#90  (heap free=627MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#90] OK t=8360ms cand=111167 pat=17 heapDelta=421MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#91  (heap free=630MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#91] OK t=8423ms cand=111304 pat=17 heapDelta=436MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#92  (heap free=629MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#92] OK t=8464ms cand=110877 pat=17 heapDelta=1084MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#93  (heap free=628MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#93] OK t=8440ms cand=110501 pat=17 heapDelta=453MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#94  (heap free=629MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#94] OK t=8469ms cand=109770 pat=17 heapDelta=603MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#95  (heap free=629MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#95] OK t=8489ms cand=110119 pat=17 heapDelta=459MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#96  (heap free=629MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#96] OK t=8625ms cand=109995 pat=17 heapDelta=644MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#97  (heap free=630MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#97] OK t=8556ms cand=109601 pat=17 heapDelta=451MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#98  (heap free=630MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#98] OK t=8733ms cand=110128 pat=17 heapDelta=713MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#99  (heap free=628MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#99] OK t=8826ms cand=111359 pat=17 heapDelta=459MB
+>> RUNNING Remine-from-scratch/FIFA/SC2_INC#100  (heap free=628MB / total=864MB / max=49152MB)
+[Remine-from-scratch/FIFA/SC2_INC#100] OK t=8989ms cand=111094 pat=17 heapDelta=917MB
+=== ALL SCENARIOS DONE (781.9s) ===
