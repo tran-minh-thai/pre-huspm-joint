@@ -1,0 +1,17 @@
+### LIVE HEAP: forced collection, interval >= 20 ms | arm = USpan
+### runtime_ms is written as -3 (perturbed by forced GC); the wall time is in wall_ms_perturbed. NOT a performance figure.
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC1]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=1 | seed.index=0
+
+--- [SC1] Static baseline on D_init ---
+>> RUNNING USpan/SIGN/SC1_su=0.049134#0  (heap free=1008MB / total=1024MB / max=49152MB)
+[USpan/SIGN/SC1_su=0.049134#0] OK t=6594ms cand=11582204 pat=2814 heapDelta=26MB
+>> RUNNING USpan/SIGN/SC1_su=0.065911#0  (heap free=114MB / total=128MB / max=49152MB)
+[USpan/SIGN/SC1_su=0.065911#0] OK t=3169ms cand=4811015 pat=583 heapDelta=45MB
+>> RUNNING USpan/SIGN/SC1_su=0.083371#0  (heap free=114MB / total=128MB / max=49152MB)
+[USpan/SIGN/SC1_su=0.083371#0] OK t=1813ms cand=2316235 pat=140 heapDelta=25MB
+>> RUNNING USpan/SIGN/SC1_su=0.091052#0  (heap free=114MB / total=128MB / max=49152MB)
+[USpan/SIGN/SC1_su=0.091052#0] OK t=1464ms cand=1736803 pat=79 heapDelta=5MB
+=== ALL SCENARIOS DONE (19.9s) ===
