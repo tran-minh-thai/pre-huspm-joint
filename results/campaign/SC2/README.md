@@ -31,11 +31,11 @@ proposal and Remine over three runs is in the next table.
 |---|---:|---:|---:|---:|---:|---:|
 | SIGN | **9.7** | 59 | 51.0 | 50.2 | 17.8 | 23.8 |
 | LEVIATHAN | **35.3** | 98 | 112 | 114 | 37.2 | 71.6 |
-| FIFA | **174** | 27 | 4,995 | 6,956 | 667 | (598, 25 increments) |
+| FIFA | **175** | 27 | 4,995 | 6,956 | 670 | (598, 25 increments) |
 | BIBLE | **53.8** | 63 | 92.1 | 109 | 93.7 | 57.5 |
 | KOSARAK | **627** | 100 | 695 | 711 | 685 | 1,594 |
 | C8T1S5I8N5K | **9.1** | 77 | 51.2 | 63.2 | 15.5 | 18.5 |
-| TAFENG | **5.9** | 52 | 7.3 | 13.0 | 18.9 | 13.8 |
+| TAFENG | **5.9** | 52 | 7.4 | 13.0 | 18.9 | 13.8 |
 
 ### Three runs
 
@@ -49,6 +49,8 @@ increments, mean ± sample standard deviation.
 | SIGN | Remine | 3 | 17.78 ± 0.58 | 17.17 | 18.31 |
 | LEVIATHAN | Pre-HUSPM-Joint | 3 | 35.33 ± 0.33 | 35.12 | 35.71 |
 | LEVIATHAN | Remine | 3 | 37.19 ± 0.17 | 37.06 | 37.39 |
+| FIFA | Pre-HUSPM-Joint | 3 | 174.97 ± 1.55 | 173.51 | 176.60 |
+| FIFA | Remine | 3 | 670.37 ± 9.49 | 663.23 | 681.14 |
 | BIBLE | Pre-HUSPM-Joint | 3 | 53.77 ± 0.20 | 53.60 | 53.99 |
 | BIBLE | Remine | 3 | 93.66 ± 0.54 | 93.14 | 94.22 |
 | KOSARAK | Pre-HUSPM-Joint | 3 | 626.85 ± 6.17 | 620.40 | 632.71 |
@@ -116,7 +118,7 @@ The joint rule never rescans more often than the SWUmax test on an insertion-onl
 same UUT and floor ratio (a proved property, checked here): the proposal rescans no more than
 Pre-HUSPM-SWUmax on 7 of 7 databases where both completed.
 
-**Inside the budget** (median ratio at most one): FIFA, 3.84 times faster than remining.
+**Inside the budget** (median ratio at most one): FIFA, 3.83 times faster than remining.
 
 **At the boundary**: SIGN (1.83x), BIBLE (1.74x), C8T1S5I8N5K (1.71x), TAFENG (3.20x). They rescan on
 52 to 77

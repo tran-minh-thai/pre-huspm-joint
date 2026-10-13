@@ -153,109 +153,112 @@ SC2_mem_BIBLE_Remine-from-scratch_peak_below_proposal,98 vs 99,table_SC2_memory.
 SC2_mem_KOSARAK_Remine-from-scratch_peak_below_proposal,"975 vs 1,070",table_SC2_memory.csv
 SC2_mem_KOSARAK_Remine-from-scratch_retained_within_10pct,353 vs 349,table_SC2_memory.csv
 SC2_mem_TAFENG_Remine-from-scratch_retained_within_10pct,57 vs 55,table_SC2_memory.csv
-SC1_mem_all_USpan_geomean,1.51,table_SC1_memory_ratios.csv
+SC1_mem_all_USpan_geomean,1.37,table_SC1_memory_ratios.csv
 SC1_mem_all_USpan_cells_used,32/32,table_SC1_memory_ratios.csv
-SC1_mem_all_USpan_holds_less,2/32,table_SC1_memory_ratios.csv
-SC1_mem_all_USpan_less_separated,2,table_SC1_memory_ratios.csv
-SC1_mem_all_USpan_less_overlapping,0,table_SC1_memory_ratios.csv
+SC1_mem_all_USpan_holds_less,5/32,table_SC1_memory_ratios.csv
+SC1_mem_all_USpan_less_separated,3,table_SC1_memory_ratios.csv
+SC1_mem_all_USpan_less_overlapping,2,table_SC1_memory_ratios.csv
 SC1_mem_all_USpan_less_one_run,0,table_SC1_memory_ratios.csv
-SC1_mem_all_USpan_more_separated,29,table_SC1_memory_ratios.csv
-SC1_mem_all_USpan_more_overlapping,1,table_SC1_memory_ratios.csv
+SC1_mem_all_USpan_more_separated,23,table_SC1_memory_ratios.csv
+SC1_mem_all_USpan_more_overlapping,4,table_SC1_memory_ratios.csv
 SC1_mem_all_USpan_more_one_run,0,table_SC1_memory_ratios.csv
 SC1_mem_all_USpan_equal,0,table_SC1_memory_ratios.csv
-SC1_mem_all_USpan_overlapping_cells,C8T1S5I8N5K@0.001099,table_SC1_memory_ratios.csv
-SC1_mem_default_USpan_geomean,1.81,table_SC1_memory_ratios.csv
+SC1_mem_all_USpan_overlapping_cells,TAFENG@0.002812; TAFENG@0.005691; BIBLE@0.0181; BMS1@0.013597; BMS1@0.015293; BMS1@0.016218,table_SC1_memory_ratios.csv
+SC1_mem_default_USpan_geomean,1.5,table_SC1_memory_ratios.csv
 SC1_mem_default_USpan_cells_used,8/8,table_SC1_memory_ratios.csv
-SC1_mem_default_USpan_holds_less,0/8,table_SC1_memory_ratios.csv
-SC1_mem_default_USpan_less_separated,0,table_SC1_memory_ratios.csv
+SC1_mem_default_USpan_holds_less,1/8,table_SC1_memory_ratios.csv
+SC1_mem_default_USpan_less_separated,1,table_SC1_memory_ratios.csv
 SC1_mem_default_USpan_less_overlapping,0,table_SC1_memory_ratios.csv
 SC1_mem_default_USpan_less_one_run,0,table_SC1_memory_ratios.csv
-SC1_mem_default_USpan_more_separated,8,table_SC1_memory_ratios.csv
-SC1_mem_default_USpan_more_overlapping,0,table_SC1_memory_ratios.csv
+SC1_mem_default_USpan_more_separated,6,table_SC1_memory_ratios.csv
+SC1_mem_default_USpan_more_overlapping,1,table_SC1_memory_ratios.csv
 SC1_mem_default_USpan_more_one_run,0,table_SC1_memory_ratios.csv
 SC1_mem_default_USpan_equal,0,table_SC1_memory_ratios.csv
-SC1_mem_all_HUSP-ULL_geomean,0.375,table_SC1_memory_ratios.csv
-SC1_mem_all_HUSP-ULL_cells_used,22/32,table_SC1_memory_ratios.csv
-SC1_mem_all_HUSP-ULL_holds_less,20/22,table_SC1_memory_ratios.csv
-SC1_mem_all_HUSP-ULL_less_separated,18,table_SC1_memory_ratios.csv
-SC1_mem_all_HUSP-ULL_less_overlapping,2,table_SC1_memory_ratios.csv
+SC1_mem_default_USpan_overlapping_cells,BMS1@0.013597,table_SC1_memory_ratios.csv
+SC1_mem_all_HUSP-ULL_geomean,0.932,table_SC1_memory_ratios.csv
+SC1_mem_all_HUSP-ULL_cells_used,32/32,table_SC1_memory_ratios.csv
+SC1_mem_all_HUSP-ULL_holds_less,20/32,table_SC1_memory_ratios.csv
+SC1_mem_all_HUSP-ULL_less_separated,20,table_SC1_memory_ratios.csv
+SC1_mem_all_HUSP-ULL_less_overlapping,0,table_SC1_memory_ratios.csv
 SC1_mem_all_HUSP-ULL_less_one_run,0,table_SC1_memory_ratios.csv
-SC1_mem_all_HUSP-ULL_more_separated,1,table_SC1_memory_ratios.csv
-SC1_mem_all_HUSP-ULL_more_overlapping,1,table_SC1_memory_ratios.csv
+SC1_mem_all_HUSP-ULL_more_separated,6,table_SC1_memory_ratios.csv
+SC1_mem_all_HUSP-ULL_more_overlapping,6,table_SC1_memory_ratios.csv
 SC1_mem_all_HUSP-ULL_more_one_run,0,table_SC1_memory_ratios.csv
 SC1_mem_all_HUSP-ULL_equal,0,table_SC1_memory_ratios.csv
-SC1_mem_all_HUSP-ULL_overlapping_cells,SIGN@0.083371; KOSARAK@0.031623; BIBLE@0.03257,table_SC1_memory_ratios.csv
-SC1_mem_default_HUSP-ULL_geomean,0.355,table_SC1_memory_ratios.csv
-SC1_mem_default_HUSP-ULL_cells_used,5/8,table_SC1_memory_ratios.csv
-SC1_mem_default_HUSP-ULL_holds_less,5/5,table_SC1_memory_ratios.csv
-SC1_mem_default_HUSP-ULL_less_separated,5,table_SC1_memory_ratios.csv
+SC1_mem_all_HUSP-ULL_overlapping_cells,SIGN@0.083371; BMS1@0.013597; BMS1@0.015293; BMS1@0.016218; KOSARAK@0.025; C8T1S5I8N5K@0.0012,table_SC1_memory_ratios.csv
+SC1_mem_default_HUSP-ULL_geomean,0.97,table_SC1_memory_ratios.csv
+SC1_mem_default_HUSP-ULL_cells_used,8/8,table_SC1_memory_ratios.csv
+SC1_mem_default_HUSP-ULL_holds_less,4/8,table_SC1_memory_ratios.csv
+SC1_mem_default_HUSP-ULL_less_separated,4,table_SC1_memory_ratios.csv
 SC1_mem_default_HUSP-ULL_less_overlapping,0,table_SC1_memory_ratios.csv
 SC1_mem_default_HUSP-ULL_less_one_run,0,table_SC1_memory_ratios.csv
-SC1_mem_default_HUSP-ULL_more_separated,0,table_SC1_memory_ratios.csv
-SC1_mem_default_HUSP-ULL_more_overlapping,0,table_SC1_memory_ratios.csv
+SC1_mem_default_HUSP-ULL_more_separated,2,table_SC1_memory_ratios.csv
+SC1_mem_default_HUSP-ULL_more_overlapping,2,table_SC1_memory_ratios.csv
 SC1_mem_default_HUSP-ULL_more_one_run,0,table_SC1_memory_ratios.csv
 SC1_mem_default_HUSP-ULL_equal,0,table_SC1_memory_ratios.csv
-SC1_mem_all_HUSP-SP_geomean,0.612,table_SC1_memory_ratios.csv
-SC1_mem_all_HUSP-SP_cells_used,31/32,table_SC1_memory_ratios.csv
-SC1_mem_all_HUSP-SP_holds_less,24/31,table_SC1_memory_ratios.csv
-SC1_mem_all_HUSP-SP_less_separated,23,table_SC1_memory_ratios.csv
-SC1_mem_all_HUSP-SP_less_overlapping,1,table_SC1_memory_ratios.csv
+SC1_mem_default_HUSP-ULL_overlapping_cells,BMS1@0.013597; KOSARAK@0.025,table_SC1_memory_ratios.csv
+SC1_mem_all_HUSP-SP_geomean,0.522,table_SC1_memory_ratios.csv
+SC1_mem_all_HUSP-SP_cells_used,32/32,table_SC1_memory_ratios.csv
+SC1_mem_all_HUSP-SP_holds_less,30/32,table_SC1_memory_ratios.csv
+SC1_mem_all_HUSP-SP_less_separated,30,table_SC1_memory_ratios.csv
+SC1_mem_all_HUSP-SP_less_overlapping,0,table_SC1_memory_ratios.csv
 SC1_mem_all_HUSP-SP_less_one_run,0,table_SC1_memory_ratios.csv
-SC1_mem_all_HUSP-SP_more_separated,7,table_SC1_memory_ratios.csv
-SC1_mem_all_HUSP-SP_more_overlapping,0,table_SC1_memory_ratios.csv
+SC1_mem_all_HUSP-SP_more_separated,1,table_SC1_memory_ratios.csv
+SC1_mem_all_HUSP-SP_more_overlapping,1,table_SC1_memory_ratios.csv
 SC1_mem_all_HUSP-SP_more_one_run,0,table_SC1_memory_ratios.csv
 SC1_mem_all_HUSP-SP_equal,0,table_SC1_memory_ratios.csv
-SC1_mem_all_HUSP-SP_overlapping_cells,TAFENG@0.002812,table_SC1_memory_ratios.csv
-SC1_mem_default_HUSP-SP_geomean,0.702,table_SC1_memory_ratios.csv
+SC1_mem_all_HUSP-SP_overlapping_cells,KOSARAK@0.031623,table_SC1_memory_ratios.csv
+SC1_mem_default_HUSP-SP_geomean,0.542,table_SC1_memory_ratios.csv
 SC1_mem_default_HUSP-SP_cells_used,8/8,table_SC1_memory_ratios.csv
-SC1_mem_default_HUSP-SP_holds_less,6/8,table_SC1_memory_ratios.csv
-SC1_mem_default_HUSP-SP_less_separated,6,table_SC1_memory_ratios.csv
+SC1_mem_default_HUSP-SP_holds_less,7/8,table_SC1_memory_ratios.csv
+SC1_mem_default_HUSP-SP_less_separated,7,table_SC1_memory_ratios.csv
 SC1_mem_default_HUSP-SP_less_overlapping,0,table_SC1_memory_ratios.csv
 SC1_mem_default_HUSP-SP_less_one_run,0,table_SC1_memory_ratios.csv
-SC1_mem_default_HUSP-SP_more_separated,2,table_SC1_memory_ratios.csv
+SC1_mem_default_HUSP-SP_more_separated,1,table_SC1_memory_ratios.csv
 SC1_mem_default_HUSP-SP_more_overlapping,0,table_SC1_memory_ratios.csv
 SC1_mem_default_HUSP-SP_more_one_run,0,table_SC1_memory_ratios.csv
 SC1_mem_default_HUSP-SP_equal,0,table_SC1_memory_ratios.csv
-SC1_mem_all_IncUSP-Miner+_geomean,20.9,table_SC1_memory_ratios.csv
+SC1_mem_all_IncUSP-Miner+_geomean,16.1,table_SC1_memory_ratios.csv
 SC1_mem_all_IncUSP-Miner+_cells_used,32/32,table_SC1_memory_ratios.csv
 SC1_mem_all_IncUSP-Miner+_holds_less,0/32,table_SC1_memory_ratios.csv
 SC1_mem_all_IncUSP-Miner+_less_separated,0,table_SC1_memory_ratios.csv
 SC1_mem_all_IncUSP-Miner+_less_overlapping,0,table_SC1_memory_ratios.csv
 SC1_mem_all_IncUSP-Miner+_less_one_run,0,table_SC1_memory_ratios.csv
-SC1_mem_all_IncUSP-Miner+_more_separated,20,table_SC1_memory_ratios.csv
-SC1_mem_all_IncUSP-Miner+_more_overlapping,0,table_SC1_memory_ratios.csv
-SC1_mem_all_IncUSP-Miner+_more_one_run,12,table_SC1_memory_ratios.csv
-SC1_mem_all_IncUSP-Miner+_equal,0,table_SC1_memory_ratios.csv
-SC1_mem_default_IncUSP-Miner+_geomean,26.1,table_SC1_memory_ratios.csv
+SC1_mem_all_IncUSP-Miner+_more_separated,30,table_SC1_memory_ratios.csv
+SC1_mem_all_IncUSP-Miner+_more_overlapping,1,table_SC1_memory_ratios.csv
+SC1_mem_all_IncUSP-Miner+_more_one_run,0,table_SC1_memory_ratios.csv
+SC1_mem_all_IncUSP-Miner+_equal,1,table_SC1_memory_ratios.csv
+SC1_mem_all_IncUSP-Miner+_overlapping_cells,BMS1@0.015293,table_SC1_memory_ratios.csv
+SC1_mem_default_IncUSP-Miner+_geomean,18.7,table_SC1_memory_ratios.csv
 SC1_mem_default_IncUSP-Miner+_cells_used,8/8,table_SC1_memory_ratios.csv
 SC1_mem_default_IncUSP-Miner+_holds_less,0/8,table_SC1_memory_ratios.csv
 SC1_mem_default_IncUSP-Miner+_less_separated,0,table_SC1_memory_ratios.csv
 SC1_mem_default_IncUSP-Miner+_less_overlapping,0,table_SC1_memory_ratios.csv
 SC1_mem_default_IncUSP-Miner+_less_one_run,0,table_SC1_memory_ratios.csv
-SC1_mem_default_IncUSP-Miner+_more_separated,5,table_SC1_memory_ratios.csv
+SC1_mem_default_IncUSP-Miner+_more_separated,8,table_SC1_memory_ratios.csv
 SC1_mem_default_IncUSP-Miner+_more_overlapping,0,table_SC1_memory_ratios.csv
-SC1_mem_default_IncUSP-Miner+_more_one_run,3,table_SC1_memory_ratios.csv
+SC1_mem_default_IncUSP-Miner+_more_one_run,0,table_SC1_memory_ratios.csv
 SC1_mem_default_IncUSP-Miner+_equal,0,table_SC1_memory_ratios.csv
-SC1_mem_all_Pre-HUSPM_geomean,2.61,table_SC1_memory_ratios.csv
+SC1_mem_all_Pre-HUSPM_geomean,3.05,table_SC1_memory_ratios.csv
 SC1_mem_all_Pre-HUSPM_cells_used,32/32,table_SC1_memory_ratios.csv
-SC1_mem_all_Pre-HUSPM_holds_less,7/32,table_SC1_memory_ratios.csv
-SC1_mem_all_Pre-HUSPM_less_separated,5,table_SC1_memory_ratios.csv
-SC1_mem_all_Pre-HUSPM_less_overlapping,2,table_SC1_memory_ratios.csv
+SC1_mem_all_Pre-HUSPM_holds_less,0/32,table_SC1_memory_ratios.csv
+SC1_mem_all_Pre-HUSPM_less_separated,0,table_SC1_memory_ratios.csv
+SC1_mem_all_Pre-HUSPM_less_overlapping,0,table_SC1_memory_ratios.csv
 SC1_mem_all_Pre-HUSPM_less_one_run,0,table_SC1_memory_ratios.csv
-SC1_mem_all_Pre-HUSPM_more_separated,13,table_SC1_memory_ratios.csv
-SC1_mem_all_Pre-HUSPM_more_overlapping,0,table_SC1_memory_ratios.csv
-SC1_mem_all_Pre-HUSPM_more_one_run,12,table_SC1_memory_ratios.csv
+SC1_mem_all_Pre-HUSPM_more_separated,30,table_SC1_memory_ratios.csv
+SC1_mem_all_Pre-HUSPM_more_overlapping,2,table_SC1_memory_ratios.csv
+SC1_mem_all_Pre-HUSPM_more_one_run,0,table_SC1_memory_ratios.csv
 SC1_mem_all_Pre-HUSPM_equal,0,table_SC1_memory_ratios.csv
-SC1_mem_all_Pre-HUSPM_overlapping_cells,BMS1@0.015293; KOSARAK@0.028117,table_SC1_memory_ratios.csv
-SC1_mem_default_Pre-HUSPM_geomean,2.92,table_SC1_memory_ratios.csv
+SC1_mem_all_Pre-HUSPM_overlapping_cells,BMS1@0.015293; BMS1@0.016218,table_SC1_memory_ratios.csv
+SC1_mem_default_Pre-HUSPM_geomean,3.34,table_SC1_memory_ratios.csv
 SC1_mem_default_Pre-HUSPM_cells_used,8/8,table_SC1_memory_ratios.csv
-SC1_mem_default_Pre-HUSPM_holds_less,1/8,table_SC1_memory_ratios.csv
-SC1_mem_default_Pre-HUSPM_less_separated,1,table_SC1_memory_ratios.csv
+SC1_mem_default_Pre-HUSPM_holds_less,0/8,table_SC1_memory_ratios.csv
+SC1_mem_default_Pre-HUSPM_less_separated,0,table_SC1_memory_ratios.csv
 SC1_mem_default_Pre-HUSPM_less_overlapping,0,table_SC1_memory_ratios.csv
 SC1_mem_default_Pre-HUSPM_less_one_run,0,table_SC1_memory_ratios.csv
-SC1_mem_default_Pre-HUSPM_more_separated,4,table_SC1_memory_ratios.csv
+SC1_mem_default_Pre-HUSPM_more_separated,8,table_SC1_memory_ratios.csv
 SC1_mem_default_Pre-HUSPM_more_overlapping,0,table_SC1_memory_ratios.csv
-SC1_mem_default_Pre-HUSPM_more_one_run,3,table_SC1_memory_ratios.csv
+SC1_mem_default_Pre-HUSPM_more_one_run,0,table_SC1_memory_ratios.csv
 SC1_mem_default_Pre-HUSPM_equal,0,table_SC1_memory_ratios.csv
 SC5_proposal_fastest,48/48,table_SC5_cells.csv
 SC5_runs_vs_closest_separated,32/48,table_SC5_cells.csv
@@ -605,33 +608,33 @@ SC5_count_agreement,2904/2904,table_agreement.csv
 SC2_proposal_fastest,7/7,table_SC2_totals.csv
 SC2_Pre-HUSPM-SWUmax_over_proposal_BIBLE,1.71,table_SC2_totals.csv
 SC2_Pre-HUSPM-SWUmax_over_proposal_C8T1S5I8N5K,5.65,table_SC2_totals.csv
-SC2_Pre-HUSPM-SWUmax_over_proposal_FIFA,28.79,table_SC2_totals.csv
+SC2_Pre-HUSPM-SWUmax_over_proposal_FIFA,28.55,table_SC2_totals.csv
 SC2_Pre-HUSPM-SWUmax_over_proposal_KOSARAK,1.11,table_SC2_totals.csv
 SC2_Pre-HUSPM-SWUmax_over_proposal_LEVIATHAN,3.18,table_SC2_totals.csv
 SC2_Pre-HUSPM-SWUmax_over_proposal_SIGN,5.25,table_SC2_totals.csv
-SC2_Pre-HUSPM-SWUmax_over_proposal_TAFENG,1.23,table_SC2_totals.csv
+SC2_Pre-HUSPM-SWUmax_over_proposal_TAFENG,1.25,table_SC2_totals.csv
 SC2_Pre-HUSPM-SWUmax_over_proposal_min,1.11 (KOSARAK),table_SC2_totals.csv
-SC2_Pre-HUSPM-SWUmax_over_proposal_max,28.79 (FIFA),table_SC2_totals.csv
+SC2_Pre-HUSPM-SWUmax_over_proposal_max,28.55 (FIFA),table_SC2_totals.csv
 SC2_Pre-HUSPM-SWUmax_over_proposal_databases,7,table_SC2_totals.csv
 SC2_Pre-HUSPM-TSU_over_proposal_BIBLE,2.03,table_SC2_totals.csv
 SC2_Pre-HUSPM-TSU_over_proposal_C8T1S5I8N5K,6.98,table_SC2_totals.csv
-SC2_Pre-HUSPM-TSU_over_proposal_FIFA,40.09,table_SC2_totals.csv
+SC2_Pre-HUSPM-TSU_over_proposal_FIFA,39.76,table_SC2_totals.csv
 SC2_Pre-HUSPM-TSU_over_proposal_KOSARAK,1.13,table_SC2_totals.csv
 SC2_Pre-HUSPM-TSU_over_proposal_LEVIATHAN,3.23,table_SC2_totals.csv
 SC2_Pre-HUSPM-TSU_over_proposal_SIGN,5.17,table_SC2_totals.csv
 SC2_Pre-HUSPM-TSU_over_proposal_TAFENG,2.21,table_SC2_totals.csv
 SC2_Pre-HUSPM-TSU_over_proposal_min,1.13 (KOSARAK),table_SC2_totals.csv
-SC2_Pre-HUSPM-TSU_over_proposal_max,40.09 (FIFA),table_SC2_totals.csv
+SC2_Pre-HUSPM-TSU_over_proposal_max,39.76 (FIFA),table_SC2_totals.csv
 SC2_Pre-HUSPM-TSU_over_proposal_databases,7,table_SC2_totals.csv
 SC2_Remine-from-scratch_over_proposal_BIBLE,1.74,table_SC2_totals.csv
 SC2_Remine-from-scratch_over_proposal_C8T1S5I8N5K,1.71,table_SC2_totals.csv
-SC2_Remine-from-scratch_over_proposal_FIFA,3.84,table_SC2_totals.csv
+SC2_Remine-from-scratch_over_proposal_FIFA,3.83,table_SC2_totals.csv
 SC2_Remine-from-scratch_over_proposal_KOSARAK,1.09,table_SC2_totals.csv
 SC2_Remine-from-scratch_over_proposal_LEVIATHAN,1.05,table_SC2_totals.csv
 SC2_Remine-from-scratch_over_proposal_SIGN,1.83,table_SC2_totals.csv
 SC2_Remine-from-scratch_over_proposal_TAFENG,3.20,table_SC2_totals.csv
 SC2_Remine-from-scratch_over_proposal_min,1.05 (LEVIATHAN),table_SC2_totals.csv
-SC2_Remine-from-scratch_over_proposal_max,3.84 (FIFA),table_SC2_totals.csv
+SC2_Remine-from-scratch_over_proposal_max,3.83 (FIFA),table_SC2_totals.csv
 SC2_Remine-from-scratch_over_proposal_databases,7,table_SC2_totals.csv
 SC2_IncUSP-Miner+_over_proposal_BIBLE,1.07,table_SC2_totals.csv
 SC2_IncUSP-Miner+_over_proposal_C8T1S5I8N5K,2.04,table_SC2_totals.csv
@@ -644,13 +647,13 @@ SC2_IncUSP-Miner+_over_proposal_max,2.54 (KOSARAK),table_SC2_totals.csv
 SC2_IncUSP-Miner+_over_proposal_databases,6,table_SC2_totals.csv
 SC2_runner_up_BIBLE,1.07 (IncUSP-Miner+; runs 3 and 3; separated),table_SC2_totals.csv
 SC2_runner_up_C8T1S5I8N5K,1.71 (Remine-from-scratch; runs 3 and 3; separated),table_SC2_totals.csv
-SC2_runner_up_FIFA,"3.84 (Remine-from-scratch; runs 1 and 1; not comparable, a side has one run)",table_SC2_totals.csv
+SC2_runner_up_FIFA,3.83 (Remine-from-scratch; runs 3 and 3; separated),table_SC2_totals.csv
 SC2_runner_up_KOSARAK,1.09 (Remine-from-scratch; runs 3 and 3; separated),table_SC2_totals.csv
 SC2_runner_up_LEVIATHAN,1.05 (Remine-from-scratch; runs 3 and 3; separated),table_SC2_totals.csv
 SC2_runner_up_SIGN,1.83 (Remine-from-scratch; runs 3 and 3; separated),table_SC2_totals.csv
-SC2_runner_up_TAFENG,"1.23 (Pre-HUSPM-SWUmax; runs 3 and 1; not comparable, a side has one run)",table_SC2_totals.csv
+SC2_runner_up_TAFENG,1.25 (Pre-HUSPM-SWUmax; runs 3 and 3; separated),table_SC2_totals.csv
 SC2_runner_up_over_proposal_min,1.05 (LEVIATHAN),table_SC2_totals.csv
-SC2_runner_up_over_proposal_max,3.84 (FIFA),table_SC2_totals.csv
+SC2_runner_up_over_proposal_max,3.83 (FIFA),table_SC2_totals.csv
 SC2_prediction,holds,table_SC2_operating_region.csv
 SC2_alpha_decisions_BIBLE_median_pct,84.6,table_SC2_operating_region.csv
 SC2_alpha_decisions_BIBLE_range_pct,71.1 to 95.5,table_SC2_operating_region.csv
@@ -701,9 +704,9 @@ SC2_mem_FIFA_IncUSP-Miner+_guard_increments_done,25,campaign-mem/SC2/FIFA/IncUSP
 SC2_mem_FIFA_IncUSP-Miner+_guard_free_mb,4864,campaign-mem/SC2/FIFA/IncUSP-Miner+/run.err
 SC2_mem_FIFA_IncUSP-Miner+_guard_free_pct,9.9,campaign-mem/SC2/FIFA/IncUSP-Miner+/run.err
 SC2_mem_FIFA_IncUSP-Miner+_guard_live_gb,43.2,campaign-mem/SC2/FIFA/IncUSP-Miner+/run.err
-noise_SC1_live_set_cells,154,table_noise.csv
-noise_SC1_live_set_median,0.0088,table_noise.csv
-noise_SC1_live_set_median_pct,0.9,table_noise.csv
+noise_SC1_live_set_cells,192,table_noise.csv
+noise_SC1_live_set_median,0.0372,table_noise.csv
+noise_SC1_live_set_median_pct,3.7,table_noise.csv
 noise_SC1_live_set_max,1.4286,table_noise.csv
 noise_SC1_live_set_max_pct,142.9,table_noise.csv
 noise_SC1_runtime_cells,192,table_noise.csv

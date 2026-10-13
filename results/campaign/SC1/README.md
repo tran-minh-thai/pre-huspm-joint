@@ -38,4 +38,4 @@ Geometric mean of the baseline's runtime over the proposal's, on the cells where
 | HUSP-ULL | 0.82 | 32 |
 
 `peak_heap_mb` in these rows is used heap, garbage included, and is not the memory result; the
-live set is in `results/campaign-mem/SC1`.
+live set is in `results/campaign-mem-sampled/SC1`.
