@@ -1575,7 +1575,7 @@ def export_platform():
     sentence = (f"All runtimes and memory figures were measured on one machine with an "
                 f"{rec.get('cpu')} ({rec.get('cpu_cores')} cores, {rec.get('cpu_threads')} threads) "
                 f"and {memory}\\,GB of memory, running {os_name} and "
-                f"{jvm}, with \\texttt{{{rec.get('jvm_flags')}}} and one JVM per run.")
+                f"{jvm}, with \\texttt{{{rec.get('jvm_flags')}}} and one Java virtual machine per run.")
     with open(os.path.join(OUT_DIR, "platform.tex"), "w", encoding="utf-8") as fh:
         fh.write(sentence + "\n")
     missing = rec.get("unavailable") or []
