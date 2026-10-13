@@ -1651,6 +1651,14 @@ public class AutomatedExperimentRunner {
         return m;
     }
 
+    /** The proposal as runSingle builds it for a static mine. */
+    private static PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo newStaticAdaptive(double su, String dsName) {
+        return new PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo(
+                su, DEFAULT_KAPPA, DEFAULT_DELTA0, slRatioFor(dsName),
+                PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.AblationMode.FULL,
+                ENABLE_PATTERN_EXPORT);
+    }
+
     private static ExperimentMetrics runSingle(String algo, String dsName, List<Sequence> db,
                                                double totalUtil, double su, int iter, String tag) {
         if (ADAPTIVE_ONLY && !algo.equals("Adaptive-Full")) return null; // rerun Adaptive only
@@ -1675,14 +1683,15 @@ public class AutomatedExperimentRunner {
         try {
             switch (algo) {
                 case "USpan": {
-                    USpanAlgorithm u = new USpanAlgorithm(totalUtil * su);
+                    final USpanAlgorithm[] u = { new USpanAlgorithm(totalUtil * su) };
                     ExperimentMetrics m = measure(algo, dsName, iter, tag,
-                            () -> u.run(db),
-                            () -> u.candidateCount, () -> u.patternCount, null, null);
+                            () -> repeatForLiveSamples(() -> u[0].run(db),
+                                    () -> { u[0] = new USpanAlgorithm(totalUtil * su); u[0].run(db); }),
+                            () -> u[0].candidateCount, () -> u[0].patternCount, null, null);
                     if (m != null && m.runtimeMs != -1) {
-                        m.prunedSwu = u.prunedSWU;
-                        m.prunedDepth = u.prunedDepth;
-                        m.exploredNodes = u.exploredNodes;
+                        m.prunedSwu = u[0].prunedSWU;
+                        m.prunedDepth = u[0].prunedDepth;
+                        m.exploredNodes = u[0].exploredNodes;
                     }
                     return logged(m);
                 }
@@ -1690,63 +1699,67 @@ public class AutomatedExperimentRunner {
                     // A STATIC algorithm without incremental updates, so it appears only in
                     // SC1 and SC3. Counted like the other baselines: candidate_count before
                     // any pruning, explored_nodes at each recursion entry.
-                    HUSPSPAlgorithm sp = new HUSPSPAlgorithm(totalUtil * su);
+                    final HUSPSPAlgorithm[] sp = { new HUSPSPAlgorithm(totalUtil * su) };
                     ExperimentMetrics m = measure(algo, dsName, iter, tag,
-                            () -> sp.run(db),
-                            () -> sp.candidateCount, () -> sp.patternCount, null, null,
-                            null, null, null, null, null, null, sp::cancel);
+                            () -> repeatForLiveSamples(() -> sp[0].run(db),
+                                    () -> { sp[0] = new HUSPSPAlgorithm(totalUtil * su); sp[0].run(db); }),
+                            () -> sp[0].candidateCount, () -> sp[0].patternCount, null, null,
+                            null, null, null, null, null, null, () -> sp[0].cancel());
                     if (m != null && m.runtimeMs != -1) {
-                        m.prunedSwu = sp.prunedSWU;
-                        m.prunedIip = sp.prunedIIP;      // candidates removed by IIP (RSU below the threshold)
-                        m.prunedPeu = sp.prunedPEU;      // Algorithm 3 calls whose PEU is below the threshold
-                        m.prunedLar = sp.prunedEP;       // candidates removed by early pruning (sound bound in place of TRSU)
-                        m.exploredNodes = sp.exploredNodes;
+                        m.prunedSwu = sp[0].prunedSWU;
+                        m.prunedIip = sp[0].prunedIIP;      // candidates removed by IIP (RSU below the threshold)
+                        m.prunedPeu = sp[0].prunedPEU;      // Algorithm 3 calls whose PEU is below the threshold
+                        m.prunedLar = sp[0].prunedEP;       // candidates removed by early pruning (sound bound in place of TRSU)
+                        m.exploredNodes = sp[0].exploredNodes;
                     }
                     return logged(m);
                 }
                 case "HUSP-ULL": {
-                    HUSPULLAlgorithm h = new HUSPULLAlgorithm(totalUtil * su);
+                    final HUSPULLAlgorithm[] h = { new HUSPULLAlgorithm(totalUtil * su) };
                     ExperimentMetrics m = measure(algo, dsName, iter, tag,
-                            () -> h.run(db),
-                            () -> h.candidateCount, () -> h.patternCount, null, null);
+                            () -> repeatForLiveSamples(() -> h[0].run(db),
+                                    () -> { h[0] = new HUSPULLAlgorithm(totalUtil * su); h[0].run(db); }),
+                            () -> h[0].candidateCount, () -> h[0].patternCount, null, null);
                     if (m != null && m.runtimeMs != -1) {
-                        m.prunedSwu = h.prunedSWU;
-                        m.prunedLar = h.prunedLAR;       // candidates discarded by the look-ahead strategy (LAS)
-                        m.prunedIip = h.prunedIIP;       // items removed by irrelevant item pruning (IPS)
-                        m.prunedPeu = h.prunedPEU;       // lists built whose PEU is below the threshold
-                        m.exploredNodes = h.exploredNodes;
+                        m.prunedSwu = h[0].prunedSWU;
+                        m.prunedLar = h[0].prunedLAR;       // candidates discarded by the look-ahead strategy (LAS)
+                        m.prunedIip = h[0].prunedIIP;       // items removed by irrelevant item pruning (IPS)
+                        m.prunedPeu = h[0].prunedPEU;       // lists built whose PEU is below the threshold
+                        m.exploredNodes = h[0].exploredNodes;
                     }
                     return logged(m);
                 }
                 case "IncUSP-Miner+": {
-                    IncUSPMinerPlusAlgorithm inc = new IncUSPMinerPlusAlgorithm(su);
+                    final IncUSPMinerPlusAlgorithm[] inc = { new IncUSPMinerPlusAlgorithm(su) };
                     ExperimentMetrics m = measure(algo, dsName, iter, tag,
-                            () -> inc.runInitialMining(db, totalUtil),
-                            () -> inc.candidateCount, () -> inc.patternCount, null, null);
-                    if (m != null && m.runtimeMs != -1) { m.prunedTsu = inc.prunedTSU; m.exploredNodes = inc.exploredNodes; }
+                            () -> repeatForLiveSamples(() -> inc[0].runInitialMining(db, totalUtil),
+                                    () -> { inc[0] = new IncUSPMinerPlusAlgorithm(su); inc[0].runInitialMining(db, totalUtil); }),
+                            () -> inc[0].candidateCount, () -> inc[0].patternCount, null, null);
+                    if (m != null && m.runtimeMs != -1) { m.prunedTsu = inc[0].prunedTSU; m.exploredNodes = inc[0].exploredNodes; }
                     return logged(m);
                 }
                 case "Pre-HUSPM": {
-                    PreHUSPMAlgorithm.PreHUSPMAlgo pre = new PreHUSPMAlgorithm.PreHUSPMAlgo(
-                            su, slRatioFor(dsName), ENABLE_PATTERN_EXPORT);
+                    final PreHUSPMAlgorithm.PreHUSPMAlgo[] pre = { new PreHUSPMAlgorithm.PreHUSPMAlgo(
+                            su, slRatioFor(dsName), ENABLE_PATTERN_EXPORT) };
                     ExperimentMetrics m = measure(algo, dsName, iter, tag,
-                            () -> pre.runInitialMining(db, totalUtil),
-                            () -> pre.candidateCount, () -> pre.patternCount, null, null);
-                    attachPreHuspm(m, pre);
+                            () -> repeatForLiveSamples(() -> pre[0].runInitialMining(db, totalUtil),
+                                    () -> { pre[0] = new PreHUSPMAlgorithm.PreHUSPMAlgo(su, slRatioFor(dsName),
+                                            ENABLE_PATTERN_EXPORT); pre[0].runInitialMining(db, totalUtil); }),
+                            () -> pre[0].candidateCount, () -> pre[0].patternCount, null, null);
+                    attachPreHuspm(m, pre[0]);
                     return logged(m);
                 }
                 case "Adaptive-Full": {
-                    PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp = new PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo(
-                            su, DEFAULT_KAPPA, DEFAULT_DELTA0, slRatioFor(dsName),
-                            PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.AblationMode.FULL,
-                            ENABLE_PATTERN_EXPORT);
+                    final PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo[] adp = { newStaticAdaptive(su, dsName) };
                     ExperimentMetrics m = measure(algo, dsName, iter, tag,
-                            () -> adp.runInitialMining(db, totalUtil),
-                            () -> adp.candidateCount, () -> adp.patternCount,
-                            () -> adp.lutDynValue, () -> adp.cubValue, () -> adp.cubTriggeredRescan,
-                            null, () -> adp.prunedValueBound,
-                            () -> adp.prelargeCount, () -> adp.uutValue, () -> adp.sftValue, adp::cancel);
-                    attachAdaptive(m, adp);
+                            () -> repeatForLiveSamples(() -> adp[0].runInitialMining(db, totalUtil),
+                                    () -> { adp[0] = newStaticAdaptive(su, dsName); adp[0].runInitialMining(db, totalUtil); }),
+                            () -> adp[0].candidateCount, () -> adp[0].patternCount,
+                            () -> adp[0].lutDynValue, () -> adp[0].cubValue, () -> adp[0].cubTriggeredRescan,
+                            null, () -> adp[0].prunedValueBound,
+                            () -> adp[0].prelargeCount, () -> adp[0].uutValue, () -> adp[0].sftValue,
+                            () -> adp[0].cancel());
+                    attachAdaptive(m, adp[0]);
                     return logged(m);
                 }
                 default: return null;
@@ -1759,6 +1772,42 @@ public class AutomatedExperimentRunner {
             try { noteOutcome(failure); } catch (Throwable ignored) { }
             return failure;
         }
+    }
+
+    // ------------------------------------------------------------------
+    // LIVE-SET SAMPLES OF A SHORT STATIC MINE
+    // ------------------------------------------------------------------
+    // The live-mode sampler reads the heap right after a forced collection, then waits
+    // max(MEM_SAMPLE_MS, 4 x that collection). Its first reading falls at the start of the call,
+    // before the miner has built anything, and a collection over a heap that holds a large
+    // database takes hundreds of milliseconds, so a mine shorter than about a second can end
+    // before a second reading: its live set is then only what is left after the call. In live
+    // mode a static mine is therefore run again, each time by a fresh instance that replaces the
+    // previous one before it runs, until the sampler has read the heap MIN_LIVE_SAMPLES times
+    // after its first reading (or LIVE_REPEAT_MAX_MS has passed). The peak over those readings is
+    // the live set of one mine; live_repeats on the row records how many mines it rests on.
+    // Timing is void in live mode, so the repeats change no runtime.
+    static final int MIN_LIVE_SAMPLES = Integer.getInteger("mem.minSamples", 5);
+    static final long LIVE_REPEAT_MAX_MS = Long.getLong("mem.repeatMaxMs", 120_000L);
+    /** The current measurement's count of forced collections; null outside a measurement. */
+    private static volatile java.util.concurrent.atomic.AtomicInteger currentGcCount = null;
+    /** Mines the last measurement's task ran; 1 unless repeatForLiveSamples repeated it. */
+    private static volatile int lastLiveRepeats = 1;
+
+    /** Runs first, then, in live mode only, fresh until the sampler has enough readings. */
+    private static void repeatForLiveSamples(Task first, Task fresh) {
+        first.run();
+        int runs = 1;
+        java.util.concurrent.atomic.AtomicInteger c = currentGcCount;
+        if (MEM_LIVE && c != null) {
+            long end = System.nanoTime() + LIVE_REPEAT_MAX_MS * 1_000_000L;
+            while (c.get() < 1 + MIN_LIVE_SAMPLES && System.nanoTime() < end
+                    && !Thread.currentThread().isInterrupted()) {
+                fresh.run();
+                runs++;
+            }
+        }
+        lastLiveRepeats = runs;
     }
 
     // ------------------------------------------------------------------
@@ -1886,6 +1935,8 @@ public class AutomatedExperimentRunner {
             } catch (Throwable ignored) {}
         }, "heap-sampler-" + algo);
         heapSampler.setDaemon(true);
+        currentGcCount = gcCount;     // read by repeatForLiveSamples in the task
+        lastLiveRepeats = 1;
         heapSampler.start();
 
         // Bytes allocated by the mining thread. Deterministic and independent of GC scheduling,
@@ -2019,6 +2070,7 @@ public class AutomatedExperimentRunner {
 
         // Stop the sampler; peakUsed is the peak heap sampled over the whole run.
         sampling.set(false); heapSampler.interrupt();
+        currentGcCount = null;
 
         long heapAfter = rt.totalMemory() - rt.freeMemory();
 
@@ -2047,6 +2099,7 @@ public class AutomatedExperimentRunner {
             m.memLiveMb     = Math.max(0, pl - memBase) / (1024 * 1024);
             m.memRetainedMb = Math.max(0, finalLive - memBase) / (1024 * 1024);
             m.gcForced      = gcCount.get();
+            m.liveRepeats   = lastLiveRepeats;
         } else {
             m.runtimeMs = realRuntime;
         }
@@ -2110,7 +2163,7 @@ public class AutomatedExperimentRunner {
                     + fatal.getClass().getSimpleName()); } catch (Throwable ig) {}
             return m;
         } finally {
-            try { sampling.set(false); heapSampler.interrupt(); } catch (Throwable ig) {}
+            try { sampling.set(false); heapSampler.interrupt(); currentGcCount = null; } catch (Throwable ig) {}
         }
     }
 

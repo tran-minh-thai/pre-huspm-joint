@@ -60,6 +60,12 @@ param(
     # Shortest wait between forced collections in live mode. The runner stretches it to four
     # times the last collection, so a large live set is sampled less often than a small one.
     [int]      $MemIntervalMs = 20,
+    # Generation of the memory campaign. Live-mode readings taken by a different sampling
+    # procedure are a different measurement and must not share a tree with the old ones. ''
+    # is the first generation (results/campaign-mem); 'sampled' is the one in which a short
+    # static mine is run again until the sampler has read it enough times (live_repeats),
+    # written to results/campaign-mem-sampled and results/campaign-mem-sampled-replicates.
+    [ValidateSet('','sampled')][string] $MemGeneration = '',
     # Replicates. Repeat n > 0 measures the same arms again, each in a fresh JVM as every arm
     # is, and SeedIndex k > 0 measures them with SEEDS[k] instead of SEEDS[0]. A replicate
     # goes to a tree of its own, results/campaign-replicates/s<k>r<n>, with its own DONE and
@@ -190,8 +196,10 @@ if ($Repeat -lt 0 -or $SeedIndex -lt 0 -or $SeedIndex -gt 4) {
 }
 # Memory replicates have a tree of their own too, results/campaign-mem-replicates/s<k>r<n>,
 # so a re-measured live set never lands in the memory campaign's main tree.
-$top   = if ($MemMode -eq 'live' -and $replicate) { "results/campaign-mem-replicates/s${SeedIndex}r${Repeat}" }
-         elseif ($MemMode -eq 'live') { 'results/campaign-mem' }
+$memTree = if ($MemGeneration) { "campaign-mem-$MemGeneration" } else { 'campaign-mem' }
+if ($MemGeneration -and $MemMode -ne 'live') { throw "-MemGeneration applies to -MemMode live only." }
+$top   = if ($MemMode -eq 'live' -and $replicate) { "results/$memTree-replicates/s${SeedIndex}r${Repeat}" }
+         elseif ($MemMode -eq 'live') { "results/$memTree" }
          elseif ($replicate) { "results/campaign-replicates/s${SeedIndex}r${Repeat}" }
          else { 'results/campaign' }
 $label = if ($MemMode -eq 'live' -and $replicate) { "mem s${SeedIndex}r${Repeat} $Scenario" }

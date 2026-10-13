@@ -106,6 +106,9 @@ public class ExperimentMetrics {
     public long memRetainedMb;    // used heap after the last forced collection
     public int  gcForced;         // number of forced collections (0 = final reading only)
     public long wallMsPerturbed;  // wall time of a live-mode run (perturbed by forced GC)
+    /** Mines a live-mode reading rests on: a short static mine is run again until the sampler
+     *  has enough readings (AutomatedExperimentRunner.repeatForLiveSamples); 1 otherwise. */
+    public int liveRepeats = 1;
     /** Bytes allocated by the mining thread, in MB. Deterministic, independent of GC scheduling. */
     public long allocatedMb;
 
@@ -168,6 +171,7 @@ public class ExperimentMetrics {
                 .add(String.valueOf(iauMax)).add(String.valueOf(iauTightness))
                 .add(String.valueOf(repetition)).add(String.valueOf(slMinEff))
                 .add(String.valueOf(rescanRetries));
+        sj.add(String.valueOf(liveRepeats));     // appended last so earlier columns keep their positions
         return sj.toString();
     }
 
@@ -182,6 +186,6 @@ public class ExperimentMetrics {
                 "sigma2,rho," +
                 "mem_mode,mem_live_mb,mem_retained_mb,gc_forced,wall_ms_perturbed,allocated_mb," +
                 "seed,repeat,block_size,kappa,delta0,trigger_rule,iau_max,iau_tightness," +
-                "repetition,sl_min_eff,rescan_retries";
+                "repetition,sl_min_eff,rescan_retries,live_repeats";
     }
 }
