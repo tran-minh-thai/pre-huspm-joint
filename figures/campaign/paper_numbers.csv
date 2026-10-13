@@ -709,6 +709,11 @@ noise_SC1_live_set_median,0.0372,table_noise.csv
 noise_SC1_live_set_median_pct,3.7,table_noise.csv
 noise_SC1_live_set_max,1.4286,table_noise.csv
 noise_SC1_live_set_max_pct,142.9,table_noise.csv
+noise_SC1_live_set_at_least_5mb_cells,184,table_noise.csv
+noise_SC1_live_set_at_least_5mb_median,0.0424,table_noise.csv
+noise_SC1_live_set_at_least_5mb_median_pct,4.2,table_noise.csv
+noise_SC1_live_set_at_least_5mb_max,0.8500,table_noise.csv
+noise_SC1_live_set_at_least_5mb_max_pct,85.0,table_noise.csv
 noise_SC1_runtime_cells,192,table_noise.csv
 noise_SC1_runtime_median,0.0174,table_noise.csv
 noise_SC1_runtime_median_pct,1.7,table_noise.csv
