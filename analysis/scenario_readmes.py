@@ -637,7 +637,7 @@ Geometric mean of the baseline's runtime over the proposal's, on the cells where
 {table(["baseline", "baseline / proposal", "cells"], geo_rows(summ))}
 
 `peak_heap_mb` in these rows is used heap, garbage included, and is not the memory result; the
-live set is in `results/campaign-mem/SC1`.
+live set is in `results/campaign-mem-sampled/SC1`.
 """
     write("campaign/SC1/README.md", text)
 
@@ -725,8 +725,11 @@ twice: Pre-HUSPM admits a pattern by an upper bound on its utility, the proposal
     write("campaign/SC4/README.md", text)
 
 
+mf_min_samples = 5   # mem.minSamples of AutomatedExperimentRunner, the readings a sampled cell needs
+
+
 def mem_sc1():
-    df = mf.parse_su(mf.load_scenario("SC1", tree=mf.MEMORY_TREE))
+    df = mf.parse_su(mf.load_scenario("SC1", tree=mf.memory_tree("SC1")))
     dss = [d for d in mf.ALL_DATASETS if d in set(df["dataset"])]
     rows, twice = [], 0
     for d in dss:
@@ -742,7 +745,7 @@ def mem_sc1():
                 row.append(STATUS.get(r["status"], r["status"]))
                 continue
             mark = ""
-            if int(r["gc_forced"]) <= 2:
+            if int(r["gc_forced"]) - 2 < mf_min_samples:
                 mark = " †"
                 twice += 1
             row.append(f"{int(r['mem_live_mb']):,}{mark}")
@@ -754,18 +757,25 @@ def mem_sc1():
         al, df_ = g.loc["all four thresholds"], g.loc["default threshold"]
         rat.append([SLABEL[base], f"{al['geomean_ratio']:.2f}", f"{int(al['cells_used'])} of {int(al['cells'])}",
                     int(al["baseline_holds_less"]), f"{df_['geomean_ratio']:.2f}"])
-    inc = incomplete_runs(static_cells(mf.load_scenario("SC1", tree=mf.MEMORY_TREE)))
+    inc = incomplete_runs(static_cells(mf.load_scenario("SC1", tree=mf.memory_tree("SC1"))))
+    done = df[df["finished"]]
+    in_run = done["gc_forced"].astype(int) - 2
+    repeats = done["live_repeats"].astype(int) if "live_repeats" in done else pd.Series([1] * len(done))
     text = f"""# SC1 memory: the live set of a static mine on `D_init`
 
-{SCOPE["campaign-mem/SC1/README.md"][1]} The wait between samples is the larger of 20 ms and four
-times the last collection. {HEAD}
+{SCOPE["campaign-mem-sampled/SC1/README.md"][1]} The wait between samples is the larger of 20 ms and four
+times the last collection. A mine that ends before the sampler has taken {mf_min_samples} readings
+while it runs is run again, each time as a fresh instance, until it has (`live_repeats` on the row:
+the mines the reading rests on; the cap is 120 s). Over {len(done)} completed cells the fewest
+readings taken while a mine runs is {int(in_run.min()) if len(done) else 0}; {int((repeats > 1).sum())} cells were run more
+than once, at most {int(repeats.max()) if len(done) else 0} times. {HEAD}
 
 {("Runs that did not complete:" + chr(10) + chr(10) + table(["database", "algorithm", "outcome"], inc, ["---", "---", "---"])) if inc else "Every run completed."}
 
 ## Live set at the default threshold
 
-Megabytes. A dagger marks a run read at its start and end only ({twice} cells), because it ended
-before the first sample; a live set below 1 MB reads as 0.
+Megabytes. A dagger marks a run with fewer than {mf_min_samples} readings taken while it ran ({twice} cells);
+a live set below 1 MB reads as 0.
 
 {table(["database"] + [SLABEL[a] for a in mf.STATIC_ORDER], rows, ["---"] + ["---:"] * len(mf.STATIC_ORDER))}
 
@@ -777,7 +787,18 @@ and both read at least 1 MB; above one, the proposal holds less. Cells left out 
 
 {table(["baseline", "all four thresholds", "cells used", "cells where the baseline holds less", "default threshold"], rat)}
 """
-    write("campaign-mem/SC1/README.md", text)
+    write("campaign-mem-sampled/SC1/README.md", text)
+
+
+def mem_sc1_superseded():
+    """The SC1 rows of the first memory tree: kept, not read."""
+    write("campaign-mem/SC1/README.md", """# SC1 memory, first measurement: not used
+
+These arms read the live set without repeating short mines, so a mine that ended before the
+first sample was read only at its start and end. The SC1 live set is read from
+`results/campaign-mem-sampled/SC1` (and its replicates), where every cell has at least five
+readings taken while the mine runs. The deterministic counters of both trees agree.
+""")
 
 
 # What each scenario measures, written while it has no finished arm; the numbers come only
@@ -816,7 +837,7 @@ SCOPE = {
         "The IUB bound and the irrelevant item pruning ablated on one mine of the whole database, with Pre-HUSPM beside them; the block "
         "index and the adaptive rescan decision ablated on `D_init` and 100 increments, on SIGN and "
         "C8T1S5I8N5K."),
-    "campaign-mem/SC1/README.md": (
+    "campaign-mem-sampled/SC1/README.md": (
         "SC1 memory: the live set of a static mine on `D_init`",
         "The runs of SC1 measured for memory instead of time: at every sample the runner forces a full "
         "collection and reads the heap right after, so runtimes are void."),
@@ -834,7 +855,7 @@ README_SOURCES = [
     ("campaign/SC5/README.md", "SC5", mf.TIMING_TREE, False, sc5),
     ("campaign/SC6/README.md", "SC6", mf.TIMING_TREE, True, sc6),
     ("campaign/SC7/README.md", "SC7", mf.TIMING_TREE, False, sc7),
-    ("campaign-mem/SC1/README.md", "SC1", mf.MEMORY_TREE, False, mem_sc1),
+    ("campaign-mem-sampled/SC1/README.md", "SC1", mf.memory_tree("SC1"), False, mem_sc1),
     ("campaign-mem/SC2/README.md", "SC2", mf.MEMORY_TREE, False, mem_sc2),
 ]
 
@@ -928,6 +949,7 @@ checked against USpan, HUSP-ULL and HUSP-SP by `verify.BaselineAgreement`.
 
 if __name__ == "__main__":
     verify_joint()
+    mem_sc1_superseded()
     missing = []
     for path, sc, tree, reps, gen in README_SOURCES:
         df = mf.load_scenario(sc, tree=tree, replicates=reps)

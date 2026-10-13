@@ -141,6 +141,7 @@ stated, by Pre-HUSPM. Their reading under each rescan rule is given in the next 
 | `repetition` | proposal: item occurrences per distinct item of the database mined first |
 | `sl_min_eff` | floor ratio `r_l` the call ran with, after any raise. Pre-HUSPM: its `r_l` |
 | `rescan_retries` | proposal: times the floor ratio was raised by 0.05 (up to 0.98, at most six times) after a mine exceeded the candidate or time budget. 0 unless such a budget is set |
+| `live_repeats` | live memory mode, static mines: the mines the live-set reading rests on. A mine that ends before the sampler has taken `mem.minSamples` (5) readings while it runs is run again as a fresh instance until it has, or until `mem.repeatMaxMs` (120 s) has passed; 1 otherwise, and 1 on every timing and incremental row. Absent from rows written before the column existed |
 
 The rescan rule has no effect on a call that makes no rescan decision: an initial or static
 mine, and every `Remine-from-scratch` row. In `results/campaign` and `results/campaign-mem`

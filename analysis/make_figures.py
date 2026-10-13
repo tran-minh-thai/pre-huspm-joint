@@ -5,6 +5,7 @@
 #  Reads the per-arm CSVs the campaign writes,
 #      results/campaign/<SC>/<DATABASE>/<ARM>/<file>.csv       timing campaign
 #      results/campaign-mem/<SC>/<DATABASE>/<ARM>/<file>.csv   memory campaign
+#      results/campaign-mem-sampled/SC1/...                     SC1 live set, sampled in-run
 #  and writes vector PDFs plus CSV/LaTeX tables to figures/campaign/.
 #
 #  Only arms that finished are read: an arm directory counts when it holds DONE.
@@ -53,7 +54,21 @@ OUT_DIR  = os.environ.get("HUSP_OUT_DIR") or os.path.join(REPO_DIR, "figures", "
 os.makedirs(OUT_DIR, exist_ok=True)
 
 TIMING_TREE = "campaign"
-MEMORY_TREE = "campaign-mem"
+MEMORY_TREE = "campaign-mem"          # SC2 live set
+# SC1 live set: a short static mine is run again until the sampler has taken five readings
+# while it runs (campaign.ps1 -MemGeneration sampled). The SC1 rows of MEMORY_TREE predate
+# that and are not read.
+SC1_MEMORY_TREE = "campaign-mem-sampled"
+
+
+def memory_tree(sc):
+    """The memory tree a scenario's live set is read from."""
+    return SC1_MEMORY_TREE if sc == "SC1" else MEMORY_TREE
+
+
+def memory_replicate_dirs(sc):
+    """The second and later measurements of a scenario's live set, one directory each."""
+    return sorted(glob.glob(os.path.join(DATA_DIR, memory_tree(sc) + "-replicates", "s*r*")))
 
 # ---- Journal aesthetics -------------------------------------------------------
 # No fills: series are told apart by colour, line style and hollow marker, bars by hatching.
@@ -1148,7 +1163,7 @@ def figset_batch_ratio(tag="fig_batch_ratio"):
 #    MEMORY (live set, from the memory campaign)
 def figset_memory_static(tag="fig_memory_static", datasets=None):
     """SC1 memory: live set at each database's default threshold, every algorithm."""
-    df = load_scenario("SC1", tree=MEMORY_TREE)
+    df = load_scenario("SC1", tree=memory_tree("SC1"))
     if df is None:
         return
     df = parse_su(df)
@@ -1226,7 +1241,7 @@ def export_summary_tables():
     if df is None:
         return
     df = parse_su(df)
-    mem = load_scenario("SC1", tree=MEMORY_TREE)
+    mem = load_scenario("SC1", tree=memory_tree("SC1"))
     mem = parse_su(mem) if mem is not None else None
     rows = []
     for ds in [d for d in ALL_DATASETS if d in set(df["dataset"])]:
@@ -1280,14 +1295,14 @@ def memory_ratios():
     outcome of whichever did not finish), and the cells where the baseline holds less.
     Leaving out a baseline's out-of-memory cell lowers the ratio, so it does not favour
     the proposal. Two scopes: all four thresholds, and the default threshold alone."""
-    df = load_scenario("SC1", tree=MEMORY_TREE)
+    df = load_scenario("SC1", tree=memory_tree("SC1"))
     if df is None:
         return None
     df = parse_su(df)
     # the second measurement of the live set, where there is one: (database, threshold,
     # algorithm) -> its value
     again = {}
-    for rd in sorted(glob.glob(os.path.join(DATA_DIR, "campaign-mem-replicates", "s*r*"))):
+    for rd in memory_replicate_dirs("SC1"):
         r = load_scenario("SC1", tree=os.path.relpath(rd, DATA_DIR))
         if r is None:
             continue
@@ -1537,6 +1552,9 @@ def measurement_hosts():
     hosts = set()
     for pattern in (os.path.join(DATA_DIR, TIMING_TREE, "*", "*", "*", "DONE"),
                     os.path.join(DATA_DIR, MEMORY_TREE, "*", "*", "*", "DONE"),
+                    os.path.join(DATA_DIR, SC1_MEMORY_TREE, "*", "*", "*", "DONE"),
+                    os.path.join(DATA_DIR, SC1_MEMORY_TREE + "-replicates", "*", "*", "*", "*", "DONE"),
+                    os.path.join(DATA_DIR, MEMORY_TREE + "-replicates", "*", "*", "*", "*", "DONE"),
                     os.path.join(DATA_DIR, REPLICATE_TREE, "*", "*", "*", "*", "DONE")):
         for f in glob.glob(pattern):
             m = re.search(r"host=(\S+)", open(f, encoding="utf-8", errors="replace").read())
@@ -1595,8 +1613,9 @@ def export_status_summary():
     """Rows per outcome, per tree x scenario x database: OK / OT / OOM / Fail / Skip."""
     order = ["OK"] + STATUS_ORDER
     rows = []
-    for tree in (TIMING_TREE, MEMORY_TREE):
+    for kind in ("timing", "memory"):
         for sc in ["SC1", "SC2", "SC3", "SC4", "SC5", "SC6", "SC7"]:
+            tree = TIMING_TREE if kind == "timing" else memory_tree(sc)
             if not os.path.isdir(os.path.join(DATA_DIR, tree, sc)):
                 continue
             df = load_scenario(sc, tree=tree)

@@ -202,6 +202,12 @@ the arm, when less than 10 percent of the heap is free.
 * The memory campaign (`results/campaign-mem`) measures the live set: a full collection is
   forced at every sample and the heap read right after, so its runtimes are void. See
   `docs/result-columns.md` for `mem_live_mb` and `mem_retained_mb`.
+* The SC1 live set is read from `results/campaign-mem-sampled` (`campaign.ps1 -MemMode live
+  -MemGeneration sampled`): a static mine that ends before the sampler has taken
+  `mem.minSamples` (5) readings while it runs is run again, as a fresh instance, until it has
+  or `mem.repeatMaxMs` (120 s) has passed; `live_repeats` records the mines a row rests on.
+  The SC1 rows of `results/campaign-mem` predate this and are not read; SC2 is read from
+  `results/campaign-mem`, since an incremental stream is not repeated.
 
 Status is encoded in `runtime_ms`: 0 or more is a completed run in milliseconds, -2 over the
 time limit, -1 a failure or a skipped call, -3 a memory-campaign row.

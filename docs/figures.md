@@ -11,7 +11,8 @@ The environment variables `HUSP_DATA_DIR` and `HUSP_OUT_DIR` override the input 
 
 - `results/campaign/<SC>/<DATABASE>/<ARM>/*.csv` for runtimes and counters.
 - `results/campaign-mem/<SC>/<DATABASE>/<ARM>/*.csv` for memory: the live set
-  (`mem_live_mb`) and the state held after each increment (`mem_retained_mb`).
+  (`mem_live_mb`) and the state held after each increment (`mem_retained_mb`). The SC1 live
+  set is read from `results/campaign-mem-sampled/SC1/` instead (`docs/experiments.md`).
 - `results/campaign-replicates/` for the replicate tables, together with the main tree.
 - `src/common/Datasets.java` for each database's default threshold, `D_init` and sweep.
   The script has no table of its own, so a threshold changed there is picked up here.

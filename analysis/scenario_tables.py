@@ -581,9 +581,9 @@ def noise():
                 rows.append(dict(measure="SC1 runtime", dataset=d, threshold=su, algorithm=a, runs=len(t),
                                  mean=float(t.mean()), relative_spread=float(np.std(t, ddof=1) / t.mean())))
     for sc, col in (("SC1", "mem_live_mb"), ("SC2", "mem_retained_mb")):
-        main = mf.load_scenario(sc, tree=mf.MEMORY_TREE)
+        main = mf.load_scenario(sc, tree=mf.memory_tree(sc))
         reps = []
-        for rd in sorted(__import__("glob").glob(os.path.join(mf.DATA_DIR, "campaign-mem-replicates", "s*r*"))):
+        for rd in mf.memory_replicate_dirs(sc):
             r = mf.load_scenario(sc, tree=os.path.relpath(os.path.join(rd), mf.DATA_DIR))
             if r is not None:
                 reps.append(r)
@@ -601,7 +601,9 @@ def noise():
                 va, vb = float(x[f"{col}_a"]), float(x[f"{col}_b"])
                 if va >= 1 and vb >= 1:
                     rows.append(dict(measure=f"{sc} live set" if sc == "SC1" else "SC2 state after last increment",
-                                     dataset=x["dataset"], threshold=np.nan, algorithm=x["algorithm"], runs=2,
+                                     dataset=x["dataset"],
+                                     threshold=float(str(x["op_type"]).split("=")[1]) if sc == "SC1" else np.nan,
+                                     algorithm=x["algorithm"], runs=2,
                                      mean=(va + vb) / 2, relative_spread=abs(va - vb) / ((va + vb) / 2)))
     return pd.DataFrame(rows)
 

@@ -121,6 +121,7 @@ results/campaign/<SC>/<DATABASE>/<ALGORITHM>/    timing, one directory per arm
 results/campaign-mem/...                         live set, same layout
 results/campaign-replicates/s<seed>r<repeat>/... replicates
 results/campaign-mem-replicates/...              replicates of the live-set measurement
+results/campaign-mem-sampled[-replicates]/SC1/   SC1 live set with short mines repeated until sampled
 results/calibration/                             settings fixed by measurement before the campaign
 results/verify-joint/, results/invariant-*/      correctness checks, counts only
 results/machine/                                 the measurement machine
