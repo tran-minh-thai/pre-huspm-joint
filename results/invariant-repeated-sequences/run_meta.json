@@ -1,0 +1,16 @@
+{
+  "command": "python3 analysis/repeated_sequences.py BMS1 39601",
+  "path_substitutions": 0,
+  "build_dir": "/tmp/rs_build",
+  "git_commit": "efda96eb38a2ff826fbae056ce3a723df741e788",
+  "tree": "src clean, other files modified",
+  "source_sha256": "9fa0c6d714c8758601d4381ae3c88c21209e0fb39b6fc41dd996ba9803f407d5",
+  "source_files": 34,
+  "java": "openjdk version \"26.0.1\" 2026-04-21",
+  "os": "Darwin 27.0.0 (macOS-27.0.1-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-10-13T21:50:41",
+  "end": "2026-10-13T21:50:41",
+  "exit_code": 0
+}

@@ -720,14 +720,15 @@ def sc2_tex(totals, region, reps=None):
     def rescans(d):
         v = [str(int(op.loc[d, c])) for c in ("rescans", "rescans_swumax", "rescans_tsu")]
         return " & ".join(f"\\textbf{{{x}}}" if b else x for x, b in zip(v, mf.lowest(v)))
-    rows = [f"{d} & {100 * op.loc[d, 'alpha_stream']:.1f} & {op.loc[d, 'joint_over_tsu']:.2f} & "
+    rows = [f"{d} & {100 * op.loc[d, 'alpha_median']:.1f} & {100 * op.loc[d, 'alpha_min']:.1f}--{100 * op.loc[d, 'alpha_max']:.1f} & "
+            f"{op.loc[d, 'gain_at_decisions']:.2f} & "
             f"{100 * op.loc[d, 'ratio_median']:.0f} & {int(op.loc[d, 'within_budget'])} & {rescans(d)} \\\\"
             for d in order]
     rule_tex = "\n".join(["\\begin{table}[!htbp]\\centering",
-                          "\\caption{Rescan rule in SC2}\\label{tab:sc2_rule}",
-                          "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}lrrrrrrr}\\toprule",
-                          " & & & & & \\multicolumn{3}{c}{Rescans} \\\\\\cmidrule(l){6-8}",
-                          "Database & $\\alpha$ (\\%) & Gain & \\begin{tabular}[b]{@{}r@{}}Median\\\\$\\Phi/\\beta$ (\\%)\\end{tabular} & "
+                          "\\caption{Rescan rule in SC2; $\\alpha$ at the rescan decisions, over the insertions since the last rescan}\\label{tab:sc2_rule}",
+                          "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}lrrrrrrrr}\\toprule",
+                          " & \\multicolumn{2}{c}{$\\alpha$ (\\%)} & & & & \\multicolumn{3}{c}{Rescans} \\\\\\cmidrule(lr){2-3}\\cmidrule(l){7-9}",
+                          "Database & Median & Range & Gain & \\begin{tabular}[b]{@{}r@{}}Median\\\\$\\Phi/\\beta$ (\\%)\\end{tabular} & "
                           "\\begin{tabular}[b]{@{}r@{}}No\\\\rescan\\end{tabular} & Joint & SWUmax & TSU \\\\\\midrule"]
                          + rows + ["\\bottomrule\\end{tabular*}", "\\end{table}", ""])
     return time_tex, rule_tex
@@ -991,6 +992,20 @@ def export_all(out_dir=None):
             print("[warning] table_explored_nodes.csv: no root count for "
                   + ", ".join(f"{r.scenario} {r.dataset} {r.su:g}" for r in ex[ex["missing"]].itertuples()))
         mf.write_csv(ex, ex_path)
+        # at the default threshold: the root items the node bound stops at once, the proposal's
+        # count with them, and each baseline's count over it (the convention of the baselines
+        # leaves them out; these keys let a note give the other reading)
+        for r in ex[ex["default"] & ~ex["missing"]].itertuples():
+            k = f"{r.scenario}_{r.dataset}_default"
+            put(f"{k}_root_stopped", int(r.root_stopped), "table_explored_nodes.csv")
+            put(f"{k}_proposal_explored_with_root", int(r.proposal_explored), "table_explored_nodes.csv")
+            put(f"{k}_proposal_explored", int(r.proposal_explored_bound), "table_explored_nodes.csv")
+            for a in mf.STATIC_ORDER:
+                col = f"explored_{a}"
+                if a == P or col not in ex.columns or pd.isna(ex.loc[r.Index, col]):
+                    continue
+                put(f"{k}_proposal_with_root_over_{a}", f"{r.proposal_explored / ex.loc[r.Index, col]:.2f}",
+                    "table_explored_nodes.csv")
         for sc in ("SC1", "SC3"):
             for scope, g in (("default", ex[(ex.scenario == sc) & ex["default"]]), ("all", ex[ex.scenario == sc])):
                 for a in ("HUSP-SP", "HUSP-ULL", "Pre-HUSPM"):
@@ -1057,6 +1072,24 @@ def export_all(out_dir=None):
             open(os.path.join(out, "table_SC2_rule.tex"), "w", encoding="utf-8").write(rule_tex)
             h = mf.rescan_hypothesis(region)
             put("SC2_prediction", h["verdict"], "table_SC2_operating_region.csv")
+            # alpha and the gain of the corollary, at the rescan decisions (median, min, max over
+            # the 100 decisions) and, for reference, over the whole insertion stream
+            src = "table_SC2_operating_region.csv"
+            for r in region.itertuples():
+                put(f"SC2_alpha_decisions_{r.dataset}_median_pct", f"{100 * r.alpha_median:.1f}", src)
+                put(f"SC2_alpha_decisions_{r.dataset}_range_pct", f"{100 * r.alpha_min:.1f} to {100 * r.alpha_max:.1f}", src)
+                put(f"SC2_gain_decisions_{r.dataset}", f"{r.gain_at_decisions:.2f}", src)
+                put(f"SC2_alpha_stream_{r.dataset}_pct", f"{100 * r.alpha_stream:.1f}", src)
+                put(f"SC2_gain_stream_{r.dataset}", f"{r.joint_over_tsu:.2f}", src)
+            # the registered prediction names the databases with the largest and the smallest
+            # gain; are they still those when the gain is taken at the decisions?
+            g = region.set_index("dataset")["gain_at_decisions"].dropna()
+            k_l, k_s = len(mf.PREDICTED_LARGEST), len(mf.PREDICTED_SMALLEST)
+            top = set(g.sort_values(ascending=False).index[:k_l])
+            bottom = set(g.sort_values().index[:k_s])
+            same = top == set(mf.PREDICTED_LARGEST) and bottom == set(mf.PREDICTED_SMALLEST)
+            put("SC2_prediction_sets_from_decision_gain", "same" if same else
+                f"differ: largest {sorted(top)}, smallest {sorted(bottom)}", src)
             pairs, more, raised = mf.rescan_order_check(region)
             put("SC2_joint_le_swumax", f"{len(pairs) - len(more)}/{len(pairs)}", "table_SC2_operating_region.csv")
 

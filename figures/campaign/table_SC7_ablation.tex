@@ -1,38 +1,38 @@
 \begin{table}[!htbp]
 \centering
-\caption{Ablation of the miner on the whole database; runtime as mean and standard deviation of three runs}
+\caption{Ablation of the miner on the whole database; runtime as mean and standard deviation of three runs; bold, per database, the lowest runtime and every runtime whose three runs overlap its runs, and the fewest explored nodes}
 \label{tab:sc7_ablation}
 \begin{tabular*}{\textwidth}{@{\extracolsep\fill}llrr}
 \toprule
 Database & Variant & Runtime (s) & Explored \\
 \midrule
 SIGN & Full & \textbf{0.53} $\pm$ 0.05 & \textbf{8,027} \\
- & -IUB & \textbf{0.48} $\pm$ 0.04 & \textbf{8,027} \\
- & -IPS & 0.68 $\pm$ 0.04 & 38,220 \\
+ & No node check & \textbf{0.48} $\pm$ 0.04 & \textbf{8,027} \\
+ & No item pruning & 0.68 $\pm$ 0.04 & 38,220 \\
  & Pre-HUSPM & 1.33 $\pm$ 0.02 & 31,639 \\
 LEVIATHAN & Full & \textbf{0.78} $\pm$ 0.06 & \textbf{3,597} \\
- & -IUB & \textbf{0.77} $\pm$ 0.03 & \textbf{3,597} \\
- & -IPS & 1.77 $\pm$ 0.14 & 30,483 \\
+ & No node check & \textbf{0.77} $\pm$ 0.03 & \textbf{3,597} \\
+ & No item pruning & 1.77 $\pm$ 0.14 & 30,483 \\
  & Pre-HUSPM & 1.71 $\pm$ 0.03 & 17,791 \\
 FIFA & Full & \textbf{9.48} $\pm$ 0.16 & \textbf{13,642} \\
- & -IUB & \textbf{9.49} $\pm$ 0.03 & \textbf{13,642} \\
- & -IPS & 102.21 $\pm$ 1.27 & 470,115 \\
+ & No node check & \textbf{9.49} $\pm$ 0.03 & \textbf{13,642} \\
+ & No item pruning & 102.21 $\pm$ 1.27 & 470,115 \\
  & Pre-HUSPM & 242.28 $\pm$ 21.82 & 279,764 \\
 BIBLE & Full & \textbf{1.42} $\pm$ 0.07 & \textbf{925} \\
- & -IUB & 1.60 $\pm$ 0.06 & \textbf{925} \\
- & -IPS & 2.33 $\pm$ 0.19 & 5,134 \\
+ & No node check & 1.60 $\pm$ 0.06 & \textbf{925} \\
+ & No item pruning & 2.33 $\pm$ 0.19 & 5,134 \\
  & Pre-HUSPM & 1.84 $\pm$ 0.05 & 2,687 \\
 KOSARAK & Full & \textbf{12.63} $\pm$ 0.11 & \textbf{237} \\
- & -IUB & \textbf{13.47} $\pm$ 0.83 & \textbf{237} \\
- & -IPS & 112.34 $\pm$ 1.09 & 83,173 \\
+ & No node check & \textbf{13.47} $\pm$ 0.83 & \textbf{237} \\
+ & No item pruning & 112.34 $\pm$ 1.09 & 83,173 \\
  & Pre-HUSPM & 15.73 $\pm$ 0.63 & 1,408 \\
 C8T1S5I8N5K & Full & \textbf{0.61} $\pm$ 0.21 & \textbf{21,750} \\
- & -IUB & \textbf{0.47} $\pm$ 0.06 & \textbf{21,750} \\
- & -IPS & 2.47 $\pm$ 0.53 & 316,822 \\
+ & No node check & \textbf{0.47} $\pm$ 0.06 & \textbf{21,750} \\
+ & No item pruning & 2.47 $\pm$ 0.53 & 316,822 \\
  & Pre-HUSPM & 0.94 $\pm$ 0.01 & 107,728 \\
 TAFENG & Full & 0.43 $\pm$ $<$0.01 & \textbf{371} \\
- & -IUB & 0.48 $\pm$ 0.02 & \textbf{371} \\
- & -IPS & 0.51 $\pm$ 0.04 & 936 \\
+ & No node check & 0.48 $\pm$ 0.02 & \textbf{371} \\
+ & No item pruning & 0.51 $\pm$ 0.04 & 936 \\
  & Pre-HUSPM & \textbf{0.25} $\pm$ $<$0.01 & 380 \\
 \bottomrule
 \end{tabular*}

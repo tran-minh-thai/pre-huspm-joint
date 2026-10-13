@@ -793,6 +793,10 @@ def operating_region(df):
                          alpha_median=float(np.nanmedian(alpha)), alpha_min=float(np.nanmin(alpha)),
                          alpha_max=float(np.nanmax(alpha)), uut=uut,
                          increments_alpha_le_uut=int(np.sum(alpha <= uut)),
+                         # the gain of the corollary at the median alpha of the rescan decisions,
+                         # each alpha taken over the insertions since the last rescan
+                         gain_at_decisions=float((1 - uut) / (np.nanmedian(alpha) - uut))
+                         if np.nanmedian(alpha) > uut else np.nan,
                          alpha_stream=stream.get(ds, np.nan), joint_over_tsu=factor.get(ds, np.nan),
                          alpha_check=alpha_check,
                          sl_min_eff_max=float(ok["sl_min_eff"].max()),
@@ -965,6 +969,10 @@ def figset_block_size(tag="fig_block_size"):
     save(fig, f"{tag}.pdf")
 
 
+# Variant names as the SC7 table prints them; the CSV and the number keys keep the short names.
+SC7_PRINTED = {"-IUB": "No node check", "-IPS": "No item pruning"}
+
+
 def export_ablation_table():
     """SC7 as a table. Static: full, IUB off (C3), item removal off (IPS) and Pre-HUSPM on
     one mine of the whole database - runtime, explored nodes, IUB cuts. Incremental: C5 and C4 arms
@@ -1029,7 +1037,8 @@ def export_ablation_table():
 
     lines = ["\\begin{table}[!htbp]", "\\centering",
              "\\caption{Ablation of the miner on the whole database; runtime as mean and standard deviation "
-             "of three runs}",
+             "of three runs; bold, per database, the lowest runtime and every runtime whose three runs overlap "
+             "its runs, and the fewest explored nodes}",
              "\\label{tab:sc7_ablation}",
              "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}llrr}", "\\toprule",
              "Database & Variant & Runtime (s) & Explored \\\\", "\\midrule"]
@@ -1050,7 +1059,7 @@ def export_ablation_table():
               if pd.notna(r["runtime_s"]) else r["status"])
         ex = f"{int(r['explored_bound']):,}" if pd.notna(r["explored_bound"]) else r["status"]
         ex = f"\\textbf{{{ex}}}" if bold[i][1] else ex
-        lines.append(f"{ds} & {r['variant']} & {rt} & {ex} \\\\")
+        lines.append(f"{ds} & {SC7_PRINTED.get(r['variant'], r['variant'])} & {rt} & {ex} \\\\")
     lines += ["\\bottomrule", "\\end{tabular*}", "\\end{table}", ""]
     with open(os.path.join(OUT_DIR, "table_SC7_ablation.tex"), "w", encoding="utf-8") as fh:
         fh.write("\n".join(lines))
