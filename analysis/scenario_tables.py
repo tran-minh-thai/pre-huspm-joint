@@ -1126,6 +1126,13 @@ def export_all(out_dir=None):
             for stat, v in (("median", big["relative_spread"].median()), ("max", big["relative_spread"].max())):
                 put(f"noise_SC1_runtime_over_1s_{stat}", f"{v:.4f}", "table_noise.csv")
                 put(f"noise_SC1_runtime_over_1s_{stat}_pct", f"{100 * v:.1f}", "table_noise.csv")
+        if m == "SC1 live set":
+            # below 5 MB the 1 MB resolution alone moves a value by 20% or more
+            big = g[g["mean"] >= 5]
+            put("noise_SC1_live_set_at_least_5mb_cells", len(big), "table_noise.csv")
+            for stat, v in (("median", big["relative_spread"].median()), ("max", big["relative_spread"].max())):
+                put(f"noise_SC1_live_set_at_least_5mb_{stat}", f"{v:.4f}", "table_noise.csv")
+                put(f"noise_SC1_live_set_at_least_5mb_{stat}_pct", f"{100 * v:.1f}", "table_noise.csv")
 
     mf.write_csv(pd.DataFrame(nums), os.path.join(out, "paper_numbers.csv"))
     print(f"[saved] scenario tables and paper_numbers.csv ({len(nums)} numbers) in {out}")
