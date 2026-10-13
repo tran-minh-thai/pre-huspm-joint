@@ -1,0 +1,17 @@
+### LIVE HEAP: forced collection, interval >= 20 ms | arm = HUSP-SP
+### runtime_ms is written as -3 (perturbed by forced GC); the wall time is in wall_ms_perturbed. NOT a performance figure.
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC1]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC1] Static baseline on D_init ---
+>> RUNNING HUSP-SP/FIFA/SC1_su=0.056234#0  (heap free=560MB / total=768MB / max=49152MB)
+[HUSP-SP/FIFA/SC1_su=0.056234#0] OK t=5298ms cand=260593 pat=42 heapDelta=24MB
+>> RUNNING HUSP-SP/FIFA/SC1_su=0.059637#0  (heap free=563MB / total=768MB / max=49152MB)
+[HUSP-SP/FIFA/SC1_su=0.059637#0] OK t=4152ms cand=199847 pat=18 heapDelta=47MB
+>> RUNNING HUSP-SP/FIFA/SC1_su=0.067073#0  (heap free=564MB / total=768MB / max=49152MB)
+[HUSP-SP/FIFA/SC1_su=0.067073#0] OK t=2699ms cand=117077 pat=5 heapDelta=100MB
+>> RUNNING HUSP-SP/FIFA/SC1_su=0.075436#0  (heap free=564MB / total=768MB / max=49152MB)
+[HUSP-SP/FIFA/SC1_su=0.075436#0] OK t=3596ms cand=70726 pat=1 heapDelta=23MB
+=== ALL SCENARIOS DONE (28.6s) ===
