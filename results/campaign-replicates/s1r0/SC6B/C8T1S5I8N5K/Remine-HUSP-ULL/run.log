@@ -1,0 +1,50 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC6B]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=1
+
+--- [SC6B] Mixed stream, exactly 14:3:3, one deletion beyond the rescan budget ---
+>> [SC6B] C8T1S5I8N5K seed=1337 opSize=199 plan=20 operations (14 insert, 3 delete, 3 modify; operation 20 deletes 5875 sequences beyond the budget)
+>> RUNNING Remine-HUSP-ULL/C8T1S5I8N5K/SC6_INIT#0  (heap free=813MB / total=1024MB / max=49152MB)
+[Remine-HUSP-ULL/C8T1S5I8N5K/SC6_INIT#0] OK t=215ms cand=419535 pat=5067 heapDelta=139MB
+>> RUNNING Remine-HUSP-ULL/C8T1S5I8N5K/SC6_INS#1  (heap free=230MB / total=320MB / max=49152MB)
+[Remine-HUSP-ULL/C8T1S5I8N5K/SC6_INS#1] OK t=129ms cand=417868 pat=5101 heapDelta=103MB
+>> RUNNING Remine-HUSP-ULL/C8T1S5I8N5K/SC6_INS#2  (heap free=230MB / total=320MB / max=49152MB)
+[Remine-HUSP-ULL/C8T1S5I8N5K/SC6_INS#2] OK t=100ms cand=412921 pat=4900 heapDelta=116MB
+>> RUNNING Remine-HUSP-ULL/C8T1S5I8N5K/SC6_MOD#3  (heap free=230MB / total=320MB / max=49152MB)
+[Remine-HUSP-ULL/C8T1S5I8N5K/SC6_MOD#3] OK t=94ms cand=411804 pat=4178 heapDelta=116MB
+>> RUNNING Remine-HUSP-ULL/C8T1S5I8N5K/SC6_INS#4  (heap free=230MB / total=320MB / max=49152MB)
+[Remine-HUSP-ULL/C8T1S5I8N5K/SC6_INS#4] OK t=95ms cand=415574 pat=4036 heapDelta=116MB
+>> RUNNING Remine-HUSP-ULL/C8T1S5I8N5K/SC6_DEL#5  (heap free=230MB / total=320MB / max=49152MB)
+[Remine-HUSP-ULL/C8T1S5I8N5K/SC6_DEL#5] OK t=86ms cand=417454 pat=3490 heapDelta=119MB
+>> RUNNING Remine-HUSP-ULL/C8T1S5I8N5K/SC6_INS#6  (heap free=230MB / total=320MB / max=49152MB)
+[Remine-HUSP-ULL/C8T1S5I8N5K/SC6_INS#6] OK t=91ms cand=416291 pat=4120 heapDelta=124MB
+>> RUNNING Remine-HUSP-ULL/C8T1S5I8N5K/SC6_MOD#7  (heap free=231MB / total=320MB / max=49152MB)
+[Remine-HUSP-ULL/C8T1S5I8N5K/SC6_MOD#7] OK t=87ms cand=419266 pat=3999 heapDelta=121MB
+>> RUNNING Remine-HUSP-ULL/C8T1S5I8N5K/SC6_INS#8  (heap free=230MB / total=320MB / max=49152MB)
+[Remine-HUSP-ULL/C8T1S5I8N5K/SC6_INS#8] OK t=91ms cand=427504 pat=4155 heapDelta=116MB
+>> RUNNING Remine-HUSP-ULL/C8T1S5I8N5K/SC6_MOD#9  (heap free=231MB / total=320MB / max=49152MB)
+[Remine-HUSP-ULL/C8T1S5I8N5K/SC6_MOD#9] OK t=99ms cand=429642 pat=5462 heapDelta=119MB
+>> RUNNING Remine-HUSP-ULL/C8T1S5I8N5K/SC6_INS#10  (heap free=230MB / total=320MB / max=49152MB)
+[Remine-HUSP-ULL/C8T1S5I8N5K/SC6_INS#10] OK t=99ms cand=430886 pat=5286 heapDelta=121MB
+>> RUNNING Remine-HUSP-ULL/C8T1S5I8N5K/SC6_INS#11  (heap free=230MB / total=320MB / max=49152MB)
+[Remine-HUSP-ULL/C8T1S5I8N5K/SC6_INS#11] OK t=95ms cand=430421 pat=5203 heapDelta=124MB
+>> RUNNING Remine-HUSP-ULL/C8T1S5I8N5K/SC6_INS#12  (heap free=230MB / total=320MB / max=49152MB)
+[Remine-HUSP-ULL/C8T1S5I8N5K/SC6_INS#12] OK t=95ms cand=431101 pat=5039 heapDelta=119MB
+>> RUNNING Remine-HUSP-ULL/C8T1S5I8N5K/SC6_INS#13  (heap free=230MB / total=320MB / max=49152MB)
+[Remine-HUSP-ULL/C8T1S5I8N5K/SC6_INS#13] OK t=95ms cand=429889 pat=4945 heapDelta=119MB
+>> RUNNING Remine-HUSP-ULL/C8T1S5I8N5K/SC6_INS#14  (heap free=230MB / total=320MB / max=49152MB)
+[Remine-HUSP-ULL/C8T1S5I8N5K/SC6_INS#14] OK t=100ms cand=431365 pat=4749 heapDelta=121MB
+>> RUNNING Remine-HUSP-ULL/C8T1S5I8N5K/SC6_INS#15  (heap free=230MB / total=320MB / max=49152MB)
+[Remine-HUSP-ULL/C8T1S5I8N5K/SC6_INS#15] OK t=94ms cand=431437 pat=4590 heapDelta=121MB
+>> RUNNING Remine-HUSP-ULL/C8T1S5I8N5K/SC6_INS#16  (heap free=230MB / total=320MB / max=49152MB)
+[Remine-HUSP-ULL/C8T1S5I8N5K/SC6_INS#16] OK t=94ms cand=432251 pat=4413 heapDelta=121MB
+>> RUNNING Remine-HUSP-ULL/C8T1S5I8N5K/SC6_INS#17  (heap free=230MB / total=320MB / max=49152MB)
+[Remine-HUSP-ULL/C8T1S5I8N5K/SC6_INS#17] OK t=96ms cand=431469 pat=4253 heapDelta=119MB
+>> RUNNING Remine-HUSP-ULL/C8T1S5I8N5K/SC6_DEL#18  (heap free=230MB / total=320MB / max=49152MB)
+[Remine-HUSP-ULL/C8T1S5I8N5K/SC6_DEL#18] OK t=99ms cand=430619 pat=4442 heapDelta=119MB
+>> RUNNING Remine-HUSP-ULL/C8T1S5I8N5K/SC6_INS#19  (heap free=230MB / total=320MB / max=49152MB)
+[Remine-HUSP-ULL/C8T1S5I8N5K/SC6_INS#19] OK t=94ms cand=428941 pat=4339 heapDelta=119MB
+>> RUNNING Remine-HUSP-ULL/C8T1S5I8N5K/SC6_DEL_BIG#20  (heap free=231MB / total=320MB / max=49152MB)
+[Remine-HUSP-ULL/C8T1S5I8N5K/SC6_DEL_BIG#20] OK t=76ms cand=414871 pat=4497 heapDelta=126MB
+=== ALL SCENARIOS DONE (15.1s) ===
