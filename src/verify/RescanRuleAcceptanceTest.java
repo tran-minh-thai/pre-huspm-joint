@@ -29,6 +29,9 @@ import java.util.Map;
  *   T7  The two Pre-HUSPM tests in front of the joint tracking (rules pre_swumax and
  *       pre_tsu): the insertion cases of T1, T2 and T6, with the direct updates they take
  *       counted, and a deletion and a modification refused.
+ *   T8  Tracking by the PEU bound under the joint rule (-Dadapt.tracking=peu): the same
+ *       insertion cases, the tracked set holding every pattern the utility tracking holds,
+ *       and a deletion, a modification and a rule other than joint refused.
  *
  * T1 and T2 check the default joint rule beside iaumax (and CUB in T1); T3 and T4 check joint.
  */
@@ -51,6 +54,7 @@ public final class RescanRuleAcceptanceTest {
         testPreHuspmVariants();
         testDirectUpdateCounterexamples();
         testPreHuspmTestsWithJointTracking();
+        testPeuTracking();
 
         System.out.println();
         System.out.printf("=== acceptance: %d passed, %d failed ===%n", passed, failures);
@@ -378,6 +382,115 @@ public final class RescanRuleAcceptanceTest {
             check("  " + rule + " refuses a deletion and a modification", delRefused && modRefused,
                     "deletion refused " + delRefused + ", modification refused " + modRefused);
         }
+    }
+
+    // ================================================================
+    // T8 - tracking by the PEU bound under the joint rule
+    // ================================================================
+    private static PreHUSPMAdaptiveAlgo peuAlgo() {
+        PreHUSPMAdaptiveAlgo a = newAlgo(TriggerRule.JOINT);
+        a.tracking = PreHUSPMAdaptiveAlgo.Tracking.PEU;
+        return a;
+    }
+
+    private static void testPeuTracking() {
+        System.out.println("T8 - tracking by the PEU bound under the joint rule, insertions");
+        // T1's batch
+        List<Sequence> init = insertInit();
+        List<Sequence> batch = insertBatch(init);
+        List<Sequence> all = SyntheticDb.concat(init, batch);
+        PreHUSPMAdaptiveAlgo a = peuAlgo();
+        a.runInitialMining(copyOf(init), SyntheticDb.tsu(init));
+        PreHUSPMAdaptiveAlgo u = newAlgo(TriggerRule.JOINT);
+        u.runInitialMining(copyOf(init), SyntheticDb.tsu(init));
+        java.util.Set<Object> byUtility = new java.util.HashSet<>(u.trackedUtilities().keySet());
+        java.util.Set<Object> byBound = new java.util.HashSet<>(a.trackedUtilities().keySet());
+        check("  the bound tracks every pattern the utility tracks (" + byUtility.size() + " in "
+                + byBound.size() + ")", byBound.containsAll(byUtility) && byBound.size() >= byUtility.size(),
+                "utility-tracked patterns missing from the bound-tracked set");
+        check("  every tracked pattern has a bound at least its utility", boundsCoverUtility(a), "a bound below a utility");
+        a.runIncrementalMining(copyOf(batch), copyOf(all), SyntheticDb.tsu(all));
+        PatternSetDiff d1 = PatternSetDiff.of(referenceForInsertScenario(), a.exportLargeAsStrings());
+        check("  matches remining in T1's batch", d1.isClean(), d1.toString());
+
+        // T2's two batches, counting the direct updates
+        SyntheticDb.resetIds();
+        List<Sequence> i2 = SyntheticDb.db("1[19] | 2[31]", "2[50]");
+        List<Sequence> b1 = SyntheticDb.db("1[4]"), b2 = SyntheticDb.db("1[4]");
+        List<Sequence> after1 = SyntheticDb.concat(i2, b1), after2 = SyntheticDb.concat(after1, b2);
+        PreHUSPMAdaptiveAlgo t2 = peuAlgo();
+        t2.runInitialMining(copyOf(i2), SyntheticDb.tsu(i2));
+        int direct = 0, before = t2.rescanCount;
+        t2.runIncrementalMining(copyOf(b1), copyOf(after1), SyntheticDb.tsu(after1));
+        if (t2.rescanCount == before) direct++;
+        before = t2.rescanCount;
+        t2.runIncrementalMining(copyOf(b2), copyOf(after2), SyntheticDb.tsu(after2));
+        if (t2.rescanCount == before) direct++;
+        PatternSetDiff d2 = PatternSetDiff.of(remineFromScratch(after2), t2.exportLargeAsStrings());
+        check("  matches remining after T2's two batches", d2.isClean(), d2.toString());
+        check("  bounds still cover utilities after the direct updates", boundsCoverUtility(t2), "a bound below a utility");
+
+        // A batch that lifts a pattern above its old bound: <2> ends its sequences, so its bound
+        // equals its utility (81); inserting 2[5] takes the direct update (budget 5, charge 3.75)
+        // and the bound must follow the utility to 86.
+        SyntheticDb.resetIds();
+        List<Sequence> t0 = SyntheticDb.db("2[50]", "1[19] | 2[31]");
+        List<Sequence> tb = SyntheticDb.db("2[5]");
+        List<Sequence> ta = SyntheticDb.concat(t0, tb);
+        PreHUSPMAdaptiveAlgo tight = peuAlgo();
+        tight.runInitialMining(copyOf(t0), SyntheticDb.tsu(t0));
+        before = tight.rescanCount;
+        tight.runIncrementalMining(copyOf(tb), copyOf(ta), SyntheticDb.tsu(ta));
+        check("  a batch on a tight bound takes the direct update", tight.rescanCount == before, "it rescanned");
+        check("  the bound follows the utility past its old value", boundsCoverUtility(tight), "a bound below a utility");
+        PatternSetDiff dt = PatternSetDiff.of(remineFromScratch(ta), tight.exportLargeAsStrings());
+        check("  matches remining after that batch", dt.isClean(), dt.toString());
+
+        // T6's insertions alone
+        SyntheticDb.resetIds();
+        List<Sequence> cur = fillers("1[22.7]", 8, 9);
+        cur.add(SyntheticDb.seq("30[5.3]"));
+        PreHUSPMAdaptiveAlgo t6 = peuAlgo();
+        t6.runInitialMining(copyOf(cur), SyntheticDb.tsu(cur));
+        for (String spec : new String[]{"50[3]", "1[6]"}) {
+            List<Sequence> ins = SyntheticDb.db(spec);
+            cur.addAll(ins);
+            before = t6.rescanCount;
+            t6.runIncrementalMining(copyOf(ins), copyOf(cur), SyntheticDb.tsu(cur));
+            if (t6.rescanCount == before) direct++;
+        }
+        PatternSetDiff d6 = PatternSetDiff.of(remineFromScratch(cur), t6.exportLargeAsStrings());
+        check("  returns every HUSP in T6's case D insertions alone", d6.isClean(), d6.toString());
+        check("  the cases above take the direct update (" + direct + " of 4 batches)", direct >= 1,
+                "every batch rescanned");
+
+        boolean delRefused = false, modRefused = false, ruleRefused = false;
+        SyntheticDb.resetIds();
+        List<Sequence> c = fillers("1[19]", 9, 9);
+        PreHUSPMAdaptiveAlgo r = peuAlgo();
+        r.runInitialMining(copyOf(c), SyntheticDb.tsu(c));
+        List<Sequence> victims = new ArrayList<>(c.subList(1, 2));
+        try { r.runDeletion(victims, copyOf(c), SyntheticDb.tsu(c)); }
+        catch (UnsupportedOperationException e) { delRefused = true; }
+        try { r.runModification(victims, SyntheticDb.db("1[6]"), copyOf(c), SyntheticDb.tsu(c)); }
+        catch (UnsupportedOperationException e) { modRefused = true; }
+        PreHUSPMAdaptiveAlgo other = newAlgo(TriggerRule.IAUMAX);
+        other.tracking = PreHUSPMAdaptiveAlgo.Tracking.PEU;
+        other.runInitialMining(copyOf(c), SyntheticDb.tsu(c));
+        try { other.runIncrementalMining(SyntheticDb.db("1[6]"), copyOf(c), SyntheticDb.tsu(c)); }
+        catch (UnsupportedOperationException e) { ruleRefused = true; }
+        check("  refuses a deletion, a modification and a rule other than joint",
+                delRefused && modRefused && ruleRefused,
+                "deletion " + delRefused + ", modification " + modRefused + ", other rule " + ruleRefused);
+    }
+
+    private static boolean boundsCoverUtility(PreHUSPMAdaptiveAlgo a) {
+        Map<?, Double> tracked = a.trackedUtilities();
+        for (Map.Entry<?, Double> e : tracked.entrySet()) {
+            Double b = a.trackedBound.get(e.getKey());
+            if (b == null || b < e.getValue() - 1e-9) return false;
+        }
+        return a.trackedBound.size() == tracked.size();
     }
 
     /** T1's scenario under rule; adds one to direct[0] when its batch took the direct update. */

@@ -1424,7 +1424,7 @@ public class AutomatedExperimentRunner {
         // -------- Arm: Adaptive-Full --------
         // First, so that with -Dverify.husps=true every other arm is compared with its patterns.
         // In the campaign each arm runs in a JVM of its own, so the order does not matter there.
-        if (algoEnabled("Adaptive-Full")) runAdaptiveStream("Adaptive-Full", null, dsName, Su, dInit, batches, col, tag);
+        if (algoEnabled("Adaptive-Full")) runAdaptiveStream("Adaptive-Full", null, null, dsName, Su, dInit, batches, col, tag);
         forceFullGC();
 
         // -------- Arm: IncUSP-Miner+ (isolated scope) --------
@@ -1650,17 +1650,25 @@ public class AutomatedExperimentRunner {
         // Same miner, same tracking by exact utility, same drop floor as Adaptive-Full; only the
         // rescan condition differs (PreHUSPMAdaptiveAlgo.TriggerRule.PRE_SWUMAX, PRE_TSU).
         if (algoEnabled("Joint-miner+SWUmax")) runAdaptiveStream("Joint-miner+SWUmax",
-                PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.TriggerRule.PRE_SWUMAX, dsName, Su, dInit, batches, col, tag);
+                PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.TriggerRule.PRE_SWUMAX, null, dsName, Su, dInit, batches, col, tag);
         if (algoEnabled("Joint-miner+TSU")) runAdaptiveStream("Joint-miner+TSU",
-                PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.TriggerRule.PRE_TSU, dsName, Su, dInit, batches, col, tag);
+                PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.TriggerRule.PRE_TSU, null, dsName, Su, dInit, batches, col, tag);
+
+        // -------- The joint rule with Pre-HUSPM's tracking by a bound (SWU_proj = PEU) --------
+        // Same miner, same search, same rule as Adaptive-Full; the tracked set holds every node
+        // whose bound reaches the floor, and a pattern is dropped by its bound
+        // (PreHUSPMAdaptiveAlgo.Tracking.PEU).
+        if (algoEnabled("Joint-rule+SWU-tracking")) runAdaptiveStream("Joint-rule+SWU-tracking", null,
+                PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.Tracking.PEU, dsName, Su, dInit, batches, col, tag);
         forceFullGC();
     }
 
     /**
-     * The proposal over a stream of insertions: Adaptive-Full under its own rule (rule null),
-     * or under another rescan rule with everything else unchanged.
+     * The proposal over a stream of insertions: Adaptive-Full under its own rule and tracking
+     * (both null), or with another rescan rule or another tracking and everything else unchanged.
      */
     private static void runAdaptiveStream(String label, PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.TriggerRule rule,
+                                          PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.Tracking tracking,
                                           String dsName, double Su, List<Sequence> dInit,
                                           List<List<Sequence>> batches, ResultCollector col, String tag) {
         final double initTotal = sumUtility(dInit);
@@ -1670,6 +1678,7 @@ public class AutomatedExperimentRunner {
                 PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.AblationMode.FULL,
                 ENABLE_PATTERN_EXPORT);
         if (rule != null) adp.triggerRule = rule;
+        if (tracking != null) adp.tracking = tracking;
         boolean poisoned = false;
         announce(label, dsName, tag + "_INIT", 0);
         ExperimentMetrics m0 = measure(label, dsName, 0, tag + "_INIT",
@@ -1733,7 +1742,8 @@ public class AutomatedExperimentRunner {
         // second default here that could drift from the algorithm's own. Under JOINT kappa and
         // delta0 have no effect, so they are written as NaN rather than as a value that looks
         // like a setting.
-        m.triggerRule   = adp.triggerRule.name().toLowerCase(java.util.Locale.ROOT);
+        m.triggerRule   = adp.triggerRule.name().toLowerCase(java.util.Locale.ROOT)
+                + (adp.tracking == PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.Tracking.PEU ? "+peu_tracking" : "");
         if (adp.triggerRule == PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.TriggerRule.JOINT) {
             m.kappa = Double.NaN; m.delta0 = Double.NaN;
         }

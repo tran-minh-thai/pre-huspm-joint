@@ -108,7 +108,12 @@ $all7    = @('SIGN','LEVIATHAN','TAFENG','BIBLE','C8T1S5I8N5K','KOSARAK','FIFA')
 $all8    = @('SIGN','LEVIATHAN','TAFENG','BIBLE','BMS1','C8T1S5I8N5K','KOSARAK','FIFA')
 $subset3 = @('SIGN','LEVIATHAN','C8T1S5I8N5K')
 $static  = @('USpan','HUSP-ULL','HUSP-SP','IncUSP-Miner+','Pre-HUSPM','Adaptive-Full')
-$incr    = @('Adaptive-Full','Pre-HUSPM-SWUmax','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+')
+$incr    = @('Adaptive-Full','Pre-HUSPM-SWUmax','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+',
+             'Remine-HUSP-ULL','Remine-HUSP-SP','Joint-miner+SWUmax','Joint-miner+TSU','Joint-rule+SWU-tracking')
+# The mixed streams (SC6, SC6D, SC6B): AutomatedExperimentRunner.MIXED_ARMS.
+$mixed   = @('Adaptive-Full','Remine-from-scratch','Remine-HUSP-ULL','Remine-HUSP-SP')
+$scenarios = @('SC1','SC2','SC3','SC4','SC5','SC6','SC6D','SC6B','SC7')
+if ($scenarios -notcontains $Scenario) { throw "Unknown scenario '$Scenario'. Known: $($scenarios -join ', ')." }
 
 # Arms that exist on some databases only. SC7's incremental ablations (the block index and
 # the adaptive rescan) run in the runner on C5_ABLATION_SET, which is SIGN and C8T1S5I8N5K
@@ -129,7 +134,9 @@ if (-not $Algorithms) {
         'SC1'   { $static }
         'SC3'   { $static }
         'SC4'   { @('Pre-HUSPM','Adaptive-Full') }
-        'SC6'   { @('Adaptive-Full','Remine-from-scratch') }
+        'SC6'   { $mixed }
+        'SC6D'  { $mixed }
+        'SC6B'  { $mixed }
         'SC7'   { @('proposed_full','proposed_no_block_index','proposed_no_IUB','proposed_no_IPS',
                     'proposed_bsz_1','proposed_bsz_5','proposed_bsz_10','proposed_bsz_50','proposed_bsz_200',
                     'proposed_C5_on','proposed_C5_off','Pre-HUSPM') }
@@ -144,6 +151,8 @@ if (-not $Datasets) {
         'SC4'   { $subset3 }
         'SC5'   { $subset3 }
         'SC6'   { $subset3 }
+        'SC6D'  { $subset3 }
+        'SC6B'  { $subset3 }
         default { $all7 }                          # SC2, SC7
     }
 }
@@ -152,6 +161,7 @@ if (-not $Datasets) {
 # array parameter the whole comma-joined string, so -Algorithms A,B arrives as one name
 # "A,B", which matches no algorithm. Use -Command "& { .\campaign.ps1 -Algorithms 'A','B' }".
 $knownAlgos = @('Adaptive-Full','Pre-HUSPM','Pre-HUSPM-SWUmax','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+',
+                'Remine-HUSP-ULL','Remine-HUSP-SP','Joint-miner+SWUmax','Joint-miner+TSU','Joint-rule+SWU-tracking',
                 'USpan','HUSP-ULL','HUSP-SP',
                 'proposed_full','proposed_no_block_index','proposed_no_IUB','proposed_no_IPS',
                 'proposed_bsz_1','proposed_bsz_5','proposed_bsz_10','proposed_bsz_50','proposed_bsz_200',
