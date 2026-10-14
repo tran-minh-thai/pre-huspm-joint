@@ -1,0 +1,129 @@
+dataset,uut,r_l,trigger_rule,seed,mode,target,target_utility,op_index,op_type,n_sequences,op_utility,budget,trigger_quantity,path,previous_path,ref_husp,got_husp,missing,extra,max_utility_gap,rescans,clean
+SIGN,0.065911,0.80,joint,42,adversarial+insert-only,"26 117 132 144 245 253",47341.000,1,insert,1,2742.000,11837.721,2561.272,direct,init,454,454,0,0,0.000000000,0,true
+SIGN,0.065911,0.80,joint,42,adversarial+insert-only,"26 117 132 144 245 253",47341.000,2,insert,1,3823.000,11837.721,6132.294,direct,insert/direct,466,466,0,0,0.000000000,0,true
+SIGN,0.065911,0.80,joint,42,adversarial+insert-only,"26 117 132 144 245 253",47341.000,3,insert,1,4030.000,11837.721,9896.673,direct,insert/direct,466,466,0,0,0.000000000,0,true
+SIGN,0.065911,0.80,joint,42,adversarial+insert-only,"26 117 132 144 245 253",47341.000,4,insert,1,3121.000,11837.721,12811.965,rescan,insert/direct,468,468,0,0,0.000000000,1,true
+SIGN,0.065911,0.80,joint,42,adversarial+insert-only,"8 26 27 144 245 253",48069.000,5,insert,1,2478.000,12018.528,2314.673,direct,insert/rescan,462,462,0,0,0.000000000,1,true
+SIGN,0.065911,0.80,joint,42,adversarial+insert-only,"8 26 27 144 245 253",48069.000,6,insert,1,3396.000,12018.528,5486.839,direct,insert/direct,459,459,0,0,0.000000000,1,true
+SIGN,0.065911,0.80,joint,42,adversarial+insert-only,"8 26 27 144 245 253",48069.000,7,insert,1,2392.000,12018.528,7721.180,direct,insert/direct,476,476,0,0,0.000000000,1,true
+SIGN,0.065911,0.80,joint,42,adversarial+insert-only,"8 26 27 144 245 253",48069.000,8,insert,1,2893.000,12018.528,10423.499,direct,insert/direct,481,481,0,0,0.000000000,1,true
+SIGN,0.065911,0.80,joint,42,adversarial+insert-only,"8 26 27 144 245 253",48069.000,9,insert,2,5287.000,12018.528,15362.028,rescan,insert/direct,475,475,0,0,0.000000000,2,true
+SIGN,0.065911,0.80,joint,42,adversarial+insert-only,"22 26 143 245 253",48940.000,10,insert,1,4237.000,12235.323,3957.735,direct,insert/rescan,482,482,0,0,0.000000000,2,true
+SIGN,0.065911,0.80,joint,42,adversarial+insert-only,"22 26 143 245 253",48940.000,11,insert,1,2717.000,12235.323,6495.655,direct,insert/direct,486,486,0,0,0.000000000,2,true
+SIGN,0.065911,0.80,joint,42,adversarial+insert-only,"22 26 143 245 253",48940.000,12,insert,1,2191.000,12235.323,8542.244,direct,insert/direct,481,481,0,0,0.000000000,2,true
+SIGN,0.065911,0.80,joint,42,adversarial+insert-only,"22 26 143 245 253",48940.000,13,insert,1,3158.000,12235.323,11492.097,direct,insert/direct,479,479,0,0,0.000000000,2,true
+SIGN,0.065911,0.80,joint,42,adversarial+insert-only,"22 26 143 245 253",48940.000,14,insert,2,4206.000,12235.323,15420.875,rescan,insert/direct,472,472,0,0,0.000000000,3,true
+SIGN,0.065911,0.80,joint,42,adversarial+insert-only,"17 110 139 143 144 245",49810.000,15,insert,1,2263.000,12452.948,2113.843,direct,insert/rescan,475,475,0,0,0.000000000,3,true
+SIGN,0.065911,0.80,joint,42,adversarial+insert-only,"17 110 139 143 144 245",49810.000,16,insert,1,2223.000,12452.948,4190.323,direct,insert/direct,470,470,0,0,0.000000000,3,true
+LEVIATHAN,0.015530,0.80,joint,42,adversarial+insert-only,"18 206 8 18",58660.000,1,insert,2,2872.000,15864.134,2827.398,direct,init,107,107,0,0,0.000000000,0,true
+LEVIATHAN,0.015530,0.80,joint,42,adversarial+insert-only,"18 206 8 18",58660.000,2,insert,3,7234.000,15864.134,9949.054,direct,insert/direct,107,107,0,0,0.000000000,0,true
+LEVIATHAN,0.015530,0.80,joint,42,adversarial+insert-only,"18 206 8 18",58660.000,3,insert,1,4489.000,15864.134,14368.340,direct,insert/direct,108,108,0,0,0.000000000,0,true
+LEVIATHAN,0.015530,0.80,joint,42,adversarial+insert-only,"18 206 8 18",58660.000,4,insert,1,4106.000,15864.134,18410.573,rescan,insert/direct,109,109,0,0,0.000000000,1,true
+LEVIATHAN,0.015530,0.80,joint,42,adversarial+insert-only,"206 18 8 18",55057.000,5,insert,1,2988.000,15922.219,2941.596,direct,insert/rescan,108,108,0,0,0.000000000,1,true
+LEVIATHAN,0.015530,0.80,joint,42,adversarial+insert-only,"206 18 8 18",55057.000,6,insert,2,5072.000,15922.219,7934.828,direct,insert/direct,109,109,0,0,0.000000000,1,true
+LEVIATHAN,0.015530,0.80,joint,42,adversarial+insert-only,"206 18 8 18",55057.000,7,insert,2,4011.000,15922.219,11883.537,direct,insert/direct,109,109,0,0,0.000000000,1,true
+LEVIATHAN,0.015530,0.80,joint,42,adversarial+insert-only,"206 18 8 18",55057.000,8,insert,1,3372.000,15922.219,15203.170,direct,insert/direct,110,110,0,0,0.000000000,1,true
+LEVIATHAN,0.015530,0.80,joint,42,adversarial+insert-only,"206 18 8 18",55057.000,9,insert,1,2858.000,15922.219,18016.785,rescan,insert/direct,111,111,0,0,0.000000000,2,true
+LEVIATHAN,0.015530,0.80,joint,42,adversarial+insert-only,"206 18 8 18",56863.000,10,insert,2,4571.000,15979.062,4500.012,direct,insert/rescan,110,110,0,0,0.000000000,2,true
+LEVIATHAN,0.015530,0.80,joint,42,adversarial+insert-only,"206 18 8 18",56863.000,11,insert,2,5362.000,15979.062,9778.741,direct,insert/direct,110,110,0,0,0.000000000,2,true
+LEVIATHAN,0.015530,0.80,joint,42,adversarial+insert-only,"206 18 8 18",56863.000,12,insert,1,4631.000,15979.062,14337.821,direct,insert/direct,110,110,0,0,0.000000000,2,true
+LEVIATHAN,0.015530,0.80,joint,42,adversarial+insert-only,"206 18 8 18",56863.000,13,insert,1,3249.000,15979.062,17536.364,rescan,insert/direct,110,110,0,0,0.000000000,3,true
+LEVIATHAN,0.015530,0.80,joint,42,adversarial+insert-only,"206 18 8 18",57972.000,14,insert,2,6009.000,16034.390,5915.680,direct,insert/rescan,111,111,0,0,0.000000000,3,true
+LEVIATHAN,0.015530,0.80,joint,42,adversarial+insert-only,"206 18 8 18",57972.000,15,insert,1,2858.000,16034.390,8729.295,direct,insert/direct,111,111,0,0,0.000000000,3,true
+LEVIATHAN,0.015530,0.80,joint,42,adversarial+insert-only,"206 18 8 18",57972.000,16,insert,2,3945.000,16034.390,12613.030,direct,insert/direct,110,110,0,0,0.000000000,3,true
+BIBLE,0.022895,0.80,joint,42,adversarial+insert-only,"356 10 10 10 46 10 46 10",313928.000,1,insert,12,14973.000,84536.816,14630.193,direct,init,234,234,0,0,0.000000000,0,true
+BIBLE,0.022895,0.80,joint,42,adversarial+insert-only,"356 10 10 10 46 10 46 10",313928.000,2,insert,16,14511.000,84536.816,28808.964,direct,insert/direct,234,234,0,0,0.000000000,0,true
+BIBLE,0.022895,0.80,joint,42,adversarial+insert-only,"356 10 10 10 46 10 46 10",313928.000,3,insert,18,15142.000,84536.816,43604.288,direct,insert/direct,234,234,0,0,0.000000000,0,true
+BIBLE,0.022895,0.80,joint,42,adversarial+insert-only,"356 10 10 10 46 10 46 10",313928.000,4,insert,19,14687.000,84536.816,57955.029,direct,insert/direct,234,234,0,0,0.000000000,0,true
+BIBLE,0.022895,0.80,joint,42,adversarial+insert-only,"356 10 10 10 46 10 46 10",313928.000,5,insert,20,14831.000,84536.816,72446.473,direct,insert/direct,234,234,0,0,0.000000000,0,true
+BIBLE,0.022895,0.80,joint,42,adversarial+insert-only,"356 10 10 10 46 10 46 10",313928.000,6,insert,20,14695.000,84536.816,86805.031,rescan,insert/direct,234,234,0,0,0.000000000,1,true
+BIBLE,0.022895,0.80,joint,42,adversarial+insert-only,"356 10 10 10 46 10 46 10",315356.000,7,insert,14,14793.000,84943.610,14454.314,direct,insert/rescan,234,234,0,0,0.000000000,1,true
+BIBLE,0.022895,0.80,joint,42,adversarial+insert-only,"356 10 10 10 46 10 46 10",315356.000,8,insert,16,14674.000,84943.610,28792.353,direct,insert/direct,234,234,0,0,0.000000000,1,true
+BIBLE,0.022895,0.80,joint,42,adversarial+insert-only,"356 10 10 10 46 10 46 10",315356.000,9,insert,15,15836.000,84943.610,44265.788,direct,insert/direct,234,234,0,0,0.000000000,1,true
+BIBLE,0.022895,0.80,joint,42,adversarial+insert-only,"356 10 10 10 46 10 46 10",315356.000,10,insert,13,16445.000,84943.610,60334.280,direct,insert/direct,234,234,0,0,0.000000000,1,true
+BIBLE,0.022895,0.80,joint,42,adversarial+insert-only,"356 10 10 10 46 10 46 10",315356.000,11,insert,13,15577.000,84943.610,75554.644,direct,insert/direct,234,234,0,0,0.000000000,1,true
+BIBLE,0.022895,0.80,joint,42,adversarial+insert-only,"356 10 10 10 46 10 46 10",315356.000,12,insert,17,14753.000,84943.610,89969.874,rescan,insert/direct,234,234,0,0,0.000000000,2,true
+BIBLE,0.022895,0.80,joint,42,adversarial+insert-only,"10 46 10 46 10 10 46 10",321028.000,13,insert,24,16515.000,85365.235,16136.889,direct,insert/rescan,234,234,0,0,0.000000000,2,true
+BIBLE,0.022895,0.80,joint,42,adversarial+insert-only,"10 46 10 46 10 10 46 10",321028.000,14,insert,21,15549.000,85365.235,31329.895,direct,insert/direct,234,234,0,0,0.000000000,2,true
+BIBLE,0.022895,0.80,joint,42,adversarial+insert-only,"10 46 10 46 10 10 46 10",321028.000,15,insert,31,14899.000,85365.235,45887.782,direct,insert/direct,234,234,0,0,0.000000000,2,true
+BIBLE,0.022895,0.80,joint,42,adversarial+insert-only,"10 46 10 46 10 10 46 10",321028.000,16,insert,18,14843.000,85365.235,60390.952,direct,insert/direct,234,234,0,0,0.000000000,2,true
+BMS1,0.013597,0.80,joint,42,adversarial+insert-only,"12703 32213",27957.000,1,insert,4,2069.000,9202.363,2040.868,direct,init,22,22,0,0,0.000000000,0,true
+BMS1,0.013597,0.80,joint,42,adversarial+insert-only,"12703 32213",27957.000,2,insert,5,2363.000,9202.363,4371.738,direct,insert/direct,22,22,0,0,0.000000000,0,true
+BMS1,0.013597,0.80,joint,42,adversarial+insert-only,"12703 32213",27957.000,3,insert,2,1560.000,9202.363,5910.527,direct,insert/direct,22,22,0,0,0.000000000,0,true
+BMS1,0.013597,0.80,joint,42,adversarial+insert-only,"12703 32213",27957.000,4,insert,5,1764.000,9202.363,7650.542,direct,insert/direct,22,22,0,0,0.000000000,0,true
+BMS1,0.013597,0.80,joint,42,adversarial+insert-only,"12703 32213",27957.000,5,insert,5,1651.000,9202.363,9279.093,rescan,insert/direct,22,22,0,0,0.000000000,1,true
+BMS1,0.013597,0.80,joint,42,adversarial+insert-only,"12703 32213",30574.000,6,insert,6,2196.000,9227.944,2166.141,direct,insert/rescan,22,22,0,0,0.000000000,1,true
+BMS1,0.013597,0.80,joint,42,adversarial+insert-only,"12703 32213",30574.000,7,insert,8,1683.000,9227.944,3826.257,direct,insert/direct,22,22,0,0,0.000000000,1,true
+BMS1,0.013597,0.80,joint,42,adversarial+insert-only,"12703 32213",30574.000,8,insert,6,1801.000,9227.944,5602.769,direct,insert/direct,22,22,0,0,0.000000000,1,true
+BMS1,0.013597,0.80,joint,42,adversarial+insert-only,"12703 32213",30574.000,9,insert,3,1677.000,9227.944,7256.967,direct,insert/direct,22,22,0,0,0.000000000,1,true
+BMS1,0.013597,0.80,joint,42,adversarial+insert-only,"12703 32213",30574.000,10,insert,2,2868.000,9227.944,10085.971,rescan,insert/direct,22,22,0,0,0.000000000,2,true
+BMS1,0.013597,0.80,joint,42,adversarial+insert-only,"12703 32213",33437.000,11,insert,4,1769.000,9255.750,1744.947,direct,insert/rescan,23,23,0,0,0.000000000,2,true
+BMS1,0.013597,0.80,joint,42,adversarial+insert-only,"12703 32213",33437.000,12,insert,2,1607.000,9255.750,3330.097,direct,insert/direct,23,23,0,0,0.000000000,2,true
+BMS1,0.013597,0.80,joint,42,adversarial+insert-only,"12703 32213",33437.000,13,insert,8,1767.000,9255.750,5073.071,direct,insert/direct,23,23,0,0,0.000000000,2,true
+BMS1,0.013597,0.80,joint,42,adversarial+insert-only,"12703 32213",33437.000,14,insert,3,3943.000,9255.750,8962.458,direct,insert/direct,23,23,0,0,0.000000000,2,true
+BMS1,0.013597,0.80,joint,42,adversarial+insert-only,"12703 32213",33437.000,15,insert,6,1787.000,9255.750,10725.160,rescan,insert/direct,24,24,0,0,0.000000000,3,true
+BMS1,0.013597,0.80,joint,42,adversarial+insert-only,"10311 12487 12703 32213",30466.000,16,insert,3,1573.000,9285.318,1551.612,direct,insert/rescan,24,24,0,0,0.000000000,3,true
+FIFA,0.059637,0.80,joint,42,adversarial+insert-only,"46 155 90 31 117",969808.000,1,insert,13,48177.000,258069.170,45303.868,direct,init,17,17,0,0,0.000000000,0,true
+FIFA,0.059637,0.80,joint,42,adversarial+insert-only,"46 155 90 31 117",969808.000,2,insert,12,48025.000,258069.170,90464.801,direct,insert/direct,18,18,0,0,0.000000000,0,true
+FIFA,0.059637,0.80,joint,42,adversarial+insert-only,"46 155 90 31 117",969808.000,3,insert,13,46368.000,258069.170,134067.553,direct,insert/direct,18,18,0,0,0.000000000,0,true
+FIFA,0.059637,0.80,joint,42,adversarial+insert-only,"46 155 90 31 117",969808.000,4,insert,14,48396.000,258069.170,179577.361,direct,insert/direct,18,18,0,0,0.000000000,0,true
+FIFA,0.059637,0.80,joint,42,adversarial+insert-only,"46 155 90 31 117",969808.000,5,insert,10,47955.000,258069.170,224672.468,direct,insert/direct,19,19,0,0,0.000000000,0,true
+FIFA,0.059637,0.80,joint,42,adversarial+insert-only,"46 155 90 31 117",969808.000,6,insert,13,47734.000,258069.170,269559.756,rescan,insert/direct,20,20,0,0,0.000000000,1,true
+FIFA,0.059637,0.80,joint,42,adversarial+insert-only,"46 155 90 31 117",1002024.000,7,insert,13,49084.000,261488.219,46156.777,direct,insert/rescan,20,20,0,0,0.000000000,1,true
+FIFA,0.059637,0.80,joint,42,adversarial+insert-only,"46 155 90 31 117",1002024.000,8,insert,13,47353.000,261488.219,90685.787,direct,insert/direct,22,22,0,0,0.000000000,1,true
+FIFA,0.059637,0.80,joint,42,adversarial+insert-only,"46 155 90 31 117",1002024.000,9,insert,13,47524.000,261488.219,135375.598,direct,insert/direct,25,25,0,0,0.000000000,1,true
+FIFA,0.059637,0.80,joint,42,adversarial+insert-only,"46 155 90 31 117",1002024.000,10,insert,14,46977.000,261488.219,179551.030,direct,insert/direct,27,27,0,0,0.000000000,1,true
+FIFA,0.059637,0.80,joint,42,adversarial+insert-only,"46 155 90 31 117",1002024.000,11,insert,10,48963.000,261488.219,225594.024,direct,insert/direct,27,27,0,0,0.000000000,1,true
+FIFA,0.059637,0.80,joint,42,adversarial+insert-only,"46 155 90 31 117",1002024.000,12,insert,13,46768.000,261488.219,269572.921,rescan,insert/direct,27,27,0,0,0.000000000,2,true
+FIFA,0.059637,0.80,joint,42,adversarial+insert-only,"17 46 90 31 117",1017424.000,13,insert,11,47847.000,264907.435,44993.548,direct,insert/rescan,27,27,0,0,0.000000000,2,true
+FIFA,0.059637,0.80,joint,42,adversarial+insert-only,"17 46 90 31 117",1017424.000,14,insert,14,49785.000,264907.435,91809.520,direct,insert/direct,27,27,0,0,0.000000000,2,true
+FIFA,0.059637,0.80,joint,42,adversarial+insert-only,"17 46 90 31 117",1017424.000,15,insert,14,48488.000,264907.435,137405.842,direct,insert/direct,28,28,0,0,0.000000000,2,true
+FIFA,0.059637,0.80,joint,42,adversarial+insert-only,"17 46 90 31 117",1017424.000,16,insert,15,50555.000,264907.435,184945.893,direct,insert/direct,29,29,0,0,0.000000000,2,true
+KOSARAK,0.025000,0.80,joint,42,adversarial+insert-only,"11 6 3 64",3762982.000,1,insert,69,167166.000,967710.630,162986.850,direct,init,9,9,0,0,0.000000000,0,true
+KOSARAK,0.025000,0.80,joint,42,adversarial+insert-only,"11 6 3 64",3762982.000,2,insert,74,165429.000,967710.630,324280.125,direct,insert/direct,9,9,0,0,0.000000000,0,true
+KOSARAK,0.025000,0.80,joint,42,adversarial+insert-only,"11 6 3 64",3762982.000,3,insert,78,165776.000,967710.630,485911.725,direct,insert/direct,9,9,0,0,0.000000000,0,true
+KOSARAK,0.025000,0.80,joint,42,adversarial+insert-only,"11 6 3 64",3762982.000,4,insert,87,181494.000,967710.630,662868.375,direct,insert/direct,9,9,0,0,0.000000000,0,true
+KOSARAK,0.025000,0.80,joint,42,adversarial+insert-only,"11 6 3 64",3762982.000,5,insert,68,165484.000,967710.630,824215.275,direct,insert/direct,9,9,0,0,0.000000000,0,true
+KOSARAK,0.025000,0.80,joint,42,adversarial+insert-only,"11 6 3 64",3762982.000,6,insert,95,165441.000,967710.630,985520.250,rescan,insert/direct,9,9,0,0,0.000000000,1,true
+KOSARAK,0.025000,0.80,joint,42,adversarial+insert-only,"11 1 6 64",3650014.000,7,insert,36,167110.000,972764.580,162932.250,direct,insert/rescan,9,9,0,0,0.000000000,1,true
+KOSARAK,0.025000,0.80,joint,42,adversarial+insert-only,"11 1 6 64",3650014.000,8,insert,46,172754.000,972764.580,331367.400,direct,insert/direct,9,9,0,0,0.000000000,1,true
+KOSARAK,0.025000,0.80,joint,42,adversarial+insert-only,"11 1 6 64",3650014.000,9,insert,44,169089.000,972764.580,496229.175,direct,insert/direct,9,9,0,0,0.000000000,1,true
+KOSARAK,0.025000,0.80,joint,42,adversarial+insert-only,"11 1 6 64",3650014.000,10,insert,39,167182.000,972764.580,659231.625,direct,insert/direct,9,9,0,0,0.000000000,1,true
+KOSARAK,0.025000,0.80,joint,42,adversarial+insert-only,"11 1 6 64",3650014.000,11,insert,47,174007.000,972764.580,828888.450,direct,insert/direct,9,9,0,0,0.000000000,1,true
+KOSARAK,0.025000,0.80,joint,42,adversarial+insert-only,"11 1 6 64",3650014.000,12,insert,33,169556.000,972764.580,994205.550,rescan,insert/direct,9,9,0,0,0.000000000,2,true
+KOSARAK,0.025000,0.80,joint,42,adversarial+insert-only,"6 64 148",3329028.000,13,insert,60,167837.000,977863.070,163641.075,direct,insert/rescan,9,9,0,0,0.000000000,2,true
+KOSARAK,0.025000,0.80,joint,42,adversarial+insert-only,"6 64 148",3329028.000,14,insert,61,167531.000,977863.070,326983.800,direct,insert/direct,9,9,0,0,0.000000000,2,true
+KOSARAK,0.025000,0.80,joint,42,adversarial+insert-only,"6 64 148",3329028.000,15,insert,55,172777.000,977863.070,495441.375,direct,insert/direct,9,9,0,0,0.000000000,2,true
+KOSARAK,0.025000,0.80,joint,42,adversarial+insert-only,"6 64 148",3329028.000,16,insert,37,175831.000,977863.070,666876.600,direct,insert/direct,9,9,0,0,0.000000000,2,true
+C8T1S5I8N5K,0.001132,0.80,joint,42,adversarial+insert-only,"(6352 11325 14528 15636 27243 29424 31075 32810 55570 55826)",21498.000,1,insert,1,1951.000,5374.547,1948.791,direct,init,7417,7417,0,0,0.000000000,0,true
+C8T1S5I8N5K,0.001132,0.80,joint,42,adversarial+insert-only,"(6352 11325 14528 15636 27243 29424 31075 32810 55570 55826)",21498.000,2,insert,1,3621.000,5374.547,5565.692,rescan,insert/direct,8114,8114,0,0,0.000000000,1,true
+C8T1S5I8N5K,0.001132,0.80,joint,42,adversarial+insert-only,"(6352 12784 15636 20020 34884 55570 55826)",21503.000,3,insert,1,4066.000,5375.808,4061.397,direct,insert/rescan,9477,9477,0,0,0.000000000,1,true
+C8T1S5I8N5K,0.001132,0.80,joint,42,adversarial+insert-only,"(6352 12784 15636 20020 34884 55570 55826)",21503.000,4,insert,1,2266.000,5375.808,6324.832,rescan,insert/direct,11051,11051,0,0,0.000000000,2,true
+C8T1S5I8N5K,0.001132,0.80,joint,42,adversarial+insert-only,"(1899 15661 27795 44193 46127 51071)",21508.000,5,insert,1,2336.000,5377.242,2333.356,direct,insert/rescan,11187,11187,0,0,0.000000000,2,true
+C8T1S5I8N5K,0.001132,0.80,joint,42,adversarial+insert-only,"(1899 15661 27795 44193 46127 51071)",21508.000,6,insert,1,1422.000,5377.242,3753.746,direct,insert/direct,11431,11431,0,0,0.000000000,2,true
+C8T1S5I8N5K,0.001132,0.80,joint,42,adversarial+insert-only,"(1899 15661 27795 44193 46127 51071)",21508.000,7,insert,1,2232.000,5377.242,5983.219,rescan,insert/direct,11644,11644,0,0,0.000000000,3,true
+C8T1S5I8N5K,0.001132,0.80,joint,42,adversarial+insert-only,"(1899 7044 21846 23611 27795 34874 44193 46127 51071)",21514.000,8,insert,1,3273.000,5378.598,3269.295,direct,insert/rescan,12007,12007,0,0,0.000000000,3,true
+C8T1S5I8N5K,0.001132,0.80,joint,42,adversarial+insert-only,"(1899 7044 21846 23611 27795 34874 44193 46127 51071)",21514.000,9,insert,1,1762.000,5378.598,5029.300,direct,insert/direct,12345,12345,0,0,0.000000000,3,true
+C8T1S5I8N5K,0.001132,0.80,joint,42,adversarial+insert-only,"(1899 7044 21846 23611 27795 34874 44193 46127 51071)",21514.000,10,insert,1,3790.000,5378.598,8815.010,rescan,insert/direct,12461,12461,0,0,0.000000000,4,true
+C8T1S5I8N5K,0.001132,0.80,joint,42,adversarial+insert-only,"(10328 23303 24473 24994 36919 41972 52995 66549 68240) (12964 30636 32771 37182 46407 49375 59742 65527)",21521.000,11,insert,1,1629.000,5380.596,1627.156,direct,insert/rescan,12475,12475,0,0,0.000000000,4,true
+C8T1S5I8N5K,0.001132,0.80,joint,42,adversarial+insert-only,"(10328 23303 24473 24994 36919 41972 52995 66549 68240) (12964 30636 32771 37182 46407 49375 59742 65527)",21521.000,12,insert,1,989.000,5380.596,2615.036,direct,insert/direct,12478,12478,0,0,0.000000000,4,true
+C8T1S5I8N5K,0.001132,0.80,joint,42,adversarial+insert-only,"(10328 23303 24473 24994 36919 41972 52995 66549 68240) (12964 30636 32771 37182 46407 49375 59742 65527)",21521.000,13,insert,1,1959.000,5380.596,4571.819,direct,insert/direct,12480,12480,0,0,0.000000000,4,true
+C8T1S5I8N5K,0.001132,0.80,joint,42,adversarial+insert-only,"(10328 23303 24473 24994 36919 41972 52995 66549 68240) (12964 30636 32771 37182 46407 49375 59742 65527)",21521.000,14,insert,1,2109.000,5380.596,6678.431,rescan,insert/direct,12491,12491,0,0,0.000000000,5,true
+C8T1S5I8N5K,0.001132,0.80,joint,42,adversarial+insert-only,"",0.000,15,insert,2,1624.000,5382.110,812.162,direct,insert/rescan,12489,12489,0,0,0.000000000,5,true
+C8T1S5I8N5K,0.001132,0.80,joint,42,adversarial+insert-only,"",0.000,16,insert,1,1788.000,5382.110,1784.138,direct,insert/direct,12483,12483,0,0,0.000000000,5,true
+TAFENG,0.003557,0.80,joint,42,adversarial+insert-only,"",0.000,1,insert,3,7437.000,39610.842,7410.547,direct,init,6,6,0,0,0.000000000,0,true
+TAFENG,0.003557,0.80,joint,42,adversarial+insert-only,"",0.000,2,insert,3,9252.000,39610.842,8869.637,direct,insert/direct,6,6,0,0,0.000000000,0,true
+TAFENG,0.003557,0.80,joint,42,adversarial+insert-only,"",0.000,3,insert,3,6915.500,39610.842,8845.039,direct,insert/direct,6,6,0,0,0.000000000,0,true
+TAFENG,0.003557,0.80,joint,42,adversarial+insert-only,"",0.000,4,insert,3,9096.500,39610.842,8812.683,direct,insert/direct,6,6,0,0,0.000000000,0,true
+TAFENG,0.003557,0.80,joint,42,adversarial+insert-only,"",0.000,5,insert,2,7995.000,39610.842,11969.744,direct,insert/direct,6,6,0,0,0.000000000,0,true
+TAFENG,0.003557,0.80,joint,42,adversarial+insert-only,"",0.000,6,insert,3,7163.000,39610.842,11944.266,direct,insert/direct,6,6,0,0,0.000000000,0,true
+TAFENG,0.003557,0.80,joint,42,adversarial+insert-only,"",0.000,7,insert,8,6807.000,39610.842,11920.053,direct,insert/direct,6,6,0,0,0.000000000,0,true
+TAFENG,0.003557,0.80,joint,42,adversarial+insert-only,"",0.000,8,insert,4,8524.000,39610.842,11889.733,direct,insert/direct,6,6,0,0,0.000000000,0,true
+TAFENG,0.003557,0.80,joint,42,adversarial+insert-only,"",0.000,9,insert,6,8062.500,39610.842,11861.055,direct,insert/direct,6,6,0,0,0.000000000,0,true
+TAFENG,0.003557,0.80,joint,42,adversarial+insert-only,"",0.000,10,insert,3,8261.500,39610.842,11831.669,direct,insert/direct,6,6,0,0,0.000000000,0,true
+TAFENG,0.003557,0.80,joint,42,adversarial+insert-only,"",0.000,11,insert,3,10529.000,39610.842,11794.217,direct,insert/direct,6,6,0,0,0.000000000,0,true
+TAFENG,0.003557,0.80,joint,42,adversarial+insert-only,"",0.000,12,insert,1,8562.000,39610.842,11763.762,direct,insert/direct,6,6,0,0,0.000000000,0,true
+TAFENG,0.003557,0.80,joint,42,adversarial+insert-only,"",0.000,13,insert,6,6713.000,39610.842,13671.384,direct,insert/direct,6,6,0,0,0.000000000,0,true
+TAFENG,0.003557,0.80,joint,42,adversarial+insert-only,"",0.000,14,insert,5,9030.500,39610.842,13639.262,direct,insert/direct,6,6,0,0,0.000000000,0,true
+TAFENG,0.003557,0.80,joint,42,adversarial+insert-only,"",0.000,15,insert,4,7455.000,39610.842,13612.745,direct,insert/direct,6,6,0,0,0.000000000,0,true
+TAFENG,0.003557,0.80,joint,42,adversarial+insert-only,"",0.000,16,insert,2,6642.000,39610.842,15251.619,direct,insert/direct,6,6,0,0,0.000000000,0,true

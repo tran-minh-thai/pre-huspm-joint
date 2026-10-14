@@ -1,0 +1,42 @@
+T1 - insertion counterexample, one batch
+    [PASS]   SWUMAX rule misses at least one HUSP
+    [PASS]   the missed pattern is X = <1>
+    [PASS]   IAUMAX rule misses nothing
+    [PASS]   X = <1> is returned as a HUSP
+    [PASS]   joint rule (default) misses nothing
+    [PASS]   CUB rule (raw cumulative) misses nothing
+T2 - consecutive batches under the budget, together over it
+    [PASS]   SWUMAX rule misses a HUSP after two batches
+    [PASS]   rule IAUMAX matches remine-from-scratch
+    [PASS]   rule JOINT matches remine-from-scratch
+T3 - LUT_dyn returns to the hard floor right after a rescan
+    [PASS]   the large batch triggers a rescan
+    [PASS]   LUT_dyn == LUT_min * TSU_ref after the rescan
+    [PASS]   LUT_dyn does not exceed the hard floor
+T4 - modification keeps the utility, changes every item
+    [PASS]   the modification consumes budget (CUB rises)
+    [PASS]   result matches remine-from-scratch
+T5 - the two variants of the Pre-HUSPM baseline (TSU rule vs SWUmax rule)
+    [PASS]   the reference contains X = <1>
+    [PASS]   Pre-HUSPM-SWUmax misses nothing
+    [PASS]   Pre-HUSPM-TSU misses nothing
+T6 - direct update: delete then insert, modify, insertions alone
+    [PASS]   iaumax (unsound) misses <1> in case A delete then insert
+    [PASS]   iaumax (unsound) misses <1> in case B one modification
+    [PASS]   iaumax (unsound) misses <1> in case D insertions alone
+    [PASS]   joint returns <1> in case A delete then insert
+    [PASS]   joint returns <1> in case B one modification
+    [PASS]   joint returns <1> in case D insertions alone
+T7 - Pre-HUSPM tests (pre_swumax, pre_tsu) with the joint tracking, insertions
+    [PASS]   PRE_SWUMAX matches remining in T1's batch
+    [PASS]   PRE_SWUMAX matches remining after T2's two batches
+    [PASS]   PRE_SWUMAX returns <1> in T6's case D insertions alone
+    [PASS]   PRE_SWUMAX takes the direct update in T2 (1 of 2 batches)
+    [PASS]   PRE_SWUMAX refuses a deletion and a modification
+    [PASS]   PRE_TSU matches remining in T1's batch
+    [PASS]   PRE_TSU matches remining after T2's two batches
+    [PASS]   PRE_TSU returns <1> in T6's case D insertions alone
+    [PASS]   PRE_TSU takes the direct update in T2 (1 of 2 batches)
+    [PASS]   PRE_TSU refuses a deletion and a modification
+
+=== acceptance: 33 passed, 0 failed ===

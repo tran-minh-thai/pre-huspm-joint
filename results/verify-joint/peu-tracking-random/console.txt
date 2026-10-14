@@ -1,0 +1,148 @@
+
+=== SIGN | UUT=0.065911 | r_l=0.80 | rule=JOINT | 16 operations | budget share 1/6 ===
+  op  1 insert n=1     path=direct after=init          ref=431 got=431 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  2 insert n=1     path=direct after=insert/direct ref=440 got=440 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  3 insert n=2     path=direct after=insert/direct ref=427 got=427 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  4 insert n=2     path=rescan after=insert/direct ref=420 got=420 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  5 insert n=1     path=direct after=insert/rescan ref=427 got=427 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  6 insert n=1     path=direct after=insert/direct ref=434 got=434 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  7 insert n=2     path=direct after=insert/direct ref=435 got=435 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  8 insert n=1     path=direct after=insert/direct ref=428 got=428 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  9 insert n=1     path=rescan after=insert/direct ref=423 got=423 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 10 insert n=1     path=direct after=insert/rescan ref=428 got=428 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 11 insert n=1     path=direct after=insert/direct ref=425 got=425 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 12 insert n=2     path=direct after=insert/direct ref=413 got=413 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 13 insert n=2     path=rescan after=insert/direct ref=406 got=406 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 14 insert n=2     path=direct after=insert/rescan ref=394 got=394 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 15 insert n=2     path=direct after=insert/direct ref=385 got=385 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 16 insert n=1     path=direct after=insert/direct ref=380 got=380 missing=0 extra=0 maxUtilGap=0.000000  OK
+
+=== LEVIATHAN | UUT=0.015530 | r_l=0.80 | rule=JOINT | 16 operations | budget share 1/6 ===
+  op  1 insert n=2     path=direct after=init          ref=107 got=107 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  2 insert n=4     path=direct after=insert/direct ref=106 got=106 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  3 insert n=4     path=direct after=insert/direct ref=106 got=106 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  4 insert n=3     path=direct after=insert/direct ref=106 got=106 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  5 insert n=3     path=rescan after=insert/direct ref=106 got=106 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  6 insert n=1     path=direct after=insert/rescan ref=106 got=106 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  7 insert n=2     path=direct after=insert/direct ref=107 got=107 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  8 insert n=2     path=direct after=insert/direct ref=107 got=107 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  9 insert n=2     path=direct after=insert/direct ref=108 got=108 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 10 insert n=2     path=rescan after=insert/direct ref=107 got=107 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 11 insert n=2     path=direct after=insert/rescan ref=107 got=107 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 12 insert n=2     path=direct after=insert/direct ref=106 got=106 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 13 insert n=2     path=direct after=insert/direct ref=107 got=107 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 14 insert n=2     path=direct after=insert/direct ref=107 got=107 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 15 insert n=1     path=rescan after=insert/direct ref=106 got=106 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 16 insert n=3     path=direct after=insert/rescan ref=108 got=108 missing=0 extra=0 maxUtilGap=0.000000  OK
+
+=== BIBLE | UUT=0.022895 | r_l=0.80 | rule=JOINT | 16 operations | budget share 1/6 ===
+  op  1 insert n=15    path=direct after=init          ref=234 got=234 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  2 insert n=18    path=direct after=insert/direct ref=234 got=234 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  3 insert n=16    path=direct after=insert/direct ref=234 got=234 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  4 insert n=28    path=direct after=insert/direct ref=234 got=234 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  5 insert n=22    path=direct after=insert/direct ref=234 got=234 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  6 insert n=20    path=direct after=insert/direct ref=234 got=234 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  7 insert n=29    path=rescan after=insert/direct ref=234 got=234 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  8 insert n=26    path=direct after=insert/rescan ref=234 got=234 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  9 insert n=26    path=direct after=insert/direct ref=234 got=234 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 10 insert n=17    path=direct after=insert/direct ref=233 got=233 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 11 insert n=21    path=direct after=insert/direct ref=233 got=233 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 12 insert n=21    path=direct after=insert/direct ref=233 got=233 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 13 insert n=25    path=direct after=insert/direct ref=233 got=233 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 14 insert n=24    path=rescan after=insert/direct ref=233 got=233 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 15 insert n=20    path=direct after=insert/rescan ref=233 got=233 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 16 insert n=23    path=direct after=insert/direct ref=233 got=233 missing=0 extra=0 maxUtilGap=0.000000  OK
+
+=== BMS1 | UUT=0.013597 | r_l=0.80 | rule=JOINT | 16 operations | budget share 1/6 ===
+  op  1 insert n=9     path=direct after=init          ref=22 got=22 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  2 insert n=28    path=direct after=insert/direct ref=22 got=22 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  3 insert n=14    path=direct after=insert/direct ref=22 got=22 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  4 insert n=13    path=direct after=insert/direct ref=22 got=22 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  5 insert n=9     path=direct after=insert/direct ref=22 got=22 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  6 insert n=11    path=direct after=insert/direct ref=22 got=22 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  7 insert n=11    path=direct after=insert/direct ref=22 got=22 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  8 insert n=10    path=direct after=insert/direct ref=22 got=22 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  9 insert n=27    path=direct after=insert/direct ref=22 got=22 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 10 insert n=17    path=direct after=insert/direct ref=22 got=22 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 11 insert n=22    path=direct after=insert/direct ref=22 got=22 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 12 insert n=24    path=direct after=insert/direct ref=22 got=22 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 13 insert n=24    path=direct after=insert/direct ref=22 got=22 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 14 insert n=22    path=direct after=insert/direct ref=22 got=22 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 15 insert n=22    path=direct after=insert/direct ref=22 got=22 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 16 insert n=17    path=direct after=insert/direct ref=22 got=22 missing=0 extra=0 maxUtilGap=0.000000  OK
+
+=== FIFA | UUT=0.059637 | r_l=0.80 | rule=JOINT | 16 operations | budget share 1/6 ===
+  op  1 insert n=17    path=direct after=init          ref=17 got=17 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  2 insert n=23    path=direct after=insert/direct ref=17 got=17 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  3 insert n=21    path=direct after=insert/direct ref=17 got=17 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  4 insert n=27    path=direct after=insert/direct ref=17 got=17 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  5 insert n=18    path=direct after=insert/direct ref=18 got=18 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  6 insert n=24    path=direct after=insert/direct ref=18 got=18 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  7 insert n=31    path=direct after=insert/direct ref=18 got=18 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  8 insert n=23    path=direct after=insert/direct ref=18 got=18 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  9 insert n=25    path=direct after=insert/direct ref=18 got=18 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 10 insert n=30    path=rescan after=insert/direct ref=18 got=18 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 11 insert n=26    path=direct after=insert/rescan ref=18 got=18 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 12 insert n=15    path=direct after=insert/direct ref=18 got=18 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 13 insert n=27    path=direct after=insert/direct ref=18 got=18 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 14 insert n=14    path=direct after=insert/direct ref=18 got=18 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 15 insert n=16    path=direct after=insert/direct ref=18 got=18 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 16 insert n=27    path=direct after=insert/direct ref=18 got=18 missing=0 extra=0 maxUtilGap=0.000000  OK
+
+=== KOSARAK | UUT=0.025000 | r_l=0.80 | rule=JOINT | 16 operations | budget share 1/6 ===
+  op  1 insert n=396   path=direct after=init          ref=9 got=9 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  2 insert n=464   path=direct after=insert/direct ref=9 got=9 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  3 insert n=392   path=direct after=insert/direct ref=9 got=9 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  4 insert n=481   path=direct after=insert/direct ref=9 got=9 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  5 insert n=450   path=direct after=insert/direct ref=9 got=9 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  6 insert n=473   path=direct after=insert/direct ref=9 got=9 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  7 insert n=433   path=rescan after=insert/direct ref=9 got=9 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  8 insert n=317   path=direct after=insert/rescan ref=9 got=9 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  9 insert n=468   path=direct after=insert/direct ref=9 got=9 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 10 insert n=419   path=direct after=insert/direct ref=9 got=9 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 11 insert n=449   path=direct after=insert/direct ref=9 got=9 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 12 insert n=374   path=direct after=insert/direct ref=9 got=9 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 13 insert n=441   path=direct after=insert/direct ref=9 got=9 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 14 insert n=432   path=rescan after=insert/direct ref=9 got=9 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 15 insert n=432   path=direct after=insert/rescan ref=9 got=9 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 16 insert n=445   path=direct after=insert/direct ref=9 got=9 missing=0 extra=0 maxUtilGap=0.000000  OK
+
+=== C8T1S5I8N5K | UUT=0.001132 | r_l=0.80 | rule=JOINT | 16 operations | budget share 1/6 ===
+  op  1 insert n=2     path=direct after=init          ref=6903 got=6903 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  2 insert n=1     path=direct after=insert/direct ref=6900 got=6900 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  3 insert n=1     path=direct after=insert/direct ref=6897 got=6897 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  4 insert n=1     path=direct after=insert/direct ref=6895 got=6895 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  5 insert n=2     path=direct after=insert/direct ref=6895 got=6895 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  6 insert n=2     path=direct after=insert/direct ref=6891 got=6891 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  7 insert n=2     path=direct after=insert/direct ref=6881 got=6881 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  8 insert n=1     path=direct after=insert/direct ref=6894 got=6894 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  9 insert n=1     path=direct after=insert/direct ref=6890 got=6890 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 10 insert n=1     path=direct after=insert/direct ref=6884 got=6884 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 11 insert n=2     path=direct after=insert/direct ref=6883 got=6883 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 12 insert n=2     path=direct after=insert/direct ref=6877 got=6877 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 13 insert n=2     path=direct after=insert/direct ref=6874 got=6874 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 14 insert n=1     path=direct after=insert/direct ref=6867 got=6867 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 15 insert n=1     path=direct after=insert/direct ref=6866 got=6866 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 16 insert n=1     path=direct after=insert/direct ref=6865 got=6865 missing=0 extra=0 maxUtilGap=0.000000  OK
+
+=== TAFENG | UUT=0.003557 | r_l=0.80 | rule=JOINT | 16 operations | budget share 1/6 ===
+  op  1 insert n=3     path=direct after=init          ref=6 got=6 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  2 insert n=3     path=direct after=insert/direct ref=6 got=6 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  3 insert n=3     path=direct after=insert/direct ref=6 got=6 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  4 insert n=3     path=direct after=insert/direct ref=6 got=6 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  5 insert n=2     path=direct after=insert/direct ref=6 got=6 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  6 insert n=3     path=direct after=insert/direct ref=6 got=6 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  7 insert n=8     path=direct after=insert/direct ref=6 got=6 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  8 insert n=4     path=direct after=insert/direct ref=6 got=6 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  9 insert n=6     path=direct after=insert/direct ref=6 got=6 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 10 insert n=3     path=direct after=insert/direct ref=6 got=6 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 11 insert n=3     path=direct after=insert/direct ref=6 got=6 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 12 insert n=1     path=direct after=insert/direct ref=6 got=6 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 13 insert n=6     path=direct after=insert/direct ref=6 got=6 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 14 insert n=5     path=direct after=insert/direct ref=6 got=6 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 15 insert n=4     path=direct after=insert/direct ref=6 got=6 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 16 insert n=2     path=direct after=insert/direct ref=6 got=6 missing=0 extra=0 maxUtilGap=0.000000  OK
+
+operations by kind/path: {insert/direct=117, insert/rescan=11}
+mismatching operations: 0
+verification.csv -> results/verify-joint/peu-tracking-random/verification.csv
