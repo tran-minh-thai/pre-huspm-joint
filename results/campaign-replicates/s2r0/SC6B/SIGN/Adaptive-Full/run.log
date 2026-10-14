@@ -1,0 +1,50 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC6B]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=2
+
+--- [SC6B] Mixed stream, exactly 14:3:3, one deletion beyond the rescan budget ---
+>> [SC6B] SIGN seed=2024 opSize=5 plan=20 operations (14 insert, 3 delete, 3 modify; operation 2 deletes 49 sequences beyond the budget)
+>> RUNNING Adaptive-Full/SIGN/SC6_INIT#0  (heap free=1008MB / total=1024MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INIT#0] OK t=190ms cand=70528 pat=583 heapDelta=19MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#1  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INS#1] OK t=188ms cand=74614 pat=611 heapDelta=4MB
+>> RUNNING Adaptive-Full/SIGN/SC6_DEL_BIG#2  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_DEL_BIG#2] OK t=92ms cand=149581 pat=607 heapDelta=3MB
+>> RUNNING Adaptive-Full/SIGN/SC6_DEL#3  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_DEL#3] OK t=4ms cand=149581 pat=612 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#4  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INS#4] OK t=104ms cand=85463 pat=705 heapDelta=3MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#5  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INS#5] OK t=102ms cand=82351 pat=685 heapDelta=3MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#6  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INS#6] OK t=101ms cand=79661 pat=635 heapDelta=3MB
+>> RUNNING Adaptive-Full/SIGN/SC6_MOD#7  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_MOD#7] OK t=105ms cand=80278 pat=653 heapDelta=3MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#8  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INS#8] OK t=105ms cand=80562 pat=718 heapDelta=3MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#9  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INS#9] OK t=109ms cand=81065 pat=657 heapDelta=3MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#10  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INS#10] OK t=111ms cand=80387 pat=668 heapDelta=3MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#11  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INS#11] OK t=112ms cand=79098 pat=623 heapDelta=3MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#12  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INS#12] OK t=111ms cand=76967 pat=575 heapDelta=3MB
+>> RUNNING Adaptive-Full/SIGN/SC6_DEL#13  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_DEL#13] OK t=2ms cand=76967 pat=576 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC6_MOD#14  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_MOD#14] OK t=102ms cand=73244 pat=491 heapDelta=3MB
+>> RUNNING Adaptive-Full/SIGN/SC6_MOD#15  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_MOD#15] OK t=101ms cand=72740 pat=507 heapDelta=3MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#16  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INS#16] OK t=102ms cand=72099 pat=505 heapDelta=3MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#17  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INS#17] OK t=102ms cand=70776 pat=459 heapDelta=2MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#18  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INS#18] OK t=100ms cand=68761 pat=452 heapDelta=2MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#19  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INS#19] OK t=98ms cand=67001 pat=431 heapDelta=2MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#20  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INS#20] OK t=102ms cand=68036 pat=411 heapDelta=2MB
+=== ALL SCENARIOS DONE (9.0s) ===
