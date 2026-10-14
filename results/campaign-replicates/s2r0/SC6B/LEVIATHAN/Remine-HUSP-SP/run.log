@@ -1,0 +1,50 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC6B]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=2
+
+--- [SC6B] Mixed stream, exactly 14:3:3, one deletion beyond the rescan budget ---
+>> [SC6B] LEVIATHAN seed=2024 opSize=30 plan=20 operations (14 insert, 3 delete, 3 modify; operation 10 deletes 603 sequences beyond the budget)
+>> RUNNING Remine-HUSP-SP/LEVIATHAN/SC6_INIT#0  (heap free=844MB / total=1024MB / max=49152MB)
+[Remine-HUSP-SP/LEVIATHAN/SC6_INIT#0] OK t=307ms cand=113619 pat=107 heapDelta=57MB
+>> RUNNING Remine-HUSP-SP/LEVIATHAN/SC6_INS#1  (heap free=167MB / total=224MB / max=49152MB)
+[Remine-HUSP-SP/LEVIATHAN/SC6_INS#1] OK t=260ms cand=114250 pat=107 heapDelta=62MB
+>> RUNNING Remine-HUSP-SP/LEVIATHAN/SC6_INS#2  (heap free=168MB / total=224MB / max=49152MB)
+[Remine-HUSP-SP/LEVIATHAN/SC6_INS#2] OK t=244ms cand=112666 pat=108 heapDelta=85MB
+>> RUNNING Remine-HUSP-SP/LEVIATHAN/SC6_INS#3  (heap free=168MB / total=224MB / max=49152MB)
+[Remine-HUSP-SP/LEVIATHAN/SC6_INS#3] OK t=231ms cand=112453 pat=106 heapDelta=88MB
+>> RUNNING Remine-HUSP-SP/LEVIATHAN/SC6_DEL#4  (heap free=168MB / total=224MB / max=49152MB)
+[Remine-HUSP-SP/LEVIATHAN/SC6_DEL#4] OK t=225ms cand=112311 pat=105 heapDelta=85MB
+>> RUNNING Remine-HUSP-SP/LEVIATHAN/SC6_INS#5  (heap free=168MB / total=224MB / max=49152MB)
+[Remine-HUSP-SP/LEVIATHAN/SC6_INS#5] OK t=227ms cand=111275 pat=107 heapDelta=85MB
+>> RUNNING Remine-HUSP-SP/LEVIATHAN/SC6_INS#6  (heap free=168MB / total=224MB / max=49152MB)
+[Remine-HUSP-SP/LEVIATHAN/SC6_INS#6] OK t=227ms cand=111382 pat=107 heapDelta=87MB
+>> RUNNING Remine-HUSP-SP/LEVIATHAN/SC6_MOD#7  (heap free=168MB / total=224MB / max=49152MB)
+[Remine-HUSP-SP/LEVIATHAN/SC6_MOD#7] OK t=224ms cand=110549 pat=108 heapDelta=85MB
+>> RUNNING Remine-HUSP-SP/LEVIATHAN/SC6_INS#8  (heap free=168MB / total=224MB / max=49152MB)
+[Remine-HUSP-SP/LEVIATHAN/SC6_INS#8] OK t=230ms cand=110224 pat=110 heapDelta=87MB
+>> RUNNING Remine-HUSP-SP/LEVIATHAN/SC6_INS#9  (heap free=168MB / total=224MB / max=49152MB)
+[Remine-HUSP-SP/LEVIATHAN/SC6_INS#9] OK t=229ms cand=109996 pat=110 heapDelta=87MB
+>> RUNNING Remine-HUSP-SP/LEVIATHAN/SC6_DEL_BIG#10  (heap free=168MB / total=224MB / max=49152MB)
+[Remine-HUSP-SP/LEVIATHAN/SC6_DEL_BIG#10] OK t=185ms cand=111293 pat=110 heapDelta=71MB
+>> RUNNING Remine-HUSP-SP/LEVIATHAN/SC6_INS#11  (heap free=168MB / total=224MB / max=49152MB)
+[Remine-HUSP-SP/LEVIATHAN/SC6_INS#11] OK t=186ms cand=110401 pat=111 heapDelta=71MB
+>> RUNNING Remine-HUSP-SP/LEVIATHAN/SC6_INS#12  (heap free=168MB / total=224MB / max=49152MB)
+[Remine-HUSP-SP/LEVIATHAN/SC6_INS#12] OK t=191ms cand=111319 pat=113 heapDelta=73MB
+>> RUNNING Remine-HUSP-SP/LEVIATHAN/SC6_INS#13  (heap free=168MB / total=224MB / max=49152MB)
+[Remine-HUSP-SP/LEVIATHAN/SC6_INS#13] OK t=195ms cand=110998 pat=115 heapDelta=75MB
+>> RUNNING Remine-HUSP-SP/LEVIATHAN/SC6_INS#14  (heap free=168MB / total=224MB / max=49152MB)
+[Remine-HUSP-SP/LEVIATHAN/SC6_INS#14] OK t=196ms cand=110858 pat=116 heapDelta=75MB
+>> RUNNING Remine-HUSP-SP/LEVIATHAN/SC6_MOD#15  (heap free=168MB / total=224MB / max=49152MB)
+[Remine-HUSP-SP/LEVIATHAN/SC6_MOD#15] OK t=194ms cand=109961 pat=115 heapDelta=75MB
+>> RUNNING Remine-HUSP-SP/LEVIATHAN/SC6_INS#16  (heap free=168MB / total=224MB / max=49152MB)
+[Remine-HUSP-SP/LEVIATHAN/SC6_INS#16] OK t=202ms cand=111728 pat=116 heapDelta=77MB
+>> RUNNING Remine-HUSP-SP/LEVIATHAN/SC6_INS#17  (heap free=168MB / total=224MB / max=49152MB)
+[Remine-HUSP-SP/LEVIATHAN/SC6_INS#17] OK t=206ms cand=112678 pat=115 heapDelta=79MB
+>> RUNNING Remine-HUSP-SP/LEVIATHAN/SC6_DEL#18  (heap free=168MB / total=224MB / max=49152MB)
+[Remine-HUSP-SP/LEVIATHAN/SC6_DEL#18] OK t=205ms cand=113774 pat=114 heapDelta=77MB
+>> RUNNING Remine-HUSP-SP/LEVIATHAN/SC6_MOD#19  (heap free=168MB / total=224MB / max=49152MB)
+[Remine-HUSP-SP/LEVIATHAN/SC6_MOD#19] OK t=205ms cand=114472 pat=112 heapDelta=79MB
+>> RUNNING Remine-HUSP-SP/LEVIATHAN/SC6_INS#20  (heap free=168MB / total=224MB / max=49152MB)
+[Remine-HUSP-SP/LEVIATHAN/SC6_INS#20] OK t=208ms cand=114795 pat=116 heapDelta=79MB
+=== ALL SCENARIOS DONE (14.1s) ===
