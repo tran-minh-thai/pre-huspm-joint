@@ -35,6 +35,10 @@ import make_figures as mf  # noqa: E402
 P = mf.PROPOSED
 REM = "Remine-from-scratch"
 INC_ARMS = [P, "Pre-HUSPM-SWUmax", "Pre-HUSPM-TSU", REM, "IncUSP-Miner+"]
+# SC2's competitors: the incremental baselines and every way of remining. The arms that change
+# one component of the proposal (ISOLATION_ARMS) are not competitors and appear in their own table.
+SC2_ARMS = INC_ARMS + ["Remine-HUSP-ULL", "Remine-HUSP-SP"]
+ISOLATION_ARMS = ["Joint-miner+SWUmax", "Joint-miner+TSU", "Joint-rule+SWU-tracking"]
 
 
 def gmean(x):
@@ -288,7 +292,7 @@ def sc6_by_op():
     if df is None:
         return pd.DataFrame()
     ops = df[~df["op_type"].astype(str).str.contains("INIT")].copy()
-    ops["kind"] = ops["op_type"].astype(str).str.extract(r"SC6_(INS|DEL|MOD)")[0]
+    ops["kind"] = ops["op_type"].astype(str).str.extract(r"SC6_(INS|DEL_BIG|DEL|MOD)")[0]
     name = {"INS": "insertion", "DEL": "deletion", "MOD": "modification"}
     rows = []
     for d, g in ops.groupby("dataset", sort=False):
@@ -300,6 +304,62 @@ def sc6_by_op():
             a, b = mf.ms_to_s(pk["runtime_ms"]).sum(), mf.ms_to_s(qk["runtime_ms"]).sum()
             rows.append(dict(dataset=d, kind=name[k], operations=len(pk), rescans=int(pk["rescanned"].sum()),
                              proposal_s=a, remine_s=b, remine_over_proposal=b / a if a > 0 else np.nan))
+    return pd.DataFrame(rows)
+
+
+# Remining arms of the mixed streams (AutomatedExperimentRunner.MIXED_ARMS after the proposal)
+MIXED_REMINE = ["Remine-from-scratch", "Remine-HUSP-ULL", "Remine-HUSP-SP"]
+MIXED_KINDS = {"INS": "insertion", "DEL": "deletion", "MOD": "modification",
+               "DEL_BIG": "deletion beyond the budget"}
+
+
+def mixed_by_op(sc):
+    """SC6, SC6D or SC6B by kind of operation, one row per (database, kind), the seeds as
+    replicates. For the proposal: operations over all seeds, how many rescanned and how many
+    took the direct update, and its time per seed. For each remining arm: the ratio of its time
+    to the proposal's on that kind, computed per seed and reported as mean and sample standard
+    deviation over the seeds where both arms finished every operation of the kind (seeds), and
+    its time per seed. A row of kind "stream" does the same over every operation after the
+    initial mine, with the proposal's time over the arm's as the ticket asks."""
+    df = mf.load_scenario(sc, replicates=True)
+    if df is None:
+        return pd.DataFrame()
+    ops = df[~df["op_type"].astype(str).str.contains("INIT")].copy()
+    ops["kind"] = ops["op_type"].astype(str).str.extract(r"SC6_(INS|DEL_BIG|DEL|MOD)")[0]
+    ops = ops[ops["kind"].notna()]
+    rows = []
+    for d in [x for x in mf.ALL_DATASETS if x in set(ops["dataset"])]:
+        g = ops[ops["dataset"] == d]
+        p = g[g["algorithm"] == P].sort_values(["replicate", "iteration"])
+        # rescan_count is cumulative within a replicate: an operation rescanned when it grew
+        p = p.assign(rescanned=p.groupby("replicate")["rescan_count"].diff().fillna(p["rescan_count"]) > 0)
+        kinds = [k for k in ["INS", "DEL", "MOD", "DEL_BIG"] if k in set(p["kind"])] + ["stream"]
+        for k in kinds:
+            pk = p if k == "stream" else p[p["kind"] == k]
+            row = dict(dataset=d, kind="stream" if k == "stream" else MIXED_KINDS[k],
+                       operations=len(pk), seeds=pk["replicate"].nunique(),
+                       rescans=int(pk["rescanned"].sum()), direct=int((~pk["rescanned"]).sum()))
+            per_p = {r: mf.ms_to_s(x["runtime_ms"]).sum() for r, x in pk.groupby("replicate")
+                     if x["finished"].all()}
+            row["proposal_s_mean"] = np.mean(list(per_p.values())) if per_p else np.nan
+            for arm in MIXED_REMINE:
+                q = g[g["algorithm"] == arm]
+                qk = q if k == "stream" else q[q["kind"] == k]
+                per_q = {r: mf.ms_to_s(x["runtime_ms"]).sum() for r, x in qk.groupby("replicate")
+                         if x["finished"].all() and len(x) == len(pk[pk["replicate"] == r])}
+                common = sorted(set(per_p) & set(per_q))
+                if k == "stream":
+                    ratios = [per_p[r] / per_q[r] for r in common if per_q[r] > 0]
+                    key = "proposal_over"
+                else:
+                    ratios = [per_q[r] / per_p[r] for r in common if per_p[r] > 0]
+                    key = "over_proposal"
+                tag = arm.replace("Remine-from-scratch", "Remine")
+                row[f"{tag}_s_mean"] = np.mean([per_q[r] for r in common]) if common else np.nan
+                row[f"{key}_{tag}_mean"] = np.mean(ratios) if ratios else np.nan
+                row[f"{key}_{tag}_sd"] = np.std(ratios, ddof=1) if len(ratios) > 1 else np.nan
+                row[f"{key}_{tag}_seeds"] = len(ratios)
+            rows.append(row)
     return pd.DataFrame(rows)
 
 
@@ -636,9 +696,9 @@ def sc2_speedups(put, totals, reps=None):
     S = sc2_stats(totals, reps)
     dbs = sorted({d for d, _ in S})
     fastest = [d for d in dbs if S.get((d, P)) and all(
-        S[(d, a)] is None or S[(d, a)]["mean"] > S[(d, P)]["mean"] for a in INC_ARMS if a != P and (d, a) in S)]
+        S[(d, a)] is None or S[(d, a)]["mean"] > S[(d, P)]["mean"] for a in SC2_ARMS if a != P and (d, a) in S)]
     put("SC2_proposal_fastest", f"{len(fastest)}/{len(dbs)}", "table_SC2_totals.csv")
-    for a in INC_ARMS:
+    for a in SC2_ARMS:
         if a == P:
             continue
         r = {d: S[(d, a)]["mean"] / S[(d, P)]["mean"] for d in dbs
@@ -651,14 +711,14 @@ def sc2_speedups(put, totals, reps=None):
         put(f"SC2_{a}_over_proposal_min", f"{r[lo]:.2f} ({lo})", "table_SC2_totals.csv")
         put(f"SC2_{a}_over_proposal_max", f"{r[hi]:.2f} ({hi})", "table_SC2_totals.csv")
         put(f"SC2_{a}_over_proposal_databases", len(r), "table_SC2_totals.csv")
-    second = {d: min((S[(d, b)]["mean"] for b in INC_ARMS if b != P and S.get((d, b))), default=None)
+    second = {d: min((S[(d, b)]["mean"] for b in SC2_ARMS if b != P and S.get((d, b))), default=None)
               for d in dbs}
     # per database: the runner-up, its time over the proposal's, the runs behind both, and
     # whether every run of the proposal is faster than every run of the runner-up
     for d in dbs:
         if not S.get((d, P)):
             continue
-        rivals = {b: S[(d, b)] for b in INC_ARMS if b != P and S.get((d, b))}
+        rivals = {b: S[(d, b)] for b in SC2_ARMS if b != P and S.get((d, b))}
         if not rivals:
             continue
         b = min(rivals, key=lambda x: rivals[x]["mean"])
@@ -674,6 +734,73 @@ def sc2_speedups(put, totals, reps=None):
     put("SC2_runner_up_over_proposal_max", f"{rr[hi]:.2f} ({hi})", "table_SC2_totals.csv")
 
 
+def sc2_isolation(totals, reps=None):
+    """SC2 with one component of the proposal changed at a time, beside the proposal and
+    Pre-HUSPM: per database and arm, the time over the 100 increments (the mean of the runs
+    where there are several, as in the SC2 table), its runs, the rescans, the tracked set after
+    the last increment (HUSPs plus pre-large patterns), and the time split into the increments
+    that rescanned and those that took the direct update (means of the runs per increment,
+    load_mean; which increments rescanned is read from the counters of the main run)."""
+    S = sc2_stats(totals, reps)
+    arms = [P] + ISOLATION_ARMS + ["Pre-HUSPM-SWUmax", "Pre-HUSPM-TSU"]
+    df = mf.load_mean("SC2")
+    if df is None:
+        return pd.DataFrame()
+    inc = df[mf.is_inc(df)]
+    rows = []
+    for d in [x for x in mf.ALL_DATASETS if x in set(inc["dataset"])]:
+        for a in arms:
+            g = inc[(inc["dataset"] == d) & (inc["algorithm"] == a)].sort_values("iteration")
+            if g.empty or (d, a) not in S:
+                continue
+            st = S[(d, a)]
+            rc = g["rescan_count"].astype(float)
+            rescanned = rc.diff().fillna(rc) > 0
+            t = mf.ms_to_s(g["runtime_ms"])
+            last = g.iloc[-1]
+            rows.append(dict(dataset=d, algorithm=a, runs=st["n"] if st else np.nan,
+                             time_s=st["mean"] if st else np.nan, time_s_std=st["std"] if st else np.nan,
+                             finished=st is not None, rescans=int(rescanned.sum()),
+                             rescan_time_s=float(t[rescanned].sum()), direct_time_s=float(t[~rescanned].sum()),
+                             tracked_after_last=int(last["total_patterns_found"] + last["prelarge_count"])
+                             if st else np.nan))
+    return pd.DataFrame(rows)
+
+
+def sc2_isolation_keys(put, iso):
+    src = "table_SC2_rule_isolation.csv"
+    for r in iso.itertuples():
+        if not r.finished:
+            continue
+        put(f"SC2_isolation_{r.algorithm}_{r.dataset}_time", f"{r.time_s:.2f}", src)
+        put(f"SC2_isolation_{r.algorithm}_{r.dataset}_rescans", r.rescans, src)
+        put(f"SC2_isolation_{r.algorithm}_{r.dataset}_tracked", f"{r.tracked_after_last:,}", src)
+        put(f"SC2_isolation_{r.algorithm}_{r.dataset}_rescan_s", f"{r.rescan_time_s:.2f}", src)
+        put(f"SC2_isolation_{r.algorithm}_{r.dataset}_direct_s", f"{r.direct_time_s:.2f}", src)
+    T = {(r.dataset, r.algorithm): r for r in iso.itertuples() if r.finished}
+    for d in sorted({r.dataset for r in iso.itertuples()}):
+        pr = T.get((d, P))
+        if pr is None:
+            continue
+        # the rule: the proposal's miner and tracking behind each Pre-HUSPM test, against the proposal
+        for a, pre in (("Joint-miner+SWUmax", "Pre-HUSPM-SWUmax"), ("Joint-miner+TSU", "Pre-HUSPM-TSU")):
+            x, y = T.get((d, a)), T.get((d, pre))
+            if x is not None:
+                put(f"SC2_isolation_rule_{a}_minus_proposal_{d}_s", f"{x.time_s - pr.time_s:.2f}", src)
+                put(f"SC2_isolation_rule_{a}_over_proposal_{d}", f"{x.time_s / pr.time_s:.2f}", src)
+            if x is not None and y is not None:
+                # what remains between Pre-HUSPM and the same test on the proposal's miner and tracking
+                put(f"SC2_isolation_rest_{pre}_minus_{a}_{d}_s", f"{y.time_s - x.time_s:.2f}", src)
+                put(f"SC2_isolation_rest_{pre}_over_{a}_{d}", f"{y.time_s / x.time_s:.2f}", src)
+        # the tracking: the joint rule tracking by the bound, against the proposal
+        x = T.get((d, "Joint-rule+SWU-tracking"))
+        if x is not None:
+            put(f"SC2_isolation_tracking_minus_proposal_{d}_s", f"{x.time_s - pr.time_s:.2f}", src)
+            put(f"SC2_isolation_tracking_over_proposal_{d}", f"{x.time_s / pr.time_s:.2f}", src)
+            put(f"SC2_isolation_tracking_tracked_over_proposal_{d}",
+                f"{x.tracked_after_last / pr.tracked_after_last:.2f}" if pr.tracked_after_last else "", src)
+
+
 def sc2_tex(totals, region, reps=None):
     """The SC2 runtime and rescan-rule tables. A cell measured three times (reps, from
     table_SC2_replicates.csv) prints the mean and standard deviation of its runs; the
@@ -687,14 +814,14 @@ def sc2_tex(totals, region, reps=None):
     def stat(d, a):
         return S.get((d, a))
 
-    def row(d):
-        st = {a: stat(d, a) for a in INC_ARMS}
-        low = dict(zip(INC_ARMS, mf.lowest([f"{st[a]['mean']:.{mf.pm_digits(st[a]['mean'])}f}"
-                                            if st[a] else None for a in INC_ARMS],
-                                           [(st[a]["min"], st[a]["max"], st[a]["n"]) if st[a] else None
-                                            for a in INC_ARMS])))
+    def row(d, arms):
+        st = {a: stat(d, a) for a in arms}
+        low = dict(zip(arms, mf.lowest([f"{st[a]['mean']:.{mf.pm_digits(st[a]['mean'])}f}"
+                                        if st[a] else None for a in arms],
+                                       [(st[a]["min"], st[a]["max"], st[a]["n"]) if st[a] else None
+                                        for a in arms])))
         cells = []
-        for a in INC_ARMS:
+        for a in arms:
             r = T.get((d, a))
             if r is None:
                 cells.append("--")
@@ -712,13 +839,29 @@ def sc2_tex(totals, region, reps=None):
             "\\begin{tabular}[b]{@{}r@{}}Pre-HUSPM-\\\\SWUmax\\end{tabular} & "
             "\\begin{tabular}[b]{@{}r@{}}Pre-HUSPM-\\\\TSU\\end{tabular} & Remine & "
             "\\begin{tabular}[b]{@{}r@{}}IncUSP-\\\\Miner$^{+}$\\end{tabular} \\\\\\midrule")
-    rows = [f"{d} & " + " & ".join(row(d)) + " \\\\" for d in order]
+    rows = [f"{d} & " + " & ".join(row(d, INC_ARMS)) + " \\\\" for d in order]
     time_tex = "\n".join(["\\begin{table}[!htbp]\\centering",
                           "\\caption{Runtime (s) of SC2 over 100 increments; mean and standard deviation where "
                           "three runs were made}\\label{tab:sc2_time}",
                           "\\setlength{\\tabcolsep}{4pt}",
                           "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}lrrrrr}\\toprule", head] + rows +
                          ["\\bottomrule\\end{tabular*}", "\\end{table}", ""])
+    # Remining in three ways beside the proposal, in a table of its own: with the two static
+    # miners the runtime table is wider than the text (measured: 89 pt over). None when
+    # neither remining arm with a static miner has a row.
+    remine_arms = [P, REM, "Remine-HUSP-ULL", "Remine-HUSP-SP"]
+    remine_tex = None
+    if any((d, a) in T for d in order for a in remine_arms[2:]):
+        rhead = ("Database & \\begin{tabular}[b]{@{}r@{}}Pre-HUSPM-\\\\Joint\\end{tabular} & "
+                 "\\begin{tabular}[b]{@{}r@{}}Remine\\\\(Pre-HUSPM-Joint)\\end{tabular} & "
+                 "\\begin{tabular}[b]{@{}r@{}}Remine\\\\(HUSP-ULL)\\end{tabular} & "
+                 "\\begin{tabular}[b]{@{}r@{}}Remine\\\\(HUSP-SP)\\end{tabular} \\\\\\midrule")
+        rrows = [f"{d} & " + " & ".join(row(d, remine_arms)) + " \\\\" for d in order]
+        remine_tex = "\n".join(["\\begin{table}[!htbp]\\centering",
+                                "\\caption{Runtime (s) of SC2 against remining after every increment; mean and "
+                                "standard deviation where three runs were made}\\label{tab:sc2_remine}",
+                                "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}lrrrr}\\toprule", rhead] + rrows +
+                               ["\\bottomrule\\end{tabular*}", "\\end{table}", ""])
     def rescans(d):
         v = [str(int(op.loc[d, c])) for c in ("rescans", "rescans_swumax", "rescans_tsu")]
         return " & ".join(f"\\textbf{{{x}}}" if b else x for x, b in zip(v, mf.lowest(v)))
@@ -734,7 +877,7 @@ def sc2_tex(totals, region, reps=None):
                           "Database & Median & Range & Gain & \\begin{tabular}[b]{@{}r@{}}Median\\\\$\\Phi/\\beta$ (\\%)\\end{tabular} & "
                           "\\begin{tabular}[b]{@{}r@{}}No\\\\rescan\\end{tabular} & Joint & SWUmax & TSU \\\\\\midrule"]
                          + rows + ["\\bottomrule\\end{tabular*}", "\\end{table}", ""])
-    return time_tex, rule_tex
+    return time_tex, rule_tex, remine_tex
 
 
 def sc7_static_runtime(put, t7):
@@ -929,6 +1072,35 @@ def export_all(out_dir=None):
     o6 = sc6_by_op()
     mf.write_csv(o6, os.path.join(out, "table_SC6_by_op.csv"))
 
+    # The mixed streams with every remining arm: SC6 (table_SC6_by_op_arms.csv beside the
+    # table above, which keeps its form), SC6D and SC6B.
+    for sc, fname in (("SC6", "table_SC6_by_op_arms.csv"), ("SC6D", "table_SC6D_by_op.csv"),
+                      ("SC6B", "table_SC6B_by_op.csv")):
+        path = os.path.join(out, fname)
+        mx = mixed_by_op(sc)
+        if not len(mx):
+            if os.path.exists(path):
+                os.remove(path)
+            print(f"[not written] {fname}: no finished arm of {sc}")
+            continue
+        mf.write_csv(mx, path)
+        for _, r in mx.iterrows():
+            kd = r["kind"].replace(" ", "_")
+            base = f"{sc}_{r['dataset']}_{kd}"
+            if r["kind"] != "stream":
+                put(f"{base}_rescans", f"{r['rescans']}/{r['operations']}", fname)
+                put(f"{base}_direct", f"{r['direct']}/{r['operations']}", fname)
+            for arm in ("Remine", "Remine-HUSP-ULL", "Remine-HUSP-SP"):
+                key = "proposal_over" if r["kind"] == "stream" else "over_proposal"
+                m, sd, n = r.get(f"{key}_{arm}_mean"), r.get(f"{key}_{arm}_sd"), r.get(f"{key}_{arm}_seeds")
+                if pd.notna(m):
+                    name = f"{base}_proposal_over_{arm}" if r["kind"] == "stream" else f"{base}_{arm}_over_proposal"
+                    put(name, f"{m:.2f}" + (f" ± {sd:.2f}" if pd.notna(sd) else "") + f" ({int(n)} seeds)", fname)
+                if r["kind"] == "deletion beyond the budget" and pd.notna(r.get(f"{arm}_s_mean")):
+                    put(f"{base}_{arm}_s", f"{r[f'{arm}_s_mean']:.3f}", fname)
+            if r["kind"] == "deletion beyond the budget" and pd.notna(r["proposal_s_mean"]):
+                put(f"{base}_proposal_s", f"{r['proposal_s_mean']:.3f}", fname)
+
     b7 = sc7_block_index()
     mf.write_csv(b7, os.path.join(out, "table_SC7_block_index.csv"))
     for _, r in b7.iterrows():
@@ -1069,8 +1241,24 @@ def export_all(out_dir=None):
         if totals is not None and len(region):
             rp = os.path.join(out, "table_SC2_replicates.csv")
             reps = pd.read_csv(rp) if os.path.exists(rp) else None
-            time_tex, rule_tex = sc2_tex(totals, region, reps)
+            time_tex, rule_tex, remine_tex = sc2_tex(totals, region, reps)
+            remine_path = os.path.join(out, "table_SC2_remine.tex")
+            if remine_tex is None:
+                if os.path.exists(remine_path):
+                    os.remove(remine_path)
+                print("[not written] table_SC2_remine.tex: no finished arm of Remine-HUSP-ULL or Remine-HUSP-SP")
+            else:
+                open(remine_path, "w", encoding="utf-8").write(remine_tex)
             sc2_speedups(put, totals, reps)
+            iso = sc2_isolation(totals, reps)
+            iso_path = os.path.join(out, "table_SC2_rule_isolation.csv")
+            if len(iso) and set(iso["algorithm"]) & set(ISOLATION_ARMS):
+                mf.write_csv(iso, iso_path)
+                sc2_isolation_keys(put, iso)
+            else:
+                if os.path.exists(iso_path):
+                    os.remove(iso_path)
+                print("[not written] table_SC2_rule_isolation.csv: no finished arm of " + ", ".join(ISOLATION_ARMS))
             open(os.path.join(out, "table_SC2_time.tex"), "w", encoding="utf-8").write(time_tex)
             open(os.path.join(out, "table_SC2_rule.tex"), "w", encoding="utf-8").write(rule_tex)
             h = mf.rescan_hypothesis(region)
