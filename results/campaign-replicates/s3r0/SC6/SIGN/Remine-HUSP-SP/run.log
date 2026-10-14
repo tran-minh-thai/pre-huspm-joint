@@ -1,0 +1,50 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC6]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=3
+
+--- [SC6] Mixed stream, exactly 14:3:3 ---
+>> [SC6] SIGN seed=31415 opSize=5 plan=20 operations (14 insert, 3 delete, 3 modify)
+>> RUNNING Remine-HUSP-SP/SIGN/SC6_INIT#0  (heap free=1008MB / total=1024MB / max=49152MB)
+[Remine-HUSP-SP/SIGN/SC6_INIT#0] OK t=179ms cand=368036 pat=583 heapDelta=58MB
+>> RUNNING Remine-HUSP-SP/SIGN/SC6_INS#1  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-SP/SIGN/SC6_INS#1] OK t=150ms cand=385082 pat=611 heapDelta=30MB
+>> RUNNING Remine-HUSP-SP/SIGN/SC6_INS#2  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-SP/SIGN/SC6_INS#2] OK t=129ms cand=406546 pat=684 heapDelta=29MB
+>> RUNNING Remine-HUSP-SP/SIGN/SC6_INS#3  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-SP/SIGN/SC6_INS#3] OK t=126ms cand=396338 pat=663 heapDelta=55MB
+>> RUNNING Remine-HUSP-SP/SIGN/SC6_MOD#4  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-SP/SIGN/SC6_MOD#4] OK t=119ms cand=382549 pat=672 heapDelta=52MB
+>> RUNNING Remine-HUSP-SP/SIGN/SC6_MOD#5  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-SP/SIGN/SC6_MOD#5] OK t=121ms cand=394831 pat=697 heapDelta=53MB
+>> RUNNING Remine-HUSP-SP/SIGN/SC6_INS#6  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-SP/SIGN/SC6_INS#6] OK t=125ms cand=397042 pat=762 heapDelta=56MB
+>> RUNNING Remine-HUSP-SP/SIGN/SC6_INS#7  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-SP/SIGN/SC6_INS#7] OK t=131ms cand=403069 pat=715 heapDelta=57MB
+>> RUNNING Remine-HUSP-SP/SIGN/SC6_INS#8  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-SP/SIGN/SC6_INS#8] OK t=134ms cand=401975 pat=722 heapDelta=58MB
+>> RUNNING Remine-HUSP-SP/SIGN/SC6_INS#9  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-SP/SIGN/SC6_INS#9] OK t=133ms cand=393962 pat=688 heapDelta=58MB
+>> RUNNING Remine-HUSP-SP/SIGN/SC6_INS#10  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-SP/SIGN/SC6_INS#10] OK t=133ms cand=387267 pat=639 heapDelta=57MB
+>> RUNNING Remine-HUSP-SP/SIGN/SC6_INS#11  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-SP/SIGN/SC6_INS#11] OK t=131ms cand=378113 pat=598 heapDelta=56MB
+>> RUNNING Remine-HUSP-SP/SIGN/SC6_DEL#12  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-SP/SIGN/SC6_DEL#12] OK t=129ms cand=381723 pat=613 heapDelta=56MB
+>> RUNNING Remine-HUSP-SP/SIGN/SC6_DEL#13  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-SP/SIGN/SC6_DEL#13] OK t=128ms cand=378951 pat=592 heapDelta=55MB
+>> RUNNING Remine-HUSP-SP/SIGN/SC6_DEL#14  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-SP/SIGN/SC6_DEL#14] OK t=128ms cand=383886 pat=624 heapDelta=56MB
+>> RUNNING Remine-HUSP-SP/SIGN/SC6_MOD#15  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-SP/SIGN/SC6_MOD#15] OK t=128ms cand=387727 pat=664 heapDelta=56MB
+>> RUNNING Remine-HUSP-SP/SIGN/SC6_INS#16  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-SP/SIGN/SC6_INS#16] OK t=131ms cand=384561 pat=645 heapDelta=56MB
+>> RUNNING Remine-HUSP-SP/SIGN/SC6_INS#17  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-SP/SIGN/SC6_INS#17] OK t=130ms cand=381087 pat=609 heapDelta=56MB
+>> RUNNING Remine-HUSP-SP/SIGN/SC6_INS#18  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-SP/SIGN/SC6_INS#18] OK t=129ms cand=369532 pat=595 heapDelta=56MB
+>> RUNNING Remine-HUSP-SP/SIGN/SC6_INS#19  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-SP/SIGN/SC6_INS#19] OK t=127ms cand=361357 pat=557 heapDelta=55MB
+>> RUNNING Remine-HUSP-SP/SIGN/SC6_INS#20  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-SP/SIGN/SC6_INS#20] OK t=132ms cand=366020 pat=540 heapDelta=56MB
+=== ALL SCENARIOS DONE (9.3s) ===
