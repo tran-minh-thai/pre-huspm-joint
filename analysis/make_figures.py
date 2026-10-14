@@ -1052,8 +1052,7 @@ def export_ablation_table():
 
     lines = ["\\begin{table}[!htbp]", "\\centering",
              "\\caption{Ablation of the miner on the whole database; runtime as mean and standard deviation "
-             "of three runs; bold, per database, the lowest runtime and every runtime whose three runs overlap "
-             "its runs, and the fewest explored nodes}",
+             "of three runs}",
              "\\label{tab:sc7_ablation}",
              "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}llrr}", "\\toprule",
              "Database & Variant & Runtime (s) & Explored \\\\", "\\midrule"]

@@ -727,7 +727,8 @@ def sc2_tex(totals, region, reps=None):
             f"{100 * op.loc[d, 'ratio_median']:.0f} & {int(op.loc[d, 'within_budget'])} & {rescans(d)} \\\\"
             for d in order]
     rule_tex = "\n".join(["\\begin{table}[!htbp]\\centering",
-                          "\\caption{Rescan rule in SC2; $\\alpha$ at the rescan decisions, over the insertions since the last rescan}\\label{tab:sc2_rule}",
+                          "\\caption{Rescan rule in SC2}\\label{tab:sc2_rule}",
+                          "\\setlength{\\tabcolsep}{4pt}",
                           "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}lrrrrrrrr}\\toprule",
                           " & \\multicolumn{2}{c}{$\\alpha$ (\\%)} & & & & \\multicolumn{3}{c}{Rescans} \\\\\\cmidrule(lr){2-3}\\cmidrule(l){7-9}",
                           "Database & Median & Range & Gain & \\begin{tabular}[b]{@{}r@{}}Median\\\\$\\Phi/\\beta$ (\\%)\\end{tabular} & "
