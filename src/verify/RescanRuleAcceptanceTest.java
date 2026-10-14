@@ -26,6 +26,10 @@ import java.util.Map;
  *       have smaller counters than the largest. The unsound iaumax rule misses a HUSP in
  *       all three; joint must not.
  *
+ *   T7  The two Pre-HUSPM tests in front of the joint tracking (rules pre_swumax and
+ *       pre_tsu): the insertion cases of T1, T2 and T6, with the direct updates they take
+ *       counted, and a deletion and a modification refused.
+ *
  * T1 and T2 check the default joint rule beside iaumax (and CUB in T1); T3 and T4 check joint.
  */
 public final class RescanRuleAcceptanceTest {
@@ -46,6 +50,7 @@ public final class RescanRuleAcceptanceTest {
         testModificationBudget();
         testPreHuspmVariants();
         testDirectUpdateCounterexamples();
+        testPreHuspmTestsWithJointTracking();
 
         System.out.println();
         System.out.printf("=== acceptance: %d passed, %d failed ===%n", passed, failures);
@@ -329,6 +334,62 @@ public final class RescanRuleAcceptanceTest {
                 }
             }
         }
+    }
+
+    // ================================================================
+    // T7 - the Pre-HUSPM tests in front of the joint tracking
+    // ================================================================
+    private static void testPreHuspmTestsWithJointTracking() {
+        System.out.println("T7 - Pre-HUSPM tests (pre_swumax, pre_tsu) with the joint tracking, insertions");
+        for (TriggerRule rule : new TriggerRule[]{TriggerRule.PRE_SWUMAX, TriggerRule.PRE_TSU}) {
+            int[] direct = {0};
+            PatternSetDiff d1 = PatternSetDiff.of(referenceForInsertScenario(), countDirect(rule, direct, 1));
+            check("  " + rule + " matches remining in T1's batch", d1.isClean(), d1.toString());
+
+            SyntheticDb.resetIds();
+            List<Sequence> init = SyntheticDb.db("1[19] | 2[31]", "2[50]");
+            List<Sequence> b1 = SyntheticDb.db("1[4]"), b2 = SyntheticDb.db("1[4]");
+            List<Sequence> after1 = SyntheticDb.concat(init, b1), after2 = SyntheticDb.concat(after1, b2);
+            PreHUSPMAdaptiveAlgo algo = newAlgo(rule);
+            algo.runInitialMining(copyOf(init), SyntheticDb.tsu(init));
+            algo.runIncrementalMining(copyOf(b1), copyOf(after1), SyntheticDb.tsu(after1));
+            if (algo.rescanCount == 0) direct[0]++;
+            int before = algo.rescanCount;
+            algo.runIncrementalMining(copyOf(b2), copyOf(after2), SyntheticDb.tsu(after2));
+            if (algo.rescanCount == before) direct[0]++;
+            PatternSetDiff d2 = PatternSetDiff.of(remineFromScratch(after2), algo.exportLargeAsStrings());
+            check("  " + rule + " matches remining after T2's two batches", d2.isClean(), d2.toString());
+
+            check("  " + rule + " returns <1> in T6's case D insertions alone", !caseInsertionsOnly(rule), "<1> missed");
+            // the cases above must include direct updates, or they check the rescan alone
+            check("  " + rule + " takes the direct update in T2 (" + direct[0] + " of 2 batches)", direct[0] >= 1,
+                    "every batch rescanned");
+
+            boolean delRefused = false, modRefused = false;
+            SyntheticDb.resetIds();
+            List<Sequence> cur = fillers("1[19]", 9, 9);
+            PreHUSPMAdaptiveAlgo a = newAlgo(rule);
+            a.runInitialMining(copyOf(cur), SyntheticDb.tsu(cur));
+            List<Sequence> victims = new ArrayList<>(cur.subList(1, 2));
+            try { a.runDeletion(victims, copyOf(cur), SyntheticDb.tsu(cur)); }
+            catch (UnsupportedOperationException e) { delRefused = true; }
+            try { a.runModification(victims, SyntheticDb.db("1[6]"), copyOf(cur), SyntheticDb.tsu(cur)); }
+            catch (UnsupportedOperationException e) { modRefused = true; }
+            check("  " + rule + " refuses a deletion and a modification", delRefused && modRefused,
+                    "deletion refused " + delRefused + ", modification refused " + modRefused);
+        }
+    }
+
+    /** T1's scenario under rule; adds one to direct[0] when its batch took the direct update. */
+    private static Map<String, Double> countDirect(TriggerRule rule, int[] direct, int batches) {
+        List<Sequence> init = insertInit();
+        List<Sequence> batch = insertBatch(init);
+        List<Sequence> all = SyntheticDb.concat(init, batch);
+        PreHUSPMAdaptiveAlgo algo = newAlgo(rule);
+        algo.runInitialMining(copyOf(init), SyntheticDb.tsu(init));
+        algo.runIncrementalMining(copyOf(batch), copyOf(all), SyntheticDb.tsu(all));
+        if (algo.rescanCount == 0) direct[0]++;
+        return algo.exportLargeAsStrings();
     }
 
     private static List<Sequence> fillers(String first, int n, double u) {

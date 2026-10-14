@@ -12,7 +12,11 @@ import java.util.*;
  * Reports how many operations took the direct-update path, per operation kind, so that
  * "0 mismatches" is never read over zero direct updates.
  *
- * args: rule trials seed
+ * args: rule trials seed [insert-only]
+ *
+ * insert-only: every operation is an insertion (the Pre-HUSPM tests, rules pre_swumax and
+ * pre_tsu, are defined for insertions only). The kind is still drawn, so the stream of random
+ * numbers, and with it every other operation, is the one of the same seed without the flag.
  */
 public class MixedBudgetFuzz {
     static final double[] SUS = {0.08, 0.12, 0.2, 0.3};
@@ -39,6 +43,8 @@ public class MixedBudgetFuzz {
         String rule = a[0];
         int trials = Integer.parseInt(a[1]);
         long seed = Long.parseLong(a[2]);
+        boolean insertOnly = a.length > 3 && a[3].equals("insert-only");
+        if (a.length > 3 && !insertOnly) throw new IllegalArgumentException("unknown argument: " + a[3]);
         Random r = new Random(seed);
         SyntheticDb.resetIds();
         int ops = 0, bad = 0, badTrials = 0;
@@ -54,6 +60,7 @@ public class MixedBudgetFuzz {
             boolean trialBad = false;
             for (int o = 0; o < 10; o++) {
                 int kind = r.nextInt(3);
+                if (insertOnly) kind = 0;
                 String op;
                 int before = algo.rescanCount;
                 if (kind == 0 || cur.size() < 6) {

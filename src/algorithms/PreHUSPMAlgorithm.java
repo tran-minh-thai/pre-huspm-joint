@@ -350,7 +350,7 @@ public class PreHUSPMAlgorithm {
         }
 
         /** SWUmax of Theorem 2: max over items i of Σ SU(s) over the sequences s of d holding i. */
-        private static double maxItemSwu(List<Sequence> d) {
+        public static double maxItemSwu(List<Sequence> d) {
             int maxItem = -1;
             for (Sequence s : d)
                 for (QItemset is : s.itemsets) for (QItem q : is.items) if (q.id > maxItem) maxItem = q.id;

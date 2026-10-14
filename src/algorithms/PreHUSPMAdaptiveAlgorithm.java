@@ -532,8 +532,36 @@ public class PreHUSPMAdaptiveAlgorithm {
          *         one item occurs in every inserted sequence.
          *
          * JOINT   Default. See below.
+         *
+         * PRE_SWUMAX, PRE_TSU  The two rescan tests of Pre-HUSPM (Yan et al., Theorems 2 and 1),
+         *         as algorithms.PreHUSPMAlgorithm applies them, put in front of this miner and
+         *         of JOINT's tracking, to separate the effect of the rule from the effect of the
+         *         miner. With q the largest sequence-weighted utility of an item in the batch
+         *         (PRE_SWUMAX) or the batch's total utility (PRE_TSU), a batch is absorbed when
+         *         buf + q <= f and then buf += q; otherwise the database is rescanned and buf = 0;
+         *         f = (UUT - LUT_min)/(1 - UUT) * TSU_r. Everything else is JOINT's: A_i, the
+         *         per-pattern drop floor L_r + min_{i in X} A_i, the rescan at L_r.
+         *         Sound for insertions: buf >= max_i A_i and A_i <= I, so while the test holds
+         *         max_i A_i - UUT*I <= (1 - UUT)*max_i A_i <= (1 - UUT)*f = (UUT - LUT_min)*TSU_r,
+         *         which is JOINT's condition, and JOINT's argument applies. Pre-HUSPM defines
+         *         both tests for insertions only, so deletions and modifications are refused.
          */
-        public enum TriggerRule { SWUMAX, CUB, IAUMAX, JOINT }
+        public enum TriggerRule { SWUMAX, CUB, IAUMAX, JOINT, PRE_SWUMAX, PRE_TSU }
+
+        /** JOINT and the two Pre-HUSPM tests in front of JOINT's tracking. */
+        private boolean jointTracking() {
+            return triggerRule == TriggerRule.JOINT || triggerRule == TriggerRule.PRE_SWUMAX
+                    || triggerRule == TriggerRule.PRE_TSU;
+        }
+
+        /** Pre-HUSPM's buf: the q of every batch absorbed since the last rescan. */
+        private double preBuf = 0;
+
+        private void refuseUnderPreTest(String op) {
+            if (triggerRule == TriggerRule.PRE_SWUMAX || triggerRule == TriggerRule.PRE_TSU)
+                throw new UnsupportedOperationException("the Pre-HUSPM rescan tests (" + triggerRule
+                        + ") are defined for insertions only; " + op + " is refused");
+        }
 
         /*
          * JOINT: one budget for insertions and deletions since the last rescan, with a
@@ -577,8 +605,10 @@ public class PreHUSPMAdaptiveAlgorithm {
                 case "cub":    return TriggerRule.CUB;
                 case "iaumax": return TriggerRule.IAUMAX;
                 case "joint":  return TriggerRule.JOINT;
+                case "pre_swumax": return TriggerRule.PRE_SWUMAX;
+                case "pre_tsu":    return TriggerRule.PRE_TSU;
                 default: throw new IllegalArgumentException(
-                        "adapt.trigger must be swumax|cub|iaumax|joint, got: " + s);
+                        "adapt.trigger must be swumax|cub|iaumax|joint|pre_swumax|pre_tsu, got: " + s);
             }
         }
 
@@ -859,7 +889,7 @@ public class PreHUSPMAdaptiveAlgorithm {
             prunedValueBound = 0; prunedIub = 0; removedItems = 0; removedItemsRoot = 0;
             cubValue = 0; cubTriggeredRescan = false;
             resetIau();
-            insertedSinceRescan = 0; deletedSinceRescan = 0;
+            insertedSinceRescan = 0; deletedSinceRescan = 0; preBuf = 0;
             largeMap.clear(); prelargeMap.clear();
             dbClear();
             globalBlockIndex = new BlockIndex();
@@ -943,7 +973,7 @@ public class PreHUSPMAdaptiveAlgorithm {
             this.cubValue += batchTotalUtil;       // perturbation accumulated since the last rescan
             this.insertedSinceRescan += batchTotalUtil;
             this.iauTightness = (iauMax <= 0) ? 1.0 : (cubValue / iauMax);
-            boolean joint = this.triggerRule == TriggerRule.JOINT;
+            boolean joint = jointTracking();
             // The batch statistics feed LUT_dyn only, and JOINT has no LUT_dyn.
             this.sigmaDSquared = joint ? 0 : calculateVariance(deltaD);
             this.rhoD = (joint || batchTotalUtil == 0) ? 0 : (swuMax / batchTotalUtil);
@@ -957,9 +987,11 @@ public class PreHUSPMAdaptiveAlgorithm {
                 case SWUMAX: triggerQuantity = swuMax;   break;  // not sound
                 case CUB:    triggerQuantity = cubValue; break;
                 case JOINT:  triggerQuantity = jointTriggerQuantity(); break;
+                case PRE_SWUMAX: triggerQuantity = preBuf + algorithms.PreHUSPMAlgorithm.PreHUSPMAlgo.maxItemSwu(deltaD); break;
+                case PRE_TSU:    triggerQuantity = preBuf + batchTotalUtil; break;
                 case IAUMAX: default: triggerQuantity = iauMax; break;
             }
-            if (joint) {
+            if (this.triggerRule == TriggerRule.JOINT) {
                 safetyBoundF = (Su - Sl_min) * tsuAtLastRescan;
                 this.sftValue = safetyBoundF;
             }
@@ -972,8 +1004,10 @@ public class PreHUSPMAdaptiveAlgorithm {
                 rescanCount++;
                 this.cubValue = 0;
                 resetIau();                             // reset A_i
-                insertedSinceRescan = 0; deletedSinceRescan = 0;
+                insertedSinceRescan = 0; deletedSinceRescan = 0; preBuf = 0;
                 this.tsuAtLastRescan = newTotalUtility; // new TSU reference
+            } else if (this.triggerRule == TriggerRule.PRE_SWUMAX || this.triggerRule == TriggerRule.PRE_TSU) {
+                preBuf = triggerQuantity;               // buf += q
             }
 
             if (joint) {
@@ -1042,7 +1076,7 @@ public class PreHUSPMAdaptiveAlgorithm {
                     if (updatedUtility >= uut_abs) largeMap.put(p, updatedUtility);
                     // Pre-large floor: the per-pattern floor under JOINT, the adaptive
                     // lutDynValue otherwise.
-                    else if (updatedUtility >= (triggerRule == TriggerRule.JOINT ? jointFloor(p) : lutDynValue))
+                    else if (updatedUtility >= (jointTracking() ? jointFloor(p) : lutDynValue))
                         prelargeMap.put(p, updatedUtility);
                 }
 
@@ -1068,6 +1102,7 @@ public class PreHUSPMAdaptiveAlgorithm {
          * newTotalUtility = TSU(dAfter). CUB adds u(s) for every deleted sequence.
          */
         public void runDeletion(List<Sequence> deletedSeqs, List<Sequence> dAfter, double newTotalUtility) {
+            refuseUnderPreTest("a deletion");
             cancelled = false; // clear a cancellation left by an earlier measurement
             if (deletedSeqs == null || deletedSeqs.isEmpty()) { this.patternCount = largeMap.size(); this.prelargeCount = prelargeMap.size(); return; }
             // calculateExactUtilityInSeq and Pass 2 use the scratch buffer arrays indexed by
@@ -1172,6 +1207,7 @@ public class PreHUSPMAdaptiveAlgorithm {
          */
         public void runModification(List<Sequence> oldSeqs, List<Sequence> newSeqs,
                                     List<Sequence> dAfter, double newTotalUtility) {
+            refuseUnderPreTest("a modification");
             // Modification = deletion + insertion.
             //
             // A modification both removes u(old) from the database and adds u(new), and either

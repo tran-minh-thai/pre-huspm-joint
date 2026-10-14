@@ -53,7 +53,7 @@ import java.util.TreeMap;
  * database. X keeps its utility while TSU falls, and gains while it rises.
  *
  *   java -cp build verify.DirectPathVerifier <DATABASE|ALL> [--ops N] [--share S]
- *        [--rule joint|iaumax|cub|swumax] [--seed N] [--adversarial] [--out DIR]
+ *        [--rule joint|iaumax|cub|swumax|pre_swumax|pre_tsu] [--seed N] [--adversarial] [--insert-only] [--out DIR]
  */
 public final class DirectPathVerifier {
 
@@ -68,11 +68,13 @@ public final class DirectPathVerifier {
     /** Floor ratio of the reference mine; -Dverify.probeRl overrides (a target must stay below r_l = 0.8). */
     private static final double PROBE_RL = Double.parseDouble(System.getProperty("verify.probeRl", "0.6"));
     private static final long PROBE_CANDIDATE_BUDGET = 500_000_000L;
+    /** --insert-only: every operation is an insertion; the mode column then ends in "+insert-only". */
+    private static boolean insertOnly = false;
 
     public static void main(String[] args) throws IOException {
         if (args.length == 0) {
             System.out.println("usage: verify.DirectPathVerifier <DATABASE|ALL> [--ops N] [--share S] "
-                    + "[--rule joint|iaumax|cub|swumax] [--seed N] [--adversarial] [--out DIR]");
+                    + "[--rule joint|iaumax|cub|swumax|pre_swumax|pre_tsu] [--seed N] [--adversarial] [--insert-only] [--out DIR]");
             System.out.println("databases: " + common.Datasets.names());
             return;
         }
@@ -91,6 +93,7 @@ public final class DirectPathVerifier {
                 case "--rule":  rule = args[++i]; break;
                 case "--out":   outDir = Paths.get(args[++i]); break;
                 case "--adversarial": adversarial = true; break;
+                case "--insert-only": insertOnly = true; break;
                 default: throw new IllegalArgumentException("unknown argument: " + args[i]);
             }
         }
@@ -150,7 +153,9 @@ public final class DirectPathVerifier {
         System.out.printf("%n=== %s | UUT=%.6f | r_l=%.2f | rule=%s | %d operations | budget share 1/%.0f ===%n",
                 name, uut, RL, algo.triggerRule, ops, share);
 
-        String[] cycle = {"delete", "insert", "modify", "insert"};
+        // --insert-only: insertions alone, for the Pre-HUSPM tests (pre_swumax, pre_tsu), which
+        // are defined for insertions only.
+        String[] cycle = insertOnly ? new String[]{"insert"} : new String[]{"delete", "insert", "modify", "insert"};
         String previous = "init";
         int violations = 0;
         String target = "";
@@ -234,7 +239,7 @@ public final class DirectPathVerifier {
 
             w.printf("%s,%.6f,%.2f,%s,%d,%s,%s,%.3f,%d,%s,%d,%.3f,%.3f,%.3f,%s,%s,%d,%d,%d,%d,%.9f,%d,%s%n",
                     name, uut, RL, algo.triggerRule.name().toLowerCase(), seed,
-                    adversarial ? "adversarial" : "random", "\"" + target + "\"", targetUtil,
+                    (adversarial ? "adversarial" : "random") + (insertOnly ? "+insert-only" : ""), "\"" + target + "\"", targetUtil,
                     o + 1, op, n, opUtil,
                     budget, algo.iauMaxAtDecision, path, previous, diff.refSize, diff.gotSize,
                     diff.missing, diff.extra, diff.maxUtilityGap, algo.rescanCount, diff.isClean());
