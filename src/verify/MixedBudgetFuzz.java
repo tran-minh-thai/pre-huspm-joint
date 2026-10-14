@@ -47,7 +47,7 @@ public class MixedBudgetFuzz {
         if (a.length > 3 && !insertOnly) throw new IllegalArgumentException("unknown argument: " + a[3]);
         Random r = new Random(seed);
         SyntheticDb.resetIds();
-        int ops = 0, bad = 0, badTrials = 0;
+        int ops = 0, bad = 0, badTrials = 0, boundBad = 0, boundChecked = 0;
         Map<String, Integer> direct = new TreeMap<>(), total = new TreeMap<>(), badBy = new TreeMap<>();
         for (int t = 0; t < trials; t++) {
             double su = SUS[r.nextInt(SUS.length)];
@@ -98,11 +98,27 @@ public class MixedBudgetFuzz {
                 boolean ok = rs.keySet().equals(gs.keySet());
                 if (ok) for (String k : rs.keySet()) if (Math.abs(rs.get(k) - gs.get(k)) > 1e-9) { ok = false; break; }
                 if (!ok) { bad++; trialBad = true; badBy.merge(op + (algo.rescanCount == before ? "/direct" : "/rescan"), 1, Integer::sum); }
+                // Tracking by the bound (-Dadapt.tracking=peu) rests on B(X) >= u(X) for every
+                // tracked X; a stale bound breaks it long before a pattern is missed, so the
+                // invariant is checked directly after every operation.
+                if (algo.tracking == PreHUSPMAdaptiveAlgo.Tracking.PEU) {
+                    Map<?, Double> tracked = algo.trackedUtilities();
+                    boundChecked += tracked.size();
+                    boolean held = algo.trackedBound.size() == tracked.size();
+                    for (Map.Entry<?, Double> e : tracked.entrySet()) {
+                        Double b = algo.trackedBound.get(e.getKey());
+                        if (b == null || b < e.getValue() - 1e-9) { held = false; break; }
+                    }
+                    if (!held) { boundBad++; trialBad = true; }
+                }
             }
             if (trialBad) badTrials++;
         }
         System.out.printf("rule=%s trials=%d seed=%d ops=%d per-kind=%s direct-update=%s mismatching-ops=%d %s trials-with-mismatch=%d%n",
                 rule, trials, seed, ops, total, direct, bad, badBy, badTrials);
-        System.exit(bad > 0 ? 1 : 0);
+        if (boundChecked > 0 || boundBad > 0)
+            System.out.printf("bound invariant B(X) >= u(X): %d tracked patterns checked, %d operations breaking it%n",
+                    boundChecked, boundBad);
+        System.exit(bad > 0 || boundBad > 0 ? 1 : 0);
     }
 }
