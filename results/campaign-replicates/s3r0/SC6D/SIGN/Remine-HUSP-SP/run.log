@@ -1,0 +1,50 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC6D]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=3
+
+--- [SC6D] Mixed stream, exactly 6:10:4 ---
+>> [SC6D] SIGN seed=31415 opSize=5 plan=20 operations (6 insert, 10 delete, 4 modify)
+>> RUNNING Remine-HUSP-SP/SIGN/SC6_INIT#0  (heap free=1008MB / total=1024MB / max=49152MB)
+[Remine-HUSP-SP/SIGN/SC6_INIT#0] OK t=167ms cand=368036 pat=583 heapDelta=61MB
+>> RUNNING Remine-HUSP-SP/SIGN/SC6_INS#1  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-SP/SIGN/SC6_INS#1] OK t=121ms cand=385082 pat=611 heapDelta=25MB
+>> RUNNING Remine-HUSP-SP/SIGN/SC6_DEL#2  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-SP/SIGN/SC6_DEL#2] OK t=115ms cand=384957 pat=619 heapDelta=23MB
+>> RUNNING Remine-HUSP-SP/SIGN/SC6_INS#3  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-SP/SIGN/SC6_INS#3] OK t=125ms cand=406833 pat=707 heapDelta=28MB
+>> RUNNING Remine-HUSP-SP/SIGN/SC6_MOD#4  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-SP/SIGN/SC6_MOD#4] OK t=126ms cand=403805 pat=692 heapDelta=27MB
+>> RUNNING Remine-HUSP-SP/SIGN/SC6_MOD#5  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-SP/SIGN/SC6_MOD#5] OK t=122ms cand=401619 pat=666 heapDelta=53MB
+>> RUNNING Remine-HUSP-SP/SIGN/SC6_INS#6  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-SP/SIGN/SC6_INS#6] OK t=122ms cand=403028 pat=691 heapDelta=53MB
+>> RUNNING Remine-HUSP-SP/SIGN/SC6_DEL#7  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-SP/SIGN/SC6_DEL#7] OK t=121ms cand=403997 pat=707 heapDelta=53MB
+>> RUNNING Remine-HUSP-SP/SIGN/SC6_DEL#8  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-SP/SIGN/SC6_DEL#8] OK t=117ms cand=400746 pat=715 heapDelta=52MB
+>> RUNNING Remine-HUSP-SP/SIGN/SC6_INS#9  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-SP/SIGN/SC6_INS#9] OK t=121ms cand=404975 pat=766 heapDelta=55MB
+>> RUNNING Remine-HUSP-SP/SIGN/SC6_INS#10  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-SP/SIGN/SC6_INS#10] OK t=126ms cand=407938 pat=720 heapDelta=56MB
+>> RUNNING Remine-HUSP-SP/SIGN/SC6_DEL#11  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-SP/SIGN/SC6_DEL#11] OK t=124ms cand=408772 pat=664 heapDelta=55MB
+>> RUNNING Remine-HUSP-SP/SIGN/SC6_MOD#12  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-SP/SIGN/SC6_MOD#12] OK t=124ms cand=407992 pat=677 heapDelta=55MB
+>> RUNNING Remine-HUSP-SP/SIGN/SC6_DEL#13  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-SP/SIGN/SC6_DEL#13] OK t=124ms cand=413887 pat=709 heapDelta=55MB
+>> RUNNING Remine-HUSP-SP/SIGN/SC6_DEL#14  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-SP/SIGN/SC6_DEL#14] OK t=115ms cand=394834 pat=673 heapDelta=51MB
+>> RUNNING Remine-HUSP-SP/SIGN/SC6_MOD#15  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-SP/SIGN/SC6_MOD#15] OK t=117ms cand=397867 pat=667 heapDelta=52MB
+>> RUNNING Remine-HUSP-SP/SIGN/SC6_DEL#16  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-SP/SIGN/SC6_DEL#16] OK t=112ms cand=392368 pat=657 heapDelta=49MB
+>> RUNNING Remine-HUSP-SP/SIGN/SC6_DEL#17  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-SP/SIGN/SC6_DEL#17] OK t=109ms cand=392494 pat=653 heapDelta=48MB
+>> RUNNING Remine-HUSP-SP/SIGN/SC6_DEL#18  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-SP/SIGN/SC6_DEL#18] OK t=107ms cand=392633 pat=630 heapDelta=47MB
+>> RUNNING Remine-HUSP-SP/SIGN/SC6_INS#19  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-SP/SIGN/SC6_INS#19] OK t=105ms cand=385733 pat=570 heapDelta=47MB
+>> RUNNING Remine-HUSP-SP/SIGN/SC6_DEL#20  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-SP/SIGN/SC6_DEL#20] OK t=103ms cand=380273 pat=577 heapDelta=46MB
+=== ALL SCENARIOS DONE (9.0s) ===
