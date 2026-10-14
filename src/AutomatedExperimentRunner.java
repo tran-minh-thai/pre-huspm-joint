@@ -26,7 +26,9 @@ import java.util.concurrent.*;
  * SC3 - Su sensitivity on the database subset SUBSET_3.
  * SC4 - Pre-large floor sensitivity (Sl/Su) for Pre-HUSPM and Adaptive.
  * SC5 - Batch strategy grid (K from common.Datasets.BATCH_COUNT_SWEEP x {EVEN, INC, DEC, BURST}).
- * SC6 - Mixed insert/delete/modify stream (Adaptive vs Remine-from-scratch).
+ * SC6 - Mixed insert/delete/modify stream (Adaptive vs the remining arms).
+ * SC6D - SC6 with deletions in the majority.
+ * SC6B - SC6 with one deletion beyond the rescan budget.
  * SC7 - Ablation: proposed_full, proposed_no_IUB, proposed_no_IPS, the incremental block-index and adaptive-rescan
  *       ablations, and a Pre-HUSPM reference.
  *
@@ -124,25 +126,31 @@ public class AutomatedExperimentRunner {
     public static final long MEM_SAMPLE_MS = Long.getLong("mem.interval.ms", 20L);
 
     /**
-     * Run only ONE algorithm (arm) in this process. Live memory mode requires one JVM per
-     * arm, because otherwise the heap has already been grown by the previous arm.
-     * Override: -Dalgo.only=USpan. Empty = run all.
+     * Run only these algorithms (arms) in this process: -Dalgo.only=USpan or a comma-separated
+     * list. Empty = run all. Live memory mode requires ONE arm per JVM, because otherwise the
+     * heap has already been grown by the previous arm.
      */
     public static final String ALGO_ONLY = System.getProperty("algo.only", "").trim();
 
     /** Rescan trigger rule in use, recorded in the CSV and on the Platform line. */
     public static final String ADAPT_TRIGGER = System.getProperty("adapt.trigger", "joint");
 
-    /** Run only ONE dataset. Override: -Ddataset.only=SIGN. Empty = all. */
+    /** Run only these datasets. Override: -Ddataset.only=SIGN or SIGN,TAFENG. Empty = all. */
     public static final String DATASET_ONLY = System.getProperty("dataset.only", "").trim();
 
     public static boolean datasetEnabled(String ds) {
-        return DATASET_ONLY.isEmpty() || DATASET_ONLY.equalsIgnoreCase(ds);
+        return DATASET_ONLY.isEmpty() || listed(DATASET_ONLY, ds);
+    }
+
+    /** name is one of the comma-separated names of list, ignoring case. */
+    private static boolean listed(String list, String name) {
+        for (String t : list.split(",")) if (t.trim().equalsIgnoreCase(name)) return true;
+        return false;
     }
 
     /** True if this algorithm may run in the current process. */
     public static boolean algoEnabled(String algo) {
-        return ALGO_ONLY.isEmpty() || ALGO_ONLY.equalsIgnoreCase(algo);
+        return ALGO_ONLY.isEmpty() || listed(ALGO_ONLY, algo);
     }
 
     // === CONTEXT OF ONE MEASUREMENT ===
@@ -510,7 +518,7 @@ public class AutomatedExperimentRunner {
                         + RESULTS_DIR);
                 System.exit(2);
             }
-            if (ALGO_ONLY.isEmpty()) {
+            if (ALGO_ONLY.isEmpty() || ALGO_ONLY.contains(",")) {
                 System.err.println("STOP: live mode requires ONE JVM PER ARM "
                         + "(-Dalgo.only=<name>). With several arms in one JVM the heap has "
                         + "already been grown by the previous arm, which is what live mode "
@@ -521,6 +529,13 @@ public class AutomatedExperimentRunner {
                     + " ms | arm = " + ALGO_ONLY);
             System.out.println("### runtime_ms is written as -3 (perturbed by forced GC); the "
                     + "wall time is in wall_ms_perturbed. NOT a performance figure.");
+        }
+
+        if (VERIFY_HUSPS && RESULTS_DIR.replace('\\', '/').toLowerCase(java.util.Locale.ROOT).contains("campaign")) {
+            System.err.println("STOP: -Dverify.husps=true compares pattern sets outside the timed calls but in "
+                    + "the same arms, so its rows are not measurements; it does not write into a campaign "
+                    + "tree. Current directory: " + RESULTS_DIR);
+            System.exit(2);
         }
 
         new File(RESULTS_DIR).mkdirs();
@@ -576,9 +591,19 @@ public class AutomatedExperimentRunner {
         if (scenarios.contains("SC4")) runSC4_SensitivitySl();
         if (scenarios.contains("SC5")) runSC5_BatchStrategyGrid();
         if (scenarios.contains("SC6")) runSC6_InsertDeleteModify();
+        if (scenarios.contains("SC6D")) runSC6D_DeletionHeavy();
+        if (scenarios.contains("SC6B")) runSC6B_DeletionBeyondBudget();
         if (scenarios.contains("SC7")) runSC7_Ablation();
         System.out.printf("=== ALL SCENARIOS DONE (%.1fs) ===%n",
                 (System.currentTimeMillis() - t0) / 1000.0);
+        if (VERIFY_HUSPS) {
+            if (verifyOut != null) verifyOut.close();
+            System.out.println("HUSP check: " + verifyCompared + " comparisons with the proposal, " + verifyBad
+                    + " mismatching, " + verifyUnreferenced + " without a reference ("
+                    + RESULTS_DIR + "verify_husps.csv)");
+            // Nothing compared is not a pass: it happens when only the proposal ran.
+            if (verifyBad > 0 || verifyUnreferenced > 0 || verifyCompared == 0) System.exit(1);
+        }
     }
 
     /** Print each database, its thresholds, and whether they were measured on this data. */
@@ -610,7 +635,7 @@ public class AutomatedExperimentRunner {
     }
 
     private static Set<String> parseScenarios(String[] args) {
-        Set<String> all = new LinkedHashSet<>(Arrays.asList("SC1","SC2","SC3","SC4","SC5","SC6","SC7"));
+        Set<String> all = new LinkedHashSet<>(Arrays.asList("SC1","SC2","SC3","SC4","SC5","SC6","SC6D","SC6B","SC7"));
         if (args == null || args.length == 0) return all;
         Set<String> chosen = new LinkedHashSet<>();
         for (String a : args) {
@@ -625,7 +650,12 @@ public class AutomatedExperimentRunner {
                 else if (t.equals("KB5")) t = "SC5";
                 else if (t.equals("KB6")) t = "SC6";
                 else if (t.equals("KB7")) t = "SC7";
-                if (all.contains(t)) chosen.add(t);
+                if (t.isEmpty() || t.equals("TEST") || t.equals("SMOKE")) continue;
+                // An unknown name is refused: falling back to every scenario would rerun the
+                // whole campaign on a typo or on a scenario this build does not have.
+                if (!all.contains(t)) throw new IllegalArgumentException(
+                        "unknown scenario '" + token + "'; known: " + all + ", ALL, TEST");
+                chosen.add(t);
             }
         }
         return chosen.isEmpty() ? all : chosen;
@@ -870,113 +900,59 @@ public class AutomatedExperimentRunner {
     }
 
     // ==================================================================
-    // SC6 - MIXED I/D/M 70:15:15 (Adaptive self-compare)
+    // SC6, SC6D, SC6B - MIXED INSERT / DELETE / MODIFY STREAMS
     // ==================================================================
-    /** One operation in SC6's mixed stream. */
-    private enum OpKind { INS, DEL, MOD }
-
-    private static final class Op {
-        final OpKind kind;
-        final int iter;
-        final List<Sequence> a;   // INS: inserted batch | DEL: deleted sequences | MOD: old sequences
-        final List<Sequence> b;   // MOD: new sequences
-        Op(OpKind kind, int iter, List<Sequence> a, List<Sequence> b) {
-            this.kind = kind; this.iter = iter; this.a = a; this.b = b;
-        }
-        String tag() {
-            switch (kind) {
-                case INS: return "SC6_INS";
-                case DEL: return "SC6_DEL";
-                default:  return "SC6_MOD";
-            }
-        }
-    }
-
-    /**
-     * SC6's schedule: 70:15:15 as exact counts, not as probabilities.
-     *
-     * The plan is built ONCE per database and seed, and every arm replays that same plan, so
-     * the arms are comparable.
-     *
-     * Exact counts rather than independent draws: with independent draws the mix of
-     * operations depends on the seed and the database, and since a deletion costs a few
-     * milliseconds where an insertion costs a remine, each database's total would follow its
-     * draw. Every database gets the same operations; only their order depends on the seed.
-     */
+    /** SC6's schedule, 70:15:15 as exact counts (common.MixedPlan). */
     static final int SC6_INSERTS = 14, SC6_DELETES = 3, SC6_MODIFIES = 3;
+    /** SC6D: deletions in the majority, 6 insertions, 10 deletions and 4 modifications. */
+    static final int SC6D_INSERTS = 6, SC6D_DELETES = 10, SC6D_MODIFIES = 4;
 
-    private static List<Op> buildSC6Plan(List<Sequence> dInit, List<Sequence> rest,
-                                         int opSize, Random rnd) {
-        List<OpKind> kinds = new ArrayList<>();
-        for (int i = 0; i < SC6_INSERTS; i++)  kinds.add(OpKind.INS);
-        for (int i = 0; i < SC6_DELETES; i++)  kinds.add(OpKind.DEL);
-        for (int i = 0; i < SC6_MODIFIES; i++) kinds.add(OpKind.MOD);
-        Collections.shuffle(kinds, rnd);
-
-        List<Op> plan = new ArrayList<>();
-        List<Sequence> pool = new ArrayList<>(rest);
-        List<Sequence> cur = new ArrayList<>(dInit);
-        for (int i = 0; i < kinds.size(); i++) {
-            int iter = i + 1;
-            OpKind kind = kinds.get(i);
-            // An operation that cannot be built is refused rather than skipped: a plan
-            // quietly shorter than its schedule is the problem this schedule exists to remove.
-            boolean needsPool = (kind != OpKind.DEL);
-            if ((needsPool && pool.size() < opSize) || (kind != OpKind.INS && cur.size() <= opSize)) {
-                throw new IllegalStateException("SC6: cannot build operation " + iter + " (" + kind
-                        + ") with opSize=" + opSize + ", pool=" + pool.size() + ", current=" + cur.size());
-            }
-            if (kind == OpKind.INS) {
-                List<Sequence> delta = new ArrayList<>(pool.subList(0, opSize));
-                pool.subList(0, opSize).clear();
-                plan.add(new Op(OpKind.INS, iter, delta, null));
-                cur.addAll(delta);
-            } else if (kind == OpKind.DEL) {
-                List<Sequence> toDel = pickRandom(cur, opSize, rnd);
-                plan.add(new Op(OpKind.DEL, iter, toDel, null));
-                cur.removeAll(toDel);
-            } else {
-                List<Sequence> oldSeqs = pickRandom(cur, opSize, rnd);
-                List<Sequence> newSeqs = new ArrayList<>(pool.subList(0, opSize));
-                pool.subList(0, opSize).clear();
-                plan.add(new Op(OpKind.MOD, iter, oldSeqs, newSeqs));
-                cur.removeAll(oldSeqs);
-                cur.addAll(newSeqs);
-            }
-        }
-        return plan;
-    }
-
-    // ==================================================================
-    // SC6 - MIXED I/D/M 70:15:15
-    // ==================================================================
     /**
-     * Mixed insert / delete / modify stream at 70:15:15.
-     *
-     * Two arms run on the SAME operation plan:
+     * The arms of the mixed scenarios, all replaying the same plan:
      *
      *   Adaptive-Full        incremental maintenance
-     *   Remine-from-scratch  mines from scratch after EVERY operation
+     *   Remine-from-scratch  the proposal's own miner on the whole current database after
+     *                        every operation, at its cutoff r_l * UUT
+     *   Remine-HUSP-ULL      HUSP-ULL on the whole current database after every operation, at UUT
+     *   Remine-HUSP-SP       HUSP-SP on the whole current database after every operation, at UUT
      *
-     * The reference uses the proposed framework's own static miner, so any measured gap
-     * comes from not having to remine, not from one miner being faster than another.
-     *
-     * Cumulative runtime is not stored as a column: it is the sum of runtime_ms over the
-     * rows of one arm and dataset, computable from the raw data.
+     * The remining arms keep no state between operations. The proposal comes first so that,
+     * with -Dverify.husps=true, every other arm is compared with its patterns.
      */
+    static final String[] MIXED_ARMS = {"Adaptive-Full", "Remine-from-scratch", "Remine-HUSP-ULL", "Remine-HUSP-SP"};
+
     private static void runSC6_InsertDeleteModify() throws IOException {
-        System.out.println("\n--- [SC6] Mixed I/D/M, exactly " + SC6_INSERTS + ":" + SC6_DELETES + ":"
-                + SC6_MODIFIES + " (Adaptive vs Remine-from-scratch) ---");
-        try (ResultCollector col = new ResultCollector(RESULTS_DIR + "SC6_idm_mixed.csv")) {
+        runMixedScenario("SC6", SC6_INSERTS, SC6_DELETES, SC6_MODIFIES, false);
+    }
+
+    private static void runSC6D_DeletionHeavy() throws IOException {
+        runMixedScenario("SC6D", SC6D_INSERTS, SC6D_DELETES, SC6D_MODIFIES, false);
+    }
+
+    /**
+     * SC6's schedule with one of its deletions, at a position the seed draws, taking random
+     * current sequences until their utility exceeds (1 - r_l) times the largest total the
+     * database has had, so that the deletion alone exceeds the rescan budget
+     * (common.MixedPlan.build). The operations before it are SC6's for the same seed.
+     */
+    private static void runSC6B_DeletionBeyondBudget() throws IOException {
+        runMixedScenario("SC6B", SC6_INSERTS, SC6_DELETES, SC6_MODIFIES, true);
+    }
+
+    private static void runMixedScenario(String sc, int inserts, int deletes, int modifies,
+                                         boolean bigDelete) throws IOException {
+        System.out.println("\n--- [" + sc + "] Mixed stream, exactly " + inserts + ":" + deletes + ":"
+                + modifies + (bigDelete ? ", one deletion beyond the rescan budget" : "") + " ---");
+        try (ResultCollector col = new ResultCollector(RESULTS_DIR + sc + "_idm_mixed.csv")) {
             for (DatasetConfig ds : DATASETS) {
                 if (!datasetEnabled(ds.name)) continue;
                 if (!calibrationOk(ds)) continue;
-                if (!scopeOk(ds, "SC6")) continue;
+                if (!scopeOk(ds, sc)) continue;
                 if (!SUBSET_3.contains(ds.name)) continue;
                 List<Sequence> full = DatasetLoader.loadDataset(datasetDir + ds.name + "_seq.txt",
                                                                 datasetDir + ds.name + "_eui.txt");
                 if (full.size() < 20) {
-                    System.out.println(">> [SC6] skipping " + ds.name + " (only " + full.size() + " sequences)");
+                    System.out.println(">> [" + sc + "] skipping " + ds.name + " (only " + full.size() + " sequences)");
                     continue;
                 }
 
@@ -990,19 +966,24 @@ public class AutomatedExperimentRunner {
                 int opSize = Math.max(1, rest.size() / common.Datasets.BATCH_COUNT);
 
                 // Here the seed matters: it decides which operation happens when and on which
-                // sequences. SC6's conclusions must not depend on one lucky plan.
+                // sequences. The conclusions must not depend on one lucky plan.
                 for (long seed : activeSeeds()) {
                     // A per-dataset seed, so this dataset's plan does not depend on which
                     // datasets ran before it.
                     Random rnd = new Random(seed + ds.name.hashCode());
-                    List<Op> plan = buildSC6Plan(dInit, rest, opSize, rnd);
-                    System.out.println(">> [SC6] " + ds.name + " seed=" + seed
-                            + " opSize=" + opSize + " plan=" + planSummary(plan));
+                    // The position of the large deletion comes from a stream of its own.
+                    Random bigRnd = new Random(~seed + ds.name.hashCode());
+                    double share = bigDelete ? 1.0 - slRatioFor(ds.name) : 0.0;
+                    List<MixedPlan.Op> plan = MixedPlan.build(dInit, rest, opSize, rnd,
+                            inserts, deletes, modifies, share, bigRnd);
+                    System.out.println(">> [" + sc + "] " + ds.name + " seed=" + seed
+                            + " opSize=" + opSize + " plan=" + MixedPlan.summary(plan));
 
                     for (int r = 0; r < REPEATS; r++) {
                         setRunContext(seed, r);
-                        if (algoEnabled("Adaptive-Full"))       runSC6Arm(ds, dInit, initTotalUtil, plan, col, false);
-                        if (algoEnabled("Remine-from-scratch")) runSC6Arm(ds, dInit, initTotalUtil, plan, col, true);
+                        beginVerify(sc, ds.name);
+                        for (String arm : MIXED_ARMS)
+                            if (algoEnabled(arm)) runMixedArm(ds, dInit, initTotalUtil, plan, col, arm);
                     }
                     forceFullGC();
                 }
@@ -1010,26 +991,25 @@ public class AutomatedExperimentRunner {
         }
     }
 
-    private static String planSummary(List<Op> plan) {
-        int i = 0, d = 0, m = 0;
-        for (Op o : plan) {
-            if (o.kind == OpKind.INS) i++;
-            else if (o.kind == OpKind.DEL) d++;
-            else m++;
-        }
-        return plan.size() + " operations (" + i + " insert, " + d + " delete, " + m + " modify)";
-    }
-
-    /** Replay the operation plan for one arm. remine=true mines from scratch after every operation. */
-    private static void runSC6Arm(DatasetConfig ds, List<Sequence> dInit, double initTotalUtil,
-                                  List<Op> plan, ResultCollector col, boolean remine) throws IOException {
-        final String label = remine ? "Remine-from-scratch" : "Adaptive-Full";
+    /** Replays the plan for one arm. */
+    private static void runMixedArm(DatasetConfig ds, List<Sequence> dInit, double initTotalUtil,
+                                    List<MixedPlan.Op> plan, ResultCollector col, String arm) throws IOException {
+        final boolean incremental = "Adaptive-Full".equals(arm);
 
         beginMemArm();
-        PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp = newAdaptive(ds.name, ds.defaultSu);
-        announce(label, ds.name, "SC6_INIT", 0);
-        ExperimentMetrics mInit = measureAdaptive(adp, label, ds.name, 0, "SC6_INIT",
-                () -> adp.runInitialMining(dInit, initTotalUtil));
+        // The initial mine on D_init: the proposal's for the proposal and for remining with the
+        // proposal's miner (as SC6 always measured it), the static miner's for the other two.
+        final boolean ownMiner = incremental || "Remine-from-scratch".equals(arm);
+        final PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp = ownMiner ? newAdaptive(ds.name, ds.defaultSu) : null;
+        ExperimentMetrics mInit;
+        if (ownMiner) {
+            announce(arm, ds.name, "SC6_INIT", 0);
+            mInit = measureAdaptive(adp, arm, ds.name, 0, "SC6_INIT",
+                    () -> adp.runInitialMining(dInit, initTotalUtil));
+            if (!failedRun(mInit)) verifyHusps(arm, 0, "SC6_INIT", adp::exportLargeAsStrings);
+        } else {
+            mInit = remineStatic(arm, ds.name, 0, "SC6_INIT", dInit, ds.defaultSu * initTotalUtil);
+        }
         col.log(mInit);
         boolean poisoned = (failedRun(mInit));
         forceFullGC();
@@ -1037,54 +1017,165 @@ public class AutomatedExperimentRunner {
         List<Sequence> cur = new ArrayList<>(dInit);
         double total = initTotalUtil;
 
-        for (Op op : plan) {
-            // The database evolves identically in both arms, because the plan is fixed.
+        for (MixedPlan.Op op : plan) {
+            // The database evolves identically in every arm, because the plan is fixed.
             List<Sequence> after = new ArrayList<>(cur);
             switch (op.kind) {
                 case INS: after.addAll(op.a); break;
                 case DEL: after.removeAll(op.a); break;
                 default:  after.removeAll(op.a); after.addAll(op.b); break;
             }
-            final double newTotal = (op.kind == OpKind.INS) ? total + sumUtility(op.a) : sumUtility(after);
+            final double newTotal = (op.kind == MixedPlan.Kind.INS) ? total + sumUtility(op.a) : sumUtility(after);
 
             if (poisoned) {
-                col.log(skippedMetric(label, ds.name, op.iter, op.tag()));
+                col.log(skippedMetric(arm, ds.name, op.iter, op.tag()));
                 cur = after; total = newTotal;
                 continue;
             }
 
             ExperimentMetrics m;
-            if (remine) {
+            final List<Sequence> snapshot = new ArrayList<>(after);
+            if ("Remine-from-scratch".equals(arm)) {
                 // Remine from scratch: a NEW instance that keeps no state.
-                final List<Sequence> snapshot = new ArrayList<>(after);
                 PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo rm = newAdaptive(ds.name, ds.defaultSu);
-                announce(label, ds.name, op.tag(), op.iter);
-                m = measureAdaptive(rm, label, ds.name, op.iter, op.tag(),
+                announce(arm, ds.name, op.tag(), op.iter);
+                m = measureAdaptive(rm, arm, ds.name, op.iter, op.tag(),
                         () -> rm.runInitialMining(snapshot, newTotal));
                 m.rescanCount = 0;   // no incremental rescan in this reference
+                if (!failedRun(m)) verifyHusps(arm, op.iter, op.tag(), rm::exportLargeAsStrings);
+            } else if (!incremental) {
+                m = remineStatic(arm, ds.name, op.iter, op.tag(), snapshot, ds.defaultSu * newTotal);
             } else {
-                final List<Sequence> snapshot = new ArrayList<>(after);
-                announce(label, ds.name, op.tag(), op.iter);
+                announce(arm, ds.name, op.tag(), op.iter);
                 switch (op.kind) {
                     case INS:
-                        m = measureAdaptive(adp, label, ds.name, op.iter, op.tag(),
+                        m = measureAdaptive(adp, arm, ds.name, op.iter, op.tag(),
                                 () -> adp.runIncrementalMining(op.a, snapshot, newTotal));
                         break;
                     case DEL:
-                        m = measureAdaptive(adp, label, ds.name, op.iter, op.tag(),
+                        m = measureAdaptive(adp, arm, ds.name, op.iter, op.tag(),
                                 () -> adp.runDeletion(op.a, snapshot, newTotal));
                         break;
                     default:
-                        m = measureAdaptive(adp, label, ds.name, op.iter, op.tag(),
+                        m = measureAdaptive(adp, arm, ds.name, op.iter, op.tag(),
                                 () -> adp.runModification(op.a, op.b, snapshot, newTotal));
                         break;
                 }
+                if (!failedRun(m)) verifyHusps(arm, op.iter, op.tag(), adp::exportLargeAsStrings);
             }
             col.log(m);
             if (failedRun(m)) poisoned = true;
             cur = after; total = newTotal;
             forceFullGC();
         }
+    }
+
+    /**
+     * One mine from scratch by HUSP-ULL or HUSP-SP at the absolute threshold minUtil, counted
+     * as runSingle counts the static baselines. Arms "Remine-HUSP-ULL" and "Remine-HUSP-SP".
+     */
+    private static ExperimentMetrics remineStatic(String arm, String dsName, int iter, String tag,
+                                                  List<Sequence> db, double minUtil) {
+        announce(arm, dsName, tag, iter);
+        if ("Remine-HUSP-SP".equals(arm)) {
+            final HUSPSPAlgorithm sp = new HUSPSPAlgorithm(minUtil);
+            ExperimentMetrics m = measure(arm, dsName, iter, tag, () -> sp.run(db),
+                    () -> sp.candidateCount, () -> sp.patternCount, null, null,
+                    null, null, null, null, null, null, sp::cancel);
+            if (m != null && m.runtimeMs != -1) {
+                m.prunedSwu = sp.prunedSWU;
+                m.prunedIip = sp.prunedIIP;
+                m.prunedPeu = sp.prunedPEU;
+                m.prunedLar = sp.prunedEP;
+                m.exploredNodes = sp.exploredNodes;
+                verifyHusps(arm, iter, tag, () -> huspStrings(sp.largeMap));
+            }
+            return m;
+        }
+        if (!"Remine-HUSP-ULL".equals(arm)) throw new IllegalArgumentException("not a static remining arm: " + arm);
+        final HUSPULLAlgorithm h = new HUSPULLAlgorithm(minUtil);
+        ExperimentMetrics m = measure(arm, dsName, iter, tag, () -> h.run(db),
+                () -> h.candidateCount, () -> h.patternCount, null, null);
+        if (m != null && m.runtimeMs != -1) {
+            m.prunedSwu = h.prunedSWU;
+            m.prunedLar = h.prunedLAR;
+            m.prunedIip = h.prunedIIP;
+            m.prunedPeu = h.prunedPEU;
+            m.exploredNodes = h.exploredNodes;
+            verifyHusps(arm, iter, tag, () -> huspStrings(h.largeMap));
+        }
+        return m;
+    }
+
+    // ==================================================================
+    // -Dverify.husps=true: every arm's patterns against the proposal's, after every operation
+    // ==================================================================
+    /**
+     * With -Dverify.husps=true, after every operation the pattern set of each arm and the
+     * utility of each pattern are compared, outside the timed call, with those the proposal
+     * (Adaptive-Full, which runs first) reported after the same operation of the same stream.
+     * One row per comparison goes to verify_husps.csv in the results directory; the run exits
+     * with code 1 on any mismatch or on a row with no reference to compare with. Timing rows of
+     * such a run are not measurements, and the mode refuses a campaign tree.
+     */
+    static final boolean VERIFY_HUSPS = Boolean.getBoolean("verify.husps");
+    private static final Map<String, Map<String, Double>> verifyRef = new HashMap<>();
+    private static String verifyScope = "";
+    private static PrintWriter verifyOut = null;
+    private static int verifyCompared = 0, verifyBad = 0, verifyUnreferenced = 0;
+
+    /** A new stream: the reference patterns of the previous one are dropped. */
+    private static void beginVerify(String scenario, String dsName) {
+        if (!VERIFY_HUSPS) return;
+        verifyRef.clear();
+        verifyScope = scenario + "," + dsName + "," + currentSeed;
+    }
+
+    private interface HuspSup { Map<String, Double> get(); }
+
+    private static void verifyHusps(String arm, int iter, String opType, HuspSup patterns) {
+        if (!VERIFY_HUSPS) return;
+        Map<String, Double> got = patterns.get();
+        String key = iter + "," + opType;
+        String row;
+        if ("Adaptive-Full".equals(arm)) {
+            verifyRef.put(key, got);
+            row = verifyScope + "," + arm + "," + iter + "," + opType + "," + got.size() + "," + got.size()
+                    + ",0,0,0,reference";
+        } else {
+            Map<String, Double> ref = verifyRef.get(key);
+            if (ref == null) {
+                verifyUnreferenced++;
+                row = verifyScope + "," + arm + "," + iter + "," + opType + ",," + got.size() + ",,,,no reference";
+            } else {
+                verify.PatternSetDiff d = verify.PatternSetDiff.of(ref, got);
+                verifyCompared++;
+                if (!d.isClean()) verifyBad++;
+                row = verifyScope + "," + arm + "," + iter + "," + opType + "," + ref.size() + "," + got.size()
+                        + "," + d.missing + "," + d.extra + "," + d.maxUtilityGap + "," + (d.isClean() ? "match" : "MISMATCH");
+            }
+        }
+        try {
+            if (verifyOut == null) {
+                File f = new File(RESULTS_DIR + "verify_husps.csv");
+                boolean fresh = !f.exists();
+                verifyOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
+                        new FileOutputStream(f, true), java.nio.charset.StandardCharsets.UTF_8)));
+                if (fresh) verifyOut.println("scenario,dataset,seed,arm,iteration,op_type,reference_husps,"
+                        + "husps,missing,extra,max_utility_gap,status");
+            }
+            verifyOut.println(row);
+            verifyOut.flush();
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
+    }
+
+    /** Patterns keyed as the proposal's exportLargeAsStrings keys them. */
+    private static Map<String, Double> huspStrings(Map<Pattern, Double> m) {
+        Map<String, Double> out = new HashMap<>(m.size() * 2);
+        for (Map.Entry<Pattern, Double> e : m.entrySet()) out.put(e.getKey().toIntuitiveString(), e.getValue());
+        return out;
     }
 
     /**
@@ -1328,6 +1419,13 @@ public class AutomatedExperimentRunner {
                                                List<List<Sequence>> batches, ResultCollector col,
                                                String tag) {
         final double initTotal = sumUtility(dInit);
+        beginVerify(tag, dsName);
+
+        // -------- Arm: Adaptive-Full --------
+        // First, so that with -Dverify.husps=true every other arm is compared with its patterns.
+        // In the campaign each arm runs in a JVM of its own, so the order does not matter there.
+        if (algoEnabled("Adaptive-Full")) runAdaptiveStream("Adaptive-Full", null, dsName, Su, dInit, batches, col, tag);
+        forceFullGC();
 
         // -------- Arm: IncUSP-Miner+ (isolated scope) --------
         if (!ADAPTIVE_ONLY && algoEnabled("IncUSP-Miner+")) {
@@ -1339,6 +1437,7 @@ public class AutomatedExperimentRunner {
                     () -> inc.runInitialMining(dInit, initTotal),
                     () -> inc.candidateCount, () -> inc.patternCount, null, null);
             if (m0.runtimeMs != -1) { m0.prunedTsu = inc.prunedTSU; m0.exploredNodes = inc.exploredNodes; }
+            if (!failedRun(m0)) verifyHusps("IncUSP-Miner+", 0, tag + "_INIT", () -> huspStrings(inc.husps()));
             col.log(m0);
             // On OOM/poison, release the CP-tree (several GB) at once so the next main-thread
             // allocations (skipped rows, snapshots, the scenario) do not OOM and end the run.
@@ -1364,6 +1463,7 @@ public class AutomatedExperimentRunner {
                             () -> inc.runIncrementalMining(delta, snapshot, finalNewTotal),
                             () -> inc.candidateCount, () -> inc.patternCount, null, null);
                     if (mb.runtimeMs != -1) { mb.prunedTsu = inc.prunedTSU; mb.exploredNodes = inc.exploredNodes; }
+                    if (!failedRun(mb)) verifyHusps("IncUSP-Miner+", batchIdx, tag + "_INC", () -> huspStrings(inc.husps()));
                     col.log(mb);
                     if (failedRun(mb)) { poisoned = true; inc.releaseState(); forceFullGC(); }
                 }
@@ -1399,6 +1499,7 @@ public class AutomatedExperimentRunner {
                         () -> preh.runInitialMining(dInit, initTotal),
                         () -> preh.candidateCount, () -> preh.patternCount, null, null);
                 attachPreHuspm(m0, preh);
+                if (!failedRun(m0)) verifyHusps(label, 0, tag + "_INIT", () -> huspStrings(preh.largeMap));
                 col.log(m0);
                 if (failedRun(m0)) poisoned = true;
 
@@ -1422,6 +1523,7 @@ public class AutomatedExperimentRunner {
                                 () -> preh.runIncrementalMining(delta, snapshot, finalNewTotal),
                                 () -> preh.candidateCount, () -> preh.patternCount, null, null);
                         attachPreHuspm(mb, preh);
+                        if (!failedRun(mb)) verifyHusps(label, batchIdx, tag + "_INC", () -> huspStrings(preh.largeMap));
                         col.log(mb);
                         if (failedRun(mb)) poisoned = true;
                     }
@@ -1465,6 +1567,7 @@ public class AutomatedExperimentRunner {
                     null, () -> rm0.prunedValueBound,
                     () -> rm0.prelargeCount, () -> rm0.uutValue, () -> rm0.sftValue, rm0::cancel);
             attachAdaptive(m0, rm0);
+            if (!failedRun(m0)) verifyHusps("Remine-from-scratch", 0, tag + "_INIT", rm0::exportLargeAsStrings);
             col.log(m0);
             if (failedRun(m0)) poisoned = true;
             forceFullGC();
@@ -1502,6 +1605,7 @@ public class AutomatedExperimentRunner {
                 // Mining from scratch has no incremental rescan; write 0 rather than 1 so
                 // rescan_count is not misread as "this reference rescans every batch".
                 mb.rescanCount = 0;
+                if (!failedRun(mb)) verifyHusps("Remine-from-scratch", batchIdx, tag + "_INC", rm::exportLargeAsStrings);
                 col.log(mb);
                 if (failedRun(mb)) poisoned = true;
                 forceFullGC();
@@ -1509,25 +1613,16 @@ public class AutomatedExperimentRunner {
         }
         forceFullGC();
 
-        // -------- Arm: Adaptive-Full (isolated scope) --------
-        if (algoEnabled("Adaptive-Full")) {
+        // -------- Remining with HUSP-ULL and HUSP-SP at UUT (isolated scopes) --------
+        // The fastest remining there is: the static miners stop at UUT, where remining with the
+        // proposal's miner goes down to r_l * UUT. A new instance per batch, no state kept.
+        for (String arm : new String[]{"Remine-HUSP-ULL", "Remine-HUSP-SP"}) {
+            if (!algoEnabled(arm)) continue;
             beginMemArm();
-            PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp = new PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo(
-                    Su, DEFAULT_KAPPA, DEFAULT_DELTA0, slRatioFor(dsName),
-                    PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.AblationMode.FULL,
-                    ENABLE_PATTERN_EXPORT);
-            boolean poisoned = false;
-            announce("Adaptive-Full", dsName, tag + "_INIT", 0);
-            ExperimentMetrics m0 = measure("Adaptive-Full", dsName, 0, tag + "_INIT",
-                    () -> adp.runInitialMining(dInit, initTotal),
-                    () -> adp.candidateCount, () -> adp.patternCount,
-                    () -> adp.lutDynValue, () -> adp.cubValue, () -> adp.cubTriggeredRescan,
-                    null, () -> adp.prunedValueBound,
-                            () -> adp.prelargeCount, () -> adp.uutValue, () -> adp.sftValue, adp::cancel);
-            attachAdaptive(m0, adp);
+            ExperimentMetrics m0 = remineStatic(arm, dsName, 0, tag + "_INIT", dInit, Su * initTotal);
             col.log(m0);
-            if (failedRun(m0)) poisoned = true;
-
+            boolean poisoned = failedRun(m0);
+            forceFullGC();
             double rolling = initTotal;
             List<Sequence> dSoFar = new ArrayList<>(dInit);
             for (int b = 0; b < batches.size(); b++) {
@@ -1535,30 +1630,89 @@ public class AutomatedExperimentRunner {
                 if (delta.isEmpty()) continue;
                 double newTotal = rolling + sumUtility(delta);
                 int batchIdx = b + 1;
-                // Memory guard before the batch.
-                if (!poisoned && !memoryGuardOk("Adaptive-Full", dsName, tag + "_INC")) poisoned = true;
-                if (poisoned) {
-                    col.log(skippedMetric("Adaptive-Full", dsName, batchIdx, tag + "_INC"));
-                } else {
-                    List<Sequence> snapshot = new ArrayList<>(dSoFar);
-                    snapshot.addAll(delta);
-                    final double finalNewTotal = newTotal;
-                    announce("Adaptive-Full", dsName, tag + "_INC", batchIdx);
-                    ExperimentMetrics mb = measure("Adaptive-Full", dsName, batchIdx, tag + "_INC",
-                            () -> adp.runIncrementalMining(delta, snapshot, finalNewTotal),
-                            () -> adp.candidateCount, () -> adp.patternCount,
-                            () -> adp.lutDynValue, () -> adp.cubValue, () -> adp.cubTriggeredRescan,
-                            null, () -> adp.prunedValueBound,
-                            () -> adp.prelargeCount, () -> adp.uutValue, () -> adp.sftValue, adp::cancel);
-                    attachAdaptive(mb, adp);
-                    col.log(mb);
-                    if (failedRun(mb)) poisoned = true;
-                }
                 dSoFar.addAll(delta);
                 rolling = newTotal;
+                if (!poisoned && !memoryGuardOk(arm, dsName, tag + "_INC")) poisoned = true;
+                if (poisoned) {
+                    col.log(skippedMetric(arm, dsName, batchIdx, tag + "_INC"));
+                    continue;
+                }
+                final List<Sequence> snapshot = new ArrayList<>(dSoFar);
+                ExperimentMetrics mb = remineStatic(arm, dsName, batchIdx, tag + "_INC", snapshot, Su * newTotal);
+                col.log(mb);
+                if (failedRun(mb)) poisoned = true;
+                forceFullGC();
             }
         }
         forceFullGC();
+
+        // -------- The proposal's miner and tracking behind Pre-HUSPM's two rescan tests --------
+        // Same miner, same tracking by exact utility, same drop floor as Adaptive-Full; only the
+        // rescan condition differs (PreHUSPMAdaptiveAlgo.TriggerRule.PRE_SWUMAX, PRE_TSU).
+        if (algoEnabled("Joint-miner+SWUmax")) runAdaptiveStream("Joint-miner+SWUmax",
+                PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.TriggerRule.PRE_SWUMAX, dsName, Su, dInit, batches, col, tag);
+        if (algoEnabled("Joint-miner+TSU")) runAdaptiveStream("Joint-miner+TSU",
+                PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.TriggerRule.PRE_TSU, dsName, Su, dInit, batches, col, tag);
+        forceFullGC();
+    }
+
+    /**
+     * The proposal over a stream of insertions: Adaptive-Full under its own rule (rule null),
+     * or under another rescan rule with everything else unchanged.
+     */
+    private static void runAdaptiveStream(String label, PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.TriggerRule rule,
+                                          String dsName, double Su, List<Sequence> dInit,
+                                          List<List<Sequence>> batches, ResultCollector col, String tag) {
+        final double initTotal = sumUtility(dInit);
+        beginMemArm();
+        PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp = new PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo(
+                Su, DEFAULT_KAPPA, DEFAULT_DELTA0, slRatioFor(dsName),
+                PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.AblationMode.FULL,
+                ENABLE_PATTERN_EXPORT);
+        if (rule != null) adp.triggerRule = rule;
+        boolean poisoned = false;
+        announce(label, dsName, tag + "_INIT", 0);
+        ExperimentMetrics m0 = measure(label, dsName, 0, tag + "_INIT",
+                () -> adp.runInitialMining(dInit, initTotal),
+                () -> adp.candidateCount, () -> adp.patternCount,
+                () -> adp.lutDynValue, () -> adp.cubValue, () -> adp.cubTriggeredRescan,
+                null, () -> adp.prunedValueBound,
+                () -> adp.prelargeCount, () -> adp.uutValue, () -> adp.sftValue, adp::cancel);
+        attachAdaptive(m0, adp);
+        if (!failedRun(m0)) verifyHusps(label, 0, tag + "_INIT", adp::exportLargeAsStrings);
+        col.log(m0);
+        if (failedRun(m0)) poisoned = true;
+
+        double rolling = initTotal;
+        List<Sequence> dSoFar = new ArrayList<>(dInit);
+        for (int b = 0; b < batches.size(); b++) {
+            List<Sequence> delta = batches.get(b);
+            if (delta.isEmpty()) continue;
+            double newTotal = rolling + sumUtility(delta);
+            int batchIdx = b + 1;
+            // Memory guard before the batch.
+            if (!poisoned && !memoryGuardOk(label, dsName, tag + "_INC")) poisoned = true;
+            if (poisoned) {
+                col.log(skippedMetric(label, dsName, batchIdx, tag + "_INC"));
+            } else {
+                List<Sequence> snapshot = new ArrayList<>(dSoFar);
+                snapshot.addAll(delta);
+                final double finalNewTotal = newTotal;
+                announce(label, dsName, tag + "_INC", batchIdx);
+                ExperimentMetrics mb = measure(label, dsName, batchIdx, tag + "_INC",
+                        () -> adp.runIncrementalMining(delta, snapshot, finalNewTotal),
+                        () -> adp.candidateCount, () -> adp.patternCount,
+                        () -> adp.lutDynValue, () -> adp.cubValue, () -> adp.cubTriggeredRescan,
+                        null, () -> adp.prunedValueBound,
+                        () -> adp.prelargeCount, () -> adp.uutValue, () -> adp.sftValue, adp::cancel);
+                attachAdaptive(mb, adp);
+                if (!failedRun(mb)) verifyHusps(label, batchIdx, tag + "_INC", adp::exportLargeAsStrings);
+                col.log(mb);
+                if (failedRun(mb)) poisoned = true;
+            }
+            dSoFar.addAll(delta);
+            rolling = newTotal;
+        }
     }
 
     // ==================================================================
@@ -2268,12 +2422,6 @@ public class AutomatedExperimentRunner {
     private static List<Sequence> tailFrom(List<Sequence> all, int startIdx) {
         if (startIdx >= all.size()) return Collections.emptyList();
         return new ArrayList<>(all.subList(startIdx, all.size()));
-    }
-
-    private static List<Sequence> pickRandom(List<Sequence> from, int count, Random rnd) {
-        List<Sequence> copy = new ArrayList<>(from);
-        Collections.shuffle(copy, rnd);
-        return new ArrayList<>(copy.subList(0, Math.min(count, copy.size())));
     }
 
     private static double[] computeWeights(BatchSplitSpec spec) {
