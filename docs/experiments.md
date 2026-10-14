@@ -14,6 +14,9 @@ scenario are in `docs/campaign-parameters.md`; column definitions are in
 | `Pre-HUSPM` | the same baseline in the static scenarios (SC1, SC3, SC4, SC7), where both tests mine alike | Yan et al., J. Supercomputing 2025 | `PreHUSPMAlgorithm`, `runInitialMining` |
 | `IncUSP-Miner+` | candidate-pattern-tree incremental baseline (Algorithms 1 and 2, HandleCase-1 and HandleCase-2, Strategies 1 to 6); insertions only | Wang and Huang, ACM TIST 2018 | `IncUSPMinerPlusAlgorithm` |
 | `Remine-from-scratch` | mines the whole current database after every operation | - | the proposal's own static miner, `runInitialMining`, on a new instance each time |
+| `Remine-HUSP-ULL`, `Remine-HUSP-SP` | mine the whole current database after every operation with HUSP-ULL or HUSP-SP at UUT, which stop at the threshold where the proposal's miner goes down to `r_l * UUT`; SC2 and the mixed streams | - | `HUSPULLAlgorithm`, `HUSPSPAlgorithm`, a new instance each time |
+| `Joint-miner+SWUmax`, `Joint-miner+TSU` | the proposal with its rescan rule replaced by Pre-HUSPM's test on `SWUmax` or on `TSU(d)`, as `PreHUSPMAlgorithm` applies it; miner, tracking by utility and drop floor unchanged; SC2 (insertions only) | Yan et al., Theorems 2 and 1 | `PreHUSPMAdaptiveAlgorithm`, `TriggerRule.PRE_SWUMAX`, `PRE_TSU` |
+| `Joint-rule+SWU-tracking` | the proposal with its tracking by utility replaced by Pre-HUSPM's tracking by the bound `SWU_proj` (PEU): every node whose bound reaches `L_r` is tracked with its bound, and dropped by it; miner, search and rule unchanged; SC2 (insertions only) | - | `PreHUSPMAdaptiveAlgorithm`, `Tracking.PEU` (`-Dadapt.tracking=peu`) |
 | `USpan` | static baseline, width pruning by SWU and depth pruning by a sound bound | Yin et al., KDD 2012 | `USpanAlgorithm` |
 | `HUSP-ULL` | static baseline, UL-lists with irrelevant item pruning (IPS) and the look-ahead strategy (LAS), Algorithms 1 to 3 | Gan et al., IEEE Transactions on Cybernetics 2021 | `HUSPULLAlgorithm` |
 | `HUSP-SP` | static baseline, seq-array and seqPro with IIP, early pruning by a sound bound, and the PEU test | Zhang et al., ACM TKDD 2024 | `HUSPSPAlgorithm` |
@@ -150,11 +153,13 @@ and KOSARAK's `r_l`, 0.80 if the proposal mines KOSARAK at that floor within 120
 | Scenario | Setup | Databases | Output file |
 |---|---|---|---|
 | SC1 | static mining of `D_init`, four UUT levels, six algorithms | all eight | `SC1_static.csv` |
-| SC2 | `D_init` then `K = 100` equal increments; the proposal, remining, `Pre-HUSPM-SWUmax`, `Pre-HUSPM-TSU` and IncUSP-Miner+ | seven (not BMS1) | `SC2_incremental.csv` |
+| SC2 | `D_init` then `K = 100` equal increments; the proposal, the three remining arms, `Pre-HUSPM-SWUmax`, `Pre-HUSPM-TSU`, IncUSP-Miner+, and the isolation arms `Joint-miner+SWUmax`, `Joint-miner+TSU`, `Joint-rule+SWU-tracking` | seven (not BMS1) | `SC2_incremental.csv` |
 | SC3 | static mining of the whole database, four UUT levels, six algorithms | SIGN, LEVIATHAN, C8T1S5I8N5K | `SC3_su.csv` |
 | SC4 | static mining of the whole database at `r_l` in {0.3, 0.5, 0.7, 0.9}, Pre-HUSPM and the proposal at the same `r_l` | SIGN, LEVIATHAN, C8T1S5I8N5K | `SC4_sl_sensitivity.csv` |
 | SC5 | the increments cut EVEN, INCREASING, DECREASING and BURST at `K` in {100, 67, 50, 25}; the SC2 arms | SIGN, LEVIATHAN, C8T1S5I8N5K | `SC5_batch_strategy.csv` |
-| SC6 | twenty operations, 14 insertions, 3 deletions and 3 modifications in a seeded order, each a hundredth of the incremental stream; the proposal and remining replay the same plan | SIGN, LEVIATHAN, C8T1S5I8N5K | `SC6_idm_mixed.csv` |
+| SC6 | twenty operations, 14 insertions, 3 deletions and 3 modifications in a seeded order, each a hundredth of the incremental stream; the proposal and the three remining arms replay the same plan (`common.MixedPlan`) | SIGN, LEVIATHAN, C8T1S5I8N5K | `SC6_idm_mixed.csv` |
+| SC6D | as SC6 with 6 insertions, 10 deletions and 4 modifications | SIGN, LEVIATHAN, C8T1S5I8N5K | `SC6D_idm_mixed.csv` |
+| SC6B | SC6's schedule; one of its deletions, at a position a stream of its own draws from the seed, takes random current sequences until their utility exceeds `(1 - r_l)` times the largest total utility the database has had, so that it alone exceeds the joint rule's budget; its row is `SC6_DEL_BIG`. The operations before it are SC6's for the same seed | SIGN, LEVIATHAN, C8T1S5I8N5K | `SC6B_idm_mixed.csv` |
 | SC7 | ablation. The IUB bound (C3) and the irrelevant item pruning (`-Dadapt.iip=off`) on one mine of the whole database, with Pre-HUSPM for reference; the block index (C4) and the adaptive rescan decision (C5) on `D_init` and 100 increments, one row per increment | C3: seven (not BMS1); C4, C5: SIGN, C8T1S5I8N5K | `SC7_ablation.csv` |
 
 BMS1 takes part in SC1 only: on the whole database 0.025 returns two patterns and 0.020
@@ -212,6 +217,12 @@ the arm, when less than 10 percent of the heap is free.
 Status is encoded in `runtime_ms`: 0 or more is a completed run in milliseconds, -2 over the
 time limit, -1 a failure or a skipped call, -3 a memory-campaign row.
 
+**Pattern check.** With `-Dverify.husps=true` the runner compares, after every operation and
+outside the timed call, every arm's patterns and utilities with the proposal's on the same
+stream (the proposal runs first), writes `verify_husps.csv` and exits 1 on a mismatch, on a
+comparison with no reference, or when nothing was compared. Such a run is a correctness check,
+not a measurement, and the runner refuses to write it into a campaign tree.
+
 ## 6. Repetition
 
 Every replicate is an arm of its own, measured in a fresh JVM like every arm, so that no
@@ -228,7 +239,8 @@ the seed in their own columns.
 | SC3 | three repeats, all six algorithms, the three databases | runtime and every SC3 comparison |
 | SC5 | three repeats of the proposal and remining on LEVIATHAN and SIGN, every K and shape; one run on C8T1S5I8N5K, whose closest margin is 1.36 | runtime summed over the increments |
 | SC7 | three repeats of the four one-mine arms (full, IUB off, IPS off, Pre-HUSPM) on the seven databases | runtime of one mine |
-| SC6 | five seeds (`s0` to `s4`: 42, 1337, 2024, 31415, 271828), both arms | the proposal-to-remining ratio, paired by seed |
+| SC6, SC6D, SC6B | five seeds (`s0` to `s4`: 42, 1337, 2024, 31415, 271828), every arm | each remining arm's time over the proposal's per kind of operation and over the stream, paired by seed (`table_SC6_by_op_arms.csv`, `table_SC6D_by_op.csv`, `table_SC6B_by_op.csv`) |
+| SC2 new arms | three repeats of `Remine-HUSP-ULL`, `Remine-HUSP-SP`, `Joint-miner+SWUmax`, `Joint-miner+TSU` and `Joint-rule+SWU-tracking` on the seven databases | runtime summed over the increments (`table_SC2_remine.tex`, `table_SC2_rule_isolation.csv`) |
 | memory | `s0r1`: SC1 on SIGN, TAFENG, C8T1S5I8N5K, BMS1 and KOSARAK, all six algorithms; SC2, all five arms, on SIGN and TAFENG | the live set between two runs |
 | others | one run | - |
 
