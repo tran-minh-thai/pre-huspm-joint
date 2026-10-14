@@ -698,6 +698,14 @@ def sc2_speedups(put, totals, reps=None):
     fastest = [d for d in dbs if S.get((d, P)) and all(
         S[(d, a)] is None or S[(d, a)]["mean"] > S[(d, P)]["mean"] for a in SC2_ARMS if a != P and (d, a) in S)]
     put("SC2_proposal_fastest", f"{len(fastest)}/{len(dbs)}", "table_SC2_totals.csv")
+    # fastest with every run of the proposal faster than every run of each rival (a rival
+    # measured once is a one-point range); a rival whose runs overlap the proposal's makes the
+    # stream a tie, not a win
+    sep_wins = [d for d in fastest if all(
+        S[(d, a)] is None or S[(d, P)]["max"] < S[(d, a)]["min"]
+        for a in SC2_ARMS if a != P and (d, a) in S)]
+    put("SC2_proposal_fastest_separated", f"{len(sep_wins)}/{len(dbs)}", "table_SC2_totals.csv")
+    put("SC2_proposal_not_fastest", "; ".join(d for d in dbs if d not in fastest) or "none", "table_SC2_totals.csv")
     for a in SC2_ARMS:
         if a == P:
             continue
@@ -724,8 +732,13 @@ def sc2_speedups(put, totals, reps=None):
         b = min(rivals, key=lambda x: rivals[x]["mean"])
         if S[(d, P)]["n"] < 2 or rivals[b]["n"] < 2:
             sep = "not comparable, a side has one run"
+        elif S[(d, P)]["max"] < rivals[b]["min"]:
+            sep = "separated"
+        elif rivals[b]["max"] < S[(d, P)]["min"]:
+            # every run of the rival is faster than every run of the proposal
+            sep = "separated, the rival faster"
         else:
-            sep = "separated" if S[(d, P)]["max"] < rivals[b]["min"] else "overlapping"
+            sep = "overlapping"
         put(f"SC2_runner_up_{d}", f"{rivals[b]['mean'] / S[(d, P)]['mean']:.2f} ({b}; runs {S[(d, P)]['n']} "
             f"and {rivals[b]['n']}; {sep})", "table_SC2_totals.csv")
     rr = {d: second[d] / S[(d, P)]["mean"] for d in dbs if second.get(d) and S.get((d, P))}
