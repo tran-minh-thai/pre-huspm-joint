@@ -49,6 +49,8 @@ checked against USpan, HUSP-ULL and HUSP-SP by `verify.BaselineAgreement`.
 | direct path on real databases, adversarial operations | finished | 128 | 108 | 30 | 49 | 30 | 0 |  |
 | direct path on real databases, adversarial-tafeng operations | finished | 16 | 0 | 4 | 8 | 4 | 0 |  |
 | direct path on real databases, adversarial-tafeng-probe0.7 operations | finished | 16 | 12 | 4 | 6 | 4 | 0 |  |
+| direct path on real databases, floor-selection-adversarial operations | finished | 128 | 108 | 30 | 49 | 30 | 0 |  |
+| direct path on real databases, floor-selection-random operations | finished | 128 | 0 | 30 | 58 | 28 | 0 |  |
 | direct path on real databases, peu-tracking-adversarial operations | finished | 128 | 110 | 0 | 108 | 0 | 0 |  |
 | direct path on real databases, peu-tracking-random operations | finished | 128 | 0 | 0 | 117 | 0 | 0 |  |
 | direct path on real databases, pre-tests-adversarial operations | finished | 256 | 224 | 0 | 210 | 0 | 0 |  |
@@ -81,6 +83,32 @@ checked against USpan, HUSP-ULL and HUSP-SP by `verify.BaselineAgreement`.
 | database | operations | with a target | insert direct | insert rescan | delete direct | delete rescan | modify direct | modify rescan | mismatches |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | TAFENG | 16 | 12 | 6 | 2 | 4 | 0 | 4 | 0 | 0 |
+
+### floor-selection-adversarial
+
+| database | operations | with a target | insert direct | insert rescan | delete direct | delete rescan | modify direct | modify rescan | mismatches |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| SIGN | 16 | 16 | 7 | 1 | 2 | 2 | 4 | 0 | 0 |
+| LEVIATHAN | 16 | 16 | 6 | 2 | 4 | 0 | 3 | 1 | 0 |
+| BIBLE | 16 | 16 | 6 | 2 | 4 | 0 | 4 | 0 | 0 |
+| BMS1 | 16 | 16 | 5 | 3 | 4 | 0 | 4 | 0 | 0 |
+| FIFA | 16 | 16 | 6 | 2 | 4 | 0 | 4 | 0 | 0 |
+| KOSARAK | 16 | 16 | 6 | 2 | 4 | 0 | 4 | 0 | 0 |
+| C8T1S5I8N5K | 16 | 12 | 5 | 3 | 4 | 0 | 3 | 1 | 0 |
+| TAFENG | 16 | 0 | 8 | 0 | 4 | 0 | 4 | 0 | 0 |
+
+### floor-selection-random
+
+| database | operations | with a target | insert direct | insert rescan | delete direct | delete rescan | modify direct | modify rescan | mismatches |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| SIGN | 16 | 0 | 7 | 1 | 3 | 1 | 3 | 1 | 0 |
+| LEVIATHAN | 16 | 0 | 7 | 1 | 3 | 1 | 3 | 1 | 0 |
+| BIBLE | 16 | 0 | 7 | 1 | 4 | 0 | 3 | 1 | 0 |
+| BMS1 | 16 | 0 | 8 | 0 | 4 | 0 | 4 | 0 | 0 |
+| FIFA | 16 | 0 | 7 | 1 | 4 | 0 | 4 | 0 | 0 |
+| KOSARAK | 16 | 0 | 7 | 1 | 4 | 0 | 3 | 1 | 0 |
+| C8T1S5I8N5K | 16 | 0 | 7 | 1 | 4 | 0 | 4 | 0 | 0 |
+| TAFENG | 16 | 0 | 8 | 0 | 4 | 0 | 4 | 0 | 0 |
 
 ### peu-tracking-adversarial
 
@@ -163,8 +191,18 @@ checked against USpan, HUSP-ULL and HUSP-SP by `verify.BaselineAgreement`.
     python3 analysis/fault_injection.py --item-removal --trials 2000 --seed 1
     # fault-injection-real: exit 0, commit e954773c, 2026-10-12T10:38:57
     python3 analysis/fault_injection.py --real SIGN,LEVIATHAN,BIBLE,C8T1S5I8N5K,TAFENG
+    # floor-selection-acceptance: exit 0, commit 8dfc5516, 2026-10-15T07:17:13
+    java -cp build-vj verify.RescanRuleAcceptanceTest
+    # floor-selection-adversarial: exit 0, commit 8dfc5516, 2026-10-15T08:30:20
+    java -Dadapt.floorWindow=1 -Xmx24g -Xss64m -cp build-vj verify.DirectPathVerifier ALL --adversarial --ops 16 --out results/verify-joint/floor-selection-adversarial
+    # floor-selection-fuzz: exit 0, commit 8dfc5516, 2026-10-15T07:18:23
+    bash -c rc=0; for w in 1 2 5; do for s in "2000 7" "5000 11" "5000 23" "5000 101"; do set -- $s; java -Dadapt.floorWindow=$w -cp build-vj verify.MixedBudgetFuzz joint $1 $2 || rc=1; done; done; exit $rc
+    # floor-selection-random: exit 0, commit 8dfc5516, 2026-10-15T08:12:38
+    java -Dadapt.floorWindow=1 -Xmx24g -Xss64m -cp build-vj verify.DirectPathVerifier ALL --ops 16 --out results/verify-joint/floor-selection-random
     # fuzz: exit 0, commit b1ea30af, 2026-10-12T08:11:48
     bash -c for s in "2000 7" "5000 11" "5000 23" "5000 101"; do set -- $s; for r in joint iaumax; do java -cp build-vj verify.MixedBudgetFuzz $r $1 $2; done; done; java -cp build-vj verify.MixedBudgetProbe joint; java -cp build-vj verify.MixedBudgetProbe iaumax; true
+    # husps-floor-selection: exit 0, commit 8dfc5516, 2026-10-15T08:09:33
+    bash -c rc=0; for d in SIGN TAFENG C8T1S5I8N5K LEVIATHAN BIBLE KOSARAK FIFA; do java -Xmx20g -Xss64m -cp build-vj -Dverify.husps=true -Drepeats=1 -Ddataset.only=$d -Dalgo.only=Adaptive-Full,Adaptive-FloorSelect -Dresults.dir=results/verify-joint/husps-floor-selection/ AutomatedExperimentRunner SC2 || rc=1; done; java -Xmx16g -Xss64m -cp build-vj -Dverify.husps=true -Dseeds=5 -Drepeats=1 -Ddataset.only=SIGN,LEVIATHAN,C8T1S5I8N5K -Dalgo.only=Adaptive-Full,Adaptive-FloorSelect -Dresults.dir=results/verify-joint/husps-floor-selection/ AutomatedExperimentRunner SC6 SC6D SC6B || rc=1; exit $rc
     # husps-mixed: exit 0, commit 35fe25c3, 2026-10-14T10:12:13
     java -Xmx16g -Xss64m -cp build-vh -Dverify.husps=true -Dseeds=5 -Drepeats=1 -Ddataset.only=SIGN,LEVIATHAN,C8T1S5I8N5K -Dalgo.only=Adaptive-Full,Remine-from-scratch,Remine-HUSP-ULL,Remine-HUSP-SP -Dresults.dir=results/verify-joint/husps-mixed/ AutomatedExperimentRunner SC6 SC6D SC6B
     # husps-sc2: exit 0, commit 35fe25c3, 2026-10-14T14:21:40
