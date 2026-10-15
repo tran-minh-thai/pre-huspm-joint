@@ -919,7 +919,17 @@ public class AutomatedExperimentRunner {
      * The remining arms keep no state between operations. The proposal comes first so that,
      * with -Dverify.husps=true, every other arm is compared with its patterns.
      */
-    static final String[] MIXED_ARMS = {"Adaptive-Full", "Remine-from-scratch", "Remine-HUSP-ULL", "Remine-HUSP-SP"};
+    static final String[] MIXED_ARMS = {"Adaptive-Full", "Remine-from-scratch", "Remine-HUSP-ULL", "Remine-HUSP-SP",
+            "Adaptive-FloorSelect"};
+
+    /**
+     * Window w of the rescan floor selection of arm Adaptive-FloorSelect
+     * (PreHUSPMAdaptiveAlgo.floorWindow): a rescan mines at UUT when the last w operations each
+     * exceeded the low budget on their own. Fixed at 5 from the rescan counts the selection gives on
+     * the SC2 streams, computed from the data files before any time was measured
+     * (analysis/insertion_alpha.py --floor-windows); -Dadapt.armFloorWindow overrides it for probes.
+     */
+    static final int FLOOR_WINDOW = Integer.getInteger("adapt.armFloorWindow", 5);
 
     private static void runSC6_InsertDeleteModify() throws IOException {
         runMixedScenario("SC6", SC6_INSERTS, SC6_DELETES, SC6_MODIFIES, false);
@@ -994,13 +1004,14 @@ public class AutomatedExperimentRunner {
     /** Replays the plan for one arm. */
     private static void runMixedArm(DatasetConfig ds, List<Sequence> dInit, double initTotalUtil,
                                     List<MixedPlan.Op> plan, ResultCollector col, String arm) throws IOException {
-        final boolean incremental = "Adaptive-Full".equals(arm);
+        final boolean incremental = "Adaptive-Full".equals(arm) || "Adaptive-FloorSelect".equals(arm);
 
         beginMemArm();
         // The initial mine on D_init: the proposal's for the proposal and for remining with the
         // proposal's miner (as SC6 always measured it), the static miner's for the other two.
         final boolean ownMiner = incremental || "Remine-from-scratch".equals(arm);
         final PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp = ownMiner ? newAdaptive(ds.name, ds.defaultSu) : null;
+        if ("Adaptive-FloorSelect".equals(arm)) adp.floorWindow = FLOOR_WINDOW;
         ExperimentMetrics mInit;
         if (ownMiner) {
             announce(arm, ds.name, "SC6_INIT", 0);
@@ -1424,7 +1435,7 @@ public class AutomatedExperimentRunner {
         // -------- Arm: Adaptive-Full --------
         // First, so that with -Dverify.husps=true every other arm is compared with its patterns.
         // In the campaign each arm runs in a JVM of its own, so the order does not matter there.
-        if (algoEnabled("Adaptive-Full")) runAdaptiveStream("Adaptive-Full", null, null, dsName, Su, dInit, batches, col, tag);
+        if (algoEnabled("Adaptive-Full")) runAdaptiveStream("Adaptive-Full", null, null, 0, dsName, Su, dInit, batches, col, tag);
         forceFullGC();
 
         // -------- Arm: IncUSP-Miner+ (isolated scope) --------
@@ -1650,26 +1661,31 @@ public class AutomatedExperimentRunner {
         // Same miner, same tracking by exact utility, same drop floor as Adaptive-Full; only the
         // rescan condition differs (PreHUSPMAdaptiveAlgo.TriggerRule.PRE_SWUMAX, PRE_TSU).
         if (algoEnabled("Joint-miner+SWUmax")) runAdaptiveStream("Joint-miner+SWUmax",
-                PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.TriggerRule.PRE_SWUMAX, null, dsName, Su, dInit, batches, col, tag);
+                PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.TriggerRule.PRE_SWUMAX, null, 0, dsName, Su, dInit, batches, col, tag);
         if (algoEnabled("Joint-miner+TSU")) runAdaptiveStream("Joint-miner+TSU",
-                PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.TriggerRule.PRE_TSU, null, dsName, Su, dInit, batches, col, tag);
+                PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.TriggerRule.PRE_TSU, null, 0, dsName, Su, dInit, batches, col, tag);
 
         // -------- The joint rule with Pre-HUSPM's tracking by a bound (SWU_proj = PEU) --------
         // Same miner, same search, same rule as Adaptive-Full; the tracked set holds every node
         // whose bound reaches the floor, and a pattern is dropped by its bound
         // (PreHUSPMAdaptiveAlgo.Tracking.PEU).
         if (algoEnabled("Joint-rule+SWU-tracking")) runAdaptiveStream("Joint-rule+SWU-tracking", null,
-                PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.Tracking.PEU, dsName, Su, dInit, batches, col, tag);
+                PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.Tracking.PEU, 0, dsName, Su, dInit, batches, col, tag);
+
+        // -------- The proposal with the rescan floor selection --------
+        if (algoEnabled("Adaptive-FloorSelect")) runAdaptiveStream("Adaptive-FloorSelect", null, null,
+                FLOOR_WINDOW, dsName, Su, dInit, batches, col, tag);
         forceFullGC();
     }
 
     /**
      * The proposal over a stream of insertions: Adaptive-Full under its own rule and tracking
-     * (both null), or with another rescan rule or another tracking and everything else unchanged.
+     * (both null, floorWindow 0), or with another rescan rule, another tracking or the rescan
+     * floor selection (floorWindow > 0), everything else unchanged.
      */
     private static void runAdaptiveStream(String label, PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.TriggerRule rule,
                                           PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.Tracking tracking,
-                                          String dsName, double Su, List<Sequence> dInit,
+                                          int floorWindow, String dsName, double Su, List<Sequence> dInit,
                                           List<List<Sequence>> batches, ResultCollector col, String tag) {
         final double initTotal = sumUtility(dInit);
         beginMemArm();
@@ -1679,6 +1695,7 @@ public class AutomatedExperimentRunner {
                 ENABLE_PATTERN_EXPORT);
         if (rule != null) adp.triggerRule = rule;
         if (tracking != null) adp.tracking = tracking;
+        if (floorWindow > 0) adp.floorWindow = floorWindow;
         boolean poisoned = false;
         announce(label, dsName, tag + "_INIT", 0);
         ExperimentMetrics m0 = measure(label, dsName, 0, tag + "_INIT",
@@ -1748,8 +1765,9 @@ public class AutomatedExperimentRunner {
             m.kappa = Double.NaN; m.delta0 = Double.NaN;
         }
         m.repetition    = adp.repetition;
-        m.slMinEff      = adp.slMinRatioEff;
+        m.slMinEff      = floorInForce(adp);
         m.rescanRetries = adp.rescanRetries;
+        m.rescansAtUut  = adp.rescansAtUut;
         m.blockSize     = adp.blockSize;            // the instance's own value, not the default
         // The work counters are not: a run that broke off leaves partial counts, and a
         // partial count in the record is worse than none.
@@ -1767,9 +1785,14 @@ public class AutomatedExperimentRunner {
         m.iauMax        = adp.iauMaxAtDecision;   // value AT the decision, before resetIau()
         m.iauTightness  = adp.iauTightness;
         m.repetition    = adp.repetition;
-        m.slMinEff      = adp.slMinRatioEff;
+        m.slMinEff      = floorInForce(adp);
         m.rescanRetries = adp.rescanRetries;
         // delta_D is not stored (derived: uut_val - lut_dyn)
+    }
+
+    /** The floor ratio of the tracked set: 1 after a rescan the floor selection mined at UUT, r_l otherwise. */
+    private static double floorInForce(PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp) {
+        return adp.floorWindow > 0 && adp.Sl_min >= adp.Su ? 1.0 : adp.slMinRatioEff;
     }
 
     /**

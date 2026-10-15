@@ -153,6 +153,38 @@ def joint_decisions(init_total, batches, uut, rl):
     return rows
 
 
+def floor_selection(init_total, batches, uut, rl, w):
+    """The joint rule with the rescan floor selection of the proposal (PreHUSPMAdaptiveAlgo
+    floorWindow = w) on an insertion-only stream: a rescan mines at UUT (floor ratio 1, budget 0)
+    when the last w batches each charged more than the low budget (1 - r_l) * UUT * TU on their own,
+    phi = max_i (utility of the batch's sequences holding i) - UUT * (the batch's utility), TU the
+    total after the batch; at r_l otherwise. (increment, rescan, floor ratio in force after it)."""
+    tsu_ref = rolling = init_total
+    floor = rl
+    a, a_max, u_plus, run = {}, 0.0, 0.0, 0
+    rows = []
+    for b, batch in enumerate(batches, start=1):
+        bt, ab = 0.0, {}
+        for items, u in batch:
+            bt += u
+            for i in items:
+                ab[i] = ab.get(i, 0.0) + u
+                v = a.get(i, 0.0) + u
+                a[i] = v
+                if v > a_max:
+                    a_max = v
+        u_plus += bt
+        rolling += bt
+        phi = (max(ab.values()) if ab else 0.0) - uut * bt
+        run = run + 1 if phi > (uut - rl * uut) * rolling else 0
+        rescan = (a_max - uut * u_plus) > (uut - floor * uut) * tsu_ref
+        if rescan:
+            a, a_max, u_plus, tsu_ref = {}, 0.0, 0.0, rolling
+            floor = 1.0 if run >= w else rl
+        rows.append((b, rescan, floor))
+    return rows
+
+
 def prehuspm_rescans(init_total, batches, uut, rl, variant):
     """Increments at which Pre-HUSPM's test rescans (Yan et al., Algorithm 1): buf + q > f with
     q = TSU_d or SWUmax_d = max_i (utility of the sequences of d holding i), buf reset to 0 and
@@ -228,13 +260,13 @@ def random_order_check(trials, seed):
     return trials, comps, bad, trials_with_rescans, first
 
 
-def campaign_rows(tree, name):
-    paths = glob.glob(os.path.join(tree, "SC2", name, "Adaptive-Full", "*.csv"))
+def campaign_rows(tree, name, arm="Adaptive-Full"):
+    paths = glob.glob(os.path.join(tree, "SC2", name, arm, "*.csv"))
     rows = []
     for p in paths:
         for r in csv.DictReader(open(p, encoding="utf-8")):
             r = {k.strip(): v for k, v in r.items()}
-            if "_INC" in r.get("op_type", "") and r.get("algorithm") == "Adaptive-Full":
+            if "_INC" in r.get("op_type", "") and r.get("algorithm") == arm:
                 rows.append(r)
     return rows
 
@@ -246,8 +278,14 @@ def main():
     ap.add_argument("--data", default=os.path.join(ROOT, "datasets"))
     ap.add_argument("--random-order", nargs=2, metavar=("TRIALS", "SEED"),
                     help="check the rescan order of the joint rule and the SWUmax test on random streams")
+    ap.add_argument("--floor-windows", type=int, nargs="+", default=None, metavar="W",
+                    help="also simulate the rescan floor selection for each window W; writes "
+                         "floor_selection.csv and floor_selection_batches.csv")
+    ap.add_argument("--floor-campaign-window", type=int, default=5,
+                    help="the window of arm Adaptive-FloorSelect, compared with --campaign")
     ap.add_argument("databases", nargs="*")
     a = ap.parse_args()
+    floor_rows, floor_batch_rows = [], []
     tab = table()
     names = a.databases or [n for n in tab if n != "BMS1"]   # BMS1 is not in SC2
     os.makedirs(a.out, exist_ok=True)
@@ -284,6 +322,36 @@ def main():
         print(f"{name}: insertion sequences={len(seqs) - d_init} alpha(stream)={alpha_s:.6f} UUT={uut} "
               f"increments={len(sim)} rescans={sum(r for _, _, r in sim)} "
               f"increments with alpha<=UUT={sum(al <= uut for _, al, _ in sim)}")
+        if a.floor_windows:
+            it = sum(u for _, u in seqs[:d_init])
+            bt = even_batches(seqs[d_init:])
+            for w in a.floor_windows:
+                fs = floor_selection(it, bt, uut, rl, w)
+                resc = [f for _, rs, f in fs if rs]
+                floor_rows.append([name, w, rl, sum(r for _, _, r in sim), len(resc), sum(1 for f in resc if f == 1.0)])
+                for b, rs, f in fs:
+                    floor_batch_rows.append([name, w, b, "true" if rs else "false", f])
+                print(f"  floor selection w={w}: rescans {len(resc)} ({sum(1 for f in resc if f == 1.0)} at UUT), "
+                      f"joint rule {sum(r for _, _, r in sim)}")
+            if a.campaign:
+                fs = {b: (rs, f) for b, rs, f in floor_selection(it, bt, uut, rl, a.floor_campaign_window)}
+                got = {int(r["iteration"]): r for r in campaign_rows(a.campaign, name, "Adaptive-FloorSelect")}
+                n = bad = 0
+                for b, (rs, f) in fs.items():
+                    r = got.get(b)
+                    if r is None:
+                        continue
+                    n += 1
+                    ok = ((r["cub_triggered"].strip().lower() == "true") == rs
+                          and abs(float(r["sl_min_eff"]) - f) <= 1e-9)
+                    if not ok:
+                        bad += 1
+                        if bad <= 3:
+                            print(f"  MISMATCH {name} increment {b}: rescan {rs} floor {f} vs "
+                                  f"cub_triggered {r['cub_triggered']} sl_min_eff {r['sl_min_eff']}")
+                print(f"  floor selection compared with {a.campaign}: {n} increments, {bad} mismatching")
+                compared += n
+                mismatched += bad
         if a.campaign:
             got = {int(r["iteration"]): r for r in campaign_rows(a.campaign, name)}
             n = bad = 0
@@ -314,6 +382,15 @@ def main():
         w = csv.writer(fh, lineterminator="\n")
         w.writerow(["dataset", "increment", "alpha", "rescan"])
         w.writerows(batch_rows)
+    if a.floor_windows:
+        with open(os.path.join(a.out, "floor_selection.csv"), "w", newline="", encoding="utf-8") as fh:
+            w = csv.writer(fh, lineterminator="\n")
+            w.writerow(["dataset", "window", "r_l", "rescans_joint", "rescans_selection", "rescans_at_uut"])
+            w.writerows(floor_rows)
+        with open(os.path.join(a.out, "floor_selection_batches.csv"), "w", newline="", encoding="utf-8") as fh:
+            w = csv.writer(fh, lineterminator="\n")
+            w.writerow(["dataset", "window", "increment", "rescan", "floor_ratio"])
+            w.writerows(floor_batch_rows)
     print(f"rescan order (k-th rescan of the joint rule not earlier than that of the SWUmax test, and no "
           f"more rescans): {order_comparisons} comparisons, {order_violations} violations")
     if order_violations:

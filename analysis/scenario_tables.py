@@ -39,6 +39,9 @@ INC_ARMS = [P, "Pre-HUSPM-SWUmax", "Pre-HUSPM-TSU", REM, "IncUSP-Miner+"]
 # one component of the proposal (ISOLATION_ARMS) are not competitors and appear in their own table.
 SC2_ARMS = INC_ARMS + ["Remine-HUSP-ULL", "Remine-HUSP-SP"]
 ISOLATION_ARMS = ["Joint-miner+SWUmax", "Joint-miner+TSU", "Joint-rule+SWU-tracking"]
+# The proposal with the rescan floor selection (PreHUSPMAdaptiveAlgo.floorWindow): a version of the
+# proposal, compared with it and with every competitor, in a table of its own.
+FS = "Adaptive-FloorSelect"
 
 
 def gmean(x):
@@ -308,7 +311,7 @@ def sc6_by_op():
 
 
 # Remining arms of the mixed streams (AutomatedExperimentRunner.MIXED_ARMS after the proposal)
-MIXED_REMINE = ["Remine-from-scratch", "Remine-HUSP-ULL", "Remine-HUSP-SP"]
+MIXED_REMINE = ["Remine-from-scratch", "Remine-HUSP-ULL", "Remine-HUSP-SP", "Adaptive-FloorSelect"]
 MIXED_KINDS = {"INS": "insertion", "DEL": "deletion", "MOD": "modification",
                "DEL_BIG": "deletion beyond the budget"}
 
@@ -354,7 +357,7 @@ def mixed_by_op(sc):
                 else:
                     ratios = [per_q[r] / per_p[r] for r in common if per_p[r] > 0]
                     key = "over_proposal"
-                tag = arm.replace("Remine-from-scratch", "Remine")
+                tag = arm.replace("Remine-from-scratch", "Remine").replace("Adaptive-FloorSelect", "FloorSelect")
                 row[f"{tag}_s_mean"] = np.mean([per_q[r] for r in common]) if common else np.nan
                 row[f"{key}_{tag}_mean"] = np.mean(ratios) if ratios else np.nan
                 row[f"{key}_{tag}_sd"] = np.std(ratios, ddof=1) if len(ratios) > 1 else np.nan
@@ -747,6 +750,52 @@ def sc2_speedups(put, totals, reps=None):
     put("SC2_runner_up_over_proposal_max", f"{rr[hi]:.2f} ({hi})", "table_SC2_totals.csv")
 
 
+def sc2_floor_selection(totals, reps=None):
+    """Per database: the proposal and the proposal with the floor selection (time, runs, rescans,
+    rescans mined at UUT), the selection's time over the proposal's, the fastest competitor and the
+    selection's time over it, and whether every run of one side is beyond every run of the other."""
+    S = sc2_stats(totals, reps)
+    df = mf.load_scenario("SC2")
+    rows = []
+    for d in [x for x in mf.ALL_DATASETS if (x, FS) in S]:
+        p, f = S.get((d, P)), S.get((d, FS))
+        if not p or not f:
+            continue
+        g = df[(df["dataset"] == d) & (df["algorithm"] == FS) & mf.is_inc(df)].sort_values("iteration")
+        last = g.iloc[-1]
+        rivals = {b: S[(d, b)] for b in SC2_ARMS if b != P and S.get((d, b))}
+        best = min(rivals, key=lambda b: rivals[b]["mean"]) if rivals else None
+        def side(x, y):
+            if x["max"] < y["min"]:
+                return "separated, faster"
+            if y["max"] < x["min"]:
+                return "separated, slower"
+            return "overlapping"
+        rows.append(dict(dataset=d, proposal_s=p["mean"], proposal_runs=p["n"], selection_s=f["mean"],
+                         selection_s_std=f["std"], selection_runs=f["n"],
+                         rescans=int(last["rescan_count"]), rescans_at_uut=int(last["rescans_at_uut"]),
+                         selection_over_proposal=f["mean"] / p["mean"], vs_proposal=side(f, p),
+                         best_competitor=best, best_competitor_s=rivals[best]["mean"] if best else np.nan,
+                         selection_over_best=f["mean"] / rivals[best]["mean"] if best else np.nan,
+                         vs_best=side(f, rivals[best]) if best else ""))
+    return pd.DataFrame(rows)
+
+
+def sc2_floor_selection_keys(put, fs):
+    src = "table_SC2_floor_selection.csv"
+    for r in fs.itertuples():
+        put(f"SC2_FloorSelect_{r.dataset}_time", f"{r.selection_s:.2f}", src)
+        put(f"SC2_FloorSelect_{r.dataset}_over_proposal", f"{r.selection_over_proposal:.2f} ({r.vs_proposal})", src)
+        put(f"SC2_FloorSelect_{r.dataset}_rescans", f"{r.rescans} ({r.rescans_at_uut} at UUT)", src)
+        put(f"SC2_FloorSelect_{r.dataset}_over_best_competitor",
+            f"{r.selection_over_best:.2f} ({r.best_competitor}; {r.vs_best})", src)
+    if len(fs):
+        put("SC2_FloorSelect_fastest_separated",
+            f"{int((fs['vs_best'] == 'separated, faster').sum())}/{len(fs)}", src)
+        put("SC2_FloorSelect_not_slower_than_best",
+            f"{int((fs['vs_best'] != 'separated, slower').sum())}/{len(fs)}", src)
+
+
 def sc2_isolation(totals, reps=None):
     """SC2 with one component of the proposal changed at a time, beside the proposal and
     Pre-HUSPM: per database and arm, the time over the 100 increments (the mean of the runs
@@ -1103,7 +1152,7 @@ def export_all(out_dir=None):
             if r["kind"] != "stream":
                 put(f"{base}_rescans", f"{r['rescans']}/{r['operations']}", fname)
                 put(f"{base}_direct", f"{r['direct']}/{r['operations']}", fname)
-            for arm in ("Remine", "Remine-HUSP-ULL", "Remine-HUSP-SP"):
+            for arm in ("Remine", "Remine-HUSP-ULL", "Remine-HUSP-SP", "FloorSelect"):
                 key = "proposal_over" if r["kind"] == "stream" else "over_proposal"
                 m, sd, n = r.get(f"{key}_{arm}_mean"), r.get(f"{key}_{arm}_sd"), r.get(f"{key}_{arm}_seeds")
                 if pd.notna(m):
@@ -1263,6 +1312,15 @@ def export_all(out_dir=None):
             else:
                 open(remine_path, "w", encoding="utf-8").write(remine_tex)
             sc2_speedups(put, totals, reps)
+            fsel = sc2_floor_selection(totals, reps)
+            fs_path = os.path.join(out, "table_SC2_floor_selection.csv")
+            if len(fsel):
+                mf.write_csv(fsel, fs_path)
+                sc2_floor_selection_keys(put, fsel)
+            else:
+                if os.path.exists(fs_path):
+                    os.remove(fs_path)
+                print("[not written] table_SC2_floor_selection.csv: no finished arm of " + FS)
             iso = sc2_isolation(totals, reps)
             iso_path = os.path.join(out, "table_SC2_rule_isolation.csv")
             if len(iso) and set(iso["algorithm"]) & set(ISOLATION_ARMS):

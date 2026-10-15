@@ -609,6 +609,41 @@ public class PreHUSPMAdaptiveAlgorithm {
                         + " is refused");
         }
 
+        /**
+         * Rescan floor selection (-Dadapt.floorWindow=w; 0, the default, keeps the floor at r_l).
+         *
+         * Right after a rescan at floor r the counters are zero, so the next operation takes the
+         * direct update iff its own charge phi = max_i a_i - UUT*u+ + UUT*u- (over that operation
+         * alone) is at most the budget (1 - r)*UUT*TSU_r. When it exceeds the budget a rescan at
+         * r_l would set, the pre-large patterns that rescan finds are never used: mining at UUT
+         * gives the same output with a subset of the search. The selection mines a rescan at UUT
+         * (floor ratio 1, budget 0) when the last w operations each exceeded the low budget on
+         * their own, and at r_l otherwise. Exact for every floor ratio in [r_l, 1]: JOINT's
+         * argument holds for any LUT_min <= UUT. A wrong guess costs at most one extra rescan
+         * each time a run of such operations ends. JOINT with tracking by utility only.
+         */
+        public int floorWindow = Integer.getInteger("adapt.floorWindow", 0);
+        /** Operations in a row whose own charge exceeded the low budget. */
+        private int overLowRun = 0;
+        /** Rescans the selection mined at UUT since the initial mine. */
+        public int rescansAtUut = 0;
+
+        private void noteOwnCharge(double ownCharge, double newTotal) {
+            if (floorWindow <= 0) return;
+            if (triggerRule != TriggerRule.JOINT || tracking != Tracking.UTILITY)
+                throw new UnsupportedOperationException("the floor selection is defined under the JOINT rule "
+                        + "with tracking by utility, not " + triggerRule + " with " + tracking);
+            overLowRun = ownCharge > (Su - slMinRatioEff * Su) * newTotal ? overLowRun + 1 : 0;
+        }
+
+        /** At a rescan, once tsuAtLastRescan is the new reference: the floor this rescan mines at. */
+        private void selectRescanFloor() {
+            if (floorWindow <= 0) return;
+            boolean high = overLowRun >= floorWindow;
+            Sl_min = high ? Su : slMinRatioEff * Su;
+            if (high) rescansAtUut++;
+        }
+
         private void refuseUnderPreTest(String op) {
             if (triggerRule == TriggerRule.PRE_SWUMAX || triggerRule == TriggerRule.PRE_TSU)
                 throw new UnsupportedOperationException("the Pre-HUSPM rescan tests (" + triggerRule
@@ -942,6 +977,7 @@ public class PreHUSPMAdaptiveAlgorithm {
             cubValue = 0; cubTriggeredRescan = false;
             resetIau();
             insertedSinceRescan = 0; deletedSinceRescan = 0; preBuf = 0;
+            if (floorWindow > 0) { Sl_min = slMinRatioEff * Su; overLowRun = 0; rescansAtUut = 0; }
             largeMap.clear(); prelargeMap.clear();
             dbClear();
             globalBlockIndex = new BlockIndex();
@@ -1031,6 +1067,10 @@ public class PreHUSPMAdaptiveAlgorithm {
             this.sigmaDSquared = joint ? 0 : calculateVariance(deltaD);
             this.rhoD = (joint || batchTotalUtil == 0) ? 0 : (swuMax / batchTotalUtil);
 
+            if (floorWindow > 0)
+                noteOwnCharge(algorithms.PreHUSPMAlgorithm.PreHUSPMAlgo.maxItemSwu(deltaD) - Su * batchTotalUtil,
+                        newTotalUtility);
+
             // --- Step 2: test the trigger ---
             // Insertion safety bound of Hong et al.: (UUT - LUT_min)/(1 - UUT) * TSU_ref.
             double safetyBoundF = ((Su - Sl_min) / (1.0 - Su)) * tsuAtLastRescan;
@@ -1059,6 +1099,7 @@ public class PreHUSPMAdaptiveAlgorithm {
                 resetIau();                             // reset A_i
                 insertedSinceRescan = 0; deletedSinceRescan = 0; preBuf = 0;
                 this.tsuAtLastRescan = newTotalUtility; // new TSU reference
+                selectRescanFloor();
             } else if (this.triggerRule == TriggerRule.PRE_SWUMAX || this.triggerRule == TriggerRule.PRE_TSU) {
                 preBuf = triggerQuantity;               // buf += q
             }
@@ -1196,6 +1237,7 @@ public class PreHUSPMAdaptiveAlgorithm {
             // The non-JOINT deletion trigger is cumulative (cubValue), hence sound.
             this.cubValue += deletedTotal;   // perturbation accumulated since the last rescan
             this.deletedSinceRescan += deletedTotal;
+            noteOwnCharge(Su * deletedTotal, newTotalUtility);
 
             // F_del = (Su - Sl_min)/Su * TSU_lastRescan (deletion bound of Hong et al.).
             double safetyBoundDel = ((Su - Sl_min) / Su) * tsuAtLastRescan;
@@ -1215,6 +1257,7 @@ public class PreHUSPMAdaptiveAlgorithm {
                 resetIau();
                 insertedSinceRescan = 0; deletedSinceRescan = 0;
                 this.tsuAtLastRescan = newTotalUtility; // new TSU reference
+                selectRescanFloor();
             }
 
             if (joint) {

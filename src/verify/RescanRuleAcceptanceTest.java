@@ -5,6 +5,7 @@ import algorithms.PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.TriggerRule;
 import common.Sequence;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -32,6 +33,10 @@ import java.util.Map;
  *   T8  Tracking by the PEU bound under the joint rule (-Dadapt.tracking=peu): the same
  *       insertion cases, the tracked set holding every pattern the utility tracking holds,
  *       and a deletion, a modification and a rule other than joint refused.
+ *   T9  The rescan floor selection (-Dadapt.floorWindow=w): batches that each exceed the low
+ *       budget on their own lift the floor to UUT after w of them, a batch within it brings the
+ *       floor back to r_l, every result matches remining, and the selection is refused under
+ *       another rule or under tracking by the bound.
  *
  * T1 and T2 check the default joint rule beside iaumax (and CUB in T1); T3 and T4 check joint.
  */
@@ -55,6 +60,7 @@ public final class RescanRuleAcceptanceTest {
         testDirectUpdateCounterexamples();
         testPreHuspmTestsWithJointTracking();
         testPeuTracking();
+        testFloorSelection();
 
         System.out.println();
         System.out.printf("=== acceptance: %d passed, %d failed ===%n", passed, failures);
@@ -482,6 +488,56 @@ public final class RescanRuleAcceptanceTest {
         check("  refuses a deletion, a modification and a rule other than joint",
                 delRefused && modRefused && ruleRefused,
                 "deletion " + delRefused + ", modification " + modRefused + ", other rule " + ruleRefused);
+    }
+
+    // ================================================================
+    // T9 - the rescan floor selection
+    // ================================================================
+    private static void testFloorSelection() {
+        System.out.println("T9 - rescan floor selection, window 2");
+        SyntheticDb.resetIds();
+        // TU = 100, UUT = 0.25, r_l = 0.8: the low budget is 0.05 * TU. A batch of one sequence
+        // 1[10] charges max_i a_i - UUT * u = 10 - 2.5 = 7.5 > 0.05 * 110 = 5.5 on its own.
+        List<Sequence> cur = fillers("1[19]", 9, 9);
+        PreHUSPMAdaptiveAlgo a = newAlgo(TriggerRule.JOINT);
+        a.floorWindow = 2;
+        a.runInitialMining(copyOf(cur), SyntheticDb.tsu(cur));
+        boolean allMatch = true;
+        double[] floors = new double[4];
+        int[] rescans = new int[4];
+        String[] specs = {"1[10]", "1[10]", "1[10]", "40[0.1]"};
+        for (int k = 0; k < specs.length; k++) {
+            List<Sequence> ins = SyntheticDb.db(specs[k]);
+            cur.addAll(ins);
+            a.runIncrementalMining(copyOf(ins), copyOf(cur), SyntheticDb.tsu(cur));
+            floors[k] = a.Sl_min / a.Su;
+            rescans[k] = a.rescanCount;
+            allMatch &= PatternSetDiff.of(remineFromScratch(cur), a.exportLargeAsStrings()).isClean();
+        }
+        check("  every batch matches remining", allMatch, "a mismatch");
+        check("  after two batches over the low budget the rescan mines at UUT (floors "
+                        + Arrays.toString(floors) + ", rescans " + Arrays.toString(rescans) + ")",
+                Math.abs(floors[1] - 1.0) < 1e-12 && a.rescansAtUut >= 1, "floor stayed at r_l");
+        check("  the first batch, alone over the budget once, keeps r_l", Math.abs(floors[0] - RL) < 1e-12,
+                "floor " + floors[0]);
+        check("  a batch within the low budget brings the floor back to r_l at its rescan",
+                rescans[3] > rescans[2] && Math.abs(floors[3] - RL) < 1e-12,
+                "rescans " + rescans[2] + " -> " + rescans[3] + ", floor " + floors[3]);
+
+        boolean refusedRule = false, refusedTracking = false;
+        PreHUSPMAdaptiveAlgo b = newAlgo(TriggerRule.IAUMAX);
+        b.floorWindow = 2;
+        b.runInitialMining(copyOf(cur), SyntheticDb.tsu(cur));
+        try { b.runIncrementalMining(SyntheticDb.db("1[10]"), copyOf(cur), SyntheticDb.tsu(cur)); }
+        catch (UnsupportedOperationException e) { refusedRule = true; }
+        PreHUSPMAdaptiveAlgo c = newAlgo(TriggerRule.JOINT);
+        c.floorWindow = 2;
+        c.tracking = PreHUSPMAdaptiveAlgo.Tracking.PEU;
+        c.runInitialMining(copyOf(cur), SyntheticDb.tsu(cur));
+        try { c.runIncrementalMining(SyntheticDb.db("1[10]"), copyOf(cur), SyntheticDb.tsu(cur)); }
+        catch (UnsupportedOperationException e) { refusedTracking = true; }
+        check("  refused under another rule and under tracking by the bound", refusedRule && refusedTracking,
+                "rule " + refusedRule + ", tracking " + refusedTracking);
     }
 
     private static boolean boundsCoverUtility(PreHUSPMAdaptiveAlgo a) {

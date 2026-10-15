@@ -109,6 +109,8 @@ public class ExperimentMetrics {
     /** Mines a live-mode reading rests on: a short static mine is run again until the sampler
      *  has enough readings (AutomatedExperimentRunner.repeatForLiveSamples); 1 otherwise. */
     public int liveRepeats = 1;
+    /** Rescans the floor selection mined at UUT (PreHUSPMAdaptiveAlgo.floorWindow > 0); 0 otherwise. */
+    public int rescansAtUut = 0;
     /** Bytes allocated by the mining thread, in MB. Deterministic, independent of GC scheduling. */
     public long allocatedMb;
 
@@ -172,6 +174,7 @@ public class ExperimentMetrics {
                 .add(String.valueOf(repetition)).add(String.valueOf(slMinEff))
                 .add(String.valueOf(rescanRetries));
         sj.add(String.valueOf(liveRepeats));     // appended last so earlier columns keep their positions
+        sj.add(String.valueOf(rescansAtUut));
         return sj.toString();
     }
 
@@ -186,6 +189,6 @@ public class ExperimentMetrics {
                 "sigma2,rho," +
                 "mem_mode,mem_live_mb,mem_retained_mb,gc_forced,wall_ms_perturbed,allocated_mb," +
                 "seed,repeat,block_size,kappa,delta0,trigger_rule,iau_max,iau_tightness," +
-                "repetition,sl_min_eff,rescan_retries,live_repeats";
+                "repetition,sl_min_eff,rescan_retries,live_repeats,rescans_at_uut";
     }
 }

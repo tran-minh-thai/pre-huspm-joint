@@ -109,9 +109,10 @@ $all8    = @('SIGN','LEVIATHAN','TAFENG','BIBLE','BMS1','C8T1S5I8N5K','KOSARAK',
 $subset3 = @('SIGN','LEVIATHAN','C8T1S5I8N5K')
 $static  = @('USpan','HUSP-ULL','HUSP-SP','IncUSP-Miner+','Pre-HUSPM','Adaptive-Full')
 $incr    = @('Adaptive-Full','Pre-HUSPM-SWUmax','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+',
-             'Remine-HUSP-ULL','Remine-HUSP-SP','Joint-miner+SWUmax','Joint-miner+TSU','Joint-rule+SWU-tracking')
+             'Remine-HUSP-ULL','Remine-HUSP-SP','Joint-miner+SWUmax','Joint-miner+TSU','Joint-rule+SWU-tracking',
+             'Adaptive-FloorSelect')
 # The mixed streams (SC6, SC6D, SC6B): AutomatedExperimentRunner.MIXED_ARMS.
-$mixed   = @('Adaptive-Full','Remine-from-scratch','Remine-HUSP-ULL','Remine-HUSP-SP')
+$mixed   = @('Adaptive-Full','Remine-from-scratch','Remine-HUSP-ULL','Remine-HUSP-SP','Adaptive-FloorSelect')
 $scenarios = @('SC1','SC2','SC3','SC4','SC5','SC6','SC6D','SC6B','SC7')
 if ($scenarios -notcontains $Scenario) { throw "Unknown scenario '$Scenario'. Known: $($scenarios -join ', ')." }
 
@@ -162,6 +163,7 @@ if (-not $Datasets) {
 # "A,B", which matches no algorithm. Use -Command "& { .\campaign.ps1 -Algorithms 'A','B' }".
 $knownAlgos = @('Adaptive-Full','Pre-HUSPM','Pre-HUSPM-SWUmax','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+',
                 'Remine-HUSP-ULL','Remine-HUSP-SP','Joint-miner+SWUmax','Joint-miner+TSU','Joint-rule+SWU-tracking',
+                'Adaptive-FloorSelect',
                 'USpan','HUSP-ULL','HUSP-SP',
                 'proposed_full','proposed_no_block_index','proposed_no_IUB','proposed_no_IPS',
                 'proposed_bsz_1','proposed_bsz_5','proposed_bsz_10','proposed_bsz_50','proposed_bsz_200',
