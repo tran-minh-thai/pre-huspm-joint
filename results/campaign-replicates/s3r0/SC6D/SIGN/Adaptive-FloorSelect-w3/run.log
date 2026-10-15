@@ -1,0 +1,50 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC6D]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=3
+
+--- [SC6D] Mixed stream, exactly 6:10:4 ---
+>> [SC6D] SIGN seed=31415 opSize=5 plan=20 operations (6 insert, 10 delete, 4 modify)
+>> RUNNING Adaptive-FloorSelect-w3/SIGN/SC6_INIT#0  (heap free=1007MB / total=1024MB / max=49152MB)
+[Adaptive-FloorSelect-w3/SIGN/SC6_INIT#0] OK t=198ms cand=70528 pat=583 heapDelta=19MB
+>> RUNNING Adaptive-FloorSelect-w3/SIGN/SC6_INS#1  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-FloorSelect-w3/SIGN/SC6_INS#1] OK t=130ms cand=74614 pat=611 heapDelta=4MB
+>> RUNNING Adaptive-FloorSelect-w3/SIGN/SC6_DEL#2  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-FloorSelect-w3/SIGN/SC6_DEL#2] OK t=4ms cand=74614 pat=619 heapDelta=1MB
+>> RUNNING Adaptive-FloorSelect-w3/SIGN/SC6_INS#3  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-FloorSelect-w3/SIGN/SC6_INS#3] OK t=189ms cand=80627 pat=707 heapDelta=3MB
+>> RUNNING Adaptive-FloorSelect-w3/SIGN/SC6_MOD#4  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-FloorSelect-w3/SIGN/SC6_MOD#4] OK t=127ms cand=80395 pat=692 heapDelta=3MB
+>> RUNNING Adaptive-FloorSelect-w3/SIGN/SC6_MOD#5  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-FloorSelect-w3/SIGN/SC6_MOD#5] OK t=125ms cand=79591 pat=666 heapDelta=3MB
+>> RUNNING Adaptive-FloorSelect-w3/SIGN/SC6_INS#6  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-FloorSelect-w3/SIGN/SC6_INS#6] OK t=126ms cand=79565 pat=691 heapDelta=3MB
+>> RUNNING Adaptive-FloorSelect-w3/SIGN/SC6_DEL#7  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-FloorSelect-w3/SIGN/SC6_DEL#7] OK t=2ms cand=79565 pat=707 heapDelta=1MB
+>> RUNNING Adaptive-FloorSelect-w3/SIGN/SC6_DEL#8  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-FloorSelect-w3/SIGN/SC6_DEL#8] OK t=2ms cand=79565 pat=715 heapDelta=1MB
+>> RUNNING Adaptive-FloorSelect-w3/SIGN/SC6_INS#9  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-FloorSelect-w3/SIGN/SC6_INS#9] OK t=126ms cand=79551 pat=766 heapDelta=3MB
+>> RUNNING Adaptive-FloorSelect-w3/SIGN/SC6_INS#10  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-FloorSelect-w3/SIGN/SC6_INS#10] OK t=129ms cand=80286 pat=720 heapDelta=3MB
+>> RUNNING Adaptive-FloorSelect-w3/SIGN/SC6_DEL#11  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-FloorSelect-w3/SIGN/SC6_DEL#11] OK t=2ms cand=80286 pat=664 heapDelta=1MB
+>> RUNNING Adaptive-FloorSelect-w3/SIGN/SC6_MOD#12  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-FloorSelect-w3/SIGN/SC6_MOD#12] OK t=128ms cand=80859 pat=677 heapDelta=3MB
+>> RUNNING Adaptive-FloorSelect-w3/SIGN/SC6_DEL#13  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-FloorSelect-w3/SIGN/SC6_DEL#13] OK t=1ms cand=80859 pat=709 heapDelta=1MB
+>> RUNNING Adaptive-FloorSelect-w3/SIGN/SC6_DEL#14  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-FloorSelect-w3/SIGN/SC6_DEL#14] OK t=2ms cand=80859 pat=673 heapDelta=1MB
+>> RUNNING Adaptive-FloorSelect-w3/SIGN/SC6_MOD#15  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-FloorSelect-w3/SIGN/SC6_MOD#15] OK t=120ms cand=78669 pat=667 heapDelta=3MB
+>> RUNNING Adaptive-FloorSelect-w3/SIGN/SC6_DEL#16  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-FloorSelect-w3/SIGN/SC6_DEL#16] OK t=2ms cand=78669 pat=657 heapDelta=1MB
+>> RUNNING Adaptive-FloorSelect-w3/SIGN/SC6_DEL#17  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-FloorSelect-w3/SIGN/SC6_DEL#17] OK t=1ms cand=78669 pat=653 heapDelta=1MB
+>> RUNNING Adaptive-FloorSelect-w3/SIGN/SC6_DEL#18  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-FloorSelect-w3/SIGN/SC6_DEL#18] OK t=2ms cand=78669 pat=630 heapDelta=1MB
+>> RUNNING Adaptive-FloorSelect-w3/SIGN/SC6_INS#19  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-FloorSelect-w3/SIGN/SC6_INS#19] OK t=109ms cand=76810 pat=570 heapDelta=3MB
+>> RUNNING Adaptive-FloorSelect-w3/SIGN/SC6_DEL#20  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-FloorSelect-w3/SIGN/SC6_DEL#20] OK t=1ms cand=76810 pat=577 heapDelta=1MB
+=== ALL SCENARIOS DONE (8.4s) ===
