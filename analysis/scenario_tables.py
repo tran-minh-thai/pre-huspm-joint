@@ -181,7 +181,7 @@ def sc2_memory():
         return pd.DataFrame()
     rows = []
     for d in [x for x in mf.SC2_DATASETS if x in set(df["dataset"])]:
-        for a in INC_ARMS:
+        for a in INC_ARMS + [FS]:
             g = df[(df["dataset"] == d) & (df["algorithm"] == a)].sort_values("iteration")
             if g.empty:
                 continue
@@ -193,7 +193,8 @@ def sc2_memory():
                              retained_after_last_mb=float(last["mem_retained_mb"]) if last is not None else np.nan,
                              peak_live_mb=float(ok["mem_live_mb"].max()) if len(ok) else np.nan))
     t = pd.DataFrame(rows)
-    full = t[t["increments_done"] == t["increments"]]
+    # the least state among the competitors; the floor selection is a version of the proposal
+    full = t[(t["increments_done"] == t["increments"]) & t["algorithm"].isin(INC_ARMS)]
     least = full.loc[full.groupby("dataset")["retained_after_last_mb"].idxmin(), ["dataset", "algorithm"]]
     t["least_retained"] = [bool(((least["dataset"] == r.dataset) & (least["algorithm"] == r.algorithm)).any())
                            for r in t.itertuples()]
@@ -267,7 +268,8 @@ def sc5_cells():
         tot = {}
         for a, ga in g.groupby("algorithm"):
             tot[a] = mf.ms_to_s(ga["runtime_ms"]).sum() if ga["finished"].all() else np.nan
-        done = {a: v for a, v in tot.items() if np.isfinite(v)}
+        # competitors only: the versions of the proposal (FS, ISOLATION_ARMS) are not rivals
+        done = {a: v for a, v in tot.items() if np.isfinite(v) and a != FS and a not in ISOLATION_ARMS}
         fastest = min(done, key=done.get) if done else ""
         # the closest other arm, and whether every run of the proposal beats every run of it
         others = {a: v for a, v in done.items() if a != P}
@@ -287,6 +289,41 @@ def sc5_cells():
                          closest_over_proposal=others[close] / tot[P] if close and tot.get(P) else np.nan,
                          runs_proposal=len(rp), runs_closest=len(rc), runs_vs_closest=runs_vs_closest))
     return pd.DataFrame(rows)
+
+
+def sc5_floor_selection(put):
+    """SC5 for the proposal with the floor selection: per cell its time over the proposal's and
+    over the fastest competitor's (means over the runs), and whether every run of it is faster
+    than every run of that competitor. Keys per database: the median and range of the ratio to the
+    proposal, and the cells where the selection is faster, overlapping or slower."""
+    runs = sc5_run_totals()
+    src = "table_SC5_floor_selection.csv"
+    rows = []
+    for (d, k, sh, a), v in runs.items():
+        if a != FS:
+            continue
+        p = runs.get((d, k, sh, P), [])
+        comp = {b: w for (d2, k2, s2, b), w in runs.items()
+                if (d2, k2, s2) == (d, k, sh) and b not in (P, FS) and b not in ISOLATION_ARMS and w}
+        if not p or not comp:
+            continue
+        best = min(comp, key=lambda b: np.mean(comp[b]))
+        bw = comp[best]
+        side = ("faster" if max(v) < min(bw) else "slower" if max(bw) < min(v) else "overlapping")
+        rows.append(dict(dataset=d, K=k, shape=sh, selection_s=np.mean(v), runs=len(v),
+                         proposal_s=np.mean(p), selection_over_proposal=np.mean(v) / np.mean(p),
+                         best_competitor=best, selection_over_best=np.mean(v) / np.mean(bw), vs_best=side))
+    t = pd.DataFrame(rows)
+    if not len(t):
+        return t
+    for d, g in t.groupby("dataset"):
+        r = g["selection_over_proposal"]
+        put(f"SC5_FloorSelect_{d}_over_proposal", f"median {r.median():.3f}, {r.min():.3f} to {r.max():.3f}", src)
+        put(f"SC5_FloorSelect_{d}_vs_best_competitor",
+            f"faster {int((g['vs_best'] == 'faster').sum())}, overlapping {int((g['vs_best'] == 'overlapping').sum())}, "
+            f"slower {int((g['vs_best'] == 'slower').sum())} of {len(g)}", src)
+    put("SC5_FloorSelect_faster_than_best", f"{int((t['vs_best'] == 'faster').sum())}/{len(t)}", src)
+    return t
 
 
 # ------------------------------------------------------------------------------ SC6
@@ -1130,6 +1167,15 @@ def export_all(out_dir=None):
                 f"{n5['closest_over_proposal'].max():.3f}", "table_SC5_cells.csv")
             put("SC5_cells_within_5pct_list", "; ".join(f"{r.dataset} K={r.K} {r.shape.lower()} {r.runs_vs_closest}"
                                                        for r in n5.itertuples()), "table_SC5_cells.csv")
+
+    f5 = sc5_floor_selection(put)
+    f5_path = os.path.join(out, "table_SC5_floor_selection.csv")
+    if len(f5):
+        mf.write_csv(f5.sort_values(["dataset", "K", "shape"]), f5_path)
+    else:
+        if os.path.exists(f5_path):
+            os.remove(f5_path)
+        print("[not written] table_SC5_floor_selection.csv: no finished arm of " + FS)
 
     o6 = sc6_by_op()
     mf.write_csv(o6, os.path.join(out, "table_SC6_by_op.csv"))
