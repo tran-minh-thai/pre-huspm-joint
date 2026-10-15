@@ -1,0 +1,50 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC6B]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=1
+
+--- [SC6B] Mixed stream, exactly 14:3:3, one deletion beyond the rescan budget ---
+>> [SC6B] C8T1S5I8N5K seed=1337 opSize=199 plan=20 operations (14 insert, 3 delete, 3 modify; operation 20 deletes 5875 sequences beyond the budget)
+>> RUNNING Adaptive-FloorSelect-w1/C8T1S5I8N5K/SC6_INIT#0  (heap free=812MB / total=1024MB / max=49152MB)
+[Adaptive-FloorSelect-w1/C8T1S5I8N5K/SC6_INIT#0] OK t=263ms cand=47013 pat=5067 heapDelta=112MB
+>> RUNNING Adaptive-FloorSelect-w1/C8T1S5I8N5K/SC6_INS#1  (heap free=318MB / total=448MB / max=49152MB)
+[Adaptive-FloorSelect-w1/C8T1S5I8N5K/SC6_INS#1] OK t=96ms cand=20223 pat=5101 heapDelta=18MB
+>> RUNNING Adaptive-FloorSelect-w1/C8T1S5I8N5K/SC6_INS#2  (heap free=317MB / total=448MB / max=49152MB)
+[Adaptive-FloorSelect-w1/C8T1S5I8N5K/SC6_INS#2] OK t=99ms cand=19599 pat=4900 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w1/C8T1S5I8N5K/SC6_MOD#3  (heap free=317MB / total=448MB / max=49152MB)
+[Adaptive-FloorSelect-w1/C8T1S5I8N5K/SC6_MOD#3] OK t=148ms cand=17252 pat=4178 heapDelta=31MB
+>> RUNNING Adaptive-FloorSelect-w1/C8T1S5I8N5K/SC6_INS#4  (heap free=316MB / total=448MB / max=49152MB)
+[Adaptive-FloorSelect-w1/C8T1S5I8N5K/SC6_INS#4] OK t=47ms cand=17075 pat=4036 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w1/C8T1S5I8N5K/SC6_DEL#5  (heap free=316MB / total=448MB / max=49152MB)
+[Adaptive-FloorSelect-w1/C8T1S5I8N5K/SC6_DEL#5] OK t=85ms cand=60986 pat=3490 heapDelta=24MB
+>> RUNNING Adaptive-FloorSelect-w1/C8T1S5I8N5K/SC6_INS#6  (heap free=315MB / total=448MB / max=49152MB)
+[Adaptive-FloorSelect-w1/C8T1S5I8N5K/SC6_INS#6] OK t=42ms cand=0 pat=4120 heapDelta=11MB
+>> RUNNING Adaptive-FloorSelect-w1/C8T1S5I8N5K/SC6_MOD#7  (heap free=314MB / total=448MB / max=49152MB)
+[Adaptive-FloorSelect-w1/C8T1S5I8N5K/SC6_MOD#7] OK t=85ms cand=17414 pat=3999 heapDelta=17MB
+>> RUNNING Adaptive-FloorSelect-w1/C8T1S5I8N5K/SC6_INS#8  (heap free=315MB / total=448MB / max=49152MB)
+[Adaptive-FloorSelect-w1/C8T1S5I8N5K/SC6_INS#8] OK t=49ms cand=17556 pat=4155 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w1/C8T1S5I8N5K/SC6_MOD#9  (heap free=315MB / total=448MB / max=49152MB)
+[Adaptive-FloorSelect-w1/C8T1S5I8N5K/SC6_MOD#9] OK t=151ms cand=20665 pat=5462 heapDelta=35MB
+>> RUNNING Adaptive-FloorSelect-w1/C8T1S5I8N5K/SC6_INS#10  (heap free=314MB / total=448MB / max=49152MB)
+[Adaptive-FloorSelect-w1/C8T1S5I8N5K/SC6_INS#10] OK t=57ms cand=20298 pat=5286 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w1/C8T1S5I8N5K/SC6_INS#11  (heap free=314MB / total=448MB / max=49152MB)
+[Adaptive-FloorSelect-w1/C8T1S5I8N5K/SC6_INS#11] OK t=94ms cand=47624 pat=5203 heapDelta=24MB
+>> RUNNING Adaptive-FloorSelect-w1/C8T1S5I8N5K/SC6_INS#12  (heap free=312MB / total=448MB / max=49152MB)
+[Adaptive-FloorSelect-w1/C8T1S5I8N5K/SC6_INS#12] OK t=10ms cand=0 pat=5039 heapDelta=11MB
+>> RUNNING Adaptive-FloorSelect-w1/C8T1S5I8N5K/SC6_INS#13  (heap free=311MB / total=448MB / max=49152MB)
+[Adaptive-FloorSelect-w1/C8T1S5I8N5K/SC6_INS#13] OK t=56ms cand=19813 pat=4945 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w1/C8T1S5I8N5K/SC6_INS#14  (heap free=313MB / total=448MB / max=49152MB)
+[Adaptive-FloorSelect-w1/C8T1S5I8N5K/SC6_INS#14] OK t=55ms cand=19230 pat=4749 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w1/C8T1S5I8N5K/SC6_INS#15  (heap free=313MB / total=448MB / max=49152MB)
+[Adaptive-FloorSelect-w1/C8T1S5I8N5K/SC6_INS#15] OK t=55ms cand=18746 pat=4590 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w1/C8T1S5I8N5K/SC6_INS#16  (heap free=312MB / total=448MB / max=49152MB)
+[Adaptive-FloorSelect-w1/C8T1S5I8N5K/SC6_INS#16] OK t=92ms cand=44043 pat=4413 heapDelta=24MB
+>> RUNNING Adaptive-FloorSelect-w1/C8T1S5I8N5K/SC6_INS#17  (heap free=312MB / total=448MB / max=49152MB)
+[Adaptive-FloorSelect-w1/C8T1S5I8N5K/SC6_INS#17] OK t=52ms cand=17724 pat=4253 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w1/C8T1S5I8N5K/SC6_DEL#18  (heap free=313MB / total=448MB / max=49152MB)
+[Adaptive-FloorSelect-w1/C8T1S5I8N5K/SC6_DEL#18] OK t=92ms cand=61837 pat=4442 heapDelta=24MB
+>> RUNNING Adaptive-FloorSelect-w1/C8T1S5I8N5K/SC6_INS#19  (heap free=312MB / total=448MB / max=49152MB)
+[Adaptive-FloorSelect-w1/C8T1S5I8N5K/SC6_INS#19] OK t=55ms cand=17926 pat=4339 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w1/C8T1S5I8N5K/SC6_DEL_BIG#20  (heap free=313MB / total=448MB / max=49152MB)
+[Adaptive-FloorSelect-w1/C8T1S5I8N5K/SC6_DEL_BIG#20] OK t=42ms cand=36553 pat=4497 heapDelta=11MB
+=== ALL SCENARIOS DONE (16.5s) ===
