@@ -29,13 +29,13 @@ proposal and Remine over three runs is in the next table.
 
 | database | Pre-HUSPM-Joint | rescans | Pre-HUSPM-SWUmax | Pre-HUSPM-TSU | Remine | IncUSP-Miner+ |
 |---|---:|---:|---:|---:|---:|---:|
-| SIGN | **9.7** | 59 | 51.0 | 50.2 | 17.8 | 23.8 |
-| LEVIATHAN | **35.3** | 98 | 112 | 114 | 37.2 | 71.6 |
-| FIFA | **175** | 27 | 4,995 | 6,956 | 670 | (598, 25 increments) |
-| BIBLE | **53.8** | 63 | 92.1 | 109 | 93.7 | 57.5 |
-| KOSARAK | **627** | 100 | 695 | 711 | 685 | 1,594 |
-| C8T1S5I8N5K | **9.1** | 77 | 51.2 | 63.2 | 15.5 | 18.5 |
-| TAFENG | **5.9** | 52 | 7.4 | 13.0 | 18.9 | 13.8 |
+| SIGN | **9.6** | 60 | 51.0 | 50.2 | 17.8 | 23.8 |
+| LEVIATHAN | **28.2** | 100 | 112 | 114 | 37.2 | 71.6 |
+| FIFA | **176** | 27 | 4,995 | 6,956 | 670 | (598, 25 increments) |
+| BIBLE | **51.9** | 64 | 92.1 | 109 | 93.7 | 57.5 |
+| KOSARAK | **279** | 100 | 695 | 711 | 685 | 1,594 |
+| C8T1S5I8N5K | **8.9** | 80 | 51.2 | 63.2 | 15.5 | 18.5 |
+| TAFENG | **6.0** | 52 | 7.4 | 13.0 | 18.9 | 13.8 |
 
 ### Three runs
 
@@ -45,19 +45,19 @@ increments, mean ± sample standard deviation.
 
 | database | arm | runs | mean ± sd | min | max |
 |---|---|---:|---:|---:|---:|
-| SIGN | Pre-HUSPM-Joint | 3 | 9.71 ± 0.12 | 9.61 | 9.85 |
+| SIGN | Pre-HUSPM-Joint | 3 | 9.57 ± 0.18 | 9.45 | 9.77 |
 | SIGN | Remine | 3 | 17.78 ± 0.58 | 17.17 | 18.31 |
-| LEVIATHAN | Pre-HUSPM-Joint | 3 | 35.33 ± 0.33 | 35.12 | 35.71 |
+| LEVIATHAN | Pre-HUSPM-Joint | 3 | 28.22 ± 0.17 | 28.06 | 28.40 |
 | LEVIATHAN | Remine | 3 | 37.19 ± 0.17 | 37.06 | 37.39 |
-| FIFA | Pre-HUSPM-Joint | 3 | 174.97 ± 1.55 | 173.51 | 176.60 |
+| FIFA | Pre-HUSPM-Joint | 3 | 176.16 ± 0.51 | 175.58 | 176.55 |
 | FIFA | Remine | 3 | 670.37 ± 9.49 | 663.23 | 681.14 |
-| BIBLE | Pre-HUSPM-Joint | 3 | 53.77 ± 0.20 | 53.60 | 53.99 |
+| BIBLE | Pre-HUSPM-Joint | 3 | 51.94 ± 0.06 | 51.86 | 51.98 |
 | BIBLE | Remine | 3 | 93.66 ± 0.54 | 93.14 | 94.22 |
-| KOSARAK | Pre-HUSPM-Joint | 3 | 626.85 ± 6.17 | 620.40 | 632.71 |
+| KOSARAK | Pre-HUSPM-Joint | 3 | 278.84 ± 0.13 | 278.71 | 278.97 |
 | KOSARAK | Remine | 3 | 684.92 ± 0.46 | 684.61 | 685.45 |
-| C8T1S5I8N5K | Pre-HUSPM-Joint | 3 | 9.06 ± 0.12 | 8.96 | 9.20 |
+| C8T1S5I8N5K | Pre-HUSPM-Joint | 3 | 8.93 ± 0.15 | 8.80 | 9.09 |
 | C8T1S5I8N5K | Remine | 3 | 15.51 ± 0.16 | 15.34 | 15.67 |
-| TAFENG | Pre-HUSPM-Joint | 3 | 5.91 ± 0.01 | 5.90 | 5.92 |
+| TAFENG | Pre-HUSPM-Joint | 3 | 5.97 ± 0.02 | 5.95 | 6.00 |
 | TAFENG | Remine | 3 | 18.90 ± 0.07 | 18.86 | 18.98 |
 
 ## The operating region
@@ -118,14 +118,14 @@ The joint rule never rescans more often than the SWUmax test on an insertion-onl
 same UUT and floor ratio (a proved property, checked here): the proposal rescans no more than
 Pre-HUSPM-SWUmax on 7 of 7 databases where both completed.
 
-**Inside the budget** (median ratio at most one): FIFA, 3.83 times faster than remining.
+**Inside the budget** (median ratio at most one): FIFA, 3.81 times faster than remining.
 
-**At the boundary**: SIGN (1.83x), BIBLE (1.74x), C8T1S5I8N5K (1.71x), TAFENG (3.20x). They rescan on
+**At the boundary**: SIGN (1.86x), BIBLE (1.80x), C8T1S5I8N5K (1.74x), TAFENG (3.16x). They rescan on
 52 to 77
 of 100 increments and still finish faster than remining.
 
 **Beyond it**: LEVIATHAN, 2 of 100 within budget, KOSARAK, 0 of 100 within budget.
-Maintenance degenerates into remining: LEVIATHAN 35.3 s against remining's 37.2 s (-5.0 %); KOSARAK 627 s against remining's 685 s (-8.5 %),
+Maintenance degenerates into remining: LEVIATHAN 28.2 s against remining's 37.2 s (-24.1 %); KOSARAK 279 s against remining's 685 s (-59.3 %),
 one run each. Two runs of one SC1 configuration on the same JDK differ by a factor between
 0.69 and 1.25 (66 configurations of at least one second), so differences
 of a few percent between single runs are not resolved here.

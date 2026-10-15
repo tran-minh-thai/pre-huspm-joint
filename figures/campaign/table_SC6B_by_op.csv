@@ -1,16 +1,16 @@
-dataset,kind,operations,seeds,rescans,direct,proposal_s_mean,Remine_s_mean,over_proposal_Remine_mean,over_proposal_Remine_sd,over_proposal_Remine_seeds,Remine-HUSP-ULL_s_mean,over_proposal_Remine-HUSP-ULL_mean,over_proposal_Remine-HUSP-ULL_sd,over_proposal_Remine-HUSP-ULL_seeds,Remine-HUSP-SP_s_mean,over_proposal_Remine-HUSP-SP_mean,over_proposal_Remine-HUSP-SP_sd,over_proposal_Remine-HUSP-SP_seeds,FloorSelect_s_mean,over_proposal_FloorSelect_mean,over_proposal_FloorSelect_sd,over_proposal_FloorSelect_seeds,proposal_over_Remine_mean,proposal_over_Remine_sd,proposal_over_Remine_seeds,proposal_over_Remine-HUSP-ULL_mean,proposal_over_Remine-HUSP-ULL_sd,proposal_over_Remine-HUSP-ULL_seeds,proposal_over_Remine-HUSP-SP_mean,proposal_over_Remine-HUSP-SP_sd,proposal_over_Remine-HUSP-SP_seeds,proposal_over_FloorSelect_mean,proposal_over_FloorSelect_sd,proposal_over_FloorSelect_seeds
-SIGN,insertion,70,5,67,3,1.647,1.791,1.089,0.086,5.0,1.603,0.974,0.062,5.0,1.667,1.013,0.065,5.0,1.543,0.939,0.093,5.0,,,,,,,,,,,,
-SIGN,deletion,10,5,0,10,0.007,0.257,39.906,8.538,5.0,0.225,35.04,7.505,5.0,0.233,36.256,7.647,5.0,0.053,8.199,9.785,5.0,,,,,,,,,,,,
-SIGN,modification,15,5,15,0,0.355,0.372,1.048,0.051,5.0,0.331,0.932,0.023,5.0,0.344,0.969,0.022,5.0,0.396,1.113,0.144,5.0,,,,,,,,,,,,
-SIGN,deletion beyond the budget,5,5,5,0,0.106,0.127,1.202,0.329,5.0,0.1,0.938,0.024,5.0,0.105,0.992,0.037,5.0,0.107,1.003,0.028,5.0,,,,,,,,,,,,
-SIGN,stream,100,5,87,13,2.116,2.548,,,,2.259,,,,2.349,,,,2.099,,,,0.833,0.059,5.0,0.938,0.049,5.0,0.902,0.047,5.0,1.009,0.055,5.0
-LEVIATHAN,insertion,70,5,70,0,3.145,3.232,1.028,0.028,5.0,3.208,1.02,0.022,5.0,3.128,0.995,0.023,5.0,3.02,0.96,0.014,5.0,,,,,,,,,,,,
-LEVIATHAN,deletion,10,5,0,10,0.004,0.444,127.847,62.613,5.0,0.445,129.42,68.429,5.0,0.432,125.327,64.92,5.0,0.089,23.587,31.912,5.0,,,,,,,,,,,,
-LEVIATHAN,modification,15,5,15,0,0.665,0.667,1.003,0.017,5.0,0.668,1.004,0.023,5.0,0.65,0.977,0.028,5.0,0.775,1.174,0.163,5.0,,,,,,,,,,,,
-LEVIATHAN,deletion beyond the budget,5,5,5,0,0.194,0.195,1.004,0.028,5.0,0.196,1.011,0.027,5.0,0.191,0.983,0.027,5.0,0.171,0.888,0.154,5.0,,,,,,,,,,,,
-LEVIATHAN,stream,100,5,90,10,4.009,4.539,,,,4.517,,,,4.4,,,,4.056,,,,0.883,0.026,5.0,0.888,0.024,5.0,0.911,0.025,5.0,0.988,0.027,5.0
-C8T1S5I8N5K,insertion,70,5,63,7,1.263,1.803,1.435,0.133,5.0,1.384,1.1,0.076,5.0,1.643,1.309,0.135,5.0,1.259,0.998,0.035,5.0,,,,,,,,,,,,
-C8T1S5I8N5K,deletion,10,5,0,10,0.098,0.246,2.694,0.771,5.0,0.197,2.16,0.626,5.0,0.22,2.418,0.714,5.0,0.121,1.228,0.375,5.0,,,,,,,,,,,,
-C8T1S5I8N5K,modification,15,5,14,1,0.432,0.382,0.891,0.109,5.0,0.299,0.703,0.116,5.0,0.339,0.799,0.136,5.0,0.462,1.07,0.081,5.0,,,,,,,,,,,,
-C8T1S5I8N5K,deletion beyond the budget,5,5,5,0,0.124,0.149,1.294,0.154,5.0,0.088,0.918,0.342,5.0,0.102,1.058,0.391,5.0,0.092,0.899,0.252,5.0,,,,,,,,,,,,
-C8T1S5I8N5K,stream,100,5,82,18,1.916,2.579,,,,1.968,,,,2.304,,,,1.935,,,,0.743,0.06,5.0,0.975,0.091,5.0,0.834,0.1,5.0,0.99,0.032,5.0
+dataset,kind,operations,seeds,rescans,direct,proposal_s_mean,Remine_s_mean,over_proposal_Remine_mean,over_proposal_Remine_sd,over_proposal_Remine_seeds,Remine-HUSP-ULL_s_mean,over_proposal_Remine-HUSP-ULL_mean,over_proposal_Remine-HUSP-ULL_sd,over_proposal_Remine-HUSP-ULL_seeds,Remine-HUSP-SP_s_mean,over_proposal_Remine-HUSP-SP_mean,over_proposal_Remine-HUSP-SP_sd,over_proposal_Remine-HUSP-SP_seeds,FixedFloor_s_mean,over_proposal_FixedFloor_mean,over_proposal_FixedFloor_sd,over_proposal_FixedFloor_seeds,proposal_over_Remine_mean,proposal_over_Remine_sd,proposal_over_Remine_seeds,proposal_over_Remine-HUSP-ULL_mean,proposal_over_Remine-HUSP-ULL_sd,proposal_over_Remine-HUSP-ULL_seeds,proposal_over_Remine-HUSP-SP_mean,proposal_over_Remine-HUSP-SP_sd,proposal_over_Remine-HUSP-SP_seeds,proposal_over_FixedFloor_mean,proposal_over_FixedFloor_sd,proposal_over_FixedFloor_seeds
+SIGN,insertion,70,5,67,3,1.543,1.791,1.163,0.041,5.0,1.603,1.04,0.039,5.0,1.667,1.082,0.042,5.0,1.647,1.073,0.102,5.0,,,,,,,,,,,,
+SIGN,deletion,10,5,2,8,0.053,0.257,24.988,22.304,5.0,0.225,21.505,19.649,5.0,0.233,22.247,20.255,5.0,0.007,0.605,0.521,5.0,,,,,,,,,,,,
+SIGN,modification,15,5,15,0,0.396,0.372,0.951,0.1,5.0,0.331,0.848,0.103,5.0,0.344,0.882,0.106,5.0,0.355,0.91,0.11,5.0,,,,,,,,,,,,
+SIGN,deletion beyond the budget,5,5,5,0,0.107,0.127,1.199,0.33,5.0,0.1,0.935,0.017,5.0,0.105,0.989,0.03,5.0,0.106,0.998,0.028,5.0,,,,,,,,,,,,
+SIGN,stream,100,5,89,11,2.099,2.548,,,,2.259,,,,2.349,,,,2.116,,,,0.825,0.029,5.0,0.93,0.015,5.0,0.894,0.015,5.0,0.993,0.055,5.0
+LEVIATHAN,insertion,70,5,70,0,3.02,3.232,1.071,0.03,5.0,3.208,1.063,0.017,5.0,3.128,1.036,0.014,5.0,3.145,1.042,0.015,5.0,,,,,,,,,,,,
+LEVIATHAN,deletion,10,5,2,8,0.089,0.444,76.902,70.338,5.0,0.445,76.572,69.529,5.0,0.432,74.579,67.584,5.0,0.004,0.691,0.743,5.0,,,,,,,,,,,,
+LEVIATHAN,modification,15,5,15,0,0.775,0.667,0.868,0.121,5.0,0.668,0.87,0.132,5.0,0.65,0.846,0.128,5.0,0.665,0.866,0.126,5.0,,,,,,,,,,,,
+LEVIATHAN,deletion beyond the budget,5,5,5,0,0.171,0.195,1.159,0.205,5.0,0.196,1.165,0.191,5.0,0.191,1.135,0.199,5.0,0.194,1.156,0.213,5.0,,,,,,,,,,,,
+LEVIATHAN,stream,100,5,92,8,4.056,4.539,,,,4.517,,,,4.4,,,,4.009,,,,0.894,0.038,5.0,0.899,0.038,5.0,0.923,0.041,5.0,1.013,0.028,5.0
+C8T1S5I8N5K,insertion,70,5,63,7,1.259,1.803,1.436,0.106,5.0,1.384,1.102,0.066,5.0,1.643,1.31,0.109,5.0,1.263,1.003,0.035,5.0,,,,,,,,,,,,
+C8T1S5I8N5K,deletion,10,5,1,9,0.121,0.246,2.369,1.019,5.0,0.197,1.894,0.812,5.0,0.22,2.122,0.921,5.0,0.098,0.864,0.205,5.0,,,,,,,,,,,,
+C8T1S5I8N5K,modification,15,5,14,1,0.462,0.382,0.84,0.148,5.0,0.299,0.661,0.132,5.0,0.339,0.752,0.156,5.0,0.432,0.939,0.069,5.0,,,,,,,,,,,,
+C8T1S5I8N5K,deletion beyond the budget,5,5,5,0,0.092,0.149,1.533,0.419,5.0,0.088,0.986,0.17,5.0,0.102,1.136,0.19,5.0,0.124,1.236,0.551,5.0,,,,,,,,,,,,
+C8T1S5I8N5K,stream,100,5,83,17,1.935,2.579,,,,1.968,,,,2.304,,,,1.916,,,,0.751,0.055,5.0,0.984,0.078,5.0,0.842,0.086,5.0,1.011,0.033,5.0

@@ -1,4 +1,4 @@
-dataset,K,shape,selection_s,runs,proposal_s,selection_over_proposal,best_competitor,selection_over_best,vs_best
+dataset,K,shape,selection_s,runs,fixed_floor_s,selection_over_fixed_floor,best_competitor,selection_over_best,vs_best
 C8T1S5I8N5K,25,BURST,1.689,3,2.84,0.595,Remine-from-scratch,0.437,faster
 C8T1S5I8N5K,25,DECREASING,1.814,3,2.796,0.649,Remine-from-scratch,0.434,faster
 C8T1S5I8N5K,25,EVEN,1.671,3,2.857,0.585,Remine-from-scratch,0.43,faster

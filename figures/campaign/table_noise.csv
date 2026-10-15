@@ -383,8 +383,8 @@ SC1 live set,TAFENG,0.003,USpan,2,60.0,0.2
 SC1 live set,TAFENG,0.004,USpan,2,64.0,0.125
 SC1 live set,TAFENG,0.004,USpan,2,66.5,0.015
 SC1 live set,TAFENG,0.006,USpan,2,40.0,0.85
-SC2 state after last increment,TAFENG,,Adaptive-Full,2,52.5,0.095
-SC2 state after last increment,SIGN,,Adaptive-Full,2,13.0,0.0
+SC2 state after last increment,TAFENG,,Adaptive-FixedFloor,2,52.5,0.095
+SC2 state after last increment,SIGN,,Adaptive-FixedFloor,2,13.0,0.0
 SC2 state after last increment,TAFENG,,IncUSP-Miner+,2,86.5,0.012
 SC2 state after last increment,TAFENG,,Pre-HUSPM-SWUmax,2,76.5,0.065
 SC2 state after last increment,SIGN,,IncUSP-Miner+,2,862.0,0.002

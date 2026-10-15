@@ -1,4 +1,4 @@
-dataset,proposal_s,proposal_runs,selection_s,selection_s_std,selection_runs,rescans,rescans_at_uut,selection_over_proposal,vs_proposal,best_competitor,best_competitor_s,selection_over_best,vs_best
+dataset,fixed_floor_s,fixed_floor_runs,selection_s,selection_s_std,selection_runs,rescans,rescans_at_uut,selection_over_fixed_floor,vs_fixed_floor,best_competitor,best_competitor_s,selection_over_best,vs_best
 SIGN,9.711,3,9.566,0.18,3,60,7,0.985,overlapping,Remine-HUSP-ULL,17.583,0.544,"separated, faster"
 LEVIATHAN,35.329,3,28.215,0.169,3,100,87,0.799,"separated, faster",Remine-HUSP-SP,35.724,0.79,"separated, faster"
 FIFA,174.966,3,176.156,0.507,3,27,0,1.007,overlapping,Remine-HUSP-SP,463.894,0.38,"separated, faster"

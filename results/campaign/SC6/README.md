@@ -18,20 +18,20 @@ replay the same plan at a seed, so the ratio is paired by seed.
 
 | database | seeds | ratio, mean ± sd | min | max |
 |---|---:|---:|---:|---:|
-| C8T1S5I8N5K | 5 | 0.657 ± 0.039 | 0.607 | 0.715 |
-| LEVIATHAN | 5 | 0.832 ± 0.018 | 0.810 | 0.852 |
-| SIGN | 5 | 0.774 ± 0.032 | 0.718 | 0.798 |
+| C8T1S5I8N5K | 5 | 0.668 ± 0.037 | 0.631 | 0.724 |
+| LEVIATHAN | 5 | 0.860 ± 0.011 | 0.849 | 0.873 |
+| SIGN | 5 | 0.757 ± 0.036 | 0.722 | 0.807 |
 
 ## By kind of operation, all seeds together
 
 | database | kind | rescans | proposal | remine | remine / proposal |
 |---|---|---:|---:|---:|---:|
-| C8T1S5I8N5K | insertion | 57 / 70 | 6.28 s | 9.55 s | 1.5 |
-| C8T1S5I8N5K | deletion | 1 / 15 | 0.67 s | 2.05 s | 3.0 |
-| C8T1S5I8N5K | modification | 12 / 15 | 1.95 s | 1.98 s | 1.0 |
-| LEVIATHAN | insertion | 70 / 70 | 16.86 s | 17.31 s | 1.0 |
-| LEVIATHAN | deletion | 0 / 15 | 0.03 s | 3.68 s | 126.8 |
-| LEVIATHAN | modification | 15 / 15 | 3.61 s | 3.66 s | 1.0 |
-| SIGN | insertion | 62 / 70 | 8.12 s | 9.45 s | 1.2 |
-| SIGN | deletion | 0 / 15 | 0.04 s | 1.95 s | 46.4 |
-| SIGN | modification | 15 / 15 | 2.18 s | 1.99 s | 0.9 |
+| C8T1S5I8N5K | insertion | 57 / 70 | 6.27 s | 9.55 s | 1.5 |
+| C8T1S5I8N5K | deletion | 1 / 15 | 0.81 s | 2.05 s | 2.5 |
+| C8T1S5I8N5K | modification | 12 / 15 | 1.99 s | 1.98 s | 1.0 |
+| LEVIATHAN | insertion | 70 / 70 | 16.79 s | 17.31 s | 1.0 |
+| LEVIATHAN | deletion | 3 / 15 | 0.74 s | 3.68 s | 4.9 |
+| LEVIATHAN | modification | 15 / 15 | 3.67 s | 3.66 s | 1.0 |
+| SIGN | insertion | 62 / 70 | 7.50 s | 9.45 s | 1.3 |
+| SIGN | deletion | 2 / 15 | 0.28 s | 1.95 s | 6.9 |
+| SIGN | modification | 15 / 15 | 2.34 s | 1.99 s | 0.8 |

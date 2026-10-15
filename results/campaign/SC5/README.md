@@ -12,10 +12,10 @@ The proposal is the fastest arm in 48 of 48 cells.
 
 | baseline | baseline time / proposal time | cells | cells where the baseline is faster |
 |---|---:|---:|---:|
-| Pre-HUSPM-TSU | 4.90 | 48 | 0 |
-| Pre-HUSPM-SWUmax | 4.64 | 48 | 0 |
-| IncUSP-Miner+ | 2.87 | 48 | 0 |
-| Remine | 1.39 | 48 | 0 |
+| Pre-HUSPM-TSU | 6.35 | 48 | 0 |
+| Pre-HUSPM-SWUmax | 6.01 | 48 | 0 |
+| IncUSP-Miner+ | 3.72 | 48 | 0 |
+| Remine | 1.80 | 48 | 0 |
 
 ## The finer the cut, the wider the gap
 
@@ -24,32 +24,32 @@ its time over remining's.
 
 | database | K | increments that rescan | proposal's time / remine's |
 |---|---:|---:|---:|
-| SIGN | 25 | 96 % | 0.91 |
-| SIGN | 50 | 82 % | 0.77 |
-| SIGN | 67 | 72 % | 0.66 |
-| SIGN | 100 | 52 % | 0.48 |
-| LEVIATHAN | 25 | 99 % | 0.95 |
-| LEVIATHAN | 50 | 96 % | 0.92 |
-| LEVIATHAN | 67 | 94 % | 0.90 |
-| LEVIATHAN | 100 | 85 % | 0.80 |
-| C8T1S5I8N5K | 25 | 97 % | 0.71 |
-| C8T1S5I8N5K | 50 | 88 % | 0.65 |
-| C8T1S5I8N5K | 67 | 79 % | 0.59 |
-| C8T1S5I8N5K | 100 | 66 % | 0.50 |
+| SIGN | 25 | 96 % | 0.59 |
+| SIGN | 50 | 84 % | 0.57 |
+| SIGN | 67 | 73 % | 0.52 |
+| SIGN | 100 | 53 % | 0.46 |
+| LEVIATHAN | 25 | 99 % | 0.73 |
+| LEVIATHAN | 50 | 96 % | 0.70 |
+| LEVIATHAN | 67 | 95 % | 0.70 |
+| LEVIATHAN | 100 | 87 % | 0.67 |
+| C8T1S5I8N5K | 25 | 98 % | 0.44 |
+| C8T1S5I8N5K | 50 | 90 % | 0.47 |
+| C8T1S5I8N5K | 67 | 82 % | 0.47 |
+| C8T1S5I8N5K | 100 | 69 % | 0.46 |
 
 ## How the stream is cut, at `K = 100`
 
 | database | strategy | proposal | remine | ratio | rescans |
 |---|---|---:|---:|---:|---:|
-| SIGN | EVEN | 9.8 s | 17.9 s | 0.55 | 59 |
-| SIGN | INCREASING | 8.6 s | 16.5 s | 0.52 | 53 |
-| SIGN | DECREASING | 8.7 s | 19.2 s | 0.46 | 52 |
-| SIGN | BURST | 7.5 s | 18.0 s | 0.42 | 45 |
-| LEVIATHAN | EVEN | 35.0 s | 37.2 s | 0.94 | 98 |
-| LEVIATHAN | INCREASING | 29.4 s | 32.5 s | 0.91 | 91 |
-| LEVIATHAN | DECREASING | 28.7 s | 41.9 s | 0.69 | 76 |
-| LEVIATHAN | BURST | 26.6 s | 37.8 s | 0.70 | 76 |
-| C8T1S5I8N5K | EVEN | 9.0 s | 15.7 s | 0.57 | 77 |
-| C8T1S5I8N5K | INCREASING | 7.8 s | 14.4 s | 0.54 | 69 |
-| C8T1S5I8N5K | DECREASING | 7.8 s | 16.6 s | 0.47 | 65 |
-| C8T1S5I8N5K | BURST | 6.4 s | 15.6 s | 0.41 | 54 |
+| SIGN | EVEN | 9.4 s | 17.9 s | 0.53 | 60 |
+| SIGN | INCREASING | 8.4 s | 16.5 s | 0.51 | 53 |
+| SIGN | DECREASING | 7.7 s | 19.2 s | 0.40 | 53 |
+| SIGN | BURST | 7.4 s | 18.0 s | 0.41 | 45 |
+| LEVIATHAN | EVEN | 28.0 s | 37.2 s | 0.75 | 100 |
+| LEVIATHAN | INCREASING | 22.4 s | 32.5 s | 0.69 | 91 |
+| LEVIATHAN | DECREASING | 24.9 s | 41.9 s | 0.59 | 78 |
+| LEVIATHAN | BURST | 24.7 s | 37.8 s | 0.65 | 78 |
+| C8T1S5I8N5K | EVEN | 8.9 s | 15.7 s | 0.57 | 80 |
+| C8T1S5I8N5K | INCREASING | 6.6 s | 14.4 s | 0.46 | 72 |
+| C8T1S5I8N5K | DECREASING | 6.9 s | 16.6 s | 0.41 | 68 |
+| C8T1S5I8N5K | BURST | 6.4 s | 15.6 s | 0.41 | 55 |

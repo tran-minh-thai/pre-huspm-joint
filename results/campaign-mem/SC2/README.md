@@ -16,11 +16,11 @@ MB.
 |---|---:|---:|---:|---:|---:|
 | SIGN | 13 | 32 | 32 | 17 | 861 |
 | LEVIATHAN | 21 | 79 | 79 | 30 | 1,238 |
-| FIFA | 34 | 283 | 269 | 42 | 44,081 at 25, then stopped by the memory guard |
-| BIBLE | 36 | 202 | 198 | 50 | 1,451 |
-| KOSARAK | 349 | 2,848 | 2,857 | 353 | 4,957 |
-| C8T1S5I8N5K | 58 | 84 | 85 | 79 | 1,587 |
-| TAFENG | 55 | 74 | 85 | 57 | 87 |
+| FIFA | 30 | 283 | 269 | 42 | 44,081 at 25, then stopped by the memory guard |
+| BIBLE | 38 | 202 | 198 | 50 | 1,451 |
+| KOSARAK | 362 | 2,848 | 2,857 | 353 | 4,957 |
+| C8T1S5I8N5K | 57 | 84 | 85 | 79 | 1,587 |
+| TAFENG | 57 | 74 | 85 | 57 | 87 |
 
 ## Peak live set over the stream
 
@@ -28,10 +28,10 @@ MB.
 
 | database | Pre-HUSPM-Joint | Pre-HUSPM-SWUmax | Pre-HUSPM-TSU | Remine | IncUSP-Miner+ |
 |---|---:|---:|---:|---:|---:|
-| SIGN | 16 | 63 | 57 | 20 | 865 |
+| SIGN | 15 | 63 | 57 | 20 | 865 |
 | LEVIATHAN | 35 | 130 | 130 | 44 | 1,267 |
-| FIFA | 112 | 510 | 509 | 127 | 44,104, then stopped by the memory guard |
-| BIBLE | 99 | 390 | 412 | 98 | 1,659 |
-| KOSARAK | 1,070 | 4,753 | 4,837 | 975 | 6,791 |
+| FIFA | 110 | 510 | 509 | 127 | 44,104, then stopped by the memory guard |
+| BIBLE | 98 | 390 | 412 | 98 | 1,659 |
+| KOSARAK | 1,010 | 4,753 | 4,837 | 975 | 6,791 |
 | C8T1S5I8N5K | 58 | 155 | 152 | 80 | 1,590 |
-| TAFENG | 56 | 78 | 87 | 61 | 118 |
+| TAFENG | 57 | 78 | 87 | 61 | 118 |
