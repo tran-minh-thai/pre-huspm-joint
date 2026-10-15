@@ -53,7 +53,8 @@ import java.util.TreeMap;
  * database. X keeps its utility while TSU falls, and gains while it rises.
  *
  *   java -cp build verify.DirectPathVerifier <DATABASE|ALL> [--ops N] [--share S]
- *        [--rule joint|iaumax|cub|swumax|pre_swumax|pre_tsu] [--seed N] [--adversarial] [--insert-only] [--out DIR]
+ *        [--rule joint|iaumax|cub|swumax|pre_swumax|pre_tsu] [--seed N] [--adversarial] [--insert-only]
+ *        [--share-alt S2] [--out DIR]
  */
 public final class DirectPathVerifier {
 
@@ -70,6 +71,15 @@ public final class DirectPathVerifier {
     private static final long PROBE_CANDIDATE_BUDGET = 500_000_000L;
     /** --insert-only: every operation is an insertion; the mode column then ends in "+insert-only". */
     private static boolean insertOnly = false;
+    /**
+     * --share-alt S2: every third operation (the 2nd, 5th, 8th, ...) is sized from S2 instead of
+     * --share; with the delete, insert, modify, insert cycle each kind gets such operations. With S2
+     * below 1 such an
+     * operation alone exceeds the low budget, so under the rescan floor selection
+     * (-Dadapt.floorWindow) the floor moves between r_l and UUT; at the default share 6 no operation
+     * does and the floor never leaves r_l. 0 (default): every operation is sized from --share.
+     */
+    private static double shareAlt = 0;
 
     public static void main(String[] args) throws IOException {
         if (args.length == 0) {
@@ -94,6 +104,7 @@ public final class DirectPathVerifier {
                 case "--out":   outDir = Paths.get(args[++i]); break;
                 case "--adversarial": adversarial = true; break;
                 case "--insert-only": insertOnly = true; break;
+                case "--share-alt": shareAlt = Double.parseDouble(args[++i]); break;
                 default: throw new IllegalArgumentException("unknown argument: " + args[i]);
             }
         }
@@ -109,7 +120,7 @@ public final class DirectPathVerifier {
             if (fresh) {
                 w.println("dataset,uut,r_l,trigger_rule,seed,mode,target,target_utility,op_index,op_type,n_sequences,op_utility,"
                         + "budget,trigger_quantity,path,previous_path,ref_husp,got_husp,missing,extra,"
-                        + "max_utility_gap,rescans,clean");
+                        + "max_utility_gap,rescans,clean,floor_before,floor_after");
             }
             for (common.Datasets.Entry e : common.Datasets.all()) {
                 if (!"ALL".equalsIgnoreCase(target) && !e.name.equalsIgnoreCase(target)) continue;
@@ -174,7 +185,8 @@ public final class DirectPathVerifier {
                         lastRescans, target, targetUtil, RL * uut * algo.tsuAtLastRescan);
             }
             double budget = (uut - RL * uut) * algo.tsuAtLastRescan;
-            double c = budget / share;
+            double c = budget / ((shareAlt > 0 && o % 3 == 1) ? shareAlt : share);
+            double floorBefore = algo.Sl_min / algo.Su;   // the floor ratio in force when the operation arrives
             int before = algo.rescanCount;
             int n = 0;
             double opUtil = 0;
@@ -237,12 +249,16 @@ public final class DirectPathVerifier {
                 counts.merge("insert/direct after direct " + previous.substring(0, previous.indexOf('/')), 1, Integer::sum);
             }
 
-            w.printf("%s,%.6f,%.2f,%s,%d,%s,%s,%.3f,%d,%s,%d,%.3f,%.3f,%.3f,%s,%s,%d,%d,%d,%d,%.9f,%d,%s%n",
+            double floorAfter = algo.Sl_min / algo.Su;
+            if (floorAfter > 1 - 1e-12 && algo.rescanCount > before) counts.merge("rescan mined at UUT", 1, Integer::sum);
+            if (floorBefore > 1 - 1e-12 && path.equals("direct")) counts.merge(op + "/direct at floor UUT", 1, Integer::sum);
+            w.printf("%s,%.6f,%.2f,%s,%d,%s,%s,%.3f,%d,%s,%d,%.3f,%.3f,%.3f,%s,%s,%d,%d,%d,%d,%.9f,%d,%s,%.6f,%.6f%n",
                     name, uut, RL, algo.triggerRule.name().toLowerCase(), seed,
                     (adversarial ? "adversarial" : "random") + (insertOnly ? "+insert-only" : ""), "\"" + target + "\"", targetUtil,
                     o + 1, op, n, opUtil,
                     budget, algo.iauMaxAtDecision, path, previous, diff.refSize, diff.gotSize,
-                    diff.missing, diff.extra, diff.maxUtilityGap, algo.rescanCount, diff.isClean());
+                    diff.missing, diff.extra, diff.maxUtilityGap, algo.rescanCount, diff.isClean(),
+                    floorBefore, floorAfter);
             w.flush();
             System.out.printf("  op %2d %-6s n=%-5d path=%-6s after=%-13s %s  %s%n",
                     o + 1, op, n, path, previous, diff, diff.isClean() ? "OK" : "<<< MISMATCH");
