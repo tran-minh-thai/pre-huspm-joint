@@ -228,6 +228,19 @@ def sc2_memory_keys(put, m2):
             lo, hi = g.loc[g["retained_after_last_mb"].idxmin()], g.loc[g["retained_after_last_mb"].idxmax()]
             put(f"SC2_mem_{name}_retained_range", f"{lo.retained_after_last_mb:,.0f} ({lo.dataset}) to "
                 f"{hi.retained_after_last_mb:,.0f} ({hi.dataset})", src)
+    # the method against the proposal at the fixed floor: the largest difference of the state held
+    # after the last increment, in MB and relative to the fixed floor
+    pairs = [(d, g[g["algorithm"] == P], g[g["algorithm"] == FIXED]) for d, g in m2.groupby("dataset")]
+    diffs = [(d, float(a.iloc[0]["retained_after_last_mb"]), float(b.iloc[0]["retained_after_last_mb"]))
+             for d, a, b in pairs if len(a) and len(b)]
+    if diffs:
+        da = max(diffs, key=lambda x: abs(x[1] - x[2]))
+        dr = max(diffs, key=lambda x: abs(x[1] - x[2]) / x[2] if x[2] else 0)
+        put("SC2_mem_selection_vs_fixed_floor_max_abs_mb",
+            f"{abs(da[1] - da[2]):,.0f} ({da[0]}: {da[1]:,.0f} vs {da[2]:,.0f})", src)
+        put("SC2_mem_selection_vs_fixed_floor_max_pct",
+            f"{100 * abs(dr[1] - dr[2]) / dr[2]:.1f} ({dr[0]}: {dr[1]:,.0f} vs {dr[2]:,.0f})", src)
+        put("SC2_mem_selection_vs_fixed_floor_databases", len(diffs), src)
     # where an arm holds less than the proposal at its peak, or comes within 10% of it after the
     # last increment
     for d, g in full.groupby("dataset"):
@@ -403,6 +416,45 @@ def mixed_by_op(sc):
                 row[f"{key}_{tag}_seeds"] = len(ratios)
             rows.append(row)
     return pd.DataFrame(rows)
+
+
+def mixed_floor_keys(put):
+    """The mixed streams: the fixed-floor proposal's rescans by kind of operation; for the method,
+    the deletions that came right after a rescan mined at UUT (budget 0) and how many of them
+    rescanned; and, in SC6B, the positions of the deletion beyond the budget."""
+    for sc in ("SC6", "SC6D", "SC6B"):
+        df = mf.load_scenario(sc, replicates=True)
+        if df is None:
+            continue
+        df = df.copy()
+        df["kind"] = df["op_type"].astype(str).str.extract(r"SC6_(INS|DEL_BIG|DEL|MOD|INIT)")[0]
+        src = "table_" + ("SC6_by_op_arms" if sc == "SC6" else sc + "_by_op") + ".csv"
+        for d in [x for x in mf.ALL_DATASETS if x in set(df["dataset"])]:
+            for arm, tag in ((FIXED, "fixed_floor"),):
+                g = df[(df["dataset"] == d) & (df["algorithm"] == arm)].sort_values(["replicate", "iteration"])
+                if g.empty:
+                    continue
+                g = g.assign(rescanned=g.groupby("replicate")["rescan_count"].diff().fillna(0) > 0)
+                for k, name in (("INS", "insertion"), ("DEL", "deletion"), ("MOD", "modification"),
+                                ("DEL_BIG", "deletion_beyond_the_budget")):
+                    gk = g[g["kind"] == k]
+                    if len(gk):
+                        put(f"{sc}_{d}_{name}_{tag}_rescans", f"{int(gk['rescanned'].sum())}/{len(gk)}", src)
+            m = df[(df["dataset"] == d) & (df["algorithm"] == P)].sort_values(["replicate", "iteration"])
+            if len(m):
+                m = m.assign(rescanned=m.groupby("replicate")["rescan_count"].diff().fillna(0) > 0,
+                             floor_before=m.groupby("replicate")["sl_min_eff"].shift(1))
+                after = m[(m["kind"] == "DEL") & (m["floor_before"] >= 1 - 1e-12)]
+                put(f"{sc}_{d}_deletions_after_a_mine_at_uut", f"{int(after['rescanned'].sum())} of {len(after)} rescanned",
+                    src)
+                dels = m[m["kind"] == "DEL"]
+                put(f"{sc}_{d}_deletions_rescanned_total", f"{int(dels['rescanned'].sum())}/{len(dels)}", src)
+        if sc == "SC6B":
+            big = df[(df["kind"] == "DEL_BIG") & (df["algorithm"] == P)]
+            if len(big):
+                pos = sorted(int(x) for x in big["iteration"])
+                put("SC6B_large_deletion_positions", f"{pos[0]} to {pos[-1]} ({len(pos)} database and seed pairs)",
+                    "table_SC6B_by_op.csv")
 
 
 # ------------------------------------------------------------------------------ SC7
@@ -581,6 +633,39 @@ def verification():
                      status=_status("acceptance") if m else "missing",
                      operations=int(m.group(1)) + int(m.group(2)) if m else None,
                      mismatches=int(m.group(2)) if m else None))
+    # The later runs of the same checks, found by their directory names: the acceptance test
+    # (its latest version has the most cases), the random streams of the new rules and of the
+    # floor selection, and the pattern checks of the runner (-Dverify.husps=true).
+    later = sorted(os.path.basename(d) for d in glob.glob(os.path.join(VERIFY_DIR, "*")) if os.path.isdir(d))
+    for name in [n for n in later if n.endswith("-acceptance")]:
+        m = re.search(r"acceptance: (\d+) passed, (\d+) failed", _console(name) or "")
+        rows.append(dict(check=f"rescan rule acceptance, {name}", status=_status(name) if m else "missing",
+                         operations=int(m.group(1)) + int(m.group(2)) if m else None,
+                         mismatches=int(m.group(2)) if m else None,
+                         runs=len(re.findall(r"^T\d+ ", _console(name) or "", flags=re.M)) if m else None))
+    for name in [n for n in later if n.endswith("-fuzz")]:
+        out = _console(name) or ""
+        every = [l for l in out.splitlines() if l.startswith("rule=")]
+        for rule in sorted({re.match(r"rule=(\S+)", l).group(1) for l in every}):
+            lines = [l for l in every if l.startswith(f"rule={rule} ")]
+            num = lambda pat: sum(int(re.search(pat, l).group(1)) for l in lines if re.search(pat, l))
+            rows.append(dict(check=f"random streams (MixedBudgetFuzz), {name}, rule {rule}", status=_status(name),
+                             runs=len(lines), operations=num(r"ops=(\d+)"),
+                             direct_delete=num(r"direct-update=\{delete=(\d+)"),
+                             direct_insert=num(r"direct-update=\{[^}]*insert=(\d+)"),
+                             direct_modify=num(r"direct-update=\{[^}]*modify=(\d+)"),
+                             mismatches=num(r"mismatching-ops=(\d+)")))
+        inv = re.findall(r"bound invariant B\(X\) >= u\(X\): (\d+) tracked patterns checked, (\d+) operations", out)
+        if inv:
+            rows.append(dict(check=f"bound invariant B(X) >= u(X), {name}", status=_status(name), runs=len(inv),
+                             operations=sum(int(a) for a, _ in inv), mismatches=sum(int(b) for _, b in inv)))
+    for name in [n for n in later if n.startswith("husps-")]:
+        found = re.findall(r"HUSP check: (\d+) comparisons with the proposal, (\d+) mismatching, (\d+) without",
+                           _console(name) or "")
+        rows.append(dict(check=f"patterns against the proposal after every operation, {name}",
+                         status=_status(name) if found else "missing", runs=len(found),
+                         operations=sum(int(a) for a, _, _ in found),
+                         mismatches=sum(int(b) + int(c) for _, b, c in found)))
     # Irrelevant item pruning against exhaustive enumeration, and with the pruning on and off.
     out = _console("ips-random")
     if _status("ips-random") != "finished":
@@ -606,7 +691,8 @@ def verification():
                              mismatches=sum(1 for _, r in blocks if not r.startswith("every mode returns"))))
     for name, label in (("fault-injection", "fault injection, random streams and hand-built cases"),
                         ("fault-injection-real", "fault injection, adversarial runs on real databases"),
-                        ("fault-injection-ips", "fault injection into the item pruning")):
+                        ("fault-injection-ips", "fault injection into the item pruning"),
+                        ("fault-injection-floor-selection", "fault injection into the rescan floor selection")):
         out = _console(name)
         if _status(name) != "finished":
             rows.append(dict(check=label, status=_status(name)))
@@ -640,7 +726,11 @@ def verification():
                          direct_delete=int(((v["op_type"] == "delete") & (v["path"] == "direct")).sum()),
                          direct_insert=int(((v["op_type"] == "insert") & (v["path"] == "direct")).sum()),
                          direct_modify=int(((v["op_type"] == "modify") & (v["path"] == "direct")).sum()),
-                         mismatches=int((v["clean"].astype(str).str.lower() != "true").sum())))
+                         mismatches=int((v["clean"].astype(str).str.lower() != "true").sum()),
+                         # runs that record the floor in force (the rescan floor selection): the
+                         # rescans mined at UUT; absent from runs written before the column existed
+                         rescans_at_uut=int(((v["floor_after"] >= 1 - 1e-12) & (v["path"] == "rescan")).sum())
+                         if "floor_after" in v.columns else None))
     summary = pd.DataFrame(rows)
     for col in summary.columns.drop(["check", "status"]):
         summary[col] = summary[col].astype("Int64")
@@ -1192,6 +1282,12 @@ def export_all(out_dir=None):
 
     o6 = sc6_by_op()
     mf.write_csv(o6, os.path.join(out, "table_SC6_by_op.csv"))
+    # pooled ratios: remining's time over the method's summed over the five seeds (table_SC6_by_op.csv)
+    for r in o6.itertuples():
+        if pd.notna(r.remine_over_proposal):
+            put(f"SC6_{r.dataset}_{r.kind.replace(' ', '_')}_pooled_remine_over_proposal",
+                f"{r.remine_over_proposal:.2f}", "table_SC6_by_op.csv")
+    mixed_floor_keys(put)
 
     # The mixed streams with every remining arm: SC6 (table_SC6_by_op_arms.csv beside the
     # table above, which keeps its form), SC6D and SC6B.
@@ -1254,8 +1350,14 @@ def export_all(out_dir=None):
     for _, r in vs.iterrows():
         key = "verify_" + re.sub(r"[^a-z0-9]+", "_", r["check"].lower()).strip("_")
         put(f"{key}_status", r["status"], "table_verification.csv")
+        if r["check"] == "fault injection into the rescan floor selection":
+            con = _console("fault-injection-floor-selection") or ""
+            faults = [f for f in re.findall(r"^fault: (.+)$", con, flags=re.M)]
+            for i, fname in enumerate(faults, start=1):
+                for w, n in re.findall(re.escape(fname) + r" \| window (\d+): .*?mismatching-ops=(\d+)", con):
+                    put(f"verify_floor_fault_{i}_window_{w}_mismatching_operations", int(n), "table_verification.csv")
         for col in ("operations", "with_target", "direct_delete", "direct_insert", "direct_modify", "mismatches",
-                    "caught"):
+                    "caught", "rescans_at_uut"):
             if col in r and pd.notna(r[col]):
                 put(f"{key}_{col}", int(r[col]), "table_verification.csv")
         parts = [r.get(c) for c in ("direct_delete", "direct_insert", "direct_modify")]
