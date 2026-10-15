@@ -1370,8 +1370,17 @@ def export_all(out_dir=None):
             for i, fname in enumerate(faults, start=1):
                 for w, n in re.findall(re.escape(fname) + r" \| window (\d+): .*?mismatching-ops=(\d+)", con):
                     put(f"verify_floor_fault_{i}_window_{w}_mismatching_operations", int(n), "table_verification.csv")
-        for col in ("operations", "with_target", "direct_delete", "direct_insert", "direct_modify", "mismatches",
-                    "caught", "rescans_at_uut", "rescans_back_to_low", "stopped_by_heap"):
+        if r["check"].startswith("patterns against the proposal after every operation, "):
+            # the comparisons of each scenario, from the rows the runner wrote (the console gives
+            # only the total of each command)
+            vh = os.path.join(VERIFY_DIR, r["check"].split(", ")[-1], "verify_husps.csv")
+            if os.path.exists(vh):
+                cmp_rows = pd.read_csv(vh)
+                cmp_rows = cmp_rows[cmp_rows["status"] != "reference"]
+                for sc, n in cmp_rows.groupby("scenario").size().items():
+                    put(f"{key}_{sc}_comparisons", int(n), "table_verification.csv")
+        for col in ("runs", "operations", "with_target", "direct_delete", "direct_insert", "direct_modify",
+                    "mismatches", "caught", "rescans_at_uut", "rescans_back_to_low", "stopped_by_heap"):
             if col in r and pd.notna(r[col]):
                 put(f"{key}_{col}", int(r[col]), "table_verification.csv")
         if pd.notna(r.get("stopped_by_heap")) and r["stopped_by_heap"] > 0:
