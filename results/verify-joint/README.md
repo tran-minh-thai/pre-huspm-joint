@@ -40,17 +40,33 @@ checked against USpan, HUSP-ULL and HUSP-SP by `verify.BaselineAgreement`.
 | hand-built cases (MixedBudgetProbe), rule joint | finished | 8 |  |  |  |  | 0 |  |
 | hand-built cases (MixedBudgetProbe), rule iaumax | finished | 8 |  |  |  |  | 3 |  |
 | rescan rule acceptance (RescanRuleAcceptanceTest) | finished | 23 |  |  |  |  | 0 |  |
+| rescan rule acceptance, floor-selection-acceptance | finished | 49 |  |  |  |  | 0 |  |
+| rescan rule acceptance, peu-tracking-acceptance | finished | 44 |  |  |  |  | 0 |  |
+| rescan rule acceptance, pre-tests-acceptance | finished | 33 |  |  |  |  | 0 |  |
+| random streams (MixedBudgetFuzz), floor-selection-fuzz, rule joint | finished | 510,000 |  | 120,279 | 41,812 | 39,215 | 0 |  |
+| random streams (MixedBudgetFuzz), peu-tracking-fuzz, rule joint | finished | 170,000 |  | 0 | 63,216 | 0 | 0 |  |
+| bound invariant B(X) >= u(X), peu-tracking-fuzz | finished | 3,632,296 |  |  |  |  | 0 |  |
+| random streams (MixedBudgetFuzz), pre-tests-fuzz, rule joint | finished | 170,000 |  | 0 | 63,216 | 0 | 0 |  |
+| random streams (MixedBudgetFuzz), pre-tests-fuzz, rule pre_swumax | finished | 170,000 |  | 0 | 56,718 | 0 | 0 |  |
+| random streams (MixedBudgetFuzz), pre-tests-fuzz, rule pre_tsu | finished | 170,000 |  | 0 | 53,371 | 0 | 0 |  |
+| patterns against the proposal after every operation, husps-floor-selection | finished | 1,652 |  |  |  |  | 0 |  |
+| patterns against the proposal after every operation, husps-mixed | finished | 2,835 |  |  |  |  | 0 |  |
+| patterns against the proposal after every operation, husps-sc2 | finished | 3,535 |  |  |  |  | 0 |  |
 | item pruning against exhaustive enumeration (ItemRemovalCheck random) | finished | 1,444 | 1,951 |  |  |  | 0 |  |
 | item pruning on and off on real databases, init (ItemRemovalCheck real) | finished | 8 |  |  |  |  | 0 |  |
 | item pruning on and off on real databases, whole (ItemRemovalCheck real) | finished | 7 |  |  |  |  | 0 |  |
 | fault injection, random streams and hand-built cases | finished | 2 |  |  |  |  |  | 2 |
 | fault injection, adversarial runs on real databases | finished | 2 |  |  |  |  |  | 2 |
 | fault injection into the item pruning | finished | 4 |  |  |  |  |  | 4 |
+| fault injection into the rescan floor selection | finished | 2 |  |  |  |  |  | 2 |
 | direct path on real databases, adversarial operations | finished | 128 | 108 | 30 | 49 | 30 | 0 |  |
 | direct path on real databases, adversarial-tafeng operations | finished | 16 | 0 | 4 | 8 | 4 | 0 |  |
 | direct path on real databases, adversarial-tafeng-probe0.7 operations | finished | 16 | 12 | 4 | 6 | 4 | 0 |  |
 | direct path on real databases, floor-selection-adversarial operations | finished | 128 | 108 | 30 | 49 | 30 | 0 |  |
 | direct path on real databases, floor-selection-random operations | finished | 128 | 0 | 30 | 58 | 28 | 0 |  |
+| direct path on real databases, floor-selection-random-floors operations | finished | 128 | 0 | 30 | 58 | 28 | 0 |  |
+| direct path on real databases, floor-selection-switching-adversarial operations | finished | 162 | 135 | 18 | 33 | 16 | 0 |  |
+| direct path on real databases, floor-selection-switching-random operations | finished | 176 | 0 | 19 | 42 | 22 | 0 |  |
 | direct path on real databases, peu-tracking-adversarial operations | finished | 128 | 110 | 0 | 108 | 0 | 0 |  |
 | direct path on real databases, peu-tracking-random operations | finished | 128 | 0 | 0 | 117 | 0 | 0 |  |
 | direct path on real databases, pre-tests-adversarial operations | finished | 256 | 224 | 0 | 210 | 0 | 0 |  |
@@ -109,6 +125,45 @@ checked against USpan, HUSP-ULL and HUSP-SP by `verify.BaselineAgreement`.
 | KOSARAK | 16 | 0 | 7 | 1 | 4 | 0 | 3 | 1 | 0 |
 | C8T1S5I8N5K | 16 | 0 | 7 | 1 | 4 | 0 | 4 | 0 | 0 |
 | TAFENG | 16 | 0 | 8 | 0 | 4 | 0 | 4 | 0 | 0 |
+
+### floor-selection-random-floors
+
+| database | operations | with a target | insert direct | insert rescan | delete direct | delete rescan | modify direct | modify rescan | mismatches |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| SIGN | 16 | 0 | 7 | 1 | 3 | 1 | 3 | 1 | 0 |
+| LEVIATHAN | 16 | 0 | 7 | 1 | 3 | 1 | 3 | 1 | 0 |
+| BIBLE | 16 | 0 | 7 | 1 | 4 | 0 | 3 | 1 | 0 |
+| BMS1 | 16 | 0 | 8 | 0 | 4 | 0 | 4 | 0 | 0 |
+| FIFA | 16 | 0 | 7 | 1 | 4 | 0 | 4 | 0 | 0 |
+| KOSARAK | 16 | 0 | 7 | 1 | 4 | 0 | 3 | 1 | 0 |
+| C8T1S5I8N5K | 16 | 0 | 7 | 1 | 4 | 0 | 4 | 0 | 0 |
+| TAFENG | 16 | 0 | 8 | 0 | 4 | 0 | 4 | 0 | 0 |
+
+### floor-selection-switching-adversarial
+
+| database | operations | with a target | insert direct | insert rescan | delete direct | delete rescan | modify direct | modify rescan | mismatches |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| SIGN | 24 | 24 | 4 | 8 | 2 | 4 | 2 | 4 | 0 |
+| LEVIATHAN | 18 | 18 | 4 | 5 | 2 | 3 | 1 | 3 | 0 |
+| BIBLE | 24 | 24 | 4 | 8 | 2 | 4 | 2 | 4 | 0 |
+| BMS1 | 16 | 16 | 3 | 5 | 2 | 2 | 1 | 3 | 0 |
+| FIFA | 24 | 24 | 4 | 8 | 2 | 4 | 2 | 4 | 0 |
+| KOSARAK | 24 | 24 | 4 | 8 | 2 | 4 | 2 | 4 | 0 |
+| C8T1S5I8N5K | 16 | 5 | 5 | 3 | 3 | 1 | 2 | 2 | 0 |
+| TAFENG | 16 | 0 | 5 | 3 | 3 | 1 | 4 | 0 | 0 |
+
+### floor-selection-switching-random
+
+| database | operations | with a target | insert direct | insert rescan | delete direct | delete rescan | modify direct | modify rescan | mismatches |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| SIGN | 24 | 0 | 4 | 8 | 2 | 4 | 2 | 4 | 0 |
+| LEVIATHAN | 24 | 0 | 4 | 8 | 2 | 4 | 2 | 4 | 0 |
+| BIBLE | 24 | 0 | 4 | 8 | 2 | 4 | 2 | 4 | 0 |
+| BMS1 | 24 | 0 | 10 | 2 | 4 | 2 | 4 | 2 | 0 |
+| FIFA | 24 | 0 | 4 | 8 | 2 | 4 | 2 | 4 | 0 |
+| KOSARAK | 24 | 0 | 4 | 8 | 2 | 4 | 2 | 4 | 0 |
+| C8T1S5I8N5K | 16 | 0 | 7 | 1 | 2 | 2 | 4 | 0 | 0 |
+| TAFENG | 16 | 0 | 5 | 3 | 3 | 1 | 4 | 0 | 0 |
 
 ### peu-tracking-adversarial
 
@@ -187,6 +242,8 @@ checked against USpan, HUSP-ULL and HUSP-SP by `verify.BaselineAgreement`.
     java -Dverify.probeRl=0.7 -Xmx24g -Xss64m -cp build-vj verify.DirectPathVerifier TAFENG --adversarial --ops 16 --out results/verify-joint/adversarial-tafeng-probe0.7
     # fault-injection: exit 0, commit b1ea30af, 2026-10-12T08:12:02
     python3 analysis/fault_injection.py --trials 2000 --seed 7
+    # fault-injection-floor-selection: exit 0, commit fa2bef41, 2026-10-15T13:57:17
+    python3 analysis/fault_injection.py --floor-selection --trials 2000 --seed 7
     # fault-injection-ips: exit 0, commit 41f3af39, 2026-10-12T15:08:58
     python3 analysis/fault_injection.py --item-removal --trials 2000 --seed 1
     # fault-injection-real: exit 0, commit e954773c, 2026-10-12T10:38:57
@@ -199,6 +256,12 @@ checked against USpan, HUSP-ULL and HUSP-SP by `verify.BaselineAgreement`.
     bash -c rc=0; for w in 1 2 5; do for s in "2000 7" "5000 11" "5000 23" "5000 101"; do set -- $s; java -Dadapt.floorWindow=$w -cp build-vj verify.MixedBudgetFuzz joint $1 $2 || rc=1; done; done; exit $rc
     # floor-selection-random: exit 0, commit 8dfc5516, 2026-10-15T08:12:38
     java -Dadapt.floorWindow=1 -Xmx24g -Xss64m -cp build-vj verify.DirectPathVerifier ALL --ops 16 --out results/verify-joint/floor-selection-random
+    # floor-selection-random-floors: exit 0, commit ee35f2bb, 2026-10-15T13:59:09
+    java -Dadapt.floorWindow=1 -Xmx24g -Xss64m -cp build-vj verify.DirectPathVerifier ALL --ops 16 --out results/verify-joint/floor-selection-random-floors
+    # floor-selection-switching-adversarial: exit 0, commit 5dc0eae1, 2026-10-15T16:56:04
+    java -Dadapt.floorWindow=1 -Xmx24g -Xss64m -cp build-vj verify.DirectPathVerifier ALL --adversarial --ops 24 --share-alt 0.5 --out results/verify-joint/floor-selection-switching-adversarial
+    # floor-selection-switching-random: exit 0, commit 5dc0eae1, 2026-10-15T14:35:04
+    java -Dadapt.floorWindow=1 -Xmx24g -Xss64m -cp build-vj verify.DirectPathVerifier ALL --ops 24 --share-alt 0.5 --out results/verify-joint/floor-selection-switching-random
     # fuzz: exit 0, commit b1ea30af, 2026-10-12T08:11:48
     bash -c for s in "2000 7" "5000 11" "5000 23" "5000 101"; do set -- $s; for r in joint iaumax; do java -cp build-vj verify.MixedBudgetFuzz $r $1 $2; done; done; java -cp build-vj verify.MixedBudgetProbe joint; java -cp build-vj verify.MixedBudgetProbe iaumax; true
     # husps-floor-selection: exit 0, commit 8dfc5516, 2026-10-15T08:09:33

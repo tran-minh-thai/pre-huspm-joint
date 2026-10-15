@@ -601,6 +601,13 @@ def _status(name):
     return "finished" if code == 0 else f"exit {code}"
 
 
+def _heap_stops(console):
+    """(count, detail) of the databases a DirectPathVerifier run stopped because a mine did not
+    fit in the heap; (None, None) when the console does not report it."""
+    m = re.search(r"^databases stopped by the heap: (\d+)(?: \[(.*)\])?$", console or "", flags=re.M)
+    return (int(m.group(1)), m.group(2) or "none") if m else (None, None)
+
+
 def verification():
     """The correctness checks of results/verify-joint, read from their outputs.
 
@@ -730,7 +737,14 @@ def verification():
                          # runs that record the floor in force (the rescan floor selection): the
                          # rescans mined at UUT; absent from runs written before the column existed
                          rescans_at_uut=int(((v["floor_after"] >= 1 - 1e-12) & (v["path"] == "rescan")).sum())
-                         if "floor_after" in v.columns else None))
+                         if "floor_after" in v.columns else None,
+                         # rescans that leave UUT for the low floor again
+                         rescans_back_to_low=int(((v["floor_before"] >= 1 - 1e-12) & (v["floor_after"] < 1 - 1e-12)
+                                                  & (v["path"] == "rescan")).sum())
+                         if "floor_after" in v.columns else None,
+                         # databases whose mines outgrew the heap: their rows stop at that operation
+                         # (the line is absent from runs written before the verifier reported it)
+                         stopped_by_heap=_heap_stops(out)[0]))
     summary = pd.DataFrame(rows)
     for col in summary.columns.drop(["check", "status"]):
         summary[col] = summary[col].astype("Int64")
@@ -1357,9 +1371,13 @@ def export_all(out_dir=None):
                 for w, n in re.findall(re.escape(fname) + r" \| window (\d+): .*?mismatching-ops=(\d+)", con):
                     put(f"verify_floor_fault_{i}_window_{w}_mismatching_operations", int(n), "table_verification.csv")
         for col in ("operations", "with_target", "direct_delete", "direct_insert", "direct_modify", "mismatches",
-                    "caught", "rescans_at_uut"):
+                    "caught", "rescans_at_uut", "rescans_back_to_low", "stopped_by_heap"):
             if col in r and pd.notna(r[col]):
                 put(f"{key}_{col}", int(r[col]), "table_verification.csv")
+        if pd.notna(r.get("stopped_by_heap")) and r["stopped_by_heap"] > 0:
+            put(f"{key}_stopped_by_heap_where", _heap_stops(_console(r["check"].split(", ")[-1]
+                                                                   .removesuffix(" operations")))[1],
+                "table_verification.csv")
         parts = [r.get(c) for c in ("direct_delete", "direct_insert", "direct_modify")]
         if all(pd.notna(v) for v in parts):
             put(f"{key}_direct_total", int(sum(parts)), "table_verification.csv")

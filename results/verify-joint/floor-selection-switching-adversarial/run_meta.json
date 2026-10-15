@@ -1,0 +1,16 @@
+{
+  "command": "java -Dadapt.floorWindow=1 -Xmx24g -Xss64m -cp build-vj verify.DirectPathVerifier ALL --adversarial --ops 24 --share-alt 0.5 --out results/verify-joint/floor-selection-switching-adversarial",
+  "path_substitutions": 0,
+  "build_dir": "build-vj",
+  "git_commit": "5dc0eae1493bde264c2a1ef82b1d3c5ff056516b",
+  "tree": "src clean, other files modified",
+  "source_sha256": "38cbea1db42d1f081aee974931c8bcc1b9b8a05a50a840d448abaff5984aff0b",
+  "source_files": 35,
+  "java": "openjdk version \"26.0.1\" 2026-04-21",
+  "os": "Darwin 27.0.0 (macOS-27.0.1-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-10-15T14:35:05",
+  "end": "2026-10-15T16:56:04",
+  "exit_code": 0
+}

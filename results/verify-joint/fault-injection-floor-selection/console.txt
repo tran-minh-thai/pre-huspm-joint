@@ -1,0 +1,15 @@
+unmodified | window 1: rule=joint trials=2000 seed=7 ops=20000 per-kind={delete=6582, insert=6702, modify=6716} direct-update={delete=3418, insert=1358, modify=1227} mismatching-ops=0 {} trials-with-mismatch=0
+unmodified | window 2: rule=joint trials=2000 seed=7 ops=20000 per-kind={delete=6582, insert=6702, modify=6716} direct-update={delete=5024, insert=1704, modify=1605} mismatching-ops=0 {} trials-with-mismatch=0
+  unmodified passes: True
+a rescan mined at UUT keeps the budget of r_l for insertions | window 1: rule=joint trials=2000 seed=7 ops=20000 per-kind={delete=6582, insert=6702, modify=6716} direct-update={delete=3262, insert=1877, modify=1172} mismatching-ops=37 {insert/direct=37} trials-with-mismatch=37
+a rescan mined at UUT keeps the budget of r_l for insertions | window 2: rule=joint trials=2000 seed=7 ops=20000 per-kind={delete=6582, insert=6702, modify=6716} direct-update={delete=4994, insert=1816, modify=1596} mismatching-ops=10 {insert/direct=10} trials-with-mismatch=10
+fault: a rescan mined at UUT keeps the budget of r_l for insertions
+  replaced: safetyBoundF = (Su - Sl_min) * tsuAtLastRescan;
+      with: safetyBoundF = (Su - (floorWindow > 0 ? slMinRatioEff * Su : Sl_min)) * tsuAtLastRescan;
+  caught: True
+a rescan mined at UUT keeps the budget of r_l for deletions | window 1: rule=joint trials=2000 seed=7 ops=20000 per-kind={delete=6582, insert=6702, modify=6716} direct-update={delete=5758, insert=1230, modify=1114} mismatching-ops=1973 {delete/direct=1973} trials-with-mismatch=971
+a rescan mined at UUT keeps the budget of r_l for deletions | window 2: rule=joint trials=2000 seed=7 ops=20000 per-kind={delete=6582, insert=6702, modify=6716} direct-update={delete=5611, insert=1668, modify=1577} mismatching-ops=542 {delete/direct=542} trials-with-mismatch=389
+fault: a rescan mined at UUT keeps the budget of r_l for deletions
+  replaced: safetyBoundDel = (Su - Sl_min) * tsuAtLastRescan;
+      with: safetyBoundDel = (Su - (floorWindow > 0 ? slMinRatioEff * Su : Sl_min)) * tsuAtLastRescan;
+  caught: True

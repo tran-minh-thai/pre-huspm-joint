@@ -1,0 +1,16 @@
+{
+  "command": "python3 analysis/fault_injection.py --floor-selection --trials 2000 --seed 7",
+  "path_substitutions": 0,
+  "build_dir": "build",
+  "git_commit": "fa2bef41c38fd6f9e347424009316ecfe22325e5",
+  "tree": "clean",
+  "source_sha256": "8ecffa4a2566999ae775b4b1c5b8f4230107f2a9047dc20280f5c4d83698bdf0",
+  "source_files": 35,
+  "java": "openjdk version \"26.0.1\" 2026-04-21",
+  "os": "Darwin 27.0.0 (macOS-27.0.1-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-10-15T13:57:01",
+  "end": "2026-10-15T13:57:17",
+  "exit_code": 0
+}
