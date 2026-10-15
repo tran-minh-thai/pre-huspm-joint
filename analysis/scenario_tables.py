@@ -725,6 +725,10 @@ def verification():
             for op in ("insert", "delete", "modify"):
                 for path_kind in ("direct", "rescan"):
                     r[f"{op}_{path_kind}"] = int(((g["op_type"] == op) & (g["path"] == path_kind)).sum())
+            if "floor_after" in g.columns:
+                r["rescans_at_uut"] = int(((g["floor_after"] >= 1 - 1e-12) & (g["path"] == "rescan")).sum())
+                r["rescans_back_to_low"] = int(((g["floor_before"] >= 1 - 1e-12) & (g["floor_after"] < 1 - 1e-12)
+                                                & (g["path"] == "rescan")).sum())
             per_db.append(r)
         rows.append(dict(check=f"direct path on real databases, {name} operations",
                          status="finished" if finished else _status(name),
@@ -748,7 +752,11 @@ def verification():
     summary = pd.DataFrame(rows)
     for col in summary.columns.drop(["check", "status"]):
         summary[col] = summary[col].astype("Int64")
-    return summary, pd.DataFrame(per_db)
+    by_db = pd.DataFrame(per_db)
+    for col in ("rescans_at_uut", "rescans_back_to_low"):
+        if col in by_db.columns:
+            by_db[col] = by_db[col].astype("Int64")
+    return summary, by_db
 
 
 # ------------------------------------------------------------------------------ agreement
