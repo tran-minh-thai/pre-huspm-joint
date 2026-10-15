@@ -21,6 +21,12 @@ database did not finish (it is named, and counts as catching nothing).
 injects faults into irrelevant-item removal instead and runs verify.ItemRemovalCheck random
 (brute-force reference) on each, with both child-building strategies; the unmodified copy is
 run first and must pass, so a check that fails on everything is not read as catching.
+
+    python3 analysis/fault_injection.py --floor-selection [--trials N] [--seed S]
+
+injects faults into the rescan floor selection (PreHUSPMAdaptiveAlgo.floorWindow) and runs
+verify.MixedBudgetFuzz with every kind of operation at windows 1 and 2 on each; the unmodified copy
+is run first and must pass.
 """
 import argparse
 import pathlib
@@ -55,6 +61,42 @@ FAULTS_IIP = [
      "for (int x = 0; x < nLocal; x++) iipAccAdd(local[x], best);",
      "for (int x = 0; x < nLocal; x++) iipAccAdd(local[x], tUtil[0] + ru[tFlat[0]]);"),
 ]
+
+
+FAULTS_FLOOR = [
+    ("a rescan mined at UUT keeps the budget of r_l for insertions",
+     "safetyBoundF = (Su - Sl_min) * tsuAtLastRescan;",
+     "safetyBoundF = (Su - (floorWindow > 0 ? slMinRatioEff * Su : Sl_min)) * tsuAtLastRescan;"),
+    ("a rescan mined at UUT keeps the budget of r_l for deletions",
+     "safetyBoundDel = (Su - Sl_min) * tsuAtLastRescan;",
+     "safetyBoundDel = (Su - (floorWindow > 0 ? slMinRatioEff * Su : Sl_min)) * tsuAtLastRescan;"),
+]
+
+
+def floor_selection(trials, seed):
+    """The unmodified copy, then each fault of FAULTS_FLOOR, under MixedBudgetFuzz at windows 1 and 2."""
+    ok = True
+    for name, old, new in [("unmodified", None, None)] + FAULTS_FLOOR:
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp = pathlib.Path(tmp)
+            copy_build(tmp, old, new, name)
+            fails = []
+            for w in (1, 2):
+                rc, out = run(["java", f"-Dadapt.floorWindow={w}", "-cp", "build", "verify.MixedBudgetFuzz",
+                               "joint", str(trials), str(seed)], tmp)
+                line = [l for l in out.splitlines() if l.startswith("rule=")]
+                print(f"{name} | window {w}: {line[0] if line else out.strip()[-300:]}")
+                fails.append(rc != 0)
+            if old is None:
+                ok &= not any(fails)
+                print(f"  unmodified passes: {not any(fails)}")
+            else:
+                ok &= any(fails)
+                print(f"fault: {name}")
+                print(f"  replaced: {old}")
+                print(f"      with: {new}")
+                print(f"  caught: {any(fails)}")
+    sys.exit(0 if ok else 1)
 
 
 def copy_build(tmp, old=None, new=None, name="unmodified"):
@@ -115,7 +157,10 @@ def main():
     ap.add_argument("--seed", type=int, default=7)
     ap.add_argument("--real", default="", help="comma-separated databases for the adversarial run")
     ap.add_argument("--item-removal", action="store_true")
+    ap.add_argument("--floor-selection", action="store_true")
     a = ap.parse_args()
+    if a.floor_selection:
+        floor_selection(a.trials, a.seed)
     if a.item_removal:
         item_removal(a.trials, a.seed)
 
