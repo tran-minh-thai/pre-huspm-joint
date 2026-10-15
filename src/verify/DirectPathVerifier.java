@@ -80,6 +80,9 @@ public final class DirectPathVerifier {
      * does and the floor never leaves r_l. 0 (default): every operation is sized from --share.
      */
     private static double shareAlt = 0;
+    /** The operation in progress, 1-based, for the message when a database stops on the heap. */
+    private static int currentOp = 0;
+    private static final List<String> stoppedByHeap = new ArrayList<>();
 
     public static void main(String[] args) throws IOException {
         if (args.length == 0) {
@@ -124,8 +127,19 @@ public final class DirectPathVerifier {
             }
             for (common.Datasets.Entry e : common.Datasets.all()) {
                 if (!"ALL".equalsIgnoreCase(target) && !e.name.equalsIgnoreCase(target)) continue;
-                violations += verifyDataset(e.name, e.defaultUut, rule, ops, share, seed, adversarial, w, counts);
                 ran = true;
+                currentOp = 0;
+                try {
+                    violations += verifyDataset(e.name, e.defaultUut, rule, ops, share, seed, adversarial, w, counts);
+                } catch (OutOfMemoryError oom) {
+                    // A mine of this database (the instance under test or the reference) did not fit
+                    // in the heap. The rows of the operations before it are written; the database
+                    // stops here and the next one starts.
+                    System.gc();
+                    String where = currentOp == 0 ? "before the first operation" : "at operation " + currentOp;
+                    stoppedByHeap.add(e.name + " " + where);
+                    System.out.println("  the heap ran out " + where + "; " + e.name + " stops here");
+                }
             }
         }
         if (!ran) {
@@ -134,6 +148,8 @@ public final class DirectPathVerifier {
         }
         System.out.println();
         System.out.println("operations by kind/path: " + counts);
+        System.out.println("databases stopped by the heap: " + stoppedByHeap.size()
+                + (stoppedByHeap.isEmpty() ? "" : " " + stoppedByHeap));
         System.out.println("mismatching operations: " + violations);
         System.out.println("verification.csv -> " + csv);
         System.exit(violations == 0 ? 0 : 1);
@@ -161,8 +177,9 @@ public final class DirectPathVerifier {
 
         PreHUSPMAdaptiveAlgo algo = newAlgo(uut, rule);
         algo.runInitialMining(new ArrayList<>(current), tsu(current));
-        System.out.printf("%n=== %s | UUT=%.6f | r_l=%.2f | rule=%s | %d operations | budget share 1/%.0f ===%n",
-                name, uut, RL, algo.triggerRule, ops, share);
+        System.out.printf("%n=== %s | UUT=%.6f | r_l=%.2f | rule=%s | %d operations | budget share 1/%.0f%s ===%n",
+                name, uut, RL, algo.triggerRule, ops, share,
+                shareAlt > 0 ? String.format(", operations 2, 5, 8, ... budget/%.2f", shareAlt) : "");
 
         // --insert-only: insertions alone, for the Pre-HUSPM tests (pre_swumax, pre_tsu), which
         // are defined for insertions only.
@@ -175,6 +192,7 @@ public final class DirectPathVerifier {
         int lastRescans = -1;
         for (int o = 0; o < ops; o++) {
             String op = cycle[o % cycle.length];
+            currentOp = o + 1;
             if (adversarial && algo.rescanCount != lastRescans) {
                 lastRescans = algo.rescanCount;
                 Map.Entry<String, Double> t = pickTarget(algo, current, uut, rule);
