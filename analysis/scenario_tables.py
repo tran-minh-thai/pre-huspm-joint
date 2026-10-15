@@ -746,6 +746,9 @@ def verification():
                          rescans_back_to_low=int(((v["floor_before"] >= 1 - 1e-12) & (v["floor_after"] < 1 - 1e-12)
                                                   & (v["path"] == "rescan")).sum())
                          if "floor_after" in v.columns else None,
+                         # direct updates that arrive while the floor in force is UUT (budget 0)
+                         direct_at_uut=int(((v["floor_before"] >= 1 - 1e-12) & (v["path"] == "direct")).sum())
+                         if "floor_before" in v.columns else None,
                          # databases whose mines outgrew the heap: their rows stop at that operation
                          # (the line is absent from runs written before the verifier reported it)
                          stopped_by_heap=_heap_stops(out)[0]))
@@ -1388,7 +1391,7 @@ def export_all(out_dir=None):
                 for sc, n in cmp_rows.groupby("scenario").size().items():
                     put(f"{key}_{sc}_comparisons", int(n), "table_verification.csv")
         for col in ("runs", "operations", "with_target", "direct_delete", "direct_insert", "direct_modify",
-                    "mismatches", "caught", "rescans_at_uut", "rescans_back_to_low", "stopped_by_heap"):
+                    "mismatches", "caught", "rescans_at_uut", "rescans_back_to_low", "direct_at_uut", "stopped_by_heap"):
             if col in r and pd.notna(r[col]):
                 put(f"{key}_{col}", int(r[col]), "table_verification.csv")
         if pd.notna(r.get("stopped_by_heap")) and r["stopped_by_heap"] > 0:
