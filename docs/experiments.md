@@ -8,7 +8,7 @@ scenario are in `docs/campaign-parameters.md`; column definitions are in
 
 | Name in results | Role | Reference | Implementation |
 |---|---|---|---|
-| `Adaptive-Full` | proposed method | this repository | `PreHUSPMAdaptiveAlgorithm` |
+| `Adaptive-Full` | proposed method at the fixed floor `r_l`; in the static scenarios this is the method, in SC2, SC5 and the mixed streams the tables read it as `Adaptive-FixedFloor`, an ablation row | this repository | `PreHUSPMAdaptiveAlgorithm` |
 | `Pre-HUSPM-SWUmax` | pre-large incremental baseline, rescan test on `SWUmax` (Theorem 2 of Yan et al.); SC2 and SC5 | Yan et al., J. Supercomputing 2025 | `PreHUSPMAlgorithm`, `Variant.SWUMAX` |
 | `Pre-HUSPM-TSU` | the same baseline with the rescan test on `TSU(d)` (Theorem 1 of Yan et al.); SC2 and SC5 | Yan et al., J. Supercomputing 2025 | `PreHUSPMAlgorithm`, `Variant.TSU` |
 | `Pre-HUSPM` | the same baseline in the static scenarios (SC1, SC3, SC4, SC7), where both tests mine alike | Yan et al., J. Supercomputing 2025 | `PreHUSPMAlgorithm`, `runInitialMining` |
@@ -21,6 +21,13 @@ scenario are in `docs/campaign-parameters.md`; column definitions are in
 | `USpan` | static baseline, width pruning by SWU and depth pruning by a sound bound | Yin et al., KDD 2012 | `USpanAlgorithm` |
 | `HUSP-ULL` | static baseline, UL-lists with irrelevant item pruning (IPS) and the look-ahead strategy (LAS), Algorithms 1 to 3 | Gan et al., IEEE Transactions on Cybernetics 2021 | `HUSPULLAlgorithm` |
 | `HUSP-SP` | static baseline, seq-array and seqPro with IIP, early pruning by a sound bound, and the PEU test | Zhang et al., ACM TKDD 2024 | `HUSPSPAlgorithm` |
+
+**The method in the incremental scenarios** is the proposal with the rescan floor selection, arm
+`Adaptive-FloorSelect`: `analysis/make_figures.load_scenario` reads it as `Adaptive-Full` in SC2, SC5,
+SC6, SC6D and SC6B, and reads the arm `Adaptive-Full` on disk there as `Adaptive-FixedFloor`. The
+static scenarios mine once, which the selection does not change. The rescan-rule table compares the
+three rules at the fixed floor and gives the method's rescans in its own column; the isolation table
+isolates the components at the fixed floor.
 
 Every algorithm is implemented in Java in `src/algorithms/` and runs inside the same harness,
 so runtime, memory and the counters are measured under identical conditions. Numbers copied

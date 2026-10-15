@@ -39,9 +39,11 @@ INC_ARMS = [P, "Pre-HUSPM-SWUmax", "Pre-HUSPM-TSU", REM, "IncUSP-Miner+"]
 # one component of the proposal (ISOLATION_ARMS) are not competitors and appear in their own table.
 SC2_ARMS = INC_ARMS + ["Remine-HUSP-ULL", "Remine-HUSP-SP"]
 ISOLATION_ARMS = ["Joint-miner+SWUmax", "Joint-miner+TSU", "Joint-rule+SWU-tracking"]
-# The proposal with the rescan floor selection (PreHUSPMAdaptiveAlgo.floorWindow): a version of the
-# proposal, compared with it and with every competitor, in a table of its own.
-FS = "Adaptive-FloorSelect"
+# In the incremental scenarios P is the method, the proposal with the rescan floor selection
+# (make_figures.load_scenario reads arm Adaptive-FloorSelect as P there); FIXED is the proposal at the
+# fixed floor r_l, kept as an ablation row: a version of the method, not a competitor.
+FIXED = mf.FIXED
+FS = FIXED     # the version of the proposal that is not a competitor
 
 
 def gmean(x):
@@ -300,25 +302,25 @@ def sc5_floor_selection(put):
     src = "table_SC5_floor_selection.csv"
     rows = []
     for (d, k, sh, a), v in runs.items():
-        if a != FS:
+        if a != P:
             continue
-        p = runs.get((d, k, sh, P), [])
+        p = runs.get((d, k, sh, FIXED), [])
         comp = {b: w for (d2, k2, s2, b), w in runs.items()
-                if (d2, k2, s2) == (d, k, sh) and b not in (P, FS) and b not in ISOLATION_ARMS and w}
+                if (d2, k2, s2) == (d, k, sh) and b not in (P, FIXED) and b not in ISOLATION_ARMS and w}
         if not p or not comp:
             continue
         best = min(comp, key=lambda b: np.mean(comp[b]))
         bw = comp[best]
         side = ("faster" if max(v) < min(bw) else "slower" if max(bw) < min(v) else "overlapping")
         rows.append(dict(dataset=d, K=k, shape=sh, selection_s=np.mean(v), runs=len(v),
-                         proposal_s=np.mean(p), selection_over_proposal=np.mean(v) / np.mean(p),
+                         fixed_floor_s=np.mean(p), selection_over_fixed_floor=np.mean(v) / np.mean(p),
                          best_competitor=best, selection_over_best=np.mean(v) / np.mean(bw), vs_best=side))
     t = pd.DataFrame(rows)
     if not len(t):
         return t
     for d, g in t.groupby("dataset"):
-        r = g["selection_over_proposal"]
-        put(f"SC5_FloorSelect_{d}_over_proposal", f"median {r.median():.3f}, {r.min():.3f} to {r.max():.3f}", src)
+        r = g["selection_over_fixed_floor"]
+        put(f"SC5_FloorSelect_{d}_over_fixed_floor", f"median {r.median():.3f}, {r.min():.3f} to {r.max():.3f}", src)
         put(f"SC5_FloorSelect_{d}_vs_best_competitor",
             f"faster {int((g['vs_best'] == 'faster').sum())}, overlapping {int((g['vs_best'] == 'overlapping').sum())}, "
             f"slower {int((g['vs_best'] == 'slower').sum())} of {len(g)}", src)
@@ -348,7 +350,7 @@ def sc6_by_op():
 
 
 # Remining arms of the mixed streams (AutomatedExperimentRunner.MIXED_ARMS after the proposal)
-MIXED_REMINE = ["Remine-from-scratch", "Remine-HUSP-ULL", "Remine-HUSP-SP", "Adaptive-FloorSelect"]
+MIXED_REMINE = ["Remine-from-scratch", "Remine-HUSP-ULL", "Remine-HUSP-SP", FIXED]
 MIXED_KINDS = {"INS": "insertion", "DEL": "deletion", "MOD": "modification",
                "DEL_BIG": "deletion beyond the budget"}
 
@@ -394,7 +396,7 @@ def mixed_by_op(sc):
                 else:
                     ratios = [per_q[r] / per_p[r] for r in common if per_p[r] > 0]
                     key = "over_proposal"
-                tag = arm.replace("Remine-from-scratch", "Remine").replace("Adaptive-FloorSelect", "FloorSelect")
+                tag = arm.replace("Remine-from-scratch", "Remine").replace(FIXED, "FixedFloor")
                 row[f"{tag}_s_mean"] = np.mean([per_q[r] for r in common]) if common else np.nan
                 row[f"{key}_{tag}_mean"] = np.mean(ratios) if ratios else np.nan
                 row[f"{key}_{tag}_sd"] = np.std(ratios, ddof=1) if len(ratios) > 1 else np.nan
@@ -794,13 +796,14 @@ def sc2_floor_selection(totals, reps=None):
     S = sc2_stats(totals, reps)
     df = mf.load_scenario("SC2")
     rows = []
-    for d in [x for x in mf.ALL_DATASETS if (x, FS) in S]:
-        p, f = S.get((d, P)), S.get((d, FS))
+    for d in [x for x in mf.ALL_DATASETS if (x, FIXED) in S]:
+        # p: the proposal at the fixed floor; f: the method, with the floor selection
+        p, f = S.get((d, FIXED)), S.get((d, P))
         if not p or not f:
             continue
-        g = df[(df["dataset"] == d) & (df["algorithm"] == FS) & mf.is_inc(df)].sort_values("iteration")
+        g = df[(df["dataset"] == d) & (df["algorithm"] == P) & mf.is_inc(df)].sort_values("iteration")
         last = g.iloc[-1]
-        rivals = {b: S[(d, b)] for b in SC2_ARMS if b != P and S.get((d, b))}
+        rivals = {b: S[(d, b)] for b in SC2_ARMS if b not in (P, FIXED) and S.get((d, b))}
         best = min(rivals, key=lambda b: rivals[b]["mean"]) if rivals else None
         def side(x, y):
             if x["max"] < y["min"]:
@@ -808,10 +811,10 @@ def sc2_floor_selection(totals, reps=None):
             if y["max"] < x["min"]:
                 return "separated, slower"
             return "overlapping"
-        rows.append(dict(dataset=d, proposal_s=p["mean"], proposal_runs=p["n"], selection_s=f["mean"],
+        rows.append(dict(dataset=d, fixed_floor_s=p["mean"], fixed_floor_runs=p["n"], selection_s=f["mean"],
                          selection_s_std=f["std"], selection_runs=f["n"],
                          rescans=int(last["rescan_count"]), rescans_at_uut=int(last["rescans_at_uut"]),
-                         selection_over_proposal=f["mean"] / p["mean"], vs_proposal=side(f, p),
+                         selection_over_fixed_floor=f["mean"] / p["mean"], vs_fixed_floor=side(f, p),
                          best_competitor=best, best_competitor_s=rivals[best]["mean"] if best else np.nan,
                          selection_over_best=f["mean"] / rivals[best]["mean"] if best else np.nan,
                          vs_best=side(f, rivals[best]) if best else ""))
@@ -822,7 +825,7 @@ def sc2_floor_selection_keys(put, fs):
     src = "table_SC2_floor_selection.csv"
     for r in fs.itertuples():
         put(f"SC2_FloorSelect_{r.dataset}_time", f"{r.selection_s:.2f}", src)
-        put(f"SC2_FloorSelect_{r.dataset}_over_proposal", f"{r.selection_over_proposal:.2f} ({r.vs_proposal})", src)
+        put(f"SC2_FloorSelect_{r.dataset}_over_fixed_floor", f"{r.selection_over_fixed_floor:.2f} ({r.vs_fixed_floor})", src)
         put(f"SC2_FloorSelect_{r.dataset}_rescans", f"{r.rescans} ({r.rescans_at_uut} at UUT)", src)
         put(f"SC2_FloorSelect_{r.dataset}_over_best_competitor",
             f"{r.selection_over_best:.2f} ({r.best_competitor}; {r.vs_best})", src)
@@ -841,7 +844,9 @@ def sc2_isolation(totals, reps=None):
     that rescanned and those that took the direct update (means of the runs per increment,
     load_mean; which increments rescanned is read from the counters of the main run)."""
     S = sc2_stats(totals, reps)
-    arms = [P] + ISOLATION_ARMS + ["Pre-HUSPM-SWUmax", "Pre-HUSPM-TSU"]
+    # the components are isolated at the fixed floor r_l, where the isolation arms run; the method
+    # (with the floor selection) is listed beside them
+    arms = [FIXED] + ISOLATION_ARMS + ["Pre-HUSPM-SWUmax", "Pre-HUSPM-TSU", P]
     df = mf.load_mean("SC2")
     if df is None:
         return pd.DataFrame()
@@ -878,15 +883,15 @@ def sc2_isolation_keys(put, iso):
         put(f"SC2_isolation_{r.algorithm}_{r.dataset}_direct_s", f"{r.direct_time_s:.2f}", src)
     T = {(r.dataset, r.algorithm): r for r in iso.itertuples() if r.finished}
     for d in sorted({r.dataset for r in iso.itertuples()}):
-        pr = T.get((d, P))
+        pr = T.get((d, FIXED))
         if pr is None:
             continue
         # the rule: the proposal's miner and tracking behind each Pre-HUSPM test, against the proposal
         for a, pre in (("Joint-miner+SWUmax", "Pre-HUSPM-SWUmax"), ("Joint-miner+TSU", "Pre-HUSPM-TSU")):
             x, y = T.get((d, a)), T.get((d, pre))
             if x is not None:
-                put(f"SC2_isolation_rule_{a}_minus_proposal_{d}_s", f"{x.time_s - pr.time_s:.2f}", src)
-                put(f"SC2_isolation_rule_{a}_over_proposal_{d}", f"{x.time_s / pr.time_s:.2f}", src)
+                put(f"SC2_isolation_rule_{a}_minus_fixed_floor_{d}_s", f"{x.time_s - pr.time_s:.2f}", src)
+                put(f"SC2_isolation_rule_{a}_over_fixed_floor_{d}", f"{x.time_s / pr.time_s:.2f}", src)
             if x is not None and y is not None:
                 # what remains between Pre-HUSPM and the same test on the proposal's miner and tracking
                 put(f"SC2_isolation_rest_{pre}_minus_{a}_{d}_s", f"{y.time_s - x.time_s:.2f}", src)
@@ -894,9 +899,9 @@ def sc2_isolation_keys(put, iso):
         # the tracking: the joint rule tracking by the bound, against the proposal
         x = T.get((d, "Joint-rule+SWU-tracking"))
         if x is not None:
-            put(f"SC2_isolation_tracking_minus_proposal_{d}_s", f"{x.time_s - pr.time_s:.2f}", src)
-            put(f"SC2_isolation_tracking_over_proposal_{d}", f"{x.time_s / pr.time_s:.2f}", src)
-            put(f"SC2_isolation_tracking_tracked_over_proposal_{d}",
+            put(f"SC2_isolation_tracking_minus_fixed_floor_{d}_s", f"{x.time_s - pr.time_s:.2f}", src)
+            put(f"SC2_isolation_tracking_over_fixed_floor_{d}", f"{x.time_s / pr.time_s:.2f}", src)
+            put(f"SC2_isolation_tracking_tracked_over_fixed_floor_{d}",
                 f"{x.tracked_after_last / pr.tracked_after_last:.2f}" if pr.tracked_after_last else "", src)
 
 
@@ -963,18 +968,26 @@ def sc2_tex(totals, region, reps=None):
                                ["\\bottomrule\\end{tabular*}", "\\end{table}", ""])
     def rescans(d):
         v = [str(int(op.loc[d, c])) for c in ("rescans", "rescans_swumax", "rescans_tsu")]
-        return " & ".join(f"\\textbf{{{x}}}" if b else x for x, b in zip(v, mf.lowest(v)))
+        cells = " & ".join(f"\\textbf{{{x}}}" if b else x for x, b in zip(v, mf.lowest(v)))
+        # the method, with the floor selection: its rescans and, in parentheses, those mined at UUT
+        if "method_rescans" in op.columns and pd.notna(op.loc[d, "method_rescans"]):
+            cells += f" & {int(op.loc[d, 'method_rescans'])} ({int(op.loc[d, 'method_rescans_at_uut'])})"
+        else:
+            cells += " & --"
+        return cells
     rows = [f"{d} & {100 * op.loc[d, 'alpha_median']:.1f} & {100 * op.loc[d, 'alpha_min']:.1f}--{100 * op.loc[d, 'alpha_max']:.1f} & "
             f"{op.loc[d, 'gain_at_decisions']:.2f} & "
             f"{100 * op.loc[d, 'ratio_median']:.0f} & {int(op.loc[d, 'within_budget'])} & {rescans(d)} \\\\"
             for d in order]
     rule_tex = "\n".join(["\\begin{table}[!htbp]\\centering",
                           "\\caption{Rescan rule in SC2}\\label{tab:sc2_rule}",
-                          "\\setlength{\\tabcolsep}{4pt}",
-                          "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}lrrrrrrrr}\\toprule",
-                          " & \\multicolumn{2}{c}{$\\alpha$ (\\%)} & & & & \\multicolumn{3}{c}{Rescans} \\\\\\cmidrule(lr){2-3}\\cmidrule(l){7-9}",
+                          # ten columns: at 4pt the table is 7pt wider than the text (measured)
+                          "\\setlength{\\tabcolsep}{3pt}",
+                          "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}lrrrrrrrrr}\\toprule",
+                          " & \\multicolumn{2}{c}{$\\alpha$ (\\%)} & & & & \\multicolumn{4}{c}{Rescans} \\\\\\cmidrule(lr){2-3}\\cmidrule(l){7-10}",
                           "Database & Median & Range & Gain & \\begin{tabular}[b]{@{}r@{}}Median\\\\$\\Phi/\\beta$ (\\%)\\end{tabular} & "
-                          "\\begin{tabular}[b]{@{}r@{}}No\\\\rescan\\end{tabular} & Joint & SWUmax & TSU \\\\\\midrule"]
+                          "\\begin{tabular}[b]{@{}r@{}}No\\\\rescan\\end{tabular} & Joint & SWUmax & TSU & "
+                          "\\begin{tabular}[b]{@{}r@{}}Selec-\\\\tion\\end{tabular} \\\\\\midrule"]
                          + rows + ["\\bottomrule\\end{tabular*}", "\\end{table}", ""])
     return time_tex, rule_tex, remine_tex
 
@@ -1198,7 +1211,7 @@ def export_all(out_dir=None):
             if r["kind"] != "stream":
                 put(f"{base}_rescans", f"{r['rescans']}/{r['operations']}", fname)
                 put(f"{base}_direct", f"{r['direct']}/{r['operations']}", fname)
-            for arm in ("Remine", "Remine-HUSP-ULL", "Remine-HUSP-SP", "FloorSelect"):
+            for arm in ("Remine", "Remine-HUSP-ULL", "Remine-HUSP-SP", "FixedFloor"):
                 key = "proposal_over" if r["kind"] == "stream" else "over_proposal"
                 m, sd, n = r.get(f"{key}_{arm}_mean"), r.get(f"{key}_{arm}_sd"), r.get(f"{key}_{arm}_seeds")
                 if pd.notna(m):

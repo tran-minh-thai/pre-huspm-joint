@@ -130,12 +130,19 @@ _mathtext.SHRINK_FACTOR = 8 / FONT_PT
 STATIC_ORDER = ["USpan", "HUSP-ULL", "HUSP-SP", "IncUSP-Miner+", "Pre-HUSPM", "Adaptive-Full"]
 INC_ORDER    = ["IncUSP-Miner+", "Pre-HUSPM-SWUmax", "Pre-HUSPM-TSU", "Remine-from-scratch", "Adaptive-Full"]
 PROPOSED = "Adaptive-Full"
+# The method in the incremental scenarios is the proposal with the rescan floor selection (arm
+# Adaptive-FloorSelect, PreHUSPMAdaptiveAlgo.floorWindow = 5). load_scenario reads that arm as
+# PROPOSED there, and the proposal at the fixed floor r_l (arm Adaptive-Full on disk) as FIXED,
+# which stays as an ablation row. The static scenarios have one initial mine, the same in both.
+FLOOR_ARM = "Adaptive-FloorSelect"
+FIXED = "Adaptive-FixedFloor"
+METHOD_SCENARIOS = {"SC2", "SC5", "SC6", "SC6D", "SC6B"}
 PROPOSED_LABEL = "Pre-HUSPM-Joint"
 ALGO_LABEL = {
     "USpan": "USpan", "HUSP-ULL": "HUSP-ULL", "HUSP-SP": "HUSP-SP",
     "IncUSP-Miner+": "IncUSP-Miner$^{+}$", "Pre-HUSPM": "Pre-HUSPM", "Pre-HUSPM-SWUmax": "Pre-HUSPM-SWUmax",
     "Pre-HUSPM-TSU": "Pre-HUSPM-TSU", "Remine-from-scratch": "Remine",
-    "Adaptive-Full": PROPOSED_LABEL,
+    "Adaptive-Full": PROPOSED_LABEL, "Adaptive-FixedFloor": PROPOSED_LABEL + ", fixed floor",
 }
 ALGO_LINESTYLE = {
     "USpan": (0, (1, 1.5)), "HUSP-ULL": (0, (4, 1.5)), "HUSP-SP": (0, (4, 1.5, 1, 1.5)),
@@ -275,6 +282,10 @@ def load_scenario(sc, tree=TIMING_TREE, finished_only=True, replicates=False):
         df = pd.read_csv(csv_path)
         df.columns = [c.strip() for c in df.columns]
         df["arm"] = os.path.basename(arm_dir)
+        if sc in METHOD_SCENARIOS:
+            swap = {PROPOSED: FIXED, FLOOR_ARM: PROPOSED}
+            df["algorithm"] = df["algorithm"].replace(swap)
+            df["arm"] = df["arm"].replace(swap)
         df["replicate"] = tag
         frames.append(df)
     if skipped:
@@ -747,7 +758,7 @@ def export_incremental_table():
     print(f"[saved] {path}")
 
 
-def operating_region(df):
+def operating_region(df, arm=None):
     """Per database, the proposal's rescan test over the increments: the ratio of the
     test quantity to its bound (iau_max / sft_val under the joint rule), its median,
     minimum and maximum, the increments within budget, and the rescans. An increment
@@ -774,8 +785,17 @@ def operating_region(df):
     else:
         print(f"[warn] {inv} is missing: alpha_stream and alpha_check are left empty; "
               "run python3 analysis/insertion_alpha.py")
+    # the rescan rule at the fixed floor r_l, which the simulation reproduces; the method's own
+    # rescans (with the floor selection) are added as two columns
+    if arm is None:
+        arm = FIXED if (df["algorithm"] == FIXED).any() else PROPOSED
+    method = {}
+    if arm != PROPOSED:
+        for ds, g in df[(df["algorithm"] == PROPOSED) & is_inc(df) & df["finished"]].groupby("dataset"):
+            g = g.sort_values("iteration")
+            method[ds] = (int(g["rescan_count"].iloc[-1]), int(g["rescans_at_uut"].iloc[-1]))
     rows = []
-    for ds, g in df[(df["algorithm"] == PROPOSED) & is_inc(df)].groupby("dataset", sort=False):
+    for ds, g in df[(df["algorithm"] == arm) & is_inc(df)].groupby("dataset", sort=False):
         g = g.sort_values("iteration")
         ok = g[g["finished"]]
         if ok.empty:
@@ -816,6 +836,8 @@ def operating_region(df):
                          alpha_check=alpha_check,
                          sl_min_eff_max=float(ok["sl_min_eff"].max()),
                          **baseline_rescans(df, ds),
+                         method_rescans=method.get(ds, (np.nan, np.nan))[0],
+                         method_rescans_at_uut=method.get(ds, (np.nan, np.nan))[1],
                          check="ok" if above == rescans == triggered
                                else f"MISMATCH above={above} triggered={triggered} rescans={rescans}"))
     return pd.DataFrame(rows)
