@@ -1,0 +1,8 @@
+dataset,proposal_s,proposal_runs,selection_s,selection_s_std,selection_runs,rescans,rescans_at_uut,selection_over_proposal,vs_proposal,best_competitor,best_competitor_s,selection_over_best,vs_best
+SIGN,9.711,3,9.566,0.18,3,60,7,0.985,overlapping,Remine-HUSP-ULL,17.583,0.544,"separated, faster"
+LEVIATHAN,35.329,3,28.215,0.169,3,100,87,0.799,"separated, faster",Remine-HUSP-SP,35.724,0.79,"separated, faster"
+FIFA,174.966,3,176.156,0.507,3,27,0,1.007,overlapping,Remine-HUSP-SP,463.894,0.38,"separated, faster"
+BIBLE,53.768,3,51.938,0.064,3,64,13,0.966,"separated, faster",IncUSP-Miner+,57.516,0.903,"separated, faster"
+KOSARAK,626.849,3,278.843,0.128,3,100,96,0.445,"separated, faster",Remine-HUSP-SP,343.683,0.811,"separated, faster"
+C8T1S5I8N5K,9.063,3,8.929,0.148,3,80,8,0.985,overlapping,Remine-HUSP-ULL,11.71,0.763,"separated, faster"
+TAFENG,5.908,3,5.975,0.021,3,52,1,1.011,"separated, slower",Pre-HUSPM-SWUmax,7.399,0.808,"separated, faster"

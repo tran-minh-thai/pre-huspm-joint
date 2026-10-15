@@ -13,6 +13,8 @@ fault injection into the item pruning,finished,,4,,,,,,4
 "direct path on real databases, adversarial operations",finished,8,128,30,49,30,0,108,
 "direct path on real databases, adversarial-tafeng operations",finished,1,16,4,8,4,0,0,
 "direct path on real databases, adversarial-tafeng-probe0.7 operations",finished,1,16,4,6,4,0,12,
+"direct path on real databases, floor-selection-adversarial operations",finished,8,128,30,49,30,0,108,
+"direct path on real databases, floor-selection-random operations",finished,8,128,30,58,28,0,0,
 "direct path on real databases, peu-tracking-adversarial operations",finished,8,128,0,108,0,0,110,
 "direct path on real databases, peu-tracking-random operations",finished,8,128,0,117,0,0,0,
 "direct path on real databases, pre-tests-adversarial operations",finished,8,256,0,210,0,0,224,
