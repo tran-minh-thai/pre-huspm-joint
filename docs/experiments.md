@@ -17,10 +17,20 @@ scenario are in `docs/campaign-parameters.md`; column definitions are in
 | `Remine-HUSP-ULL`, `Remine-HUSP-SP` | mine the whole current database after every operation with HUSP-ULL or HUSP-SP at UUT, which stop at the threshold where the proposal's miner goes down to `r_l * UUT`; SC2 and the mixed streams | - | `HUSPULLAlgorithm`, `HUSPSPAlgorithm`, a new instance each time |
 | `Joint-miner+SWUmax`, `Joint-miner+TSU` | the proposal with its rescan rule replaced by Pre-HUSPM's test on `SWUmax` or on `TSU(d)`, as `PreHUSPMAlgorithm` applies it; miner, tracking by utility and drop floor unchanged; SC2 (insertions only) | Yan et al., Theorems 2 and 1 | `PreHUSPMAdaptiveAlgorithm`, `TriggerRule.PRE_SWUMAX`, `PRE_TSU` |
 | `Adaptive-FloorSelect` | the proposal with the rescan floor selection, window `w = 5`: a rescan mines at UUT (floor ratio 1, budget 0) when the last `w` operations each charged more than the low budget `(1 - r_l) * UUT * TU` on their own, and at `r_l` otherwise; exact for every floor in `[r_l, 1]`; SC2, SC5 and the mixed streams. The rescan decisions and floors are reproduced from the data files by `analysis/insertion_alpha.py --floor-windows` | - | `PreHUSPMAdaptiveAlgorithm`, `floorWindow` (`-Dadapt.floorWindow=w`) |
+| `Adaptive-FloorSelect-w<n>`, n in {1, 2, 3, 10} | `Adaptive-FloorSelect` with window `w = n`, for the sensitivity to `w`; run only when named (`-Dalgo.only`, or `campaign.ps1 -WindowSweep`); SC2, SC5 and the mixed streams | - | `PreHUSPMAdaptiveAlgorithm`, `floorWindow` |
 | `Joint-rule+SWU-tracking` | the proposal with its tracking by utility replaced by Pre-HUSPM's tracking by the bound `SWU_proj` (PEU): every node whose bound reaches `L_r` is tracked with its bound, and dropped by it; miner, search and rule unchanged; SC2 (insertions only) | - | `PreHUSPMAdaptiveAlgorithm`, `Tracking.PEU` (`-Dadapt.tracking=peu`) |
 | `USpan` | static baseline, width pruning by SWU and depth pruning by a sound bound | Yin et al., KDD 2012 | `USpanAlgorithm` |
 | `HUSP-ULL` | static baseline, UL-lists with irrelevant item pruning (IPS) and the look-ahead strategy (LAS), Algorithms 1 to 3 | Gan et al., IEEE Transactions on Cybernetics 2021 | `HUSPULLAlgorithm` |
 | `HUSP-SP` | static baseline, seq-array and seqPro with IIP, early pruning by a sound bound, and the PEU test | Zhang et al., ACM TKDD 2024 | `HUSPSPAlgorithm` |
+
+**How `w = 5` was chosen.** From the rescans the selection adds to the fixed floor on the seven
+SC2 streams at `w` in {1, 2, 3, 5}, simulated from the data files with no time measured
+(`results/invariant-insertion-alpha/floor-selection`), by inspection: no rule was written before
+the choice. The rule that reproduces it, written afterwards, is: the smallest `w` whose selection
+adds at most 3 rescans to the fixed floor on every stream. Every bound from 3 to 8 gives the same
+`w`. `analysis/window_rule.py` applies it to the counts at `w` in {1, 2, 3, 5, 10}
+(`results/invariant-insertion-alpha/floor-selection-windows`), on all seven streams and leaving
+each stream out in turn; the windows it picks were fixed before the window arms were timed.
 
 **The method in the incremental scenarios** is the proposal with the rescan floor selection, arm
 `Adaptive-FloorSelect`: `analysis/make_figures.load_scenario` reads it as `Adaptive-Full` in SC2, SC5,
@@ -249,6 +259,7 @@ the seed in their own columns.
 | SC7 | three repeats of the four one-mine arms (full, IUB off, IPS off, Pre-HUSPM) on the seven databases | runtime of one mine |
 | SC6, SC6D, SC6B | five seeds (`s0` to `s4`: 42, 1337, 2024, 31415, 271828), every arm | each remining arm's time over the proposal's per kind of operation and over the stream, paired by seed (`table_SC6_by_op_arms.csv`, `table_SC6D_by_op.csv`, `table_SC6B_by_op.csv`) |
 | SC2 new arms | three repeats of `Remine-HUSP-ULL`, `Remine-HUSP-SP`, `Joint-miner+SWUmax`, `Joint-miner+TSU` and `Joint-rule+SWU-tracking` on the seven databases | runtime summed over the increments (`table_SC2_remine.tex`, `table_SC2_rule_isolation.csv`) |
+| window arms | three repeats of `Adaptive-FloorSelect-w1`, `-w2`, `-w3`, `-w10` in SC2; one run in SC5; five seeds in SC6, SC6D and SC6B | as the method's |
 | memory | `s0r1`: SC1 on SIGN, TAFENG, C8T1S5I8N5K, BMS1 and KOSARAK, all six algorithms; SC2, all five arms, on SIGN and TAFENG | the live set between two runs |
 | others | one run | - |
 

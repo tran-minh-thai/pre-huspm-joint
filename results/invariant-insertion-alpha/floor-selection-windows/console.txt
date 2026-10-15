@@ -1,0 +1,43 @@
+SIGN: insertion sequences=500 alpha(stream)=0.917488 UUT=0.065911 increments=100 rescans=59 increments with alpha<=UUT=0
+  floor selection w=1: rescans 63 (23 at UUT), joint rule 59
+  floor selection w=2: rescans 61 (16 at UUT), joint rule 59
+  floor selection w=3: rescans 61 (12 at UUT), joint rule 59
+  floor selection w=5: rescans 60 (7 at UUT), joint rule 59
+  floor selection w=10: rescans 60 (2 at UUT), joint rule 59
+LEVIATHAN: insertion sequences=3000 alpha(stream)=0.886138 UUT=0.01553 increments=100 rescans=98 increments with alpha<=UUT=0
+  floor selection w=1: rescans 100 (98 at UUT), joint rule 98
+  floor selection w=2: rescans 100 (95 at UUT), joint rule 98
+  floor selection w=3: rescans 100 (92 at UUT), joint rule 98
+  floor selection w=5: rescans 100 (87 at UUT), joint rule 98
+  floor selection w=10: rescans 100 (77 at UUT), joint rule 98
+BIBLE: insertion sequences=15000 alpha(stream)=0.815808 UUT=0.022895 increments=100 rescans=63 increments with alpha<=UUT=0
+  floor selection w=1: rescans 69 (32 at UUT), joint rule 63
+  floor selection w=2: rescans 65 (21 at UUT), joint rule 63
+  floor selection w=3: rescans 64 (17 at UUT), joint rule 63
+  floor selection w=5: rescans 64 (13 at UUT), joint rule 63
+  floor selection w=10: rescans 63 (4 at UUT), joint rule 63
+FIFA: insertion sequences=10000 alpha(stream)=0.621257 UUT=0.059637 increments=100 rescans=27 increments with alpha<=UUT=0
+  floor selection w=1: rescans 27 (0 at UUT), joint rule 27
+  floor selection w=2: rescans 27 (0 at UUT), joint rule 27
+  floor selection w=3: rescans 27 (0 at UUT), joint rule 27
+  floor selection w=5: rescans 27 (0 at UUT), joint rule 27
+  floor selection w=10: rescans 27 (0 at UUT), joint rule 27
+KOSARAK: insertion sequences=900000 alpha(stream)=0.869385 UUT=0.025 increments=100 rescans=100 increments with alpha<=UUT=0
+  floor selection w=1: rescans 100 (100 at UUT), joint rule 100
+  floor selection w=2: rescans 100 (99 at UUT), joint rule 100
+  floor selection w=3: rescans 100 (98 at UUT), joint rule 100
+  floor selection w=5: rescans 100 (96 at UUT), joint rule 100
+  floor selection w=10: rescans 100 (91 at UUT), joint rule 100
+C8T1S5I8N5K: insertion sequences=19999 alpha(stream)=0.058839 UUT=0.001132 increments=100 rescans=77 increments with alpha<=UUT=0
+  floor selection w=1: rescans 94 (71 at UUT), joint rule 77
+  floor selection w=2: rescans 91 (48 at UUT), joint rule 77
+  floor selection w=3: rescans 86 (29 at UUT), joint rule 77
+  floor selection w=5: rescans 80 (8 at UUT), joint rule 77
+  floor selection w=10: rescans 77 (0 at UUT), joint rule 77
+TAFENG: insertion sequences=20000 alpha(stream)=0.147234 UUT=0.003557 increments=100 rescans=52 increments with alpha<=UUT=0
+  floor selection w=1: rescans 58 (21 at UUT), joint rule 52
+  floor selection w=2: rescans 56 (11 at UUT), joint rule 52
+  floor selection w=3: rescans 54 (6 at UUT), joint rule 52
+  floor selection w=5: rescans 52 (1 at UUT), joint rule 52
+  floor selection w=10: rescans 52 (0 at UUT), joint rule 52
+rescan order (k-th rescan of the joint rule not earlier than that of the SWUmax test, and no more rescans): 483 comparisons, 0 violations

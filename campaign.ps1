@@ -42,6 +42,10 @@ param(
     # one is given explicitly.
     [string[]] $Algorithms,
     [int]      $CapSeconds = 28800,
+    # The window sensitivity study: the arms Adaptive-FloorSelect-w1, -w2, -w3 and -w10 of SC2,
+    # SC5, SC6, SC6D and SC6B (w = 5 is Adaptive-FloorSelect). Replaces the scenario's arm list,
+    # so -Repeat and -SeedIndex measure replicates of these arms only.
+    [switch]   $WindowSweep,
     # Heap ceiling for every arm, one value for the whole campaign. -Xmx is a ceiling, not a
     # reservation, so tuning it per database gains nothing; but the ceiling decides how far a
     # memory-bound arm gets, so rows measured under different ceilings are not comparable.
@@ -133,6 +137,14 @@ function Test-Arm($d, $a) {
     return $true
 }
 
+$windowArms = @('Adaptive-FloorSelect-w1','Adaptive-FloorSelect-w2','Adaptive-FloorSelect-w3','Adaptive-FloorSelect-w10')
+if ($WindowSweep) {
+    if (@('SC2','SC5','SC6','SC6D','SC6B') -notcontains $Scenario) {
+        throw "-WindowSweep applies to SC2, SC5, SC6, SC6D and SC6B, not $Scenario."
+    }
+    if ($Algorithms) { throw "-WindowSweep sets the arms itself; drop -Algorithms." }
+    $Algorithms = $windowArms
+}
 if (-not $Algorithms) {
     $Algorithms = switch ($Scenario) {
         'SC1'   { $static }
@@ -168,6 +180,7 @@ if (-not $Datasets) {
 $knownAlgos = @('Adaptive-Full','Pre-HUSPM','Pre-HUSPM-SWUmax','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+',
                 'Remine-HUSP-ULL','Remine-HUSP-SP','Joint-miner+SWUmax','Joint-miner+TSU','Joint-rule+SWU-tracking',
                 'Adaptive-FloorSelect',
+                'Adaptive-FloorSelect-w1','Adaptive-FloorSelect-w2','Adaptive-FloorSelect-w3','Adaptive-FloorSelect-w10',
                 'USpan','HUSP-ULL','HUSP-SP',
                 'proposed_full','proposed_no_block_index','proposed_no_IUB','proposed_no_IPS',
                 'proposed_bsz_1','proposed_bsz_5','proposed_bsz_10','proposed_bsz_50','proposed_bsz_200',

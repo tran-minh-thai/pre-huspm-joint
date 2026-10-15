@@ -931,6 +931,27 @@ public class AutomatedExperimentRunner {
      */
     static final int FLOOR_WINDOW = Integer.getInteger("adapt.armFloorWindow", 5);
 
+    /**
+     * The other windows of the sensitivity study, one arm each: Adaptive-FloorSelect-w<n> is
+     * Adaptive-FloorSelect with w = n. They run only when -Dalgo.only names them, so a run of a
+     * whole scenario measures the arms of the main tables only.
+     */
+    static final int[] WINDOW_SWEEP = {1, 2, 3, 10};
+
+    static String windowArm(int w) { return "Adaptive-FloorSelect-w" + w; }
+
+    /** The window of a floor-selection arm, 0 for any other arm. */
+    static int floorWindowOf(String arm) {
+        if ("Adaptive-FloorSelect".equals(arm)) return FLOOR_WINDOW;
+        for (int w : WINDOW_SWEEP) if (windowArm(w).equals(arm)) return w;
+        return 0;
+    }
+
+    /** True when -Dalgo.only names the arm; for the arms that a full run leaves out. */
+    static boolean algoNamed(String algo) {
+        return !ALGO_ONLY.isEmpty() && listed(ALGO_ONLY, algo);
+    }
+
     private static void runSC6_InsertDeleteModify() throws IOException {
         runMixedScenario("SC6", SC6_INSERTS, SC6_DELETES, SC6_MODIFIES, false);
     }
@@ -994,6 +1015,8 @@ public class AutomatedExperimentRunner {
                         beginVerify(sc, ds.name);
                         for (String arm : MIXED_ARMS)
                             if (algoEnabled(arm)) runMixedArm(ds, dInit, initTotalUtil, plan, col, arm);
+                        for (int w : WINDOW_SWEEP)
+                            if (algoNamed(windowArm(w))) runMixedArm(ds, dInit, initTotalUtil, plan, col, windowArm(w));
                     }
                     forceFullGC();
                 }
@@ -1004,14 +1027,14 @@ public class AutomatedExperimentRunner {
     /** Replays the plan for one arm. */
     private static void runMixedArm(DatasetConfig ds, List<Sequence> dInit, double initTotalUtil,
                                     List<MixedPlan.Op> plan, ResultCollector col, String arm) throws IOException {
-        final boolean incremental = "Adaptive-Full".equals(arm) || "Adaptive-FloorSelect".equals(arm);
+        final boolean incremental = "Adaptive-Full".equals(arm) || floorWindowOf(arm) > 0;
 
         beginMemArm();
         // The initial mine on D_init: the proposal's for the proposal and for remining with the
         // proposal's miner (as SC6 always measured it), the static miner's for the other two.
         final boolean ownMiner = incremental || "Remine-from-scratch".equals(arm);
         final PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp = ownMiner ? newAdaptive(ds.name, ds.defaultSu) : null;
-        if ("Adaptive-FloorSelect".equals(arm)) adp.floorWindow = FLOOR_WINDOW;
+        if (floorWindowOf(arm) > 0) adp.floorWindow = floorWindowOf(arm);
         ExperimentMetrics mInit;
         if (ownMiner) {
             announce(arm, ds.name, "SC6_INIT", 0);
@@ -1675,6 +1698,9 @@ public class AutomatedExperimentRunner {
         // -------- The proposal with the rescan floor selection --------
         if (algoEnabled("Adaptive-FloorSelect")) runAdaptiveStream("Adaptive-FloorSelect", null, null,
                 FLOOR_WINDOW, dsName, Su, dInit, batches, col, tag);
+        for (int w : WINDOW_SWEEP)
+            if (algoNamed(windowArm(w))) runAdaptiveStream(windowArm(w), null, null, w, dsName, Su, dInit,
+                    batches, col, tag);
         forceFullGC();
     }
 

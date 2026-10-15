@@ -116,7 +116,7 @@ with `DIR`.
 | `UUT` (threshold ratio) | per database, below | `src/common/Datasets.java` |
 | `r_l` (`LUT_min = r_l * UUT`) | 0.80 on every database | `Datasets.java` |
 | rescan rule | `joint` | `-Dadapt.trigger` |
-| rescan floor window `w` | 5 for `Adaptive-FloorSelect`; 0 (fixed floor) otherwise | `-Dadapt.armFloorWindow`, `-Dadapt.floorWindow` |
+| rescan floor window `w` | 5 for `Adaptive-FloorSelect` (`Adaptive-FloorSelect-w<n>`: n = 1, 2, 3, 10); 0 (fixed floor) otherwise | `-Dadapt.armFloorWindow`, `-Dadapt.floorWindow` |
 | irrelevant item pruning | `once` per node | `-Dadapt.iip` |
 | batches `K` | 100 (SC5: 100, 67, 50, 25) | `-Dbatch.count` |
 | block size | 100 sequences, never across two batches | `-Dblock.size` |

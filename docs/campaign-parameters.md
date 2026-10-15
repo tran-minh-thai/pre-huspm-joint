@@ -83,5 +83,6 @@ after each increment.
 | SC5 | 18 | `Adaptive-Full`, `Adaptive-FloorSelect`, `Pre-HUSPM-SWUmax`, `Pre-HUSPM-TSU`, `Remine-from-scratch`, `IncUSP-Miner+` on the same three |
 | SC6, SC6D, SC6B | 15 each | `Adaptive-Full`, `Adaptive-FloorSelect`, `Remine-from-scratch`, `Remine-HUSP-ULL`, `Remine-HUSP-SP` on the same three |
 | SC7 | 44 | `proposed_full`, `proposed_no_IUB`, `proposed_no_IPS`, `Pre-HUSPM` on seven databases; `proposed_C5_on`, `proposed_C5_off`, `proposed_no_block_index` and the block sizes `proposed_bsz_1`, `_5`, `_10`, `_50`, `_200` on SIGN and C8T1S5I8N5K |
+| window sweep (`-WindowSweep`) | 28 in SC2, 12 in SC5 and in each mixed stream | `Adaptive-FloorSelect-w1`, `-w2`, `-w3`, `-w10` |
 | SC1, live memory | 48 | as SC1 |
 | SC2, live memory | 42 | `Adaptive-Full`, `Adaptive-FloorSelect`, `Pre-HUSPM-SWUmax`, `Pre-HUSPM-TSU`, `Remine-from-scratch`, `IncUSP-Miner+` on seven databases |
