@@ -426,7 +426,7 @@ public class AutomatedExperimentRunner {
      *   - SIGN, LEVIATHAN, FIFA: dense, long sequences.
      *   - BMS1, KOSARAK, TAFENG: sparse or short sequences.
      *   - C8T1S5I8N5K: the only one with more than one item per event.
-     * The "paper" example (4 sequences) is for the TEST-mode smoke test only.
+     * The "example" database (4 sequences) is for the TEST-mode smoke test only.
      * Heap: LEVIATHAN and SIGN need -Xmx8g or more.
      *
      * The list must name every database that will be run, not just the ones already set
@@ -457,9 +457,9 @@ public class AutomatedExperimentRunner {
         return List.copyOf(out);
     }
 
-    /** Smoke-test dataset (paper = 4 sequences, < 1 s). */
+    /** Smoke-test dataset (example, 4 sequences, < 1 s). */
     private static final List<DatasetConfig> DATASETS_TEST = List.of(
-            new DatasetConfig("paper", 0.001, new double[]{0.0005, 0.001, 0.002, 0.005})
+            new DatasetConfig("example", 0.001, new double[]{0.0005, 0.001, 0.002, 0.005})
     );
 
     /** Datasets in use: the TEST set or the production set. */
@@ -540,7 +540,7 @@ public class AutomatedExperimentRunner {
 
         new File(RESULTS_DIR).mkdirs();
 
-        // TEST (or SMOKE) in the arguments selects the smoke-test dataset (paper, 4 sequences,
+        // TEST (or SMOKE) in the arguments selects the smoke-test dataset (example, 4 sequences,
         // < 1 s). "TEST" or "TEST SC1" for a smoke test; ALL/SC* (default) use production.
         boolean testMode = false;
         if (args != null) for (String a : args) {
@@ -564,7 +564,7 @@ public class AutomatedExperimentRunner {
 
         Set<String> scenarios = parseScenarios(args);
         System.out.println("=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===");
-        System.out.println("Mode: " + (testMode ? "TEST (paper dataset)" : "PRODUCTION")
+        System.out.println("Mode: " + (testMode ? "TEST (example dataset)" : "PRODUCTION")
                 + " | Datasets: " + DATASETS.size() + " | Scenarios: " + scenarios);
         System.out.println("Heap max: " + (Runtime.getRuntime().maxMemory() / (1024 * 1024)) + " MB");
         // The platform each arm ran on, recorded in the arm's own log.

@@ -1,164 +1,163 @@
 # Pre-HUSPM-Joint
 
-Exact incremental high-utility sequential pattern mining under insertions, deletions and
-modifications. Pre-HUSPM-Joint keeps the high-utility and pre-large patterns of a sequence
-database with their utilities, updates them directly after each operation, and mines the
-database again only when a utility budget shared by insertions and deletions is used up.
+**Problem.** Keep the exact set of high-utility sequential patterns (HUSPs) of a database
+while sequences are inserted, deleted and modified, without mining the whole database
+again after every change.
 
-This repository holds the algorithm, five baselines, the experiment harness, the correctness
-checks and every measured result. In the code and the result files the method is the class
-`PreHUSPMAdaptiveAlgorithm` and the arm `Adaptive-Full`.
+**Method.** After a mine, Pre-HUSPM-Joint tracks every pattern whose utility is at least
+`LUT_min * TU` (`LUT_min = r_l * UUT`), with its exact utility. Each operation updates
+three counters: `U+` (utility inserted), `U-` (utility deleted) and `A_i` (utility inserted
+in sequences that contain item `i`). The database is mined again only when
 
-## Layout
+    max_i A_i - UUT * U+ + UUT * U-  >  (UUT - lambda) * TU_ref
 
-```
-src/algorithms/     Pre-HUSPM-Joint and the baselines (USpan, HUSP-ULL, HUSP-SP, IncUSP-Miner+, Pre-HUSPM)
-src/common/         sequences, loader, patterns, dataset table (Datasets.java)
-src/verify/         correctness checks
-src/experiments/    calibration and threshold tools
-src/AutomatedExperimentRunner.java   scenario driver, one CSV row per measured call
-analysis/           figures, tables, scenario READMEs, run manifests
-docs/               experiment protocol and the meaning of every result column
-results/            measured results (see below)
-figures/            figures and tables generated from results/
-tafeng/             builds the TAFENG database from the public Ta-Feng file
-examples/           a small example database
-```
+Otherwise every tracked pattern is updated directly. One budget covers insertions and
+deletions together. In the incremental scenarios a rescan mines at `lambda = UUT` when
+each of the last `w = 5` batches exceeded the low budget on its own, and at
+`lambda = LUT_min` otherwise. The reported set is exact for either choice.
 
-## Requirements
+The repository holds the method, five baselines, the experiment harness, the correctness
+checks and every measured result.
 
-- JDK 17 or later to build. Results were measured on Eclipse Temurin 25.0.4.1+1, pinned in
-  `environment.lock.json`; `campaign.ps1` refuses any other build.
-- Python 3.9 or later for figures and tables: `pip install -r analysis/requirements.txt`.
-- Memory: measurements use `-Xmx48g` on a 64 GB machine.
+## Quick start
 
-## Data
+Requirements: JDK 17 or later, Python 3.9 or later (`pip install -r analysis/requirements.txt`
+for figures and tables).
 
-The databases come from https://github.com/tran-minh-thai/huspm-datasets, release
-`v1.2.1-measured-quantity`, checked against its SHA-256 manifest:
-
-```powershell
-.\fetch-datasets.ps1        # Windows
-```
 ```bash
-./fetch-datasets.sh         # Linux, macOS
+./fetch-datasets.sh                                      # databases, checked by SHA-256 (Windows: .\fetch-datasets.ps1)
+javac -encoding UTF-8 -d build $(find src -name '*.java')
+HEAP=2g ./run.sh TEST SC1                                # smoke test on examples/, about 20 s (Windows: .\run.ps1 TEST SC1)
 ```
 
-TAFENG is built from the Ta-Feng grocery file (`ta_feng_all_months_merged.csv`,
-[Kaggle](https://www.kaggle.com/datasets/chiranjivdas09/ta-feng-grocery-dataset)); the output is
-pinned by `tafeng/TAFENG.sha256`:
+`fetch-datasets` downloads release `v1.2.1-measured-quantity` of
+[huspm-datasets](https://github.com/tran-minh-thai/huspm-datasets). TAFENG is not
+redistributed; build it from the Ta-Feng file
+([Kaggle](https://www.kaggle.com/datasets/chiranjivdas09/ta-feng-grocery-dataset)):
 
 ```bash
 python tafeng/build_tafeng.py --zip archive.zip --out-dir datasets --name TAFENG
 (cd datasets && shasum -a 256 -c ../tafeng/TAFENG.sha256)
 ```
 
-| Database | Sequences | Items | Avg. length | Items/event | Utilities | `D_init` | Default UUT |
-|---|---:|---:|---:|---:|---|---:|---:|
-| SIGN | 730 | 267 | 52.00 | 1.00 | generated | 230 | 0.065911 |
-| LEVIATHAN | 5,834 | 9,025 | 33.81 | 1.00 | generated | 2,834 | 0.015530 |
-| FIFA | 20,450 | 2,990 | 36.24 | 1.00 | generated | 10,450 | 0.059637 |
-| BIBLE | 36,369 | 13,905 | 21.64 | 1.00 | generated | 21,369 | 0.022895 |
-| BMS1 | 59,601 | 497 | 2.51 | 1.00 | generated | 39,601 | 0.013597 |
-| KOSARAK | 990,002 | 41,270 | 8.10 | 1.00 | generated | 90,002 | 0.025000 |
-| C8T1S5I8N5K | 47,132 | 68,240 | 18.83 | 7.97 | generated | 27,133 | 0.001132 |
-| TAFENG | 60,665 | 23,812 | 13.40 | 1.00 | measured | 40,665 | 0.003557 |
+## Reproduce the experiments
 
-`D_init` sequences are mined first and the rest form the update stream. `src/common/Datasets.java`
-holds these values and the threshold sweeps. Each database is two files: `NAME_seq.txt`, one
-sequence per line as `item[quantity]` with `-1` closing an event and `-2` the sequence, and
-`NAME_eui.txt`, one `item:profit` per line.
-
-## Build and run
+`./run.sh SC2` (or `.\run.ps1 SC2`) runs one scenario into `results/run-<time>-<commit>/` with a
+manifest. The published results come from `campaign.ps1`. It runs one JVM per arm
+(algorithm, database, scenario) and commits each finished arm. Before measuring, it refuses
+any JVM other than the one pinned in `environment.lock.json`.
 
 ```powershell
-.\run.ps1 -BuildOnly        # Windows
-.\run.ps1 TEST SC1          # smoke test on examples/, under a minute
-```
-```bash
-javac -encoding UTF-8 -d build $(find src -name '*.java')
-HEAP=8g ./run.sh TEST SC1
+.\campaign.ps1 -Scenario SC2                   # timing
+.\campaign.ps1 -Scenario SC2 -MemMode live     # live-set memory
+.\campaign.ps1 -Scenario SC2 -Repeat 1         # a replicate
+.\campaign.ps1 -List                           # arms not yet measured
 ```
 
-Correctness checks:
-
-```bash
-java -cp build verify.RescanRuleAcceptanceTest                         # rescan rule on hand-built cases
-java -cp build verify.MixedBudgetFuzz joint 5000 11                    # random insert/delete/modify streams
-java -Xmx48g -Xss64m -cp build verify.BaselineAgreement ALL            # every miner returns the same patterns
-java -Xmx4g -cp build verify.ItemRemovalCheck random 2000 1            # the proposal's miner against brute force
-java -Xmx24g -Xss64m -cp build verify.IncUspVerifier random 300 7      # IncUSP-Miner+ against brute force
-```
-
-The measurement campaign runs one JVM per arm and commits each finished arm:
-
-```powershell
-.\campaign.ps1 -Scenario SC2                  # one scenario
-.\campaign.ps1 -Scenario SC1 -MemMode live    # live-set measurement
-.\campaign.ps1 -Scenario SC1 -Repeat 1        # a replicate
-.\campaign.ps1 -List                          # arms not yet measured
-```
-
-| Scenario | Measures | Databases |
+| Scenario | What runs | Databases |
 |---|---|---|
-| SC1 | static mining of `D_init` at four thresholds | all eight |
+| SC1 | static mining of `D_init` at four thresholds, six algorithms | all eight |
 | SC2 | `D_init`, then 100 equal insertion batches | all but BMS1 |
 | SC3 | static mining of the whole database at four thresholds | SIGN, LEVIATHAN, C8T1S5I8N5K |
-| SC4 | floor ratio `r_l` in {0.3, 0.5, 0.7, 0.9} | SIGN, LEVIATHAN, C8T1S5I8N5K |
-| SC5 | 25 to 100 batches under four batch-size shapes | SIGN, LEVIATHAN, C8T1S5I8N5K |
-| SC6 | 14 insertions, 3 deletions and 3 modifications in seeded order | SIGN, LEVIATHAN, C8T1S5I8N5K |
+| SC4 | `r_l` in {0.3, 0.5, 0.7, 0.9} | same three |
+| SC5 | 25 to 100 batches cut in four shapes | same three |
+| SC6, SC6D, SC6B | 20 mixed insertions, deletions and modifications; SC6D mostly deletions; SC6B with one deletion that exceeds the budget alone; five seeds | same three |
 | SC7 | ablations of the miner and of the maintenance | all but BMS1 |
 
-Arm names (`algorithm` column): `Adaptive-Full` (Pre-HUSPM-Joint), `Remine-from-scratch`
-(the same miner on the whole database after every operation), `Pre-HUSPM-SWUmax` and
-`Pre-HUSPM-TSU` (the two rescan tests of Yan et al., 2025; one arm, `Pre-HUSPM`, in static
-scenarios), `IncUSP-Miner+`, `USpan`, `HUSP-ULL`, `HUSP-SP`.
+**Arm names** (`algorithm` column):
+- `Adaptive-Full` is the method at the fixed floor `r_l`.
+- `Adaptive-FloorSelect` is the method with the rescan floor selection.
+- In SC2, SC5 and SC6* the analysis reads `Adaptive-FloorSelect` as the method and
+  `Adaptive-Full` as `Adaptive-FixedFloor`.
+- The other arms are the baselines and controls:
+  - `Pre-HUSPM-SWUmax`, `Pre-HUSPM-TSU` (`Pre-HUSPM` in the static scenarios)
+  - `IncUSP-Miner+`, `USpan`, `HUSP-ULL`, `HUSP-SP`
+  - `Remine-from-scratch`, `Remine-HUSP-ULL`, `Remine-HUSP-SP`
+  - `Joint-miner+SWUmax`, `Joint-miner+TSU`, `Joint-rule+SWU-tracking`
+
+Each arm is described in `docs/experiments.md`.
+
+**Correctness checks** (counts only, any machine; outputs in `results/verify-joint/`):
+
+```bash
+java -cp build verify.RescanRuleAcceptanceTest                       # rescan rule, hand-built cases
+java -cp build verify.MixedBudgetFuzz joint 5000 11                  # random insert/delete/modify streams
+java -Xmx24g -Xss64m -cp build verify.DirectPathVerifier ALL --out results/verify-joint/mine   # direct updates on the real databases
+java -Xmx48g -Xss64m -cp build verify.BaselineAgreement ALL          # every miner returns the same patterns
+java -Xmx4g -cp build verify.ItemRemovalCheck random 2000 1          # the miner against brute force
+```
+
+`-Dverify.husps=true` makes the runner compare every arm's patterns with the method's after
+every operation.
 
 ## Results
 
-```
-results/campaign/<SC>/<DATABASE>/<ALGORITHM>/    timing, one directory per arm
-results/campaign-mem/...                         live set, same layout
-results/campaign-replicates/s<seed>r<repeat>/... replicates
-results/campaign-mem-replicates/...              replicates of the live-set measurement
-results/campaign-mem-sampled[-replicates]/SC1/   SC1 live set with short mines repeated until sampled
-results/calibration/                             settings fixed by measurement before the campaign
-results/verify-joint/, results/invariant-*/      correctness checks, counts only
-results/machine/                                 the measurement machine
-results/v1-submitted/                            results of the first submitted version
-```
+| Path | Content |
+|---|---|
+| `results/campaign/<SC>/<DB>/<ARM>/` | timing: `<SC>_*.csv` (one row per measured call), `run.log` (platform line), `DONE` (machine, commit, exit code, rows) |
+| `results/campaign-mem*/` | live-set memory, same layout |
+| `results/campaign*-replicates/s<seed>r<repeat>/` | replicates |
+| `results/<SC>/README.md` in each tree | the scenario's tables |
+| `results/verify-joint/`, `results/invariant-*/` | correctness checks and counted invariants, each with `run_meta.json` |
+| `results/calibration/`, `results/machine/` | settings fixed before the campaign; the measurement machine |
+| `results/v1-submitted/` | results of the first submitted version, kept unchanged |
+| `figures/campaign/` | figures, tables and `paper_numbers.csv`, generated by `python3 analysis/make_figures.py` |
 
-Each arm directory holds the CSV (one row per measured call, columns defined in
-`docs/result-columns.md`), `run.log` with the platform line, and `DONE` with the machine, the
-commit of `src/`, the exit code and the row count. Each scenario directory has a `README.md`
-with its tables. `runtime_ms` uses `-1` for a failed call, `-2` for one over the time limit
-and `-3` for a live-set row, whose time is not valid; `mem_live_mb` is the memory figure to
-report. `COMMIT_MAP.tsv` maps commit identifiers that some result files record to the commits
-of this repository.
+In `runtime_ms`, `-1` marks a failed call, `-2` a call over the time limit and `-3` a
+memory row. Every column is defined in `docs/result-columns.md`. `COMMIT_MAP.tsv` maps
+older commit identifiers recorded in some result files to this repository's history.
+`analysis/check_generated.py DIR` regenerates every table and figure and compares them
+with `DIR`.
 
-Figures and tables:
+## Parameters
 
-```bash
-python3 analysis/make_figures.py        # writes figures/campaign/
-python3 analysis/scenario_readmes.py    # writes the scenario READMEs
-```
-
-## Main parameters
-
-| Parameter | Where | Value |
+| Parameter | Value | Set by |
 |---|---|---|
-| UUT | `Datasets.java` | per database, table above |
-| floor ratio `r_l` | `Datasets.java` | 0.80 (`LUT_min = r_l * UUT`) |
-| batches | `-Dbatch.count` | 100 |
-| rescan rule | `-Dadapt.trigger` | `joint` (`iaumax`, `cub`, `swumax` kept for comparison) |
-| irrelevant item pruning | `-Dadapt.iip` | `once` (`off`, `fixpoint`) |
-| block size | `-Dblock.size` | 100 sequences |
-| time limit per call / per arm | `-Dtimeout.min` / `campaign.ps1 -CapSeconds` | 120 min / 8 h |
-| heap, stack | `-Xmx`, `-Xss` | 48g, 64m |
+| `UUT` (threshold ratio) | per database, below | `src/common/Datasets.java` |
+| `r_l` (`LUT_min = r_l * UUT`) | 0.80 on every database | `Datasets.java` |
+| rescan rule | `joint` | `-Dadapt.trigger` |
+| rescan floor window `w` | 5 for `Adaptive-FloorSelect`; 0 (fixed floor) otherwise | `-Dadapt.armFloorWindow`, `-Dadapt.floorWindow` |
+| irrelevant item pruning | `once` per node | `-Dadapt.iip` |
+| batches `K` | 100 (SC5: 100, 67, 50, 25) | `-Dbatch.count` |
+| block size | 100 sequences, never across two batches | `-Dblock.size` |
+| one-at-a-time child lists | above 100,000 sequences per node | `-Dadapt.singlePassCap` |
+| seeds (SC6*) | 42, 1337, 2024, 31415, 271828 | `AutomatedExperimentRunner.SEEDS` |
+| time limit | 120 min per call, 8 h per arm | `-Dtimeout.min`, `campaign.ps1 -CapSeconds` |
+| memory guard | stop an arm when less than 10% of the heap is free before a batch | `AutomatedExperimentRunner` |
+| live-set sampling | at least 20 ms apart, longer as the live set grows; short mines repeated until 5 samples or 120 s | `-Dmem.interval.ms`, `-Dmem.minSamples`, `-Dmem.repeatMaxMs` |
+| JVM | Eclipse Temurin 25.0.4.1+1, `-Xmx48g -Xss64m` | `environment.lock.json`, `campaign.ps1` |
+| machine | AMD Ryzen 9 9950X, 64 GB, Windows 11 | `results/machine/PC-THAI.json` |
 
-The full list is in `docs/experiments.md` and `docs/campaign-parameters.md`.
+| Database | Sequences | `D_init` | Default UUT | Utilities |
+|---|---:|---:|---:|---|
+| SIGN | 730 | 230 | 0.065911 | generated |
+| LEVIATHAN | 5,834 | 2,834 | 0.015530 | generated |
+| FIFA | 20,450 | 10,450 | 0.059637 | generated |
+| BIBLE | 36,369 | 21,369 | 0.022895 | generated |
+| BMS1 | 59,601 | 39,601 | 0.013597 | generated |
+| KOSARAK | 990,002 | 90,002 | 0.025000 | generated |
+| C8T1S5I8N5K | 47,132 | 27,133 | 0.001132 | generated |
+| TAFENG | 60,665 | 40,665 | 0.003557 | measured |
+
+The first `D_init` sequences are mined first; the rest form the update stream. The four
+threshold levels of SC1 and SC3, and the remaining settings, are listed in
+`docs/experiments.md` and `docs/campaign-parameters.md`.
+
+## Layout
+
+```
+src/algorithms/   the method (PreHUSPMAdaptiveAlgorithm) and the baselines
+src/common/       sequences, loader, database table, mixed-operation plans
+src/verify/       correctness checks
+src/experiments/  calibration and threshold tools
+src/AutomatedExperimentRunner.java   scenario driver
+analysis/         figures, tables, run records
+docs/             protocol, parameters, result columns, figures
+tafeng/           builds TAFENG from the public Ta-Feng file
+examples/         a four-sequence database for the smoke test
+```
 
 ## License
 
-MIT, see `LICENSE`. The databases are distributed under the terms of their own release;
-citation information is in `CITATION.cff`.
+MIT for the code in this repository (`LICENSE`). The databases keep the terms of their own
+release. Citation: `CITATION.cff`.

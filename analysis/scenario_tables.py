@@ -1470,7 +1470,7 @@ def export_all(out_dir=None):
                 put("SC7_no_IPS_explored_over_full_max", f"{r.max():.2f} ({r.idxmax()})", "table_SC7_static.csv")
         sc7_static_runtime(put, t7)
 
-    # The keys the manuscript asked for by name.
+    # Keys requested by name.
     def row_of(prefix):
         hit = vs[vs["check"].str.startswith(prefix)]
         return hit.iloc[0] if len(hit) else None

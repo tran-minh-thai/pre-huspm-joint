@@ -492,7 +492,7 @@ public class PreHUSPMAdaptiveAlgorithm {
         // --- Metrics exported to the result CSV ---
         public int rescanCount = 0, patternCount = 0;
         public long candidateCount = 0, blocksReadCount = 0, numBlocksSkipped = 0;
-        public long exploredNodes = 0; // nodes actually expanded; the PEU bound is applied before materialization, so this is far below candidate_count
+        public long exploredNodes = 0; // nodes entered with a non-empty occurrence list, counted before the IUB test (root items it stops included)
         // prunedValueBound = items removed by the aggregated PEU value bound.
         public long prunedValueBound = 0, prunedIub = 0;
         // removedItems = items removed by irrelevant-item removal, summed over the root and every
@@ -1831,7 +1831,7 @@ public class PreHUSPMAdaptiveAlgorithm {
             if (depth > maxDepth) return;
             if (parentTrackers == null || parentTrackers.isEmpty()) return;
 
-            exploredNodes++; // this node passed the PEU bound and is expanded
+            exploredNodes++; // counted before the IUB test below; only root items can fail it
             // candidateCount counts every item generated in the survey below, as the baselines do.
             final boolean iip = iipMode != IipMode.OFF;
             final int iipMark = iipTop;   // removals pushed by this node are undone on return

@@ -111,6 +111,9 @@ $static  = @('USpan','HUSP-ULL','HUSP-SP','IncUSP-Miner+','Pre-HUSPM','Adaptive-
 $incr    = @('Adaptive-Full','Pre-HUSPM-SWUmax','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+',
              'Remine-HUSP-ULL','Remine-HUSP-SP','Joint-miner+SWUmax','Joint-miner+TSU','Joint-rule+SWU-tracking',
              'Adaptive-FloorSelect')
+# SC5 runs the method, its fixed-floor row and the four arms SC2 started with.
+$sc5     = @('Adaptive-Full','Pre-HUSPM-SWUmax','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+',
+             'Adaptive-FloorSelect')
 # The mixed streams (SC6, SC6D, SC6B): AutomatedExperimentRunner.MIXED_ARMS.
 $mixed   = @('Adaptive-Full','Remine-from-scratch','Remine-HUSP-ULL','Remine-HUSP-SP','Adaptive-FloorSelect')
 $scenarios = @('SC1','SC2','SC3','SC4','SC5','SC6','SC6D','SC6B','SC7')
@@ -141,7 +144,8 @@ if (-not $Algorithms) {
         'SC7'   { @('proposed_full','proposed_no_block_index','proposed_no_IUB','proposed_no_IPS',
                     'proposed_bsz_1','proposed_bsz_5','proposed_bsz_10','proposed_bsz_50','proposed_bsz_200',
                     'proposed_C5_on','proposed_C5_off','Pre-HUSPM') }
-        default { $incr }                          # SC2, SC5
+        'SC5'   { $sc5 }
+        default { $incr }                          # SC2
     }
 }
 

@@ -1,8 +1,8 @@
 # Running the measurement campaign
 
 How the campaign is run, which arms each scenario has, and what the arms of the proposal and
-of remining cost. The costs are those measured on `PC-THAI` (AMD Ryzen 9 9950X, 64 GB, OpenJDK
-25.0.4, `-Xmx48g`), the machine every result in `results/campaign` and `results/campaign-mem`
+of remining cost. The costs are those measured on `PC-THAI` (AMD Ryzen 9 9950X, 64 GB, Eclipse
+Temurin 25.0.4.1+1, `-Xmx48g`), the machine every result in `results/campaign` and `results/campaign-mem`
 comes from.
 
 ## The command
@@ -77,11 +77,11 @@ after each increment.
 | scenario | arms | arms per database |
 |---|---:|---|
 | SC1 | 48 | the six static algorithms on eight databases |
-| SC2 | 35 | `Adaptive-Full`, `Pre-HUSPM-SWUmax`, `Pre-HUSPM-TSU`, `Remine-from-scratch`, `IncUSP-Miner+` on seven databases |
+| SC2 | 77 | `Adaptive-Full`, `Adaptive-FloorSelect`, `Pre-HUSPM-SWUmax`, `Pre-HUSPM-TSU`, `Remine-from-scratch`, `Remine-HUSP-ULL`, `Remine-HUSP-SP`, `IncUSP-Miner+`, `Joint-miner+SWUmax`, `Joint-miner+TSU`, `Joint-rule+SWU-tracking` on seven databases |
 | SC3 | 18 | the six static algorithms on SIGN, LEVIATHAN, C8T1S5I8N5K |
 | SC4 | 6 | `Pre-HUSPM` and `Adaptive-Full` on the same three |
-| SC5 | 15 | SC2's five arms on the same three |
-| SC6 | 6 | `Adaptive-Full` and `Remine-from-scratch` on the same three |
+| SC5 | 18 | `Adaptive-Full`, `Adaptive-FloorSelect`, `Pre-HUSPM-SWUmax`, `Pre-HUSPM-TSU`, `Remine-from-scratch`, `IncUSP-Miner+` on the same three |
+| SC6, SC6D, SC6B | 15 each | `Adaptive-Full`, `Adaptive-FloorSelect`, `Remine-from-scratch`, `Remine-HUSP-ULL`, `Remine-HUSP-SP` on the same three |
 | SC7 | 44 | `proposed_full`, `proposed_no_IUB`, `proposed_no_IPS`, `Pre-HUSPM` on seven databases; `proposed_C5_on`, `proposed_C5_off`, `proposed_no_block_index` and the block sizes `proposed_bsz_1`, `_5`, `_10`, `_50`, `_200` on SIGN and C8T1S5I8N5K |
 | SC1, live memory | 48 | as SC1 |
-| SC2, live memory | 35 | as SC2 |
+| SC2, live memory | 42 | `Adaptive-Full`, `Adaptive-FloorSelect`, `Pre-HUSPM-SWUmax`, `Pre-HUSPM-TSU`, `Remine-from-scratch`, `IncUSP-Miner+` on seven databases |
