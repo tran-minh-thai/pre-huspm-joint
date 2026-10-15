@@ -137,6 +137,15 @@ PROPOSED = "Adaptive-Full"
 FLOOR_ARM = "Adaptive-FloorSelect"
 FIXED = "Adaptive-FixedFloor"
 METHOD_SCENARIOS = {"SC2", "SC5", "SC6", "SC6D", "SC6B"}
+# The window sensitivity arms (Adaptive-FloorSelect-w<n>, n != 5): read only by the window study,
+# never by the main tables and figures, where they would count as competitors.
+WINDOW_ARM = re.compile(r"^Adaptive-FloorSelect-w\d+$")
+WINDOWS = (1, 2, 3, 5, 10)
+
+
+def window_arm(w):
+    """The arm of window w as the loader names it: w = 5 is the method in METHOD_SCENARIOS."""
+    return PROPOSED if w == 5 else f"Adaptive-FloorSelect-w{w}"
 PROPOSED_LABEL = "Pre-HUSPM-Joint"
 ALGO_LABEL = {
     "USpan": "USpan", "HUSP-ULL": "HUSP-ULL", "HUSP-SP": "HUSP-SP",
@@ -261,13 +270,13 @@ def classify_status(op_type, runtime_ms):
 REPLICATE_TREE = "campaign-replicates"
 
 
-def load_scenario(sc, tree=TIMING_TREE, finished_only=True, replicates=False):
+def load_scenario(sc, tree=TIMING_TREE, finished_only=True, replicates=False, windows=False):
     """All rows of one scenario: every <DB>/<ARM>/*.csv under results/<tree>/<sc>,
     with `arm`, `replicate` and `status`/`finished` columns. Arms without DONE are
     skipped. With replicates=True the timing tree is read together with every replicate
     tree under results/campaign-replicates/s<k>r<n>; the main tree is replicate s0r0.
     Without it only the main tree is read, so a figure drawn from one run per cell is
-    never handed several rows per cell."""
+    never handed several rows per cell. The window arms are left out unless windows=True."""
     bases = [(os.path.join(DATA_DIR, tree, sc), "s0r0")]
     if replicates and tree == TIMING_TREE:
         for rd in sorted(glob.glob(os.path.join(DATA_DIR, REPLICATE_TREE, "s*r*"))):
@@ -276,6 +285,8 @@ def load_scenario(sc, tree=TIMING_TREE, finished_only=True, replicates=False):
     for base, tag in bases:
       for csv_path in sorted(glob.glob(os.path.join(base, "*", "*", "*.csv"))):
         arm_dir = os.path.dirname(csv_path)
+        if not windows and WINDOW_ARM.match(os.path.basename(arm_dir)):
+            continue
         if finished_only and not os.path.exists(os.path.join(arm_dir, "DONE")):
             skipped.append(f"{tag}:{os.path.relpath(arm_dir, base)}")
             continue

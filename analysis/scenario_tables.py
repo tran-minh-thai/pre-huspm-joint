@@ -1141,6 +1141,266 @@ def sc7_static_runtime(put, t7):
             or "none", "table_SC7_static.csv")
 
 
+# ------------------------------------------------------------------------------ window study
+# The rescan floor selection at w in mf.WINDOWS: the arm Adaptive-FloorSelect is w = 5 (read as the
+# method, P), Adaptive-FloorSelect-w<n> the others; the fixed floor (FIXED) is the reference.
+WIN_ORDER = ["SIGN", "TAFENG", "C8T1S5I8N5K", "BIBLE", "LEVIATHAN", "FIFA", "KOSARAK"]   # as table_SC2_time
+
+
+def _is_window(a):
+    return a == P or bool(mf.WINDOW_ARM.match(a))
+
+
+def _side(x, y):
+    """Every run of x against every run of y."""
+    if max(x) < min(y):
+        return "separated, faster"
+    if max(y) < min(x):
+        return "separated, slower"
+    return "overlapping"
+
+
+def _run_totals(df, keys):
+    """keys + algorithm -> the time summed over the rows of each replicate that finished every row,
+    one value per replicate; a replicate with fewer rows than the arm's largest is left out."""
+    out = {}
+    for k, g in df.groupby(keys + ["algorithm", "replicate"]):
+        out.setdefault(k[:-1], []).append((len(g), bool(g["finished"].all()), float(mf.ms_to_s(g["runtime_ms"]).sum())))
+    res = {}
+    for k, v in out.items():
+        n = max(x[0] for x in v)
+        res[k] = [t for m, ok, t in v if ok and m == n]
+    return res
+
+
+def window_sc2():
+    """SC2 at each window: per database the time (mean, standard deviation and runs over the
+    increments), the rescans and those mined at UUT (main run), the time over the fixed floor and
+    over the fastest competitor of the SC2 and remining tables, and whether every run of one side
+    is beyond every run of the other."""
+    df = mf.load_scenario("SC2", replicates=True, windows=True)
+    inc = df[mf.is_inc(df)]
+    runs = _run_totals(inc, ["dataset"])
+    main = inc[inc["replicate"] == "s0r0"]
+    rows = []
+    for d in [x for x in WIN_ORDER if (x, FIXED) in runs]:
+        fixed = runs[(d, FIXED)]
+        comp = {b: runs[(d, b)] for b in SC2_ARMS if b != P and runs.get((d, b))}
+        best = min(comp, key=lambda b: np.mean(comp[b]))
+        for w in mf.WINDOWS:
+            a = mf.window_arm(w)
+            v = runs.get((d, a))
+            if not v or not fixed:
+                continue
+            last = main[(main["dataset"] == d) & (main["algorithm"] == a)].sort_values("iteration").iloc[-1]
+            rows.append(dict(dataset=d, window=w, runs=len(v), time_s=np.mean(v),
+                             time_s_std=np.std(v, ddof=1) if len(v) > 1 else np.nan,
+                             rescans=int(last["rescan_count"]), rescans_at_uut=int(last["rescans_at_uut"]),
+                             fixed_floor_s=np.mean(fixed), fixed_floor_runs=len(fixed),
+                             over_fixed_floor=np.mean(v) / np.mean(fixed), vs_fixed_floor=_side(v, fixed),
+                             best_competitor=best, best_competitor_s=np.mean(comp[best]),
+                             best_competitor_runs=len(comp[best]),
+                             over_best_competitor=np.mean(v) / np.mean(comp[best]), vs_best=_side(v, comp[best])))
+    return pd.DataFrame(rows)
+
+
+def window_sc2_tex(t):
+    """Rows: databases; columns: the windows; each cell the time over the fixed floor (means of the
+    runs) with the rescans mined at UUT in parentheses; the lowest ratio of each row, as printed,
+    in bold."""
+    head = " & ".join(f"$w={w}$" for w in mf.WINDOWS)
+    lines = []
+    for d in [x for x in WIN_ORDER if x in set(t["dataset"])]:
+        g = t[t["dataset"] == d].set_index("window")
+        txt = {w: f"{g.loc[w, 'over_fixed_floor']:.2f}" for w in mf.WINDOWS if w in g.index}
+        low = min(float(x) for x in txt.values())
+        cells = [(f"\\textbf{{{txt[w]}}}" if float(txt[w]) == low else txt[w]) + f" ({int(g.loc[w, 'rescans_at_uut'])})"
+                 if w in txt else "--" for w in mf.WINDOWS]
+        lines.append(f"{d} & " + " & ".join(cells) + " \\\\")
+    return ("\\begin{table}[!htbp]\\centering\n"
+            "\\caption{Effect of the window $w$ in SC2: runtime over the fixed floor (mean of three runs), "
+            "with the rescans mined at UUT in parentheses}\\label{tab:sc2_window}\n"
+            "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}l" + "r" * len(mf.WINDOWS) + "}\\toprule\n"
+            f"Database & {head} \\\\\\midrule\n" + "\n".join(lines) + "\n\\bottomrule\\end{tabular*}\n\\end{table}\n")
+
+
+def window_loo(t):
+    """For each database, the window the rule of analysis/window_rule.py picks on the other six
+    streams (bound 3; the smallest window on a tie), and the database's result at that window."""
+    import window_rule
+    picks = window_rule.leave_one_out(window_rule.load(), window_rule.EXTRA)
+    rows = []
+    for d in [x for x in WIN_ORDER if x in set(t["dataset"])]:
+        w = picks[d]
+        r = t[(t["dataset"] == d) & (t["window"] == w)].iloc[0]
+        rows.append(dict(dataset=d, window=w, time_s=r["time_s"], runs=r["runs"],
+                         over_fixed_floor=r["over_fixed_floor"], vs_fixed_floor=r["vs_fixed_floor"],
+                         best_competitor=r["best_competitor"], over_best_competitor=r["over_best_competitor"],
+                         vs_best=r["vs_best"], fastest=r["vs_best"] == "separated, faster"))
+    return pd.DataFrame(rows)
+
+
+def window_sc5():
+    """SC5 at each window, per cell (database, K, shape): the time over the fixed floor (means of
+    the runs) and whether every run beats every run of the fastest competitor (the SC5 arms other
+    than the proposal's versions)."""
+    df = mf.load_scenario("SC5", replicates=True, windows=True)
+    df = mf.parse_batch(df)
+    inc = df[df["phase"] == "INC"]
+    runs = _run_totals(inc, ["dataset", "K", "strat"])
+    rows = []
+    for (d, k, sh) in sorted({x[:3] for x in runs}):
+        fixed = runs.get((d, k, sh, FIXED))
+        comp = {b: v for (d2, k2, s2, b), v in runs.items()
+                if (d2, k2, s2) == (d, k, sh) and v and b != FIXED and b not in ISOLATION_ARMS and not _is_window(b)}
+        if not fixed or not comp:
+            continue
+        best = min(comp, key=lambda b: np.mean(comp[b]))
+        for w in mf.WINDOWS:
+            v = runs.get((d, k, sh, mf.window_arm(w)))
+            if not v:
+                continue
+            side = _side(v, comp[best])
+            rows.append(dict(dataset=d, K=int(k), shape=sh, window=w, runs=len(v), time_s=np.mean(v),
+                             over_fixed_floor=np.mean(v) / np.mean(fixed), best_competitor=best,
+                             best_competitor_runs=len(comp[best]),
+                             over_best_competitor=np.mean(v) / np.mean(comp[best]),
+                             vs_best=side.replace("separated, ", "")))
+    return pd.DataFrame(rows)
+
+
+def window_mixed():
+    """SC6, SC6D and SC6B at each window: the time of the stream over remining's and over the fixed
+    floor's, per seed and averaged over the seeds where both finished (as the stream row of the
+    mixed tables), and the deletions right after a rescan mined at UUT, with how many rescanned."""
+    rows = []
+    for sc in ("SC6", "SC6D", "SC6B"):
+        df = mf.load_scenario(sc, replicates=True, windows=True)
+        if df is None:
+            continue
+        df = df.copy()
+        df["kind"] = df["op_type"].astype(str).str.extract(r"SC6_(INS|DEL_BIG|DEL|MOD|INIT)")[0]
+        ops = df[df["kind"].notna() & (df["kind"] != "INIT")]
+        for d in [x for x in mf.ALL_DATASETS if x in set(ops["dataset"])]:
+            g = ops[ops["dataset"] == d]
+
+            def per_seed(arm):
+                x = g[g["algorithm"] == arm]
+                return {r: (len(y), float(mf.ms_to_s(y["runtime_ms"]).sum())) for r, y in x.groupby("replicate")
+                        if y["finished"].all()}
+            rem, fix = per_seed(REM), per_seed(FIXED)
+            for w in mf.WINDOWS:
+                a = mf.window_arm(w)
+                m = per_seed(a)
+                if not m:
+                    continue
+                r_rem = [m[r][1] / rem[r][1] for r in m if r in rem and rem[r][0] == m[r][0] and rem[r][1] > 0]
+                r_fix = [m[r][1] / fix[r][1] for r in m if r in fix and fix[r][0] == m[r][0] and fix[r][1] > 0]
+                s = df[(df["dataset"] == d) & (df["algorithm"] == a)].sort_values(["replicate", "iteration"])
+                s = s.assign(rescanned=s.groupby("replicate")["rescan_count"].diff().fillna(0) > 0,
+                             floor_before=s.groupby("replicate")["sl_min_eff"].shift(1))
+                after = s[(s["kind"] == "DEL") & (s["floor_before"] >= 1 - 1e-12)]
+                rows.append(dict(scenario=sc, dataset=d, window=w, seeds=len(m),
+                                 over_remine=np.mean(r_rem) if r_rem else np.nan, over_remine_seeds=len(r_rem),
+                                 over_fixed_floor=np.mean(r_fix) if r_fix else np.nan, over_fixed_floor_seeds=len(r_fix),
+                                 deletions_after_uut=len(after), deletions_after_uut_rescanned=int(after["rescanned"].sum())))
+    return pd.DataFrame(rows)
+
+
+def window_husp_check():
+    """Every row of a window arm against the fixed floor's row of the same database, seed, operation
+    and iteration: the HUSP counts must be equal. The counts do not depend on the repeat, so a
+    repeat the fixed floor was not measured in is compared with its other repeats of the same seed.
+    Returns (comparisons, mismatches, rows of a window arm with no fixed-floor row)."""
+    n = bad = alone = 0
+    for sc in ("SC2", "SC5", "SC6", "SC6D", "SC6B"):
+        df = mf.load_scenario(sc, replicates=True, windows=True)
+        if df is None:
+            continue
+        df = df.assign(seed_tag=df["replicate"].str.extract(r"^(s\d+)")[0])
+        key = ["dataset", "seed_tag", "op_type", "iteration"]
+        ref = df[df["algorithm"] == FIXED].set_index(key)["total_patterns_found"]
+        ref = ref[~ref.index.duplicated()]
+        for a in [mf.window_arm(w) for w in mf.WINDOWS]:
+            x = df[df["algorithm"] == a].set_index(key)["total_patterns_found"]
+            r = ref.reindex(x.index)
+            has = r.notna().values
+            alone += int((~has).sum())
+            n += int(has.sum())
+            bad += int((x.values[has] != r.values[has]).sum())
+    return n, bad, alone
+
+
+def window_rescans_vs_simulation(t):
+    """The SC2 rescans and rescans at UUT of every window against the simulation from the data
+    files (results/invariant-insertion-alpha/floor-selection-windows): (matching, compared)."""
+    import window_rule
+    sim = pd.read_csv(window_rule.DEFAULT_TABLE)
+    S = {(r.dataset, int(r.window)): (int(r.rescans_selection), int(r.rescans_at_uut)) for r in sim.itertuples()}
+    ok = sum(S.get((r.dataset, int(r.window))) == (r.rescans, r.rescans_at_uut) for r in t.itertuples())
+    return ok, len(t)
+
+
+def window_study(put, out):
+    t2 = window_sc2()
+    mf.write_csv(t2, os.path.join(out, "table_SC2_window.csv"))
+    open(os.path.join(out, "table_SC2_window.tex"), "w", encoding="utf-8").write(window_sc2_tex(t2))
+    src = "table_SC2_window.csv"
+    for r in t2.itertuples():
+        b = f"SC2_window_{r.window}_{r.dataset}"
+        put(f"{b}_time", f"{r.time_s:.2f}" + (f" ± {r.time_s_std:.2f}" if pd.notna(r.time_s_std) else "")
+            + f" ({r.runs} runs)", src)
+        put(f"{b}_over_fixed_floor", f"{r.over_fixed_floor:.2f} ({r.vs_fixed_floor})", src)
+        put(f"{b}_over_best_competitor", f"{r.over_best_competitor:.2f} ({r.best_competitor}; {r.vs_best})", src)
+        put(f"{b}_rescans", r.rescans, src)
+        put(f"{b}_at_uut", r.rescans_at_uut, src)
+    for w, g in t2.groupby("window"):
+        put(f"SC2_window_{w}_fastest_separated", f"{int((g['vs_best'] == 'separated, faster').sum())}/{len(g)}", src)
+    ok, n = window_rescans_vs_simulation(t2)
+    put("SC2_window_rescans_match_simulation", f"{ok}/{n}", src)
+
+    lo = window_loo(t2)
+    mf.write_csv(lo, os.path.join(out, "table_SC2_window_loo.csv"))
+    src = "table_SC2_window_loo.csv"
+    for r in lo.itertuples():
+        b = f"SC2_loo_{r.dataset}"
+        put(f"{b}_w", r.window, src)
+        put(f"{b}_over_fixed_floor", f"{r.over_fixed_floor:.2f} ({r.vs_fixed_floor})", src)
+        put(f"{b}_over_best_competitor", f"{r.over_best_competitor:.2f} ({r.best_competitor}; {r.vs_best})", src)
+        put(f"{b}_fastest", "yes" if r.fastest else "no", src)
+    put("SC2_loo_fastest_separated", f"{int(lo['fastest'].sum())}/{len(lo)}", src)
+
+    t5 = window_sc5()
+    mf.write_csv(t5, os.path.join(out, "table_SC5_window.csv"))
+    src = "table_SC5_window.csv"
+    for (w, d), g in t5.groupby(["window", "dataset"]):
+        r = g["over_fixed_floor"]
+        put(f"SC5_window_{w}_{d}_over_fixed_floor", f"median {r.median():.3f}, {r.min():.3f} to {r.max():.3f}", src)
+        put(f"SC5_window_{w}_{d}_vs_best_competitor",
+            f"faster {int((g['vs_best'] == 'faster').sum())}, overlapping {int((g['vs_best'] == 'overlapping').sum())}, "
+            f"slower {int((g['vs_best'] == 'slower').sum())} of {len(g)}; runs {', '.join(map(str, sorted(set(g['runs']))))}",
+            src)
+    for w, g in t5.groupby("window"):
+        put(f"SC5_window_{w}_faster_than_best", f"{int((g['vs_best'] == 'faster').sum())}/{len(g)}"
+            + (" (one run per cell)" if (g["runs"] == 1).all() else ""), src)
+
+    t6 = window_mixed()
+    mf.write_csv(t6, os.path.join(out, "table_SC6_window.csv"))
+    src = "table_SC6_window.csv"
+    for r in t6.itertuples():
+        b = f"{r.scenario}_window_{r.window}_{r.dataset}"
+        put(f"{b}_over_remine", f"{r.over_remine:.2f} ({r.over_remine_seeds} seeds)", src)
+        put(f"{b}_over_fixed_floor", f"{r.over_fixed_floor:.2f} ({r.over_fixed_floor_seeds} seeds)", src)
+        put(f"{b}_deletions_after_a_mine_at_uut",
+            f"{r.deletions_after_uut_rescanned} of {r.deletions_after_uut} rescanned", src)
+
+    n, bad, alone = window_husp_check()
+    put("window_husp_check_comparisons", n, "table_SC2_window.csv")
+    put("window_husp_check_mismatches", bad, "table_SC2_window.csv")
+    put("window_husp_check_rows_without_reference", alone, "table_SC2_window.csv")
+    return t2, lo, t5, t6
+
+
 def half_up(value, digits=2):
     """value to the given decimals, rounded half up on its decimal string: in binary 8.995
     lies just below itself and would print 8.99."""
@@ -1313,6 +1573,7 @@ def export_all(out_dir=None):
             put(f"SC6_{r.dataset}_{r.kind.replace(' ', '_')}_pooled_remine_over_proposal",
                 f"{r.remine_over_proposal:.2f}", "table_SC6_by_op.csv")
     mixed_floor_keys(put)
+    window_study(put, out)
 
     # The mixed streams with every remining arm: SC6 (table_SC6_by_op_arms.csv beside the
     # table above, which keeps its form), SC6D and SC6B.

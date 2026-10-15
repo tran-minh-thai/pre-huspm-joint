@@ -1,0 +1,8 @@
+dataset,window,time_s,runs,over_fixed_floor,vs_fixed_floor,best_competitor,over_best_competitor,vs_best,fastest
+SIGN,5,9.566,3,0.985,overlapping,Remine-HUSP-ULL,0.544,"separated, faster",True
+TAFENG,5,5.975,3,1.011,"separated, slower",Pre-HUSPM-SWUmax,0.807,"separated, faster",True
+C8T1S5I8N5K,3,8.465,3,0.934,"separated, faster",Remine-HUSP-ULL,0.723,"separated, faster",True
+BIBLE,5,51.938,3,0.966,"separated, faster",IncUSP-Miner+,0.903,"separated, faster",True
+LEVIATHAN,5,28.215,3,0.799,"separated, faster",Remine-HUSP-SP,0.79,"separated, faster",True
+FIFA,5,176.156,3,1.007,overlapping,Remine-HUSP-SP,0.38,"separated, faster",True
+KOSARAK,5,278.843,3,0.445,"separated, faster",Remine-HUSP-SP,0.811,"separated, faster",True

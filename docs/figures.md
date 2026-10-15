@@ -76,6 +76,9 @@ pattern and marker, so a black-and-white print still reads.
 | `table_SC6_seeds.csv`, `table_SC6_seed_summary.csv` | SC6 per database and seed: the proposal's and remining's time over the twenty operations, their ratio, and whether every pattern count agreed; then the ratio's spread over the seeds |
 | `table_SC7_static.csv`, `table_SC7_ablation.tex` | SC7 on one mine: full, IUB off, Pre-HUSPM - runtime, explored nodes, IUB cuts |
 | `table_SC7_incremental.csv` | SC7 over the increments: full, adaptive rescan off, block index off - increments completed, runtime, rescans, `blocks_read` summed, mean pre-large set, final pattern count |
+| `table_SC2_window.csv`, `table_SC2_window.tex` | the rescan floor selection at `w` in {1, 2, 3, 5, 10} in SC2 (w = 5 is the method, the others the arms `Adaptive-FloorSelect-w<n>`): per database the time (mean, deviation, runs), the rescans and those mined at UUT, the time over the fixed floor and over the fastest competitor of the SC2 and remining tables, and whether the runs separate. The LaTeX table prints the time over the fixed floor with the rescans at UUT |
+| `table_SC2_window_loo.csv` | for each SC2 database, the window `analysis/window_rule.py` picks on the other six streams, and the database's result at that window |
+| `table_SC5_window.csv`, `table_SC6_window.csv` | the same windows in SC5 (per cell: time over the fixed floor, against the fastest competitor) and in SC6, SC6D and SC6B (the stream's time over remining's and over the fixed floor's, averaged over the seeds; the deletions right after a mine at UUT) |
 | `table_status_summary.csv` | rows per outcome for every tree, scenario and database |
 | `platform.tex` | one sentence describing the measurement platform, generated from the machine record and `environment.lock.json`; not written when the `DONE` files name more than one host or the host has no record |
 

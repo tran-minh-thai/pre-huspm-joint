@@ -379,6 +379,389 @@ SC6B_C8T1S5I8N5K_deletion_beyond_the_budget_fixed_floor_rescans,5/5,table_SC6B_b
 SC6B_C8T1S5I8N5K_deletions_after_a_mine_at_uut,1 of 1 rescanned,table_SC6B_by_op.csv
 SC6B_C8T1S5I8N5K_deletions_rescanned_total,1/10,table_SC6B_by_op.csv
 SC6B_large_deletion_positions,2 to 20 (15 database and seed pairs),table_SC6B_by_op.csv
+SC2_window_1_SIGN_time,8.92 ± 0.04 (3 runs),table_SC2_window.csv
+SC2_window_1_SIGN_over_fixed_floor,"0.92 (separated, faster)",table_SC2_window.csv
+SC2_window_1_SIGN_over_best_competitor,"0.51 (Remine-HUSP-ULL; separated, faster)",table_SC2_window.csv
+SC2_window_1_SIGN_rescans,63,table_SC2_window.csv
+SC2_window_1_SIGN_at_uut,23,table_SC2_window.csv
+SC2_window_2_SIGN_time,9.00 ± 0.05 (3 runs),table_SC2_window.csv
+SC2_window_2_SIGN_over_fixed_floor,"0.93 (separated, faster)",table_SC2_window.csv
+SC2_window_2_SIGN_over_best_competitor,"0.51 (Remine-HUSP-ULL; separated, faster)",table_SC2_window.csv
+SC2_window_2_SIGN_rescans,61,table_SC2_window.csv
+SC2_window_2_SIGN_at_uut,16,table_SC2_window.csv
+SC2_window_3_SIGN_time,9.32 ± 0.08 (3 runs),table_SC2_window.csv
+SC2_window_3_SIGN_over_fixed_floor,"0.96 (separated, faster)",table_SC2_window.csv
+SC2_window_3_SIGN_over_best_competitor,"0.53 (Remine-HUSP-ULL; separated, faster)",table_SC2_window.csv
+SC2_window_3_SIGN_rescans,61,table_SC2_window.csv
+SC2_window_3_SIGN_at_uut,12,table_SC2_window.csv
+SC2_window_5_SIGN_time,9.57 ± 0.18 (3 runs),table_SC2_window.csv
+SC2_window_5_SIGN_over_fixed_floor,0.99 (overlapping),table_SC2_window.csv
+SC2_window_5_SIGN_over_best_competitor,"0.54 (Remine-HUSP-ULL; separated, faster)",table_SC2_window.csv
+SC2_window_5_SIGN_rescans,60,table_SC2_window.csv
+SC2_window_5_SIGN_at_uut,7,table_SC2_window.csv
+SC2_window_10_SIGN_time,9.76 ± 0.03 (3 runs),table_SC2_window.csv
+SC2_window_10_SIGN_over_fixed_floor,1.01 (overlapping),table_SC2_window.csv
+SC2_window_10_SIGN_over_best_competitor,"0.56 (Remine-HUSP-ULL; separated, faster)",table_SC2_window.csv
+SC2_window_10_SIGN_rescans,60,table_SC2_window.csv
+SC2_window_10_SIGN_at_uut,2,table_SC2_window.csv
+SC2_window_1_TAFENG_time,6.38 ± 0.03 (3 runs),table_SC2_window.csv
+SC2_window_1_TAFENG_over_fixed_floor,"1.08 (separated, slower)",table_SC2_window.csv
+SC2_window_1_TAFENG_over_best_competitor,"0.86 (Pre-HUSPM-SWUmax; separated, faster)",table_SC2_window.csv
+SC2_window_1_TAFENG_rescans,58,table_SC2_window.csv
+SC2_window_1_TAFENG_at_uut,21,table_SC2_window.csv
+SC2_window_2_TAFENG_time,6.34 ± 0.04 (3 runs),table_SC2_window.csv
+SC2_window_2_TAFENG_over_fixed_floor,"1.07 (separated, slower)",table_SC2_window.csv
+SC2_window_2_TAFENG_over_best_competitor,"0.86 (Pre-HUSPM-SWUmax; separated, faster)",table_SC2_window.csv
+SC2_window_2_TAFENG_rescans,56,table_SC2_window.csv
+SC2_window_2_TAFENG_at_uut,11,table_SC2_window.csv
+SC2_window_3_TAFENG_time,6.11 ± 0.06 (3 runs),table_SC2_window.csv
+SC2_window_3_TAFENG_over_fixed_floor,"1.03 (separated, slower)",table_SC2_window.csv
+SC2_window_3_TAFENG_over_best_competitor,"0.83 (Pre-HUSPM-SWUmax; separated, faster)",table_SC2_window.csv
+SC2_window_3_TAFENG_rescans,54,table_SC2_window.csv
+SC2_window_3_TAFENG_at_uut,6,table_SC2_window.csv
+SC2_window_5_TAFENG_time,5.97 ± 0.02 (3 runs),table_SC2_window.csv
+SC2_window_5_TAFENG_over_fixed_floor,"1.01 (separated, slower)",table_SC2_window.csv
+SC2_window_5_TAFENG_over_best_competitor,"0.81 (Pre-HUSPM-SWUmax; separated, faster)",table_SC2_window.csv
+SC2_window_5_TAFENG_rescans,52,table_SC2_window.csv
+SC2_window_5_TAFENG_at_uut,1,table_SC2_window.csv
+SC2_window_10_TAFENG_time,5.97 ± 0.04 (3 runs),table_SC2_window.csv
+SC2_window_10_TAFENG_over_fixed_floor,"1.01 (separated, slower)",table_SC2_window.csv
+SC2_window_10_TAFENG_over_best_competitor,"0.81 (Pre-HUSPM-SWUmax; separated, faster)",table_SC2_window.csv
+SC2_window_10_TAFENG_rescans,52,table_SC2_window.csv
+SC2_window_10_TAFENG_at_uut,0,table_SC2_window.csv
+SC2_window_1_C8T1S5I8N5K_time,7.05 ± 0.08 (3 runs),table_SC2_window.csv
+SC2_window_1_C8T1S5I8N5K_over_fixed_floor,"0.78 (separated, faster)",table_SC2_window.csv
+SC2_window_1_C8T1S5I8N5K_over_best_competitor,"0.60 (Remine-HUSP-ULL; separated, faster)",table_SC2_window.csv
+SC2_window_1_C8T1S5I8N5K_rescans,94,table_SC2_window.csv
+SC2_window_1_C8T1S5I8N5K_at_uut,71,table_SC2_window.csv
+SC2_window_2_C8T1S5I8N5K_time,7.92 ± 0.01 (3 runs),table_SC2_window.csv
+SC2_window_2_C8T1S5I8N5K_over_fixed_floor,"0.87 (separated, faster)",table_SC2_window.csv
+SC2_window_2_C8T1S5I8N5K_over_best_competitor,"0.68 (Remine-HUSP-ULL; separated, faster)",table_SC2_window.csv
+SC2_window_2_C8T1S5I8N5K_rescans,91,table_SC2_window.csv
+SC2_window_2_C8T1S5I8N5K_at_uut,48,table_SC2_window.csv
+SC2_window_3_C8T1S5I8N5K_time,8.46 ± 0.08 (3 runs),table_SC2_window.csv
+SC2_window_3_C8T1S5I8N5K_over_fixed_floor,"0.93 (separated, faster)",table_SC2_window.csv
+SC2_window_3_C8T1S5I8N5K_over_best_competitor,"0.72 (Remine-HUSP-ULL; separated, faster)",table_SC2_window.csv
+SC2_window_3_C8T1S5I8N5K_rescans,86,table_SC2_window.csv
+SC2_window_3_C8T1S5I8N5K_at_uut,29,table_SC2_window.csv
+SC2_window_5_C8T1S5I8N5K_time,8.93 ± 0.15 (3 runs),table_SC2_window.csv
+SC2_window_5_C8T1S5I8N5K_over_fixed_floor,0.99 (overlapping),table_SC2_window.csv
+SC2_window_5_C8T1S5I8N5K_over_best_competitor,"0.76 (Remine-HUSP-ULL; separated, faster)",table_SC2_window.csv
+SC2_window_5_C8T1S5I8N5K_rescans,80,table_SC2_window.csv
+SC2_window_5_C8T1S5I8N5K_at_uut,8,table_SC2_window.csv
+SC2_window_10_C8T1S5I8N5K_time,9.20 ± 0.11 (3 runs),table_SC2_window.csv
+SC2_window_10_C8T1S5I8N5K_over_fixed_floor,1.02 (overlapping),table_SC2_window.csv
+SC2_window_10_C8T1S5I8N5K_over_best_competitor,"0.79 (Remine-HUSP-ULL; separated, faster)",table_SC2_window.csv
+SC2_window_10_C8T1S5I8N5K_rescans,77,table_SC2_window.csv
+SC2_window_10_C8T1S5I8N5K_at_uut,0,table_SC2_window.csv
+SC2_window_1_BIBLE_time,52.71 ± 0.24 (3 runs),table_SC2_window.csv
+SC2_window_1_BIBLE_over_fixed_floor,"0.98 (separated, faster)",table_SC2_window.csv
+SC2_window_1_BIBLE_over_best_competitor,"0.92 (IncUSP-Miner+; separated, faster)",table_SC2_window.csv
+SC2_window_1_BIBLE_rescans,69,table_SC2_window.csv
+SC2_window_1_BIBLE_at_uut,32,table_SC2_window.csv
+SC2_window_2_BIBLE_time,52.09 ± 0.45 (3 runs),table_SC2_window.csv
+SC2_window_2_BIBLE_over_fixed_floor,"0.97 (separated, faster)",table_SC2_window.csv
+SC2_window_2_BIBLE_over_best_competitor,"0.91 (IncUSP-Miner+; separated, faster)",table_SC2_window.csv
+SC2_window_2_BIBLE_rescans,65,table_SC2_window.csv
+SC2_window_2_BIBLE_at_uut,21,table_SC2_window.csv
+SC2_window_3_BIBLE_time,51.26 ± 0.25 (3 runs),table_SC2_window.csv
+SC2_window_3_BIBLE_over_fixed_floor,"0.95 (separated, faster)",table_SC2_window.csv
+SC2_window_3_BIBLE_over_best_competitor,"0.89 (IncUSP-Miner+; separated, faster)",table_SC2_window.csv
+SC2_window_3_BIBLE_rescans,64,table_SC2_window.csv
+SC2_window_3_BIBLE_at_uut,17,table_SC2_window.csv
+SC2_window_5_BIBLE_time,51.94 ± 0.06 (3 runs),table_SC2_window.csv
+SC2_window_5_BIBLE_over_fixed_floor,"0.97 (separated, faster)",table_SC2_window.csv
+SC2_window_5_BIBLE_over_best_competitor,"0.90 (IncUSP-Miner+; separated, faster)",table_SC2_window.csv
+SC2_window_5_BIBLE_rescans,64,table_SC2_window.csv
+SC2_window_5_BIBLE_at_uut,13,table_SC2_window.csv
+SC2_window_10_BIBLE_time,53.61 ± 0.61 (3 runs),table_SC2_window.csv
+SC2_window_10_BIBLE_over_fixed_floor,1.00 (overlapping),table_SC2_window.csv
+SC2_window_10_BIBLE_over_best_competitor,"0.93 (IncUSP-Miner+; separated, faster)",table_SC2_window.csv
+SC2_window_10_BIBLE_rescans,63,table_SC2_window.csv
+SC2_window_10_BIBLE_at_uut,4,table_SC2_window.csv
+SC2_window_1_LEVIATHAN_time,26.99 ± 0.22 (3 runs),table_SC2_window.csv
+SC2_window_1_LEVIATHAN_over_fixed_floor,"0.76 (separated, faster)",table_SC2_window.csv
+SC2_window_1_LEVIATHAN_over_best_competitor,"0.76 (Remine-HUSP-SP; separated, faster)",table_SC2_window.csv
+SC2_window_1_LEVIATHAN_rescans,100,table_SC2_window.csv
+SC2_window_1_LEVIATHAN_at_uut,98,table_SC2_window.csv
+SC2_window_2_LEVIATHAN_time,27.05 ± 0.51 (3 runs),table_SC2_window.csv
+SC2_window_2_LEVIATHAN_over_fixed_floor,"0.77 (separated, faster)",table_SC2_window.csv
+SC2_window_2_LEVIATHAN_over_best_competitor,"0.76 (Remine-HUSP-SP; separated, faster)",table_SC2_window.csv
+SC2_window_2_LEVIATHAN_rescans,100,table_SC2_window.csv
+SC2_window_2_LEVIATHAN_at_uut,95,table_SC2_window.csv
+SC2_window_3_LEVIATHAN_time,27.00 ± 0.18 (3 runs),table_SC2_window.csv
+SC2_window_3_LEVIATHAN_over_fixed_floor,"0.76 (separated, faster)",table_SC2_window.csv
+SC2_window_3_LEVIATHAN_over_best_competitor,"0.76 (Remine-HUSP-SP; separated, faster)",table_SC2_window.csv
+SC2_window_3_LEVIATHAN_rescans,100,table_SC2_window.csv
+SC2_window_3_LEVIATHAN_at_uut,92,table_SC2_window.csv
+SC2_window_5_LEVIATHAN_time,28.22 ± 0.17 (3 runs),table_SC2_window.csv
+SC2_window_5_LEVIATHAN_over_fixed_floor,"0.80 (separated, faster)",table_SC2_window.csv
+SC2_window_5_LEVIATHAN_over_best_competitor,"0.79 (Remine-HUSP-SP; separated, faster)",table_SC2_window.csv
+SC2_window_5_LEVIATHAN_rescans,100,table_SC2_window.csv
+SC2_window_5_LEVIATHAN_at_uut,87,table_SC2_window.csv
+SC2_window_10_LEVIATHAN_time,29.10 ± 0.22 (3 runs),table_SC2_window.csv
+SC2_window_10_LEVIATHAN_over_fixed_floor,"0.82 (separated, faster)",table_SC2_window.csv
+SC2_window_10_LEVIATHAN_over_best_competitor,"0.81 (Remine-HUSP-SP; separated, faster)",table_SC2_window.csv
+SC2_window_10_LEVIATHAN_rescans,100,table_SC2_window.csv
+SC2_window_10_LEVIATHAN_at_uut,77,table_SC2_window.csv
+SC2_window_1_FIFA_time,176.34 ± 1.22 (3 runs),table_SC2_window.csv
+SC2_window_1_FIFA_over_fixed_floor,1.01 (overlapping),table_SC2_window.csv
+SC2_window_1_FIFA_over_best_competitor,"0.38 (Remine-HUSP-SP; separated, faster)",table_SC2_window.csv
+SC2_window_1_FIFA_rescans,27,table_SC2_window.csv
+SC2_window_1_FIFA_at_uut,0,table_SC2_window.csv
+SC2_window_2_FIFA_time,176.27 ± 0.93 (3 runs),table_SC2_window.csv
+SC2_window_2_FIFA_over_fixed_floor,1.01 (overlapping),table_SC2_window.csv
+SC2_window_2_FIFA_over_best_competitor,"0.38 (Remine-HUSP-SP; separated, faster)",table_SC2_window.csv
+SC2_window_2_FIFA_rescans,27,table_SC2_window.csv
+SC2_window_2_FIFA_at_uut,0,table_SC2_window.csv
+SC2_window_3_FIFA_time,176.41 ± 1.43 (3 runs),table_SC2_window.csv
+SC2_window_3_FIFA_over_fixed_floor,1.01 (overlapping),table_SC2_window.csv
+SC2_window_3_FIFA_over_best_competitor,"0.38 (Remine-HUSP-SP; separated, faster)",table_SC2_window.csv
+SC2_window_3_FIFA_rescans,27,table_SC2_window.csv
+SC2_window_3_FIFA_at_uut,0,table_SC2_window.csv
+SC2_window_5_FIFA_time,176.16 ± 0.51 (3 runs),table_SC2_window.csv
+SC2_window_5_FIFA_over_fixed_floor,1.01 (overlapping),table_SC2_window.csv
+SC2_window_5_FIFA_over_best_competitor,"0.38 (Remine-HUSP-SP; separated, faster)",table_SC2_window.csv
+SC2_window_5_FIFA_rescans,27,table_SC2_window.csv
+SC2_window_5_FIFA_at_uut,0,table_SC2_window.csv
+SC2_window_10_FIFA_time,176.16 ± 1.51 (3 runs),table_SC2_window.csv
+SC2_window_10_FIFA_over_fixed_floor,1.01 (overlapping),table_SC2_window.csv
+SC2_window_10_FIFA_over_best_competitor,"0.38 (Remine-HUSP-SP; separated, faster)",table_SC2_window.csv
+SC2_window_10_FIFA_rescans,27,table_SC2_window.csv
+SC2_window_10_FIFA_at_uut,0,table_SC2_window.csv
+SC2_window_1_KOSARAK_time,279.13 ± 3.19 (3 runs),table_SC2_window.csv
+SC2_window_1_KOSARAK_over_fixed_floor,"0.45 (separated, faster)",table_SC2_window.csv
+SC2_window_1_KOSARAK_over_best_competitor,"0.81 (Remine-HUSP-SP; separated, faster)",table_SC2_window.csv
+SC2_window_1_KOSARAK_rescans,100,table_SC2_window.csv
+SC2_window_1_KOSARAK_at_uut,100,table_SC2_window.csv
+SC2_window_2_KOSARAK_time,280.54 ± 2.30 (3 runs),table_SC2_window.csv
+SC2_window_2_KOSARAK_over_fixed_floor,"0.45 (separated, faster)",table_SC2_window.csv
+SC2_window_2_KOSARAK_over_best_competitor,"0.82 (Remine-HUSP-SP; separated, faster)",table_SC2_window.csv
+SC2_window_2_KOSARAK_rescans,100,table_SC2_window.csv
+SC2_window_2_KOSARAK_at_uut,99,table_SC2_window.csv
+SC2_window_3_KOSARAK_time,277.53 ± 2.02 (3 runs),table_SC2_window.csv
+SC2_window_3_KOSARAK_over_fixed_floor,"0.44 (separated, faster)",table_SC2_window.csv
+SC2_window_3_KOSARAK_over_best_competitor,"0.81 (Remine-HUSP-SP; separated, faster)",table_SC2_window.csv
+SC2_window_3_KOSARAK_rescans,100,table_SC2_window.csv
+SC2_window_3_KOSARAK_at_uut,98,table_SC2_window.csv
+SC2_window_5_KOSARAK_time,278.84 ± 0.13 (3 runs),table_SC2_window.csv
+SC2_window_5_KOSARAK_over_fixed_floor,"0.44 (separated, faster)",table_SC2_window.csv
+SC2_window_5_KOSARAK_over_best_competitor,"0.81 (Remine-HUSP-SP; separated, faster)",table_SC2_window.csv
+SC2_window_5_KOSARAK_rescans,100,table_SC2_window.csv
+SC2_window_5_KOSARAK_at_uut,96,table_SC2_window.csv
+SC2_window_10_KOSARAK_time,279.33 ± 1.39 (3 runs),table_SC2_window.csv
+SC2_window_10_KOSARAK_over_fixed_floor,"0.45 (separated, faster)",table_SC2_window.csv
+SC2_window_10_KOSARAK_over_best_competitor,"0.81 (Remine-HUSP-SP; separated, faster)",table_SC2_window.csv
+SC2_window_10_KOSARAK_rescans,100,table_SC2_window.csv
+SC2_window_10_KOSARAK_at_uut,91,table_SC2_window.csv
+SC2_window_1_fastest_separated,7/7,table_SC2_window.csv
+SC2_window_2_fastest_separated,7/7,table_SC2_window.csv
+SC2_window_3_fastest_separated,7/7,table_SC2_window.csv
+SC2_window_5_fastest_separated,7/7,table_SC2_window.csv
+SC2_window_10_fastest_separated,7/7,table_SC2_window.csv
+SC2_window_rescans_match_simulation,35/35,table_SC2_window.csv
+SC2_loo_SIGN_w,5,table_SC2_window_loo.csv
+SC2_loo_SIGN_over_fixed_floor,0.99 (overlapping),table_SC2_window_loo.csv
+SC2_loo_SIGN_over_best_competitor,"0.54 (Remine-HUSP-ULL; separated, faster)",table_SC2_window_loo.csv
+SC2_loo_SIGN_fastest,yes,table_SC2_window_loo.csv
+SC2_loo_TAFENG_w,5,table_SC2_window_loo.csv
+SC2_loo_TAFENG_over_fixed_floor,"1.01 (separated, slower)",table_SC2_window_loo.csv
+SC2_loo_TAFENG_over_best_competitor,"0.81 (Pre-HUSPM-SWUmax; separated, faster)",table_SC2_window_loo.csv
+SC2_loo_TAFENG_fastest,yes,table_SC2_window_loo.csv
+SC2_loo_C8T1S5I8N5K_w,3,table_SC2_window_loo.csv
+SC2_loo_C8T1S5I8N5K_over_fixed_floor,"0.93 (separated, faster)",table_SC2_window_loo.csv
+SC2_loo_C8T1S5I8N5K_over_best_competitor,"0.72 (Remine-HUSP-ULL; separated, faster)",table_SC2_window_loo.csv
+SC2_loo_C8T1S5I8N5K_fastest,yes,table_SC2_window_loo.csv
+SC2_loo_BIBLE_w,5,table_SC2_window_loo.csv
+SC2_loo_BIBLE_over_fixed_floor,"0.97 (separated, faster)",table_SC2_window_loo.csv
+SC2_loo_BIBLE_over_best_competitor,"0.90 (IncUSP-Miner+; separated, faster)",table_SC2_window_loo.csv
+SC2_loo_BIBLE_fastest,yes,table_SC2_window_loo.csv
+SC2_loo_LEVIATHAN_w,5,table_SC2_window_loo.csv
+SC2_loo_LEVIATHAN_over_fixed_floor,"0.80 (separated, faster)",table_SC2_window_loo.csv
+SC2_loo_LEVIATHAN_over_best_competitor,"0.79 (Remine-HUSP-SP; separated, faster)",table_SC2_window_loo.csv
+SC2_loo_LEVIATHAN_fastest,yes,table_SC2_window_loo.csv
+SC2_loo_FIFA_w,5,table_SC2_window_loo.csv
+SC2_loo_FIFA_over_fixed_floor,1.01 (overlapping),table_SC2_window_loo.csv
+SC2_loo_FIFA_over_best_competitor,"0.38 (Remine-HUSP-SP; separated, faster)",table_SC2_window_loo.csv
+SC2_loo_FIFA_fastest,yes,table_SC2_window_loo.csv
+SC2_loo_KOSARAK_w,5,table_SC2_window_loo.csv
+SC2_loo_KOSARAK_over_fixed_floor,"0.44 (separated, faster)",table_SC2_window_loo.csv
+SC2_loo_KOSARAK_over_best_competitor,"0.81 (Remine-HUSP-SP; separated, faster)",table_SC2_window_loo.csv
+SC2_loo_KOSARAK_fastest,yes,table_SC2_window_loo.csv
+SC2_loo_fastest_separated,7/7,table_SC2_window_loo.csv
+SC5_window_1_C8T1S5I8N5K_over_fixed_floor,"median 0.627, 0.537 to 1.040",table_SC5_window.csv
+SC5_window_1_C8T1S5I8N5K_vs_best_competitor,"faster 16, overlapping 0, slower 0 of 16; runs 1",table_SC5_window.csv
+SC5_window_1_LEVIATHAN_over_fixed_floor,"median 0.751, 0.731 to 0.929",table_SC5_window.csv
+SC5_window_1_LEVIATHAN_vs_best_competitor,"faster 16, overlapping 0, slower 0 of 16; runs 1",table_SC5_window.csv
+SC5_window_1_SIGN_over_fixed_floor,"median 0.735, 0.573 to 1.125",table_SC5_window.csv
+SC5_window_1_SIGN_vs_best_competitor,"faster 16, overlapping 0, slower 0 of 16; runs 1",table_SC5_window.csv
+SC5_window_2_C8T1S5I8N5K_over_fixed_floor,"median 0.639, 0.542 to 1.021",table_SC5_window.csv
+SC5_window_2_C8T1S5I8N5K_vs_best_competitor,"faster 16, overlapping 0, slower 0 of 16; runs 1",table_SC5_window.csv
+SC5_window_2_LEVIATHAN_over_fixed_floor,"median 0.768, 0.746 to 0.912",table_SC5_window.csv
+SC5_window_2_LEVIATHAN_vs_best_competitor,"faster 16, overlapping 0, slower 0 of 16; runs 1",table_SC5_window.csv
+SC5_window_2_SIGN_over_fixed_floor,"median 0.785, 0.607 to 1.068",table_SC5_window.csv
+SC5_window_2_SIGN_vs_best_competitor,"faster 16, overlapping 0, slower 0 of 16; runs 1",table_SC5_window.csv
+SC5_window_3_C8T1S5I8N5K_over_fixed_floor,"median 0.672, 0.551 to 1.025",table_SC5_window.csv
+SC5_window_3_C8T1S5I8N5K_vs_best_competitor,"faster 16, overlapping 0, slower 0 of 16; runs 1",table_SC5_window.csv
+SC5_window_3_LEVIATHAN_over_fixed_floor,"median 0.758, 0.740 to 0.912",table_SC5_window.csv
+SC5_window_3_LEVIATHAN_vs_best_competitor,"faster 16, overlapping 0, slower 0 of 16; runs 1",table_SC5_window.csv
+SC5_window_3_SIGN_over_fixed_floor,"median 0.767, 0.601 to 0.991",table_SC5_window.csv
+SC5_window_3_SIGN_vs_best_competitor,"faster 16, overlapping 0, slower 0 of 16; runs 1",table_SC5_window.csv
+SC5_window_5_C8T1S5I8N5K_over_fixed_floor,"median 0.731, 0.562 to 1.001",table_SC5_window.csv
+SC5_window_5_C8T1S5I8N5K_vs_best_competitor,"faster 16, overlapping 0, slower 0 of 16; runs 3",table_SC5_window.csv
+SC5_window_5_LEVIATHAN_over_fixed_floor,"median 0.768, 0.747 to 0.930",table_SC5_window.csv
+SC5_window_5_LEVIATHAN_vs_best_competitor,"faster 16, overlapping 0, slower 0 of 16; runs 3",table_SC5_window.csv
+SC5_window_5_SIGN_over_fixed_floor,"median 0.780, 0.624 to 1.003",table_SC5_window.csv
+SC5_window_5_SIGN_vs_best_competitor,"faster 16, overlapping 0, slower 0 of 16; runs 3",table_SC5_window.csv
+SC5_window_10_C8T1S5I8N5K_over_fixed_floor,"median 0.781, 0.597 to 1.013",table_SC5_window.csv
+SC5_window_10_C8T1S5I8N5K_vs_best_competitor,"faster 16, overlapping 0, slower 0 of 16; runs 1",table_SC5_window.csv
+SC5_window_10_LEVIATHAN_over_fixed_floor,"median 0.803, 0.756 to 0.935",table_SC5_window.csv
+SC5_window_10_LEVIATHAN_vs_best_competitor,"faster 16, overlapping 0, slower 0 of 16; runs 1",table_SC5_window.csv
+SC5_window_10_SIGN_over_fixed_floor,"median 0.821, 0.665 to 0.989",table_SC5_window.csv
+SC5_window_10_SIGN_vs_best_competitor,"faster 16, overlapping 0, slower 0 of 16; runs 1",table_SC5_window.csv
+SC5_window_1_faster_than_best,48/48 (one run per cell),table_SC5_window.csv
+SC5_window_2_faster_than_best,48/48 (one run per cell),table_SC5_window.csv
+SC5_window_3_faster_than_best,48/48 (one run per cell),table_SC5_window.csv
+SC5_window_5_faster_than_best,48/48,table_SC5_window.csv
+SC5_window_10_faster_than_best,48/48 (one run per cell),table_SC5_window.csv
+SC6_window_1_SIGN_over_remine,0.68 (5 seeds),table_SC6_window.csv
+SC6_window_1_SIGN_over_fixed_floor,0.88 (5 seeds),table_SC6_window.csv
+SC6_window_1_SIGN_deletions_after_a_mine_at_uut,11 of 11 rescanned,table_SC6_window.csv
+SC6_window_2_SIGN_over_remine,0.72 (5 seeds),table_SC6_window.csv
+SC6_window_2_SIGN_over_fixed_floor,0.94 (5 seeds),table_SC6_window.csv
+SC6_window_2_SIGN_deletions_after_a_mine_at_uut,6 of 6 rescanned,table_SC6_window.csv
+SC6_window_3_SIGN_over_remine,0.75 (5 seeds),table_SC6_window.csv
+SC6_window_3_SIGN_over_fixed_floor,0.98 (5 seeds),table_SC6_window.csv
+SC6_window_3_SIGN_deletions_after_a_mine_at_uut,3 of 3 rescanned,table_SC6_window.csv
+SC6_window_5_SIGN_over_remine,0.76 (5 seeds),table_SC6_window.csv
+SC6_window_5_SIGN_over_fixed_floor,0.98 (5 seeds),table_SC6_window.csv
+SC6_window_5_SIGN_deletions_after_a_mine_at_uut,2 of 2 rescanned,table_SC6_window.csv
+SC6_window_10_SIGN_over_remine,0.77 (5 seeds),table_SC6_window.csv
+SC6_window_10_SIGN_over_fixed_floor,1.00 (5 seeds),table_SC6_window.csv
+SC6_window_10_SIGN_deletions_after_a_mine_at_uut,0 of 0 rescanned,table_SC6_window.csv
+SC6_window_1_LEVIATHAN_over_remine,0.85 (5 seeds),table_SC6_window.csv
+SC6_window_1_LEVIATHAN_over_fixed_floor,1.02 (5 seeds),table_SC6_window.csv
+SC6_window_1_LEVIATHAN_deletions_after_a_mine_at_uut,12 of 12 rescanned,table_SC6_window.csv
+SC6_window_2_LEVIATHAN_over_remine,0.90 (5 seeds),table_SC6_window.csv
+SC6_window_2_LEVIATHAN_over_fixed_floor,1.09 (5 seeds),table_SC6_window.csv
+SC6_window_2_LEVIATHAN_deletions_after_a_mine_at_uut,10 of 10 rescanned,table_SC6_window.csv
+SC6_window_3_LEVIATHAN_over_remine,0.89 (5 seeds),table_SC6_window.csv
+SC6_window_3_LEVIATHAN_over_fixed_floor,1.08 (5 seeds),table_SC6_window.csv
+SC6_window_3_LEVIATHAN_deletions_after_a_mine_at_uut,7 of 7 rescanned,table_SC6_window.csv
+SC6_window_5_LEVIATHAN_over_remine,0.86 (5 seeds),table_SC6_window.csv
+SC6_window_5_LEVIATHAN_over_fixed_floor,1.03 (5 seeds),table_SC6_window.csv
+SC6_window_5_LEVIATHAN_deletions_after_a_mine_at_uut,3 of 3 rescanned,table_SC6_window.csv
+SC6_window_10_LEVIATHAN_over_remine,0.82 (5 seeds),table_SC6_window.csv
+SC6_window_10_LEVIATHAN_over_fixed_floor,0.99 (5 seeds),table_SC6_window.csv
+SC6_window_10_LEVIATHAN_deletions_after_a_mine_at_uut,0 of 0 rescanned,table_SC6_window.csv
+SC6_window_1_C8T1S5I8N5K_over_remine,0.61 (5 seeds),table_SC6_window.csv
+SC6_window_1_C8T1S5I8N5K_over_fixed_floor,0.92 (5 seeds),table_SC6_window.csv
+SC6_window_1_C8T1S5I8N5K_deletions_after_a_mine_at_uut,11 of 11 rescanned,table_SC6_window.csv
+SC6_window_2_C8T1S5I8N5K_over_remine,0.67 (5 seeds),table_SC6_window.csv
+SC6_window_2_C8T1S5I8N5K_over_fixed_floor,1.02 (5 seeds),table_SC6_window.csv
+SC6_window_2_C8T1S5I8N5K_deletions_after_a_mine_at_uut,7 of 7 rescanned,table_SC6_window.csv
+SC6_window_3_C8T1S5I8N5K_over_remine,0.66 (5 seeds),table_SC6_window.csv
+SC6_window_3_C8T1S5I8N5K_over_fixed_floor,1.01 (5 seeds),table_SC6_window.csv
+SC6_window_3_C8T1S5I8N5K_deletions_after_a_mine_at_uut,3 of 3 rescanned,table_SC6_window.csv
+SC6_window_5_C8T1S5I8N5K_over_remine,0.67 (5 seeds),table_SC6_window.csv
+SC6_window_5_C8T1S5I8N5K_over_fixed_floor,1.02 (5 seeds),table_SC6_window.csv
+SC6_window_5_C8T1S5I8N5K_deletions_after_a_mine_at_uut,0 of 0 rescanned,table_SC6_window.csv
+SC6_window_10_C8T1S5I8N5K_over_remine,0.65 (5 seeds),table_SC6_window.csv
+SC6_window_10_C8T1S5I8N5K_over_fixed_floor,0.98 (5 seeds),table_SC6_window.csv
+SC6_window_10_C8T1S5I8N5K_deletions_after_a_mine_at_uut,0 of 0 rescanned,table_SC6_window.csv
+SC6D_window_1_SIGN_over_remine,0.63 (5 seeds),table_SC6_window.csv
+SC6D_window_1_SIGN_over_fixed_floor,1.24 (5 seeds),table_SC6_window.csv
+SC6D_window_1_SIGN_deletions_after_a_mine_at_uut,30 of 30 rescanned,table_SC6_window.csv
+SC6D_window_2_SIGN_over_remine,0.55 (5 seeds),table_SC6_window.csv
+SC6D_window_2_SIGN_over_fixed_floor,1.07 (5 seeds),table_SC6_window.csv
+SC6D_window_2_SIGN_deletions_after_a_mine_at_uut,7 of 7 rescanned,table_SC6_window.csv
+SC6D_window_3_SIGN_over_remine,0.53 (5 seeds),table_SC6_window.csv
+SC6D_window_3_SIGN_over_fixed_floor,1.03 (5 seeds),table_SC6_window.csv
+SC6D_window_3_SIGN_deletions_after_a_mine_at_uut,1 of 1 rescanned,table_SC6_window.csv
+SC6D_window_5_SIGN_over_remine,0.52 (5 seeds),table_SC6_window.csv
+SC6D_window_5_SIGN_over_fixed_floor,1.01 (5 seeds),table_SC6_window.csv
+SC6D_window_5_SIGN_deletions_after_a_mine_at_uut,0 of 0 rescanned,table_SC6_window.csv
+SC6D_window_10_SIGN_over_remine,0.51 (5 seeds),table_SC6_window.csv
+SC6D_window_10_SIGN_over_fixed_floor,1.00 (5 seeds),table_SC6_window.csv
+SC6D_window_10_SIGN_deletions_after_a_mine_at_uut,0 of 0 rescanned,table_SC6_window.csv
+SC6D_window_1_LEVIATHAN_over_remine,0.70 (5 seeds),table_SC6_window.csv
+SC6D_window_1_LEVIATHAN_over_fixed_floor,1.42 (5 seeds),table_SC6_window.csv
+SC6D_window_1_LEVIATHAN_deletions_after_a_mine_at_uut,25 of 25 rescanned,table_SC6_window.csv
+SC6D_window_2_LEVIATHAN_over_remine,0.52 (5 seeds),table_SC6_window.csv
+SC6D_window_2_LEVIATHAN_over_fixed_floor,1.07 (5 seeds),table_SC6_window.csv
+SC6D_window_2_LEVIATHAN_deletions_after_a_mine_at_uut,2 of 2 rescanned,table_SC6_window.csv
+SC6D_window_3_LEVIATHAN_over_remine,0.51 (5 seeds),table_SC6_window.csv
+SC6D_window_3_LEVIATHAN_over_fixed_floor,1.05 (5 seeds),table_SC6_window.csv
+SC6D_window_3_LEVIATHAN_deletions_after_a_mine_at_uut,1 of 1 rescanned,table_SC6_window.csv
+SC6D_window_5_LEVIATHAN_over_remine,0.49 (5 seeds),table_SC6_window.csv
+SC6D_window_5_LEVIATHAN_over_fixed_floor,1.00 (5 seeds),table_SC6_window.csv
+SC6D_window_5_LEVIATHAN_deletions_after_a_mine_at_uut,0 of 0 rescanned,table_SC6_window.csv
+SC6D_window_10_LEVIATHAN_over_remine,0.48 (5 seeds),table_SC6_window.csv
+SC6D_window_10_LEVIATHAN_over_fixed_floor,0.99 (5 seeds),table_SC6_window.csv
+SC6D_window_10_LEVIATHAN_deletions_after_a_mine_at_uut,0 of 0 rescanned,table_SC6_window.csv
+SC6D_window_1_C8T1S5I8N5K_over_remine,0.63 (5 seeds),table_SC6_window.csv
+SC6D_window_1_C8T1S5I8N5K_over_fixed_floor,1.04 (5 seeds),table_SC6_window.csv
+SC6D_window_1_C8T1S5I8N5K_deletions_after_a_mine_at_uut,27 of 27 rescanned,table_SC6_window.csv
+SC6D_window_2_C8T1S5I8N5K_over_remine,0.63 (5 seeds),table_SC6_window.csv
+SC6D_window_2_C8T1S5I8N5K_over_fixed_floor,1.03 (5 seeds),table_SC6_window.csv
+SC6D_window_2_C8T1S5I8N5K_deletions_after_a_mine_at_uut,6 of 6 rescanned,table_SC6_window.csv
+SC6D_window_3_C8T1S5I8N5K_over_remine,0.62 (5 seeds),table_SC6_window.csv
+SC6D_window_3_C8T1S5I8N5K_over_fixed_floor,1.01 (5 seeds),table_SC6_window.csv
+SC6D_window_3_C8T1S5I8N5K_deletions_after_a_mine_at_uut,2 of 2 rescanned,table_SC6_window.csv
+SC6D_window_5_C8T1S5I8N5K_over_remine,0.63 (5 seeds),table_SC6_window.csv
+SC6D_window_5_C8T1S5I8N5K_over_fixed_floor,1.03 (5 seeds),table_SC6_window.csv
+SC6D_window_5_C8T1S5I8N5K_deletions_after_a_mine_at_uut,0 of 0 rescanned,table_SC6_window.csv
+SC6D_window_10_C8T1S5I8N5K_over_remine,0.61 (5 seeds),table_SC6_window.csv
+SC6D_window_10_C8T1S5I8N5K_over_fixed_floor,1.00 (5 seeds),table_SC6_window.csv
+SC6D_window_10_C8T1S5I8N5K_deletions_after_a_mine_at_uut,0 of 0 rescanned,table_SC6_window.csv
+SC6B_window_1_SIGN_over_remine,0.68 (5 seeds),table_SC6_window.csv
+SC6B_window_1_SIGN_over_fixed_floor,0.82 (5 seeds),table_SC6_window.csv
+SC6B_window_1_SIGN_deletions_after_a_mine_at_uut,9 of 9 rescanned,table_SC6_window.csv
+SC6B_window_2_SIGN_over_remine,0.76 (5 seeds),table_SC6_window.csv
+SC6B_window_2_SIGN_over_fixed_floor,0.92 (5 seeds),table_SC6_window.csv
+SC6B_window_2_SIGN_deletions_after_a_mine_at_uut,7 of 7 rescanned,table_SC6_window.csv
+SC6B_window_3_SIGN_over_remine,0.78 (5 seeds),table_SC6_window.csv
+SC6B_window_3_SIGN_over_fixed_floor,0.95 (5 seeds),table_SC6_window.csv
+SC6B_window_3_SIGN_deletions_after_a_mine_at_uut,4 of 4 rescanned,table_SC6_window.csv
+SC6B_window_5_SIGN_over_remine,0.82 (5 seeds),table_SC6_window.csv
+SC6B_window_5_SIGN_over_fixed_floor,0.99 (5 seeds),table_SC6_window.csv
+SC6B_window_5_SIGN_deletions_after_a_mine_at_uut,2 of 2 rescanned,table_SC6_window.csv
+SC6B_window_10_SIGN_over_remine,0.83 (5 seeds),table_SC6_window.csv
+SC6B_window_10_SIGN_over_fixed_floor,0.99 (5 seeds),table_SC6_window.csv
+SC6B_window_10_SIGN_deletions_after_a_mine_at_uut,0 of 0 rescanned,table_SC6_window.csv
+SC6B_window_1_LEVIATHAN_over_remine,0.88 (5 seeds),table_SC6_window.csv
+SC6B_window_1_LEVIATHAN_over_fixed_floor,1.00 (5 seeds),table_SC6_window.csv
+SC6B_window_1_LEVIATHAN_deletions_after_a_mine_at_uut,9 of 9 rescanned,table_SC6_window.csv
+SC6B_window_2_LEVIATHAN_over_remine,0.93 (5 seeds),table_SC6_window.csv
+SC6B_window_2_LEVIATHAN_over_fixed_floor,1.05 (5 seeds),table_SC6_window.csv
+SC6B_window_2_LEVIATHAN_deletions_after_a_mine_at_uut,8 of 8 rescanned,table_SC6_window.csv
+SC6B_window_3_LEVIATHAN_over_remine,0.91 (5 seeds),table_SC6_window.csv
+SC6B_window_3_LEVIATHAN_over_fixed_floor,1.03 (5 seeds),table_SC6_window.csv
+SC6B_window_3_LEVIATHAN_deletions_after_a_mine_at_uut,5 of 5 rescanned,table_SC6_window.csv
+SC6B_window_5_LEVIATHAN_over_remine,0.89 (5 seeds),table_SC6_window.csv
+SC6B_window_5_LEVIATHAN_over_fixed_floor,1.01 (5 seeds),table_SC6_window.csv
+SC6B_window_5_LEVIATHAN_deletions_after_a_mine_at_uut,2 of 2 rescanned,table_SC6_window.csv
+SC6B_window_10_LEVIATHAN_over_remine,0.88 (5 seeds),table_SC6_window.csv
+SC6B_window_10_LEVIATHAN_over_fixed_floor,1.00 (5 seeds),table_SC6_window.csv
+SC6B_window_10_LEVIATHAN_deletions_after_a_mine_at_uut,0 of 0 rescanned,table_SC6_window.csv
+SC6B_window_1_C8T1S5I8N5K_over_remine,0.64 (5 seeds),table_SC6_window.csv
+SC6B_window_1_C8T1S5I8N5K_over_fixed_floor,0.86 (5 seeds),table_SC6_window.csv
+SC6B_window_1_C8T1S5I8N5K_deletions_after_a_mine_at_uut,9 of 9 rescanned,table_SC6_window.csv
+SC6B_window_2_C8T1S5I8N5K_over_remine,0.71 (5 seeds),table_SC6_window.csv
+SC6B_window_2_C8T1S5I8N5K_over_fixed_floor,0.96 (5 seeds),table_SC6_window.csv
+SC6B_window_2_C8T1S5I8N5K_deletions_after_a_mine_at_uut,7 of 7 rescanned,table_SC6_window.csv
+SC6B_window_3_C8T1S5I8N5K_over_remine,0.71 (5 seeds),table_SC6_window.csv
+SC6B_window_3_C8T1S5I8N5K_over_fixed_floor,0.96 (5 seeds),table_SC6_window.csv
+SC6B_window_3_C8T1S5I8N5K_deletions_after_a_mine_at_uut,5 of 5 rescanned,table_SC6_window.csv
+SC6B_window_5_C8T1S5I8N5K_over_remine,0.75 (5 seeds),table_SC6_window.csv
+SC6B_window_5_C8T1S5I8N5K_over_fixed_floor,1.01 (5 seeds),table_SC6_window.csv
+SC6B_window_5_C8T1S5I8N5K_deletions_after_a_mine_at_uut,1 of 1 rescanned,table_SC6_window.csv
+SC6B_window_10_C8T1S5I8N5K_over_remine,0.76 (5 seeds),table_SC6_window.csv
+SC6B_window_10_C8T1S5I8N5K_over_fixed_floor,1.03 (5 seeds),table_SC6_window.csv
+SC6B_window_10_C8T1S5I8N5K_deletions_after_a_mine_at_uut,0 of 0 rescanned,table_SC6_window.csv
+window_husp_check_comparisons,35994,table_SC2_window.csv
+window_husp_check_mismatches,0,table_SC2_window.csv
+window_husp_check_rows_without_reference,0,table_SC2_window.csv
 SC6_SIGN_insertion_rescans,62/70,table_SC6_by_op_arms.csv
 SC6_SIGN_insertion_direct,8/70,table_SC6_by_op_arms.csv
 SC6_SIGN_insertion_Remine_over_proposal,1.26 ± 0.05 (5 seeds),table_SC6_by_op_arms.csv
