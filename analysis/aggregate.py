@@ -174,7 +174,7 @@ def main():
                 if c not in cols:
                     cols.append(c)
         with open(args.csv, "w", newline="", encoding="utf-8") as f:
-            w = csv.DictWriter(f, fieldnames=cols)
+            w = csv.DictWriter(f, fieldnames=cols, lineterminator="\n")
             w.writeheader()
             w.writerows(out_rows)
         print()
