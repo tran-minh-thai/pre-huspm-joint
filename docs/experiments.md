@@ -274,10 +274,11 @@ Generated tables span the full text width (`tabular*` with `\extracolsep\fill`, 
 Springer Nature template does) in the class's table font; a mean and its standard deviation
 share one line, except in the SC1 table, whose six algorithms only fit with the deviation
 below the mean. Generated tables set the lowest value of each row in bold (runtime, rescans; in the SC7
-ablation the lowest runtime and the fewest explored nodes of each database), comparing the
-values as printed, so two values that print alike are both bold; a cell measured three times
-whose runs overlap those of the lowest is a tie and is bold as well; a run that did not finish
-takes no part. Every table, figure and number on runtime reads the mean of the replicates
+ablation the lowest runtime and the fewest explored nodes of each database; in the window
+table the window with the lowest time). Runtimes are compared on their unrounded means, so two
+means that only print alike are not tied; a cell measured three times whose runs overlap those
+of the lowest is a tie and is bold as well. Counts are compared as printed. A run that did not
+finish takes no part. Every table, figure and number on runtime reads the mean of the replicates
 (`load_mean` in `analysis/make_figures.py`); SC1, SC3, SC5 and SC7 count a win as separated
 only when every run of the proposal beats every run of the closest arm. An SC2 arm that the runner's memory guard stopped (less than a tenth of the
 heap free after a full collection, before the next increment) is printed as "Stopped

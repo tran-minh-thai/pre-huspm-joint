@@ -151,7 +151,7 @@ ALGO_LABEL = {
     "USpan": "USpan", "HUSP-ULL": "HUSP-ULL", "HUSP-SP": "HUSP-SP",
     "IncUSP-Miner+": "IncUSP-Miner$^{+}$", "Pre-HUSPM": "Pre-HUSPM", "Pre-HUSPM-SWUmax": "Pre-HUSPM-SWUmax",
     "Pre-HUSPM-TSU": "Pre-HUSPM-TSU", "Remine-from-scratch": "Remine",
-    "Adaptive-Full": PROPOSED_LABEL, "Adaptive-FixedFloor": PROPOSED_LABEL + ", fixed floor",
+    "Adaptive-Full": PROPOSED_LABEL, "Adaptive-FixedFloor": PROPOSED_LABEL + ", fixed lower threshold",
 }
 ALGO_LINESTYLE = {
     "USpan": (0, (1, 1.5)), "HUSP-ULL": (0, (4, 1.5)), "HUSP-SP": (0, (4, 1.5, 1, 1.5)),
@@ -1089,14 +1089,14 @@ def export_ablation_table():
              "\\label{tab:sc7_ablation}",
              "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}llrr}", "\\toprule",
              "Database & Variant & Runtime (s) & Explored \\\\", "\\midrule"]
-    # the lowest runtime and the fewest explored nodes of each database in bold, compared as
-    # printed; a variant that did not finish takes no part
+    # the lowest runtime (unrounded mean, with the variants whose runs overlap its runs) and the
+    # fewest explored nodes of each database in bold; a variant that did not finish takes no part
     bold = {}
     for ds, g in tab.groupby("dataset", sort=False):
         rt = [f"{v:.2f}" if pd.notna(v) else None for v in g["runtime_s"]]
         rg = [(a, b, n) if pd.notna(a) else None for a, b, n in zip(g["runtime_s_min"], g["runtime_s_max"], g["runs"])]
         ex = [f"{int(v)}" if pd.notna(v) else None for v in g["explored_bound"]]
-        for i, a, b in zip(g.index, lowest(rt, rg), lowest(ex)):
+        for i, a, b in zip(g.index, lowest(rt, rg, list(g["runtime_s"])), lowest(ex)):
             bold[i] = (a, b)
     prev = None
     for i, r in tab.iterrows():
@@ -1408,13 +1408,16 @@ def pm_digits(mean):
     return 0 if mean >= 100 else (1 if mean >= 10 else 2)
 
 
-def lowest(printed, ranges=None):
-    """Which of a row's printed values are its lowest, compared as printed: two values that
-    print alike are tied and both marked. None stands for a cell that takes no part (a run
-    that did not finish, a missing cell). With ranges, one (min, max, runs) per cell, a cell
-    measured at least twice whose runs overlap those of a lowest cell measured at least
-    twice is a tie and is marked too: a difference within the spread of the runs is not a
-    win."""
+def lowest(printed, ranges=None, values=None):
+    """Which of a row's values are its lowest. None stands for a cell that takes no part (a run
+    that did not finish, a missing cell). Without values the cells are compared as printed, so
+    two values that print alike are both marked (counts, which print exactly). With values, the
+    unrounded means, the lowest mean is marked and two means that merely print alike are not
+    tied. With ranges, one (min, max, runs) per cell, a cell measured at least twice whose runs
+    overlap those of a lowest cell measured at least twice is a tie and is marked too: a
+    difference within the spread of the runs is not a win."""
+    if values is not None:
+        printed = [None if p is None else repr(float(v)) for p, v in zip(printed, values)]
     vals = [float(v.replace(",", "")) if v is not None else None for v in printed]
     finite = [v for v in vals if v is not None]
     best = min(finite) if finite else None
@@ -1510,12 +1513,13 @@ def export_replicate_tables():
                     r = r.iloc[0]
                     stats[c] = dict(n=r["n"], mean=r["runtime_s_mean"], std=r["runtime_s_std"],
                                     min=r["runtime_s_min"], max=r["runtime_s_max"])
-            # the lowest mean of the row in bold, compared as printed; a run that did not
-            # finish takes no part
+            # the lowest mean of the row in bold (unrounded, with the cells whose runs overlap its
+            # runs); a run that did not finish takes no part
             low = dict(zip(cols, lowest([f"{stats[c]['mean']:.{pm_digits(stats[c]['mean'])}f}"
                                          if c in stats else None for c in cols],
                                         [(stats[c]["min"], stats[c]["max"], stats[c]["n"]) if c in stats else None
-                                         for c in cols])))
+                                         for c in cols],
+                                        [stats[c]["mean"] if c in stats else None for c in cols])))
             cells = []
             for c in cols:
                 r = tab[(tab["dataset"] == ds) & (tab["algorithm"] == c)]

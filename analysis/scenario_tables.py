@@ -1038,7 +1038,8 @@ def sc2_tex(totals, region, reps=None):
         low = dict(zip(arms, mf.lowest([f"{st[a]['mean']:.{mf.pm_digits(st[a]['mean'])}f}"
                                         if st[a] else None for a in arms],
                                        [(st[a]["min"], st[a]["max"], st[a]["n"]) if st[a] else None
-                                        for a in arms])))
+                                        for a in arms],
+                                       [st[a]["mean"] if st[a] else None for a in arms])))
         cells = []
         for a in arms:
             r = T.get((d, a))
@@ -1072,9 +1073,9 @@ def sc2_tex(totals, region, reps=None):
     remine_tex = None
     if any((d, a) in T for d in order for a in remine_arms[2:]):
         rhead = ("Database & \\begin{tabular}[b]{@{}r@{}}Pre-HUSPM-\\\\Joint\\end{tabular} & "
-                 "\\begin{tabular}[b]{@{}r@{}}Remine\\\\(Pre-HUSPM-Joint)\\end{tabular} & "
-                 "\\begin{tabular}[b]{@{}r@{}}Remine\\\\(HUSP-ULL)\\end{tabular} & "
-                 "\\begin{tabular}[b]{@{}r@{}}Remine\\\\(HUSP-SP)\\end{tabular} \\\\\\midrule")
+                 "Remine & "
+                 "\\begin{tabular}[b]{@{}r@{}}Remine-\\\\HUSP-ULL\\end{tabular} & "
+                 "\\begin{tabular}[b]{@{}r@{}}Remine-\\\\HUSP-SP\\end{tabular} \\\\\\midrule")
         rrows = [f"{d} & " + " & ".join(row(d, remine_arms)) + " \\\\" for d in order]
         remine_tex = "\n".join(["\\begin{table}[!htbp]\\centering",
                                 "\\caption{Runtime (s) of SC2 against remining after every increment; mean and "
@@ -1195,6 +1196,7 @@ def window_sc2():
             last = main[(main["dataset"] == d) & (main["algorithm"] == a)].sort_values("iteration").iloc[-1]
             rows.append(dict(dataset=d, window=w, runs=len(v), time_s=np.mean(v),
                              time_s_std=np.std(v, ddof=1) if len(v) > 1 else np.nan,
+                             time_s_min=min(v), time_s_max=max(v),
                              rescans=int(last["rescan_count"]), rescans_at_uut=int(last["rescans_at_uut"]),
                              fixed_floor_s=np.mean(fixed), fixed_floor_runs=len(fixed),
                              over_fixed_floor=np.mean(v) / np.mean(fixed), vs_fixed_floor=_side(v, fixed),
@@ -1205,21 +1207,24 @@ def window_sc2():
 
 
 def window_sc2_tex(t):
-    """Rows: databases; columns: the windows; each cell the time over the fixed floor (means of the
-    runs) with the rescans mined at UUT in parentheses; the lowest ratio of each row, as printed,
-    in bold."""
+    """Rows: databases; columns: the windows; each cell the time over the fixed lower threshold
+    (means of the runs) with the rescans mined at UUT in parentheses. In bold, as in the runtime
+    tables: the window with the lowest mean time of the row and every window whose runs overlap
+    its runs."""
     head = " & ".join(f"$w={w}$" for w in mf.WINDOWS)
     lines = []
     for d in [x for x in WIN_ORDER if x in set(t["dataset"])]:
         g = t[t["dataset"] == d].set_index("window")
         txt = {w: f"{g.loc[w, 'over_fixed_floor']:.2f}" for w in mf.WINDOWS if w in g.index}
-        low = min(float(x) for x in txt.values())
-        cells = [(f"\\textbf{{{txt[w]}}}" if float(txt[w]) == low else txt[w]) + f" ({int(g.loc[w, 'rescans_at_uut'])})"
+        ws = [w for w in mf.WINDOWS if w in txt]
+        bold = dict(zip(ws, mf.lowest([txt[w] for w in ws],
+                                      [(g.loc[w, "time_s_min"], g.loc[w, "time_s_max"], int(g.loc[w, "runs"])) for w in ws],
+                                      [g.loc[w, "time_s"] for w in ws])))
+        cells = [(f"\\textbf{{{txt[w]}}}" if bold[w] else txt[w]) + f" ({int(g.loc[w, 'rescans_at_uut'])})"
                  if w in txt else "--" for w in mf.WINDOWS]
         lines.append(f"{d} & " + " & ".join(cells) + " \\\\")
     return ("\\begin{table}[!htbp]\\centering\n"
-            "\\caption{Effect of the window $w$ in SC2: runtime over the fixed floor (mean of three runs), "
-            "with the rescans mined at UUT in parentheses}\\label{tab:sc2_window}\n"
+            "\\caption{Effect of the window $w$ in SC2}\\label{tab:sc2_window}\n"
             "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}l" + "r" * len(mf.WINDOWS) + "}\\toprule\n"
             f"Database & {head} \\\\\\midrule\n" + "\n".join(lines) + "\n\\bottomrule\\end{tabular*}\n\\end{table}\n")
 
