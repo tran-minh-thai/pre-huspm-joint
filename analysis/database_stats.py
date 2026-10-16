@@ -76,7 +76,7 @@ def self_test():
     """Hand-built lines with known counts, including an element closed by -2 alone."""
     p = {1: 2.0, 2: 1.0, 7: 3.0}
     r = scan_lines(["# comment", "", "1[2] 2[1] -1 7[1] -1 -2", "2[3] -1 1[1] 7[2] -2"], p)
-    want = dict(sequences=2, items_occurring=3, max_item_id=7, elements=4, occurrences=6, total_utility=21.0)
+    want = dict(sequences=2, items_occurring=3, max_item_id=7, elements=4, occurrences=6, total_utility=19.0)
     for k, v in want.items():
         assert r[k] == v, (k, r[k], v)
     try:
