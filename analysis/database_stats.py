@@ -114,7 +114,7 @@ def main(argv=None):
               f"TU {r['total_utility']:.0f}")
     os.makedirs(a.out, exist_ok=True)
     with open(os.path.join(a.out, "database_stats.csv"), "w", newline="", encoding="utf-8") as fh:
-        w = csv.DictWriter(fh, fieldnames=list(rows[0]))
+        w = csv.DictWriter(fh, fieldnames=list(rows[0]), lineterminator="\n")
         w.writeheader()
         w.writerows(rows)
     return 0
