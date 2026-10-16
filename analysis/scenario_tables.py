@@ -1506,6 +1506,10 @@ def memory_guard_stops(put):
             src = os.path.relpath(err, mf.DATA_DIR).replace(os.sep, "/")
             k = f"SC2_{'mem_' if tree == mf.MEMORY_TREE else ''}{ds}_{algo}_guard"
             put(f"{k}_increments_done", done, src)
+            if tree == mf.TIMING_TREE:
+                # the time of the increments this same run finished before the guard stopped it
+                inc = rows[(rows["op_type"].astype(str) == "SC2_INC") & (pd.to_numeric(rows["runtime_ms"]) >= 0)]
+                put(f"{k}_time_until_stop_s", half_up(inc["runtime_ms"].sum() / 1000), src)
             put(f"{k}_free_mb", free, src)
             put(f"{k}_free_pct", f"{100 * free / heap_mb:.1f}", src)
             put(f"{k}_live_gb", f"{(heap_mb - free) / 1024:.1f}", src)
