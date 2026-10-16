@@ -116,13 +116,13 @@ $mixedSets = @('SIGN','LEVIATHAN','C8T1S5I8N5K','TAFENG')
 $static  = @('USpan','HUSP-ULL','HUSP-SP','IncUSP-Miner+','Pre-HUSPM','Adaptive-Full','Joint-miner@UUT')
 $incr    = @('Adaptive-Full','Pre-HUSPM-SWUmax','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+',
              'Remine-HUSP-ULL','Remine-HUSP-SP','Joint-miner+SWUmax','Joint-miner+TSU','Joint-rule+PreHUSPM-tracking','Joint-miner+SWUmax+PreHUSPM-tracking',
-             'Adaptive-FloorSelect','Remine-own-UUT','Joint-rule+plain-floor')
+             'Adaptive-FloorSelect','Remine-own-UUT','Joint-rule+plain-floor','Joint-rule+min-floor')
 # SC5 runs the method, its fixed-floor row, the four arms SC2 started with and the remining arms.
 $sc5     = @('Adaptive-Full','Pre-HUSPM-SWUmax','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+',
              'Adaptive-FloorSelect','Remine-HUSP-ULL','Remine-HUSP-SP','Remine-own-UUT')
 # The mixed streams (SC6, SC6D, SC6B): AutomatedExperimentRunner.MIXED_ARMS.
 $mixed   = @('Adaptive-Full','Remine-from-scratch','Remine-HUSP-ULL','Remine-HUSP-SP','Adaptive-FloorSelect',
-             'Remine-own-UUT','Joint-rule+plain-floor')
+             'Remine-own-UUT','Joint-rule+plain-floor','Joint-rule+min-floor')
 $scenarios = @('SC1','SC2','SC3','SC4','SC5','SC6','SC6D','SC6B','SC7','FIDELITY')
 if ($scenarios -notcontains $Scenario) { throw "Unknown scenario '$Scenario'. Known: $($scenarios -join ', ')." }
 
@@ -185,7 +185,7 @@ if (-not $Datasets) {
 # "A,B", which matches no algorithm. Use -Command "& { .\campaign.ps1 -Algorithms 'A','B' }".
 $knownAlgos = @('Adaptive-Full','Pre-HUSPM','Pre-HUSPM-SWUmax','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+',
                 'Remine-HUSP-ULL','Remine-HUSP-SP','Joint-miner+SWUmax','Joint-miner+TSU','Joint-rule+PreHUSPM-tracking','Joint-miner+SWUmax+PreHUSPM-tracking',
-                'Adaptive-FloorSelect','Remine-own-UUT','Joint-rule+plain-floor','Joint-miner@UUT',
+                'Adaptive-FloorSelect','Remine-own-UUT','Joint-rule+plain-floor','Joint-rule+min-floor','Joint-miner@UUT',
                 'Adaptive-FloorSelect-w1','Adaptive-FloorSelect-w2','Adaptive-FloorSelect-w3','Adaptive-FloorSelect-w10',
                 'USpan','HUSP-ULL','HUSP-SP',
                 'proposed_full','proposed_no_block_index','proposed_no_IUB','proposed_no_IPS',

@@ -152,7 +152,7 @@ those rows (SC1, SC3, SC4, the static SC7 arms, and `Remine-from-scratch`) recor
 
 The default rule is `joint` (`-Dadapt.trigger`). It rescans when
 `max_i A_i - UUT * I + UUT * D > (UUT - LUT_min) * TSU_ref`, and on a call that does not rescan
-it drops a tracked pattern `X` only when `u(X) < LUT_min * TSU_ref + min_{i in X} A_i`. The rules
+it drops a tracked pattern `X` only when `u(X) < LUT_min * TSU_ref + max_{i in X} A_i`. The rules
 `iaumax`, `cub` and `swumax` are kept for comparison only; `iaumax` and `swumax` can miss
 patterns on a direct update. The proposal's `swumax` rule compares the utility of the largest
 single inserted sequence; it is not the `SWUmax` of Yan et al.
@@ -162,7 +162,7 @@ single inserted sequence; it is not the `SWUmax` of Yan et al.
 | `iau_max` | `max_i A_i - UUT * I + UUT * D` | the compared quantity: `max_i A_i`, `cub_val`, or the largest sequence utility of the batch |
 | `sft_val` | `(UUT - LUT_min) * TSU_ref`, on insertion and deletion | insertion `((UUT - LUT_min) / (1 - UUT)) * TSU_ref`; deletion `((UUT - LUT_min) / UUT) * TSU_ref` |
 | `cub_triggered` | `iau_max > sft_val` | `iau_max > sft_val` on insertion; `cub_val > sft_val` on deletion |
-| `lut_dyn` | `LUT_min * TSU_ref`, the floor a rescan mines at; the drop floor of a pattern `X` adds `min_{i in X} A_i` and is not stored | the adaptive floor, `UUT * TSU` minus a band width that is at least the width the safety bound requires |
+| `lut_dyn` | `LUT_min * TSU_ref`, the floor a rescan mines at; the drop floor of a pattern `X` adds `max_{i in X} A_i` (`min_{i in X} A_i` in arm `Joint-rule+min-floor`, nothing in `Joint-rule+plain-floor`) and is not stored | the adaptive floor, `UUT * TSU` minus a band width that is at least the width the safety bound requires |
 | `sigma2`, `rho` | 0 | batch statistics feeding the adaptive floor |
 | `kappa`, `delta0` | `NaN` | the coefficients used |
 | `iau_tightness` | recorded, not used | recorded |

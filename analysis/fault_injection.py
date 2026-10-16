@@ -42,9 +42,12 @@ FAULTS = [
     ("trigger without the deletion term",
      "return iauMax - Su * insertedSinceRescan + Su * deletedSinceRescan;",
      "return iauMax - Su * insertedSinceRescan;"),
-    ("drop floor with the largest counter instead of the pattern's smallest",
-     "return Sl_min * tsuAtLastRescan + minIauOf(p);",
-     "return Sl_min * tsuAtLastRescan + iauMax;"),
+    ("drop floor with the largest counter of all items instead of the largest of the pattern's",
+     "case MAX: default: return Sl_min * tsuAtLastRescan + maxIauOf(p);",
+     "case MAX: default: return Sl_min * tsuAtLastRescan + iauMax;"),
+    ("drop floor raised by 5 percent of the lower threshold above the pattern's largest counter",
+     "case MAX: default: return Sl_min * tsuAtLastRescan + maxIauOf(p);",
+     "case MAX: default: return 1.05 * Sl_min * tsuAtLastRescan + maxIauOf(p);"),
 ]
 
 FAULTS_IIP = [

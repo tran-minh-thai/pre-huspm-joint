@@ -929,7 +929,7 @@ public class AutomatedExperimentRunner {
      * with -Dverify.husps=true, every other arm is compared with its patterns.
      */
     static final String[] MIXED_ARMS = {"Adaptive-Full", "Remine-from-scratch", "Remine-HUSP-ULL", "Remine-HUSP-SP",
-            "Adaptive-FloorSelect", "Remine-own-UUT", "Joint-rule+plain-floor"};
+            "Adaptive-FloorSelect", "Remine-own-UUT", "Joint-rule+plain-floor", "Joint-rule+min-floor"};
 
     /**
      * Remining with the proposal's own miner after every operation, a new instance each time:
@@ -940,11 +940,20 @@ public class AutomatedExperimentRunner {
     static final String[] OWN_REMINE_ARMS = {"Remine-from-scratch", "Remine-own-UUT"};
 
     /**
-     * The proposal at the fixed lower threshold with the discard floor L_ref alone, without the
-     * term min_{i in X} A_i: a tracked pattern is dropped once its utility falls below L_ref.
-     * Exact, since it drops no pattern the proposal keeps; it isolates what the term saves.
+     * The proposal at the fixed lower threshold with another discard floor
+     * (PreHUSPMAdaptiveAlgo.Floor): L_ref alone (PLAIN_FLOOR_ARM), or L_ref + min_{i in X} A_i
+     * (MIN_FLOOR_ARM) instead of the proposal's L_ref + max_{i in X} A_i. Both are exact, since
+     * they drop no pattern the proposal keeps; they isolate what the counter term saves.
      */
     static final String PLAIN_FLOOR_ARM = "Joint-rule+plain-floor";
+    static final String MIN_FLOOR_ARM = "Joint-rule+min-floor";
+
+    /** The discard floor an arm runs with: the proposal's, unless the arm is a floor ablation. */
+    static PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.Floor floorOf(String arm) {
+        if (PLAIN_FLOOR_ARM.equals(arm)) return PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.Floor.PLAIN;
+        if (MIN_FLOOR_ARM.equals(arm)) return PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.Floor.MIN;
+        return PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.Floor.MAX;
+    }
 
     static boolean isOwnRemine(String arm) {
         return "Remine-from-scratch".equals(arm) || "Remine-own-UUT".equals(arm);
@@ -1080,7 +1089,8 @@ public class AutomatedExperimentRunner {
     /** Replays the plan for one arm. */
     private static void runMixedArm(DatasetConfig ds, List<Sequence> dInit, double initTotalUtil,
                                     List<MixedPlan.Op> plan, ResultCollector col, String arm) throws IOException {
-        final boolean incremental = "Adaptive-Full".equals(arm) || floorWindowOf(arm) > 0 || PLAIN_FLOOR_ARM.equals(arm);
+        final boolean incremental = "Adaptive-Full".equals(arm) || floorWindowOf(arm) > 0 || PLAIN_FLOOR_ARM.equals(arm)
+                || MIN_FLOOR_ARM.equals(arm);
 
         beginMemArm();
         // The initial mine on D_init: the proposal's for the proposal and for remining with the
@@ -1090,7 +1100,7 @@ public class AutomatedExperimentRunner {
                 : isOwnRemine(arm) ? newAdaptive(ds.defaultSu, ownRemineRatio(arm, ds.name))
                 : newAdaptive(ds.name, ds.defaultSu);
         if (floorWindowOf(arm) > 0) adp.floorWindow = floorWindowOf(arm);
-        if (PLAIN_FLOOR_ARM.equals(arm)) adp.plainFloor = true;
+        if (adp != null) adp.floor = floorOf(arm);
         ExperimentMetrics mInit;
         if (ownMiner) {
             announce(arm, ds.name, "SC6_INIT", 0);
@@ -1762,8 +1772,10 @@ public class AutomatedExperimentRunner {
                 PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.TriggerRule.PRE_SWUMAX,
                 PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.Tracking.PREHUSPM, 0, dsName, Su, dInit, batches, col, tag);
 
-        // -------- The joint rule with the plain discard floor L_ref (no min_i A_i term) --------
+        // -------- The joint rule with the discard floor L_ref, and L_ref + min_{i in X} A_i --------
         if (algoEnabled(PLAIN_FLOOR_ARM)) runAdaptiveStream(PLAIN_FLOOR_ARM, null, null, 0, dsName, Su, dInit,
+                batches, col, tag);
+        if (algoEnabled(MIN_FLOOR_ARM)) runAdaptiveStream(MIN_FLOOR_ARM, null, null, 0, dsName, Su, dInit,
                 batches, col, tag);
 
         // -------- The proposal with the rescan floor selection --------
@@ -1793,7 +1805,7 @@ public class AutomatedExperimentRunner {
         if (rule != null) adp.triggerRule = rule;
         if (tracking != null) adp.tracking = tracking;
         if (floorWindow > 0) adp.floorWindow = floorWindow;
-        if (PLAIN_FLOOR_ARM.equals(label)) adp.plainFloor = true;
+        adp.floor = floorOf(label);
         boolean poisoned = false;
         announce(label, dsName, tag + "_INIT", 0);
         ExperimentMetrics m0 = measure(label, dsName, 0, tag + "_INIT",

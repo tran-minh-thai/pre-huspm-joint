@@ -528,7 +528,7 @@ public class PreHUSPMAdaptiveAlgorithm {
          * IAUMAX  rescan iff max_i A_i > SFT, with
          *         A_i = sum of u(s) over sequences inserted since the last rescan with i in s.
          *         Never looser than CUB. If X is in s then every item of X is in s, so the
-         *         gain of X is bounded by min_{i in X} A_i <= max_i A_i. Reduces to CUB when
+         *         gain of X is bounded by A_i for every item i of X, hence by max_i A_i. Reduces to CUB when
          *         one item occurs in every inserted sequence.
          *
          * JOINT   Default. See below.
@@ -540,7 +540,7 @@ public class PreHUSPMAdaptiveAlgorithm {
          *         (PRE_SWUMAX) or the batch's total utility (PRE_TSU), a batch is absorbed when
          *         buf + q <= f and then buf += q; otherwise the database is rescanned and buf = 0;
          *         f = (UUT - LUT_min)/(1 - UUT) * TSU_r. Everything else is JOINT's: A_i, the
-         *         per-pattern drop floor L_r + min_{i in X} A_i, the rescan at L_r.
+         *         per-pattern drop floor L_r + max_{i in X} A_i, the rescan at L_r.
          *         Sound for insertions: buf >= max_i A_i and A_i <= I, so while the test holds
          *         max_i A_i - UUT*I <= (1 - UUT)*max_i A_i <= (1 - UUT)*f = (UUT - LUT_min)*TSU_r,
          *         which is JOINT's condition, and JOINT's argument applies. Pre-HUSPM defines
@@ -569,10 +569,10 @@ public class PreHUSPMAdaptiveAlgorithm {
          *           utility, summed: the bound IUB of the miner on the reduced database) reaches L_r,
          *           with that bound B(X). A direct insertion adds u(X, batch) to u(X) and the
          *           projected SWU of X in the batch to B(X), and drops X only when
-         *           B(X) < L_r + min_{i in X} A_i. Only the recording and the drop test differ from
+         *           B(X) < L_r + max_{i in X} A_i. Only the recording and the drop test differ from
          *           UTILITY, so the cost of Pre-HUSPM's tracking is measured on the proposal's miner.
          *           Exact under JOINT and Pre-HUSPM's tests: B(X) >= u(X), so a dropped pattern
-         *           satisfies the invariant u(X) < L_r + min_i A_i. Insertions only; set with
+         *           satisfies the invariant u(X) < L_r + max_{i in X} A_i. Insertions only; set with
          *           -Dadapt.tracking=prehuspm. verify.PreHuspmTrackingCheck checks that a mine tracks
          *           the same patterns with the same bounds as PreHUSPMAlgorithm's buffer.
          */
@@ -658,11 +658,14 @@ public class PreHUSPMAdaptiveAlgorithm {
          *   I = inserted utility, D = deleted utility, A_i = inserted utility of the
          *   sequences containing item i, all since the last rescan; L_r = LUT_min * TSU_r.
          *   Rescan iff  max_i A_i - UUT*I + UUT*D > (UUT - LUT_min) * TSU_r.
-         *   A tracked pattern X is dropped only if u(X) < L_r + min_{i in X} A_i.
-         * Every untracked X then satisfies u(X) < L_r + min_{i in X} A_i at all later times
-         * (its gain is bounded by min_{i in X} A_i, deletions only lower it), and the rule
-         * keeps L_r + max_i A_i <= UUT * (TSU_r + I - D) = UUT * TSU, so no untracked X is a
-         * HUSP while the rule holds.
+         *   A tracked pattern X is dropped only if u(X) < L_r + max_{i in X} A_i.
+         * Every untracked X then satisfies u(X) < L_r + max_{i in X} A_i at all later times:
+         * a sequence that contains X contains each item of X, so the gain of X since any time
+         * is at most the growth of A_i for every item i of X, and deletions only lower u(X).
+         * The rule keeps L_r + max_i A_i <= UUT * (TSU_r + I - D) = UUT * TSU, so no untracked
+         * X is a HUSP while the rule holds. The floor is the largest with this property: a
+         * tracked pattern at or above it can be made a HUSP by later insertions under which
+         * the rule does not rescan.
          */
         private double insertedSinceRescan = 0, deletedSinceRescan = 0;
 
@@ -680,14 +683,42 @@ public class PreHUSPMAdaptiveAlgorithm {
             return iauMax - Su * insertedSinceRescan + Su * deletedSinceRescan;
         }
 
+        private double maxIauOf(CompactPattern p) {
+            double m = 0.0;
+            for (int item : p.flat) {
+                if (item < 0) continue;
+                double a = item < iau.length ? iau[item] : 0.0;
+                if (a > m) m = a;
+            }
+            return m;
+        }
+
         /**
-         * The discard floor L_r alone, without min_{i in X} A_i (-Dadapt.plainFloor=true): exact,
-         * since it drops a subset of what the joint floor drops; for measuring what the term saves.
+         * Discard floor of a tracked pattern X under JOINT's tracking (-Dadapt.floor):
+         *   MAX    L_r + max_{i in X} A_i, the default (see the comment above).
+         *   MIN    L_r + min_{i in X} A_i: exact, drops a subset of what MAX drops.
+         *   PLAIN  L_r alone: exact, drops a subset of what MIN drops.
+         * MIN and PLAIN are kept for measuring what the counter term of the floor saves.
          */
-        public boolean plainFloor = Boolean.getBoolean("adapt.plainFloor");
+        public enum Floor { MAX, MIN, PLAIN }
+
+        public Floor floor = parseFloor(System.getProperty("adapt.floor", "max"));
+
+        private static Floor parseFloor(String s) {
+            switch (s.trim().toLowerCase(java.util.Locale.ROOT)) {
+                case "max":   return Floor.MAX;
+                case "min":   return Floor.MIN;
+                case "plain": return Floor.PLAIN;
+                default: throw new IllegalArgumentException("adapt.floor must be max|min|plain, got: " + s);
+            }
+        }
 
         private double jointFloor(CompactPattern p) {
-            return plainFloor ? Sl_min * tsuAtLastRescan : Sl_min * tsuAtLastRescan + minIauOf(p);
+            switch (floor) {
+                case MIN:   return Sl_min * tsuAtLastRescan + minIauOf(p);
+                case PLAIN: return Sl_min * tsuAtLastRescan;
+                case MAX: default: return Sl_min * tsuAtLastRescan + maxIauOf(p);
+            }
         }
 
         /** Trigger rule. Override with -Dadapt.trigger=swumax|cub|iaumax|joint. */
