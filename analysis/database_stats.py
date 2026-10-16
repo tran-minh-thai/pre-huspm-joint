@@ -6,8 +6,8 @@ total utility. No timing.
     python3 analysis/database_stats.py [--datasets datasets] [--out results/invariant-database-stats]
 
 A sequence line holds `item[quantity]` tokens, `-1` closing an element and `-2` the sequence (an
-element left open at `-2` is closed by it); lines starting with `#` and empty lines are skipped,
-as `common.DatasetLoader` does. The utility of an occurrence is its quantity times the item's
+element left open at `-2` is closed by it); lines starting with `#`, empty lines and sequences with
+no item are skipped, as `common.DatasetLoader` does. The utility of an occurrence is its quantity times the item's
 profit in the `_eui` file.
 """
 import argparse
@@ -43,6 +43,7 @@ def scan_lines(lines, profit):
         if not line or line.startswith("#"):
             continue
         open_elem = 0
+        seq_items = 0
         for tok in line.split():
             m = TOKEN.match(tok)
             if not m:
@@ -56,13 +57,15 @@ def scan_lines(lines, profit):
                 if open_elem:
                     elems += 1
                 open_elem = 0
-                seqs += 1
+                seqs += 1 if seq_items else 0
+                seq_items = 0
             elif v >= 0:
                 q = float(m.group(2)) if m.group(2) else 1.0
                 items.add(v)
                 max_item = max(max_item, v)
                 occ += 1
                 open_elem += 1
+                seq_items += 1
                 tu += q * profit.get(v, 0.0)
             else:
                 raise ValueError(f"unexpected separator {tok!r}")
@@ -73,9 +76,10 @@ def scan_lines(lines, profit):
 
 
 def self_test():
-    """Hand-built lines with known counts, including an element closed by -2 alone."""
+    """Hand-built lines with known counts, including an element closed by -2 alone and an empty
+    sequence, which is not counted."""
     p = {1: 2.0, 2: 1.0, 7: 3.0}
-    r = scan_lines(["# comment", "", "1[2] 2[1] -1 7[1] -1 -2", "2[3] -1 1[1] 7[2] -2"], p)
+    r = scan_lines(["# comment", "", "1[2] 2[1] -1 7[1] -1 -2", "2[3] -1 1[1] 7[2] -2", "-2"], p)
     want = dict(sequences=2, items_occurring=3, max_item_id=7, elements=4, occurrences=6, total_utility=19.0)
     for k, v in want.items():
         assert r[k] == v, (k, r[k], v)
