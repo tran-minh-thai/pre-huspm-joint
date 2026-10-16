@@ -74,7 +74,7 @@ any JVM other than the one pinned in `environment.lock.json`.
   - `Pre-HUSPM-SWUmax`, `Pre-HUSPM-TSU` (`Pre-HUSPM` in the static scenarios)
   - `IncUSP-Miner+`, `USpan`, `HUSP-ULL`, `HUSP-SP`
   - `Remine-from-scratch`, `Remine-HUSP-ULL`, `Remine-HUSP-SP`
-  - `Joint-miner+SWUmax`, `Joint-miner+TSU`, `Joint-rule+SWU-tracking`
+  - `Joint-miner+SWUmax`, `Joint-miner+TSU`, `Joint-rule+PreHUSPM-tracking`, `Joint-miner+SWUmax+PreHUSPM-tracking`, `Joint-rule+plain-floor`
 
 Each arm is described in `docs/experiments.md`.
 

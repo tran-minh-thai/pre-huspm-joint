@@ -77,11 +77,11 @@ after each increment.
 | scenario | arms | arms per database |
 |---|---:|---|
 | SC1 | 48 | the six static algorithms on eight databases |
-| SC2 | 77 | `Adaptive-Full`, `Adaptive-FloorSelect`, `Pre-HUSPM-SWUmax`, `Pre-HUSPM-TSU`, `Remine-from-scratch`, `Remine-HUSP-ULL`, `Remine-HUSP-SP`, `IncUSP-Miner+`, `Joint-miner+SWUmax`, `Joint-miner+TSU`, `Joint-rule+SWU-tracking` on seven databases |
+| SC2 | 98 | `Adaptive-Full`, `Adaptive-FloorSelect`, `Pre-HUSPM-SWUmax`, `Pre-HUSPM-TSU`, `Remine-from-scratch`, `Remine-own-UUT`, `Remine-HUSP-ULL`, `Remine-HUSP-SP`, `IncUSP-Miner+`, `Joint-miner+SWUmax`, `Joint-miner+TSU`, `Joint-rule+PreHUSPM-tracking`, `Joint-miner+SWUmax+PreHUSPM-tracking`, `Joint-rule+plain-floor` on seven databases |
 | SC3 | 18 | the six static algorithms on SIGN, LEVIATHAN, C8T1S5I8N5K |
 | SC4 | 6 | `Pre-HUSPM` and `Adaptive-Full` on the same three |
-| SC5 | 18 | `Adaptive-Full`, `Adaptive-FloorSelect`, `Pre-HUSPM-SWUmax`, `Pre-HUSPM-TSU`, `Remine-from-scratch`, `IncUSP-Miner+` on the same three |
-| SC6, SC6D, SC6B | 15 each | `Adaptive-Full`, `Adaptive-FloorSelect`, `Remine-from-scratch`, `Remine-HUSP-ULL`, `Remine-HUSP-SP` on the same three |
+| SC5 | 27 | `Adaptive-Full`, `Adaptive-FloorSelect`, `Pre-HUSPM-SWUmax`, `Pre-HUSPM-TSU`, `Remine-from-scratch`, `Remine-own-UUT`, `Remine-HUSP-ULL`, `Remine-HUSP-SP`, `IncUSP-Miner+` on the same three |
+| SC6, SC6D, SC6B | 24 each, 28 in SC6 | `Adaptive-Full`, `Adaptive-FloorSelect`, `Remine-from-scratch`, `Remine-own-UUT`, `Remine-HUSP-ULL`, `Remine-HUSP-SP` on the same three and TAFENG; `Joint-rule+plain-floor` in SC6 |
 | SC7 | 44 | `proposed_full`, `proposed_no_IUB`, `proposed_no_IPS`, `Pre-HUSPM` on seven databases; `proposed_C5_on`, `proposed_C5_off`, `proposed_no_block_index` and the block sizes `proposed_bsz_1`, `_5`, `_10`, `_50`, `_200` on SIGN and C8T1S5I8N5K |
 | window sweep (`-WindowSweep`) | 28 in SC2, 12 in SC5 and in each mixed stream | `Adaptive-FloorSelect-w1`, `-w2`, `-w3`, `-w10` |
 | SC1, live memory | 48 | as SC1 |

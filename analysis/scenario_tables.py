@@ -38,7 +38,12 @@ INC_ARMS = [P, "Pre-HUSPM-SWUmax", "Pre-HUSPM-TSU", REM, "IncUSP-Miner+"]
 # SC2's competitors: the incremental baselines and every way of remining. The arms that change
 # one component of the proposal (ISOLATION_ARMS) are not competitors and appear in their own table.
 SC2_ARMS = INC_ARMS + ["Remine-HUSP-ULL", "Remine-HUSP-SP"]
-ISOLATION_ARMS = ["Joint-miner+SWUmax", "Joint-miner+TSU", "Joint-rule+SWU-tracking"]
+# The proposal with one maintenance component changed: Pre-HUSPM's rescan tests, Pre-HUSPM's
+# tracking (alone and with its SWUmax test), and the discard floor without min_i A_i.
+PREHUSPM_TRACKING = "Joint-rule+PreHUSPM-tracking"
+PREHUSPM_MAINTENANCE = "Joint-miner+SWUmax+PreHUSPM-tracking"
+ISOLATION_ARMS = ["Joint-miner+SWUmax", "Joint-miner+TSU", PREHUSPM_TRACKING, PREHUSPM_MAINTENANCE,
+                  "Joint-rule+plain-floor"]
 # In the incremental scenarios P is the method, the proposal with the rescan floor selection
 # (make_figures.load_scenario reads arm Adaptive-FloorSelect as P there); FIXED is the proposal at the
 # fixed floor r_l, kept as an ablation row: a version of the method, not a competitor.
@@ -979,12 +984,16 @@ def sc2_isolation(totals, reps=None):
             rescanned = rc.diff().fillna(rc) > 0
             t = mf.ms_to_s(g["runtime_ms"])
             last = g.iloc[-1]
+            tracked = g["total_patterns_found"].astype(float) + g["prelarge_count"].astype(float)
             rows.append(dict(dataset=d, algorithm=a, runs=st["n"] if st else np.nan,
                              time_s=st["mean"] if st else np.nan, time_s_std=st["std"] if st else np.nan,
                              finished=st is not None, rescans=int(rescanned.sum()),
                              rescan_time_s=float(t[rescanned].sum()), direct_time_s=float(t[~rescanned].sum()),
                              tracked_after_last=int(last["total_patterns_found"] + last["prelarge_count"])
-                             if st else np.nan))
+                             if st else np.nan,
+                             tracked_max=int(tracked.max()) if st else np.nan,
+                             # explored nodes summed over the increments that rescanned
+                             rescan_nodes=int(g.loc[rescanned, "explored_nodes"].astype(float).sum())))
     return pd.DataFrame(rows)
 
 
@@ -996,6 +1005,8 @@ def sc2_isolation_keys(put, iso):
         put(f"SC2_isolation_{r.algorithm}_{r.dataset}_time", f"{r.time_s:.2f}", src)
         put(f"SC2_isolation_{r.algorithm}_{r.dataset}_rescans", r.rescans, src)
         put(f"SC2_isolation_{r.algorithm}_{r.dataset}_tracked", f"{r.tracked_after_last:,}", src)
+        put(f"SC2_isolation_{r.algorithm}_{r.dataset}_tracked_max", f"{r.tracked_max:,}", src)
+        put(f"SC2_isolation_{r.algorithm}_{r.dataset}_nodes", f"{r.rescan_nodes:,}", src)
         put(f"SC2_isolation_{r.algorithm}_{r.dataset}_rescan_s", f"{r.rescan_time_s:.2f}", src)
         put(f"SC2_isolation_{r.algorithm}_{r.dataset}_direct_s", f"{r.direct_time_s:.2f}", src)
     T = {(r.dataset, r.algorithm): r for r in iso.itertuples() if r.finished}
@@ -1013,8 +1024,13 @@ def sc2_isolation_keys(put, iso):
                 # what remains between Pre-HUSPM and the same test on the proposal's miner and tracking
                 put(f"SC2_isolation_rest_{pre}_minus_{a}_{d}_s", f"{y.time_s - x.time_s:.2f}", src)
                 put(f"SC2_isolation_rest_{pre}_over_{a}_{d}", f"{y.time_s / x.time_s:.2f}", src)
-        # the tracking: the joint rule tracking by the bound, against the proposal
-        x = T.get((d, "Joint-rule+SWU-tracking"))
+        # Pre-HUSPM's maintenance (its SWUmax test and its tracking) on the proposal's miner, against
+        # Pre-HUSPM with its own miner: what remains is the miner
+        x, y = T.get((d, PREHUSPM_MAINTENANCE)), T.get((d, "Pre-HUSPM-SWUmax"))
+        if x is not None and y is not None:
+            put(f"SC2_isolation_miner_Pre-HUSPM-SWUmax_over_{PREHUSPM_MAINTENANCE}_{d}", f"{y.time_s / x.time_s:.2f}", src)
+        # the tracking: the joint rule with Pre-HUSPM's tracking, against the proposal
+        x = T.get((d, PREHUSPM_TRACKING))
         if x is not None:
             put(f"SC2_isolation_tracking_minus_fixed_floor_{d}_s", f"{x.time_s - pr.time_s:.2f}", src)
             put(f"SC2_isolation_tracking_over_fixed_floor_{d}", f"{x.time_s / pr.time_s:.2f}", src)
