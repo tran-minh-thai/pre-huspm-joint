@@ -29,12 +29,12 @@ proposal and Remine over three runs is in the next table.
 
 | database | Pre-HUSPM-Joint | rescans | Pre-HUSPM-SWUmax | Pre-HUSPM-TSU | Remine | IncUSP-Miner+ |
 |---|---:|---:|---:|---:|---:|---:|
-| SIGN | **9.6** | 60 | 51.0 | 50.2 | 17.8 | 23.8 |
-| LEVIATHAN | **28.2** | 100 | 112 | 114 | 37.2 | 71.6 |
-| FIFA | **176** | 27 | 4,995 | 6,956 | 670 | (598, 25 increments) |
-| BIBLE | **51.9** | 64 | 92.1 | 109 | 93.7 | 57.5 |
-| KOSARAK | **279** | 100 | 695 | 711 | 685 | 1,594 |
-| C8T1S5I8N5K | **8.9** | 80 | 51.2 | 63.2 | 15.5 | 18.5 |
+| SIGN | **9.5** | 60 | 51.0 | 50.2 | 17.9 | 23.8 |
+| LEVIATHAN | **28.1** | 100 | 112 | 114 | 37.1 | 71.6 |
+| FIFA | **176** | 27 | 4,995 | 6,956 | 673 | (598, 25 increments) |
+| BIBLE | **52.0** | 64 | 92.1 | 109 | 93.8 | 57.5 |
+| KOSARAK | **279** | 100 | 695 | 711 | 683 | 1,594 |
+| C8T1S5I8N5K | **8.9** | 80 | 51.2 | 63.2 | 15.6 | 18.5 |
 | TAFENG | **6.0** | 52 | 7.4 | 13.0 | 18.9 | 13.8 |
 
 ### Three runs
@@ -45,20 +45,20 @@ increments, mean ± sample standard deviation.
 
 | database | arm | runs | mean ± sd | min | max |
 |---|---|---:|---:|---:|---:|
-| SIGN | Pre-HUSPM-Joint | 3 | 9.57 ± 0.18 | 9.45 | 9.77 |
-| SIGN | Remine | 3 | 17.78 ± 0.58 | 17.17 | 18.31 |
-| LEVIATHAN | Pre-HUSPM-Joint | 3 | 28.22 ± 0.17 | 28.06 | 28.40 |
-| LEVIATHAN | Remine | 3 | 37.19 ± 0.17 | 37.06 | 37.39 |
-| FIFA | Pre-HUSPM-Joint | 3 | 176.16 ± 0.51 | 175.58 | 176.55 |
-| FIFA | Remine | 3 | 670.37 ± 9.49 | 663.23 | 681.14 |
-| BIBLE | Pre-HUSPM-Joint | 3 | 51.94 ± 0.06 | 51.86 | 51.98 |
-| BIBLE | Remine | 3 | 93.66 ± 0.54 | 93.14 | 94.22 |
-| KOSARAK | Pre-HUSPM-Joint | 3 | 278.84 ± 0.13 | 278.71 | 278.97 |
-| KOSARAK | Remine | 3 | 684.92 ± 0.46 | 684.61 | 685.45 |
-| C8T1S5I8N5K | Pre-HUSPM-Joint | 3 | 8.93 ± 0.15 | 8.80 | 9.09 |
-| C8T1S5I8N5K | Remine | 3 | 15.51 ± 0.16 | 15.34 | 15.67 |
-| TAFENG | Pre-HUSPM-Joint | 3 | 5.97 ± 0.02 | 5.95 | 6.00 |
-| TAFENG | Remine | 3 | 18.90 ± 0.07 | 18.86 | 18.98 |
+| SIGN | Pre-HUSPM-Joint | 5 | 9.52 ± 0.15 | 9.39 | 9.77 |
+| SIGN | Remine | 5 | 17.86 ± 0.45 | 17.17 | 18.31 |
+| LEVIATHAN | Pre-HUSPM-Joint | 4 | 28.10 ± 0.27 | 27.74 | 28.40 |
+| LEVIATHAN | Remine | 4 | 37.08 ± 0.27 | 36.74 | 37.39 |
+| FIFA | Pre-HUSPM-Joint | 4 | 176.06 ± 0.46 | 175.58 | 176.55 |
+| FIFA | Remine | 4 | 672.56 ± 8.90 | 663.23 | 681.14 |
+| BIBLE | Pre-HUSPM-Joint | 4 | 51.95 ± 0.06 | 51.86 | 52.00 |
+| BIBLE | Remine | 4 | 93.82 ± 0.54 | 93.14 | 94.29 |
+| KOSARAK | Pre-HUSPM-Joint | 4 | 278.83 ± 0.11 | 278.71 | 278.97 |
+| KOSARAK | Remine | 4 | 682.70 ± 4.45 | 676.06 | 685.45 |
+| C8T1S5I8N5K | Pre-HUSPM-Joint | 4 | 8.95 ± 0.13 | 8.80 | 9.09 |
+| C8T1S5I8N5K | Remine | 4 | 15.57 ± 0.18 | 15.34 | 15.74 |
+| TAFENG | Pre-HUSPM-Joint | 4 | 5.96 ± 0.03 | 5.93 | 6.00 |
+| TAFENG | Remine | 4 | 18.95 ± 0.10 | 18.86 | 19.07 |
 
 ## The operating region
 
@@ -118,14 +118,14 @@ The joint rule never rescans more often than the SWUmax test on an insertion-onl
 same UUT and floor ratio (a proved property, checked here): the proposal rescans no more than
 Pre-HUSPM-SWUmax on 7 of 7 databases where both completed.
 
-**Inside the budget** (median ratio at most one): FIFA, 3.81 times faster than remining.
+**Inside the budget** (median ratio at most one): FIFA, 3.82 times faster than remining.
 
-**At the boundary**: SIGN (1.86x), BIBLE (1.80x), C8T1S5I8N5K (1.74x), TAFENG (3.16x). They rescan on
+**At the boundary**: SIGN (1.88x), BIBLE (1.81x), C8T1S5I8N5K (1.74x), TAFENG (3.18x). They rescan on
 52 to 77
 of 100 increments and still finish faster than remining.
 
 **Beyond it**: LEVIATHAN, 2 of 100 within budget, KOSARAK, 0 of 100 within budget.
-Maintenance degenerates into remining: LEVIATHAN 28.2 s against remining's 37.2 s (-24.1 %); KOSARAK 279 s against remining's 685 s (-59.3 %),
+Maintenance degenerates into remining: LEVIATHAN 28.1 s against remining's 37.1 s (-24.2 %); KOSARAK 279 s against remining's 683 s (-59.2 %),
 one run each. Two runs of one SC1 configuration on the same JDK differ by a factor between
 0.69 and 1.25 (66 configurations of at least one second), so differences
 of a few percent between single runs are not resolved here.

@@ -41,17 +41,17 @@ checked against USpan, HUSP-ULL and HUSP-SP by `verify.BaselineAgreement`.
 | hand-built cases (MixedBudgetProbe), rule iaumax | finished | 8 |  |  |  |  | 3 |  |
 | rescan rule acceptance (RescanRuleAcceptanceTest) | finished | 23 |  |  |  |  | 0 |  |
 | rescan rule acceptance, floor-selection-acceptance | finished | 49 |  |  |  |  | 0 |  |
-| rescan rule acceptance, peu-tracking-acceptance | finished | 44 |  |  |  |  | 0 |  |
+| rescan rule acceptance, plain-floor-acceptance | finished | 49 |  |  |  |  | 0 |  |
 | rescan rule acceptance, pre-tests-acceptance | finished | 33 |  |  |  |  | 0 |  |
 | random streams (MixedBudgetFuzz), floor-selection-fuzz, rule joint | finished | 510,000 |  | 120,279 | 41,812 | 39,215 | 0 |  |
-| random streams (MixedBudgetFuzz), peu-tracking-fuzz, rule joint | finished | 170,000 |  | 0 | 63,216 | 0 | 0 |  |
-| bound invariant B(X) >= u(X), peu-tracking-fuzz | finished | 3,632,296 |  |  |  |  | 0 |  |
+| random streams (MixedBudgetFuzz), plain-floor-fuzz, rule joint | finished | 170,000 |  | 47,587 | 15,481 | 14,626 | 0 |  |
 | random streams (MixedBudgetFuzz), pre-tests-fuzz, rule joint | finished | 170,000 |  | 0 | 63,216 | 0 | 0 |  |
 | random streams (MixedBudgetFuzz), pre-tests-fuzz, rule pre_swumax | finished | 170,000 |  | 0 | 56,718 | 0 | 0 |  |
 | random streams (MixedBudgetFuzz), pre-tests-fuzz, rule pre_tsu | finished | 170,000 |  | 0 | 53,371 | 0 | 0 |  |
 | patterns against the proposal after every operation, husps-floor-selection | finished | 1,652 |  |  |  |  | 0 |  |
 | patterns against the proposal after every operation, husps-mixed | finished | 2,835 |  |  |  |  | 0 |  |
 | patterns against the proposal after every operation, husps-sc2 | finished | 3,535 |  |  |  |  | 0 |  |
+| patterns against the proposal after every operation, husps-supplementary-mixed | not finished | 1,890 |  |  |  |  | 0 |  |
 | item pruning against exhaustive enumeration (ItemRemovalCheck random) | finished | 1,444 | 1,951 |  |  |  | 0 |  |
 | item pruning on and off on real databases, init (ItemRemovalCheck real) | finished | 8 |  |  |  |  | 0 |  |
 | item pruning on and off on real databases, whole (ItemRemovalCheck real) | finished | 7 |  |  |  |  | 0 |  |
@@ -67,8 +67,8 @@ checked against USpan, HUSP-ULL and HUSP-SP by `verify.BaselineAgreement`.
 | direct path on real databases, floor-selection-random-floors operations | finished | 128 | 0 | 30 | 58 | 28 | 0 |  |
 | direct path on real databases, floor-selection-switching-adversarial operations | finished | 162 | 135 | 18 | 33 | 16 | 0 |  |
 | direct path on real databases, floor-selection-switching-random operations | finished | 176 | 0 | 19 | 42 | 22 | 0 |  |
-| direct path on real databases, peu-tracking-adversarial operations | finished | 128 | 110 | 0 | 108 | 0 | 0 |  |
-| direct path on real databases, peu-tracking-random operations | finished | 128 | 0 | 0 | 117 | 0 | 0 |  |
+| direct path on real databases, plain-floor-adversarial operations | finished | 128 | 108 | 30 | 49 | 30 | 0 |  |
+| direct path on real databases, plain-floor-random operations | finished | 128 | 0 | 30 | 58 | 28 | 0 |  |
 | direct path on real databases, pre-tests-adversarial operations | finished | 256 | 224 | 0 | 210 | 0 | 0 |  |
 | direct path on real databases, pre-tests-random operations | finished | 256 | 0 | 0 | 218 | 0 | 0 |  |
 | direct path on real databases, random operations | finished | 128 | 0 | 30 | 58 | 28 | 0 |  |
@@ -165,31 +165,31 @@ checked against USpan, HUSP-ULL and HUSP-SP by `verify.BaselineAgreement`.
 | C8T1S5I8N5K | 16 | 0 | 7 | 1 | 2 | 2 | 4 | 0 | 0 |
 | TAFENG | 16 | 0 | 5 | 3 | 3 | 1 | 4 | 0 | 0 |
 
-### peu-tracking-adversarial
+### plain-floor-adversarial
 
 | database | operations | with a target | insert direct | insert rescan | delete direct | delete rescan | modify direct | modify rescan | mismatches |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| SIGN | 16 | 16 | 13 | 3 | 0 | 0 | 0 | 0 | 0 |
-| LEVIATHAN | 16 | 16 | 13 | 3 | 0 | 0 | 0 | 0 | 0 |
-| BIBLE | 16 | 16 | 14 | 2 | 0 | 0 | 0 | 0 | 0 |
-| BMS1 | 16 | 16 | 13 | 3 | 0 | 0 | 0 | 0 | 0 |
-| FIFA | 16 | 16 | 14 | 2 | 0 | 0 | 0 | 0 | 0 |
-| KOSARAK | 16 | 16 | 14 | 2 | 0 | 0 | 0 | 0 | 0 |
-| C8T1S5I8N5K | 16 | 14 | 11 | 5 | 0 | 0 | 0 | 0 | 0 |
-| TAFENG | 16 | 0 | 16 | 0 | 0 | 0 | 0 | 0 | 0 |
+| SIGN | 16 | 16 | 7 | 1 | 2 | 2 | 4 | 0 | 0 |
+| LEVIATHAN | 16 | 16 | 6 | 2 | 4 | 0 | 3 | 1 | 0 |
+| BIBLE | 16 | 16 | 6 | 2 | 4 | 0 | 4 | 0 | 0 |
+| BMS1 | 16 | 16 | 5 | 3 | 4 | 0 | 4 | 0 | 0 |
+| FIFA | 16 | 16 | 6 | 2 | 4 | 0 | 4 | 0 | 0 |
+| KOSARAK | 16 | 16 | 6 | 2 | 4 | 0 | 4 | 0 | 0 |
+| C8T1S5I8N5K | 16 | 12 | 5 | 3 | 4 | 0 | 3 | 1 | 0 |
+| TAFENG | 16 | 0 | 8 | 0 | 4 | 0 | 4 | 0 | 0 |
 
-### peu-tracking-random
+### plain-floor-random
 
 | database | operations | with a target | insert direct | insert rescan | delete direct | delete rescan | modify direct | modify rescan | mismatches |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| SIGN | 16 | 0 | 13 | 3 | 0 | 0 | 0 | 0 | 0 |
-| LEVIATHAN | 16 | 0 | 13 | 3 | 0 | 0 | 0 | 0 | 0 |
-| BIBLE | 16 | 0 | 14 | 2 | 0 | 0 | 0 | 0 | 0 |
-| BMS1 | 16 | 0 | 16 | 0 | 0 | 0 | 0 | 0 | 0 |
-| FIFA | 16 | 0 | 15 | 1 | 0 | 0 | 0 | 0 | 0 |
-| KOSARAK | 16 | 0 | 14 | 2 | 0 | 0 | 0 | 0 | 0 |
-| C8T1S5I8N5K | 16 | 0 | 16 | 0 | 0 | 0 | 0 | 0 | 0 |
-| TAFENG | 16 | 0 | 16 | 0 | 0 | 0 | 0 | 0 | 0 |
+| SIGN | 16 | 0 | 7 | 1 | 3 | 1 | 3 | 1 | 0 |
+| LEVIATHAN | 16 | 0 | 7 | 1 | 3 | 1 | 3 | 1 | 0 |
+| BIBLE | 16 | 0 | 7 | 1 | 4 | 0 | 3 | 1 | 0 |
+| BMS1 | 16 | 0 | 8 | 0 | 4 | 0 | 4 | 0 | 0 |
+| FIFA | 16 | 0 | 7 | 1 | 4 | 0 | 4 | 0 | 0 |
+| KOSARAK | 16 | 0 | 7 | 1 | 4 | 0 | 3 | 1 | 0 |
+| C8T1S5I8N5K | 16 | 0 | 7 | 1 | 4 | 0 | 4 | 0 | 0 |
+| TAFENG | 16 | 0 | 8 | 0 | 4 | 0 | 4 | 0 | 0 |
 
 ### pre-tests-adversarial
 
@@ -274,14 +274,14 @@ checked against USpan, HUSP-ULL and HUSP-SP by `verify.BaselineAgreement`.
     java -Xmx8g -Xss64m -cp build-vj verify.ItemRemovalCheck random 2000 1
     # ips-real: exit 0, commit 41f3af39, 2026-10-12T15:04:42
     bash -c rc=0; for d in SIGN LEVIATHAN FIFA BIBLE BMS1 KOSARAK C8T1S5I8N5K TAFENG; do java -Xmx24g -Xss64m -cp build-vj verify.ItemRemovalCheck real $d init floor || rc=1; done; for d in SIGN LEVIATHAN FIFA BIBLE KOSARAK C8T1S5I8N5K TAFENG; do java -Xmx24g -Xss64m -cp build-vj verify.ItemRemovalCheck real $d whole floor || rc=1; done; exit $rc
-    # peu-tracking-acceptance: exit 0, commit 6ad44c1f, 2026-10-14T09:18:14
-    java -cp build-vj verify.RescanRuleAcceptanceTest
-    # peu-tracking-adversarial: exit 0, commit 6ad44c1f, 2026-10-14T11:21:25
-    java -Dadapt.tracking=peu -Xmx24g -Xss64m -cp build-vj verify.DirectPathVerifier ALL --adversarial --ops 16 --rule joint --insert-only --out results/verify-joint/peu-tracking-adversarial
-    # peu-tracking-fuzz: exit 0, commit 35fe25c3, 2026-10-14T09:33:57
-    bash -c rc=0; for s in "2000 7" "5000 11" "5000 23" "5000 101"; do set -- $s; java -Dadapt.tracking=peu -cp build-vj verify.MixedBudgetFuzz joint $1 $2 insert-only || rc=1; done; exit $rc
-    # peu-tracking-random: exit 0, commit 6ad44c1f, 2026-10-14T09:31:35
-    java -Dadapt.tracking=peu -Xmx24g -Xss64m -cp build-vj verify.DirectPathVerifier ALL --ops 16 --rule joint --insert-only --out results/verify-joint/peu-tracking-random
+    # plain-floor-acceptance: exit 0, commit 126a1659, 2026-10-16T16:05:18
+    java -Dadapt.plainFloor=true -cp build-v30 verify.RescanRuleAcceptanceTest
+    # plain-floor-adversarial: exit 0, commit 8ec22b15, 2026-10-16T16:30:52
+    java -Dadapt.plainFloor=true -Xmx24g -Xss64m -cp build-v30 verify.DirectPathVerifier ALL --adversarial --ops 16 --out results/verify-joint/plain-floor-adversarial
+    # plain-floor-fuzz: exit 0, commit 126a1659, 2026-10-16T16:05:17
+    bash -c rc=0; for s in "2000 7" "5000 11" "5000 23" "5000 101"; do set -- $s; java -Dadapt.plainFloor=true -cp build-v30 verify.MixedBudgetFuzz joint $1 $2 || rc=1; done; exit $rc
+    # plain-floor-random: exit 0, commit 126a1659, 2026-10-16T16:08:32
+    java -Dadapt.plainFloor=true -Xmx24g -Xss64m -cp build-v30 verify.DirectPathVerifier ALL --ops 16 --out results/verify-joint/plain-floor-random
     # pre-tests-acceptance: exit 0, commit 7bfddd24, 2026-10-14T08:47:18
     java -cp build-vj verify.RescanRuleAcceptanceTest
     # pre-tests-adversarial: exit 0, commit 7bfddd24, 2026-10-14T11:40:21
