@@ -111,15 +111,18 @@ if (-not $host_) { $host_ = 'unknown' }
 $all7    = @('SIGN','LEVIATHAN','TAFENG','BIBLE','C8T1S5I8N5K','KOSARAK','FIFA')
 $all8    = @('SIGN','LEVIATHAN','TAFENG','BIBLE','BMS1','C8T1S5I8N5K','KOSARAK','FIFA')
 $subset3 = @('SIGN','LEVIATHAN','C8T1S5I8N5K')
-$static  = @('USpan','HUSP-ULL','HUSP-SP','IncUSP-Miner+','Pre-HUSPM','Adaptive-Full')
+# The mixed streams also run on TAFENG, the database with measured utilities (AutomatedExperimentRunner.MIXED_SETS).
+$mixedSets = @('SIGN','LEVIATHAN','C8T1S5I8N5K','TAFENG')
+$static  = @('USpan','HUSP-ULL','HUSP-SP','IncUSP-Miner+','Pre-HUSPM','Adaptive-Full','Joint-miner@UUT')
 $incr    = @('Adaptive-Full','Pre-HUSPM-SWUmax','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+',
              'Remine-HUSP-ULL','Remine-HUSP-SP','Joint-miner+SWUmax','Joint-miner+TSU','Joint-rule+SWU-tracking',
-             'Adaptive-FloorSelect')
-# SC5 runs the method, its fixed-floor row and the four arms SC2 started with.
+             'Adaptive-FloorSelect','Remine-own-UUT','Joint-rule+plain-floor')
+# SC5 runs the method, its fixed-floor row, the four arms SC2 started with and the remining arms.
 $sc5     = @('Adaptive-Full','Pre-HUSPM-SWUmax','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+',
-             'Adaptive-FloorSelect')
+             'Adaptive-FloorSelect','Remine-HUSP-ULL','Remine-HUSP-SP','Remine-own-UUT')
 # The mixed streams (SC6, SC6D, SC6B): AutomatedExperimentRunner.MIXED_ARMS.
-$mixed   = @('Adaptive-Full','Remine-from-scratch','Remine-HUSP-ULL','Remine-HUSP-SP','Adaptive-FloorSelect')
+$mixed   = @('Adaptive-Full','Remine-from-scratch','Remine-HUSP-ULL','Remine-HUSP-SP','Adaptive-FloorSelect',
+             'Remine-own-UUT','Joint-rule+plain-floor')
 $scenarios = @('SC1','SC2','SC3','SC4','SC5','SC6','SC6D','SC6B','SC7')
 if ($scenarios -notcontains $Scenario) { throw "Unknown scenario '$Scenario'. Known: $($scenarios -join ', ')." }
 
@@ -167,9 +170,9 @@ if (-not $Datasets) {
         'SC3'   { $subset3 }
         'SC4'   { $subset3 }
         'SC5'   { $subset3 }
-        'SC6'   { $subset3 }
-        'SC6D'  { $subset3 }
-        'SC6B'  { $subset3 }
+        'SC6'   { $mixedSets }
+        'SC6D'  { $mixedSets }
+        'SC6B'  { $mixedSets }
         default { $all7 }                          # SC2, SC7
     }
 }
@@ -179,7 +182,7 @@ if (-not $Datasets) {
 # "A,B", which matches no algorithm. Use -Command "& { .\campaign.ps1 -Algorithms 'A','B' }".
 $knownAlgos = @('Adaptive-Full','Pre-HUSPM','Pre-HUSPM-SWUmax','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+',
                 'Remine-HUSP-ULL','Remine-HUSP-SP','Joint-miner+SWUmax','Joint-miner+TSU','Joint-rule+SWU-tracking',
-                'Adaptive-FloorSelect',
+                'Adaptive-FloorSelect','Remine-own-UUT','Joint-rule+plain-floor','Joint-miner@UUT',
                 'Adaptive-FloorSelect-w1','Adaptive-FloorSelect-w2','Adaptive-FloorSelect-w3','Adaptive-FloorSelect-w10',
                 'USpan','HUSP-ULL','HUSP-SP',
                 'proposed_full','proposed_no_block_index','proposed_no_IUB','proposed_no_IPS',

@@ -482,6 +482,10 @@ public class AutomatedExperimentRunner {
      *
      * KOSARAK runs in SC1, SC2 and SC7.
      */
+    /** The mixed streams (SC6, SC6D, SC6B): SUBSET_3 and TAFENG, the database with measured utilities. */
+    private static final Set<String> MIXED_SETS = new HashSet<>(Arrays.asList(
+            "SIGN", "LEVIATHAN", "C8T1S5I8N5K", "TAFENG"));
+
     private static final Set<String> SUBSET_3 = new HashSet<>(Arrays.asList(
             "SIGN", "LEVIATHAN", "C8T1S5I8N5K"));
 
@@ -675,7 +679,7 @@ public class AutomatedExperimentRunner {
                 if (full.isEmpty()) continue;
                 List<Sequence> dInit = dInitFor(ds, full);
                 double totalUtil = sumUtility(dInit);
-                String[] algos = {"USpan", "HUSP-ULL", "HUSP-SP", "IncUSP-Miner+", "Pre-HUSPM", "Adaptive-Full"};
+                String[] algos = {"USpan", "HUSP-ULL", "HUSP-SP", "IncUSP-Miner+", "Pre-HUSPM", "Adaptive-Full", "Joint-miner@UUT"};
                 // SC1 has no randomness: no batch split, no generated operations. A seed
                 // changes nothing, so only the same configuration is repeated (JIT/GC noise).
                 for (double su : ds.suSweep) {
@@ -741,7 +745,7 @@ public class AutomatedExperimentRunner {
     private static void runSC3_SensitivitySu() throws IOException {
         System.out.println("\n--- [SC3] Su sensitivity ---");
         try (ResultCollector col = new ResultCollector(RESULTS_DIR + "SC3_su.csv")) {
-            String[] algos = {"USpan", "HUSP-ULL", "HUSP-SP", "IncUSP-Miner+", "Pre-HUSPM", "Adaptive-Full"};
+            String[] algos = {"USpan", "HUSP-ULL", "HUSP-SP", "IncUSP-Miner+", "Pre-HUSPM", "Adaptive-Full", "Joint-miner@UUT"};
             for (DatasetConfig ds : DATASETS) {
                 if (!datasetEnabled(ds.name)) continue;
                 if (!calibrationOk(ds)) continue;
@@ -920,7 +924,30 @@ public class AutomatedExperimentRunner {
      * with -Dverify.husps=true, every other arm is compared with its patterns.
      */
     static final String[] MIXED_ARMS = {"Adaptive-Full", "Remine-from-scratch", "Remine-HUSP-ULL", "Remine-HUSP-SP",
-            "Adaptive-FloorSelect"};
+            "Adaptive-FloorSelect", "Remine-own-UUT", "Joint-rule+plain-floor"};
+
+    /**
+     * Remining with the proposal's own miner after every operation, a new instance each time:
+     * Remine-from-scratch mines down to r_l * UUT, as the proposal's rescans at the fixed lower
+     * threshold do; Remine-own-UUT mines at UUT (lower threshold ratio 1, no pre-large patterns),
+     * as the proposal's rescans at lambda = UUT do.
+     */
+    static final String[] OWN_REMINE_ARMS = {"Remine-from-scratch", "Remine-own-UUT"};
+
+    /**
+     * The proposal at the fixed lower threshold with the discard floor L_ref alone, without the
+     * term min_{i in X} A_i: a tracked pattern is dropped once its utility falls below L_ref.
+     * Exact, since it drops no pattern the proposal keeps; it isolates what the term saves.
+     */
+    static final String PLAIN_FLOOR_ARM = "Joint-rule+plain-floor";
+
+    static boolean isOwnRemine(String arm) {
+        return "Remine-from-scratch".equals(arm) || "Remine-own-UUT".equals(arm);
+    }
+
+    static double ownRemineRatio(String arm, String dsName) {
+        return "Remine-own-UUT".equals(arm) ? 1.0 : slRatioFor(dsName);
+    }
 
     /**
      * Window w of the rescan floor selection of arm Adaptive-FloorSelect
@@ -979,7 +1006,7 @@ public class AutomatedExperimentRunner {
                 if (!datasetEnabled(ds.name)) continue;
                 if (!calibrationOk(ds)) continue;
                 if (!scopeOk(ds, sc)) continue;
-                if (!SUBSET_3.contains(ds.name)) continue;
+                if (!MIXED_SETS.contains(ds.name)) continue;
                 List<Sequence> full = DatasetLoader.loadDataset(datasetDir + ds.name + "_seq.txt",
                                                                 datasetDir + ds.name + "_eui.txt");
                 if (full.size() < 20) {
@@ -1027,14 +1054,17 @@ public class AutomatedExperimentRunner {
     /** Replays the plan for one arm. */
     private static void runMixedArm(DatasetConfig ds, List<Sequence> dInit, double initTotalUtil,
                                     List<MixedPlan.Op> plan, ResultCollector col, String arm) throws IOException {
-        final boolean incremental = "Adaptive-Full".equals(arm) || floorWindowOf(arm) > 0;
+        final boolean incremental = "Adaptive-Full".equals(arm) || floorWindowOf(arm) > 0 || PLAIN_FLOOR_ARM.equals(arm);
 
         beginMemArm();
         // The initial mine on D_init: the proposal's for the proposal and for remining with the
         // proposal's miner (as SC6 always measured it), the static miner's for the other two.
-        final boolean ownMiner = incremental || "Remine-from-scratch".equals(arm);
-        final PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp = ownMiner ? newAdaptive(ds.name, ds.defaultSu) : null;
+        final boolean ownMiner = incremental || isOwnRemine(arm);
+        final PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp = !ownMiner ? null
+                : isOwnRemine(arm) ? newAdaptive(ds.defaultSu, ownRemineRatio(arm, ds.name))
+                : newAdaptive(ds.name, ds.defaultSu);
         if (floorWindowOf(arm) > 0) adp.floorWindow = floorWindowOf(arm);
+        if (PLAIN_FLOOR_ARM.equals(arm)) adp.plainFloor = true;
         ExperimentMetrics mInit;
         if (ownMiner) {
             announce(arm, ds.name, "SC6_INIT", 0);
@@ -1069,9 +1099,9 @@ public class AutomatedExperimentRunner {
 
             ExperimentMetrics m;
             final List<Sequence> snapshot = new ArrayList<>(after);
-            if ("Remine-from-scratch".equals(arm)) {
+            if (isOwnRemine(arm)) {
                 // Remine from scratch: a NEW instance that keeps no state.
-                PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo rm = newAdaptive(ds.name, ds.defaultSu);
+                PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo rm = newAdaptive(ds.defaultSu, ownRemineRatio(arm, ds.name));
                 announce(arm, ds.name, op.tag(), op.iter);
                 m = measureAdaptive(rm, arm, ds.name, op.iter, op.tag(),
                         () -> rm.runInitialMining(snapshot, newTotal));
@@ -1252,8 +1282,12 @@ public class AutomatedExperimentRunner {
     }
 
     private static PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo newAdaptive(String dsName, double su) {
+        return newAdaptive(su, slRatioFor(dsName));
+    }
+
+    private static PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo newAdaptive(double su, double lowerRatio) {
         return new PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo(
-                su, DEFAULT_KAPPA, DEFAULT_DELTA0, slRatioFor(dsName),
+                su, DEFAULT_KAPPA, DEFAULT_DELTA0, lowerRatio,
                 PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.AblationMode.FULL,
                 ENABLE_PATTERN_EXPORT);
     }
@@ -1582,7 +1616,9 @@ public class AutomatedExperimentRunner {
         // Cumulative runtime is not stored as a column: it is the sum of runtime_ms over
         // the rows of one run, computable from the raw data, following ExperimentMetrics'
         // rule of not storing derived quantities.
-        if (algoEnabled("Remine-from-scratch")) {
+        for (String rarm : OWN_REMINE_ARMS) {
+            if (!algoEnabled(rarm)) continue;
+            final double rRatio = ownRemineRatio(rarm, dsName);
             beginMemArm();
             boolean poisoned = false;
             double rolling = initTotal;
@@ -1590,18 +1626,18 @@ public class AutomatedExperimentRunner {
 
             PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo rm0 =
                     new PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo(
-                            Su, DEFAULT_KAPPA, DEFAULT_DELTA0, slRatioFor(dsName),
+                            Su, DEFAULT_KAPPA, DEFAULT_DELTA0, rRatio,
                             PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.AblationMode.FULL,
                             ENABLE_PATTERN_EXPORT);
-            announce("Remine-from-scratch", dsName, tag + "_INIT", 0);
-            ExperimentMetrics m0 = measure("Remine-from-scratch", dsName, 0, tag + "_INIT",
+            announce(rarm, dsName, tag + "_INIT", 0);
+            ExperimentMetrics m0 = measure(rarm, dsName, 0, tag + "_INIT",
                     () -> rm0.runInitialMining(dInit, initTotal),
                     () -> rm0.candidateCount, () -> rm0.patternCount,
                     () -> rm0.lutDynValue, () -> rm0.cubValue, () -> rm0.cubTriggeredRescan,
                     null, () -> rm0.prunedValueBound,
                     () -> rm0.prelargeCount, () -> rm0.uutValue, () -> rm0.sftValue, rm0::cancel);
             attachAdaptive(m0, rm0);
-            if (!failedRun(m0)) verifyHusps("Remine-from-scratch", 0, tag + "_INIT", rm0::exportLargeAsStrings);
+            if (!failedRun(m0)) verifyHusps(rarm, 0, tag + "_INIT", rm0::exportLargeAsStrings);
             col.log(m0);
             if (failedRun(m0)) poisoned = true;
             forceFullGC();
@@ -1614,9 +1650,9 @@ public class AutomatedExperimentRunner {
                 dSoFar.addAll(delta);
                 rolling = newTotal;
 
-                if (!poisoned && !memoryGuardOk("Remine-from-scratch", dsName, tag + "_INC")) poisoned = true;
+                if (!poisoned && !memoryGuardOk(rarm, dsName, tag + "_INC")) poisoned = true;
                 if (poisoned) {
-                    col.log(skippedMetric("Remine-from-scratch", dsName, batchIdx, tag + "_INC"));
+                    col.log(skippedMetric(rarm, dsName, batchIdx, tag + "_INC"));
                     continue;
                 }
                 // A new instance per batch: mining from scratch keeps NO state from the
@@ -1625,11 +1661,11 @@ public class AutomatedExperimentRunner {
                 final double finalTotal = newTotal;
                 PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo rm =
                         new PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo(
-                                Su, DEFAULT_KAPPA, DEFAULT_DELTA0, slRatioFor(dsName),
+                                Su, DEFAULT_KAPPA, DEFAULT_DELTA0, rRatio,
                                 PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.AblationMode.FULL,
                                 ENABLE_PATTERN_EXPORT);
-                announce("Remine-from-scratch", dsName, tag + "_INC", batchIdx);
-                ExperimentMetrics mb = measure("Remine-from-scratch", dsName, batchIdx, tag + "_INC",
+                announce(rarm, dsName, tag + "_INC", batchIdx);
+                ExperimentMetrics mb = measure(rarm, dsName, batchIdx, tag + "_INC",
                         () -> rm.runInitialMining(snapshot, finalTotal),
                         () -> rm.candidateCount, () -> rm.patternCount,
                         () -> rm.lutDynValue, () -> rm.cubValue, () -> rm.cubTriggeredRescan,
@@ -1639,7 +1675,7 @@ public class AutomatedExperimentRunner {
                 // Mining from scratch has no incremental rescan; write 0 rather than 1 so
                 // rescan_count is not misread as "this reference rescans every batch".
                 mb.rescanCount = 0;
-                if (!failedRun(mb)) verifyHusps("Remine-from-scratch", batchIdx, tag + "_INC", rm::exportLargeAsStrings);
+                if (!failedRun(mb)) verifyHusps(rarm, batchIdx, tag + "_INC", rm::exportLargeAsStrings);
                 col.log(mb);
                 if (failedRun(mb)) poisoned = true;
                 forceFullGC();
@@ -1695,6 +1731,10 @@ public class AutomatedExperimentRunner {
         if (algoEnabled("Joint-rule+SWU-tracking")) runAdaptiveStream("Joint-rule+SWU-tracking", null,
                 PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.Tracking.PEU, 0, dsName, Su, dInit, batches, col, tag);
 
+        // -------- The joint rule with the plain discard floor L_ref (no min_i A_i term) --------
+        if (algoEnabled(PLAIN_FLOOR_ARM)) runAdaptiveStream(PLAIN_FLOOR_ARM, null, null, 0, dsName, Su, dInit,
+                batches, col, tag);
+
         // -------- The proposal with the rescan floor selection --------
         if (algoEnabled("Adaptive-FloorSelect")) runAdaptiveStream("Adaptive-FloorSelect", null, null,
                 FLOOR_WINDOW, dsName, Su, dInit, batches, col, tag);
@@ -1722,6 +1762,7 @@ public class AutomatedExperimentRunner {
         if (rule != null) adp.triggerRule = rule;
         if (tracking != null) adp.tracking = tracking;
         if (floorWindow > 0) adp.floorWindow = floorWindow;
+        if (PLAIN_FLOOR_ARM.equals(label)) adp.plainFloor = true;
         boolean poisoned = false;
         announce(label, dsName, tag + "_INIT", 0);
         ExperimentMetrics m0 = measure(label, dsName, 0, tag + "_INIT",
@@ -1865,13 +1906,6 @@ public class AutomatedExperimentRunner {
     }
 
     /** The proposal as runSingle builds it for a static mine. */
-    private static PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo newStaticAdaptive(double su, String dsName) {
-        return new PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo(
-                su, DEFAULT_KAPPA, DEFAULT_DELTA0, slRatioFor(dsName),
-                PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.AblationMode.FULL,
-                ENABLE_PATTERN_EXPORT);
-    }
-
     private static ExperimentMetrics runSingle(String algo, String dsName, List<Sequence> db,
                                                double totalUtil, double su, int iter, String tag) {
         if (ADAPTIVE_ONLY && !algo.equals("Adaptive-Full")) return null; // rerun Adaptive only
@@ -1962,11 +1996,15 @@ public class AutomatedExperimentRunner {
                     attachPreHuspm(m, pre[0]);
                     return logged(m);
                 }
-                case "Adaptive-Full": {
-                    final PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo[] adp = { newStaticAdaptive(su, dsName) };
+                case "Adaptive-Full":
+                case "Joint-miner@UUT": {
+                    // Joint-miner@UUT: the proposal's miner with its cutoff at UUT (lower threshold
+                    // ratio 1, no pre-large patterns), the cutoff HUSP-ULL and HUSP-SP mine at.
+                    final double ratio = "Joint-miner@UUT".equals(algo) ? 1.0 : slRatioFor(dsName);
+                    final PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo[] adp = { newAdaptive(su, ratio) };
                     ExperimentMetrics m = measure(algo, dsName, iter, tag,
                             () -> repeatForLiveSamples(() -> adp[0].runInitialMining(db, totalUtil),
-                                    () -> { adp[0] = newStaticAdaptive(su, dsName); adp[0].runInitialMining(db, totalUtil); }),
+                                    () -> { adp[0] = newAdaptive(su, ratio); adp[0].runInitialMining(db, totalUtil); }),
                             () -> adp[0].candidateCount, () -> adp[0].patternCount,
                             () -> adp[0].lutDynValue, () -> adp[0].cubValue, () -> adp[0].cubTriggeredRescan,
                             null, () -> adp[0].prunedValueBound,

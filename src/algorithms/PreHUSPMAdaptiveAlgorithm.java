@@ -678,8 +678,14 @@ public class PreHUSPMAdaptiveAlgorithm {
             return iauMax - Su * insertedSinceRescan + Su * deletedSinceRescan;
         }
 
+        /**
+         * The discard floor L_r alone, without min_{i in X} A_i (-Dadapt.plainFloor=true): exact,
+         * since it drops a subset of what the joint floor drops; for measuring what the term saves.
+         */
+        public boolean plainFloor = Boolean.getBoolean("adapt.plainFloor");
+
         private double jointFloor(CompactPattern p) {
-            return Sl_min * tsuAtLastRescan + minIauOf(p);
+            return plainFloor ? Sl_min * tsuAtLastRescan : Sl_min * tsuAtLastRescan + minIauOf(p);
         }
 
         /** Trigger rule. Override with -Dadapt.trigger=swumax|cub|iaumax|joint. */
