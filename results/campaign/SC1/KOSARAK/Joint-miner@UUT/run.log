@@ -1,0 +1,15 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC1]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC1] Static baseline on D_init ---
+>> RUNNING Joint-miner@UUT/KOSARAK/SC1_su=0.022228#0  (heap free=4247MB / total=6624MB / max=49152MB)
+[Joint-miner@UUT/KOSARAK/SC1_su=0.022228#0] OK t=616ms cand=1703 pat=11 heapDelta=336MB
+>> RUNNING Joint-miner@UUT/KOSARAK/SC1_su=0.025#0  (heap free=4224MB / total=6624MB / max=49152MB)
+[Joint-miner@UUT/KOSARAK/SC1_su=0.025#0] OK t=371ms cand=1202 pat=10 heapDelta=288MB
+>> RUNNING Joint-miner@UUT/KOSARAK/SC1_su=0.028117#0  (heap free=4224MB / total=6624MB / max=49152MB)
+[Joint-miner@UUT/KOSARAK/SC1_su=0.028117#0] OK t=307ms cand=869 pat=7 heapDelta=304MB
+>> RUNNING Joint-miner@UUT/KOSARAK/SC1_su=0.031623#0  (heap free=4224MB / total=6624MB / max=49152MB)
+[Joint-miner@UUT/KOSARAK/SC1_su=0.031623#0] OK t=315ms cand=612 pat=5 heapDelta=256MB
+=== ALL SCENARIOS DONE (29.0s) ===
