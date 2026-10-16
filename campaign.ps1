@@ -123,7 +123,7 @@ $sc5     = @('Adaptive-Full','Pre-HUSPM-SWUmax','Pre-HUSPM-TSU','Remine-from-scr
 # The mixed streams (SC6, SC6D, SC6B): AutomatedExperimentRunner.MIXED_ARMS.
 $mixed   = @('Adaptive-Full','Remine-from-scratch','Remine-HUSP-ULL','Remine-HUSP-SP','Adaptive-FloorSelect',
              'Remine-own-UUT','Joint-rule+plain-floor')
-$scenarios = @('SC1','SC2','SC3','SC4','SC5','SC6','SC6D','SC6B','SC7')
+$scenarios = @('SC1','SC2','SC3','SC4','SC5','SC6','SC6D','SC6B','SC7','FIDELITY')
 if ($scenarios -notcontains $Scenario) { throw "Unknown scenario '$Scenario'. Known: $($scenarios -join ', ')." }
 
 # Arms that exist on some databases only. SC7's incremental ablations (the block index and
@@ -156,6 +156,7 @@ if (-not $Algorithms) {
         'SC6'   { $mixed }
         'SC6D'  { $mixed }
         'SC6B'  { $mixed }
+        'FIDELITY' { @('Pre-HUSPM-SWUmax','Pre-HUSPM-TSU') }
         'SC7'   { @('proposed_full','proposed_no_block_index','proposed_no_IUB','proposed_no_IPS',
                     'proposed_bsz_1','proposed_bsz_5','proposed_bsz_10','proposed_bsz_50','proposed_bsz_200',
                     'proposed_C5_on','proposed_C5_off','Pre-HUSPM') }
@@ -173,6 +174,8 @@ if (-not $Datasets) {
         'SC6'   { $mixedSets }
         'SC6D'  { $mixedSets }
         'SC6B'  { $mixedSets }
+        # SPMF's files with utilities, under the Pre-HUSPM paper's setting (.\fetch-spmf-husp.ps1)
+        'FIDELITY' { @('SIGN','FIFA','BIBLE','KOSARAK10K','BMS') }
         default { $all7 }                          # SC2, SC7
     }
 }
@@ -188,7 +191,7 @@ $knownAlgos = @('Adaptive-Full','Pre-HUSPM','Pre-HUSPM-SWUmax','Pre-HUSPM-TSU','
                 'proposed_full','proposed_no_block_index','proposed_no_IUB','proposed_no_IPS',
                 'proposed_bsz_1','proposed_bsz_5','proposed_bsz_10','proposed_bsz_50','proposed_bsz_200',
                 'proposed_C5_on','proposed_C5_off')
-$knownSets  = @('SIGN','LEVIATHAN','TAFENG','BIBLE','BMS1','C8T1S5I8N5K','KOSARAK','FIFA')
+$knownSets  = @('SIGN','LEVIATHAN','TAFENG','BIBLE','BMS1','C8T1S5I8N5K','KOSARAK','FIFA','KOSARAK10K','BMS')
 foreach ($a in $Algorithms) {
     if ($knownAlgos -notcontains $a) {
         throw ("Unknown algorithm '$a'. Known: " + ($knownAlgos -join ', ') +
@@ -317,6 +320,9 @@ if ($List) {
 }
 
 if (-not (Test-Path 'datasets\SIGN_seq.txt')) { throw "Databases are missing. Run .\fetch-datasets.ps1" }
+if ($Scenario -eq 'FIDELITY' -and -not (Test-Path 'datasets\spmf-husp\converted\SIGN_seq.txt')) {
+    throw "SPMF's files are missing. Run .\fetch-spmf-husp.ps1"
+}
 Write-Host "host=$host_  java=$ver"
 Write-Host "compiling..."
 if (Test-Path build) { Remove-Item -Recurse -Force build }

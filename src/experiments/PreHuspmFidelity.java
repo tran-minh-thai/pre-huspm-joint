@@ -36,12 +36,25 @@ public final class PreHuspmFidelity {
             System.err.println("usage: DATA_DIR NAME SU SL OD_NUM PER_INCREMENT swumax|tsu OUT_DIR [INCREMENTS]");
             System.exit(2);
         }
-        String dir = a[0], name = a[1];
-        double su = Double.parseDouble(a[2]), sl = Double.parseDouble(a[3]);
-        int odNum = Integer.parseInt(a[4]), per = Integer.parseInt(a[5]);
-        Variant variant = Variant.valueOf(a[6].toUpperCase(Locale.ROOT));
-        Path out = Paths.get(a[7]);
-        int increments = a.length > 8 ? Integer.parseInt(a[8]) : 100;
+        run(a[0], a[1], Double.parseDouble(a[2]), Double.parseDouble(a[3]), Integer.parseInt(a[4]),
+                Integer.parseInt(a[5]), Variant.valueOf(a[6].toUpperCase(Locale.ROOT)), Paths.get(a[7]),
+                a.length > 8 ? Integer.parseInt(a[8]) : 100);
+    }
+
+    /**
+     * The settings of the Pre-HUSPM paper's runtime figure and its Table 16: name, Su, Sl, OD.Num,
+     * sequences per increment. LEVIATHAN is not here: SPMF publishes no file of it with utilities.
+     */
+    public static final Object[][] PAPER_SETTINGS = {
+            {"SIGN", 0.15, 0.09, 230, 5},
+            {"FIFA", 0.21, 0.15, 10450, 80},
+            {"BIBLE", 0.16, 0.10, 21369, 90},
+            {"KOSARAK10K", 0.14, 0.08, 1000, 90},
+            {"BMS", 0.036, 0.027, 39601, 200},
+    };
+
+    public static void run(String dir, String name, double su, double sl, int odNum, int per, Variant variant,
+                           Path out, int increments) throws IOException {
         if (!(sl > 0 && sl < su && su < 1)) throw new IllegalArgumentException("need 0 < SL < SU < 1");
 
         List<Sequence> all = DatasetLoader.loadDataset(Paths.get(dir, name + "_seq.txt").toString(),

@@ -597,6 +597,7 @@ public class AutomatedExperimentRunner {
         if (scenarios.contains("SC6")) runSC6_InsertDeleteModify();
         if (scenarios.contains("SC6D")) runSC6D_DeletionHeavy();
         if (scenarios.contains("SC6B")) runSC6B_DeletionBeyondBudget();
+        if (scenarios.contains("FIDELITY")) runFidelity();
         if (scenarios.contains("SC7")) runSC7_Ablation();
         System.out.printf("=== ALL SCENARIOS DONE (%.1fs) ===%n",
                 (System.currentTimeMillis() - t0) / 1000.0);
@@ -640,6 +641,10 @@ public class AutomatedExperimentRunner {
 
     private static Set<String> parseScenarios(String[] args) {
         Set<String> all = new LinkedHashSet<>(Arrays.asList("SC1","SC2","SC3","SC4","SC5","SC6","SC6D","SC6B","SC7"));
+        // FIDELITY (the Pre-HUSPM implementation under its paper's setting) runs only when named:
+        // it reads the SPMF files of fetch-spmf-husp, which a full run does not need.
+        Set<String> known = new LinkedHashSet<>(all);
+        known.add("FIDELITY");
         if (args == null || args.length == 0) return all;
         Set<String> chosen = new LinkedHashSet<>();
         for (String a : args) {
@@ -657,8 +662,8 @@ public class AutomatedExperimentRunner {
                 if (t.isEmpty() || t.equals("TEST") || t.equals("SMOKE")) continue;
                 // An unknown name is refused: falling back to every scenario would rerun the
                 // whole campaign on a typo or on a scenario this build does not have.
-                if (!all.contains(t)) throw new IllegalArgumentException(
-                        "unknown scenario '" + token + "'; known: " + all + ", ALL, TEST");
+                if (!known.contains(t)) throw new IllegalArgumentException(
+                        "unknown scenario '" + token + "'; known: " + known + ", ALL, TEST");
                 chosen.add(t);
             }
         }
@@ -977,6 +982,27 @@ public class AutomatedExperimentRunner {
     /** True when -Dalgo.only names the arm; for the arms that a full run leaves out. */
     static boolean algoNamed(String algo) {
         return !ALGO_ONLY.isEmpty() && listed(ALGO_ONLY, algo);
+    }
+
+    /**
+     * FIDELITY: the Pre-HUSPM implementation under the setting of its paper's runtime figure, on
+     * SPMF's files with utilities (fetch-spmf-husp), one row per increment
+     * (experiments.PreHuspmFidelity). Arms Pre-HUSPM-SWUmax and Pre-HUSPM-TSU.
+     */
+    private static void runFidelity() throws IOException {
+        String dir = System.getProperty("fidelity.dir", "datasets/spmf-husp/converted");
+        for (Object[] c : experiments.PreHuspmFidelity.PAPER_SETTINGS) {
+            String name = (String) c[0];
+            if (!datasetEnabled(name)) continue;
+            for (String arm : new String[]{"Pre-HUSPM-SWUmax", "Pre-HUSPM-TSU"}) {
+                if (!algoEnabled(arm)) continue;
+                System.out.println(">> [FIDELITY] " + name + " " + arm);
+                experiments.PreHuspmFidelity.run(dir, name, (double) c[1], (double) c[2], (int) c[3], (int) c[4],
+                        arm.endsWith("TSU") ? PreHUSPMAlgorithm.PreHUSPMAlgo.Variant.TSU
+                                : PreHUSPMAlgorithm.PreHUSPMAlgo.Variant.SWUMAX,
+                        java.nio.file.Paths.get(RESULTS_DIR), 100);
+            }
+        }
     }
 
     private static void runSC6_InsertDeleteModify() throws IOException {
