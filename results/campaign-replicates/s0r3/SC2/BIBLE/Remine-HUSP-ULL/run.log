@@ -1,0 +1,209 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC2]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=3 | seed.index=0
+
+--- [SC2] Incremental sequence (100 batches, EVEN; D_init per Yan et al. Table 16) ---
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INIT#0  (heap free=641MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INIT#0] OK t=717ms cand=335596 pat=192 heapDelta=288MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#1  (heap free=641MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#1] OK t=608ms cand=337245 pat=190 heapDelta=343MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#2  (heap free=644MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#2] OK t=605ms cand=338053 pat=190 heapDelta=343MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#3  (heap free=644MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#3] OK t=598ms cand=338735 pat=189 heapDelta=392MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#4  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#4] OK t=583ms cand=339630 pat=188 heapDelta=400MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#5  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#5] OK t=590ms cand=340585 pat=186 heapDelta=400MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#6  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#6] OK t=599ms cand=341692 pat=183 heapDelta=392MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#7  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#7] OK t=588ms cand=343268 pat=182 heapDelta=448MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#8  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#8] OK t=590ms cand=344316 pat=181 heapDelta=448MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#9  (heap free=646MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#9] OK t=589ms cand=347830 pat=180 heapDelta=448MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#10  (heap free=646MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#10] OK t=599ms cand=349147 pat=180 heapDelta=448MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#11  (heap free=646MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#11] OK t=594ms cand=350520 pat=177 heapDelta=448MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#12  (heap free=646MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#12] OK t=615ms cand=352536 pat=180 heapDelta=444MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#13  (heap free=646MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#13] OK t=622ms cand=355882 pat=181 heapDelta=442MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#14  (heap free=646MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#14] OK t=639ms cand=357325 pat=184 heapDelta=448MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#15  (heap free=646MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#15] OK t=650ms cand=359542 pat=191 heapDelta=448MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#16  (heap free=646MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#16] OK t=671ms cand=361525 pat=195 heapDelta=444MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#17  (heap free=646MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#17] OK t=677ms cand=363299 pat=195 heapDelta=444MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#18  (heap free=646MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#18] OK t=688ms cand=363933 pat=195 heapDelta=444MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#19  (heap free=646MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#19] OK t=676ms cand=364862 pat=196 heapDelta=457MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#20  (heap free=646MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#20] OK t=685ms cand=365541 pat=195 heapDelta=444MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#21  (heap free=646MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#21] OK t=692ms cand=366738 pat=196 heapDelta=444MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#22  (heap free=646MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#22] OK t=700ms cand=368090 pat=196 heapDelta=444MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#23  (heap free=646MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#23] OK t=700ms cand=370507 pat=197 heapDelta=444MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#24  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#24] OK t=717ms cand=372956 pat=194 heapDelta=435MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#25  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#25] OK t=713ms cand=374449 pat=193 heapDelta=435MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#26  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#26] OK t=731ms cand=380148 pat=192 heapDelta=435MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#27  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#27] OK t=735ms cand=380716 pat=193 heapDelta=435MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#28  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#28] OK t=731ms cand=382083 pat=192 heapDelta=444MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#29  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#29] OK t=743ms cand=382912 pat=191 heapDelta=435MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#30  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#30] OK t=767ms cand=384789 pat=196 heapDelta=435MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#31  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#31] OK t=761ms cand=386051 pat=196 heapDelta=435MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#32  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#32] OK t=762ms cand=388081 pat=196 heapDelta=435MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#33  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#33] OK t=760ms cand=387719 pat=197 heapDelta=435MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#34  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#34] OK t=785ms cand=388568 pat=197 heapDelta=480MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#35  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#35] OK t=775ms cand=389180 pat=192 heapDelta=435MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#36  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#36] OK t=765ms cand=389864 pat=192 heapDelta=435MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#37  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#37] OK t=779ms cand=391206 pat=190 heapDelta=476MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#38  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#38] OK t=795ms cand=392397 pat=191 heapDelta=480MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#39  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#39] OK t=798ms cand=393329 pat=190 heapDelta=476MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#40  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#40] OK t=792ms cand=394307 pat=191 heapDelta=476MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#41  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#41] OK t=797ms cand=395520 pat=190 heapDelta=435MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#42  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#42] OK t=819ms cand=396599 pat=190 heapDelta=476MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#43  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#43] OK t=818ms cand=397718 pat=191 heapDelta=476MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#44  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#44] OK t=809ms cand=399558 pat=190 heapDelta=476MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#45  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#45] OK t=804ms cand=400767 pat=188 heapDelta=435MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#46  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#46] OK t=830ms cand=402510 pat=187 heapDelta=476MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#47  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#47] OK t=819ms cand=402516 pat=186 heapDelta=476MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#48  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#48] OK t=814ms cand=403781 pat=183 heapDelta=476MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#49  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#49] OK t=811ms cand=405466 pat=182 heapDelta=476MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#50  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#50] OK t=837ms cand=406739 pat=181 heapDelta=467MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#51  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#51] OK t=818ms cand=407969 pat=177 heapDelta=476MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#52  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#52] OK t=816ms cand=408827 pat=176 heapDelta=476MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#53  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#53] OK t=816ms cand=408664 pat=175 heapDelta=476MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#54  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#54] OK t=841ms cand=409221 pat=175 heapDelta=476MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#55  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#55] OK t=825ms cand=409844 pat=170 heapDelta=476MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#56  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#56] OK t=823ms cand=410931 pat=169 heapDelta=476MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#57  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#57] OK t=843ms cand=412748 pat=169 heapDelta=467MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#58  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#58] OK t=862ms cand=413778 pat=167 heapDelta=467MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#59  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#59] OK t=836ms cand=414557 pat=164 heapDelta=467MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#60  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#60] OK t=841ms cand=416949 pat=164 heapDelta=457MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#61  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#61] OK t=835ms cand=418262 pat=163 heapDelta=467MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#62  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#62] OK t=853ms cand=419276 pat=162 heapDelta=467MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#63  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#63] OK t=849ms cand=420289 pat=160 heapDelta=457MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#64  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#64] OK t=852ms cand=419905 pat=157 heapDelta=457MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#65  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#65] OK t=838ms cand=420428 pat=157 heapDelta=467MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#66  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#66] OK t=862ms cand=421314 pat=154 heapDelta=467MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#67  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#67] OK t=844ms cand=421586 pat=151 heapDelta=457MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#68  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#68] OK t=850ms cand=422119 pat=150 heapDelta=457MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#69  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#69] OK t=849ms cand=422531 pat=150 heapDelta=457MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#70  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#70] OK t=868ms cand=421266 pat=150 heapDelta=457MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#71  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#71] OK t=859ms cand=421924 pat=150 heapDelta=457MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#72  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#72] OK t=850ms cand=426460 pat=148 heapDelta=457MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#73  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#73] OK t=856ms cand=427814 pat=149 heapDelta=457MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#74  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#74] OK t=885ms cand=429188 pat=147 heapDelta=457MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#75  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#75] OK t=854ms cand=430706 pat=146 heapDelta=457MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#76  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#76] OK t=859ms cand=431317 pat=145 heapDelta=457MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#77  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#77] OK t=859ms cand=433299 pat=144 heapDelta=457MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#78  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#78] OK t=888ms cand=436979 pat=142 heapDelta=457MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#79  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#79] OK t=876ms cand=439234 pat=142 heapDelta=457MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#80  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#80] OK t=871ms cand=440175 pat=140 heapDelta=457MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#81  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#81] OK t=877ms cand=441241 pat=140 heapDelta=457MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#82  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#82] OK t=900ms cand=443782 pat=140 heapDelta=457MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#83  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#83] OK t=878ms cand=444627 pat=139 heapDelta=457MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#84  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#84] OK t=869ms cand=445872 pat=135 heapDelta=457MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#85  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#85] OK t=886ms cand=446022 pat=134 heapDelta=457MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#86  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#86] OK t=901ms cand=448213 pat=133 heapDelta=457MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#87  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#87] OK t=887ms cand=449316 pat=133 heapDelta=457MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#88  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#88] OK t=898ms cand=451188 pat=133 heapDelta=457MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#89  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#89] OK t=899ms cand=451475 pat=132 heapDelta=457MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#90  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#90] OK t=917ms cand=453026 pat=131 heapDelta=457MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#91  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#91] OK t=900ms cand=455802 pat=129 heapDelta=457MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#92  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#92] OK t=894ms cand=459767 pat=128 heapDelta=457MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#93  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#93] OK t=913ms cand=462456 pat=128 heapDelta=457MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#94  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#94] OK t=927ms cand=464031 pat=127 heapDelta=480MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#95  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#95] OK t=910ms cand=465549 pat=127 heapDelta=457MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#96  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#96] OK t=917ms cand=466735 pat=127 heapDelta=445MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#97  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#97] OK t=920ms cand=467939 pat=127 heapDelta=457MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#98  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#98] OK t=927ms cand=469056 pat=127 heapDelta=457MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#99  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#99] OK t=934ms cand=471181 pat=128 heapDelta=459MB
+>> RUNNING Remine-HUSP-ULL/BIBLE/SC2_INC#100  (heap free=645MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/BIBLE/SC2_INC#100] OK t=931ms cand=470436 pat=129 heapDelta=466MB
+=== ALL SCENARIOS DONE (193.9s) ===
