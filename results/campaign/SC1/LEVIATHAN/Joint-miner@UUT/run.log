@@ -1,0 +1,15 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC1]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC1] Static baseline on D_init ---
+>> RUNNING Joint-miner@UUT/LEVIATHAN/SC1_su=0.014644#0  (heap free=168MB / total=224MB / max=49152MB)
+[Joint-miner@UUT/LEVIATHAN/SC1_su=0.014644#0] OK t=489ms cand=10267 pat=136 heapDelta=52MB
+>> RUNNING Joint-miner@UUT/LEVIATHAN/SC1_su=0.01553#0  (heap free=165MB / total=224MB / max=49152MB)
+[Joint-miner@UUT/LEVIATHAN/SC1_su=0.01553#0] OK t=192ms cand=8947 pat=107 heapDelta=47MB
+>> RUNNING Joint-miner@UUT/LEVIATHAN/SC1_su=0.01647#0  (heap free=165MB / total=224MB / max=49152MB)
+[Joint-miner@UUT/LEVIATHAN/SC1_su=0.01647#0] OK t=157ms cand=7752 pat=89 heapDelta=35MB
+>> RUNNING Joint-miner@UUT/LEVIATHAN/SC1_su=0.017987#0  (heap free=165MB / total=224MB / max=49152MB)
+[Joint-miner@UUT/LEVIATHAN/SC1_su=0.017987#0] OK t=138ms cand=6283 pat=63 heapDelta=33MB
+=== ALL SCENARIOS DONE (12.0s) ===
