@@ -1,0 +1,7 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [FIDELITY]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+>> [FIDELITY] BIBLE Pre-HUSPM-TSU
+BIBLE TSU: 100 increments, 5 rescans, 0.8 s
+=== ALL SCENARIOS DONE (10.7s) ===
