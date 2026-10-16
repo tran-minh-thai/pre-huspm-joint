@@ -1,49 +1,49 @@
-dataset,K,shape,total_s_Adaptive-Full,total_s_Pre-HUSPM-SWUmax,total_s_Pre-HUSPM-TSU,total_s_Remine-from-scratch,total_s_IncUSP-Miner+,proposal_rescans,proposal_rescan_share,remine_over_proposal,fastest,closest,closest_over_proposal,runs_proposal,runs_closest,runs_vs_closest
-C8T1S5I8N5K,25,BURST,1.689,15.289,15.676,3.866,10.342,25,1.0,2.288,Adaptive-Full,Remine-from-scratch,2.288,3,1,one run
-C8T1S5I8N5K,25,DECREASING,1.814,15.666,16.885,4.176,10.561,24,0.96,2.302,Adaptive-Full,Remine-from-scratch,2.302,3,1,one run
-C8T1S5I8N5K,25,EVEN,1.671,15.46,15.656,3.882,10.526,25,1.0,2.323,Adaptive-Full,Remine-from-scratch,2.323,3,1,one run
-C8T1S5I8N5K,25,INCREASING,1.595,15.32,16.116,3.614,10.192,24,0.96,2.266,Adaptive-Full,Remine-from-scratch,2.266,3,1,one run
-C8T1S5I8N5K,50,BURST,4.593,26.855,32.017,7.671,13.135,43,0.86,1.67,Adaptive-Full,Remine-from-scratch,1.67,3,1,one run
-C8T1S5I8N5K,50,DECREASING,3.371,28.315,33.91,8.322,13.834,43,0.86,2.468,Adaptive-Full,Remine-from-scratch,2.468,3,1,one run
-C8T1S5I8N5K,50,EVEN,3.166,32.118,32.101,7.71,13.494,50,1.0,2.436,Adaptive-Full,Remine-from-scratch,2.436,3,1,one run
-C8T1S5I8N5K,50,INCREASING,3.318,27.955,31.86,7.168,13.544,45,0.9,2.16,Adaptive-Full,Remine-from-scratch,2.16,3,1,one run
-C8T1S5I8N5K,67,BURST,5.114,28.823,41.993,10.273,15.842,44,0.657,2.009,Adaptive-Full,Remine-from-scratch,2.009,3,1,one run
-C8T1S5I8N5K,67,DECREASING,4.858,34.956,45.948,11.157,15.332,55,0.821,2.296,Adaptive-Full,Remine-from-scratch,2.296,3,1,one run
-C8T1S5I8N5K,67,EVEN,5.271,40.148,42.364,10.303,15.317,66,0.985,1.955,Adaptive-Full,Remine-from-scratch,1.955,3,1,one run
-C8T1S5I8N5K,67,INCREASING,4.081,36.335,43.308,9.624,14.591,55,0.821,2.358,Adaptive-Full,Remine-from-scratch,2.358,3,1,one run
-C8T1S5I8N5K,100,BURST,6.444,38.379,65.467,15.566,18.901,55,0.55,2.416,Adaptive-Full,Remine-from-scratch,2.416,3,1,one run
-C8T1S5I8N5K,100,DECREASING,6.891,44.1,67.18,16.621,19.946,68,0.68,2.412,Adaptive-Full,Remine-from-scratch,2.412,3,1,one run
-C8T1S5I8N5K,100,EVEN,8.91,51.3,62.62,15.652,19.001,80,0.8,1.757,Adaptive-Full,Remine-from-scratch,1.757,3,1,one run
-C8T1S5I8N5K,100,INCREASING,6.606,46.856,63.294,14.363,18.68,72,0.72,2.174,Adaptive-Full,Remine-from-scratch,2.174,3,1,one run
-LEVIATHAN,25,BURST,6.881,29.985,30.384,9.274,36.657,25,1.0,1.348,Adaptive-Full,Remine-from-scratch,1.348,3,3,separated
-LEVIATHAN,25,DECREASING,7.563,32.14,32.665,10.592,37.285,24,0.96,1.4,Adaptive-Full,Remine-from-scratch,1.4,3,3,separated
-LEVIATHAN,25,EVEN,6.926,30.165,30.582,9.394,39.62,25,1.0,1.356,Adaptive-Full,Remine-from-scratch,1.356,3,3,separated
-LEVIATHAN,25,INCREASING,6.103,27.121,26.874,8.219,36.743,25,1.0,1.347,Adaptive-Full,Remine-from-scratch,1.347,3,3,separated
-LEVIATHAN,50,BURST,13.547,60.09,60.097,18.743,49.805,50,1.0,1.384,Adaptive-Full,Remine-from-scratch,1.384,3,3,separated
-LEVIATHAN,50,DECREASING,14.01,59.128,59.354,21.025,51.851,45,0.9,1.501,Adaptive-Full,Remine-from-scratch,1.501,3,3,separated
-LEVIATHAN,50,EVEN,13.477,59.674,59.977,18.625,54.373,50,1.0,1.382,Adaptive-Full,Remine-from-scratch,1.382,3,3,separated
-LEVIATHAN,50,INCREASING,11.589,50.863,51.66,16.275,50.479,47,0.94,1.404,Adaptive-Full,Remine-from-scratch,1.404,3,3,separated
-LEVIATHAN,67,BURST,18.487,76.571,76.015,24.941,55.517,66,0.985,1.349,Adaptive-Full,Remine-from-scratch,1.349,3,3,separated
-LEVIATHAN,67,DECREASING,18.106,76.694,76.892,28.148,59.016,59,0.881,1.555,Adaptive-Full,Remine-from-scratch,1.555,3,3,separated
-LEVIATHAN,67,EVEN,17.959,79.971,79.229,24.909,61.504,67,1.0,1.387,Adaptive-Full,Remine-from-scratch,1.387,3,3,separated
-LEVIATHAN,67,INCREASING,15.302,66.978,68.508,21.752,57.223,62,0.925,1.422,Adaptive-Full,Remine-from-scratch,1.422,3,3,separated
-LEVIATHAN,100,BURST,24.726,88.192,90.206,37.824,67.106,78,0.78,1.53,Adaptive-Full,Remine-from-scratch,1.53,3,3,separated
-LEVIATHAN,100,DECREASING,24.927,96.614,98.102,41.9,69.929,78,0.78,1.681,Adaptive-Full,Remine-from-scratch,1.681,3,3,separated
-LEVIATHAN,100,EVEN,27.966,113.787,117.908,37.159,72.845,100,1.0,1.329,Adaptive-Full,Remine-from-scratch,1.329,3,3,separated
-LEVIATHAN,100,INCREASING,22.396,96.701,98.327,32.472,67.414,91,0.91,1.45,Adaptive-Full,Remine-from-scratch,1.45,3,3,separated
-SIGN,25,BURST,2.771,22.636,21.931,4.474,13.967,25,1.0,1.614,Adaptive-Full,Remine-from-scratch,1.614,3,3,separated
-SIGN,25,DECREASING,2.74,21.543,20.942,4.91,14.316,22,0.88,1.792,Adaptive-Full,Remine-from-scratch,1.792,3,3,separated
-SIGN,25,EVEN,2.684,22.537,22.008,4.493,15.235,25,1.0,1.674,Adaptive-Full,Remine-from-scratch,1.674,3,3,separated
-SIGN,25,INCREASING,2.38,20.586,19.884,4.12,14.905,24,0.96,1.731,Adaptive-Full,Remine-from-scratch,1.731,3,3,separated
-SIGN,50,BURST,5.309,30.172,29.29,8.977,17.979,36,0.72,1.691,Adaptive-Full,Remine-from-scratch,1.691,3,3,separated
-SIGN,50,DECREASING,4.932,32.832,31.797,9.723,18.38,37,0.74,1.971,Adaptive-Full,Remine-from-scratch,1.971,3,3,separated
-SIGN,50,EVEN,5.557,42.866,41.449,8.94,18.825,50,1.0,1.609,Adaptive-Full,Remine-from-scratch,1.609,3,3,separated
-SIGN,50,INCREASING,4.492,37.548,36.418,8.201,18.542,45,0.9,1.825,Adaptive-Full,Remine-from-scratch,1.825,3,3,separated
-SIGN,67,BURST,6.654,34.451,33.334,11.978,19.494,42,0.627,1.8,Adaptive-Full,Remine-from-scratch,1.8,3,3,separated
-SIGN,67,DECREASING,5.985,39.748,38.707,12.966,20.058,46,0.687,2.167,Adaptive-Full,Remine-from-scratch,2.167,3,3,separated
-SIGN,67,EVEN,6.469,42.213,40.862,12.052,20.685,50,0.746,1.863,Adaptive-Full,Remine-from-scratch,1.863,3,3,separated
-SIGN,67,INCREASING,6.075,48.412,46.543,11.017,20.085,58,0.866,1.814,Adaptive-Full,Remine-from-scratch,1.814,3,3,separated
-SIGN,100,BURST,7.445,39.215,37.979,18.048,22.024,45,0.45,2.424,Adaptive-Full,Remine-from-scratch,2.424,3,3,separated
-SIGN,100,DECREASING,7.712,45.177,43.812,19.217,23.285,53,0.53,2.492,Adaptive-Full,Remine-from-scratch,2.492,3,3,separated
-SIGN,100,EVEN,9.419,50.507,49.026,17.92,23.816,60,0.6,1.903,Adaptive-Full,Remine-from-scratch,1.903,3,3,separated
-SIGN,100,INCREASING,8.443,44.464,42.994,16.532,22.844,53,0.53,1.958,Adaptive-Full,Remine-from-scratch,1.958,3,3,separated
+dataset,K,shape,total_s_Adaptive-Full,total_s_Pre-HUSPM-SWUmax,total_s_Pre-HUSPM-TSU,total_s_Remine-from-scratch,total_s_IncUSP-Miner+,proposal_rescans,proposal_rescan_share,remine_over_proposal,fastest,closest,closest_over_proposal,runs_proposal,runs_closest,runs_vs_closest,proposal_s_min,proposal_s_max,closest_s_min,closest_s_max
+C8T1S5I8N5K,25,BURST,1.689,15.289,15.676,3.866,10.342,25,1.0,2.288,Adaptive-Full,Remine-from-scratch,2.288,3,1,one run,1.676,1.705,3.866,3.866
+C8T1S5I8N5K,25,DECREASING,1.814,15.666,16.885,4.176,10.561,24,0.96,2.302,Adaptive-Full,Remine-from-scratch,2.302,3,1,one run,1.794,1.825,4.176,4.176
+C8T1S5I8N5K,25,EVEN,1.671,15.46,15.656,3.882,10.526,25,1.0,2.323,Adaptive-Full,Remine-from-scratch,2.323,3,1,one run,1.663,1.682,3.882,3.882
+C8T1S5I8N5K,25,INCREASING,1.595,15.32,16.116,3.614,10.192,24,0.96,2.266,Adaptive-Full,Remine-from-scratch,2.266,3,1,one run,1.584,1.604,3.614,3.614
+C8T1S5I8N5K,50,BURST,4.593,26.855,32.017,7.671,13.135,43,0.86,1.67,Adaptive-Full,Remine-from-scratch,1.67,3,1,one run,4.566,4.613,7.671,7.671
+C8T1S5I8N5K,50,DECREASING,3.371,28.315,33.91,8.322,13.834,43,0.86,2.468,Adaptive-Full,Remine-from-scratch,2.468,3,1,one run,3.348,3.39,8.322,8.322
+C8T1S5I8N5K,50,EVEN,3.166,32.118,32.101,7.71,13.494,50,1.0,2.436,Adaptive-Full,Remine-from-scratch,2.436,3,1,one run,3.141,3.182,7.71,7.71
+C8T1S5I8N5K,50,INCREASING,3.318,27.955,31.86,7.168,13.544,45,0.9,2.16,Adaptive-Full,Remine-from-scratch,2.16,3,1,one run,3.3,3.33,7.168,7.168
+C8T1S5I8N5K,67,BURST,5.114,28.823,41.993,10.273,15.842,44,0.657,2.009,Adaptive-Full,Remine-from-scratch,2.009,3,1,one run,5.094,5.134,10.273,10.273
+C8T1S5I8N5K,67,DECREASING,4.858,34.956,45.948,11.157,15.332,55,0.821,2.296,Adaptive-Full,Remine-from-scratch,2.296,3,1,one run,4.836,4.876,11.157,11.157
+C8T1S5I8N5K,67,EVEN,5.271,40.148,42.364,10.303,15.317,66,0.985,1.955,Adaptive-Full,Remine-from-scratch,1.955,3,1,one run,5.239,5.306,10.303,10.303
+C8T1S5I8N5K,67,INCREASING,4.081,36.335,43.308,9.624,14.591,55,0.821,2.358,Adaptive-Full,Remine-from-scratch,2.358,3,1,one run,4.061,4.106,9.624,9.624
+C8T1S5I8N5K,100,BURST,6.444,38.379,65.467,15.566,18.901,55,0.55,2.416,Adaptive-Full,Remine-from-scratch,2.416,3,1,one run,6.417,6.467,15.566,15.566
+C8T1S5I8N5K,100,DECREASING,6.891,44.1,67.18,16.621,19.946,68,0.68,2.412,Adaptive-Full,Remine-from-scratch,2.412,3,1,one run,6.863,6.91,16.621,16.621
+C8T1S5I8N5K,100,EVEN,8.91,51.3,62.62,15.652,19.001,80,0.8,1.757,Adaptive-Full,Remine-from-scratch,1.757,3,1,one run,8.824,8.983,15.652,15.652
+C8T1S5I8N5K,100,INCREASING,6.606,46.856,63.294,14.363,18.68,72,0.72,2.174,Adaptive-Full,Remine-from-scratch,2.174,3,1,one run,6.554,6.641,14.363,14.363
+LEVIATHAN,25,BURST,6.881,29.985,30.384,9.274,36.657,25,1.0,1.348,Adaptive-Full,Remine-from-scratch,1.348,3,3,separated,6.816,6.931,9.161,9.388
+LEVIATHAN,25,DECREASING,7.563,32.14,32.665,10.592,37.285,24,0.96,1.4,Adaptive-Full,Remine-from-scratch,1.4,3,3,separated,7.501,7.614,10.467,10.718
+LEVIATHAN,25,EVEN,6.926,30.165,30.582,9.394,39.62,25,1.0,1.356,Adaptive-Full,Remine-from-scratch,1.356,3,3,separated,6.86,6.986,9.262,9.5
+LEVIATHAN,25,INCREASING,6.103,27.121,26.874,8.219,36.743,25,1.0,1.347,Adaptive-Full,Remine-from-scratch,1.347,3,3,separated,6.042,6.158,8.113,8.323
+LEVIATHAN,50,BURST,13.547,60.09,60.097,18.743,49.805,50,1.0,1.384,Adaptive-Full,Remine-from-scratch,1.384,3,3,separated,13.396,13.685,18.516,18.97
+LEVIATHAN,50,DECREASING,14.01,59.128,59.354,21.025,51.851,45,0.9,1.501,Adaptive-Full,Remine-from-scratch,1.501,3,3,separated,13.863,14.143,20.783,21.276
+LEVIATHAN,50,EVEN,13.477,59.674,59.977,18.625,54.373,50,1.0,1.382,Adaptive-Full,Remine-from-scratch,1.382,3,3,separated,13.352,13.571,18.412,18.838
+LEVIATHAN,50,INCREASING,11.589,50.863,51.66,16.275,50.479,47,0.94,1.404,Adaptive-Full,Remine-from-scratch,1.404,3,3,separated,11.471,11.682,16.1,16.453
+LEVIATHAN,67,BURST,18.487,76.571,76.015,24.941,55.517,66,0.985,1.349,Adaptive-Full,Remine-from-scratch,1.349,3,3,separated,18.325,18.632,24.636,25.239
+LEVIATHAN,67,DECREASING,18.106,76.694,76.892,28.148,59.016,59,0.881,1.555,Adaptive-Full,Remine-from-scratch,1.555,3,3,separated,17.946,18.237,27.775,28.522
+LEVIATHAN,67,EVEN,17.959,79.971,79.229,24.909,61.504,67,1.0,1.387,Adaptive-Full,Remine-from-scratch,1.387,3,3,separated,17.774,18.136,24.594,25.206
+LEVIATHAN,67,INCREASING,15.302,66.978,68.508,21.752,57.223,62,0.925,1.422,Adaptive-Full,Remine-from-scratch,1.422,3,3,separated,15.145,15.431,21.462,22.016
+LEVIATHAN,100,BURST,24.726,88.192,90.206,37.824,67.106,78,0.78,1.53,Adaptive-Full,Remine-from-scratch,1.53,3,3,separated,24.501,24.929,37.315,38.337
+LEVIATHAN,100,DECREASING,24.927,96.614,98.102,41.9,69.929,78,0.78,1.681,Adaptive-Full,Remine-from-scratch,1.681,3,3,separated,24.685,25.118,41.381,42.37
+LEVIATHAN,100,EVEN,27.966,113.787,117.908,37.159,72.845,100,1.0,1.329,Adaptive-Full,Remine-from-scratch,1.329,3,3,separated,27.697,28.16,36.711,37.563
+LEVIATHAN,100,INCREASING,22.396,96.701,98.327,32.472,67.414,91,0.91,1.45,Adaptive-Full,Remine-from-scratch,1.45,3,3,separated,22.184,22.587,32.044,32.822
+SIGN,25,BURST,2.771,22.636,21.931,4.474,13.967,25,1.0,1.614,Adaptive-Full,Remine-from-scratch,1.614,3,3,separated,2.765,2.777,4.407,4.563
+SIGN,25,DECREASING,2.74,21.543,20.942,4.91,14.316,22,0.88,1.792,Adaptive-Full,Remine-from-scratch,1.792,3,3,separated,2.738,2.743,4.854,5.005
+SIGN,25,EVEN,2.684,22.537,22.008,4.493,15.235,25,1.0,1.674,Adaptive-Full,Remine-from-scratch,1.674,3,3,separated,2.682,2.685,4.434,4.579
+SIGN,25,INCREASING,2.38,20.586,19.884,4.12,14.905,24,0.96,1.731,Adaptive-Full,Remine-from-scratch,1.731,3,3,separated,2.371,2.388,4.074,4.197
+SIGN,50,BURST,5.309,30.172,29.29,8.977,17.979,36,0.72,1.691,Adaptive-Full,Remine-from-scratch,1.691,3,3,separated,5.305,5.317,8.865,9.143
+SIGN,50,DECREASING,4.932,32.832,31.797,9.723,18.38,37,0.74,1.971,Adaptive-Full,Remine-from-scratch,1.971,3,3,separated,4.924,4.938,9.62,9.894
+SIGN,50,EVEN,5.557,42.866,41.449,8.94,18.825,50,1.0,1.609,Adaptive-Full,Remine-from-scratch,1.609,3,3,separated,5.55,5.566,8.832,9.105
+SIGN,50,INCREASING,4.492,37.548,36.418,8.201,18.542,45,0.9,1.825,Adaptive-Full,Remine-from-scratch,1.825,3,3,separated,4.489,4.496,8.104,8.362
+SIGN,67,BURST,6.654,34.451,33.334,11.978,19.494,42,0.627,1.8,Adaptive-Full,Remine-from-scratch,1.8,3,3,separated,6.649,6.657,11.836,12.205
+SIGN,67,DECREASING,5.985,39.748,38.707,12.966,20.058,46,0.687,2.167,Adaptive-Full,Remine-from-scratch,2.167,3,3,separated,5.973,5.991,12.826,13.199
+SIGN,67,EVEN,6.469,42.213,40.862,12.052,20.685,50,0.746,1.863,Adaptive-Full,Remine-from-scratch,1.863,3,3,separated,6.459,6.475,11.908,12.274
+SIGN,67,INCREASING,6.075,48.412,46.543,11.017,20.085,58,0.866,1.814,Adaptive-Full,Remine-from-scratch,1.814,3,3,separated,6.064,6.081,10.891,11.226
+SIGN,100,BURST,7.445,39.215,37.979,18.048,22.024,45,0.45,2.424,Adaptive-Full,Remine-from-scratch,2.424,3,3,separated,7.424,7.457,17.824,18.397
+SIGN,100,DECREASING,7.712,45.177,43.812,19.217,23.285,53,0.53,2.492,Adaptive-Full,Remine-from-scratch,2.492,3,3,separated,7.7,7.733,18.978,19.572
+SIGN,100,EVEN,9.419,50.507,49.026,17.92,23.816,60,0.6,1.903,Adaptive-Full,Remine-from-scratch,1.903,3,3,separated,9.401,9.432,17.694,18.272
+SIGN,100,INCREASING,8.443,44.464,42.994,16.532,22.844,53,0.53,1.958,Adaptive-Full,Remine-from-scratch,1.958,3,3,separated,8.435,8.448,16.324,16.835

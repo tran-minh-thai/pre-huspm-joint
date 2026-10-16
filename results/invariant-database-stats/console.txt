@@ -1,0 +1,9 @@
+self-test: 7 checks passed
+SIGN: 730 sequences, 267 items occur (largest id 310), 51.9973 elements per sequence, 1.0000 items per element, 51.9973 per sequence, TU 1796483
+LEVIATHAN: 5834 sequences, 9025 items occur (largest id 9493), 33.8106 elements per sequence, 1.0000 items per element, 33.8106 per sequence, TU 10502159
+FIFA: 20450 sequences, 2990 items occur (largest id 3462), 36.2392 elements per sequence, 1.0000 items per element, 36.2392 per sequence, TU 42781841
+BIBLE: 36369 sequences, 13905 items occur (largest id 14575), 21.6411 elements per sequence, 1.0000 items per element, 21.6411 per sequence, TU 35550162
+BMS1: 59601 sequences, 497 items occur (largest id 60977), 2.5107 elements per sequence, 1.0000 items per element, 2.5107 per sequence, TU 7229030
+KOSARAK: 990002 sequences, 41270 items occur (largest id 41270), 8.1000 elements per sequence, 1.0000 items per element, 8.1000 per sequence, TU 385921994
+C8T1S5I8N5K: 47132 sequences, 68240 items occur (largest id 4999999), 2.3620 elements per sequence, 7.9707 items per element, 18.8265 per sequence, TU 47416411
+TAFENG: 60665 sequences, 23789 items occur (largest id 23812), 13.3967 elements per sequence, 1.0000 items per element, 13.3967 per sequence, TU 106639001

@@ -302,7 +302,9 @@ def sc5_cells():
                          if tot.get(P) else np.nan,
                          fastest=fastest, closest=close,
                          closest_over_proposal=others[close] / tot[P] if close and tot.get(P) else np.nan,
-                         runs_proposal=len(rp), runs_closest=len(rc), runs_vs_closest=runs_vs_closest))
+                         runs_proposal=len(rp), runs_closest=len(rc), runs_vs_closest=runs_vs_closest,
+                         proposal_s_min=min(rp) if rp else np.nan, proposal_s_max=max(rp) if rp else np.nan,
+                         closest_s_min=min(rc) if rc else np.nan, closest_s_max=max(rc) if rc else np.nan))
     return pd.DataFrame(rows)
 
 
@@ -1406,6 +1408,65 @@ def window_study(put, out):
     return t2, lo, t5, t6
 
 
+
+def datasets_table(put, out):
+    """The database table: the shape of each database counted on the data files
+    (results/invariant-database-stats, analysis/database_stats.py) with D_init and the default UUT
+    of common.Datasets."""
+    path = os.path.join(mf.DATA_DIR, "invariant-database-stats", "database_stats.csv")
+    st = pd.read_csv(path).set_index("dataset")
+    src = "table_datasets.csv"
+    rows = []
+    for d in mf.ALL_DATASETS:
+        r, v = st.loc[d], mf.DATASETS[d]
+        rows.append(dict(dataset=d, sequences=int(r["sequences"]), items=int(r["items_occurring"]),
+                         max_item_id=int(r["max_item_id"]), avg_length=float(r["items_per_sequence"]),
+                         elements_per_sequence=float(r["elements_per_sequence"]),
+                         items_per_element=float(r["items_per_element"]), total_utility=float(r["total_utility"]),
+                         d_init=v["d_init"], default_uut=v["default_uut"]))
+    t = pd.DataFrame(rows)
+    mf.write_csv(t, os.path.join(out, "table_datasets.csv"))
+    lines = ["\\begin{table}[!htbp]\\centering", "\\setlength{\\tabcolsep}{3pt}",
+             "\\caption{Databases}\\label{tab:datasets}",
+             "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}lrrrrrrr@{}}\\toprule",
+             "Database & $|D|$ & $|I|$ & \\begin{tabular}[b]{@{}r@{}}Avg.\\\\length\\end{tabular} & "
+             "\\begin{tabular}[b]{@{}r@{}}Items/\\\\element\\end{tabular} & $\\TU(D)$ & $|D_{\\mathrm{init}}|$ & "
+             "\\begin{tabular}[b]{@{}r@{}}Default\\\\$\\UUT$ (\\%)\\end{tabular} \\\\\\midrule"]
+    for r in t.itertuples():
+        tu = f"{int(half_up(r.total_utility, 0)):,}"
+        lines.append(f"{r.dataset} & {r.sequences:,} & {r.items:,} & {half_up(r.avg_length)} & "
+                     f"{half_up(r.items_per_element)} & {tu} & {r.d_init:,} & {pct4(r.default_uut)} \\\\")
+        b = f"DB_{r.dataset}"
+        put(f"{b}_sequences", f"{r.sequences:,}", src)
+        put(f"{b}_items", f"{r.items:,}", src)
+        put(f"{b}_max_item_id", f"{r.max_item_id:,}", src)
+        put(f"{b}_avg_length", half_up(r.avg_length), src)
+        put(f"{b}_elements_per_sequence", half_up(r.elements_per_sequence), src)
+        put(f"{b}_items_per_element", half_up(r.items_per_element), src)
+        put(f"{b}_total_utility", tu, src)
+    lines[-1] = lines[-1] + "\\bottomrule"
+    lines += ["\\end{tabular*}", "\\end{table}", ""]
+    open(os.path.join(out, "table_datasets.tex"), "w", encoding="utf-8").write("\n".join(lines))
+
+
+def repeated_sequence_keys(put):
+    """BMS1's most repeated long sequence and the longer sequences that contain it
+    (results/invariant-repeated-sequences, analysis/repeated_sequences.py)."""
+    base = os.path.join(mf.DATA_DIR, "invariant-repeated-sequences")
+    g = pd.read_csv(os.path.join(base, "BMS1_repeated.csv"))
+    src = "invariant-repeated-sequences/BMS1_repeated.csv"
+    core = g.sort_values(["copies", "length"], ascending=False).iloc[0]
+    holders = g[g["contains_core"].astype(str) == "True"]
+    others = holders.drop(core.name)
+    tu = float(re.search(r"TU\(D\) (\d+)", open(os.path.join(base, "console.txt"), encoding="utf-8").read()).group(1))
+    put("BMS1_repeated_core_length", int(core["length"]), src)
+    put("BMS1_repeated_core_copies", int(core["copies"]), src)
+    put("BMS1_repeated_containing_lengths", ", ".join(str(int(x)) for x in others["length"]), src)
+    put("BMS1_repeated_containing_copies", int(others["copies"].sum()), src)
+    put("BMS1_repeated_sequences", int(holders["copies"].sum()), src)
+    put("BMS1_repeated_in_d_init", int(holders["in_d_init"].sum()), src)
+    put("BMS1_repeated_share_of_tu_pct", half_up(100 * holders["utility"].sum() / tu), src)
+
 def half_up(value, digits=2):
     """value to the given decimals, rounded half up on its decimal string: in binary 8.995
     lies just below itself and would print 8.99."""
@@ -1541,6 +1602,13 @@ def export_all(out_dir=None):
         for state in ("separated", "overlapping", "behind", "one run"):
             put(f"SC5_runs_vs_closest_{state.replace(' ', '_')}", f"{int((c5['runs_vs_closest'] == state).sum())}/{len(c5)}",
                 "table_SC5_cells.csv")
+        for d, g in c5.groupby("dataset"):
+            put(f"SC5_{d}_closest_over_proposal_min", f"{g['closest_over_proposal'].min():.3f}", "table_SC5_cells.csv")
+            # the closest arm's fastest run over the proposal's slowest: the margin no run of either side undoes
+            put(f"SC5_{d}_closest_fastest_over_proposal_slowest_min",
+                f"{(g['closest_s_min'] / g['proposal_s_max']).min():.3f}", "table_SC5_cells.csv")
+            put(f"SC5_{d}_runs", f"proposal {', '.join(map(str, sorted(set(g['runs_proposal']))))}; "
+                f"closest {', '.join(map(str, sorted(set(g['runs_closest']))))}", "table_SC5_cells.csv")
         near = c5[c5["closest_over_proposal"] < 1.10]
         put("SC5_cells_within_10pct", f"{len(near)}/{len(c5)}", "table_SC5_cells.csv")
         if len(near):
@@ -1656,6 +1724,8 @@ def export_all(out_dir=None):
                 cmp_rows = cmp_rows[cmp_rows["status"] != "reference"]
                 for sc, n in cmp_rows.groupby("scenario").size().items():
                     put(f"{key}_{sc}_comparisons", int(n), "table_verification.csv")
+                for (sc, arm), n in cmp_rows.groupby(["scenario", "arm"]).size().items():
+                    put(f"{key}_{sc}_{arm}_comparisons", int(n), "table_verification.csv")
         for col in ("runs", "operations", "with_target", "direct_delete", "direct_insert", "direct_modify",
                     "mismatches", "caught", "rescans_at_uut", "rescans_back_to_low", "direct_at_uut", "stopped_by_heap"):
             if col in r and pd.notna(r[col]):
@@ -1833,6 +1903,8 @@ def export_all(out_dir=None):
     lines += ["\\bottomrule\\end{tabular*}", "\\end{table}", ""]
     open(os.path.join(out, "table_thresholds.tex"), "w", encoding="utf-8").write("\n".join(lines))
 
+    datasets_table(put, out)
+    repeated_sequence_keys(put)
     bms1_whole(put)
     memory_guard_stops(put)
 
@@ -1851,6 +1923,8 @@ def export_all(out_dir=None):
             for stat, v in (("median", big["relative_spread"].median()), ("max", big["relative_spread"].max())):
                 put(f"noise_SC1_runtime_over_1s_{stat}", f"{v:.4f}", "table_noise.csv")
                 put(f"noise_SC1_runtime_over_1s_{stat}_pct", f"{100 * v:.1f}", "table_noise.csv")
+        put(f"noise_{key}_algorithms", ", ".join(sorted(set(g["algorithm"]))), "table_noise.csv")
+        put(f"noise_{key}_databases", ", ".join(d for d in mf.ALL_DATASETS if d in set(g["dataset"])), "table_noise.csv")
         if m == "SC1 live set":
             # below 5 MB the 1 MB resolution alone moves a value by 20% or more
             big = g[g["mean"] >= 5]
