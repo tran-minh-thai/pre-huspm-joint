@@ -1,0 +1,209 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC2]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=3 | seed.index=0
+
+--- [SC2] Incremental sequence (100 batches, EVEN; D_init per Yan et al. Table 16) ---
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INIT#0  (heap free=563MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INIT#0] OK t=3320ms cand=199847 pat=18 heapDelta=331MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#1  (heap free=563MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#1] OK t=3283ms cand=200648 pat=18 heapDelta=388MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#2  (heap free=564MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#2] OK t=3361ms cand=200851 pat=18 heapDelta=702MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#3  (heap free=565MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#3] OK t=3312ms cand=201161 pat=18 heapDelta=427MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#4  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#4] OK t=3369ms cand=202451 pat=18 heapDelta=442MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#5  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#5] OK t=3409ms cand=202799 pat=18 heapDelta=448MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#6  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#6] OK t=3450ms cand=200061 pat=18 heapDelta=669MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#7  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#7] OK t=3418ms cand=198080 pat=18 heapDelta=442MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#8  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#8] OK t=3429ms cand=199117 pat=18 heapDelta=448MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#9  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#9] OK t=3452ms cand=198061 pat=18 heapDelta=442MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#10  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#10] OK t=3550ms cand=198266 pat=18 heapDelta=693MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#11  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#11] OK t=3488ms cand=196563 pat=17 heapDelta=448MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#12  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#12] OK t=3561ms cand=198855 pat=18 heapDelta=448MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#13  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#13] OK t=3640ms cand=200366 pat=18 heapDelta=448MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#14  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#14] OK t=3708ms cand=198398 pat=18 heapDelta=743MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#15  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#15] OK t=3627ms cand=196121 pat=19 heapDelta=442MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#16  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#16] OK t=3679ms cand=198155 pat=19 heapDelta=448MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#17  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#17] OK t=3705ms cand=197722 pat=18 heapDelta=448MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#18  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#18] OK t=3765ms cand=197503 pat=17 heapDelta=768MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#19  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#19] OK t=3737ms cand=196667 pat=17 heapDelta=442MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#20  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#20] OK t=3771ms cand=196746 pat=17 heapDelta=442MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#21  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#21] OK t=3808ms cand=197343 pat=17 heapDelta=448MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#22  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#22] OK t=3949ms cand=198286 pat=17 heapDelta=809MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#23  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#23] OK t=3920ms cand=196671 pat=17 heapDelta=448MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#24  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#24] OK t=3937ms cand=195651 pat=17 heapDelta=448MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#25  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#25] OK t=3886ms cand=194523 pat=17 heapDelta=442MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#26  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#26] OK t=3976ms cand=194896 pat=17 heapDelta=818MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#27  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#27] OK t=3889ms cand=192366 pat=17 heapDelta=442MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#28  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#28] OK t=3950ms cand=192937 pat=17 heapDelta=448MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#29  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#29] OK t=3985ms cand=193595 pat=17 heapDelta=448MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#30  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#30] OK t=4098ms cand=194744 pat=17 heapDelta=851MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#31  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#31] OK t=4119ms cand=195423 pat=17 heapDelta=442MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#32  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#32] OK t=4172ms cand=196316 pat=17 heapDelta=443MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#33  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#33] OK t=4190ms cand=197316 pat=17 heapDelta=448MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#34  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#34] OK t=4264ms cand=196245 pat=17 heapDelta=899MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#35  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#35] OK t=4197ms cand=194230 pat=17 heapDelta=443MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#36  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#36] OK t=4217ms cand=193033 pat=17 heapDelta=444MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#37  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#37] OK t=4288ms cand=194250 pat=17 heapDelta=442MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#38  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#38] OK t=4463ms cand=196977 pat=17 heapDelta=948MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#39  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#39] OK t=4405ms cand=196181 pat=17 heapDelta=444MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#40  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#40] OK t=4421ms cand=195842 pat=17 heapDelta=445MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#41  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#41] OK t=4497ms cand=196539 pat=17 heapDelta=445MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#42  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#42] OK t=4574ms cand=194712 pat=17 heapDelta=973MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#43  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#43] OK t=4481ms cand=194190 pat=17 heapDelta=445MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#44  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#44] OK t=4513ms cand=193302 pat=17 heapDelta=445MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#45  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#45] OK t=4532ms cand=192932 pat=17 heapDelta=445MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#46  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#46] OK t=4598ms cand=192476 pat=17 heapDelta=989MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#47  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#47] OK t=4532ms cand=192039 pat=17 heapDelta=442MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#48  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#48] OK t=4591ms cand=192205 pat=17 heapDelta=446MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#49  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#49] OK t=4617ms cand=192841 pat=17 heapDelta=446MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#50  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#50] OK t=4684ms cand=192017 pat=17 heapDelta=1023MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#51  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#51] OK t=4606ms cand=191473 pat=17 heapDelta=446MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#52  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#52] OK t=4702ms cand=191946 pat=17 heapDelta=446MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#53  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#53] OK t=4734ms cand=191436 pat=17 heapDelta=446MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#54  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#54] OK t=4806ms cand=191773 pat=17 heapDelta=1055MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#55  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#55] OK t=4809ms cand=192188 pat=17 heapDelta=447MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#56  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#56] OK t=4833ms cand=192234 pat=17 heapDelta=442MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#57  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#57] OK t=4860ms cand=192025 pat=17 heapDelta=447MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#58  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#58] OK t=4998ms cand=191821 pat=17 heapDelta=1096MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#59  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#59] OK t=4846ms cand=190980 pat=17 heapDelta=442MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#60  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#60] OK t=4916ms cand=190552 pat=17 heapDelta=440MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#61  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#61] OK t=4954ms cand=190980 pat=17 heapDelta=448MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#62  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#62] OK t=5002ms cand=190524 pat=17 heapDelta=1104MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#63  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#63] OK t=4974ms cand=191577 pat=17 heapDelta=448MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#64  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#64] OK t=4983ms cand=191003 pat=17 heapDelta=448MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#65  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#65] OK t=5083ms cand=191538 pat=16 heapDelta=442MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#66  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#66] OK t=5176ms cand=191269 pat=16 heapDelta=1145MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#67  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#67] OK t=5178ms cand=192249 pat=16 heapDelta=442MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#68  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#68] OK t=5237ms cand=193422 pat=17 heapDelta=442MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#69  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#69] OK t=5250ms cand=192843 pat=17 heapDelta=433MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#70  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#70] OK t=5270ms cand=192678 pat=17 heapDelta=865MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#71  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#71] OK t=5292ms cand=192434 pat=17 heapDelta=442MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#72  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#72] OK t=5288ms cand=192075 pat=17 heapDelta=442MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#73  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#73] OK t=5344ms cand=191945 pat=17 heapDelta=448MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#74  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#74] OK t=5356ms cand=192078 pat=17 heapDelta=442MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#75  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#75] OK t=5466ms cand=192491 pat=17 heapDelta=448MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#76  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#76] OK t=5546ms cand=191752 pat=17 heapDelta=473MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#77  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#77] OK t=5487ms cand=191820 pat=17 heapDelta=442MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#78  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#78] OK t=5533ms cand=191168 pat=17 heapDelta=442MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#79  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#79] OK t=5571ms cand=191608 pat=17 heapDelta=490MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#80  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#80] OK t=5576ms cand=191618 pat=17 heapDelta=442MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#81  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#81] OK t=5655ms cand=190953 pat=17 heapDelta=442MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#82  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#82] OK t=5683ms cand=190395 pat=17 heapDelta=506MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#83  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#83] OK t=5658ms cand=191302 pat=17 heapDelta=442MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#84  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#84] OK t=5749ms cand=191508 pat=17 heapDelta=442MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#85  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#85] OK t=5775ms cand=191122 pat=17 heapDelta=538MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#86  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#86] OK t=5758ms cand=190527 pat=17 heapDelta=442MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#87  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#87] OK t=5783ms cand=189852 pat=17 heapDelta=442MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#88  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#88] OK t=5829ms cand=189918 pat=17 heapDelta=563MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#89  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#89] OK t=5822ms cand=189134 pat=17 heapDelta=442MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#90  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#90] OK t=5847ms cand=188958 pat=17 heapDelta=442MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#91  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#91] OK t=5928ms cand=188722 pat=17 heapDelta=579MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#92  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#92] OK t=5921ms cand=188123 pat=17 heapDelta=442MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#93  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#93] OK t=5865ms cand=187374 pat=17 heapDelta=448MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#94  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#94] OK t=5974ms cand=186422 pat=17 heapDelta=580MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#95  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#95] OK t=5964ms cand=186562 pat=17 heapDelta=448MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#96  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#96] OK t=5968ms cand=186169 pat=17 heapDelta=442MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#97  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#97] OK t=6106ms cand=185841 pat=17 heapDelta=604MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#98  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#98] OK t=6081ms cand=186294 pat=17 heapDelta=442MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#99  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#99] OK t=6117ms cand=188262 pat=17 heapDelta=442MB
+>> RUNNING Remine-HUSP-SP/FIFA/SC2_INC#100  (heap free=566MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/FIFA/SC2_INC#100] OK t=6229ms cand=187789 pat=17 heapDelta=661MB
+=== ALL SCENARIOS DONE (582.5s) ===
