@@ -61,8 +61,9 @@ any JVM other than the one pinned in `environment.lock.json`.
 | SC3 | static mining of the whole database at four thresholds | SIGN, LEVIATHAN, C8T1S5I8N5K |
 | SC4 | `r_l` in {0.3, 0.5, 0.7, 0.9} | same three |
 | SC5 | 25 to 100 batches cut in four shapes | same three |
-| SC6, SC6D, SC6B | 20 mixed insertions, deletions and modifications; SC6D mostly deletions; SC6B with one deletion that exceeds the budget alone; five seeds | same three |
+| SC6, SC6D, SC6B | 20 mixed insertions, deletions and modifications; SC6D mostly deletions; SC6B with one deletion that exceeds the budget alone; five seeds | same three and TAFENG |
 | SC7 | ablations of the miner and of the maintenance | all but BMS1 |
+| FIDELITY | the Pre-HUSPM implementation under its paper's setting, on SPMF's files (`./fetch-spmf-husp.sh` or `.\fetch-spmf-husp.ps1` first) | SIGN, FIFA, BIBLE, Kosarak10k, BMS |
 
 **Arm names** (`algorithm` column):
 - `Adaptive-Full` is the method at the fixed floor `r_l`.
