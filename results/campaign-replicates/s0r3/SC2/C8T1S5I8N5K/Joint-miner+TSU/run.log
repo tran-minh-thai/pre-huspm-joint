@@ -1,0 +1,209 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC2]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=3 | seed.index=0
+
+--- [SC2] Incremental sequence (100 batches, EVEN; D_init per Yan et al. Table 16) ---
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INIT#0  (heap free=230MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INIT#0] OK t=259ms cand=47013 pat=5067 heapDelta=106MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#1  (heap free=190MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#1] OK t=148ms cand=46366 pat=5100 heapDelta=22MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#2  (heap free=189MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#2] OK t=103ms cand=45461 pat=4900 heapDelta=19MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#3  (heap free=189MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#3] OK t=100ms cand=45765 pat=5357 heapDelta=19MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#4  (heap free=188MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#4] OK t=97ms cand=45042 pat=5212 heapDelta=19MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#5  (heap free=188MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#5] OK t=100ms cand=48490 pat=5948 heapDelta=19MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#6  (heap free=187MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#6] OK t=98ms cand=47547 pat=5760 heapDelta=21MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#7  (heap free=187MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#7] OK t=98ms cand=48172 pat=5856 heapDelta=21MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#8  (heap free=186MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#8] OK t=99ms cand=48030 pat=6878 heapDelta=21MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#9  (heap free=186MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#9] OK t=99ms cand=46980 pat=6691 heapDelta=21MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#10  (heap free=186MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#10] OK t=97ms cand=46763 pat=6588 heapDelta=21MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#11  (heap free=185MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#11] OK t=99ms cand=46424 pat=6414 heapDelta=21MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#12  (heap free=185MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#12] OK t=99ms cand=46306 pat=6291 heapDelta=21MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#13  (heap free=185MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#13] OK t=100ms cand=45322 pat=6073 heapDelta=21MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#14  (heap free=184MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#14] OK t=96ms cand=44607 pat=5921 heapDelta=21MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#15  (heap free=184MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#15] OK t=96ms cand=43742 pat=5746 heapDelta=21MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#16  (heap free=184MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#16] OK t=97ms cand=43130 pat=5655 heapDelta=21MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#17  (heap free=184MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#17] OK t=97ms cand=43300 pat=5493 heapDelta=21MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#18  (heap free=183MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#18] OK t=97ms cand=42510 pat=5331 heapDelta=21MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#19  (heap free=183MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#19] OK t=96ms cand=41944 pat=5481 heapDelta=21MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#20  (heap free=183MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#20] OK t=97ms cand=41517 pat=5368 heapDelta=21MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#21  (heap free=184MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#21] OK t=97ms cand=41106 pat=5276 heapDelta=21MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#22  (heap free=184MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#22] OK t=97ms cand=40974 pat=5243 heapDelta=21MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#23  (heap free=184MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#23] OK t=97ms cand=41869 pat=5176 heapDelta=22MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#24  (heap free=183MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#24] OK t=104ms cand=43424 pat=5328 heapDelta=22MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#25  (heap free=183MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#25] OK t=101ms cand=43038 pat=5281 heapDelta=22MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#26  (heap free=182MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#26] OK t=105ms cand=43693 pat=5564 heapDelta=22MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#27  (heap free=182MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#27] OK t=106ms cand=43142 pat=5407 heapDelta=22MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#28  (heap free=180MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#28] OK t=100ms cand=42847 pat=5213 heapDelta=22MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#29  (heap free=182MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#29] OK t=104ms cand=43975 pat=5094 heapDelta=24MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#30  (heap free=181MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#30] OK t=102ms cand=43380 pat=4921 heapDelta=23MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#31  (heap free=180MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#31] OK t=105ms cand=44122 pat=5163 heapDelta=23MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#32  (heap free=180MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#32] OK t=105ms cand=43769 pat=5266 heapDelta=23MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#33  (heap free=180MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#33] OK t=107ms cand=43790 pat=5114 heapDelta=23MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#34  (heap free=181MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#34] OK t=108ms cand=43676 pat=4961 heapDelta=24MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#35  (heap free=180MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#35] OK t=106ms cand=42871 pat=4980 heapDelta=24MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#36  (heap free=179MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#36] OK t=108ms cand=44138 pat=4981 heapDelta=24MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#37  (heap free=179MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#37] OK t=107ms cand=43551 pat=4805 heapDelta=23MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#38  (heap free=178MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#38] OK t=108ms cand=43096 pat=4610 heapDelta=23MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#39  (heap free=180MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#39] OK t=105ms cand=43089 pat=4441 heapDelta=23MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#40  (heap free=179MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#40] OK t=106ms cand=43001 pat=4260 heapDelta=23MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#41  (heap free=179MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#41] OK t=105ms cand=43037 pat=4086 heapDelta=25MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#42  (heap free=179MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#42] OK t=103ms cand=41863 pat=4060 heapDelta=23MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#43  (heap free=178MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#43] OK t=105ms cand=41754 pat=3920 heapDelta=23MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#44  (heap free=178MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#44] OK t=106ms cand=41040 pat=3794 heapDelta=23MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#45  (heap free=178MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#45] OK t=105ms cand=41366 pat=3651 heapDelta=24MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#46  (heap free=179MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#46] OK t=108ms cand=42416 pat=3809 heapDelta=24MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#47  (heap free=179MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#47] OK t=108ms cand=41947 pat=3716 heapDelta=25MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#48  (heap free=180MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#48] OK t=107ms cand=42307 pat=3632 heapDelta=25MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#49  (heap free=180MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#49] OK t=107ms cand=41493 pat=3525 heapDelta=25MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#50  (heap free=179MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#50] OK t=106ms cand=40888 pat=3361 heapDelta=25MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#51  (heap free=179MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#51] OK t=109ms cand=40469 pat=3416 heapDelta=25MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#52  (heap free=179MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#52] OK t=109ms cand=39838 pat=3302 heapDelta=25MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#53  (heap free=179MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#53] OK t=106ms cand=39469 pat=3174 heapDelta=25MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#54  (heap free=178MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#54] OK t=112ms cand=40525 pat=3316 heapDelta=25MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#55  (heap free=178MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#55] OK t=109ms cand=39897 pat=3188 heapDelta=25MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#56  (heap free=178MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#56] OK t=111ms cand=39320 pat=3075 heapDelta=25MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#57  (heap free=177MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#57] OK t=109ms cand=38801 pat=2958 heapDelta=25MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#58  (heap free=177MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#58] OK t=109ms cand=40040 pat=2931 heapDelta=26MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#59  (heap free=177MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#59] OK t=109ms cand=39690 pat=2841 heapDelta=25MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#60  (heap free=178MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#60] OK t=114ms cand=40769 pat=2782 heapDelta=26MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#61  (heap free=179MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#61] OK t=113ms cand=40918 pat=2927 heapDelta=26MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#62  (heap free=179MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#62] OK t=115ms cand=40855 pat=3278 heapDelta=26MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#63  (heap free=178MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#63] OK t=116ms cand=43020 pat=3131 heapDelta=26MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#64  (heap free=178MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#64] OK t=117ms cand=42323 pat=3016 heapDelta=26MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#65  (heap free=177MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#65] OK t=115ms cand=42254 pat=2934 heapDelta=26MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#66  (heap free=177MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#66] OK t=117ms cand=43894 pat=2881 heapDelta=26MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#67  (heap free=178MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#67] OK t=118ms cand=43752 pat=2779 heapDelta=26MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#68  (heap free=178MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#68] OK t=116ms cand=43300 pat=2640 heapDelta=27MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#69  (heap free=177MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#69] OK t=118ms cand=43021 pat=2543 heapDelta=26MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#70  (heap free=177MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#70] OK t=119ms cand=43617 pat=2554 heapDelta=27MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#71  (heap free=177MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#71] OK t=119ms cand=43053 pat=2396 heapDelta=27MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#72  (heap free=176MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#72] OK t=116ms cand=41969 pat=2259 heapDelta=27MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#73  (heap free=176MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#73] OK t=121ms cand=45366 pat=2157 heapDelta=27MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#74  (heap free=176MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#74] OK t=122ms cand=44874 pat=2384 heapDelta=27MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#75  (heap free=175MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#75] OK t=127ms cand=46368 pat=2663 heapDelta=28MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#76  (heap free=175MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#76] OK t=128ms cand=45634 pat=2816 heapDelta=28MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#77  (heap free=176MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#77] OK t=125ms cand=44786 pat=2701 heapDelta=27MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#78  (heap free=177MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#78] OK t=124ms cand=44070 pat=2565 heapDelta=28MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#79  (heap free=177MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#79] OK t=123ms cand=43407 pat=2467 heapDelta=28MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#80  (heap free=177MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#80] OK t=125ms cand=45506 pat=2350 heapDelta=28MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#81  (heap free=176MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#81] OK t=126ms cand=44851 pat=2441 heapDelta=28MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#82  (heap free=176MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#82] OK t=127ms cand=44019 pat=2317 heapDelta=29MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#83  (heap free=176MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#83] OK t=128ms cand=44157 pat=2541 heapDelta=28MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#84  (heap free=176MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#84] OK t=129ms cand=43874 pat=2657 heapDelta=28MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#85  (heap free=175MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#85] OK t=131ms cand=43666 pat=2552 heapDelta=29MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#86  (heap free=175MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#86] OK t=131ms cand=43320 pat=2521 heapDelta=29MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#87  (heap free=175MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#87] OK t=127ms cand=42378 pat=2417 heapDelta=29MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#88  (heap free=174MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#88] OK t=128ms cand=41679 pat=2366 heapDelta=30MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#89  (heap free=174MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#89] OK t=127ms cand=41305 pat=2284 heapDelta=30MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#90  (heap free=176MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#90] OK t=132ms cand=41115 pat=2737 heapDelta=30MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#91  (heap free=175MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#91] OK t=131ms cand=40428 pat=2652 heapDelta=30MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#92  (heap free=175MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#92] OK t=130ms cand=40070 pat=2603 heapDelta=30MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#93  (heap free=175MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#93] OK t=135ms cand=41142 pat=2912 heapDelta=30MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#94  (heap free=174MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#94] OK t=136ms cand=41632 pat=3059 heapDelta=30MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#95  (heap free=174MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#95] OK t=134ms cand=41275 pat=2958 heapDelta=30MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#96  (heap free=174MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#96] OK t=140ms cand=41228 pat=3449 heapDelta=30MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#97  (heap free=173MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#97] OK t=141ms cand=41393 pat=3545 heapDelta=30MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#98  (heap free=173MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#98] OK t=140ms cand=40841 pat=3451 heapDelta=30MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#99  (heap free=173MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#99] OK t=140ms cand=40676 pat=3537 heapDelta=31MB
+>> RUNNING Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#100  (heap free=172MB / total=320MB / max=49152MB)
+[Joint-miner+TSU/C8T1S5I8N5K/SC2_INC#100] OK t=140ms cand=40109 pat=3438 heapDelta=31MB
+=== ALL SCENARIOS DONE (82.8s) ===
