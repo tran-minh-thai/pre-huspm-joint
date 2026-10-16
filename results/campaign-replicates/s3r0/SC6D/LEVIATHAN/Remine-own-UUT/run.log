@@ -1,0 +1,50 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC6D]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=3
+
+--- [SC6D] Mixed stream, exactly 6:10:4 ---
+>> [SC6D] LEVIATHAN seed=31415 opSize=30 plan=20 operations (6 insert, 10 delete, 4 modify)
+>> RUNNING Remine-own-UUT/LEVIATHAN/SC6_INIT#0  (heap free=843MB / total=1024MB / max=49152MB)
+[Remine-own-UUT/LEVIATHAN/SC6_INIT#0] OK t=410ms cand=8947 pat=107 heapDelta=63MB
+>> RUNNING Remine-own-UUT/LEVIATHAN/SC6_DEL#1  (heap free=153MB / total=224MB / max=49152MB)
+[Remine-own-UUT/LEVIATHAN/SC6_DEL#1] OK t=203ms cand=8997 pat=106 heapDelta=32MB
+>> RUNNING Remine-own-UUT/LEVIATHAN/SC6_MOD#2  (heap free=153MB / total=224MB / max=49152MB)
+[Remine-own-UUT/LEVIATHAN/SC6_MOD#2] OK t=222ms cand=8955 pat=107 heapDelta=31MB
+>> RUNNING Remine-own-UUT/LEVIATHAN/SC6_MOD#3  (heap free=153MB / total=224MB / max=49152MB)
+[Remine-own-UUT/LEVIATHAN/SC6_MOD#3] OK t=170ms cand=8859 pat=108 heapDelta=31MB
+>> RUNNING Remine-own-UUT/LEVIATHAN/SC6_DEL#4  (heap free=249MB / total=320MB / max=49152MB)
+[Remine-own-UUT/LEVIATHAN/SC6_DEL#4] OK t=165ms cand=8826 pat=108 heapDelta=34MB
+>> RUNNING Remine-own-UUT/LEVIATHAN/SC6_INS#5  (heap free=249MB / total=320MB / max=49152MB)
+[Remine-own-UUT/LEVIATHAN/SC6_INS#5] OK t=162ms cand=8753 pat=109 heapDelta=34MB
+>> RUNNING Remine-own-UUT/LEVIATHAN/SC6_DEL#6  (heap free=249MB / total=320MB / max=49152MB)
+[Remine-own-UUT/LEVIATHAN/SC6_DEL#6] OK t=159ms cand=8780 pat=109 heapDelta=34MB
+>> RUNNING Remine-own-UUT/LEVIATHAN/SC6_INS#7  (heap free=249MB / total=320MB / max=49152MB)
+[Remine-own-UUT/LEVIATHAN/SC6_INS#7] OK t=162ms cand=8729 pat=109 heapDelta=34MB
+>> RUNNING Remine-own-UUT/LEVIATHAN/SC6_DEL#8  (heap free=249MB / total=320MB / max=49152MB)
+[Remine-own-UUT/LEVIATHAN/SC6_DEL#8] OK t=164ms cand=8751 pat=109 heapDelta=34MB
+>> RUNNING Remine-own-UUT/LEVIATHAN/SC6_DEL#9  (heap free=249MB / total=320MB / max=49152MB)
+[Remine-own-UUT/LEVIATHAN/SC6_DEL#9] OK t=158ms cand=8850 pat=109 heapDelta=33MB
+>> RUNNING Remine-own-UUT/LEVIATHAN/SC6_DEL#10  (heap free=249MB / total=320MB / max=49152MB)
+[Remine-own-UUT/LEVIATHAN/SC6_DEL#10] OK t=161ms cand=8795 pat=110 heapDelta=33MB
+>> RUNNING Remine-own-UUT/LEVIATHAN/SC6_MOD#11  (heap free=249MB / total=320MB / max=49152MB)
+[Remine-own-UUT/LEVIATHAN/SC6_MOD#11] OK t=162ms cand=8999 pat=114 heapDelta=33MB
+>> RUNNING Remine-own-UUT/LEVIATHAN/SC6_INS#12  (heap free=249MB / total=320MB / max=49152MB)
+[Remine-own-UUT/LEVIATHAN/SC6_INS#12] OK t=159ms cand=8891 pat=111 heapDelta=33MB
+>> RUNNING Remine-own-UUT/LEVIATHAN/SC6_INS#13  (heap free=249MB / total=320MB / max=49152MB)
+[Remine-own-UUT/LEVIATHAN/SC6_INS#13] OK t=162ms cand=8870 pat=115 heapDelta=34MB
+>> RUNNING Remine-own-UUT/LEVIATHAN/SC6_INS#14  (heap free=249MB / total=320MB / max=49152MB)
+[Remine-own-UUT/LEVIATHAN/SC6_INS#14] OK t=167ms cand=8804 pat=114 heapDelta=34MB
+>> RUNNING Remine-own-UUT/LEVIATHAN/SC6_DEL#15  (heap free=249MB / total=320MB / max=49152MB)
+[Remine-own-UUT/LEVIATHAN/SC6_DEL#15] OK t=165ms cand=8913 pat=114 heapDelta=34MB
+>> RUNNING Remine-own-UUT/LEVIATHAN/SC6_DEL#16  (heap free=249MB / total=320MB / max=49152MB)
+[Remine-own-UUT/LEVIATHAN/SC6_DEL#16] OK t=163ms cand=8950 pat=114 heapDelta=34MB
+>> RUNNING Remine-own-UUT/LEVIATHAN/SC6_DEL#17  (heap free=249MB / total=320MB / max=49152MB)
+[Remine-own-UUT/LEVIATHAN/SC6_DEL#17] OK t=164ms cand=8993 pat=115 heapDelta=33MB
+>> RUNNING Remine-own-UUT/LEVIATHAN/SC6_INS#18  (heap free=249MB / total=320MB / max=49152MB)
+[Remine-own-UUT/LEVIATHAN/SC6_INS#18] OK t=165ms cand=8933 pat=115 heapDelta=34MB
+>> RUNNING Remine-own-UUT/LEVIATHAN/SC6_DEL#19  (heap free=249MB / total=320MB / max=49152MB)
+[Remine-own-UUT/LEVIATHAN/SC6_DEL#19] OK t=165ms cand=9022 pat=117 heapDelta=33MB
+>> RUNNING Remine-own-UUT/LEVIATHAN/SC6_MOD#20  (heap free=249MB / total=320MB / max=49152MB)
+[Remine-own-UUT/LEVIATHAN/SC6_MOD#20] OK t=163ms cand=9096 pat=117 heapDelta=33MB
+=== ALL SCENARIOS DONE (14.0s) ===
