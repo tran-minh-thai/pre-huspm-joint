@@ -1,0 +1,50 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC6D]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC6D] Mixed stream, exactly 6:10:4 ---
+>> [SC6D] TAFENG seed=42 opSize=200 plan=20 operations (6 insert, 10 delete, 4 modify)
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_INIT#0  (heap free=570MB / total=1024MB / max=49152MB)
+[Adaptive-FloorSelect/TAFENG/SC6_INIT#0] OK t=358ms cand=2123 pat=6 heapDelta=244MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_DEL#1  (heap free=598MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect/TAFENG/SC6_DEL#1] OK t=1ms cand=2123 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_DEL#2  (heap free=597MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect/TAFENG/SC6_DEL#2] OK t=0ms cand=2123 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_DEL#3  (heap free=597MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect/TAFENG/SC6_DEL#3] OK t=1ms cand=2123 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_DEL#4  (heap free=597MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect/TAFENG/SC6_DEL#4] OK t=1ms cand=2123 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_DEL#5  (heap free=597MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect/TAFENG/SC6_DEL#5] OK t=1ms cand=2123 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_MOD#6  (heap free=597MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect/TAFENG/SC6_MOD#6] OK t=13ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_INS#7  (heap free=597MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect/TAFENG/SC6_INS#7] OK t=186ms cand=2121 pat=6 heapDelta=49MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_DEL#8  (heap free=595MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect/TAFENG/SC6_DEL#8] OK t=1ms cand=2121 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_DEL#9  (heap free=595MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect/TAFENG/SC6_DEL#9] OK t=1ms cand=2121 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_MOD#10  (heap free=595MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect/TAFENG/SC6_MOD#10] OK t=9ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_INS#11  (heap free=595MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect/TAFENG/SC6_INS#11] OK t=87ms cand=2038 pat=5 heapDelta=49MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_INS#12  (heap free=592MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect/TAFENG/SC6_INS#12] OK t=2ms cand=0 pat=5 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_INS#13  (heap free=592MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect/TAFENG/SC6_INS#13] OK t=85ms cand=2034 pat=5 heapDelta=49MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_DEL#14  (heap free=590MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect/TAFENG/SC6_DEL#14] OK t=1ms cand=2034 pat=5 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_INS#15  (heap free=591MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect/TAFENG/SC6_INS#15] OK t=86ms cand=2035 pat=6 heapDelta=49MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_DEL#16  (heap free=590MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect/TAFENG/SC6_DEL#16] OK t=1ms cand=2035 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_DEL#17  (heap free=590MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect/TAFENG/SC6_DEL#17] OK t=1ms cand=2035 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_MOD#18  (heap free=590MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect/TAFENG/SC6_MOD#18] OK t=92ms cand=2057 pat=6 heapDelta=49MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_INS#19  (heap free=590MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect/TAFENG/SC6_INS#19] OK t=89ms cand=2089 pat=6 heapDelta=49MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_MOD#20  (heap free=591MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect/TAFENG/SC6_MOD#20] OK t=90ms cand=2089 pat=6 heapDelta=49MB
+=== ALL SCENARIOS DONE (16.5s) ===
