@@ -1,0 +1,16 @@
+{
+  "command": "bash -c rc=0; java -Xmx16g -Xss64m -cp build-v30 -Dverify.husps=true -Dseeds=5 -Drepeats=1 -Ddataset.only=SIGN,LEVIATHAN,C8T1S5I8N5K -Dalgo.only=Adaptive-Full,Remine-own-UUT,Joint-rule+plain-floor -Dresults.dir=results/verify-joint/husps-supplementary-mixed/ AutomatedExperimentRunner SC6 SC6D SC6B || rc=1; java -Xmx16g -Xss64m -cp build-v30 -Dverify.husps=true -Dseeds=5 -Drepeats=1 -Ddataset.only=TAFENG -Dalgo.only=Adaptive-Full,Remine-from-scratch,Remine-HUSP-ULL,Remine-HUSP-SP,Adaptive-FloorSelect,Remine-own-UUT,Joint-rule+plain-floor -Dresults.dir=results/verify-joint/husps-supplementary-mixed/ AutomatedExperimentRunner SC6 SC6D SC6B || rc=1; exit $rc",
+  "path_substitutions": 0,
+  "build_dir": "build-v30",
+  "git_commit": "b1c3e6b4e6d1cb3dccc21a68600df8f27d13b40e",
+  "tree": "src clean, other files modified",
+  "source_sha256": "77cfe11da52fbfa3577020cc92e3fe10a971832c66047099d2a8386053c23958",
+  "source_files": 37,
+  "java": "openjdk version \"26.0.1\" 2026-04-21",
+  "os": "Darwin 27.0.0 (macOS-27.0.1-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-10-16T19:29:31",
+  "end": "2026-10-16T20:09:43",
+  "exit_code": 0
+}

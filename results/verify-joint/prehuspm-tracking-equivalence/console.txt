@@ -1,0 +1,9 @@
+SIGN: initial mine 61818 patterns, 0 differing; then 100 increments on the same path (59 both rescan, 41 both direct), 0 differing
+LEVIATHAN: initial mine 16782 patterns, 0 differing; then 100 increments on the same path (98 both rescan, 2 both direct), 0 differing
+BIBLE: initial mine 3516 patterns, 0 differing; then 100 increments on the same path (63 both rescan, 37 both direct), 0 differing
+BMS1: initial mine 14316 patterns, 0 differing; then 6 increments on the same path (1 both rescan, 5 both direct), 0 differing
+FIFA: initial mine 326612 patterns, 0 differing; then 3 increments on the same path (1 both rescan, 2 both direct), 0 differing
+KOSARAK: initial mine 1372 patterns, 0 differing; then 100 increments on the same path (100 both rescan, 0 both direct), 0 differing
+C8T1S5I8N5K: initial mine 163002 patterns, 0 differing; then 9 increments on the same path (8 both rescan, 1 both direct), 0 differing
+TAFENG: initial mine 399 patterns, 0 differing; then 51 increments on the same path (29 both rescan, 22 both direct), 0 differing
+Pre-HUSPM's tracking on the proposal's miner against PreHUSPMAlgorithm: 587817 patterns after the initial mines and 8290152 over the increments compared, 0 differing

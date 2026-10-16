@@ -1,0 +1,16 @@
+rule=joint trials=2000 seed=7 ops=20000 per-kind={insert=20000} direct-update={insert=7563} mismatching-ops=0 {} trials-with-mismatch=0
+bound invariant B(X) >= u(X): 459454 tracked patterns checked, 0 operations breaking it
+rule=pre_swumax trials=2000 seed=7 ops=20000 per-kind={insert=20000} direct-update={insert=6756} mismatching-ops=0 {} trials-with-mismatch=0
+bound invariant B(X) >= u(X): 459694 tracked patterns checked, 0 operations breaking it
+rule=joint trials=5000 seed=11 ops=50000 per-kind={insert=50000} direct-update={insert=18522} mismatching-ops=0 {} trials-with-mismatch=0
+bound invariant B(X) >= u(X): 1175579 tracked patterns checked, 0 operations breaking it
+rule=pre_swumax trials=5000 seed=11 ops=50000 per-kind={insert=50000} direct-update={insert=16645} mismatching-ops=0 {} trials-with-mismatch=0
+bound invariant B(X) >= u(X): 1176489 tracked patterns checked, 0 operations breaking it
+rule=joint trials=5000 seed=23 ops=50000 per-kind={insert=50000} direct-update={insert=18600} mismatching-ops=0 {} trials-with-mismatch=0
+bound invariant B(X) >= u(X): 1162719 tracked patterns checked, 0 operations breaking it
+rule=pre_swumax trials=5000 seed=23 ops=50000 per-kind={insert=50000} direct-update={insert=16731} mismatching-ops=0 {} trials-with-mismatch=0
+bound invariant B(X) >= u(X): 1163380 tracked patterns checked, 0 operations breaking it
+rule=joint trials=5000 seed=101 ops=50000 per-kind={insert=50000} direct-update={insert=18531} mismatching-ops=0 {} trials-with-mismatch=0
+bound invariant B(X) >= u(X): 1161257 tracked patterns checked, 0 operations breaking it
+rule=pre_swumax trials=5000 seed=101 ops=50000 per-kind={insert=50000} direct-update={insert=16586} mismatching-ops=0 {} trials-with-mismatch=0
+bound invariant B(X) >= u(X): 1162037 tracked patterns checked, 0 operations breaking it

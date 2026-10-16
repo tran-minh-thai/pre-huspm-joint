@@ -1,0 +1,16 @@
+{
+  "command": "java -Dadapt.plainFloor=true -Xmx24g -Xss64m -cp build-v30 verify.DirectPathVerifier ALL --adversarial --ops 16 --out results/verify-joint/plain-floor-adversarial",
+  "path_substitutions": 0,
+  "build_dir": "build-v30",
+  "git_commit": "8ec22b15885935e9727b90e23112a4b04c10c82c",
+  "tree": "src clean, other files modified",
+  "source_sha256": "af11aa55a92dd24952bf83dbc3d939fe122bb351018ec6cccf1df8b266775808",
+  "source_files": 36,
+  "java": "openjdk version \"26.0.1\" 2026-04-21",
+  "os": "Darwin 27.0.0 (macOS-27.0.1-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-10-16T16:08:33",
+  "end": "2026-10-16T16:30:52",
+  "exit_code": 0
+}
