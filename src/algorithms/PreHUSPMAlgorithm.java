@@ -433,6 +433,52 @@ public class PreHUSPMAlgorithm {
             return out;
         }
 
+        /**
+         * The removal of removeSmallItems (Algorithm 3 line 13) for another miner: the database
+         * without every item whose Definition 8 SWU is below absSl, sequences left empty dropped.
+         * Used by the proposal's tracking in Pre-HUSPM's manner (PreHUSPMAdaptiveAlgo.Tracking.PREHUSPM);
+         * verify.PreHuspmTrackingCheck checks that the two give the same buffer.
+         */
+        public static List<Sequence> withoutItemsBelowSwu(List<Sequence> db, double absSl) {
+            int maxItem = -1;
+            for (Sequence s : db) {
+                if (s.flatItems == null) s.buildFlatRepresentation();
+                for (int k = 0; k < s.flatLen; k++) if (s.flatItems[k] > maxItem) maxItem = s.flatItems[k];
+            }
+            if (maxItem < 0) return db;
+            double[] swu = new double[maxItem + 1];
+            int[] seen = new int[maxItem + 1];
+            for (int i = 0; i < db.size(); i++) {
+                Sequence s = db.get(i);
+                int[] fi = s.flatItems;
+                for (int k = 0; k < s.flatLen; k++) {
+                    int it = fi[k];
+                    if (seen[it] != i + 1) { seen[it] = i + 1; swu[it] += s.sequenceUtility; }
+                }
+            }
+            boolean[] small = new boolean[maxItem + 1];
+            int removed = 0;
+            for (int it = 0; it <= maxItem; it++)
+                if (seen[it] != 0 && swu[it] < absSl) { small[it] = true; removed++; }
+            if (removed == 0) return db;
+            List<Sequence> out = new ArrayList<>(db.size());
+            for (Sequence s : db) {
+                boolean touched = false;
+                for (int k = 0; k < s.flatLen && !touched; k++) touched = small[s.flatItems[k]];
+                if (!touched) { out.add(s); continue; }
+                Sequence r = new Sequence(s.id);
+                for (QItemset is : s.itemsets) {
+                    QItemset ni = new QItemset();
+                    for (QItem q : is.items) if (!small[q.id]) ni.items.add(q);
+                    if (!ni.items.isEmpty()) r.itemsets.add(ni);
+                }
+                if (r.itemsets.isEmpty()) continue;
+                r.buildFlatRepresentation();
+                out.add(r);
+            }
+            return out;
+        }
+
         /** Derives largeMap (HUSP) and prelargeMap (PSWU, Definition 12) from the buffer. */
         private void deriveMaps(double absSu, double absSl) {
             largeMap.clear(); prelargeMap.clear();

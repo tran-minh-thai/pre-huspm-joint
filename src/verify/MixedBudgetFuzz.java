@@ -98,10 +98,10 @@ public class MixedBudgetFuzz {
                 boolean ok = rs.keySet().equals(gs.keySet());
                 if (ok) for (String k : rs.keySet()) if (Math.abs(rs.get(k) - gs.get(k)) > 1e-9) { ok = false; break; }
                 if (!ok) { bad++; trialBad = true; badBy.merge(op + (algo.rescanCount == before ? "/direct" : "/rescan"), 1, Integer::sum); }
-                // Tracking by the bound (-Dadapt.tracking=peu) rests on B(X) >= u(X) for every
+                // Pre-HUSPM's tracking (-Dadapt.tracking=prehuspm) rests on B(X) >= u(X) for every
                 // tracked X; a stale bound breaks it long before a pattern is missed, so the
                 // invariant is checked directly after every operation.
-                if (algo.tracking == PreHUSPMAdaptiveAlgo.Tracking.PEU) {
+                if (algo.tracking == PreHUSPMAdaptiveAlgo.Tracking.PREHUSPM) {
                     Map<?, Double> tracked = algo.trackedUtilities();
                     boundChecked += tracked.size();
                     boolean held = algo.trackedBound.size() == tracked.size();

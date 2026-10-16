@@ -115,7 +115,7 @@ $subset3 = @('SIGN','LEVIATHAN','C8T1S5I8N5K')
 $mixedSets = @('SIGN','LEVIATHAN','C8T1S5I8N5K','TAFENG')
 $static  = @('USpan','HUSP-ULL','HUSP-SP','IncUSP-Miner+','Pre-HUSPM','Adaptive-Full','Joint-miner@UUT')
 $incr    = @('Adaptive-Full','Pre-HUSPM-SWUmax','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+',
-             'Remine-HUSP-ULL','Remine-HUSP-SP','Joint-miner+SWUmax','Joint-miner+TSU','Joint-rule+SWU-tracking',
+             'Remine-HUSP-ULL','Remine-HUSP-SP','Joint-miner+SWUmax','Joint-miner+TSU','Joint-rule+PreHUSPM-tracking','Joint-miner+SWUmax+PreHUSPM-tracking',
              'Adaptive-FloorSelect','Remine-own-UUT','Joint-rule+plain-floor')
 # SC5 runs the method, its fixed-floor row, the four arms SC2 started with and the remining arms.
 $sc5     = @('Adaptive-Full','Pre-HUSPM-SWUmax','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+',
@@ -184,7 +184,7 @@ if (-not $Datasets) {
 # array parameter the whole comma-joined string, so -Algorithms A,B arrives as one name
 # "A,B", which matches no algorithm. Use -Command "& { .\campaign.ps1 -Algorithms 'A','B' }".
 $knownAlgos = @('Adaptive-Full','Pre-HUSPM','Pre-HUSPM-SWUmax','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+',
-                'Remine-HUSP-ULL','Remine-HUSP-SP','Joint-miner+SWUmax','Joint-miner+TSU','Joint-rule+SWU-tracking',
+                'Remine-HUSP-ULL','Remine-HUSP-SP','Joint-miner+SWUmax','Joint-miner+TSU','Joint-rule+PreHUSPM-tracking','Joint-miner+SWUmax+PreHUSPM-tracking',
                 'Adaptive-FloorSelect','Remine-own-UUT','Joint-rule+plain-floor','Joint-miner@UUT',
                 'Adaptive-FloorSelect-w1','Adaptive-FloorSelect-w2','Adaptive-FloorSelect-w3','Adaptive-FloorSelect-w10',
                 'USpan','HUSP-ULL','HUSP-SP',

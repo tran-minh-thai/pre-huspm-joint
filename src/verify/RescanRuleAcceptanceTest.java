@@ -30,7 +30,7 @@ import java.util.Map;
  *   T7  The two Pre-HUSPM tests in front of the joint tracking (rules pre_swumax and
  *       pre_tsu): the insertion cases of T1, T2 and T6, with the direct updates they take
  *       counted, and a deletion and a modification refused.
- *   T8  Tracking by the PEU bound under the joint rule (-Dadapt.tracking=peu): the same
+ *   T8  Pre-HUSPM's tracking under the joint rule (-Dadapt.tracking=prehuspm): the same
  *       insertion cases, the tracked set holding every pattern the utility tracking holds,
  *       and a deletion, a modification and a rule other than joint refused.
  *   T9  The rescan floor selection (-Dadapt.floorWindow=w): batches that each exceed the low
@@ -391,21 +391,21 @@ public final class RescanRuleAcceptanceTest {
     }
 
     // ================================================================
-    // T8 - tracking by the PEU bound under the joint rule
+    // T8 - Pre-HUSPM's tracking under the joint rule
     // ================================================================
-    private static PreHUSPMAdaptiveAlgo peuAlgo() {
+    private static PreHUSPMAdaptiveAlgo preHuspmTrackingAlgo() {
         PreHUSPMAdaptiveAlgo a = newAlgo(TriggerRule.JOINT);
-        a.tracking = PreHUSPMAdaptiveAlgo.Tracking.PEU;
+        a.tracking = PreHUSPMAdaptiveAlgo.Tracking.PREHUSPM;
         return a;
     }
 
     private static void testPeuTracking() {
-        System.out.println("T8 - tracking by the PEU bound under the joint rule, insertions");
+        System.out.println("T8 - Pre-HUSPM's tracking under the joint rule, insertions");
         // T1's batch
         List<Sequence> init = insertInit();
         List<Sequence> batch = insertBatch(init);
         List<Sequence> all = SyntheticDb.concat(init, batch);
-        PreHUSPMAdaptiveAlgo a = peuAlgo();
+        PreHUSPMAdaptiveAlgo a = preHuspmTrackingAlgo();
         a.runInitialMining(copyOf(init), SyntheticDb.tsu(init));
         PreHUSPMAdaptiveAlgo u = newAlgo(TriggerRule.JOINT);
         u.runInitialMining(copyOf(init), SyntheticDb.tsu(init));
@@ -424,7 +424,7 @@ public final class RescanRuleAcceptanceTest {
         List<Sequence> i2 = SyntheticDb.db("1[19] | 2[31]", "2[50]");
         List<Sequence> b1 = SyntheticDb.db("1[4]"), b2 = SyntheticDb.db("1[4]");
         List<Sequence> after1 = SyntheticDb.concat(i2, b1), after2 = SyntheticDb.concat(after1, b2);
-        PreHUSPMAdaptiveAlgo t2 = peuAlgo();
+        PreHUSPMAdaptiveAlgo t2 = preHuspmTrackingAlgo();
         t2.runInitialMining(copyOf(i2), SyntheticDb.tsu(i2));
         int direct = 0, before = t2.rescanCount;
         t2.runIncrementalMining(copyOf(b1), copyOf(after1), SyntheticDb.tsu(after1));
@@ -443,7 +443,7 @@ public final class RescanRuleAcceptanceTest {
         List<Sequence> t0 = SyntheticDb.db("2[50]", "1[19] | 2[31]");
         List<Sequence> tb = SyntheticDb.db("2[5]");
         List<Sequence> ta = SyntheticDb.concat(t0, tb);
-        PreHUSPMAdaptiveAlgo tight = peuAlgo();
+        PreHUSPMAdaptiveAlgo tight = preHuspmTrackingAlgo();
         tight.runInitialMining(copyOf(t0), SyntheticDb.tsu(t0));
         before = tight.rescanCount;
         tight.runIncrementalMining(copyOf(tb), copyOf(ta), SyntheticDb.tsu(ta));
@@ -456,7 +456,7 @@ public final class RescanRuleAcceptanceTest {
         SyntheticDb.resetIds();
         List<Sequence> cur = fillers("1[22.7]", 8, 9);
         cur.add(SyntheticDb.seq("30[5.3]"));
-        PreHUSPMAdaptiveAlgo t6 = peuAlgo();
+        PreHUSPMAdaptiveAlgo t6 = preHuspmTrackingAlgo();
         t6.runInitialMining(copyOf(cur), SyntheticDb.tsu(cur));
         for (String spec : new String[]{"50[3]", "1[6]"}) {
             List<Sequence> ins = SyntheticDb.db(spec);
@@ -473,7 +473,7 @@ public final class RescanRuleAcceptanceTest {
         boolean delRefused = false, modRefused = false, ruleRefused = false;
         SyntheticDb.resetIds();
         List<Sequence> c = fillers("1[19]", 9, 9);
-        PreHUSPMAdaptiveAlgo r = peuAlgo();
+        PreHUSPMAdaptiveAlgo r = preHuspmTrackingAlgo();
         r.runInitialMining(copyOf(c), SyntheticDb.tsu(c));
         List<Sequence> victims = new ArrayList<>(c.subList(1, 2));
         try { r.runDeletion(victims, copyOf(c), SyntheticDb.tsu(c)); }
@@ -481,7 +481,7 @@ public final class RescanRuleAcceptanceTest {
         try { r.runModification(victims, SyntheticDb.db("1[6]"), copyOf(c), SyntheticDb.tsu(c)); }
         catch (UnsupportedOperationException e) { modRefused = true; }
         PreHUSPMAdaptiveAlgo other = newAlgo(TriggerRule.IAUMAX);
-        other.tracking = PreHUSPMAdaptiveAlgo.Tracking.PEU;
+        other.tracking = PreHUSPMAdaptiveAlgo.Tracking.PREHUSPM;
         other.runInitialMining(copyOf(c), SyntheticDb.tsu(c));
         try { other.runIncrementalMining(SyntheticDb.db("1[6]"), copyOf(c), SyntheticDb.tsu(c)); }
         catch (UnsupportedOperationException e) { ruleRefused = true; }
@@ -532,7 +532,7 @@ public final class RescanRuleAcceptanceTest {
         catch (UnsupportedOperationException e) { refusedRule = true; }
         PreHUSPMAdaptiveAlgo c = newAlgo(TriggerRule.JOINT);
         c.floorWindow = 2;
-        c.tracking = PreHUSPMAdaptiveAlgo.Tracking.PEU;
+        c.tracking = PreHUSPMAdaptiveAlgo.Tracking.PREHUSPM;
         c.runInitialMining(copyOf(cur), SyntheticDb.tsu(cur));
         try { c.runIncrementalMining(SyntheticDb.db("1[10]"), copyOf(cur), SyntheticDb.tsu(cur)); }
         catch (UnsupportedOperationException e) { refusedTracking = true; }

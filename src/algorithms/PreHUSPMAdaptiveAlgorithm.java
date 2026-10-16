@@ -560,29 +560,31 @@ public class PreHUSPMAdaptiveAlgorithm {
         /**
          * What the tracked set holds.
          *
-         * UTILITY  Default: a pattern is tracked while its exact utility stays at or above its
-         *          floor (L_r after a rescan, JOINT's per-pattern floor after a direct update).
-         * PEU      Tracked by an upper bound, as Pre-HUSPM's buffer is (its SWU_proj, summed per
-         *          sequence as the largest prefix utility plus rest utility): a rescan tracks
-         *          every node whose bound IUB reaches L_r, i.e. every node the miner expands,
-         *          with B(X) = IUB(X) as the miner computes it; a direct insertion adds
-         *          u(X, batch) to u(X) and PEU(X, batch) to B(X), and drops X only when
-         *          B(X) < L_r + min_{i in X} A_i. The search is the same; only the recording and
-         *          the drop test change, so the cost of tracking by a bound is measured apart
-         *          from the miner. Sound under JOINT: B(X) >= u(X) always, so a dropped pattern
-         *          satisfies JOINT's invariant u(X) < L_r + min_i A_i, and every pattern the
-         *          UTILITY tracking would hold is held. Insertions under JOINT only; set with
-         *          -Dadapt.tracking=peu.
+         * UTILITY   Default: a pattern is tracked while its exact utility stays at or above its
+         *           floor (L_r after a rescan, JOINT's per-pattern floor after a direct update).
+         * PREHUSPM  Tracked as Pre-HUSPM's buffer is (Yan et al. 2025; PreHUSPMAlgorithm): a mine
+         *           first drops every item whose Definition 8 SWU is below L_r (Algorithm 3 line 13),
+         *           then runs without irrelevant item pruning, and tracks every pattern whose SWU on
+         *           the projected database (per sequence the largest prefix utility plus rest
+         *           utility, summed: the bound IUB of the miner on the reduced database) reaches L_r,
+         *           with that bound B(X). A direct insertion adds u(X, batch) to u(X) and the
+         *           projected SWU of X in the batch to B(X), and drops X only when
+         *           B(X) < L_r + min_{i in X} A_i. Only the recording and the drop test differ from
+         *           UTILITY, so the cost of Pre-HUSPM's tracking is measured on the proposal's miner.
+         *           Exact under JOINT and Pre-HUSPM's tests: B(X) >= u(X), so a dropped pattern
+         *           satisfies the invariant u(X) < L_r + min_i A_i. Insertions only; set with
+         *           -Dadapt.tracking=prehuspm. verify.PreHuspmTrackingCheck checks that a mine tracks
+         *           the same patterns with the same bounds as PreHUSPMAlgorithm's buffer.
          */
-        public enum Tracking { UTILITY, PEU }
+        public enum Tracking { UTILITY, PREHUSPM }
 
         public Tracking tracking = parseTracking(System.getProperty("adapt.tracking", "utility"));
 
         private static Tracking parseTracking(String s) {
             switch (s.trim().toLowerCase(java.util.Locale.ROOT)) {
                 case "utility": return Tracking.UTILITY;
-                case "peu":     return Tracking.PEU;
-                default: throw new IllegalArgumentException("adapt.tracking must be utility|peu, got: " + s);
+                case "prehuspm": return Tracking.PREHUSPM;
+                default: throw new IllegalArgumentException("adapt.tracking must be utility|prehuspm, got: " + s);
             }
         }
 
@@ -593,19 +595,19 @@ public class PreHUSPMAdaptiveAlgorithm {
             return m;
         }
 
-        /** PEU tracking: B(X) of every tracked pattern. */
+        /** Tracking.PREHUSPM: B(X) of every tracked pattern. */
         public final Map<CompactPattern, Double> trackedBound = new HashMap<>();
-        /** PEU tracking: bounds of the nodes recorded by the mine in progress; null otherwise. */
+        /** Tracking.PREHUSPM: bounds of the nodes recorded by the mine in progress; null otherwise. */
         private Map<CompactPattern, Double> minedBounds = null;
         /** PEU of the pattern in the sequence of the last calculateExactUtilityInSeq call. */
         private double lastSeqPeu = 0;
 
         private void refuseUnderPeuTracking(String op) {
-            if (tracking == Tracking.PEU && triggerRule != TriggerRule.JOINT)
-                throw new UnsupportedOperationException("PEU tracking is defined under the JOINT rule only, not "
-                        + triggerRule);
-            if (tracking == Tracking.PEU && op != null)
-                throw new UnsupportedOperationException("PEU tracking is defined for insertions only; " + op
+            if (tracking == Tracking.PREHUSPM && !jointTracking())
+                throw new UnsupportedOperationException("Pre-HUSPM's tracking is defined under JOINT and Pre-HUSPM's "
+                        + "tests, not " + triggerRule);
+            if (tracking == Tracking.PREHUSPM && op != null)
+                throw new UnsupportedOperationException("Pre-HUSPM's tracking is defined for insertions only; " + op
                         + " is refused");
         }
 
@@ -737,6 +739,17 @@ public class PreHUSPMAdaptiveAlgorithm {
             java.util.Map<String, Double> out = new java.util.HashMap<>(largeMap.size() * 2);
             for (Map.Entry<CompactPattern, Double> e : largeMap.entrySet()) {
                 out.put(e.getKey().toPattern().toIntuitiveString(), e.getValue());
+            }
+            return out;
+        }
+
+        /** Every tracked pattern with {utility, bound} (the bound only under Tracking.PREHUSPM, else NaN). */
+        public java.util.Map<String, double[]> exportTrackedWithBounds() {
+            java.util.Map<String, double[]> out = new java.util.HashMap<>();
+            for (Map.Entry<CompactPattern, Double> e : trackedUtilities().entrySet()) {
+                Double b = trackedBound.get(e.getKey());
+                out.put(e.getKey().toPattern().toIntuitiveString(),
+                        new double[]{e.getValue(), b == null ? Double.NaN : b});
             }
             return out;
         }
@@ -1171,7 +1184,7 @@ public class PreHUSPMAdaptiveAlgorithm {
                 largeMap.clear(); prelargeMap.clear();
                 blocksReadCount = 0;
 
-                final boolean byBound = tracking == Tracking.PEU;
+                final boolean byBound = tracking == Tracking.PREHUSPM;
                 final double[] peuGain = new double[1];
                 Map<CompactPattern, Double> newBounds = byBound ? new HashMap<>() : null;
                 for (CompactPattern p : allTrackedPatterns) {
@@ -1859,7 +1872,7 @@ public class PreHUSPMAdaptiveAlgorithm {
             }
 
             if (minedBounds != null ? IUB >= minThreshold : exactUtilityD >= minThreshold) {
-                // Every pattern that reaches the cutoff is kept (under PEU tracking: every node
+                // Every pattern that reaches the cutoff is kept (under Tracking.PREHUSPM: every node
                 // whose bound reaches it). A tracked set too large for the heap ends the run with
                 // an out-of-memory status; dropping patterns instead would break exactness, since
                 // an untracked pattern above the floor is never revisited.
@@ -2405,13 +2418,36 @@ public class PreHUSPMAdaptiveAlgorithm {
         }
 
         private void mineAndClassify(List<Sequence> db, double uut, double lut) {
-            minedBounds = (tracking == Tracking.PEU) ? new HashMap<>() : null;
+            if (tracking == Tracking.PREHUSPM) { mineAndClassifyAsPreHuspm(db, uut, lut); return; }
+            minedBounds = null;
+            Map<CompactPattern, Double> all = mineBatchWithIUB(db, lut);
+            for (Map.Entry<CompactPattern, Double> e : all.entrySet()) {
+                if (e.getValue() >= uut) largeMap.put(e.getKey(), e.getValue());
+                else prelargeMap.put(e.getKey(), e.getValue());
+            }
+            this.patternCount = largeMap.size(); this.prelargeCount = prelargeMap.size();
+        }
+
+        /**
+         * Tracking.PREHUSPM: drops the items of Definition 8 SWU below lut (as PreHUSPMAlgorithm
+         * does at a rescan), mines the reduced database with no irrelevant item pruning, and records
+         * every node whose bound reaches lut with that bound. The miner reads sequences by id, so
+         * the reduced sequences stand in for the full ones during the mine and are put back after.
+         */
+        private void mineAndClassifyAsPreHuspm(List<Sequence> db, double uut, double lut) {
+            iipMode = IipMode.OFF;
+            List<Sequence> reduced = algorithms.PreHUSPMAlgorithm.PreHUSPMAlgo.withoutItemsBelowSwu(db, lut);
+            Map<Integer, Sequence> full = new HashMap<>();
+            for (Sequence s : db) full.put(s.id, s);
+            for (Sequence r : reduced) if (r != full.get(r.id)) dbPut(r.id, r);
+            minedBounds = new HashMap<>();
             Map<CompactPattern, Double> all;
             try {
-                all = mineBatchWithIUB(db, lut);
-                if (minedBounds != null) { trackedBound.clear(); trackedBound.putAll(minedBounds); }
+                all = mineBatchWithIUB(reduced, lut);
+                trackedBound.clear(); trackedBound.putAll(minedBounds);
             } finally {
                 minedBounds = null;
+                for (Sequence r : reduced) if (r != full.get(r.id)) dbPut(r.id, full.get(r.id));
             }
             for (Map.Entry<CompactPattern, Double> e : all.entrySet()) {
                 if (e.getValue() >= uut) largeMap.put(e.getKey(), e.getValue());

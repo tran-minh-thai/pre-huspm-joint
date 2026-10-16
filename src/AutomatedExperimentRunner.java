@@ -1750,12 +1750,17 @@ public class AutomatedExperimentRunner {
         if (algoEnabled("Joint-miner+TSU")) runAdaptiveStream("Joint-miner+TSU",
                 PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.TriggerRule.PRE_TSU, null, 0, dsName, Su, dInit, batches, col, tag);
 
-        // -------- The joint rule with Pre-HUSPM's tracking by a bound (SWU_proj = PEU) --------
-        // Same miner, same search, same rule as Adaptive-Full; the tracked set holds every node
-        // whose bound reaches the floor, and a pattern is dropped by its bound
-        // (PreHUSPMAdaptiveAlgo.Tracking.PEU).
-        if (algoEnabled("Joint-rule+SWU-tracking")) runAdaptiveStream("Joint-rule+SWU-tracking", null,
-                PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.Tracking.PEU, 0, dsName, Su, dInit, batches, col, tag);
+        // -------- Pre-HUSPM's tracking on the proposal's miner --------
+        // The tracked set is Pre-HUSPM's buffer: a mine drops the items below the floor by
+        // Definition 8 SWU and tracks every pattern whose SWU on the projected database reaches the
+        // floor, with that bound; a pattern is dropped by its bound (PreHUSPMAdaptiveAlgo.Tracking.PREHUSPM).
+        // Under the joint rule, and under Pre-HUSPM's SWUmax test (the arm with both of Pre-HUSPM's
+        // maintenance components on the proposal's miner).
+        if (algoEnabled("Joint-rule+PreHUSPM-tracking")) runAdaptiveStream("Joint-rule+PreHUSPM-tracking", null,
+                PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.Tracking.PREHUSPM, 0, dsName, Su, dInit, batches, col, tag);
+        if (algoEnabled("Joint-miner+SWUmax+PreHUSPM-tracking")) runAdaptiveStream("Joint-miner+SWUmax+PreHUSPM-tracking",
+                PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.TriggerRule.PRE_SWUMAX,
+                PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.Tracking.PREHUSPM, 0, dsName, Su, dInit, batches, col, tag);
 
         // -------- The joint rule with the plain discard floor L_ref (no min_i A_i term) --------
         if (algoEnabled(PLAIN_FLOOR_ARM)) runAdaptiveStream(PLAIN_FLOOR_ARM, null, null, 0, dsName, Su, dInit,
@@ -1853,7 +1858,7 @@ public class AutomatedExperimentRunner {
         // delta0 have no effect, so they are written as NaN rather than as a value that looks
         // like a setting.
         m.triggerRule   = adp.triggerRule.name().toLowerCase(java.util.Locale.ROOT)
-                + (adp.tracking == PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.Tracking.PEU ? "+peu_tracking" : "");
+                + (adp.tracking == PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.Tracking.PREHUSPM ? "+prehuspm_tracking" : "");
         if (adp.triggerRule == PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.TriggerRule.JOINT) {
             m.kappa = Double.NaN; m.delta0 = Double.NaN;
         }
