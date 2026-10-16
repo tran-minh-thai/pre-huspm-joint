@@ -1467,6 +1467,75 @@ def repeated_sequence_keys(put):
     put("BMS1_repeated_in_d_init", int(holders["in_d_init"].sum()), src)
     put("BMS1_repeated_share_of_tu_pct", half_up(100 * holders["utility"].sum() / tu), src)
 
+
+# ------------------------------------------------------------------------------ SC2 inference
+BOOTSTRAP_RESAMPLES = 10_000
+BOOTSTRAP_SEED = 20261016
+
+
+def _sc2_run_totals():
+    """(database, arm) -> SC2 time summed over the increments, one value per replicate that
+    finished every increment."""
+    df = mf.load_scenario("SC2", replicates=True)
+    inc = df[mf.is_inc(df)]
+    return {k: v for k, v in _run_totals(inc, ["dataset"]).items() if v}
+
+
+def bootstrap_ratio(a, b, resamples=BOOTSTRAP_RESAMPLES, seed=BOOTSTRAP_SEED):
+    """95% percentile interval of mean(a) / mean(b), each side resampled with replacement on
+    its own (the runs of two arms are independent)."""
+    rng = np.random.default_rng(seed)
+    a, b = np.asarray(a, float), np.asarray(b, float)
+    ra = rng.choice(a, size=(resamples, len(a)), replace=True).mean(axis=1)
+    rb = rng.choice(b, size=(resamples, len(b)), replace=True).mean(axis=1)
+    lo, hi = np.percentile(ra / rb, [2.5, 97.5])
+    return float(lo), float(hi)
+
+
+def sign_test_p(wins, n):
+    """One-sided sign test: the probability of at least `wins` successes in n fair coin tosses."""
+    from math import comb
+    return sum(comb(n, i) for i in range(wins, n + 1)) / 2 ** n
+
+
+def sc2_inference(put, out):
+    """Every SC2 arm against the method, per database: the ratio of the mean times (arm over
+    method), the arm's fastest run over the method's slowest, a bootstrap interval for the ratio,
+    and the runs behind each side; then a one-sided sign test over the streams for 'the method is
+    faster than its closest competitor on every stream'."""
+    T = _sc2_run_totals()
+    rivals = [a for a in SC2_ARMS + ["Remine-own-UUT"] if a != P]
+    rows = []
+    for d in [x for x in WIN_ORDER if (x, P) in T]:
+        p = T[(d, P)]
+        for a in rivals + ISOLATION_ARMS + [FIXED]:
+            if (d, a) not in T:
+                continue
+            q = T[(d, a)]
+            lo, hi = bootstrap_ratio(q, p)
+            rows.append(dict(dataset=d, arm=a, competitor=a in rivals, runs_method=len(p), runs_arm=len(q),
+                             method_s=np.mean(p), arm_s=np.mean(q), ratio=np.mean(q) / np.mean(p),
+                             fastest_over_slowest=min(q) / max(p), ci_low=lo, ci_high=hi))
+    t = pd.DataFrame(rows)
+    mf.write_csv(t, os.path.join(out, "table_SC2_inference.csv"))
+    src = "table_SC2_inference.csv"
+    for r in t.itertuples():
+        b = f"SC2_inference_{r.arm}_over_proposal_{r.dataset}"
+        put(f"{b}_ratio", f"{r.ratio:.2f}", src)
+        put(f"{b}_fastest_over_slowest", f"{r.fastest_over_slowest:.2f}", src)
+        put(f"{b}_ci95", f"{r.ci_low:.2f} to {r.ci_high:.2f}", src)
+        put(f"{b}_runs", f"{r.runs_arm} and {r.runs_method}", src)
+    comp = t[t["competitor"]]
+    closest = comp.loc[comp.groupby("dataset")["ratio"].idxmin()]
+    wins = int((closest["ratio"] > 1).sum())
+    put("SC2_sign_test_streams", f"{wins}/{len(closest)}", src)
+    put("SC2_sign_test_p", f"{sign_test_p(wins, len(closest)):.4f}", src)
+    for r in closest.itertuples():
+        put(f"SC2_inference_closest_{r.dataset}", f"{r.arm}: {r.ratio:.2f}, fastest over slowest "
+            f"{r.fastest_over_slowest:.2f}, interval {r.ci_low:.2f} to {r.ci_high:.2f} "
+            f"({r.runs_arm} and {r.runs_method} runs)", src)
+    return t
+
 def half_up(value, digits=2):
     """value to the given decimals, rounded half up on its decimal string: in binary 8.995
     lies just below itself and would print 8.99."""
@@ -1651,6 +1720,7 @@ def export_all(out_dir=None):
                 f"{r.remine_over_proposal:.2f}", "table_SC6_by_op.csv")
     mixed_floor_keys(put)
     window_study(put, out)
+    sc2_inference(put, out)
 
     # The mixed streams with every remining arm: SC6 (table_SC6_by_op_arms.csv beside the
     # table above, which keeps its form), SC6D and SC6B.
