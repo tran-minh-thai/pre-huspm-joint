@@ -20,7 +20,8 @@ scenario are in `docs/campaign-parameters.md`; column definitions are in
 | `Adaptive-FloorSelect-w<n>`, n in {1, 2, 3, 10} | `Adaptive-FloorSelect` with window `w = n`, for the sensitivity to `w`; run only when named (`-Dalgo.only`, or `campaign.ps1 -WindowSweep`); SC2, SC5 and the mixed streams | - | `PreHUSPMAdaptiveAlgorithm`, `floorWindow` |
 | `Remine-own-UUT` | the proposal's own miner on the whole current database after every operation at UUT (lower threshold ratio 1, no pre-large patterns), as the proposal's rescans at `lambda = UUT` mine; a new instance each time; SC2, SC5 and the mixed streams | - | `PreHUSPMAdaptiveAlgorithm`, `runInitialMining` with ratio 1 |
 | `Joint-miner@UUT` | the proposal's miner in one static mine with its cutoff at UUT, the cutoff of HUSP-ULL and HUSP-SP; SC1 and SC3 | - | `PreHUSPMAdaptiveAlgorithm`, `runInitialMining` with ratio 1 |
-| `Joint-rule+plain-floor` | the proposal at the fixed lower threshold with the discard floor `L_ref` alone, without `min_{i in X} A_i`; exact, since it drops no pattern the proposal keeps; SC2 and SC6 | - | `PreHUSPMAdaptiveAlgorithm`, `plainFloor` (`-Dadapt.plainFloor=true`) |
+| `Joint-rule+min-floor` | the proposal at the fixed lower threshold with the discard floor `L_ref + min_{i in X} A_i` instead of `L_ref + max_{i in X} A_i`; exact, since it drops no pattern the proposal keeps; SC2 and SC6 | - | `PreHUSPMAdaptiveAlgorithm`, `Floor.MIN` (`-Dadapt.floor=min`) |
+| `Joint-rule+plain-floor` | the proposal at the fixed lower threshold with the discard floor `L_ref` alone, without a counter term; exact, since it drops no pattern the proposal keeps; SC2 and SC6 | - | `PreHUSPMAdaptiveAlgorithm`, `Floor.PLAIN` (`-Dadapt.floor=plain`) |
 | `Joint-rule+PreHUSPM-tracking` | the proposal with its tracking by utility replaced by Pre-HUSPM's tracking: a mine first drops every item whose Definition 8 SWU is below `L_r` (Algorithm 3, line 13, of Yan et al.), then mines without irrelevant item pruning and tracks every pattern whose SWU on the projected database reaches `L_r`, with that bound; a direct insertion adds the pattern's utility and projected SWU in the batch, and a pattern is dropped when its bound falls below the discard floor; miner, search and rule unchanged; SC2 (insertions only). `verify.PreHuspmTrackingCheck` checks that it tracks the patterns and bounds of `PreHUSPMAlgorithm`'s own buffer | Yan et al., Definition 12 and the worked example of their Section 5 | `PreHUSPMAdaptiveAlgorithm`, `Tracking.PREHUSPM` (`-Dadapt.tracking=prehuspm`) |
 | `Joint-miner+SWUmax+PreHUSPM-tracking` | the same tracking with Pre-HUSPM's SWUmax test in place of the joint rule: Pre-HUSPM's maintenance on the proposal's miner; SC2 (insertions only) | Yan et al., Theorem 2 | `PreHUSPMAdaptiveAlgorithm`, `TriggerRule.PRE_SWUMAX`, `Tracking.PREHUSPM` |
 | `USpan` | static baseline, width pruning by SWU and depth pruning by a sound bound | Yin et al., KDD 2012 | `USpanAlgorithm` |
@@ -156,7 +157,8 @@ The rescan rule `joint`: with `I` and `D` the utility inserted and deleted since
 rescan, `A_i` the inserted utility of the sequences containing item `i`, and `TSU_ref` the
 total utility at the last rescan, the proposal rescans when
 `max_i A_i - UUT*I + UUT*D > (UUT - LUT_min) * TSU_ref`, and on an operation that does not
-rescan it drops a tracked pattern `X` only when `u(X) < LUT_min * TSU_ref + min_{i in X} A_i`.
+rescan it drops a tracked pattern `X` only when `u(X) < LUT_min * TSU_ref + max_{i in X} A_i`
+(`-Dadapt.floor=max`; `min` and `plain` select the ablation floors).
 The rules `iaumax`, `cub` and `swumax` remain selectable for comparison only; `iaumax` and
 `swumax` can miss patterns on a direct update. The proposal's `swumax` rule compares the
 utility of the largest single inserted sequence; it is not the `SWUmax` of Yan et al., which
@@ -175,7 +177,7 @@ and KOSARAK's `r_l`, 0.80 if the proposal mines KOSARAK at that floor within 120
 | Scenario | Setup | Databases | Output file |
 |---|---|---|---|
 | SC1 | static mining of `D_init`, four UUT levels, six algorithms | all eight | `SC1_static.csv` |
-| SC2 | `D_init` then `K = 100` equal increments; the proposal, the three remining arms, `Pre-HUSPM-SWUmax`, `Pre-HUSPM-TSU`, IncUSP-Miner+, and the isolation arms `Joint-miner+SWUmax`, `Joint-miner+TSU`, `Joint-rule+PreHUSPM-tracking`, `Joint-miner+SWUmax+PreHUSPM-tracking`, `Joint-rule+plain-floor` | seven (not BMS1) | `SC2_incremental.csv` |
+| SC2 | `D_init` then `K = 100` equal increments; the proposal, the three remining arms, `Pre-HUSPM-SWUmax`, `Pre-HUSPM-TSU`, IncUSP-Miner+, and the isolation arms `Joint-miner+SWUmax`, `Joint-miner+TSU`, `Joint-rule+PreHUSPM-tracking`, `Joint-miner+SWUmax+PreHUSPM-tracking`, `Joint-rule+min-floor`, `Joint-rule+plain-floor` | seven (not BMS1) | `SC2_incremental.csv` |
 | SC3 | static mining of the whole database, four UUT levels, six algorithms | SIGN, LEVIATHAN, C8T1S5I8N5K | `SC3_su.csv` |
 | SC4 | static mining of the whole database at `r_l` in {0.3, 0.5, 0.7, 0.9}, Pre-HUSPM and the proposal at the same `r_l` | SIGN, LEVIATHAN, C8T1S5I8N5K | `SC4_sl_sensitivity.csv` |
 | SC5 | the increments cut EVEN, INCREASING, DECREASING and BURST at `K` in {100, 67, 50, 25}; the SC2 arms | SIGN, LEVIATHAN, C8T1S5I8N5K | `SC5_batch_strategy.csv` |

@@ -39,11 +39,12 @@ INC_ARMS = [P, "Pre-HUSPM-SWUmax", "Pre-HUSPM-TSU", REM, "IncUSP-Miner+"]
 # one component of the proposal (ISOLATION_ARMS) are not competitors and appear in their own table.
 SC2_ARMS = INC_ARMS + ["Remine-HUSP-ULL", "Remine-HUSP-SP"]
 # The proposal with one maintenance component changed: Pre-HUSPM's rescan tests, Pre-HUSPM's
-# tracking (alone and with its SWUmax test), and the discard floor without min_i A_i.
+# tracking (alone and with its SWUmax test), and the discard floor L_ref + min_{i in X} A_i or L_ref
+# alone instead of L_ref + max_{i in X} A_i.
 PREHUSPM_TRACKING = "Joint-rule+PreHUSPM-tracking"
 PREHUSPM_MAINTENANCE = "Joint-miner+SWUmax+PreHUSPM-tracking"
 ISOLATION_ARMS = ["Joint-miner+SWUmax", "Joint-miner+TSU", PREHUSPM_TRACKING, PREHUSPM_MAINTENANCE,
-                  "Joint-rule+plain-floor"]
+                  "Joint-rule+min-floor", "Joint-rule+plain-floor"]
 # In the incremental scenarios P is the method, the proposal with the rescan floor selection
 # (make_figures.load_scenario reads arm Adaptive-FloorSelect as P there); FIXED is the proposal at the
 # fixed floor r_l, kept as an ablation row: a version of the method, not a competitor.
