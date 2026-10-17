@@ -1,18 +1,20 @@
 #!/usr/bin/env python3
-"""List the measured runs whose arm applies the proposal's discard floor, and print the campaign
-commands that measure the same configurations again.
+"""List the measured runs that executed the changed discard floor, and print the campaign commands
+that measure the same configurations again.
 
     python3 analysis/affected_runs.py [--remove] [--extra-arm NAME:LIKE]
 
-An arm applies the discard floor when it is the proposal's incremental algorithm under its own
-discard floor and takes direct updates: every arm of FLOOR_ARMS in the incremental scenarios. The
-floor is never reached by a static mine (SC1, SC3, SC4, SC7's static ablations), by remining
-(Remine-*, a new instance mined from scratch at every operation), by proposed_C5_off (a rescan at
-every increment), by Pre-HUSPM, IncUSP-Miner+ or HUSP-ULL/HUSP-SP, or by Joint-rule+plain-floor,
-whose floor L_ref has no counter term. Within those arms a run that never took a direct update
-(no row with cub_triggered false after the first mine) executed no floor; by default it is
-measured again all the same, so that every table comes from one commit, and --skip-no-direct keeps
-it instead. Such runs are counted either way.
+Compiled without debug information, the floor change leaves 86 of 89 classes identical; in the
+proposal's class it changes the floor (jointFloor) and one field assignment in the constructor,
+and in the runner one assignment of the floor per arm. A run therefore executed changed code in a
+loop only if it evaluated the floor, which happens on a direct update (a row with cub_triggered
+false after the first mine) of an arm in FLOOR_ARMS: the proposal's incremental arms, and
+Joint-rule+plain-floor, whose floor value is unchanged but is now chosen by a switch inside the
+direct-update loop. The floor is never evaluated by a static mine (SC1, SC3, SC4, SC7's static
+ablations), by remining (Remine-*, a new instance mined from scratch at every operation), by
+proposed_C5_off (a rescan at every increment), by Pre-HUSPM, IncUSP-Miner+, HUSP-ULL, HUSP-SP or
+USpan (classes unchanged), nor by a run of a FLOOR_ARMS arm that rescanned at every operation: those
+runs are kept, and counted. --include-no-direct lists the last kind too.
 
 --remove deletes the listed run directories (and their DONE files) so that campaign.ps1 measures
 them again. --extra-arm Joint-rule+min-floor:Joint-rule+plain-floor adds, for a new arm, every
@@ -32,6 +34,7 @@ INCREMENTAL = {"SC2", "SC5", "SC6", "SC6D", "SC6B", "SC7"}
 FLOOR_ARMS = {"Adaptive-Full", "Adaptive-FloorSelect", "Adaptive-FloorSelect-w1", "Adaptive-FloorSelect-w2",
               "Adaptive-FloorSelect-w3", "Adaptive-FloorSelect-w10", "Joint-miner+SWUmax", "Joint-miner+TSU",
               "Joint-rule+PreHUSPM-tracking", "Joint-miner+SWUmax+PreHUSPM-tracking", "Joint-rule+min-floor",
+              "Joint-rule+plain-floor",
               "proposed_C5_on", "proposed_no_block_index", "proposed_bsz_1", "proposed_bsz_5",
               "proposed_bsz_10", "proposed_bsz_50", "proposed_bsz_200"}
 TREES = ["campaign", "campaign-replicates", "campaign-mem", "campaign-mem-replicates",
@@ -81,7 +84,7 @@ def has_direct_update(path):
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--remove", action="store_true")
-    ap.add_argument("--skip-no-direct", action="store_true")
+    ap.add_argument("--include-no-direct", action="store_true")
     ap.add_argument("--extra-arm", action="append", default=[])
     a = ap.parse_args()
     all_runs = list(runs())
@@ -93,14 +96,14 @@ def main():
         extra += [(t, s, sc, ds, new, None) for t, s, sc, ds, arm, _ in all_runs
                   if arm == like and (t, s, sc, ds) not in have]
     no_direct = [r for r in listed if not has_direct_update(r[5])]
-    if a.skip_no_direct:
+    if not a.include_no_direct:
         listed = [r for r in listed if r not in no_direct]
     groups = defaultdict(lambda: defaultdict(set))
     for t, s, sc, ds, arm, _ in listed + extra:
         groups[(t, s, sc)][arm].add(ds)
     print(f"runs of the campaign trees: {len(all_runs)}; to measure again: {len(listed)}, of which without "
-          f"a direct update: {0 if a.skip_no_direct else len(no_direct)}; kept without a direct update: "
-          f"{len(no_direct) if a.skip_no_direct else 0}; configurations added for new arms: {len(extra)}")
+          f"a direct update: {len(no_direct) if a.include_no_direct else 0}; kept without a direct update: "
+          f"{0 if a.include_no_direct else len(no_direct)}; configurations added for new arms: {len(extra)}")
     for (t, s, sc), arms in sorted(groups.items()):
         # one command per set of databases, so no configuration that was not measured is added
         by_sets = defaultdict(list)

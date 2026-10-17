@@ -1,0 +1,50 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC6B]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=3
+
+--- [SC6B] Mixed stream, exactly 14:3:3, one deletion beyond the rescan budget ---
+>> [SC6B] LEVIATHAN seed=31415 opSize=30 plan=20 operations (14 insert, 3 delete, 3 modify; operation 10 deletes 615 sequences beyond the budget)
+>> RUNNING Adaptive-FloorSelect-w1/LEVIATHAN/SC6_INIT#0  (heap free=843MB / total=1024MB / max=49152MB)
+[Adaptive-FloorSelect-w1/LEVIATHAN/SC6_INIT#0] OK t=503ms cand=15377 pat=107 heapDelta=63MB
+>> RUNNING Adaptive-FloorSelect-w1/LEVIATHAN/SC6_INS#1  (heap free=154MB / total=224MB / max=49152MB)
+[Adaptive-FloorSelect-w1/LEVIATHAN/SC6_INS#1] OK t=220ms cand=8907 pat=107 heapDelta=10MB
+>> RUNNING Adaptive-FloorSelect-w1/LEVIATHAN/SC6_MOD#2  (heap free=153MB / total=224MB / max=49152MB)
+[Adaptive-FloorSelect-w1/LEVIATHAN/SC6_MOD#2] OK t=392ms cand=8820 pat=107 heapDelta=19MB
+>> RUNNING Adaptive-FloorSelect-w1/LEVIATHAN/SC6_DEL#3  (heap free=153MB / total=224MB / max=49152MB)
+[Adaptive-FloorSelect-w1/LEVIATHAN/SC6_DEL#3] OK t=228ms cand=24161 pat=107 heapDelta=11MB
+>> RUNNING Adaptive-FloorSelect-w1/LEVIATHAN/SC6_INS#4  (heap free=151MB / total=224MB / max=49152MB)
+[Adaptive-FloorSelect-w1/LEVIATHAN/SC6_INS#4] OK t=161ms cand=8834 pat=106 heapDelta=9MB
+>> RUNNING Adaptive-FloorSelect-w1/LEVIATHAN/SC6_INS#5  (heap free=152MB / total=224MB / max=49152MB)
+[Adaptive-FloorSelect-w1/LEVIATHAN/SC6_INS#5] OK t=164ms cand=8731 pat=106 heapDelta=9MB
+>> RUNNING Adaptive-FloorSelect-w1/LEVIATHAN/SC6_INS#6  (heap free=151MB / total=224MB / max=49152MB)
+[Adaptive-FloorSelect-w1/LEVIATHAN/SC6_INS#6] OK t=165ms cand=8788 pat=108 heapDelta=9MB
+>> RUNNING Adaptive-FloorSelect-w1/LEVIATHAN/SC6_INS#7  (heap free=152MB / total=224MB / max=49152MB)
+[Adaptive-FloorSelect-w1/LEVIATHAN/SC6_INS#7] OK t=163ms cand=8692 pat=106 heapDelta=9MB
+>> RUNNING Adaptive-FloorSelect-w1/LEVIATHAN/SC6_INS#8  (heap free=151MB / total=224MB / max=49152MB)
+[Adaptive-FloorSelect-w1/LEVIATHAN/SC6_INS#8] OK t=169ms cand=8685 pat=107 heapDelta=9MB
+>> RUNNING Adaptive-FloorSelect-w1/LEVIATHAN/SC6_INS#9  (heap free=152MB / total=224MB / max=49152MB)
+[Adaptive-FloorSelect-w1/LEVIATHAN/SC6_INS#9] OK t=170ms cand=8623 pat=107 heapDelta=9MB
+>> RUNNING Adaptive-FloorSelect-w1/LEVIATHAN/SC6_DEL_BIG#10  (heap free=151MB / total=224MB / max=49152MB)
+[Adaptive-FloorSelect-w1/LEVIATHAN/SC6_DEL_BIG#10] OK t=141ms cand=18001 pat=113 heapDelta=6MB
+>> RUNNING Adaptive-FloorSelect-w1/LEVIATHAN/SC6_MOD#11  (heap free=151MB / total=224MB / max=49152MB)
+[Adaptive-FloorSelect-w1/LEVIATHAN/SC6_MOD#11] OK t=343ms cand=9352 pat=118 heapDelta=16MB
+>> RUNNING Adaptive-FloorSelect-w1/LEVIATHAN/SC6_INS#12  (heap free=152MB / total=224MB / max=49152MB)
+[Adaptive-FloorSelect-w1/LEVIATHAN/SC6_INS#12] OK t=146ms cand=9339 pat=118 heapDelta=7MB
+>> RUNNING Adaptive-FloorSelect-w1/LEVIATHAN/SC6_INS#13  (heap free=151MB / total=224MB / max=49152MB)
+[Adaptive-FloorSelect-w1/LEVIATHAN/SC6_INS#13] OK t=149ms cand=9320 pat=119 heapDelta=7MB
+>> RUNNING Adaptive-FloorSelect-w1/LEVIATHAN/SC6_INS#14  (heap free=151MB / total=224MB / max=49152MB)
+[Adaptive-FloorSelect-w1/LEVIATHAN/SC6_INS#14] OK t=148ms cand=9247 pat=119 heapDelta=7MB
+>> RUNNING Adaptive-FloorSelect-w1/LEVIATHAN/SC6_DEL#15  (heap free=150MB / total=224MB / max=49152MB)
+[Adaptive-FloorSelect-w1/LEVIATHAN/SC6_DEL#15] OK t=203ms cand=25312 pat=120 heapDelta=9MB
+>> RUNNING Adaptive-FloorSelect-w1/LEVIATHAN/SC6_INS#16  (heap free=151MB / total=224MB / max=49152MB)
+[Adaptive-FloorSelect-w1/LEVIATHAN/SC6_INS#16] OK t=151ms cand=9341 pat=119 heapDelta=7MB
+>> RUNNING Adaptive-FloorSelect-w1/LEVIATHAN/SC6_INS#17  (heap free=151MB / total=224MB / max=49152MB)
+[Adaptive-FloorSelect-w1/LEVIATHAN/SC6_INS#17] OK t=156ms cand=9621 pat=120 heapDelta=8MB
+>> RUNNING Adaptive-FloorSelect-w1/LEVIATHAN/SC6_INS#18  (heap free=150MB / total=224MB / max=49152MB)
+[Adaptive-FloorSelect-w1/LEVIATHAN/SC6_INS#18] OK t=159ms cand=9674 pat=120 heapDelta=8MB
+>> RUNNING Adaptive-FloorSelect-w1/LEVIATHAN/SC6_INS#19  (heap free=150MB / total=224MB / max=49152MB)
+[Adaptive-FloorSelect-w1/LEVIATHAN/SC6_INS#19] OK t=163ms cand=9640 pat=119 heapDelta=8MB
+>> RUNNING Adaptive-FloorSelect-w1/LEVIATHAN/SC6_MOD#20  (heap free=151MB / total=224MB / max=49152MB)
+[Adaptive-FloorSelect-w1/LEVIATHAN/SC6_MOD#20] OK t=369ms cand=9293 pat=119 heapDelta=18MB
+=== ALL SCENARIOS DONE (14.9s) ===
