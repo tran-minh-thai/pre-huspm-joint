@@ -112,7 +112,7 @@ stated, by Pre-HUSPM. Their reading under each rescan rule is given in the next 
 | `sft_val` | the bound the rescan quantity is compared with. Proposal, initial mine: `(UUT - LUT_min) * TSU`, compared with nothing. Pre-HUSPM: `((UUT - LUT_min) / (1 - UUT)) * TSU_ref` |
 | `rescan_count` | rescans since the initial mine, cumulative over the arm. 0 for algorithms without rescans and for `Remine-from-scratch` |
 | `blocks_read` | proposal: sequences of the increment read through the block index while updating tracked patterns, on the most recent increment that took the direct update. Reset at each direct insertion update and carried unchanged on a row that rescanned |
-| `blocks_skipped` | proposal: cumulative since the initial mine. Sequences the block index skipped, plus, for a pattern with an item in no block, the increment's size in blocks plus one |
+| `blocks_skipped` | proposal: cumulative since the initial mine. Sequences the block index skipped, plus, for a pattern with an item in no block of the increment, the increment's size in blocks plus one |
 | `sigma2` | proposal, rules other than `joint`: variance of the sequence utilities of the batch. 0 under `joint` and on an initial mine |
 | `rho` | proposal, rules other than `joint`: largest sequence utility of the batch over the batch total. 0 under `joint` and on an initial mine |
 

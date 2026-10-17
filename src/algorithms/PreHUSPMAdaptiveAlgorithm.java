@@ -758,6 +758,11 @@ public class PreHUSPMAdaptiveAlgorithm {
         public double uutValue = 0;     // uut_abs = TSU * Su
 
         BlockIndex globalBlockIndex = new BlockIndex();
+        /**
+         * Block ids [batchFirstBlock, batchEndBlock) of the batch indexed last. A block never spans
+         * two batches, so these blocks hold exactly the sequences of that batch.
+         */
+        private int batchFirstBlock = 0, batchEndBlock = 0;
         // Result maps are keyed by CompactPattern; conversion to Pattern happens only on
         // export or re-evaluation.
         public Map<CompactPattern, Double> largeMap = new HashMap<>();
@@ -1077,7 +1082,9 @@ public class PreHUSPMAdaptiveAlgorithm {
             // candidateCount is reset every batch: the candidate budget applies per batch,
             // and candidate_count reports the cost of each batch.
             candidateCount = 0; exploredNodes = 0; removedItems = 0; removedItemsRoot = 0;
+            batchFirstBlock = globalBlockIndex.blocks.size();
             globalBlockIndex.buildFromBatch(deltaD);
+            batchEndBlock = globalBlockIndex.blocks.size();
             double batchTotalUtil = 0;
             double swuMax = 0;
 
@@ -1491,8 +1498,14 @@ public class PreHUSPMAdaptiveAlgorithm {
             // make the index useless.
             // A sequence contains p only if it contains every item of p, so its block lies
             // in the intersection: the filter is tighter and misses nothing.
+            // Only the blocks of the batch are intersected, [batchFirstBlock, batchEndBlock):
+            // the sequences read are those of the batch, so the blocks of earlier batches
+            // cannot change which are read, and the intersection costs O(blocks of the batch)
+            // per item instead of O(blocks of the database). Bit b of relevantBlocks stands
+            // for block batchFirstBlock + b.
             // Skipped under the block index ablation, which reads every sequence.
             final int blkUnit = Math.max(1, globalBlockIndex.blockSize);
+            final int from = batchFirstBlock, to = batchEndBlock;
             BitSet relevantBlocks = null;
             if (useBlockIndex) {
                 final int[] flat = p.flat;
@@ -1500,14 +1513,15 @@ public class PreHUSPMAdaptiveAlgorithm {
                     int item = flat[idx];
                     if (item < 0) continue; // skip the -1 itemset separator
                     BitSet bs = globalBlockIndex.bitsetFor(item);
-                    if (bs == null || bs.isEmpty()) {     // item in no block: pattern absent
+                    BitSet inBatch = bs == null ? null : bs.get(from, to); // a copy: the index is never mutated
+                    if (inBatch == null || inBatch.isEmpty()) {   // item in no block of the batch: pattern absent
                         numBlocksSkipped += (deltaD.size() / blkUnit) + 1;
                         return 0.0;
                     }
                     if (relevantBlocks == null) {
-                        relevantBlocks = (BitSet) bs.clone(); // clone: never mutate the index bitmap
+                        relevantBlocks = inBatch;
                     } else {
-                        relevantBlocks.and(bs);
+                        relevantBlocks.and(inBatch);
                         if (relevantBlocks.isEmpty()) {   // empty intersection: no block holds all items
                             numBlocksSkipped += (deltaD.size() / blkUnit) + 1;
                             return 0.0;
@@ -1528,7 +1542,7 @@ public class PreHUSPMAdaptiveAlgorithm {
                     shouldRead = true;
                 } else {
                     int bid = globalBlockIndex.blockOf(seq.id);
-                    shouldRead = (bid >= 0 && relevantBlocks.get(bid));
+                    shouldRead = (bid >= from && bid < to && relevantBlocks.get(bid - from));
                 }
                 if (shouldRead) {
                     blocksReadCount++;
