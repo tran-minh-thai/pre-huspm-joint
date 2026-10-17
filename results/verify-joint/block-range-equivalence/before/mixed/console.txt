@@ -1,0 +1,1031 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC6, SC6D, SC6B]
+Heap max: 20480 MB
+Platform: os=Mac OS X 27.0.1 (aarch64) | java=26.0.1+8-34 OpenJDK 64-Bit Server VM (Oracle Corporation) | cpus=10 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC6] Mixed stream, exactly 14:3:3 ---
+>> [SC6] LEVIATHAN seed=42 opSize=30 plan=20 operations (14 insert, 3 delete, 3 modify)
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_INIT#0  (heap free=143MB / total=192MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_INIT#0] OK t=890ms cand=15377 pat=107 heapDelta=48MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_INS#1  (heap free=106MB / total=160MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_INS#1] OK t=571ms cand=15341 pat=107 heapDelta=11MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_INS#2  (heap free=105MB / total=160MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_INS#2] OK t=539ms cand=15133 pat=108 heapDelta=11MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_INS#3  (heap free=105MB / total=160MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_INS#3] OK t=478ms cand=15026 pat=106 heapDelta=11MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_INS#4  (heap free=105MB / total=160MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_INS#4] OK t=481ms cand=14887 pat=108 heapDelta=11MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_INS#5  (heap free=105MB / total=160MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_INS#5] OK t=483ms cand=14915 pat=107 heapDelta=11MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_INS#6  (heap free=105MB / total=160MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_INS#6] OK t=472ms cand=14781 pat=107 heapDelta=11MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_DEL#7  (heap free=105MB / total=160MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_DEL#7] OK t=5ms cand=14781 pat=107 heapDelta=1MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_DEL#8  (heap free=105MB / total=160MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_DEL#8] OK t=3ms cand=14781 pat=107 heapDelta=1MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_INS#9  (heap free=105MB / total=160MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_INS#9] OK t=549ms cand=14507 pat=109 heapDelta=11MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_INS#10  (heap free=105MB / total=160MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_INS#10] OK t=2430ms cand=14418 pat=110 heapDelta=11MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_INS#11  (heap free=104MB / total=160MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_INS#11] OK t=804ms cand=14415 pat=110 heapDelta=11MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_INS#12  (heap free=104MB / total=160MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_INS#12] OK t=1230ms cand=14469 pat=110 heapDelta=12MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_MOD#13  (heap free=104MB / total=160MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_MOD#13] OK t=823ms cand=14368 pat=112 heapDelta=12MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_INS#14  (heap free=104MB / total=160MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_INS#14] OK t=767ms cand=14275 pat=114 heapDelta=12MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_INS#15  (heap free=104MB / total=160MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_INS#15] OK t=838ms cand=14465 pat=115 heapDelta=13MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_MOD#16  (heap free=104MB / total=160MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_MOD#16] OK t=788ms cand=14554 pat=114 heapDelta=13MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_INS#17  (heap free=104MB / total=160MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_INS#17] OK t=525ms cand=14604 pat=116 heapDelta=12MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_MOD#18  (heap free=104MB / total=160MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_MOD#18] OK t=59338ms cand=14620 pat=116 heapDelta=13MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_INS#19  (heap free=104MB / total=160MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_INS#19] OK t=1186ms cand=14752 pat=116 heapDelta=13MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_DEL#20  (heap free=104MB / total=160MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_DEL#20] OK t=3ms cand=14752 pat=117 heapDelta=1MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_INIT#0  (heap free=104MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_INIT#0] OK t=558ms cand=15377 pat=107 heapDelta=39MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_INS#1  (heap free=105MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_INS#1] OK t=505ms cand=15341 pat=107 heapDelta=11MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_INS#2  (heap free=105MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_INS#2] OK t=494ms cand=15133 pat=108 heapDelta=11MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_INS#3  (heap free=105MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_INS#3] OK t=505ms cand=15026 pat=106 heapDelta=11MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_INS#4  (heap free=105MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_INS#4] OK t=498ms cand=14887 pat=108 heapDelta=11MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_INS#5  (heap free=105MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_INS#5] OK t=363ms cand=8678 pat=107 heapDelta=9MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_INS#6  (heap free=105MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_INS#6] OK t=431ms cand=8629 pat=107 heapDelta=9MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_DEL#7  (heap free=104MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_DEL#7] OK t=705ms cand=23085 pat=107 heapDelta=10MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_DEL#8  (heap free=104MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_DEL#8] OK t=2ms cand=23085 pat=107 heapDelta=1MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_INS#9  (heap free=104MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_INS#9] OK t=497ms cand=14507 pat=109 heapDelta=11MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_INS#10  (heap free=104MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_INS#10] OK t=519ms cand=14418 pat=110 heapDelta=11MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_INS#11  (heap free=104MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_INS#11] OK t=505ms cand=14415 pat=110 heapDelta=11MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_INS#12  (heap free=104MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_INS#12] OK t=510ms cand=14469 pat=110 heapDelta=11MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_MOD#13  (heap free=104MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_MOD#13] OK t=505ms cand=14368 pat=112 heapDelta=12MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_INS#14  (heap free=104MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_INS#14] OK t=561ms cand=14275 pat=114 heapDelta=12MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_INS#15  (heap free=104MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_INS#15] OK t=795ms cand=14465 pat=115 heapDelta=12MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_MOD#16  (heap free=104MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_MOD#16] OK t=516ms cand=14554 pat=114 heapDelta=13MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_INS#17  (heap free=104MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_INS#17] OK t=524ms cand=14604 pat=116 heapDelta=12MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_MOD#18  (heap free=104MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_MOD#18] OK t=531ms cand=14620 pat=116 heapDelta=13MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_INS#19  (heap free=104MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_INS#19] OK t=537ms cand=14752 pat=116 heapDelta=13MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_DEL#20  (heap free=104MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_DEL#20] OK t=2ms cand=14752 pat=117 heapDelta=1MB
+>> [SC6] SIGN seed=42 opSize=5 plan=20 operations (14 insert, 3 delete, 3 modify)
+>> RUNNING Adaptive-Full/SIGN/SC6_INIT#0  (heap free=92MB / total=160MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_INIT#0] OK t=301ms cand=70528 pat=583 heapDelta=8MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#1  (heap free=50MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_INS#1] OK t=250ms cand=74614 pat=611 heapDelta=2MB
+>> RUNNING Adaptive-Full/SIGN/SC6_DEL#2  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_DEL#2] OK t=12ms cand=74614 pat=644 heapDelta=0MB
+>> RUNNING Adaptive-Full/SIGN/SC6_MOD#3  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_MOD#3] OK t=384ms cand=80352 pat=738 heapDelta=2MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#4  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_INS#4] OK t=313ms cand=78431 pat=708 heapDelta=2MB
+>> RUNNING Adaptive-Full/SIGN/SC6_DEL#5  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_DEL#5] OK t=4ms cand=78431 pat=707 heapDelta=0MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#6  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_INS#6] OK t=252ms cand=76580 pat=670 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#7  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_INS#7] OK t=260ms cand=76657 pat=687 heapDelta=2MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#8  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_INS#8] OK t=276ms cand=77175 pat=741 heapDelta=2MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#9  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_INS#9] OK t=276ms cand=77552 pat=701 heapDelta=2MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#10  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_INS#10] OK t=281ms cand=77091 pat=710 heapDelta=2MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#11  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_INS#11] OK t=283ms cand=76389 pat=677 heapDelta=2MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#12  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_INS#12] OK t=280ms cand=74545 pat=612 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#13  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_INS#13] OK t=277ms cand=72446 pat=581 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC6_MOD#14  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_MOD#14] OK t=286ms cand=70644 pat=530 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC6_MOD#15  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_MOD#15] OK t=263ms cand=68938 pat=519 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#16  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_INS#16] OK t=270ms cand=67785 pat=490 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#17  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_INS#17] OK t=252ms cand=66189 pat=475 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#18  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_INS#18] OK t=4ms cand=0 pat=455 heapDelta=0MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#19  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_INS#19] OK t=285ms cand=65731 pat=446 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC6_DEL#20  (heap free=48MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_DEL#20] OK t=2ms cand=65731 pat=460 heapDelta=0MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_INIT#0  (heap free=48MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_INIT#0] OK t=246ms cand=70528 pat=583 heapDelta=7MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_INS#1  (heap free=50MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_INS#1] OK t=252ms cand=74614 pat=611 heapDelta=2MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_DEL#2  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_DEL#2] OK t=3ms cand=74614 pat=644 heapDelta=0MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_MOD#3  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_MOD#3] OK t=309ms cand=80352 pat=738 heapDelta=2MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_INS#4  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_INS#4] OK t=258ms cand=78431 pat=708 heapDelta=2MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_DEL#5  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_DEL#5] OK t=3ms cand=78431 pat=707 heapDelta=0MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_INS#6  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_INS#6] OK t=249ms cand=76580 pat=670 heapDelta=1MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_INS#7  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_INS#7] OK t=257ms cand=76657 pat=687 heapDelta=2MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_INS#8  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_INS#8] OK t=267ms cand=77175 pat=741 heapDelta=2MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_INS#9  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_INS#9] OK t=275ms cand=77552 pat=701 heapDelta=2MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_INS#10  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_INS#10] OK t=280ms cand=77091 pat=710 heapDelta=2MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_INS#11  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_INS#11] OK t=160ms cand=38027 pat=677 heapDelta=1MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_INS#12  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_INS#12] OK t=157ms cand=37315 pat=612 heapDelta=1MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_INS#13  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_INS#13] OK t=174ms cand=36213 pat=581 heapDelta=1MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_MOD#14  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_MOD#14] OK t=689ms cand=70644 pat=530 heapDelta=3MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_MOD#15  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_MOD#15] OK t=261ms cand=68938 pat=519 heapDelta=1MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_INS#16  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_INS#16] OK t=260ms cand=67785 pat=490 heapDelta=1MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_INS#17  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_INS#17] OK t=258ms cand=66189 pat=475 heapDelta=1MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_INS#18  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_INS#18] OK t=2ms cand=0 pat=455 heapDelta=0MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_INS#19  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_INS#19] OK t=268ms cand=65731 pat=446 heapDelta=1MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_DEL#20  (heap free=48MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_DEL#20] OK t=2ms cand=65731 pat=460 heapDelta=0MB
+>> [SC6] TAFENG seed=42 opSize=200 plan=20 operations (14 insert, 3 delete, 3 modify)
+>> RUNNING Adaptive-Full/TAFENG/SC6_INIT#0  (heap free=385MB / total=576MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_INIT#0] OK t=228ms cand=2123 pat=6 heapDelta=143MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#1  (heap free=376MB / total=576MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_INS#1] OK t=2ms cand=0 pat=6 heapDelta=9MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#2  (heap free=375MB / total=576MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_INS#2] OK t=169ms cand=2109 pat=6 heapDelta=42MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#3  (heap free=374MB / total=576MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_INS#3] OK t=1ms cand=0 pat=6 heapDelta=9MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#4  (heap free=374MB / total=576MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_INS#4] OK t=264ms cand=2105 pat=6 heapDelta=42MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_DEL#5  (heap free=373MB / total=576MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_DEL#5] OK t=19ms cand=2105 pat=6 heapDelta=9MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_MOD#6  (heap free=373MB / total=576MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_MOD#6] OK t=17ms cand=0 pat=6 heapDelta=9MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#7  (heap free=372MB / total=576MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_INS#7] OK t=167ms cand=2110 pat=6 heapDelta=42MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#8  (heap free=371MB / total=576MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_INS#8] OK t=171ms cand=2109 pat=6 heapDelta=42MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#9  (heap free=371MB / total=576MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_INS#9] OK t=123ms cand=2122 pat=6 heapDelta=42MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_MOD#10  (heap free=371MB / total=576MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_MOD#10] OK t=135ms cand=2159 pat=6 heapDelta=46MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#11  (heap free=370MB / total=576MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_INS#11] OK t=120ms cand=2162 pat=6 heapDelta=42MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#12  (heap free=370MB / total=576MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_INS#12] OK t=132ms cand=2156 pat=6 heapDelta=42MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#13  (heap free=370MB / total=576MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_INS#13] OK t=0ms cand=0 pat=6 heapDelta=9MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#14  (heap free=369MB / total=576MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_INS#14] OK t=117ms cand=2141 pat=6 heapDelta=42MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#15  (heap free=369MB / total=576MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_INS#15] OK t=125ms cand=2144 pat=6 heapDelta=42MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_DEL#16  (heap free=369MB / total=576MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_DEL#16] OK t=1ms cand=2144 pat=6 heapDelta=9MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#17  (heap free=369MB / total=576MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_INS#17] OK t=2ms cand=0 pat=6 heapDelta=9MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_MOD#18  (heap free=368MB / total=576MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_MOD#18] OK t=131ms cand=2152 pat=6 heapDelta=46MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#19  (heap free=368MB / total=576MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_INS#19] OK t=1ms cand=0 pat=6 heapDelta=9MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_DEL#20  (heap free=368MB / total=576MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_DEL#20] OK t=1ms cand=0 pat=6 heapDelta=9MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_INIT#0  (heap free=368MB / total=576MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_INIT#0] OK t=176ms cand=2123 pat=6 heapDelta=142MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_INS#1  (heap free=374MB / total=576MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_INS#1] OK t=1ms cand=0 pat=6 heapDelta=8MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_INS#2  (heap free=373MB / total=576MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_INS#2] OK t=131ms cand=2109 pat=6 heapDelta=42MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_INS#3  (heap free=373MB / total=576MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_INS#3] OK t=1ms cand=0 pat=6 heapDelta=8MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_INS#4  (heap free=372MB / total=576MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_INS#4] OK t=137ms cand=2105 pat=6 heapDelta=42MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_DEL#5  (heap free=372MB / total=576MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_DEL#5] OK t=0ms cand=2105 pat=6 heapDelta=8MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_MOD#6  (heap free=371MB / total=576MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_MOD#6] OK t=5ms cand=0 pat=6 heapDelta=8MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_INS#7  (heap free=371MB / total=576MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_INS#7] OK t=187ms cand=2110 pat=6 heapDelta=42MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_INS#8  (heap free=371MB / total=576MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_INS#8] OK t=142ms cand=2109 pat=6 heapDelta=42MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_INS#9  (heap free=371MB / total=576MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_INS#9] OK t=128ms cand=2122 pat=6 heapDelta=42MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_MOD#10  (heap free=370MB / total=576MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_MOD#10] OK t=132ms cand=2159 pat=6 heapDelta=46MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_INS#11  (heap free=370MB / total=576MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_INS#11] OK t=112ms cand=2162 pat=6 heapDelta=42MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_INS#12  (heap free=369MB / total=576MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_INS#12] OK t=115ms cand=2156 pat=6 heapDelta=42MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_INS#13  (heap free=369MB / total=576MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_INS#13] OK t=1ms cand=0 pat=6 heapDelta=8MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_INS#14  (heap free=369MB / total=576MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_INS#14] OK t=128ms cand=2141 pat=6 heapDelta=42MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_INS#15  (heap free=370MB / total=576MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_INS#15] OK t=120ms cand=2144 pat=6 heapDelta=42MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_DEL#16  (heap free=369MB / total=576MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_DEL#16] OK t=0ms cand=2144 pat=6 heapDelta=8MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_INS#17  (heap free=369MB / total=576MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_INS#17] OK t=1ms cand=0 pat=6 heapDelta=8MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_MOD#18  (heap free=369MB / total=576MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_MOD#18] OK t=119ms cand=2152 pat=6 heapDelta=46MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_INS#19  (heap free=369MB / total=576MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_INS#19] OK t=0ms cand=0 pat=6 heapDelta=8MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_DEL#20  (heap free=369MB / total=576MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_DEL#20] OK t=0ms cand=0 pat=6 heapDelta=8MB
+>> [SC6] C8T1S5I8N5K seed=42 opSize=199 plan=20 operations (14 insert, 3 delete, 3 modify)
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INIT#0  (heap free=260MB / total=576MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INIT#0] OK t=384ms cand=47013 pat=5067 heapDelta=82MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_MOD#1  (heap free=163MB / total=272MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_MOD#1] OK t=243ms cand=47148 pat=5314 heapDelta=23MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#2  (heap free=162MB / total=272MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#2] OK t=176ms cand=46452 pat=5104 heapDelta=19MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#3  (heap free=161MB / total=272MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#3] OK t=172ms cand=46706 pat=5547 heapDelta=19MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#4  (heap free=161MB / total=272MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#4] OK t=115ms cand=45903 pat=5388 heapDelta=19MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#5  (heap free=160MB / total=272MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#5] OK t=71ms cand=0 pat=6158 heapDelta=6MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#6  (heap free=160MB / total=272MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#6] OK t=135ms cand=48324 pat=5932 heapDelta=19MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#7  (heap free=160MB / total=272MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#7] OK t=126ms cand=49316 pat=6053 heapDelta=19MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#8  (heap free=159MB / total=272MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#8] OK t=131ms cand=48869 pat=7071 heapDelta=19MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#9  (heap free=159MB / total=272MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#9] OK t=120ms cand=47914 pat=6878 heapDelta=19MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_DEL#10  (heap free=159MB / total=272MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_DEL#10] OK t=39ms cand=47914 pat=7031 heapDelta=5MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_MOD#11  (heap free=159MB / total=272MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_MOD#11] OK t=158ms cand=47636 pat=7074 heapDelta=22MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#12  (heap free=158MB / total=272MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#12] OK t=11ms cand=0 pat=6899 heapDelta=7MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#13  (heap free=158MB / total=272MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#13] OK t=122ms cand=47116 pat=6747 heapDelta=19MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_DEL#14  (heap free=159MB / total=272MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_DEL#14] OK t=48ms cand=47116 pat=6554 heapDelta=5MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#15  (heap free=159MB / total=272MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#15] OK t=119ms cand=45735 pat=6368 heapDelta=19MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#16  (heap free=159MB / total=272MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#16] OK t=161ms cand=45007 pat=6240 heapDelta=19MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_MOD#17  (heap free=158MB / total=272MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_MOD#17] OK t=85ms cand=0 pat=6249 heapDelta=8MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#18  (heap free=158MB / total=272MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#18] OK t=110ms cand=43483 pat=6082 heapDelta=19MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#19  (heap free=158MB / total=272MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#19] OK t=130ms cand=44766 pat=5972 heapDelta=19MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_DEL#20  (heap free=158MB / total=272MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_DEL#20] OK t=33ms cand=44766 pat=5909 heapDelta=3MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INIT#0  (heap free=158MB / total=272MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INIT#0] OK t=134ms cand=47013 pat=5067 heapDelta=79MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_MOD#1  (heap free=161MB / total=272MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_MOD#1] OK t=156ms cand=47148 pat=5314 heapDelta=23MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#2  (heap free=160MB / total=272MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#2] OK t=112ms cand=46452 pat=5104 heapDelta=19MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#3  (heap free=160MB / total=272MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#3] OK t=161ms cand=46706 pat=5547 heapDelta=19MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#4  (heap free=160MB / total=272MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#4] OK t=106ms cand=45903 pat=5388 heapDelta=19MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#5  (heap free=159MB / total=272MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#5] OK t=26ms cand=0 pat=6158 heapDelta=7MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#6  (heap free=160MB / total=272MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#6] OK t=213ms cand=48324 pat=5932 heapDelta=19MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#7  (heap free=159MB / total=272MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#7] OK t=216ms cand=49316 pat=6053 heapDelta=19MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#8  (heap free=158MB / total=272MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#8] OK t=150ms cand=48869 pat=7071 heapDelta=19MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#9  (heap free=159MB / total=272MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#9] OK t=143ms cand=47914 pat=6878 heapDelta=19MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_DEL#10  (heap free=159MB / total=272MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_DEL#10] OK t=39ms cand=47914 pat=7031 heapDelta=5MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_MOD#11  (heap free=159MB / total=272MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_MOD#11] OK t=160ms cand=47636 pat=7074 heapDelta=22MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#12  (heap free=159MB / total=272MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#12] OK t=12ms cand=0 pat=6899 heapDelta=6MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#13  (heap free=158MB / total=272MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#13] OK t=125ms cand=47116 pat=6747 heapDelta=19MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_DEL#14  (heap free=159MB / total=272MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_DEL#14] OK t=42ms cand=47116 pat=6554 heapDelta=5MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#15  (heap free=159MB / total=272MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#15] OK t=109ms cand=45735 pat=6368 heapDelta=19MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#16  (heap free=159MB / total=272MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#16] OK t=121ms cand=45007 pat=6240 heapDelta=19MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_MOD#17  (heap free=158MB / total=272MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_MOD#17] OK t=50ms cand=0 pat=6249 heapDelta=9MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#18  (heap free=158MB / total=272MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#18] OK t=214ms cand=43483 pat=6082 heapDelta=19MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#19  (heap free=159MB / total=272MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#19] OK t=106ms cand=44766 pat=5972 heapDelta=19MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_DEL#20  (heap free=159MB / total=272MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_DEL#20] OK t=39ms cand=44766 pat=5909 heapDelta=3MB
+
+--- [SC6D] Mixed stream, exactly 6:10:4 ---
+>> [SC6D] LEVIATHAN seed=42 opSize=30 plan=20 operations (6 insert, 10 delete, 4 modify)
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_INIT#0  (heap free=668MB / total=816MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_INIT#0] OK t=288ms cand=15377 pat=107 heapDelta=38MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_DEL#1  (heap free=169MB / total=224MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_DEL#1] OK t=1ms cand=15377 pat=106 heapDelta=4MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_INS#2  (heap free=169MB / total=224MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_INS#2] OK t=278ms cand=15398 pat=107 heapDelta=14MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_DEL#3  (heap free=169MB / total=224MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_DEL#3] OK t=2ms cand=15398 pat=106 heapDelta=4MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_DEL#4  (heap free=169MB / total=224MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_DEL#4] OK t=2ms cand=15398 pat=106 heapDelta=4MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_DEL#5  (heap free=169MB / total=224MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_DEL#5] OK t=1ms cand=15398 pat=105 heapDelta=4MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_DEL#6  (heap free=169MB / total=224MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_DEL#6] OK t=1ms cand=15398 pat=107 heapDelta=4MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_DEL#7  (heap free=169MB / total=224MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_DEL#7] OK t=0ms cand=15398 pat=107 heapDelta=4MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_DEL#8  (heap free=169MB / total=224MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_DEL#8] OK t=1ms cand=15398 pat=108 heapDelta=4MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_INS#9  (heap free=169MB / total=224MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_INS#9] OK t=362ms cand=14914 pat=107 heapDelta=12MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_DEL#10  (heap free=169MB / total=224MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_DEL#10] OK t=1ms cand=14914 pat=109 heapDelta=4MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_INS#11  (heap free=169MB / total=224MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_INS#11] OK t=253ms cand=14917 pat=108 heapDelta=12MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_INS#12  (heap free=169MB / total=224MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_INS#12] OK t=271ms cand=14751 pat=107 heapDelta=12MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_MOD#13  (heap free=168MB / total=224MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_MOD#13] OK t=258ms cand=14845 pat=109 heapDelta=12MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_INS#14  (heap free=168MB / total=224MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_INS#14] OK t=270ms cand=14710 pat=108 heapDelta=12MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_INS#15  (heap free=168MB / total=224MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_INS#15] OK t=301ms cand=14656 pat=107 heapDelta=12MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_MOD#16  (heap free=168MB / total=224MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_MOD#16] OK t=286ms cand=14617 pat=111 heapDelta=12MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_DEL#17  (heap free=168MB / total=224MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_DEL#17] OK t=1ms cand=14617 pat=109 heapDelta=4MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_MOD#18  (heap free=168MB / total=224MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_MOD#18] OK t=300ms cand=14681 pat=110 heapDelta=12MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_DEL#19  (heap free=168MB / total=224MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_DEL#19] OK t=1ms cand=14681 pat=108 heapDelta=4MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_MOD#20  (heap free=168MB / total=224MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_MOD#20] OK t=255ms cand=14766 pat=108 heapDelta=12MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_INIT#0  (heap free=167MB / total=224MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_INIT#0] OK t=373ms cand=15377 pat=107 heapDelta=34MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_DEL#1  (heap free=105MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_DEL#1] OK t=25ms cand=15377 pat=106 heapDelta=2MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_INS#2  (heap free=105MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_INS#2] OK t=312ms cand=15398 pat=107 heapDelta=11MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_DEL#3  (heap free=105MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_DEL#3] OK t=2ms cand=15398 pat=106 heapDelta=2MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_DEL#4  (heap free=105MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_DEL#4] OK t=1ms cand=15398 pat=106 heapDelta=2MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_DEL#5  (heap free=105MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_DEL#5] OK t=1ms cand=15398 pat=105 heapDelta=2MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_DEL#6  (heap free=105MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_DEL#6] OK t=0ms cand=15398 pat=107 heapDelta=2MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_DEL#7  (heap free=105MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_DEL#7] OK t=1ms cand=15398 pat=107 heapDelta=2MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_DEL#8  (heap free=105MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_DEL#8] OK t=1ms cand=15398 pat=108 heapDelta=2MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_INS#9  (heap free=105MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_INS#9] OK t=276ms cand=14914 pat=107 heapDelta=9MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_DEL#10  (heap free=105MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_DEL#10] OK t=0ms cand=14914 pat=109 heapDelta=2MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_INS#11  (heap free=105MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_INS#11] OK t=256ms cand=14917 pat=108 heapDelta=9MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_INS#12  (heap free=105MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_INS#12] OK t=279ms cand=14751 pat=107 heapDelta=9MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_MOD#13  (heap free=105MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_MOD#13] OK t=255ms cand=14845 pat=109 heapDelta=10MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_INS#14  (heap free=105MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_INS#14] OK t=437ms cand=14710 pat=108 heapDelta=10MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_INS#15  (heap free=105MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_INS#15] OK t=429ms cand=14656 pat=107 heapDelta=10MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_MOD#16  (heap free=105MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_MOD#16] OK t=386ms cand=14617 pat=111 heapDelta=11MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_DEL#17  (heap free=105MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_DEL#17] OK t=2ms cand=14617 pat=109 heapDelta=2MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_MOD#18  (heap free=105MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_MOD#18] OK t=335ms cand=14681 pat=110 heapDelta=11MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_DEL#19  (heap free=105MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_DEL#19] OK t=1ms cand=14681 pat=108 heapDelta=2MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_MOD#20  (heap free=105MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_MOD#20] OK t=252ms cand=14766 pat=108 heapDelta=10MB
+>> [SC6D] SIGN seed=42 opSize=5 plan=20 operations (6 insert, 10 delete, 4 modify)
+>> RUNNING Adaptive-Full/SIGN/SC6_INIT#0  (heap free=93MB / total=160MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_INIT#0] OK t=128ms cand=70528 pat=583 heapDelta=7MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#1  (heap free=50MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_INS#1] OK t=151ms cand=74614 pat=611 heapDelta=2MB
+>> RUNNING Adaptive-Full/SIGN/SC6_DEL#2  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_DEL#2] OK t=1ms cand=74614 pat=644 heapDelta=0MB
+>> RUNNING Adaptive-Full/SIGN/SC6_MOD#3  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_MOD#3] OK t=152ms cand=80352 pat=738 heapDelta=2MB
+>> RUNNING Adaptive-Full/SIGN/SC6_DEL#4  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_DEL#4] OK t=1ms cand=80352 pat=766 heapDelta=0MB
+>> RUNNING Adaptive-Full/SIGN/SC6_MOD#5  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_MOD#5] OK t=143ms cand=80145 pat=797 heapDelta=2MB
+>> RUNNING Adaptive-Full/SIGN/SC6_DEL#6  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_DEL#6] OK t=2ms cand=80145 pat=849 heapDelta=0MB
+>> RUNNING Adaptive-Full/SIGN/SC6_DEL#7  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_DEL#7] OK t=3ms cand=80145 pat=887 heapDelta=0MB
+>> RUNNING Adaptive-Full/SIGN/SC6_DEL#8  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_DEL#8] OK t=2ms cand=80145 pat=841 heapDelta=0MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#9  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_INS#9] OK t=277ms cand=78311 pat=787 heapDelta=2MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#10  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_INS#10] OK t=191ms cand=78386 pat=824 heapDelta=2MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#11  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_INS#11] OK t=221ms cand=78806 pat=899 heapDelta=2MB
+>> RUNNING Adaptive-Full/SIGN/SC6_DEL#12  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_DEL#12] OK t=5ms cand=78806 pat=920 heapDelta=0MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#13  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_INS#13] OK t=174ms cand=81911 pat=845 heapDelta=2MB
+>> RUNNING Adaptive-Full/SIGN/SC6_MOD#14  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_MOD#14] OK t=149ms cand=80016 pat=807 heapDelta=2MB
+>> RUNNING Adaptive-Full/SIGN/SC6_MOD#15  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_MOD#15] OK t=151ms cand=76765 pat=758 heapDelta=2MB
+>> RUNNING Adaptive-Full/SIGN/SC6_DEL#16  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_DEL#16] OK t=3ms cand=76765 pat=717 heapDelta=0MB
+>> RUNNING Adaptive-Full/SIGN/SC6_DEL#17  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_DEL#17] OK t=2ms cand=76765 pat=658 heapDelta=0MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#18  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_INS#18] OK t=145ms cand=70372 pat=587 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC6_DEL#19  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_DEL#19] OK t=1ms cand=70372 pat=635 heapDelta=0MB
+>> RUNNING Adaptive-Full/SIGN/SC6_DEL#20  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_DEL#20] OK t=2ms cand=70372 pat=659 heapDelta=0MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_INIT#0  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_INIT#0] OK t=126ms cand=70528 pat=583 heapDelta=7MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_INS#1  (heap free=50MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_INS#1] OK t=150ms cand=74614 pat=611 heapDelta=2MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_DEL#2  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_DEL#2] OK t=3ms cand=74614 pat=644 heapDelta=0MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_MOD#3  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_MOD#3] OK t=154ms cand=80352 pat=738 heapDelta=2MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_DEL#4  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_DEL#4] OK t=1ms cand=80352 pat=766 heapDelta=0MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_MOD#5  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_MOD#5] OK t=149ms cand=80145 pat=797 heapDelta=2MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_DEL#6  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_DEL#6] OK t=3ms cand=80145 pat=849 heapDelta=0MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_DEL#7  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_DEL#7] OK t=2ms cand=80145 pat=887 heapDelta=0MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_DEL#8  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_DEL#8] OK t=2ms cand=80145 pat=841 heapDelta=0MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_INS#9  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_INS#9] OK t=150ms cand=78311 pat=787 heapDelta=2MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_INS#10  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_INS#10] OK t=143ms cand=78386 pat=824 heapDelta=2MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_INS#11  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_INS#11] OK t=152ms cand=78806 pat=899 heapDelta=2MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_DEL#12  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_DEL#12] OK t=1ms cand=78806 pat=920 heapDelta=0MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_INS#13  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_INS#13] OK t=169ms cand=81911 pat=845 heapDelta=2MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_MOD#14  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_MOD#14] OK t=156ms cand=80016 pat=807 heapDelta=2MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_MOD#15  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_MOD#15] OK t=152ms cand=76765 pat=758 heapDelta=2MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_DEL#16  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_DEL#16] OK t=1ms cand=76765 pat=717 heapDelta=0MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_DEL#17  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_DEL#17] OK t=1ms cand=76765 pat=658 heapDelta=0MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_INS#18  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_INS#18] OK t=126ms cand=70372 pat=587 heapDelta=1MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_DEL#19  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_DEL#19] OK t=1ms cand=70372 pat=635 heapDelta=0MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_DEL#20  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_DEL#20] OK t=2ms cand=70372 pat=659 heapDelta=0MB
+>> [SC6D] TAFENG seed=42 opSize=200 plan=20 operations (6 insert, 10 delete, 4 modify)
+>> RUNNING Adaptive-Full/TAFENG/SC6_INIT#0  (heap free=423MB / total=720MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_INIT#0] OK t=149ms cand=2123 pat=6 heapDelta=149MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_DEL#1  (heap free=439MB / total=640MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_DEL#1] OK t=1ms cand=2123 pat=6 heapDelta=11MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_DEL#2  (heap free=439MB / total=640MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_DEL#2] OK t=8ms cand=2123 pat=6 heapDelta=11MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_DEL#3  (heap free=439MB / total=640MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_DEL#3] OK t=0ms cand=2123 pat=6 heapDelta=11MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_DEL#4  (heap free=439MB / total=640MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_DEL#4] OK t=4ms cand=2123 pat=6 heapDelta=11MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_DEL#5  (heap free=439MB / total=640MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_DEL#5] OK t=1ms cand=2123 pat=6 heapDelta=11MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_MOD#6  (heap free=439MB / total=640MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_MOD#6] OK t=1ms cand=0 pat=6 heapDelta=11MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#7  (heap free=438MB / total=640MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_INS#7] OK t=113ms cand=2121 pat=6 heapDelta=45MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_DEL#8  (heap free=437MB / total=640MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_DEL#8] OK t=0ms cand=2121 pat=6 heapDelta=10MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_DEL#9  (heap free=437MB / total=640MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_DEL#9] OK t=0ms cand=2121 pat=6 heapDelta=10MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_MOD#10  (heap free=437MB / total=640MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_MOD#10] OK t=4ms cand=0 pat=6 heapDelta=10MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#11  (heap free=437MB / total=640MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_INS#11] OK t=99ms cand=2038 pat=5 heapDelta=40MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#12  (heap free=436MB / total=640MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_INS#12] OK t=0ms cand=0 pat=5 heapDelta=10MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#13  (heap free=436MB / total=640MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_INS#13] OK t=106ms cand=2034 pat=5 heapDelta=40MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_DEL#14  (heap free=436MB / total=640MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_DEL#14] OK t=0ms cand=2034 pat=5 heapDelta=10MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#15  (heap free=435MB / total=640MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_INS#15] OK t=103ms cand=2035 pat=6 heapDelta=40MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_DEL#16  (heap free=435MB / total=640MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_DEL#16] OK t=0ms cand=2035 pat=6 heapDelta=10MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_DEL#17  (heap free=435MB / total=640MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_DEL#17] OK t=0ms cand=2035 pat=6 heapDelta=10MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_MOD#18  (heap free=435MB / total=640MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_MOD#18] OK t=101ms cand=2057 pat=6 heapDelta=44MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#19  (heap free=435MB / total=640MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_INS#19] OK t=105ms cand=2089 pat=6 heapDelta=44MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_MOD#20  (heap free=434MB / total=640MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_MOD#20] OK t=96ms cand=2089 pat=6 heapDelta=44MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_INIT#0  (heap free=434MB / total=640MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_INIT#0] OK t=140ms cand=2123 pat=6 heapDelta=142MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_DEL#1  (heap free=439MB / total=640MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_DEL#1] OK t=2ms cand=2123 pat=6 heapDelta=10MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_DEL#2  (heap free=438MB / total=640MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_DEL#2] OK t=0ms cand=2123 pat=6 heapDelta=10MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_DEL#3  (heap free=438MB / total=640MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_DEL#3] OK t=0ms cand=2123 pat=6 heapDelta=10MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_DEL#4  (heap free=438MB / total=640MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_DEL#4] OK t=0ms cand=2123 pat=6 heapDelta=10MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_DEL#5  (heap free=438MB / total=640MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_DEL#5] OK t=0ms cand=2123 pat=6 heapDelta=10MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_MOD#6  (heap free=438MB / total=640MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_MOD#6] OK t=5ms cand=0 pat=6 heapDelta=10MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_INS#7  (heap free=437MB / total=640MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_INS#7] OK t=120ms cand=2121 pat=6 heapDelta=44MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_DEL#8  (heap free=437MB / total=640MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_DEL#8] OK t=1ms cand=2121 pat=6 heapDelta=9MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_DEL#9  (heap free=437MB / total=640MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_DEL#9] OK t=0ms cand=2121 pat=6 heapDelta=9MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_MOD#10  (heap free=437MB / total=640MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_MOD#10] OK t=2ms cand=0 pat=6 heapDelta=9MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_INS#11  (heap free=436MB / total=640MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_INS#11] OK t=108ms cand=2038 pat=5 heapDelta=40MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_INS#12  (heap free=436MB / total=640MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_INS#12] OK t=1ms cand=0 pat=5 heapDelta=9MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_INS#13  (heap free=435MB / total=640MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_INS#13] OK t=121ms cand=2034 pat=5 heapDelta=40MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_DEL#14  (heap free=436MB / total=640MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_DEL#14] OK t=1ms cand=2034 pat=5 heapDelta=9MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_INS#15  (heap free=435MB / total=640MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_INS#15] OK t=111ms cand=2035 pat=6 heapDelta=40MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_DEL#16  (heap free=435MB / total=640MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_DEL#16] OK t=0ms cand=2035 pat=6 heapDelta=9MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_DEL#17  (heap free=434MB / total=640MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_DEL#17] OK t=0ms cand=2035 pat=6 heapDelta=9MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_MOD#18  (heap free=434MB / total=640MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_MOD#18] OK t=102ms cand=2057 pat=6 heapDelta=44MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_INS#19  (heap free=435MB / total=640MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_INS#19] OK t=110ms cand=2089 pat=6 heapDelta=40MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_MOD#20  (heap free=435MB / total=640MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_MOD#20] OK t=100ms cand=2089 pat=6 heapDelta=44MB
+>> [SC6D] C8T1S5I8N5K seed=42 opSize=199 plan=20 operations (6 insert, 10 delete, 4 modify)
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INIT#0  (heap free=238MB / total=640MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INIT#0] OK t=124ms cand=47013 pat=5067 heapDelta=83MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_MOD#1  (heap free=275MB / total=384MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_MOD#1] OK t=144ms cand=47148 pat=5314 heapDelta=24MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#2  (heap free=273MB / total=384MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#2] OK t=105ms cand=46452 pat=5104 heapDelta=21MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#3  (heap free=273MB / total=384MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#3] OK t=98ms cand=46706 pat=5547 heapDelta=21MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_DEL#4  (heap free=272MB / total=384MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_DEL#4] OK t=40ms cand=46706 pat=5785 heapDelta=7MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_DEL#5  (heap free=272MB / total=384MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_DEL#5] OK t=38ms cand=46706 pat=5949 heapDelta=7MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_DEL#6  (heap free=272MB / total=384MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_DEL#6] OK t=42ms cand=46706 pat=6184 heapDelta=7MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#7  (heap free=272MB / total=384MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#7] OK t=246ms cand=49098 pat=6011 heapDelta=21MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#8  (heap free=272MB / total=384MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#8] OK t=40ms cand=0 pat=6882 heapDelta=9MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_DEL#9  (heap free=272MB / total=384MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_DEL#9] OK t=42ms cand=0 pat=7081 heapDelta=7MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_MOD#10  (heap free=272MB / total=384MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_MOD#10] OK t=146ms cand=50632 pat=6529 heapDelta=24MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_MOD#11  (heap free=270MB / total=384MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_MOD#11] OK t=159ms cand=53879 pat=6389 heapDelta=24MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_DEL#12  (heap free=271MB / total=384MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_DEL#12] OK t=52ms cand=53879 pat=6587 heapDelta=7MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_DEL#13  (heap free=271MB / total=384MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_DEL#13] OK t=46ms cand=53879 pat=5929 heapDelta=7MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_DEL#14  (heap free=271MB / total=384MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_DEL#14] OK t=49ms cand=53879 pat=5578 heapDelta=7MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_DEL#15  (heap free=271MB / total=384MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_DEL#15] OK t=37ms cand=53879 pat=5515 heapDelta=7MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#16  (heap free=271MB / total=384MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#16] OK t=115ms cand=53356 pat=6716 heapDelta=21MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_MOD#17  (heap free=270MB / total=384MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_MOD#17] OK t=164ms cand=52864 pat=6257 heapDelta=24MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#18  (heap free=270MB / total=384MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#18] OK t=107ms cand=51868 pat=6188 heapDelta=21MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_DEL#19  (heap free=270MB / total=384MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_DEL#19] OK t=45ms cand=51868 pat=6419 heapDelta=7MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_DEL#20  (heap free=270MB / total=384MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_DEL#20] OK t=43ms cand=51868 pat=6362 heapDelta=7MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INIT#0  (heap free=270MB / total=384MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INIT#0] OK t=128ms cand=47013 pat=5067 heapDelta=79MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_MOD#1  (heap free=210MB / total=320MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_MOD#1] OK t=154ms cand=47148 pat=5314 heapDelta=25MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#2  (heap free=208MB / total=320MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#2] OK t=151ms cand=46452 pat=5104 heapDelta=20MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#3  (heap free=208MB / total=320MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#3] OK t=136ms cand=46706 pat=5547 heapDelta=20MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_DEL#4  (heap free=207MB / total=320MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_DEL#4] OK t=41ms cand=46706 pat=5785 heapDelta=5MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_DEL#5  (heap free=207MB / total=320MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_DEL#5] OK t=45ms cand=46706 pat=5949 heapDelta=5MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_DEL#6  (heap free=207MB / total=320MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_DEL#6] OK t=51ms cand=46706 pat=6184 heapDelta=5MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#7  (heap free=207MB / total=320MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#7] OK t=108ms cand=49098 pat=6011 heapDelta=20MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#8  (heap free=208MB / total=320MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#8] OK t=22ms cand=0 pat=6882 heapDelta=7MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_DEL#9  (heap free=208MB / total=320MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_DEL#9] OK t=37ms cand=0 pat=7081 heapDelta=5MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_MOD#10  (heap free=208MB / total=320MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_MOD#10] OK t=151ms cand=50632 pat=6529 heapDelta=22MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_MOD#11  (heap free=207MB / total=320MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_MOD#11] OK t=162ms cand=53879 pat=6389 heapDelta=22MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_DEL#12  (heap free=207MB / total=320MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_DEL#12] OK t=43ms cand=53879 pat=6587 heapDelta=5MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_DEL#13  (heap free=207MB / total=320MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_DEL#13] OK t=50ms cand=53879 pat=5929 heapDelta=5MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_DEL#14  (heap free=207MB / total=320MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_DEL#14] OK t=43ms cand=53879 pat=5578 heapDelta=5MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_DEL#15  (heap free=207MB / total=320MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_DEL#15] OK t=39ms cand=53879 pat=5515 heapDelta=5MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#16  (heap free=207MB / total=320MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#16] OK t=114ms cand=53356 pat=6716 heapDelta=20MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_MOD#17  (heap free=207MB / total=320MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_MOD#17] OK t=163ms cand=52864 pat=6257 heapDelta=22MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#18  (heap free=206MB / total=320MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#18] OK t=120ms cand=51868 pat=6188 heapDelta=20MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_DEL#19  (heap free=207MB / total=320MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_DEL#19] OK t=84ms cand=51868 pat=6419 heapDelta=5MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_DEL#20  (heap free=207MB / total=320MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_DEL#20] OK t=72ms cand=51868 pat=6362 heapDelta=5MB
+
+--- [SC6B] Mixed stream, exactly 14:3:3, one deletion beyond the rescan budget ---
+>> [SC6B] LEVIATHAN seed=42 opSize=30 plan=20 operations (14 insert, 3 delete, 3 modify; operation 8 deletes 617 sequences beyond the budget)
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_INIT#0  (heap free=110MB / total=320MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_INIT#0] OK t=319ms cand=15377 pat=107 heapDelta=35MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_INS#1  (heap free=169MB / total=224MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_INS#1] OK t=310ms cand=15341 pat=107 heapDelta=14MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_INS#2  (heap free=169MB / total=224MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_INS#2] OK t=300ms cand=15133 pat=108 heapDelta=14MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_INS#3  (heap free=169MB / total=224MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_INS#3] OK t=283ms cand=15026 pat=106 heapDelta=14MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_INS#4  (heap free=169MB / total=224MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_INS#4] OK t=285ms cand=14887 pat=108 heapDelta=14MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_INS#5  (heap free=168MB / total=224MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_INS#5] OK t=325ms cand=14915 pat=107 heapDelta=14MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_INS#6  (heap free=168MB / total=224MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_INS#6] OK t=410ms cand=14781 pat=107 heapDelta=14MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_DEL#7  (heap free=168MB / total=224MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_DEL#7] OK t=2ms cand=14781 pat=107 heapDelta=4MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_DEL_BIG#8  (heap free=168MB / total=224MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_DEL_BIG#8] OK t=269ms cand=29312 pat=111 heapDelta=10MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_INS#9  (heap free=168MB / total=224MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_INS#9] OK t=394ms cand=14485 pat=112 heapDelta=10MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_INS#10  (heap free=168MB / total=224MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_INS#10] OK t=266ms cand=14408 pat=111 heapDelta=12MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_INS#11  (heap free=167MB / total=224MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_INS#11] OK t=258ms cand=14338 pat=112 heapDelta=12MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_INS#12  (heap free=168MB / total=224MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_INS#12] OK t=274ms cand=14353 pat=110 heapDelta=12MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_MOD#13  (heap free=167MB / total=224MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_MOD#13] OK t=254ms cand=13954 pat=109 heapDelta=12MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_INS#14  (heap free=167MB / total=224MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_INS#14] OK t=242ms cand=13903 pat=112 heapDelta=12MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_INS#15  (heap free=167MB / total=224MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_INS#15] OK t=301ms cand=14033 pat=113 heapDelta=12MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_MOD#16  (heap free=168MB / total=224MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_MOD#16] OK t=302ms cand=14704 pat=114 heapDelta=12MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_INS#17  (heap free=168MB / total=224MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_INS#17] OK t=284ms cand=14834 pat=114 heapDelta=12MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_MOD#18  (heap free=168MB / total=224MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_MOD#18] OK t=284ms cand=14826 pat=111 heapDelta=12MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_INS#19  (heap free=168MB / total=224MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_INS#19] OK t=308ms cand=14901 pat=113 heapDelta=12MB
+>> RUNNING Adaptive-Full/LEVIATHAN/SC6_DEL#20  (heap free=168MB / total=224MB / max=20480MB)
+[Adaptive-Full/LEVIATHAN/SC6_DEL#20] OK t=1ms cand=14901 pat=113 heapDelta=4MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_INIT#0  (heap free=168MB / total=224MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_INIT#0] OK t=351ms cand=15377 pat=107 heapDelta=34MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_INS#1  (heap free=105MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_INS#1] OK t=504ms cand=15341 pat=107 heapDelta=11MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_INS#2  (heap free=104MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_INS#2] OK t=410ms cand=15133 pat=108 heapDelta=11MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_INS#3  (heap free=104MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_INS#3] OK t=279ms cand=15026 pat=106 heapDelta=11MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_INS#4  (heap free=104MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_INS#4] OK t=311ms cand=14887 pat=108 heapDelta=11MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_INS#5  (heap free=104MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_INS#5] OK t=218ms cand=8678 pat=107 heapDelta=9MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_INS#6  (heap free=104MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_INS#6] OK t=210ms cand=8629 pat=107 heapDelta=9MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_DEL#7  (heap free=104MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_DEL#7] OK t=285ms cand=23085 pat=107 heapDelta=10MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_DEL_BIG#8  (heap free=104MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_DEL_BIG#8] OK t=246ms cand=37616 pat=111 heapDelta=8MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_INS#9  (heap free=104MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_INS#9] OK t=230ms cand=14485 pat=112 heapDelta=9MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_INS#10  (heap free=104MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_INS#10] OK t=235ms cand=14408 pat=111 heapDelta=9MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_INS#11  (heap free=103MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_INS#11] OK t=250ms cand=14338 pat=112 heapDelta=9MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_INS#12  (heap free=104MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_INS#12] OK t=194ms cand=8424 pat=110 heapDelta=8MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_MOD#13  (heap free=103MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_MOD#13] OK t=613ms cand=13954 pat=109 heapDelta=16MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_INS#14  (heap free=104MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_INS#14] OK t=289ms cand=13903 pat=112 heapDelta=9MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_INS#15  (heap free=103MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_INS#15] OK t=240ms cand=14033 pat=113 heapDelta=9MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_MOD#16  (heap free=104MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_MOD#16] OK t=278ms cand=14704 pat=114 heapDelta=11MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_INS#17  (heap free=103MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_INS#17] OK t=276ms cand=14834 pat=114 heapDelta=10MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_MOD#18  (heap free=104MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_MOD#18] OK t=280ms cand=14826 pat=111 heapDelta=11MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_INS#19  (heap free=103MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_INS#19] OK t=276ms cand=14901 pat=113 heapDelta=10MB
+>> RUNNING Adaptive-FloorSelect/LEVIATHAN/SC6_DEL#20  (heap free=104MB / total=160MB / max=20480MB)
+[Adaptive-FloorSelect/LEVIATHAN/SC6_DEL#20] OK t=1ms cand=14901 pat=113 heapDelta=2MB
+>> [SC6B] SIGN seed=42 opSize=5 plan=20 operations (14 insert, 3 delete, 3 modify; operation 2 deletes 46 sequences beyond the budget)
+>> RUNNING Adaptive-Full/SIGN/SC6_INIT#0  (heap free=92MB / total=160MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_INIT#0] OK t=144ms cand=70528 pat=583 heapDelta=7MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#1  (heap free=50MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_INS#1] OK t=135ms cand=74614 pat=611 heapDelta=2MB
+>> RUNNING Adaptive-Full/SIGN/SC6_DEL_BIG#2  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_DEL_BIG#2] OK t=149ms cand=158479 pat=636 heapDelta=2MB
+>> RUNNING Adaptive-Full/SIGN/SC6_MOD#3  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_MOD#3] OK t=136ms cand=93134 pat=726 heapDelta=2MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#4  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_INS#4] OK t=132ms cand=89868 pat=704 heapDelta=2MB
+>> RUNNING Adaptive-Full/SIGN/SC6_DEL#5  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_DEL#5] OK t=2ms cand=89868 pat=712 heapDelta=0MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#6  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_INS#6] OK t=129ms cand=86689 pat=657 heapDelta=2MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#7  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_INS#7] OK t=138ms cand=86324 pat=695 heapDelta=2MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#8  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_INS#8] OK t=153ms cand=86294 pat=766 heapDelta=2MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#9  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_INS#9] OK t=156ms cand=87135 pat=712 heapDelta=2MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#10  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_INS#10] OK t=149ms cand=86384 pat=737 heapDelta=2MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#11  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_INS#11] OK t=150ms cand=84839 pat=684 heapDelta=2MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#12  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_INS#12] OK t=139ms cand=82768 pat=615 heapDelta=2MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#13  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_INS#13] OK t=139ms cand=79879 pat=568 heapDelta=2MB
+>> RUNNING Adaptive-Full/SIGN/SC6_MOD#14  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_MOD#14] OK t=153ms cand=79841 pat=592 heapDelta=2MB
+>> RUNNING Adaptive-Full/SIGN/SC6_MOD#15  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_MOD#15] OK t=153ms cand=79241 pat=588 heapDelta=2MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#16  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_INS#16] OK t=140ms cand=77699 pat=550 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#17  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_INS#17] OK t=160ms cand=75246 pat=539 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#18  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_INS#18] OK t=133ms cand=73378 pat=516 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#19  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_INS#19] OK t=139ms cand=74316 pat=493 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC6_DEL#20  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-Full/SIGN/SC6_DEL#20] OK t=1ms cand=74316 pat=508 heapDelta=0MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_INIT#0  (heap free=48MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_INIT#0] OK t=133ms cand=70528 pat=583 heapDelta=7MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_INS#1  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_INS#1] OK t=150ms cand=74614 pat=611 heapDelta=2MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_DEL_BIG#2  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_DEL_BIG#2] OK t=116ms cand=158479 pat=636 heapDelta=2MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_MOD#3  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_MOD#3] OK t=202ms cand=93134 pat=726 heapDelta=2MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_INS#4  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_INS#4] OK t=153ms cand=89868 pat=704 heapDelta=2MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_DEL#5  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_DEL#5] OK t=4ms cand=89868 pat=712 heapDelta=0MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_INS#6  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_INS#6] OK t=245ms cand=86689 pat=657 heapDelta=2MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_INS#7  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_INS#7] OK t=143ms cand=86324 pat=695 heapDelta=2MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_INS#8  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_INS#8] OK t=152ms cand=86294 pat=766 heapDelta=2MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_INS#9  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_INS#9] OK t=159ms cand=87135 pat=712 heapDelta=2MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_INS#10  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_INS#10] OK t=105ms cand=42483 pat=737 heapDelta=1MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_INS#11  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_INS#11] OK t=102ms cand=41931 pat=684 heapDelta=1MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_INS#12  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_INS#12] OK t=81ms cand=40958 pat=615 heapDelta=1MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_INS#13  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_INS#13] OK t=83ms cand=39580 pat=568 heapDelta=1MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_MOD#14  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_MOD#14] OK t=292ms cand=79841 pat=592 heapDelta=3MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_MOD#15  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_MOD#15] OK t=171ms cand=79241 pat=588 heapDelta=2MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_INS#16  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_INS#16] OK t=151ms cand=77699 pat=550 heapDelta=1MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_INS#17  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_INS#17] OK t=163ms cand=75246 pat=539 heapDelta=1MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_INS#18  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_INS#18] OK t=171ms cand=73378 pat=516 heapDelta=1MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_INS#19  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_INS#19] OK t=201ms cand=74316 pat=493 heapDelta=1MB
+>> RUNNING Adaptive-FloorSelect/SIGN/SC6_DEL#20  (heap free=49MB / total=64MB / max=20480MB)
+[Adaptive-FloorSelect/SIGN/SC6_DEL#20] OK t=1ms cand=74316 pat=508 heapDelta=0MB
+>> [SC6B] TAFENG seed=42 opSize=200 plan=20 operations (14 insert, 3 delete, 3 modify; operation 20 deletes 8577 sequences beyond the budget)
+>> RUNNING Adaptive-Full/TAFENG/SC6_INIT#0  (heap free=226MB / total=576MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_INIT#0] OK t=155ms cand=2123 pat=6 heapDelta=144MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#1  (heap free=376MB / total=576MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_INS#1] OK t=1ms cand=0 pat=6 heapDelta=10MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#2  (heap free=374MB / total=576MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_INS#2] OK t=116ms cand=2109 pat=6 heapDelta=43MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#3  (heap free=374MB / total=576MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_INS#3] OK t=1ms cand=0 pat=6 heapDelta=10MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#4  (heap free=374MB / total=576MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_INS#4] OK t=140ms cand=2105 pat=6 heapDelta=43MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_DEL#5  (heap free=373MB / total=576MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_DEL#5] OK t=1ms cand=2105 pat=6 heapDelta=10MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_MOD#6  (heap free=374MB / total=576MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_MOD#6] OK t=2ms cand=0 pat=6 heapDelta=10MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#7  (heap free=373MB / total=576MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_INS#7] OK t=134ms cand=2110 pat=6 heapDelta=43MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#8  (heap free=373MB / total=576MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_INS#8] OK t=130ms cand=2109 pat=6 heapDelta=43MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#9  (heap free=372MB / total=576MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_INS#9] OK t=114ms cand=2122 pat=6 heapDelta=43MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_MOD#10  (heap free=371MB / total=576MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_MOD#10] OK t=130ms cand=2159 pat=6 heapDelta=47MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#11  (heap free=371MB / total=576MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_INS#11] OK t=106ms cand=2162 pat=6 heapDelta=43MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#12  (heap free=371MB / total=576MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_INS#12] OK t=129ms cand=2156 pat=6 heapDelta=43MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#13  (heap free=370MB / total=576MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_INS#13] OK t=0ms cand=0 pat=6 heapDelta=10MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#14  (heap free=370MB / total=576MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_INS#14] OK t=118ms cand=2141 pat=6 heapDelta=43MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#15  (heap free=370MB / total=576MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_INS#15] OK t=115ms cand=2144 pat=6 heapDelta=43MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_DEL#16  (heap free=369MB / total=576MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_DEL#16] OK t=0ms cand=2144 pat=6 heapDelta=10MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#17  (heap free=369MB / total=576MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_INS#17] OK t=1ms cand=0 pat=6 heapDelta=10MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_MOD#18  (heap free=370MB / total=576MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_MOD#18] OK t=116ms cand=2152 pat=6 heapDelta=47MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#19  (heap free=370MB / total=576MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_INS#19] OK t=0ms cand=0 pat=6 heapDelta=10MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_DEL_BIG#20  (heap free=369MB / total=576MB / max=20480MB)
+[Adaptive-Full/TAFENG/SC6_DEL_BIG#20] OK t=93ms cand=2162 pat=6 heapDelta=35MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_INIT#0  (heap free=369MB / total=576MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_INIT#0] OK t=138ms cand=2123 pat=6 heapDelta=141MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_INS#1  (heap free=375MB / total=576MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_INS#1] OK t=0ms cand=0 pat=6 heapDelta=9MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_INS#2  (heap free=373MB / total=576MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_INS#2] OK t=115ms cand=2109 pat=6 heapDelta=43MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_INS#3  (heap free=373MB / total=576MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_INS#3] OK t=1ms cand=0 pat=6 heapDelta=9MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_INS#4  (heap free=372MB / total=576MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_INS#4] OK t=107ms cand=2105 pat=6 heapDelta=43MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_DEL#5  (heap free=372MB / total=576MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_DEL#5] OK t=1ms cand=2105 pat=6 heapDelta=9MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_MOD#6  (heap free=372MB / total=576MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_MOD#6] OK t=1ms cand=0 pat=6 heapDelta=9MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_INS#7  (heap free=372MB / total=576MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_INS#7] OK t=121ms cand=2110 pat=6 heapDelta=43MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_INS#8  (heap free=371MB / total=576MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_INS#8] OK t=113ms cand=2109 pat=6 heapDelta=43MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_INS#9  (heap free=370MB / total=576MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_INS#9] OK t=109ms cand=2122 pat=6 heapDelta=43MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_MOD#10  (heap free=369MB / total=576MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_MOD#10] OK t=115ms cand=2159 pat=6 heapDelta=47MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_INS#11  (heap free=370MB / total=576MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_INS#11] OK t=114ms cand=2162 pat=6 heapDelta=43MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_INS#12  (heap free=370MB / total=576MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_INS#12] OK t=112ms cand=2156 pat=6 heapDelta=43MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_INS#13  (heap free=369MB / total=576MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_INS#13] OK t=1ms cand=0 pat=6 heapDelta=9MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_INS#14  (heap free=370MB / total=576MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_INS#14] OK t=126ms cand=2141 pat=6 heapDelta=43MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_INS#15  (heap free=369MB / total=576MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_INS#15] OK t=128ms cand=2144 pat=6 heapDelta=43MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_DEL#16  (heap free=369MB / total=576MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_DEL#16] OK t=0ms cand=2144 pat=6 heapDelta=9MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_INS#17  (heap free=369MB / total=576MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_INS#17] OK t=0ms cand=0 pat=6 heapDelta=9MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_MOD#18  (heap free=369MB / total=576MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_MOD#18] OK t=106ms cand=2152 pat=6 heapDelta=47MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_INS#19  (heap free=369MB / total=576MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_INS#19] OK t=1ms cand=0 pat=6 heapDelta=9MB
+>> RUNNING Adaptive-FloorSelect/TAFENG/SC6_DEL_BIG#20  (heap free=368MB / total=576MB / max=20480MB)
+[Adaptive-FloorSelect/TAFENG/SC6_DEL_BIG#20] OK t=91ms cand=2162 pat=6 heapDelta=35MB
+>> [SC6B] C8T1S5I8N5K seed=42 opSize=199 plan=20 operations (14 insert, 3 delete, 3 modify; operation 14 deletes 5810 sequences beyond the budget)
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INIT#0  (heap free=314MB / total=576MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INIT#0] OK t=134ms cand=47013 pat=5067 heapDelta=82MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_MOD#1  (heap free=211MB / total=320MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_MOD#1] OK t=157ms cand=47148 pat=5314 heapDelta=24MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#2  (heap free=209MB / total=320MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#2] OK t=117ms cand=46452 pat=5104 heapDelta=20MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#3  (heap free=208MB / total=320MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#3] OK t=109ms cand=46706 pat=5547 heapDelta=20MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#4  (heap free=207MB / total=320MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#4] OK t=118ms cand=45903 pat=5388 heapDelta=20MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#5  (heap free=207MB / total=320MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#5] OK t=24ms cand=0 pat=6158 heapDelta=7MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#6  (heap free=207MB / total=320MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#6] OK t=126ms cand=48324 pat=5932 heapDelta=20MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#7  (heap free=206MB / total=320MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#7] OK t=110ms cand=49316 pat=6053 heapDelta=20MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#8  (heap free=206MB / total=320MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#8] OK t=119ms cand=48869 pat=7071 heapDelta=20MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#9  (heap free=206MB / total=320MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#9] OK t=124ms cand=47914 pat=6878 heapDelta=20MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_DEL#10  (heap free=205MB / total=320MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_DEL#10] OK t=38ms cand=47914 pat=7031 heapDelta=5MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_MOD#11  (heap free=206MB / total=320MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_MOD#11] OK t=159ms cand=47636 pat=7074 heapDelta=22MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#12  (heap free=205MB / total=320MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#12] OK t=13ms cand=0 pat=6899 heapDelta=7MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#13  (heap free=205MB / total=320MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#13] OK t=137ms cand=47116 pat=6747 heapDelta=20MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_DEL_BIG#14  (heap free=205MB / total=320MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_DEL_BIG#14] OK t=98ms cand=100544 pat=8778 heapDelta=18MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#15  (heap free=204MB / total=320MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#15] OK t=102ms cand=52638 pat=8464 heapDelta=18MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#16  (heap free=204MB / total=320MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#16] OK t=110ms cand=51747 pat=8184 heapDelta=18MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_MOD#17  (heap free=204MB / total=320MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_MOD#17] OK t=145ms cand=51864 pat=7904 heapDelta=20MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#18  (heap free=204MB / total=320MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#18] OK t=115ms cand=50831 pat=7631 heapDelta=18MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#19  (heap free=204MB / total=320MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#19] OK t=101ms cand=50156 pat=7395 heapDelta=18MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_DEL#20  (heap free=204MB / total=320MB / max=20480MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_DEL#20] OK t=53ms cand=50156 pat=7636 heapDelta=5MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INIT#0  (heap free=204MB / total=320MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INIT#0] OK t=117ms cand=47013 pat=5067 heapDelta=79MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_MOD#1  (heap free=209MB / total=320MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_MOD#1] OK t=144ms cand=47148 pat=5314 heapDelta=24MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#2  (heap free=208MB / total=320MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#2] OK t=108ms cand=46452 pat=5104 heapDelta=20MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#3  (heap free=208MB / total=320MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#3] OK t=120ms cand=46706 pat=5547 heapDelta=20MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#4  (heap free=207MB / total=320MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#4] OK t=107ms cand=45903 pat=5388 heapDelta=20MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#5  (heap free=207MB / total=320MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#5] OK t=19ms cand=0 pat=6158 heapDelta=7MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#6  (heap free=207MB / total=320MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#6] OK t=110ms cand=48324 pat=5932 heapDelta=20MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#7  (heap free=207MB / total=320MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#7] OK t=120ms cand=49316 pat=6053 heapDelta=20MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#8  (heap free=207MB / total=320MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#8] OK t=114ms cand=48869 pat=7071 heapDelta=20MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#9  (heap free=207MB / total=320MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#9] OK t=125ms cand=47914 pat=6878 heapDelta=20MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_DEL#10  (heap free=206MB / total=320MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_DEL#10] OK t=37ms cand=47914 pat=7031 heapDelta=5MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_MOD#11  (heap free=206MB / total=320MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_MOD#11] OK t=150ms cand=47636 pat=7074 heapDelta=22MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#12  (heap free=206MB / total=320MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#12] OK t=10ms cand=0 pat=6899 heapDelta=7MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#13  (heap free=206MB / total=320MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#13] OK t=117ms cand=47116 pat=6747 heapDelta=20MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_DEL_BIG#14  (heap free=206MB / total=320MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_DEL_BIG#14] OK t=108ms cand=100544 pat=8778 heapDelta=18MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#15  (heap free=206MB / total=320MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#15] OK t=122ms cand=52638 pat=8464 heapDelta=18MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#16  (heap free=205MB / total=320MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#16] OK t=93ms cand=51747 pat=8184 heapDelta=18MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_MOD#17  (heap free=206MB / total=320MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_MOD#17] OK t=157ms cand=51864 pat=7904 heapDelta=20MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#18  (heap free=205MB / total=320MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#18] OK t=101ms cand=50831 pat=7631 heapDelta=18MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#19  (heap free=206MB / total=320MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_INS#19] OK t=105ms cand=50156 pat=7395 heapDelta=18MB
+>> RUNNING Adaptive-FloorSelect/C8T1S5I8N5K/SC6_DEL#20  (heap free=206MB / total=320MB / max=20480MB)
+[Adaptive-FloorSelect/C8T1S5I8N5K/SC6_DEL#20] OK t=50ms cand=50156 pat=7636 heapDelta=5MB
+=== ALL SCENARIOS DONE (507.9s) ===

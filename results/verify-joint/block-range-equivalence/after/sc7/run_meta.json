@@ -1,0 +1,16 @@
+{
+  "command": "java -Xmx20g -Xss64m -cp build-bi -Drepeats=1 -Dalgo.only=proposed_C5_on,proposed_no_block_index,proposed_bsz_1,proposed_bsz_5,proposed_bsz_10,proposed_bsz_50,proposed_bsz_200 -Dresults.dir=results/verify-joint/block-range-equivalence/after/sc7/ AutomatedExperimentRunner SC7",
+  "path_substitutions": 0,
+  "build_dir": "build-bi",
+  "git_commit": "12db281563c289e1caa7e58a9392d43b266d4faf",
+  "tree": "src clean, other files modified",
+  "source_sha256": "aaa1651c45a21471a75cd81a718314c51859c54cea083bad330afeb50f9da35e",
+  "source_files": 39,
+  "java": "openjdk version \"26.0.1\" 2026-04-21",
+  "os": "Darwin 27.0.0 (macOS-27.0.1-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-10-17T13:14:08",
+  "end": "2026-10-17T13:25:36",
+  "exit_code": 0
+}

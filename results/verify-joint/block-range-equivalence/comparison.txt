@@ -1,0 +1,6 @@
+mixed/SC6B_idm_mixed.csv: 168 rows, 1176 values compared
+mixed/SC6D_idm_mixed.csv: 168 rows, 1176 values compared
+mixed/SC6_idm_mixed.csv: 168 rows, 1176 values compared
+sc2/SC2_incremental.csv: 3535 rows, 24745 values compared
+sc7/SC7_ablation.csv: 1414 rows, 9898 values compared
+values compared: 38171; differences: 0

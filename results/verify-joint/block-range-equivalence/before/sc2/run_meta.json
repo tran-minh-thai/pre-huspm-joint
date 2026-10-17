@@ -1,0 +1,16 @@
+{
+  "command": "bash -c rc=0; for d in SIGN TAFENG C8T1S5I8N5K LEVIATHAN BIBLE KOSARAK FIFA; do java -Xmx20g -Xss64m -cp build-old -Drepeats=1 -Ddataset.only=$d -Dalgo.only=Adaptive-Full,Joint-rule+min-floor,Joint-rule+plain-floor,Joint-rule+PreHUSPM-tracking,Adaptive-FloorSelect -Dresults.dir=~/work/pre-huspm-adaptive-new/results/verify-joint/block-range-equivalence/before/sc2/ AutomatedExperimentRunner SC2 || rc=1; done; exit $rc",
+  "path_substitutions": 1,
+  "build_dir": "build-old",
+  "git_commit": "c5660b3f965448861eaac42852d93492e010547c",
+  "tree": "clean",
+  "source_sha256": "b26648f128d54b182880d9d7a91e0e593203eb276570a54afcbcaa660c254e8f",
+  "source_files": 39,
+  "java": "openjdk version \"26.0.1\" 2026-04-21",
+  "os": "Darwin 27.0.0 (macOS-27.0.1-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-10-17T09:20:24",
+  "end": "2026-10-17T12:56:03",
+  "exit_code": 0
+}
