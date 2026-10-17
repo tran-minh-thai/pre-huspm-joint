@@ -1,0 +1,50 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC6D]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=2
+
+--- [SC6D] Mixed stream, exactly 6:10:4 ---
+>> [SC6D] TAFENG seed=2024 opSize=200 plan=20 operations (6 insert, 10 delete, 4 modify)
+>> RUNNING Remine-own-UUT/TAFENG/SC6_INIT#0  (heap free=570MB / total=1024MB / max=49152MB)
+[Remine-own-UUT/TAFENG/SC6_INIT#0] OK t=311ms cand=1628 pat=6 heapDelta=217MB
+>> RUNNING Remine-own-UUT/TAFENG/SC6_DEL#1  (heap free=598MB / total=864MB / max=49152MB)
+[Remine-own-UUT/TAFENG/SC6_DEL#1] OK t=205ms cand=1630 pat=6 heapDelta=203MB
+>> RUNNING Remine-own-UUT/TAFENG/SC6_MOD#2  (heap free=599MB / total=864MB / max=49152MB)
+[Remine-own-UUT/TAFENG/SC6_MOD#2] OK t=210ms cand=1627 pat=6 heapDelta=153MB
+>> RUNNING Remine-own-UUT/TAFENG/SC6_DEL#3  (heap free=599MB / total=864MB / max=49152MB)
+[Remine-own-UUT/TAFENG/SC6_DEL#3] OK t=154ms cand=1629 pat=6 heapDelta=151MB
+>> RUNNING Remine-own-UUT/TAFENG/SC6_MOD#4  (heap free=599MB / total=864MB / max=49152MB)
+[Remine-own-UUT/TAFENG/SC6_MOD#4] OK t=153ms cand=1615 pat=6 heapDelta=151MB
+>> RUNNING Remine-own-UUT/TAFENG/SC6_DEL#5  (heap free=599MB / total=864MB / max=49152MB)
+[Remine-own-UUT/TAFENG/SC6_DEL#5] OK t=146ms cand=1611 pat=6 heapDelta=151MB
+>> RUNNING Remine-own-UUT/TAFENG/SC6_DEL#6  (heap free=599MB / total=864MB / max=49152MB)
+[Remine-own-UUT/TAFENG/SC6_DEL#6] OK t=146ms cand=1607 pat=6 heapDelta=151MB
+>> RUNNING Remine-own-UUT/TAFENG/SC6_DEL#7  (heap free=599MB / total=864MB / max=49152MB)
+[Remine-own-UUT/TAFENG/SC6_DEL#7] OK t=143ms cand=1599 pat=6 heapDelta=145MB
+>> RUNNING Remine-own-UUT/TAFENG/SC6_MOD#8  (heap free=599MB / total=864MB / max=49152MB)
+[Remine-own-UUT/TAFENG/SC6_MOD#8] OK t=144ms cand=1605 pat=6 heapDelta=145MB
+>> RUNNING Remine-own-UUT/TAFENG/SC6_DEL#9  (heap free=599MB / total=864MB / max=49152MB)
+[Remine-own-UUT/TAFENG/SC6_DEL#9] OK t=142ms cand=1608 pat=6 heapDelta=145MB
+>> RUNNING Remine-own-UUT/TAFENG/SC6_INS#10  (heap free=598MB / total=864MB / max=49152MB)
+[Remine-own-UUT/TAFENG/SC6_INS#10] OK t=144ms cand=1609 pat=6 heapDelta=145MB
+>> RUNNING Remine-own-UUT/TAFENG/SC6_DEL#11  (heap free=598MB / total=864MB / max=49152MB)
+[Remine-own-UUT/TAFENG/SC6_DEL#11] OK t=143ms cand=1611 pat=6 heapDelta=145MB
+>> RUNNING Remine-own-UUT/TAFENG/SC6_DEL#12  (heap free=599MB / total=864MB / max=49152MB)
+[Remine-own-UUT/TAFENG/SC6_DEL#12] OK t=141ms cand=1617 pat=6 heapDelta=145MB
+>> RUNNING Remine-own-UUT/TAFENG/SC6_INS#13  (heap free=598MB / total=864MB / max=49152MB)
+[Remine-own-UUT/TAFENG/SC6_INS#13] OK t=146ms cand=1613 pat=6 heapDelta=145MB
+>> RUNNING Remine-own-UUT/TAFENG/SC6_INS#14  (heap free=598MB / total=864MB / max=49152MB)
+[Remine-own-UUT/TAFENG/SC6_INS#14] OK t=144ms cand=1610 pat=6 heapDelta=145MB
+>> RUNNING Remine-own-UUT/TAFENG/SC6_MOD#15  (heap free=598MB / total=864MB / max=49152MB)
+[Remine-own-UUT/TAFENG/SC6_MOD#15] OK t=144ms cand=1605 pat=6 heapDelta=145MB
+>> RUNNING Remine-own-UUT/TAFENG/SC6_DEL#16  (heap free=598MB / total=864MB / max=49152MB)
+[Remine-own-UUT/TAFENG/SC6_DEL#16] OK t=144ms cand=1607 pat=6 heapDelta=145MB
+>> RUNNING Remine-own-UUT/TAFENG/SC6_INS#17  (heap free=597MB / total=864MB / max=49152MB)
+[Remine-own-UUT/TAFENG/SC6_INS#17] OK t=146ms cand=1625 pat=6 heapDelta=145MB
+>> RUNNING Remine-own-UUT/TAFENG/SC6_INS#18  (heap free=598MB / total=864MB / max=49152MB)
+[Remine-own-UUT/TAFENG/SC6_INS#18] OK t=147ms cand=1664 pat=6 heapDelta=151MB
+>> RUNNING Remine-own-UUT/TAFENG/SC6_INS#19  (heap free=598MB / total=864MB / max=49152MB)
+[Remine-own-UUT/TAFENG/SC6_INS#19] OK t=148ms cand=1660 pat=6 heapDelta=151MB
+>> RUNNING Remine-own-UUT/TAFENG/SC6_DEL#20  (heap free=598MB / total=864MB / max=49152MB)
+[Remine-own-UUT/TAFENG/SC6_DEL#20] OK t=149ms cand=1661 pat=6 heapDelta=151MB
+=== ALL SCENARIOS DONE (18.7s) ===

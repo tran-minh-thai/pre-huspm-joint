@@ -1,0 +1,209 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC2]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC2] Incremental sequence (100 batches, EVEN; D_init per Yan et al. Table 16) ---
+>> RUNNING Remine-own-UUT/SIGN/SC2_INIT#0  (heap free=114MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INIT#0] OK t=126ms cand=35251 pat=583 heapDelta=11MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#1  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#1] OK t=111ms cand=37276 pat=611 heapDelta=9MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#2  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#2] OK t=82ms cand=39895 pat=684 heapDelta=10MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#3  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#3] OK t=78ms cand=38883 pat=663 heapDelta=9MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#4  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#4] OK t=78ms cand=37919 pat=631 heapDelta=8MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#5  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#5] OK t=78ms cand=37828 pat=652 heapDelta=8MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#6  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#6] OK t=82ms cand=38167 pat=695 heapDelta=8MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#7  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#7] OK t=83ms cand=38428 pat=664 heapDelta=8MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#8  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#8] OK t=85ms cand=38149 pat=660 heapDelta=8MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#9  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#9] OK t=87ms cand=37773 pat=632 heapDelta=8MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#10  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#10] OK t=86ms cand=37027 pat=594 heapDelta=8MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#11  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#11] OK t=84ms cand=35951 pat=564 heapDelta=8MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#12  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#12] OK t=84ms cand=35526 pat=571 heapDelta=9MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#13  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#13] OK t=86ms cand=35053 pat=556 heapDelta=9MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#14  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#14] OK t=86ms cand=34722 pat=528 heapDelta=9MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#15  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#15] OK t=85ms cand=34111 pat=506 heapDelta=9MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#16  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#16] OK t=85ms cand=33516 pat=480 heapDelta=9MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#17  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#17] OK t=86ms cand=33785 pat=461 heapDelta=9MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#18  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#18] OK t=91ms cand=34317 pat=503 heapDelta=10MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#19  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#19] OK t=90ms cand=33857 pat=471 heapDelta=10MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#20  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#20] OK t=88ms cand=33351 pat=434 heapDelta=10MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#21  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#21] OK t=88ms cand=32853 pat=415 heapDelta=10MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#22  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#22] OK t=91ms cand=32586 pat=423 heapDelta=10MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#23  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#23] OK t=92ms cand=32750 pat=434 heapDelta=10MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#24  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#24] OK t=94ms cand=32926 pat=470 heapDelta=10MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#25  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#25] OK t=94ms cand=32794 pat=456 heapDelta=10MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#26  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#26] OK t=98ms cand=32872 pat=475 heapDelta=10MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#27  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#27] OK t=97ms cand=32902 pat=442 heapDelta=10MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#28  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#28] OK t=100ms cand=33266 pat=425 heapDelta=11MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#29  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#29] OK t=99ms cand=32860 pat=435 heapDelta=11MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#30  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#30] OK t=100ms cand=32241 pat=416 heapDelta=11MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#31  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#31] OK t=101ms cand=32261 pat=394 heapDelta=11MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#32  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#32] OK t=101ms cand=32397 pat=373 heapDelta=11MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#33  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#33] OK t=101ms cand=32103 pat=337 heapDelta=11MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#34  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#34] OK t=102ms cand=31871 pat=333 heapDelta=12MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#35  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#35] OK t=102ms cand=31873 pat=316 heapDelta=12MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#36  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#36] OK t=103ms cand=31757 pat=323 heapDelta=12MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#37  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#37] OK t=103ms cand=31519 pat=308 heapDelta=12MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#38  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#38] OK t=104ms cand=31587 pat=298 heapDelta=12MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#39  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#39] OK t=104ms cand=31380 pat=293 heapDelta=12MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#40  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#40] OK t=106ms cand=31159 pat=276 heapDelta=12MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#41  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#41] OK t=106ms cand=31047 pat=269 heapDelta=12MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#42  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#42] OK t=106ms cand=30683 pat=269 heapDelta=12MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#43  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#43] OK t=105ms cand=30303 pat=276 heapDelta=13MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#44  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#44] OK t=107ms cand=30119 pat=289 heapDelta=13MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#45  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#45] OK t=106ms cand=29651 pat=275 heapDelta=13MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#46  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#46] OK t=105ms cand=29287 pat=280 heapDelta=13MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#47  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#47] OK t=107ms cand=29226 pat=279 heapDelta=13MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#48  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#48] OK t=106ms cand=28851 pat=271 heapDelta=13MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#49  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#49] OK t=105ms cand=28595 pat=269 heapDelta=13MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#50  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#50] OK t=105ms cand=28441 pat=253 heapDelta=14MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#51  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#51] OK t=107ms cand=28276 pat=244 heapDelta=14MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#52  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#52] OK t=107ms cand=28161 pat=239 heapDelta=14MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#53  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#53] OK t=106ms cand=28149 pat=243 heapDelta=14MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#54  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#54] OK t=111ms cand=28050 pat=245 heapDelta=14MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#55  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#55] OK t=109ms cand=27821 pat=243 heapDelta=14MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#56  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#56] OK t=108ms cand=27582 pat=236 heapDelta=14MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#57  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#57] OK t=108ms cand=27206 pat=230 heapDelta=14MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#58  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#58] OK t=110ms cand=27156 pat=223 heapDelta=14MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#59  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#59] OK t=110ms cand=27117 pat=226 heapDelta=14MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#60  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#60] OK t=112ms cand=27017 pat=217 heapDelta=14MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#61  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#61] OK t=111ms cand=26731 pat=205 heapDelta=15MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#62  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#62] OK t=112ms cand=26455 pat=206 heapDelta=15MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#63  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#63] OK t=112ms cand=26330 pat=200 heapDelta=15MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#64  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#64] OK t=111ms cand=26089 pat=197 heapDelta=15MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#65  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#65] OK t=112ms cand=26096 pat=199 heapDelta=15MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#66  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#66] OK t=115ms cand=26444 pat=190 heapDelta=16MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#67  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#67] OK t=115ms cand=26436 pat=188 heapDelta=16MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#68  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#68] OK t=117ms cand=26389 pat=185 heapDelta=16MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#69  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#69] OK t=119ms cand=26634 pat=185 heapDelta=16MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#70  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#70] OK t=123ms cand=26722 pat=183 heapDelta=16MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#71  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#71] OK t=123ms cand=26969 pat=172 heapDelta=16MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#72  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#72] OK t=123ms cand=26816 pat=166 heapDelta=16MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#73  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#73] OK t=121ms cand=26618 pat=162 heapDelta=16MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#74  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#74] OK t=122ms cand=26394 pat=157 heapDelta=16MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#75  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#75] OK t=122ms cand=26318 pat=151 heapDelta=16MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#76  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#76] OK t=123ms cand=26426 pat=155 heapDelta=17MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#77  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#77] OK t=127ms cand=26258 pat=155 heapDelta=17MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#78  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#78] OK t=124ms cand=25966 pat=151 heapDelta=17MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#79  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#79] OK t=125ms cand=25642 pat=144 heapDelta=17MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#80  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#80] OK t=124ms cand=25705 pat=145 heapDelta=17MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#81  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#81] OK t=126ms cand=25687 pat=148 heapDelta=17MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#82  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#82] OK t=125ms cand=25556 pat=144 heapDelta=17MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#83  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#83] OK t=127ms cand=25662 pat=139 heapDelta=17MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#84  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#84] OK t=129ms cand=25918 pat=139 heapDelta=17MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#85  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#85] OK t=127ms cand=25671 pat=132 heapDelta=18MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#86  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#86] OK t=128ms cand=25416 pat=124 heapDelta=18MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#87  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#87] OK t=128ms cand=25513 pat=123 heapDelta=18MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#88  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#88] OK t=129ms cand=25444 pat=123 heapDelta=18MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#89  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#89] OK t=131ms cand=25564 pat=118 heapDelta=18MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#90  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#90] OK t=134ms cand=25672 pat=119 heapDelta=19MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#91  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#91] OK t=134ms cand=25859 pat=115 heapDelta=19MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#92  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#92] OK t=136ms cand=25967 pat=113 heapDelta=19MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#93  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#93] OK t=138ms cand=26352 pat=116 heapDelta=19MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#94  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#94] OK t=141ms cand=26586 pat=119 heapDelta=19MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#95  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#95] OK t=144ms cand=26940 pat=124 heapDelta=19MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#96  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#96] OK t=147ms cand=27017 pat=139 heapDelta=19MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#97  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#97] OK t=146ms cand=26830 pat=143 heapDelta=19MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#98  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#98] OK t=149ms cand=27109 pat=146 heapDelta=20MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#99  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#99] OK t=150ms cand=27114 pat=142 heapDelta=20MB
+>> RUNNING Remine-own-UUT/SIGN/SC2_INC#100  (heap free=108MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC2_INC#100] OK t=151ms cand=27028 pat=141 heapDelta=20MB
+=== ALL SCENARIOS DONE (75.1s) ===

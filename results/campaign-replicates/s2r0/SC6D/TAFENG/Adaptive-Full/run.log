@@ -1,0 +1,50 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC6D]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=2
+
+--- [SC6D] Mixed stream, exactly 6:10:4 ---
+>> [SC6D] TAFENG seed=2024 opSize=200 plan=20 operations (6 insert, 10 delete, 4 modify)
+>> RUNNING Adaptive-Full/TAFENG/SC6_INIT#0  (heap free=570MB / total=1024MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC6_INIT#0] OK t=333ms cand=2123 pat=6 heapDelta=229MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_DEL#1  (heap free=598MB / total=864MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC6_DEL#1] OK t=2ms cand=2123 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_MOD#2  (heap free=597MB / total=864MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC6_MOD#2] OK t=12ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_DEL#3  (heap free=597MB / total=864MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC6_DEL#3] OK t=1ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_MOD#4  (heap free=597MB / total=864MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC6_MOD#4] OK t=150ms cand=2111 pat=6 heapDelta=55MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_DEL#5  (heap free=595MB / total=864MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC6_DEL#5] OK t=1ms cand=2111 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_DEL#6  (heap free=595MB / total=864MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC6_DEL#6] OK t=1ms cand=2111 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_DEL#7  (heap free=595MB / total=864MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC6_DEL#7] OK t=1ms cand=2111 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_MOD#8  (heap free=595MB / total=864MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC6_MOD#8] OK t=4ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_DEL#9  (heap free=595MB / total=864MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC6_DEL#9] OK t=1ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#10  (heap free=595MB / total=864MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC6_INS#10] OK t=146ms cand=2112 pat=6 heapDelta=49MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_DEL#11  (heap free=592MB / total=864MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC6_DEL#11] OK t=1ms cand=2112 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_DEL#12  (heap free=592MB / total=864MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC6_DEL#12] OK t=1ms cand=2112 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#13  (heap free=592MB / total=864MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC6_INS#13] OK t=2ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#14  (heap free=592MB / total=864MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC6_INS#14] OK t=86ms cand=2116 pat=6 heapDelta=49MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_MOD#15  (heap free=592MB / total=864MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC6_MOD#15] OK t=89ms cand=2117 pat=6 heapDelta=49MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_DEL#16  (heap free=591MB / total=864MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC6_DEL#16] OK t=1ms cand=2117 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#17  (heap free=591MB / total=864MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC6_INS#17] OK t=91ms cand=2127 pat=6 heapDelta=49MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#18  (heap free=592MB / total=864MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC6_INS#18] OK t=88ms cand=2165 pat=6 heapDelta=49MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#19  (heap free=591MB / total=864MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC6_INS#19] OK t=88ms cand=2158 pat=6 heapDelta=49MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_DEL#20  (heap free=590MB / total=864MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC6_DEL#20] OK t=1ms cand=2158 pat=6 heapDelta=14MB
+=== ALL SCENARIOS DONE (16.7s) ===

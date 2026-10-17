@@ -1,0 +1,17 @@
+### LIVE HEAP: forced collection, interval >= 20 ms | arm = Joint-miner@UUT
+### runtime_ms is written as -3 (perturbed by forced GC); the wall time is in wall_ms_perturbed. NOT a performance figure.
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC1]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC1] Static baseline on D_init ---
+>> RUNNING Joint-miner@UUT/TAFENG/SC1_su=0.002812#0  (heap free=625MB / total=864MB / max=49152MB)
+[Joint-miner@UUT/TAFENG/SC1_su=0.002812#0] OK t=2723ms cand=2161 pat=10 heapDelta=175MB
+>> RUNNING Joint-miner@UUT/TAFENG/SC1_su=0.003557#0  (heap free=617MB / total=864MB / max=49152MB)
+[Joint-miner@UUT/TAFENG/SC1_su=0.003557#0] OK t=2716ms cand=1628 pat=6 heapDelta=63MB
+>> RUNNING Joint-miner@UUT/TAFENG/SC1_su=0.004499#0  (heap free=618MB / total=864MB / max=49152MB)
+[Joint-miner@UUT/TAFENG/SC1_su=0.004499#0] OK t=2869ms cand=1178 pat=5 heapDelta=52MB
+>> RUNNING Joint-miner@UUT/TAFENG/SC1_su=0.005691#0  (heap free=619MB / total=864MB / max=49152MB)
+[Joint-miner@UUT/TAFENG/SC1_su=0.005691#0] OK t=2792ms cand=846 pat=3 heapDelta=138MB
+=== ALL SCENARIOS DONE (27.8s) ===

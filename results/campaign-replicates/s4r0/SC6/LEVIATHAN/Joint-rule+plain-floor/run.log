@@ -1,0 +1,50 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC6]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=4
+
+--- [SC6] Mixed stream, exactly 14:3:3 ---
+>> [SC6] LEVIATHAN seed=271828 opSize=30 plan=20 operations (14 insert, 3 delete, 3 modify)
+>> RUNNING Joint-rule+plain-floor/LEVIATHAN/SC6_INIT#0  (heap free=843MB / total=1024MB / max=49152MB)
+[Joint-rule+plain-floor/LEVIATHAN/SC6_INIT#0] OK t=518ms cand=15377 pat=107 heapDelta=64MB
+>> RUNNING Joint-rule+plain-floor/LEVIATHAN/SC6_INS#1  (heap free=154MB / total=224MB / max=49152MB)
+[Joint-rule+plain-floor/LEVIATHAN/SC6_INS#1] OK t=264ms cand=15341 pat=107 heapDelta=13MB
+>> RUNNING Joint-rule+plain-floor/LEVIATHAN/SC6_INS#2  (heap free=153MB / total=224MB / max=49152MB)
+[Joint-rule+plain-floor/LEVIATHAN/SC6_INS#2] OK t=231ms cand=15133 pat=108 heapDelta=12MB
+>> RUNNING Joint-rule+plain-floor/LEVIATHAN/SC6_INS#3  (heap free=153MB / total=224MB / max=49152MB)
+[Joint-rule+plain-floor/LEVIATHAN/SC6_INS#3] OK t=233ms cand=15026 pat=106 heapDelta=11MB
+>> RUNNING Joint-rule+plain-floor/LEVIATHAN/SC6_INS#4  (heap free=153MB / total=224MB / max=49152MB)
+[Joint-rule+plain-floor/LEVIATHAN/SC6_INS#4] OK t=232ms cand=14887 pat=108 heapDelta=11MB
+>> RUNNING Joint-rule+plain-floor/LEVIATHAN/SC6_MOD#5  (heap free=153MB / total=224MB / max=49152MB)
+[Joint-rule+plain-floor/LEVIATHAN/SC6_MOD#5] OK t=239ms cand=15106 pat=109 heapDelta=12MB
+>> RUNNING Joint-rule+plain-floor/LEVIATHAN/SC6_INS#6  (heap free=153MB / total=224MB / max=49152MB)
+[Joint-rule+plain-floor/LEVIATHAN/SC6_INS#6] OK t=232ms cand=14932 pat=107 heapDelta=11MB
+>> RUNNING Joint-rule+plain-floor/LEVIATHAN/SC6_MOD#7  (heap free=152MB / total=224MB / max=49152MB)
+[Joint-rule+plain-floor/LEVIATHAN/SC6_MOD#7] OK t=238ms cand=14955 pat=110 heapDelta=12MB
+>> RUNNING Joint-rule+plain-floor/LEVIATHAN/SC6_INS#8  (heap free=151MB / total=224MB / max=49152MB)
+[Joint-rule+plain-floor/LEVIATHAN/SC6_INS#8] OK t=238ms cand=14862 pat=110 heapDelta=12MB
+>> RUNNING Joint-rule+plain-floor/LEVIATHAN/SC6_INS#9  (heap free=152MB / total=224MB / max=49152MB)
+[Joint-rule+plain-floor/LEVIATHAN/SC6_INS#9] OK t=237ms cand=14788 pat=110 heapDelta=12MB
+>> RUNNING Joint-rule+plain-floor/LEVIATHAN/SC6_INS#10  (heap free=151MB / total=224MB / max=49152MB)
+[Joint-rule+plain-floor/LEVIATHAN/SC6_INS#10] OK t=241ms cand=14820 pat=110 heapDelta=12MB
+>> RUNNING Joint-rule+plain-floor/LEVIATHAN/SC6_MOD#11  (heap free=152MB / total=224MB / max=49152MB)
+[Joint-rule+plain-floor/LEVIATHAN/SC6_MOD#11] OK t=248ms cand=14869 pat=113 heapDelta=12MB
+>> RUNNING Joint-rule+plain-floor/LEVIATHAN/SC6_INS#12  (heap free=150MB / total=224MB / max=49152MB)
+[Joint-rule+plain-floor/LEVIATHAN/SC6_INS#12] OK t=246ms cand=14757 pat=114 heapDelta=13MB
+>> RUNNING Joint-rule+plain-floor/LEVIATHAN/SC6_INS#13  (heap free=152MB / total=224MB / max=49152MB)
+[Joint-rule+plain-floor/LEVIATHAN/SC6_INS#13] OK t=249ms cand=14928 pat=113 heapDelta=13MB
+>> RUNNING Joint-rule+plain-floor/LEVIATHAN/SC6_INS#14  (heap free=150MB / total=224MB / max=49152MB)
+[Joint-rule+plain-floor/LEVIATHAN/SC6_INS#14] OK t=259ms cand=15361 pat=114 heapDelta=14MB
+>> RUNNING Joint-rule+plain-floor/LEVIATHAN/SC6_INS#15  (heap free=152MB / total=224MB / max=49152MB)
+[Joint-rule+plain-floor/LEVIATHAN/SC6_INS#15] OK t=263ms cand=15381 pat=115 heapDelta=13MB
+>> RUNNING Joint-rule+plain-floor/LEVIATHAN/SC6_INS#16  (heap free=150MB / total=224MB / max=49152MB)
+[Joint-rule+plain-floor/LEVIATHAN/SC6_INS#16] OK t=266ms cand=15382 pat=116 heapDelta=14MB
+>> RUNNING Joint-rule+plain-floor/LEVIATHAN/SC6_DEL#17  (heap free=152MB / total=224MB / max=49152MB)
+[Joint-rule+plain-floor/LEVIATHAN/SC6_DEL#17] OK t=1ms cand=15382 pat=116 heapDelta=1MB
+>> RUNNING Joint-rule+plain-floor/LEVIATHAN/SC6_DEL#18  (heap free=152MB / total=224MB / max=49152MB)
+[Joint-rule+plain-floor/LEVIATHAN/SC6_DEL#18] OK t=1ms cand=15382 pat=115 heapDelta=1MB
+>> RUNNING Joint-rule+plain-floor/LEVIATHAN/SC6_DEL#19  (heap free=152MB / total=224MB / max=49152MB)
+[Joint-rule+plain-floor/LEVIATHAN/SC6_DEL#19] OK t=1ms cand=15382 pat=115 heapDelta=1MB
+>> RUNNING Joint-rule+plain-floor/LEVIATHAN/SC6_INS#20  (heap free=152MB / total=224MB / max=49152MB)
+[Joint-rule+plain-floor/LEVIATHAN/SC6_INS#20] OK t=260ms cand=15341 pat=117 heapDelta=13MB
+=== ALL SCENARIOS DONE (15.2s) ===

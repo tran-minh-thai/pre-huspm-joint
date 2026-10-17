@@ -1,0 +1,50 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC6B]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=2
+
+--- [SC6B] Mixed stream, exactly 14:3:3, one deletion beyond the rescan budget ---
+>> [SC6B] SIGN seed=2024 opSize=5 plan=20 operations (14 insert, 3 delete, 3 modify; operation 2 deletes 49 sequences beyond the budget)
+>> RUNNING Remine-own-UUT/SIGN/SC6_INIT#0  (heap free=1008MB / total=1024MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC6_INIT#0] OK t=127ms cand=35251 pat=583 heapDelta=18MB
+>> RUNNING Remine-own-UUT/SIGN/SC6_INS#1  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC6_INS#1] OK t=98ms cand=37276 pat=611 heapDelta=9MB
+>> RUNNING Remine-own-UUT/SIGN/SC6_DEL_BIG#2  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC6_DEL_BIG#2] OK t=81ms cand=36724 pat=607 heapDelta=8MB
+>> RUNNING Remine-own-UUT/SIGN/SC6_DEL#3  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC6_DEL#3] OK t=87ms cand=38139 pat=612 heapDelta=7MB
+>> RUNNING Remine-own-UUT/SIGN/SC6_INS#4  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC6_INS#4] OK t=63ms cand=41589 pat=705 heapDelta=7MB
+>> RUNNING Remine-own-UUT/SIGN/SC6_INS#5  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC6_INS#5] OK t=62ms cand=40333 pat=685 heapDelta=7MB
+>> RUNNING Remine-own-UUT/SIGN/SC6_INS#6  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC6_INS#6] OK t=60ms cand=39097 pat=635 heapDelta=7MB
+>> RUNNING Remine-own-UUT/SIGN/SC6_MOD#7  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC6_MOD#7] OK t=62ms cand=39221 pat=653 heapDelta=7MB
+>> RUNNING Remine-own-UUT/SIGN/SC6_INS#8  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC6_INS#8] OK t=64ms cand=39449 pat=718 heapDelta=7MB
+>> RUNNING Remine-own-UUT/SIGN/SC6_INS#9  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC6_INS#9] OK t=66ms cand=39816 pat=657 heapDelta=7MB
+>> RUNNING Remine-own-UUT/SIGN/SC6_INS#10  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC6_INS#10] OK t=67ms cand=39475 pat=668 heapDelta=7MB
+>> RUNNING Remine-own-UUT/SIGN/SC6_INS#11  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC6_INS#11] OK t=69ms cand=38839 pat=623 heapDelta=7MB
+>> RUNNING Remine-own-UUT/SIGN/SC6_INS#12  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC6_INS#12] OK t=68ms cand=37978 pat=575 heapDelta=7MB
+>> RUNNING Remine-own-UUT/SIGN/SC6_DEL#13  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC6_DEL#13] OK t=67ms cand=38262 pat=576 heapDelta=7MB
+>> RUNNING Remine-own-UUT/SIGN/SC6_MOD#14  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC6_MOD#14] OK t=62ms cand=36536 pat=491 heapDelta=7MB
+>> RUNNING Remine-own-UUT/SIGN/SC6_MOD#15  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC6_MOD#15] OK t=63ms cand=36289 pat=507 heapDelta=7MB
+>> RUNNING Remine-own-UUT/SIGN/SC6_INS#16  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC6_INS#16] OK t=63ms cand=35865 pat=505 heapDelta=7MB
+>> RUNNING Remine-own-UUT/SIGN/SC6_INS#17  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC6_INS#17] OK t=63ms cand=35305 pat=459 heapDelta=7MB
+>> RUNNING Remine-own-UUT/SIGN/SC6_INS#18  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC6_INS#18] OK t=63ms cand=34428 pat=452 heapDelta=7MB
+>> RUNNING Remine-own-UUT/SIGN/SC6_INS#19  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC6_INS#19] OK t=62ms cand=33589 pat=431 heapDelta=7MB
+>> RUNNING Remine-own-UUT/SIGN/SC6_INS#20  (heap free=109MB / total=128MB / max=49152MB)
+[Remine-own-UUT/SIGN/SC6_INS#20] OK t=64ms cand=34032 pat=411 heapDelta=7MB
+=== ALL SCENARIOS DONE (8.3s) ===

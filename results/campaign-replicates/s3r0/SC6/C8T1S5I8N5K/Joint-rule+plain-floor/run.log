@@ -1,0 +1,50 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC6]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=3
+
+--- [SC6] Mixed stream, exactly 14:3:3 ---
+>> [SC6] C8T1S5I8N5K seed=31415 opSize=199 plan=20 operations (14 insert, 3 delete, 3 modify)
+>> RUNNING Joint-rule+plain-floor/C8T1S5I8N5K/SC6_INIT#0  (heap free=813MB / total=1024MB / max=49152MB)
+[Joint-rule+plain-floor/C8T1S5I8N5K/SC6_INIT#0] OK t=294ms cand=47013 pat=5067 heapDelta=111MB
+>> RUNNING Joint-rule+plain-floor/C8T1S5I8N5K/SC6_INS#1  (heap free=318MB / total=448MB / max=49152MB)
+[Joint-rule+plain-floor/C8T1S5I8N5K/SC6_INS#1] OK t=155ms cand=46386 pat=5101 heapDelta=27MB
+>> RUNNING Joint-rule+plain-floor/C8T1S5I8N5K/SC6_INS#2  (heap free=316MB / total=448MB / max=49152MB)
+[Joint-rule+plain-floor/C8T1S5I8N5K/SC6_INS#2] OK t=140ms cand=45462 pat=4900 heapDelta=24MB
+>> RUNNING Joint-rule+plain-floor/C8T1S5I8N5K/SC6_INS#3  (heap free=316MB / total=448MB / max=49152MB)
+[Joint-rule+plain-floor/C8T1S5I8N5K/SC6_INS#3] OK t=144ms cand=45767 pat=5360 heapDelta=24MB
+>> RUNNING Joint-rule+plain-floor/C8T1S5I8N5K/SC6_INS#4  (heap free=315MB / total=448MB / max=49152MB)
+[Joint-rule+plain-floor/C8T1S5I8N5K/SC6_INS#4] OK t=93ms cand=45059 pat=5212 heapDelta=24MB
+>> RUNNING Joint-rule+plain-floor/C8T1S5I8N5K/SC6_INS#5  (heap free=315MB / total=448MB / max=49152MB)
+[Joint-rule+plain-floor/C8T1S5I8N5K/SC6_INS#5] OK t=46ms cand=0 pat=5957 heapDelta=11MB
+>> RUNNING Joint-rule+plain-floor/C8T1S5I8N5K/SC6_INS#6  (heap free=314MB / total=448MB / max=49152MB)
+[Joint-rule+plain-floor/C8T1S5I8N5K/SC6_INS#6] OK t=98ms cand=47566 pat=5744 heapDelta=24MB
+>> RUNNING Joint-rule+plain-floor/C8T1S5I8N5K/SC6_INS#7  (heap free=314MB / total=448MB / max=49152MB)
+[Joint-rule+plain-floor/C8T1S5I8N5K/SC6_INS#7] OK t=99ms cand=48283 pat=5865 heapDelta=24MB
+>> RUNNING Joint-rule+plain-floor/C8T1S5I8N5K/SC6_MOD#8  (heap free=313MB / total=448MB / max=49152MB)
+[Joint-rule+plain-floor/C8T1S5I8N5K/SC6_MOD#8] OK t=154ms cand=47884 pat=7065 heapDelta=30MB
+>> RUNNING Joint-rule+plain-floor/C8T1S5I8N5K/SC6_MOD#9  (heap free=313MB / total=448MB / max=49152MB)
+[Joint-rule+plain-floor/C8T1S5I8N5K/SC6_MOD#9] OK t=150ms cand=47515 pat=7072 heapDelta=27MB
+>> RUNNING Joint-rule+plain-floor/C8T1S5I8N5K/SC6_DEL#10  (heap free=313MB / total=448MB / max=49152MB)
+[Joint-rule+plain-floor/C8T1S5I8N5K/SC6_DEL#10] OK t=39ms cand=47515 pat=7085 heapDelta=8MB
+>> RUNNING Joint-rule+plain-floor/C8T1S5I8N5K/SC6_INS#11  (heap free=312MB / total=448MB / max=49152MB)
+[Joint-rule+plain-floor/C8T1S5I8N5K/SC6_INS#11] OK t=100ms cand=47888 pat=6985 heapDelta=24MB
+>> RUNNING Joint-rule+plain-floor/C8T1S5I8N5K/SC6_MOD#12  (heap free=312MB / total=448MB / max=49152MB)
+[Joint-rule+plain-floor/C8T1S5I8N5K/SC6_MOD#12] OK t=50ms cand=0 pat=6737 heapDelta=14MB
+>> RUNNING Joint-rule+plain-floor/C8T1S5I8N5K/SC6_INS#13  (heap free=312MB / total=448MB / max=49152MB)
+[Joint-rule+plain-floor/C8T1S5I8N5K/SC6_INS#13] OK t=96ms cand=47813 pat=6618 heapDelta=24MB
+>> RUNNING Joint-rule+plain-floor/C8T1S5I8N5K/SC6_INS#14  (heap free=312MB / total=448MB / max=49152MB)
+[Joint-rule+plain-floor/C8T1S5I8N5K/SC6_INS#14] OK t=95ms cand=46765 pat=6416 heapDelta=24MB
+>> RUNNING Joint-rule+plain-floor/C8T1S5I8N5K/SC6_INS#15  (heap free=311MB / total=448MB / max=49152MB)
+[Joint-rule+plain-floor/C8T1S5I8N5K/SC6_INS#15] OK t=95ms cand=46153 pat=6250 heapDelta=24MB
+>> RUNNING Joint-rule+plain-floor/C8T1S5I8N5K/SC6_DEL#16  (heap free=311MB / total=448MB / max=49152MB)
+[Joint-rule+plain-floor/C8T1S5I8N5K/SC6_DEL#16] OK t=36ms cand=46153 pat=6457 heapDelta=8MB
+>> RUNNING Joint-rule+plain-floor/C8T1S5I8N5K/SC6_DEL#17  (heap free=311MB / total=448MB / max=49152MB)
+[Joint-rule+plain-floor/C8T1S5I8N5K/SC6_DEL#17] OK t=35ms cand=46153 pat=6650 heapDelta=8MB
+>> RUNNING Joint-rule+plain-floor/C8T1S5I8N5K/SC6_INS#18  (heap free=311MB / total=448MB / max=49152MB)
+[Joint-rule+plain-floor/C8T1S5I8N5K/SC6_INS#18] OK t=8ms cand=0 pat=6458 heapDelta=11MB
+>> RUNNING Joint-rule+plain-floor/C8T1S5I8N5K/SC6_INS#19  (heap free=310MB / total=448MB / max=49152MB)
+[Joint-rule+plain-floor/C8T1S5I8N5K/SC6_INS#19] OK t=94ms cand=44892 pat=6298 heapDelta=24MB
+>> RUNNING Joint-rule+plain-floor/C8T1S5I8N5K/SC6_INS#20  (heap free=311MB / total=448MB / max=49152MB)
+[Joint-rule+plain-floor/C8T1S5I8N5K/SC6_INS#20] OK t=98ms cand=46117 pat=6135 heapDelta=24MB
+=== ALL SCENARIOS DONE (17.0s) ===

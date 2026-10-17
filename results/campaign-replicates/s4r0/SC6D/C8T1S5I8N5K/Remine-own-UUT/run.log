@@ -1,0 +1,50 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC6D]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=4
+
+--- [SC6D] Mixed stream, exactly 6:10:4 ---
+>> [SC6D] C8T1S5I8N5K seed=271828 opSize=199 plan=20 operations (6 insert, 10 delete, 4 modify)
+>> RUNNING Remine-own-UUT/C8T1S5I8N5K/SC6_INIT#0  (heap free=812MB / total=1024MB / max=49152MB)
+[Remine-own-UUT/C8T1S5I8N5K/SC6_INIT#0] OK t=429ms cand=20252 pat=5067 heapDelta=99MB
+>> RUNNING Remine-own-UUT/C8T1S5I8N5K/SC6_INS#1  (heap free=320MB / total=448MB / max=49152MB)
+[Remine-own-UUT/C8T1S5I8N5K/SC6_INS#1] OK t=284ms cand=20223 pat=5101 heapDelta=90MB
+>> RUNNING Remine-own-UUT/C8T1S5I8N5K/SC6_INS#2  (heap free=319MB / total=448MB / max=49152MB)
+[Remine-own-UUT/C8T1S5I8N5K/SC6_INS#2] OK t=86ms cand=19599 pat=4900 heapDelta=80MB
+>> RUNNING Remine-own-UUT/C8T1S5I8N5K/SC6_DEL#3  (heap free=318MB / total=448MB / max=49152MB)
+[Remine-own-UUT/C8T1S5I8N5K/SC6_DEL#3] OK t=89ms cand=19526 pat=4937 heapDelta=80MB
+>> RUNNING Remine-own-UUT/C8T1S5I8N5K/SC6_DEL#4  (heap free=318MB / total=448MB / max=49152MB)
+[Remine-own-UUT/C8T1S5I8N5K/SC6_DEL#4] OK t=86ms cand=20105 pat=5140 heapDelta=80MB
+>> RUNNING Remine-own-UUT/C8T1S5I8N5K/SC6_MOD#5  (heap free=318MB / total=448MB / max=49152MB)
+[Remine-own-UUT/C8T1S5I8N5K/SC6_MOD#5] OK t=86ms cand=20326 pat=5518 heapDelta=80MB
+>> RUNNING Remine-own-UUT/C8T1S5I8N5K/SC6_MOD#6  (heap free=318MB / total=448MB / max=49152MB)
+[Remine-own-UUT/C8T1S5I8N5K/SC6_MOD#6] OK t=86ms cand=20494 pat=5558 heapDelta=80MB
+>> RUNNING Remine-own-UUT/C8T1S5I8N5K/SC6_INS#7  (heap free=318MB / total=448MB / max=49152MB)
+[Remine-own-UUT/C8T1S5I8N5K/SC6_INS#7] OK t=91ms cand=21445 pat=5978 heapDelta=80MB
+>> RUNNING Remine-own-UUT/C8T1S5I8N5K/SC6_DEL#8  (heap free=318MB / total=448MB / max=49152MB)
+[Remine-own-UUT/C8T1S5I8N5K/SC6_DEL#8] OK t=88ms cand=21526 pat=5817 heapDelta=80MB
+>> RUNNING Remine-own-UUT/C8T1S5I8N5K/SC6_INS#9  (heap free=318MB / total=448MB / max=49152MB)
+[Remine-own-UUT/C8T1S5I8N5K/SC6_INS#9] OK t=87ms cand=20888 pat=5602 heapDelta=80MB
+>> RUNNING Remine-own-UUT/C8T1S5I8N5K/SC6_DEL#10  (heap free=318MB / total=448MB / max=49152MB)
+[Remine-own-UUT/C8T1S5I8N5K/SC6_DEL#10] OK t=85ms cand=20772 pat=5515 heapDelta=80MB
+>> RUNNING Remine-own-UUT/C8T1S5I8N5K/SC6_INS#11  (heap free=317MB / total=448MB / max=49152MB)
+[Remine-own-UUT/C8T1S5I8N5K/SC6_INS#11] OK t=88ms cand=20996 pat=5674 heapDelta=80MB
+>> RUNNING Remine-own-UUT/C8T1S5I8N5K/SC6_DEL#12  (heap free=317MB / total=448MB / max=49152MB)
+[Remine-own-UUT/C8T1S5I8N5K/SC6_DEL#12] OK t=88ms cand=21055 pat=5851 heapDelta=80MB
+>> RUNNING Remine-own-UUT/C8T1S5I8N5K/SC6_DEL#13  (heap free=317MB / total=448MB / max=49152MB)
+[Remine-own-UUT/C8T1S5I8N5K/SC6_DEL#13] OK t=88ms cand=20991 pat=6000 heapDelta=76MB
+>> RUNNING Remine-own-UUT/C8T1S5I8N5K/SC6_MOD#14  (heap free=317MB / total=448MB / max=49152MB)
+[Remine-own-UUT/C8T1S5I8N5K/SC6_MOD#14] OK t=95ms cand=23152 pat=7224 heapDelta=80MB
+>> RUNNING Remine-own-UUT/C8T1S5I8N5K/SC6_INS#15  (heap free=317MB / total=448MB / max=49152MB)
+[Remine-own-UUT/C8T1S5I8N5K/SC6_INS#15] OK t=94ms cand=22906 pat=7074 heapDelta=80MB
+>> RUNNING Remine-own-UUT/C8T1S5I8N5K/SC6_DEL#16  (heap free=317MB / total=448MB / max=49152MB)
+[Remine-own-UUT/C8T1S5I8N5K/SC6_DEL#16] OK t=95ms cand=23219 pat=7214 heapDelta=80MB
+>> RUNNING Remine-own-UUT/C8T1S5I8N5K/SC6_MOD#17  (heap free=317MB / total=448MB / max=49152MB)
+[Remine-own-UUT/C8T1S5I8N5K/SC6_MOD#17] OK t=93ms cand=23057 pat=6840 heapDelta=80MB
+>> RUNNING Remine-own-UUT/C8T1S5I8N5K/SC6_DEL#18  (heap free=317MB / total=448MB / max=49152MB)
+[Remine-own-UUT/C8T1S5I8N5K/SC6_DEL#18] OK t=92ms cand=23018 pat=6786 heapDelta=76MB
+>> RUNNING Remine-own-UUT/C8T1S5I8N5K/SC6_DEL#19  (heap free=317MB / total=448MB / max=49152MB)
+[Remine-own-UUT/C8T1S5I8N5K/SC6_DEL#19] OK t=92ms cand=23215 pat=6955 heapDelta=76MB
+>> RUNNING Remine-own-UUT/C8T1S5I8N5K/SC6_DEL#20  (heap free=317MB / total=448MB / max=49152MB)
+[Remine-own-UUT/C8T1S5I8N5K/SC6_DEL#20] OK t=88ms cand=22708 pat=6597 heapDelta=76MB
+=== ALL SCENARIOS DONE (17.1s) ===

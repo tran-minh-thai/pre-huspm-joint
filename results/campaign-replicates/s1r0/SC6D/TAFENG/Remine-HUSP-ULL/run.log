@@ -1,0 +1,50 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC6D]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=1
+
+--- [SC6D] Mixed stream, exactly 6:10:4 ---
+>> [SC6D] TAFENG seed=1337 opSize=200 plan=20 operations (6 insert, 10 delete, 4 modify)
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC6_INIT#0  (heap free=574MB / total=1024MB / max=49152MB)
+[Remine-HUSP-ULL/TAFENG/SC6_INIT#0] OK t=272ms cand=2611537 pat=6 heapDelta=220MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC6_DEL#1  (heap free=631MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/TAFENG/SC6_DEL#1] OK t=173ms cand=2603721 pat=6 heapDelta=203MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC6_DEL#2  (heap free=632MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/TAFENG/SC6_DEL#2] OK t=147ms cand=2593823 pat=6 heapDelta=220MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC6_DEL#3  (heap free=632MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/TAFENG/SC6_DEL#3] OK t=152ms cand=2589921 pat=6 heapDelta=220MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC6_DEL#4  (heap free=633MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/TAFENG/SC6_DEL#4] OK t=152ms cand=2579812 pat=6 heapDelta=215MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC6_MOD#5  (heap free=633MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/TAFENG/SC6_MOD#5] OK t=136ms cand=2576411 pat=6 heapDelta=197MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC6_MOD#6  (heap free=633MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/TAFENG/SC6_MOD#6] OK t=135ms cand=2560801 pat=6 heapDelta=197MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC6_INS#7  (heap free=633MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/TAFENG/SC6_INS#7] OK t=135ms cand=2565615 pat=6 heapDelta=197MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC6_DEL#8  (heap free=633MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/TAFENG/SC6_DEL#8] OK t=138ms cand=2554552 pat=6 heapDelta=197MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC6_DEL#9  (heap free=633MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/TAFENG/SC6_DEL#9] OK t=134ms cand=2544127 pat=6 heapDelta=197MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC6_INS#10  (heap free=633MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/TAFENG/SC6_INS#10] OK t=132ms cand=2547972 pat=6 heapDelta=197MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC6_DEL#11  (heap free=633MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/TAFENG/SC6_DEL#11] OK t=134ms cand=2539394 pat=6 heapDelta=192MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC6_DEL#12  (heap free=633MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/TAFENG/SC6_DEL#12] OK t=133ms cand=2531426 pat=6 heapDelta=192MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC6_INS#13  (heap free=633MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/TAFENG/SC6_INS#13] OK t=135ms cand=2533601 pat=6 heapDelta=192MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC6_MOD#14  (heap free=633MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/TAFENG/SC6_MOD#14] OK t=133ms cand=2534591 pat=5 heapDelta=192MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC6_DEL#15  (heap free=633MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/TAFENG/SC6_DEL#15] OK t=135ms cand=2527260 pat=6 heapDelta=192MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC6_INS#16  (heap free=633MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/TAFENG/SC6_INS#16] OK t=132ms cand=2529426 pat=6 heapDelta=192MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC6_INS#17  (heap free=633MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/TAFENG/SC6_INS#17] OK t=139ms cand=2590253 pat=6 heapDelta=197MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC6_DEL#18  (heap free=633MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/TAFENG/SC6_DEL#18] OK t=135ms cand=2583880 pat=6 heapDelta=197MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC6_MOD#19  (heap free=633MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/TAFENG/SC6_MOD#19] OK t=137ms cand=2637598 pat=6 heapDelta=197MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC6_INS#20  (heap free=633MB / total=864MB / max=49152MB)
+[Remine-HUSP-ULL/TAFENG/SC6_INS#20] OK t=135ms cand=2648255 pat=6 heapDelta=197MB
+=== ALL SCENARIOS DONE (17.1s) ===

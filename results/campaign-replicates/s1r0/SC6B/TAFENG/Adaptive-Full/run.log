@@ -1,0 +1,50 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC6B]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=1
+
+--- [SC6B] Mixed stream, exactly 14:3:3, one deletion beyond the rescan budget ---
+>> [SC6B] TAFENG seed=1337 opSize=200 plan=20 operations (14 insert, 3 delete, 3 modify; operation 4 deletes 8229 sequences beyond the budget)
+>> RUNNING Adaptive-Full/TAFENG/SC6_INIT#0  (heap free=573MB / total=1024MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC6_INIT#0] OK t=329ms cand=2123 pat=6 heapDelta=223MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#1  (heap free=598MB / total=864MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC6_INS#1] OK t=2ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#2  (heap free=596MB / total=864MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC6_INS#2] OK t=166ms cand=2109 pat=6 heapDelta=55MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#3  (heap free=595MB / total=864MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC6_INS#3] OK t=2ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_DEL_BIG#4  (heap free=595MB / total=864MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC6_DEL_BIG#4] OK t=96ms cand=2104 pat=6 heapDelta=43MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_MOD#5  (heap free=593MB / total=864MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC6_MOD#5] OK t=101ms cand=2101 pat=6 heapDelta=43MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_MOD#6  (heap free=594MB / total=864MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC6_MOD#6] OK t=76ms cand=2092 pat=6 heapDelta=43MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#7  (heap free=593MB / total=864MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC6_INS#7] OK t=1ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_DEL#8  (heap free=592MB / total=864MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC6_DEL#8] OK t=1ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#9  (heap free=592MB / total=864MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC6_INS#9] OK t=69ms cand=2096 pat=6 heapDelta=43MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#10  (heap free=592MB / total=864MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC6_INS#10] OK t=72ms cand=2108 pat=6 heapDelta=43MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#11  (heap free=593MB / total=864MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC6_INS#11] OK t=74ms cand=2149 pat=6 heapDelta=43MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#12  (heap free=592MB / total=864MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC6_INS#12] OK t=75ms cand=2157 pat=6 heapDelta=43MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#13  (heap free=591MB / total=864MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC6_INS#13] OK t=75ms cand=2149 pat=6 heapDelta=43MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_MOD#14  (heap free=590MB / total=864MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC6_MOD#14] OK t=4ms cand=0 pat=7 heapDelta=14MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#15  (heap free=590MB / total=864MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC6_INS#15] OK t=75ms cand=2136 pat=7 heapDelta=43MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#16  (heap free=590MB / total=864MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC6_INS#16] OK t=74ms cand=2136 pat=7 heapDelta=43MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#17  (heap free=589MB / total=864MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC6_INS#17] OK t=75ms cand=2133 pat=7 heapDelta=43MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#18  (heap free=589MB / total=864MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC6_INS#18] OK t=77ms cand=2131 pat=7 heapDelta=43MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_DEL#19  (heap free=588MB / total=864MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC6_DEL#19] OK t=1ms cand=2131 pat=7 heapDelta=14MB
+>> RUNNING Adaptive-Full/TAFENG/SC6_INS#20  (heap free=588MB / total=864MB / max=49152MB)
+[Adaptive-Full/TAFENG/SC6_INS#20] OK t=1ms cand=0 pat=7 heapDelta=14MB
+=== ALL SCENARIOS DONE (16.7s) ===

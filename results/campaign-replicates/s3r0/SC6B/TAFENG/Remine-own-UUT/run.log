@@ -1,0 +1,50 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC6B]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=3
+
+--- [SC6B] Mixed stream, exactly 14:3:3, one deletion beyond the rescan budget ---
+>> [SC6B] TAFENG seed=31415 opSize=200 plan=20 operations (14 insert, 3 delete, 3 modify; operation 5 deletes 8253 sequences beyond the budget)
+>> RUNNING Remine-own-UUT/TAFENG/SC6_INIT#0  (heap free=572MB / total=1024MB / max=49152MB)
+[Remine-own-UUT/TAFENG/SC6_INIT#0] OK t=326ms cand=1628 pat=6 heapDelta=226MB
+>> RUNNING Remine-own-UUT/TAFENG/SC6_INS#1  (heap free=598MB / total=864MB / max=49152MB)
+[Remine-own-UUT/TAFENG/SC6_INS#1] OK t=185ms cand=1626 pat=6 heapDelta=197MB
+>> RUNNING Remine-own-UUT/TAFENG/SC6_INS#2  (heap free=599MB / total=864MB / max=49152MB)
+[Remine-own-UUT/TAFENG/SC6_INS#2] OK t=179ms cand=1624 pat=6 heapDelta=192MB
+>> RUNNING Remine-own-UUT/TAFENG/SC6_DEL#3  (heap free=598MB / total=864MB / max=49152MB)
+[Remine-own-UUT/TAFENG/SC6_DEL#3] OK t=146ms cand=1628 pat=6 heapDelta=153MB
+>> RUNNING Remine-own-UUT/TAFENG/SC6_INS#4  (heap free=598MB / total=864MB / max=49152MB)
+[Remine-own-UUT/TAFENG/SC6_INS#4] OK t=146ms cand=1624 pat=6 heapDelta=151MB
+>> RUNNING Remine-own-UUT/TAFENG/SC6_DEL_BIG#5  (heap free=598MB / total=864MB / max=49152MB)
+[Remine-own-UUT/TAFENG/SC6_DEL_BIG#5] OK t=122ms cand=1618 pat=7 heapDelta=124MB
+>> RUNNING Remine-own-UUT/TAFENG/SC6_MOD#6  (heap free=598MB / total=864MB / max=49152MB)
+[Remine-own-UUT/TAFENG/SC6_MOD#6] OK t=118ms cand=1616 pat=7 heapDelta=124MB
+>> RUNNING Remine-own-UUT/TAFENG/SC6_INS#7  (heap free=598MB / total=864MB / max=49152MB)
+[Remine-own-UUT/TAFENG/SC6_INS#7] OK t=118ms cand=1618 pat=7 heapDelta=124MB
+>> RUNNING Remine-own-UUT/TAFENG/SC6_INS#8  (heap free=598MB / total=864MB / max=49152MB)
+[Remine-own-UUT/TAFENG/SC6_INS#8] OK t=123ms cand=1615 pat=7 heapDelta=124MB
+>> RUNNING Remine-own-UUT/TAFENG/SC6_INS#9  (heap free=597MB / total=864MB / max=49152MB)
+[Remine-own-UUT/TAFENG/SC6_INS#9] OK t=122ms cand=1617 pat=7 heapDelta=124MB
+>> RUNNING Remine-own-UUT/TAFENG/SC6_MOD#10  (heap free=597MB / total=864MB / max=49152MB)
+[Remine-own-UUT/TAFENG/SC6_MOD#10] OK t=122ms cand=1644 pat=7 heapDelta=124MB
+>> RUNNING Remine-own-UUT/TAFENG/SC6_INS#11  (heap free=598MB / total=864MB / max=49152MB)
+[Remine-own-UUT/TAFENG/SC6_INS#11] OK t=126ms cand=1673 pat=7 heapDelta=128MB
+>> RUNNING Remine-own-UUT/TAFENG/SC6_MOD#12  (heap free=598MB / total=864MB / max=49152MB)
+[Remine-own-UUT/TAFENG/SC6_MOD#12] OK t=125ms cand=1670 pat=6 heapDelta=128MB
+>> RUNNING Remine-own-UUT/TAFENG/SC6_INS#13  (heap free=597MB / total=864MB / max=49152MB)
+[Remine-own-UUT/TAFENG/SC6_INS#13] OK t=125ms cand=1665 pat=6 heapDelta=128MB
+>> RUNNING Remine-own-UUT/TAFENG/SC6_INS#14  (heap free=597MB / total=864MB / max=49152MB)
+[Remine-own-UUT/TAFENG/SC6_INS#14] OK t=125ms cand=1655 pat=6 heapDelta=128MB
+>> RUNNING Remine-own-UUT/TAFENG/SC6_INS#15  (heap free=597MB / total=864MB / max=49152MB)
+[Remine-own-UUT/TAFENG/SC6_INS#15] OK t=127ms cand=1658 pat=6 heapDelta=128MB
+>> RUNNING Remine-own-UUT/TAFENG/SC6_DEL#16  (heap free=597MB / total=864MB / max=49152MB)
+[Remine-own-UUT/TAFENG/SC6_DEL#16] OK t=124ms cand=1658 pat=6 heapDelta=128MB
+>> RUNNING Remine-own-UUT/TAFENG/SC6_INS#17  (heap free=597MB / total=864MB / max=49152MB)
+[Remine-own-UUT/TAFENG/SC6_INS#17] OK t=126ms cand=1663 pat=6 heapDelta=128MB
+>> RUNNING Remine-own-UUT/TAFENG/SC6_INS#18  (heap free=596MB / total=864MB / max=49152MB)
+[Remine-own-UUT/TAFENG/SC6_INS#18] OK t=129ms cand=1663 pat=6 heapDelta=133MB
+>> RUNNING Remine-own-UUT/TAFENG/SC6_INS#19  (heap free=596MB / total=864MB / max=49152MB)
+[Remine-own-UUT/TAFENG/SC6_INS#19] OK t=128ms cand=1656 pat=6 heapDelta=133MB
+>> RUNNING Remine-own-UUT/TAFENG/SC6_INS#20  (heap free=596MB / total=864MB / max=49152MB)
+[Remine-own-UUT/TAFENG/SC6_INS#20] OK t=132ms cand=1656 pat=6 heapDelta=133MB
+=== ALL SCENARIOS DONE (18.8s) ===
