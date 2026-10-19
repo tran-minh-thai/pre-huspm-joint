@@ -1,0 +1,4 @@
+rule=joint trials=2000 seed=7 ops=20000 per-kind={delete=6582, insert=6702, modify=6716} direct-update={delete=5573, insert=1804, modify=1694} mismatching-ops=0 {} trials-with-mismatch=0
+rule=joint trials=5000 seed=11 ops=50000 per-kind={delete=16736, insert=16698, modify=16566} direct-update={delete=14052, insert=4643, modify=4251} mismatching-ops=0 {} trials-with-mismatch=0
+rule=joint trials=5000 seed=23 ops=50000 per-kind={delete=16744, insert=16565, modify=16691} direct-update={delete=14002, insert=4528, modify=4389} mismatching-ops=0 {} trials-with-mismatch=0
+rule=joint trials=5000 seed=101 ops=50000 per-kind={delete=16684, insert=16665, modify=16651} direct-update={delete=13960, insert=4506, modify=4292} mismatching-ops=0 {} trials-with-mismatch=0

@@ -1,12 +1,24 @@
 fault: trigger without the deletion term
   replaced: return iauMax - Su * insertedSinceRescan + Su * deletedSinceRescan;
       with: return iauMax - Su * insertedSinceRescan;
-  fuzz : rule=joint trials=2000 seed=7 ops=20000 per-kind={delete=6582, insert=6702, modify=6716} direct-update={delete=6582, insert=2051, modify=2773} mismatching-ops=519 {delete/direct=417, insert/direct=22, modify/direct=80} trials-with-mismatch=315
+  fuzz : rule=joint trials=2000 seed=7 ops=20000 per-kind={delete=6582, insert=6702, modify=6716} direct-update={delete=6582, insert=2051, modify=2773} mismatching-ops=674 {delete/direct=552, insert/direct=26, modify/direct=96} trials-with-mismatch=403
   probe: caseD mismatch=false ; cases with a mismatch: A=true B=true ; total mismatching patterns over 8 checks = 2
-  caught: True
-fault: drop floor with the largest counter instead of the pattern's smallest
-  replaced: return Sl_min * tsuAtLastRescan + minIauOf(p);
-      with: return Sl_min * tsuAtLastRescan + iauMax;
+  caught: True (by fuzz, probe)
+fault: drop floor with the largest counter of all items instead of the largest of the pattern's
+  replaced: case MAX: default: return Sl_min * tsuAtLastRescan + maxIauOf(p);
+      with: case MAX: default: return Sl_min * tsuAtLastRescan + iauMax;
   fuzz : rule=joint trials=2000 seed=7 ops=20000 per-kind={delete=6582, insert=6702, modify=6716} direct-update={delete=5573, insert=1804, modify=1694} mismatching-ops=6 {insert/direct=4, modify/direct=2} trials-with-mismatch=6
   probe: caseD mismatch=true ; cases with a mismatch: A=false B=false ; total mismatching patterns over 8 checks = 1
-  caught: True
+  caught: True (by fuzz, probe)
+fault: block index intersected over the batch's blocks but its last block
+  replaced: shouldRead = (bid >= from && bid < to && relevantBlocks.get(bid - from));
+      with: shouldRead = (bid >= from && bid < to - 1 && relevantBlocks.get(bid - from));
+  fuzz : rule=joint trials=2000 seed=7 ops=20000 per-kind={delete=6582, insert=6702, modify=6716} direct-update={delete=5573, insert=1804, modify=1694} mismatching-ops=1211 {delete/direct=177, insert/direct=479, modify/direct=495, modify/rescan=60} trials-with-mismatch=695
+  probe: caseD mismatch=true ; cases with a mismatch: A=false B=false ; total mismatching patterns over 8 checks = 1
+  caught: True (by fuzz, probe)
+fault: drop floor raised by 5 percent of the lower threshold above the pattern's largest counter
+  replaced: case MAX: default: return Sl_min * tsuAtLastRescan + maxIauOf(p);
+      with: case MAX: default: return 1.05 * Sl_min * tsuAtLastRescan + maxIauOf(p);
+  fuzz : rule=joint trials=2000 seed=7 ops=20000 per-kind={delete=6582, insert=6702, modify=6716} direct-update={delete=5573, insert=1804, modify=1694} mismatching-ops=101 {delete/direct=97, insert/direct=1, modify/direct=3} trials-with-mismatch=96
+  probe: caseD mismatch=false ; cases with a mismatch: A=false B=false ; total mismatching patterns over 8 checks = 0
+  caught: True (by fuzz)

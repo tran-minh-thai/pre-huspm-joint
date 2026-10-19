@@ -178,6 +178,7 @@
   op 16 insert n=2     path=direct after=insert/direct ref=6 got=6 missing=0 extra=0 maxUtilGap=0.000000  OK
 
 operations by kind/path: {insert/direct=105, insert/rescan=23}
+databases stopped by the heap: 0
 mismatching operations: 0
 verification.csv -> results/verify-joint/pre-tests-adversarial/verification.csv
 
@@ -360,5 +361,6 @@ verification.csv -> results/verify-joint/pre-tests-adversarial/verification.csv
   op 16 insert n=2     path=direct after=insert/direct ref=6 got=6 missing=0 extra=0 maxUtilGap=0.000000  OK
 
 operations by kind/path: {insert/direct=105, insert/rescan=23}
+databases stopped by the heap: 0
 mismatching operations: 0
 verification.csv -> results/verify-joint/pre-tests-adversarial/verification.csv

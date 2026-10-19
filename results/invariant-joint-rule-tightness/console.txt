@@ -1,0 +1,23 @@
+== regime light: 1500 random streams of 12 operations
+floor plain     (must be exact): states 18000, discards 9020 (at or above the min floor: 0), mismatching states 0 -> ok
+floor min       (must be exact): states 18000, discards 30906 (at or above the min floor: 0), mismatching states 0 -> ok
+floor max       (must be exact): states 18000, discards 54589 (at or above the min floor: 39138), mismatching states 0 -> ok
+floor globalmax (fault, must be caught in some regime): states 18000, discards 61288 (at or above the min floor: 49480), mismatching states 10 -> caught here
+floor maxplus   (fault, must be caught in some regime): states 18000, discards 56965 (at or above the min floor: 43307), mismatching states 26 -> caught here
+trigger: states with Phi > beta 4333, construction gives an untracked HUSP 4333; states with Phi <= beta 10940, succeeded 0; outside U- <= (1 - lambda) TU_ref 0
+max floor: patterns at or above it 16606, made HUSPs 16606; below it 7954, made HUSPs 0; excluded states (no insertion, Phi = beta) 0 -> ok
+== regime heavy: 1500 random streams of 12 operations
+floor plain     (must be exact): states 18000, discards 17989 (at or above the min floor: 0), mismatching states 0 -> ok
+floor min       (must be exact): states 18000, discards 30431 (at or above the min floor: 0), mismatching states 0 -> ok
+floor max       (must be exact): states 18000, discards 46992 (at or above the min floor: 19704), mismatching states 0 -> ok
+floor globalmax (fault, must be caught in some regime): states 18000, discards 51129 (at or above the min floor: 24445), mismatching states 6 -> caught here
+floor maxplus   (fault, must be caught in some regime): states 18000, discards 54316 (at or above the min floor: 27838), mismatching states 455 -> caught here
+trigger: states with Phi > beta 10164, construction gives an untracked HUSP 10164; states with Phi <= beta 2126, succeeded 0; outside U- <= (1 - lambda) TU_ref 3
+max floor: patterns at or above it 20045, made HUSPs 20045; below it 6838, made HUSPs 0; excluded states (no insertion, Phi = beta) 274 -> ok
+faulty floor globalmax: mismatching states over all regimes 16 -> caught
+faulty floor maxplus: mismatching states over all regimes 481 -> caught
+== self-test: faults in this checker, 60 light streams each
+fault: trigger construction without the redistribution -> caught
+fault: floor construction without filler -> caught
+fault: min floor taken as the boundary -> caught
+all claims hold and every fault is caught

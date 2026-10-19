@@ -1,16 +1,16 @@
 {
-  "command": "java -Xmx16g -Xss64m -cp build-vh -Dverify.husps=true -Dseeds=5 -Drepeats=1 -Ddataset.only=SIGN,LEVIATHAN,C8T1S5I8N5K -Dalgo.only=Adaptive-Full,Remine-from-scratch,Remine-HUSP-ULL,Remine-HUSP-SP -Dresults.dir=results/verify-joint/husps-mixed/ AutomatedExperimentRunner SC6 SC6D SC6B",
+  "command": "java -Xmx16g -Xss64m -cp build-v31 -Dverify.husps=true -Dseeds=5 -Drepeats=1 -Ddataset.only=SIGN,LEVIATHAN,C8T1S5I8N5K,TAFENG -Dalgo.only=Adaptive-Full,Remine-from-scratch,Remine-HUSP-ULL,Remine-HUSP-SP,Adaptive-FloorSelect,Remine-own-UUT,Joint-rule+plain-floor,Joint-rule+min-floor -Dresults.dir=results/verify-joint/husps-mixed/ AutomatedExperimentRunner SC6 SC6D SC6B",
   "path_substitutions": 0,
-  "build_dir": "build-vh",
-  "git_commit": "35fe25c3177bd1301623fdb0e6df276f9eb14940",
+  "build_dir": "build-v31",
+  "git_commit": "e84b5a89a37789e217c993f82a17c40b56940921",
   "tree": "src clean, other files modified",
-  "source_sha256": "32cfdf264c960bbf44596cdde97fbded45ac52c3abcf4a2684c6c11438102092",
-  "source_files": 35,
+  "source_sha256": "aaa1651c45a21471a75cd81a718314c51859c54cea083bad330afeb50f9da35e",
+  "source_files": 39,
   "java": "openjdk version \"26.0.1\" 2026-04-21",
   "os": "Darwin 27.0.0 (macOS-27.0.1-arm64-arm-64bit-Mach-O)",
   "machine": "ThaiTMs-MacBook-Pro.local",
   "role": "development machine: counters only, no timings",
-  "start": "2026-10-14T09:36:14",
-  "end": "2026-10-14T10:12:13",
+  "start": "2026-10-18T00:07:47",
+  "end": "2026-10-18T01:32:25",
   "exit_code": 0
 }

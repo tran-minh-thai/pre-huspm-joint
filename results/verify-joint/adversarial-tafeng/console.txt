@@ -20,5 +20,6 @@
   op 16 insert n=1     path=direct after=modify/direct ref=4 got=4 missing=0 extra=0 maxUtilGap=0.000000  OK
 
 operations by kind/path: {delete/direct=4, insert/direct=8, insert/direct after direct delete=4, insert/direct after direct modify=4, modify/direct=4}
+databases stopped by the heap: 0
 mismatching operations: 0
-verification.csv -> results\verify-joint\adversarial-tafeng\verification.csv
+verification.csv -> results/verify-joint/adversarial-tafeng/verification.csv

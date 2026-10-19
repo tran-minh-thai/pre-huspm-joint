@@ -144,5 +144,6 @@
   op 16 insert n=1     path=direct after=modify/direct ref=4 got=4 missing=0 extra=0 maxUtilGap=0.000000  OK
 
 operations by kind/path: {delete/direct=30, delete/rescan=2, insert/direct=58, insert/direct after direct delete=25, insert/direct after direct modify=27, insert/rescan=6, modify/direct=28, modify/rescan=4}
+databases stopped by the heap: 0
 mismatching operations: 0
 verification.csv -> results/verify-joint/random/verification.csv

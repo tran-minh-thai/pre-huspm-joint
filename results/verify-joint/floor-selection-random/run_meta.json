@@ -1,16 +1,16 @@
 {
-  "command": "java -Dadapt.floorWindow=1 -Xmx24g -Xss64m -cp build-vj verify.DirectPathVerifier ALL --ops 16 --out results/verify-joint/floor-selection-random",
+  "command": "java -Dadapt.floorWindow=1 -Xmx24g -Xss64m -cp build-v31 verify.DirectPathVerifier ALL --ops 16 --out results/verify-joint/floor-selection-random",
   "path_substitutions": 0,
-  "build_dir": "build-vj",
-  "git_commit": "8dfc551638d04491219c0d2cd811fbf9d92f1211",
+  "build_dir": "build-v31",
+  "git_commit": "e84b5a89a37789e217c993f82a17c40b56940921",
   "tree": "src clean, other files modified",
-  "source_sha256": "e4e1ec2f6f11ccf08203f3a4e4619c6833d40b6b1e1200f01641803f2cbc15c8",
-  "source_files": 35,
+  "source_sha256": "aaa1651c45a21471a75cd81a718314c51859c54cea083bad330afeb50f9da35e",
+  "source_files": 39,
   "java": "openjdk version \"26.0.1\" 2026-04-21",
   "os": "Darwin 27.0.0 (macOS-27.0.1-arm64-arm-64bit-Mach-O)",
   "machine": "ThaiTMs-MacBook-Pro.local",
   "role": "development machine: counters only, no timings",
-  "start": "2026-10-15T08:09:33",
-  "end": "2026-10-15T08:12:38",
+  "start": "2026-10-17T16:05:50",
+  "end": "2026-10-17T16:11:51",
   "exit_code": 0
 }

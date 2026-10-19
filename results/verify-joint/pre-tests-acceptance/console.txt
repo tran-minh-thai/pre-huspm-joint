@@ -38,5 +38,23 @@ T7 - Pre-HUSPM tests (pre_swumax, pre_tsu) with the joint tracking, insertions
     [PASS]   PRE_TSU returns <1> in T6's case D insertions alone
     [PASS]   PRE_TSU takes the direct update in T2 (1 of 2 batches)
     [PASS]   PRE_TSU refuses a deletion and a modification
+T8 - Pre-HUSPM's tracking under the joint rule, insertions
+    [PASS]   the bound tracks every pattern the utility tracks (2 in 3)
+    [PASS]   every tracked pattern has a bound at least its utility
+    [PASS]   matches remining in T1's batch
+    [PASS]   matches remining after T2's two batches
+    [PASS]   bounds still cover utilities after the direct updates
+    [PASS]   a batch on a tight bound takes the direct update
+    [PASS]   the bound follows the utility past its old value
+    [PASS]   matches remining after that batch
+    [PASS]   returns every HUSP in T6's case D insertions alone
+    [PASS]   the cases above take the direct update (3 of 4 batches)
+    [PASS]   refuses a deletion, a modification and a rule other than joint
+T9 - rescan floor selection, window 2
+    [PASS]   every batch matches remining
+    [PASS]   after two batches over the low budget the rescan mines at UUT (floors [0.8, 1.0, 1.0, 0.8], rescans [1, 2, 3, 4])
+    [PASS]   the first batch, alone over the budget once, keeps r_l
+    [PASS]   a batch within the low budget brings the floor back to r_l at its rescan
+    [PASS]   refused under another rule and under tracking by the bound
 
-=== acceptance: 33 passed, 0 failed ===
+=== acceptance: 49 passed, 0 failed ===

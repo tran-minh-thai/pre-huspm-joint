@@ -1,16 +1,16 @@
 {
-  "command": "java -cp build-pt verify.RescanRuleAcceptanceTest",
+  "command": "java -cp build-v31 verify.RescanRuleAcceptanceTest",
   "path_substitutions": 0,
-  "build_dir": "build-pt",
-  "git_commit": "906222294890cba79a50b836e95f44a521ee0d4d",
+  "build_dir": "build-v31",
+  "git_commit": "e84b5a89a37789e217c993f82a17c40b56940921",
   "tree": "src clean, other files modified",
-  "source_sha256": "0e430a88ace5523a3d1adf3130c40377c26cc36f168f6dbb04ed4102d7c5e68f",
+  "source_sha256": "aaa1651c45a21471a75cd81a718314c51859c54cea083bad330afeb50f9da35e",
   "source_files": 39,
   "java": "openjdk version \"26.0.1\" 2026-04-21",
   "os": "Darwin 27.0.0 (macOS-27.0.1-arm64-arm-64bit-Mach-O)",
   "machine": "ThaiTMs-MacBook-Pro.local",
   "role": "development machine: counters only, no timings",
-  "start": "2026-10-16T22:10:22",
-  "end": "2026-10-16T22:10:22",
+  "start": "2026-10-17T13:43:59",
+  "end": "2026-10-17T13:43:59",
   "exit_code": 0
 }

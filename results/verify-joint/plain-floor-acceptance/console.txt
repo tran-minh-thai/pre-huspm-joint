@@ -38,7 +38,7 @@ T7 - Pre-HUSPM tests (pre_swumax, pre_tsu) with the joint tracking, insertions
     [PASS]   PRE_TSU returns <1> in T6's case D insertions alone
     [PASS]   PRE_TSU takes the direct update in T2 (1 of 2 batches)
     [PASS]   PRE_TSU refuses a deletion and a modification
-T8 - tracking by the PEU bound under the joint rule, insertions
+T8 - Pre-HUSPM's tracking under the joint rule, insertions
     [PASS]   the bound tracks every pattern the utility tracks (2 in 3)
     [PASS]   every tracked pattern has a bound at least its utility
     [PASS]   matches remining in T1's batch
