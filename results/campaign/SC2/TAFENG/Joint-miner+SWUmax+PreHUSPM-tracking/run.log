@@ -1,0 +1,138 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC2]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC2] Incremental sequence (100 batches, EVEN; D_init per Yan et al. Table 16) ---
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INIT#0  (heap free=630MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INIT#0] OK t=309ms cand=478215 pat=6 heapDelta=284MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#1  (heap free=599MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#1] OK t=7ms cand=0 pat=6 heapDelta=13MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#2  (heap free=597MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#2] OK t=110ms cand=478645 pat=6 heapDelta=138MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#3  (heap free=596MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#3] OK t=5ms cand=0 pat=6 heapDelta=12MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#4  (heap free=596MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#4] OK t=79ms cand=476453 pat=6 heapDelta=138MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#5  (heap free=595MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#5] OK t=3ms cand=0 pat=6 heapDelta=11MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#6  (heap free=595MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#6] OK t=75ms cand=478621 pat=6 heapDelta=138MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#7  (heap free=595MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#7] OK t=75ms cand=481054 pat=6 heapDelta=138MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#8  (heap free=594MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#8] OK t=77ms cand=489236 pat=6 heapDelta=138MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#9  (heap free=593MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#9] OK t=77ms cand=512854 pat=6 heapDelta=138MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#10  (heap free=592MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#10] OK t=79ms cand=508288 pat=6 heapDelta=138MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#11  (heap free=590MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#11] OK t=77ms cand=507280 pat=6 heapDelta=138MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#12  (heap free=593MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#12] OK t=2ms cand=0 pat=6 heapDelta=10MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#13  (heap free=592MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#13] OK t=80ms cand=507496 pat=6 heapDelta=143MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#14  (heap free=591MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#14] OK t=79ms cand=509759 pat=6 heapDelta=143MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#15  (heap free=590MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#15] OK t=2ms cand=0 pat=6 heapDelta=10MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#16  (heap free=589MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#16] OK t=76ms cand=511180 pat=6 heapDelta=143MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#17  (heap free=590MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#17] OK t=1ms cand=0 pat=6 heapDelta=10MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#18  (heap free=590MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#18] OK t=81ms cand=506478 pat=6 heapDelta=143MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#19  (heap free=590MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#19] OK t=2ms cand=0 pat=6 heapDelta=10MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#20  (heap free=590MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#20] OK t=89ms cand=502853 pat=6 heapDelta=143MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#21  (heap free=588MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#21] OK t=2ms cand=0 pat=6 heapDelta=10MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#22  (heap free=588MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#22] OK t=84ms cand=498636 pat=6 heapDelta=143MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#23  (heap free=589MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#23] OK t=2ms cand=0 pat=6 heapDelta=10MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#24  (heap free=589MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#24] OK t=89ms cand=501872 pat=6 heapDelta=143MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#25  (heap free=589MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#25] OK t=2ms cand=0 pat=6 heapDelta=10MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#26  (heap free=589MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#26] OK t=80ms cand=498918 pat=6 heapDelta=148MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#27  (heap free=590MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#27] OK t=1ms cand=0 pat=6 heapDelta=10MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#28  (heap free=590MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#28] OK t=80ms cand=495973 pat=6 heapDelta=148MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#29  (heap free=588MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#29] OK t=1ms cand=0 pat=6 heapDelta=10MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#30  (heap free=588MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#30] OK t=81ms cand=494616 pat=6 heapDelta=148MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#31  (heap free=589MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#31] OK t=2ms cand=0 pat=6 heapDelta=10MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#32  (heap free=589MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#32] OK t=1ms cand=0 pat=6 heapDelta=10MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#33  (heap free=588MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#33] OK t=78ms cand=490168 pat=6 heapDelta=148MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#34  (heap free=586MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#34] OK t=1ms cand=0 pat=6 heapDelta=10MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#35  (heap free=586MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#35] OK t=80ms cand=489133 pat=6 heapDelta=148MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#36  (heap free=587MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#36] OK t=81ms cand=489833 pat=6 heapDelta=148MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#37  (heap free=587MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#37] OK t=1ms cand=0 pat=6 heapDelta=10MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#38  (heap free=588MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#38] OK t=82ms cand=492141 pat=6 heapDelta=153MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#39  (heap free=586MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#39] OK t=83ms cand=495593 pat=6 heapDelta=153MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#40  (heap free=586MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#40] OK t=81ms cand=497513 pat=6 heapDelta=153MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#41  (heap free=587MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#41] OK t=2ms cand=0 pat=6 heapDelta=10MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#42  (heap free=587MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#42] OK t=83ms cand=492933 pat=6 heapDelta=153MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#43  (heap free=586MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#43] OK t=1ms cand=0 pat=6 heapDelta=10MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#44  (heap free=586MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#44] OK t=83ms cand=490563 pat=6 heapDelta=153MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#45  (heap free=587MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#45] OK t=1ms cand=0 pat=6 heapDelta=10MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#46  (heap free=587MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#46] OK t=2ms cand=0 pat=6 heapDelta=10MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#47  (heap free=587MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#47] OK t=83ms cand=487520 pat=6 heapDelta=158MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#48  (heap free=586MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#48] OK t=2ms cand=0 pat=6 heapDelta=10MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#49  (heap free=586MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#49] OK t=84ms cand=489164 pat=6 heapDelta=158MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#50  (heap free=588MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#50] OK t=86ms cand=493979 pat=6 heapDelta=158MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#51  (heap free=587MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#51] OK t=2ms cand=0 pat=6 heapDelta=10MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#52  (heap free=587MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#52] OK t=87ms cand=493841 pat=6 heapDelta=158MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#53  (heap free=586MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#53] OK t=2ms cand=0 pat=6 heapDelta=10MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#54  (heap free=586MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#54] OK t=86ms cand=492340 pat=6 heapDelta=160MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#55  (heap free=585MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#55] OK t=2ms cand=0 pat=6 heapDelta=10MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#56  (heap free=585MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#56] OK t=87ms cand=498491 pat=6 heapDelta=160MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#57  (heap free=585MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#57] OK t=1ms cand=0 pat=6 heapDelta=10MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#58  (heap free=588MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#58] OK t=88ms cand=494457 pat=6 heapDelta=165MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#59  (heap free=587MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#59] OK t=88ms cand=495403 pat=6 heapDelta=165MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#60  (heap free=587MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#60] OK t=2ms cand=0 pat=6 heapDelta=10MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#61  (heap free=586MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#61] OK t=88ms cand=493066 pat=6 heapDelta=165MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#62  (heap free=586MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#62] OK t=2ms cand=0 pat=6 heapDelta=10MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#63  (heap free=586MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#63] OK t=94ms cand=494102 pat=6 heapDelta=165MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#64  (heap free=585MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#64] OK t=2ms cand=0 pat=6 heapDelta=10MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#65  (heap free=585MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/TAFENG/SC2_INC#65] OK t=90ms cand=492383 pat=6 heapDelta=165MB
