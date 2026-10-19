@@ -1,0 +1,209 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC2]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC2] Incremental sequence (100 batches, EVEN; D_init per Yan et al. Table 16) ---
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INIT#0  (heap free=641MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INIT#0] OK t=1191ms cand=2918 pat=192 heapDelta=288MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#1  (heap free=617MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#1] OK t=677ms cand=2906 pat=190 heapDelta=147MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#2  (heap free=618MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#2] OK t=690ms cand=2889 pat=190 heapDelta=147MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#3  (heap free=617MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#3] OK t=10ms cand=0 pat=189 heapDelta=16MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#4  (heap free=617MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#4] OK t=679ms cand=2857 pat=188 heapDelta=147MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#5  (heap free=617MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#5] OK t=9ms cand=0 pat=186 heapDelta=16MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#6  (heap free=617MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#6] OK t=685ms cand=2808 pat=183 heapDelta=147MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#7  (heap free=616MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#7] OK t=677ms cand=2800 pat=182 heapDelta=153MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#8  (heap free=618MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#8] OK t=11ms cand=0 pat=181 heapDelta=16MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#9  (heap free=617MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#9] OK t=684ms cand=2765 pat=180 heapDelta=153MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#10  (heap free=617MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#10] OK t=679ms cand=2756 pat=180 heapDelta=153MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#11  (heap free=617MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#11] OK t=689ms cand=2759 pat=177 heapDelta=153MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#12  (heap free=616MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#12] OK t=704ms cand=2791 pat=180 heapDelta=153MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#13  (heap free=616MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#13] OK t=702ms cand=2829 pat=181 heapDelta=160MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#14  (heap free=615MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#14] OK t=727ms cand=2857 pat=184 heapDelta=160MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#15  (heap free=615MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#15] OK t=761ms cand=2970 pat=191 heapDelta=166MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#16  (heap free=616MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#16] OK t=783ms cand=3064 pat=195 heapDelta=172MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#17  (heap free=616MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#17] OK t=791ms cand=3092 pat=195 heapDelta=172MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#18  (heap free=617MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#18] OK t=4ms cand=0 pat=195 heapDelta=13MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#19  (heap free=618MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#19] OK t=802ms cand=3086 pat=196 heapDelta=172MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#20  (heap free=618MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#20] OK t=4ms cand=0 pat=195 heapDelta=12MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#21  (heap free=618MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#21] OK t=799ms cand=3048 pat=196 heapDelta=171MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#22  (heap free=617MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#22] OK t=809ms cand=3063 pat=196 heapDelta=177MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#23  (heap free=617MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#23] OK t=815ms cand=3078 pat=197 heapDelta=177MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#24  (heap free=616MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#24] OK t=807ms cand=3085 pat=194 heapDelta=177MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#25  (heap free=616MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#25] OK t=825ms cand=3061 pat=193 heapDelta=177MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#26  (heap free=617MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#26] OK t=828ms cand=3071 pat=192 heapDelta=177MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#27  (heap free=617MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#27] OK t=835ms cand=3099 pat=193 heapDelta=183MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#28  (heap free=617MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#28] OK t=847ms cand=3111 pat=192 heapDelta=183MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#29  (heap free=616MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#29] OK t=844ms cand=3099 pat=191 heapDelta=183MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#30  (heap free=616MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#30] OK t=883ms cand=3115 pat=196 heapDelta=188MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#31  (heap free=615MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#31] OK t=873ms cand=3115 pat=196 heapDelta=188MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#32  (heap free=617MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#32] OK t=877ms cand=3101 pat=196 heapDelta=192MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#33  (heap free=615MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#33] OK t=884ms cand=3101 pat=197 heapDelta=192MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#34  (heap free=614MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#34] OK t=4ms cand=0 pat=197 heapDelta=11MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#35  (heap free=614MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#35] OK t=884ms cand=3065 pat=192 heapDelta=192MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#36  (heap free=614MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#36] OK t=3ms cand=0 pat=192 heapDelta=11MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#37  (heap free=614MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#37] OK t=891ms cand=3049 pat=190 heapDelta=197MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#38  (heap free=613MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#38] OK t=883ms cand=3051 pat=191 heapDelta=197MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#39  (heap free=613MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#39] OK t=4ms cand=0 pat=190 heapDelta=11MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#40  (heap free=612MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#40] OK t=906ms cand=3021 pat=191 heapDelta=197MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#41  (heap free=612MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#41] OK t=930ms cand=3057 pat=190 heapDelta=203MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#42  (heap free=612MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#42] OK t=926ms cand=3052 pat=190 heapDelta=203MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#43  (heap free=611MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#43] OK t=4ms cand=0 pat=191 heapDelta=11MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#44  (heap free=613MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#44] OK t=927ms cand=3035 pat=190 heapDelta=209MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#45  (heap free=612MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#45] OK t=2ms cand=0 pat=188 heapDelta=11MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#46  (heap free=612MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#46] OK t=936ms cand=2974 pat=187 heapDelta=203MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#47  (heap free=612MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#47] OK t=3ms cand=0 pat=186 heapDelta=11MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#48  (heap free=611MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#48] OK t=923ms cand=2942 pat=183 heapDelta=209MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#49  (heap free=611MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#49] OK t=3ms cand=0 pat=182 heapDelta=11MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#50  (heap free=611MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#50] OK t=920ms cand=2912 pat=181 heapDelta=209MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#51  (heap free=610MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#51] OK t=3ms cand=0 pat=177 heapDelta=11MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#52  (heap free=610MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#52] OK t=927ms cand=2888 pat=176 heapDelta=209MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#53  (heap free=610MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#53] OK t=3ms cand=0 pat=175 heapDelta=11MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#54  (heap free=609MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#54] OK t=930ms cand=2855 pat=175 heapDelta=209MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#55  (heap free=611MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#55] OK t=3ms cand=0 pat=170 heapDelta=11MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#56  (heap free=611MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#56] OK t=925ms cand=2830 pat=169 heapDelta=209MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#57  (heap free=610MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#57] OK t=3ms cand=0 pat=169 heapDelta=11MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#58  (heap free=610MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#58] OK t=940ms cand=2823 pat=167 heapDelta=215MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#59  (heap free=609MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#59] OK t=3ms cand=0 pat=164 heapDelta=11MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#60  (heap free=609MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#60] OK t=939ms cand=2795 pat=164 heapDelta=215MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#61  (heap free=609MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#61] OK t=3ms cand=0 pat=163 heapDelta=11MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#62  (heap free=610MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#62] OK t=925ms cand=2771 pat=162 heapDelta=215MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#63  (heap free=610MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#63] OK t=3ms cand=0 pat=160 heapDelta=11MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#64  (heap free=609MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#64] OK t=941ms cand=2760 pat=157 heapDelta=215MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#65  (heap free=609MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#65] OK t=3ms cand=0 pat=157 heapDelta=11MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#66  (heap free=611MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#66] OK t=937ms cand=2717 pat=154 heapDelta=215MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#67  (heap free=610MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#67] OK t=2ms cand=0 pat=151 heapDelta=11MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#68  (heap free=610MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#68] OK t=942ms cand=2696 pat=150 heapDelta=215MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#69  (heap free=610MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#69] OK t=2ms cand=0 pat=150 heapDelta=11MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#70  (heap free=610MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#70] OK t=931ms cand=2664 pat=150 heapDelta=215MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#71  (heap free=609MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#71] OK t=3ms cand=0 pat=150 heapDelta=11MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#72  (heap free=609MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#72] OK t=922ms cand=2626 pat=148 heapDelta=220MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#73  (heap free=610MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#73] OK t=3ms cand=0 pat=149 heapDelta=11MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#74  (heap free=611MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#74] OK t=939ms cand=2612 pat=147 heapDelta=220MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#75  (heap free=611MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#75] OK t=4ms cand=0 pat=146 heapDelta=11MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#76  (heap free=611MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#76] OK t=929ms cand=2579 pat=145 heapDelta=220MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#77  (heap free=610MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#77] OK t=3ms cand=0 pat=144 heapDelta=11MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#78  (heap free=609MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#78] OK t=934ms cand=2555 pat=142 heapDelta=220MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#79  (heap free=609MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#79] OK t=3ms cand=0 pat=142 heapDelta=11MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#80  (heap free=609MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#80] OK t=942ms cand=2530 pat=140 heapDelta=224MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#81  (heap free=608MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#81] OK t=2ms cand=0 pat=140 heapDelta=11MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#82  (heap free=608MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#82] OK t=943ms cand=2506 pat=140 heapDelta=224MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#83  (heap free=609MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#83] OK t=2ms cand=0 pat=139 heapDelta=11MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#84  (heap free=609MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#84] OK t=941ms cand=2460 pat=135 heapDelta=224MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#85  (heap free=609MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#85] OK t=4ms cand=0 pat=134 heapDelta=11MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#86  (heap free=608MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#86] OK t=940ms cand=2441 pat=133 heapDelta=224MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#87  (heap free=608MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#87] OK t=3ms cand=0 pat=133 heapDelta=11MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#88  (heap free=608MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#88] OK t=957ms cand=2437 pat=133 heapDelta=224MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#89  (heap free=607MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#89] OK t=3ms cand=0 pat=132 heapDelta=11MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#90  (heap free=609MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#90] OK t=960ms cand=2429 pat=131 heapDelta=229MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#91  (heap free=608MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#91] OK t=942ms cand=2417 pat=129 heapDelta=229MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#92  (heap free=608MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#92] OK t=3ms cand=0 pat=128 heapDelta=11MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#93  (heap free=607MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#93] OK t=988ms cand=2408 pat=128 heapDelta=229MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#94  (heap free=609MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#94] OK t=3ms cand=0 pat=127 heapDelta=11MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#95  (heap free=609MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#95] OK t=958ms cand=2380 pat=127 heapDelta=229MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#96  (heap free=608MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#96] OK t=3ms cand=0 pat=127 heapDelta=11MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#97  (heap free=608MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#97] OK t=957ms cand=2369 pat=127 heapDelta=229MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#98  (heap free=608MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#98] OK t=4ms cand=0 pat=127 heapDelta=11MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#99  (heap free=607MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#99] OK t=967ms cand=2375 pat=128 heapDelta=235MB
+>> RUNNING Joint-miner+SWUmax/BIBLE/SC2_INC#100  (heap free=607MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax/BIBLE/SC2_INC#100] OK t=3ms cand=0 pat=129 heapDelta=11MB
+=== ALL SCENARIOS DONE (123.4s) ===
