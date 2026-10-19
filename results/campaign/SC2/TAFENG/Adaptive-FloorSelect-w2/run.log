@@ -1,0 +1,209 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC2]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC2] Incremental sequence (100 batches, EVEN; D_init per Yan et al. Table 16) ---
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INIT#0  (heap free=630MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INIT#0] OK t=348ms cand=2123 pat=6 heapDelta=241MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#1  (heap free=598MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#1] OK t=3ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#2  (heap free=597MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#2] OK t=195ms cand=2109 pat=6 heapDelta=55MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#3  (heap free=595MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#3] OK t=2ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#4  (heap free=595MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#4] OK t=120ms cand=2105 pat=6 heapDelta=55MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#5  (heap free=594MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#5] OK t=2ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#6  (heap free=593MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#6] OK t=109ms cand=2110 pat=6 heapDelta=49MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#7  (heap free=592MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#7] OK t=91ms cand=2111 pat=6 heapDelta=49MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#8  (heap free=591MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#8] OK t=88ms cand=1630 pat=6 heapDelta=49MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#9  (heap free=590MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#9] OK t=91ms cand=1662 pat=6 heapDelta=49MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#10  (heap free=589MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#10] OK t=88ms cand=1654 pat=6 heapDelta=49MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#11  (heap free=588MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#11] OK t=86ms cand=1648 pat=6 heapDelta=49MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#12  (heap free=587MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#12] OK t=99ms cand=2158 pat=6 heapDelta=55MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#13  (heap free=587MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#13] OK t=1ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#14  (heap free=586MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#14] OK t=98ms cand=2151 pat=6 heapDelta=55MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#15  (heap free=587MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#15] OK t=1ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#16  (heap free=587MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#16] OK t=98ms cand=2143 pat=6 heapDelta=55MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#17  (heap free=587MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#17] OK t=1ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#18  (heap free=586MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#18] OK t=108ms cand=2134 pat=6 heapDelta=55MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#19  (heap free=586MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#19] OK t=1ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#20  (heap free=586MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#20] OK t=107ms cand=2124 pat=6 heapDelta=55MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#21  (heap free=585MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#21] OK t=1ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#22  (heap free=585MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#22] OK t=102ms cand=2119 pat=6 heapDelta=55MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#23  (heap free=585MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#23] OK t=1ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#24  (heap free=584MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#24] OK t=100ms cand=2114 pat=6 heapDelta=55MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#25  (heap free=584MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#25] OK t=1ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#26  (heap free=584MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#26] OK t=103ms cand=2105 pat=6 heapDelta=55MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#27  (heap free=584MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#27] OK t=1ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#28  (heap free=583MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#28] OK t=103ms cand=2100 pat=6 heapDelta=55MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#29  (heap free=583MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#29] OK t=1ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#30  (heap free=583MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#30] OK t=103ms cand=2089 pat=6 heapDelta=55MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#31  (heap free=582MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#31] OK t=1ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#32  (heap free=582MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#32] OK t=1ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#33  (heap free=584MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#33] OK t=104ms cand=2083 pat=6 heapDelta=55MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#34  (heap free=584MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#34] OK t=1ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#35  (heap free=583MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#35] OK t=105ms cand=2072 pat=6 heapDelta=55MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#36  (heap free=583MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#36] OK t=104ms cand=2068 pat=6 heapDelta=55MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#37  (heap free=583MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#37] OK t=1ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#38  (heap free=582MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#38] OK t=106ms cand=2077 pat=6 heapDelta=55MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#39  (heap free=583MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#39] OK t=97ms cand=1599 pat=6 heapDelta=49MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#40  (heap free=583MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#40] OK t=98ms cand=1595 pat=6 heapDelta=49MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#41  (heap free=583MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#41] OK t=106ms cand=2077 pat=6 heapDelta=55MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#42  (heap free=582MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#42] OK t=0ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#43  (heap free=584MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#43] OK t=108ms cand=2070 pat=6 heapDelta=55MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#44  (heap free=583MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#44] OK t=1ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#45  (heap free=583MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#45] OK t=110ms cand=2063 pat=6 heapDelta=55MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#46  (heap free=583MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#46] OK t=1ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#47  (heap free=583MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#47] OK t=111ms cand=2058 pat=6 heapDelta=60MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#48  (heap free=582MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#48] OK t=1ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#49  (heap free=582MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#49] OK t=108ms cand=2056 pat=6 heapDelta=60MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#50  (heap free=582MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#50] OK t=113ms cand=2067 pat=6 heapDelta=60MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#51  (heap free=581MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#51] OK t=1ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#52  (heap free=581MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#52] OK t=1ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#53  (heap free=583MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#53] OK t=115ms cand=2069 pat=6 heapDelta=60MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#54  (heap free=582MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#54] OK t=1ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#55  (heap free=582MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#55] OK t=113ms cand=2073 pat=6 heapDelta=60MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#56  (heap free=582MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#56] OK t=1ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#57  (heap free=581MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#57] OK t=114ms cand=2068 pat=6 heapDelta=60MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#58  (heap free=581MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#58] OK t=1ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#59  (heap free=581MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#59] OK t=115ms cand=2067 pat=6 heapDelta=60MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#60  (heap free=580MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#60] OK t=1ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#61  (heap free=580MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#61] OK t=116ms cand=2063 pat=6 heapDelta=60MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#62  (heap free=581MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#62] OK t=1ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#63  (heap free=581MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#63] OK t=119ms cand=2059 pat=6 heapDelta=60MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#64  (heap free=581MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#64] OK t=1ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#65  (heap free=581MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#65] OK t=120ms cand=2048 pat=6 heapDelta=60MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#66  (heap free=580MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#66] OK t=0ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#67  (heap free=580MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#67] OK t=1ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#68  (heap free=580MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#68] OK t=117ms cand=2043 pat=6 heapDelta=60MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#69  (heap free=579MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#69] OK t=1ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#70  (heap free=579MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#70] OK t=122ms cand=2045 pat=6 heapDelta=60MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#71  (heap free=580MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#71] OK t=1ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#72  (heap free=580MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#72] OK t=1ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#73  (heap free=580MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#73] OK t=120ms cand=2027 pat=6 heapDelta=60MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#74  (heap free=580MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#74] OK t=1ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#75  (heap free=579MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#75] OK t=124ms cand=2082 pat=6 heapDelta=60MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#76  (heap free=579MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#76] OK t=112ms cand=1631 pat=6 heapDelta=60MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#77  (heap free=578MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#77] OK t=126ms cand=2093 pat=6 heapDelta=60MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#78  (heap free=578MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#78] OK t=126ms cand=2092 pat=6 heapDelta=64MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#79  (heap free=578MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#79] OK t=113ms cand=1619 pat=6 heapDelta=60MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#80  (heap free=577MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#80] OK t=126ms cand=2084 pat=6 heapDelta=64MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#81  (heap free=577MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#81] OK t=1ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#82  (heap free=577MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#82] OK t=125ms cand=2048 pat=8 heapDelta=64MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#83  (heap free=576MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#83] OK t=114ms cand=1609 pat=8 heapDelta=60MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#84  (heap free=578MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#84] OK t=114ms cand=1600 pat=9 heapDelta=60MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#85  (heap free=578MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#85] OK t=113ms cand=1586 pat=9 heapDelta=60MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#86  (heap free=577MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#86] OK t=127ms cand=2051 pat=9 heapDelta=64MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#87  (heap free=577MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#87] OK t=1ms cand=0 pat=9 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#88  (heap free=577MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#88] OK t=132ms cand=2046 pat=9 heapDelta=64MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#89  (heap free=576MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#89] OK t=1ms cand=0 pat=9 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#90  (heap free=576MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#90] OK t=1ms cand=0 pat=9 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#91  (heap free=576MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#91] OK t=129ms cand=2045 pat=9 heapDelta=64MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#92  (heap free=576MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#92] OK t=1ms cand=0 pat=9 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#93  (heap free=575MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#93] OK t=1ms cand=0 pat=9 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#94  (heap free=577MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#94] OK t=133ms cand=2036 pat=9 heapDelta=64MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#95  (heap free=577MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#95] OK t=1ms cand=0 pat=9 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#96  (heap free=576MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#96] OK t=1ms cand=0 pat=9 heapDelta=13MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#97  (heap free=577MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#97] OK t=1ms cand=0 pat=9 heapDelta=13MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#98  (heap free=576MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#98] OK t=132ms cand=2027 pat=9 heapDelta=64MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#99  (heap free=578MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#99] OK t=1ms cand=0 pat=9 heapDelta=14MB
+>> RUNNING Adaptive-FloorSelect-w2/TAFENG/SC2_INC#100  (heap free=578MB / total=864MB / max=49152MB)
+[Adaptive-FloorSelect-w2/TAFENG/SC2_INC#100] OK t=135ms cand=2035 pat=9 heapDelta=69MB
+=== ALL SCENARIOS DONE (79.8s) ===
