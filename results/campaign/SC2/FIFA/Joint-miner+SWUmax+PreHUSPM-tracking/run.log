@@ -1,0 +1,209 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC2]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC2] Incremental sequence (100 batches, EVEN; D_init per Yan et al. Table 16) ---
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INIT#0  (heap free=562MB / total=768MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INIT#0] OK t=28136ms cand=62054305 pat=18 heapDelta=443MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#1  (heap free=468MB / total=768MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#1] OK t=1661ms cand=0 pat=18 heapDelta=165MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#2  (heap free=496MB / total=768MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#2] OK t=28969ms cand=62541433 pat=18 heapDelta=408MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#3  (heap free=501MB / total=800MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#3] OK t=1556ms cand=0 pat=18 heapDelta=174MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#4  (heap free=523MB / total=800MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#4] OK t=29922ms cand=63031605 pat=18 heapDelta=410MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#5  (heap free=501MB / total=800MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#5] OK t=1657ms cand=0 pat=18 heapDelta=167MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#6  (heap free=528MB / total=800MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#6] OK t=794ms cand=0 pat=18 heapDelta=103MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#7  (heap free=539MB / total=800MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#7] OK t=29997ms cand=61888885 pat=18 heapDelta=411MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#8  (heap free=502MB / total=800MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#8] OK t=1305ms cand=0 pat=18 heapDelta=174MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#9  (heap free=524MB / total=800MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#9] OK t=925ms cand=0 pat=18 heapDelta=117MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#10  (heap free=537MB / total=800MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#10] OK t=30514ms cand=60136646 pat=18 heapDelta=421MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#11  (heap free=503MB / total=800MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#11] OK t=1332ms cand=0 pat=17 heapDelta=167MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#12  (heap free=524MB / total=800MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#12] OK t=1014ms cand=0 pat=18 heapDelta=111MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#13  (heap free=538MB / total=800MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#13] OK t=31579ms cand=60629943 pat=18 heapDelta=420MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#14  (heap free=502MB / total=800MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#14] OK t=1323ms cand=0 pat=18 heapDelta=167MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#15  (heap free=524MB / total=800MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#15] OK t=720ms cand=0 pat=19 heapDelta=112MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#16  (heap free=535MB / total=800MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#16] OK t=32618ms cand=60447849 pat=19 heapDelta=457MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#17  (heap free=534MB / total=832MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#17] OK t=1368ms cand=0 pat=18 heapDelta=167MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#18  (heap free=551MB / total=832MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#18] OK t=1048ms cand=0 pat=17 heapDelta=120MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#19  (heap free=567MB / total=832MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#19] OK t=33279ms cand=60019043 pat=17 heapDelta=448MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#20  (heap free=534MB / total=832MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#20] OK t=1391ms cand=0 pat=17 heapDelta=167MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#21  (heap free=554MB / total=832MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#21] OK t=1000ms cand=0 pat=17 heapDelta=111MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#22  (heap free=569MB / total=832MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#22] OK t=33916ms cand=58955947 pat=17 heapDelta=457MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#23  (heap free=534MB / total=832MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#23] OK t=1170ms cand=0 pat=17 heapDelta=160MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#24  (heap free=549MB / total=832MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#24] OK t=955ms cand=0 pat=17 heapDelta=119MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#25  (heap free=564MB / total=832MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#25] OK t=34260ms cand=57877705 pat=17 heapDelta=453MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#26  (heap free=567MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#26] OK t=1457ms cand=0 pat=17 heapDelta=154MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#27  (heap free=587MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#27] OK t=830ms cand=0 pat=17 heapDelta=105MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#28  (heap free=598MB / total=864MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#28] OK t=34758ms cand=56677886 pat=17 heapDelta=553MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#29  (heap free=632MB / total=928MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#29] OK t=1283ms cand=0 pat=17 heapDelta=160MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#30  (heap free=645MB / total=928MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#30] OK t=1095ms cand=0 pat=17 heapDelta=116MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#31  (heap free=660MB / total=928MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#31] OK t=36059ms cand=57362150 pat=17 heapDelta=547MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#32  (heap free=631MB / total=928MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#32] OK t=1477ms cand=0 pat=17 heapDelta=151MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#33  (heap free=651MB / total=928MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#33] OK t=982ms cand=0 pat=17 heapDelta=106MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#34  (heap free=661MB / total=928MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#34] OK t=37141ms cand=57805974 pat=17 heapDelta=549MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#35  (heap free=630MB / total=928MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#35] OK t=1375ms cand=0 pat=17 heapDelta=158MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#36  (heap free=648MB / total=928MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#36] OK t=891ms cand=0 pat=17 heapDelta=117MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#37  (heap free=657MB / total=928MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#37] OK t=38253ms cand=57216123 pat=17 heapDelta=581MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#38  (heap free=662MB / total=960MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#38] OK t=1533ms cand=0 pat=17 heapDelta=158MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#39  (heap free=680MB / total=960MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#39] OK t=891ms cand=0 pat=17 heapDelta=107MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#40  (heap free=690MB / total=960MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#40] OK t=38961ms cand=56950324 pat=17 heapDelta=609MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#41  (heap free=693MB / total=992MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#41] OK t=1461ms cand=0 pat=17 heapDelta=151MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#42  (heap free=711MB / total=992MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#42] OK t=753ms cand=0 pat=17 heapDelta=107MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#43  (heap free=723MB / total=992MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#43] OK t=39666ms cand=56062528 pat=17 heapDelta=661MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#44  (heap free=759MB / total=1056MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#44] OK t=1201ms cand=0 pat=17 heapDelta=155MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#45  (heap free=679MB / total=960MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#45] OK t=971ms cand=0 pat=17 heapDelta=117MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#46  (heap free=690MB / total=960MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#46] OK t=39430ms cand=54506825 pat=17 heapDelta=628MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#47  (heap free=728MB / total=1024MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#47] OK t=1092ms cand=0 pat=17 heapDelta=155MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#48  (heap free=677MB / total=960MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#48] OK t=964ms cand=0 pat=17 heapDelta=106MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#49  (heap free=690MB / total=960MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#49] OK t=654ms cand=0 pat=17 heapDelta=85MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#50  (heap free=696MB / total=960MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#50] OK t=40461ms cand=54222138 pat=17 heapDelta=607MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#51  (heap free=695MB / total=992MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#51] OK t=1321ms cand=0 pat=17 heapDelta=149MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#52  (heap free=678MB / total=960MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#52] OK t=970ms cand=0 pat=17 heapDelta=106MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#53  (heap free=690MB / total=960MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#53] OK t=614ms cand=0 pat=17 heapDelta=74MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#54  (heap free=695MB / total=960MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#54] OK t=42027ms cand=54644964 pat=17 heapDelta=613MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#55  (heap free=695MB / total=992MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#55] OK t=1227ms cand=0 pat=17 heapDelta=151MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#56  (heap free=675MB / total=960MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#56] OK t=1097ms cand=0 pat=17 heapDelta=119MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#57  (heap free=687MB / total=960MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#57] OK t=701ms cand=0 pat=17 heapDelta=87MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#58  (heap free=696MB / total=960MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#58] OK t=43983ms cand=55082406 pat=17 heapDelta=647MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#59  (heap free=724MB / total=1024MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#59] OK t=1359ms cand=0 pat=17 heapDelta=155MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#60  (heap free=678MB / total=960MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#60] OK t=836ms cand=0 pat=17 heapDelta=117MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#61  (heap free=688MB / total=960MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#61] OK t=785ms cand=0 pat=17 heapDelta=89MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#62  (heap free=696MB / total=960MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#62] OK t=44652ms cand=54525717 pat=17 heapDelta=642MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#63  (heap free=724MB / total=1024MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#63] OK t=1318ms cand=0 pat=17 heapDelta=155MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#64  (heap free=738MB / total=1024MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#64] OK t=879ms cand=0 pat=17 heapDelta=119MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#65  (heap free=685MB / total=960MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#65] OK t=748ms cand=0 pat=16 heapDelta=85MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#66  (heap free=691MB / total=960MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#66] OK t=45990ms cand=54630272 pat=16 heapDelta=601MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#67  (heap free=694MB / total=992MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#67] OK t=1359ms cand=0 pat=16 heapDelta=149MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#68  (heap free=708MB / total=992MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#68] OK t=983ms cand=0 pat=17 heapDelta=119MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#69  (heap free=717MB / total=992MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#69] OK t=702ms cand=0 pat=17 heapDelta=87MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#70  (heap free=691MB / total=960MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#70] OK t=48301ms cand=55213606 pat=17 heapDelta=645MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#71  (heap free=724MB / total=1024MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#71] OK t=1248ms cand=0 pat=17 heapDelta=160MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#72  (heap free=736MB / total=1024MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#72] OK t=870ms cand=0 pat=17 heapDelta=128MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#73  (heap free=681MB / total=960MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#73] OK t=749ms cand=0 pat=17 heapDelta=96MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#74  (heap free=688MB / total=960MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#74] OK t=49122ms cand=54640278 pat=17 heapDelta=614MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#75  (heap free=691MB / total=992MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#75] OK t=1273ms cand=0 pat=17 heapDelta=151MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#76  (heap free=705MB / total=992MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#76] OK t=967ms cand=0 pat=17 heapDelta=119MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#77  (heap free=715MB / total=992MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#77] OK t=754ms cand=0 pat=17 heapDelta=87MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#78  (heap free=690MB / total=960MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#78] OK t=49677ms cand=53272386 pat=17 heapDelta=666MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#79  (heap free=756MB / total=1056MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#79] OK t=1324ms cand=0 pat=17 heapDelta=151MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#80  (heap free=769MB / total=1056MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#80] OK t=957ms cand=0 pat=17 heapDelta=120MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#81  (heap free=779MB / total=1056MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#81] OK t=708ms cand=0 pat=17 heapDelta=88MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#82  (heap free=689MB / total=960MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#82] OK t=50339ms cand=52323283 pat=17 heapDelta=601MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#83  (heap free=692MB / total=992MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#83] OK t=1405ms cand=0 pat=17 heapDelta=153MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#84  (heap free=705MB / total=992MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#84] OK t=978ms cand=0 pat=17 heapDelta=119MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#85  (heap free=716MB / total=992MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#85] OK t=697ms cand=0 pat=17 heapDelta=87MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#86  (heap free=692MB / total=960MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#86] OK t=51629ms cand=51736406 pat=17 heapDelta=639MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#87  (heap free=724MB / total=1024MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#87] OK t=1228ms cand=0 pat=17 heapDelta=152MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#88  (heap free=734MB / total=1024MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#88] OK t=1053ms cand=0 pat=17 heapDelta=120MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#89  (heap free=681MB / total=960MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#89] OK t=625ms cand=0 pat=17 heapDelta=96MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#90  (heap free=686MB / total=960MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#90] OK t=640ms cand=0 pat=17 heapDelta=74MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#91  (heap free=692MB / total=960MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#91] OK t=52869ms cand=51006564 pat=17 heapDelta=654MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#92  (heap free=723MB / total=1024MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#92] OK t=1083ms cand=0 pat=17 heapDelta=149MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#93  (heap free=733MB / total=1024MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#93] OK t=860ms cand=0 pat=17 heapDelta=128MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#94  (heap free=677MB / total=960MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#94] OK t=774ms cand=0 pat=17 heapDelta=106MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#95  (heap free=684MB / total=960MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#95] OK t=656ms cand=0 pat=17 heapDelta=85MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#96  (heap free=689MB / total=960MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#96] OK t=53395ms cand=49974287 pat=17 heapDelta=647MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#97  (heap free=757MB / total=1056MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#97] OK t=1180ms cand=0 pat=17 heapDelta=149MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#98  (heap free=672MB / total=960MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#98] OK t=1038ms cand=0 pat=17 heapDelta=115MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#99  (heap free=683MB / total=960MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#99] OK t=819ms cand=0 pat=17 heapDelta=84MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#100  (heap free=691MB / total=960MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/FIFA/SC2_INC#100] OK t=54738ms cand=50367694 pat=17 heapDelta=577MB
+=== ALL SCENARIOS DONE (1357.9s) ===

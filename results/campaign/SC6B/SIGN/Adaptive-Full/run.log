@@ -1,0 +1,50 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC6B]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC6B] Mixed stream, exactly 14:3:3, one deletion beyond the rescan budget ---
+>> [SC6B] SIGN seed=42 opSize=5 plan=20 operations (14 insert, 3 delete, 3 modify; operation 2 deletes 46 sequences beyond the budget)
+>> RUNNING Adaptive-Full/SIGN/SC6_INIT#0  (heap free=1008MB / total=1024MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INIT#0] OK t=198ms cand=70528 pat=583 heapDelta=19MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#1  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INS#1] OK t=187ms cand=74614 pat=611 heapDelta=4MB
+>> RUNNING Adaptive-Full/SIGN/SC6_DEL_BIG#2  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_DEL_BIG#2] OK t=105ms cand=158479 pat=636 heapDelta=3MB
+>> RUNNING Adaptive-Full/SIGN/SC6_MOD#3  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_MOD#3] OK t=120ms cand=93134 pat=726 heapDelta=3MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#4  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INS#4] OK t=113ms cand=89868 pat=704 heapDelta=3MB
+>> RUNNING Adaptive-Full/SIGN/SC6_DEL#5  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_DEL#5] OK t=6ms cand=89868 pat=712 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#6  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INS#6] OK t=108ms cand=86689 pat=657 heapDelta=3MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#7  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INS#7] OK t=112ms cand=86324 pat=695 heapDelta=3MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#8  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INS#8] OK t=115ms cand=86294 pat=766 heapDelta=3MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#9  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INS#9] OK t=119ms cand=87135 pat=712 heapDelta=3MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#10  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INS#10] OK t=122ms cand=86384 pat=737 heapDelta=3MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#11  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INS#11] OK t=124ms cand=84839 pat=684 heapDelta=3MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#12  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INS#12] OK t=122ms cand=82768 pat=615 heapDelta=3MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#13  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INS#13] OK t=120ms cand=79879 pat=568 heapDelta=3MB
+>> RUNNING Adaptive-Full/SIGN/SC6_MOD#14  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_MOD#14] OK t=121ms cand=79841 pat=592 heapDelta=3MB
+>> RUNNING Adaptive-Full/SIGN/SC6_MOD#15  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_MOD#15] OK t=120ms cand=79241 pat=588 heapDelta=3MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#16  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INS#16] OK t=118ms cand=77699 pat=550 heapDelta=3MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#17  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INS#17] OK t=116ms cand=75246 pat=539 heapDelta=3MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#18  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INS#18] OK t=115ms cand=73378 pat=516 heapDelta=3MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#19  (heap free=108MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INS#19] OK t=120ms cand=74316 pat=493 heapDelta=3MB
+>> RUNNING Adaptive-Full/SIGN/SC6_DEL#20  (heap free=108MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_DEL#20] OK t=1ms cand=74316 pat=508 heapDelta=1MB
+=== ALL SCENARIOS DONE (9.3s) ===

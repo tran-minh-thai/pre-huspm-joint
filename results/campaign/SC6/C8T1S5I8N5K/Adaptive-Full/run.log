@@ -1,0 +1,50 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC6]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC6] Mixed stream, exactly 14:3:3 ---
+>> [SC6] C8T1S5I8N5K seed=42 opSize=199 plan=20 operations (14 insert, 3 delete, 3 modify)
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INIT#0  (heap free=813MB / total=1024MB / max=49152MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INIT#0] OK t=264ms cand=47013 pat=5067 heapDelta=111MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_MOD#1  (heap free=318MB / total=448MB / max=49152MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_MOD#1] OK t=221ms cand=47148 pat=5314 heapDelta=31MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#2  (heap free=316MB / total=448MB / max=49152MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#2] OK t=172ms cand=46452 pat=5104 heapDelta=24MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#3  (heap free=315MB / total=448MB / max=49152MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#3] OK t=99ms cand=46706 pat=5547 heapDelta=24MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#4  (heap free=315MB / total=448MB / max=49152MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#4] OK t=98ms cand=45903 pat=5388 heapDelta=24MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#5  (heap free=315MB / total=448MB / max=49152MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#5] OK t=32ms cand=0 pat=6158 heapDelta=14MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#6  (heap free=314MB / total=448MB / max=49152MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#6] OK t=99ms cand=48324 pat=5932 heapDelta=24MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#7  (heap free=314MB / total=448MB / max=49152MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#7] OK t=99ms cand=49316 pat=6053 heapDelta=24MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#8  (heap free=313MB / total=448MB / max=49152MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#8] OK t=104ms cand=48869 pat=7071 heapDelta=24MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#9  (heap free=313MB / total=448MB / max=49152MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#9] OK t=101ms cand=47914 pat=6878 heapDelta=24MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_DEL#10  (heap free=313MB / total=448MB / max=49152MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_DEL#10] OK t=49ms cand=47914 pat=7031 heapDelta=8MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_MOD#11  (heap free=312MB / total=448MB / max=49152MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_MOD#11] OK t=144ms cand=47636 pat=7074 heapDelta=27MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#12  (heap free=312MB / total=448MB / max=49152MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#12] OK t=4ms cand=0 pat=6899 heapDelta=11MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#13  (heap free=312MB / total=448MB / max=49152MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#13] OK t=103ms cand=47116 pat=6747 heapDelta=24MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_DEL#14  (heap free=312MB / total=448MB / max=49152MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_DEL#14] OK t=40ms cand=47116 pat=6554 heapDelta=8MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#15  (heap free=311MB / total=448MB / max=49152MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#15] OK t=96ms cand=45735 pat=6368 heapDelta=24MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#16  (heap free=311MB / total=448MB / max=49152MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#16] OK t=97ms cand=45007 pat=6240 heapDelta=24MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_MOD#17  (heap free=311MB / total=448MB / max=49152MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_MOD#17] OK t=41ms cand=0 pat=6249 heapDelta=14MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#18  (heap free=311MB / total=448MB / max=49152MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#18] OK t=93ms cand=43483 pat=6082 heapDelta=24MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_INS#19  (heap free=311MB / total=448MB / max=49152MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_INS#19] OK t=100ms cand=44766 pat=5972 heapDelta=24MB
+>> RUNNING Adaptive-Full/C8T1S5I8N5K/SC6_DEL#20  (heap free=310MB / total=448MB / max=49152MB)
+[Adaptive-Full/C8T1S5I8N5K/SC6_DEL#20] OK t=34ms cand=44766 pat=5909 heapDelta=8MB
+=== ALL SCENARIOS DONE (17.0s) ===

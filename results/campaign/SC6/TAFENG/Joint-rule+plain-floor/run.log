@@ -1,0 +1,50 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC6]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC6] Mixed stream, exactly 14:3:3 ---
+>> [SC6] TAFENG seed=42 opSize=200 plan=20 operations (14 insert, 3 delete, 3 modify)
+>> RUNNING Joint-rule+plain-floor/TAFENG/SC6_INIT#0  (heap free=573MB / total=1024MB / max=49152MB)
+[Joint-rule+plain-floor/TAFENG/SC6_INIT#0] OK t=344ms cand=2123 pat=6 heapDelta=243MB
+>> RUNNING Joint-rule+plain-floor/TAFENG/SC6_INS#1  (heap free=598MB / total=864MB / max=49152MB)
+[Joint-rule+plain-floor/TAFENG/SC6_INS#1] OK t=2ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Joint-rule+plain-floor/TAFENG/SC6_INS#2  (heap free=597MB / total=864MB / max=49152MB)
+[Joint-rule+plain-floor/TAFENG/SC6_INS#2] OK t=191ms cand=2109 pat=6 heapDelta=55MB
+>> RUNNING Joint-rule+plain-floor/TAFENG/SC6_INS#3  (heap free=595MB / total=864MB / max=49152MB)
+[Joint-rule+plain-floor/TAFENG/SC6_INS#3] OK t=1ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Joint-rule+plain-floor/TAFENG/SC6_INS#4  (heap free=595MB / total=864MB / max=49152MB)
+[Joint-rule+plain-floor/TAFENG/SC6_INS#4] OK t=97ms cand=2105 pat=6 heapDelta=49MB
+>> RUNNING Joint-rule+plain-floor/TAFENG/SC6_DEL#5  (heap free=592MB / total=864MB / max=49152MB)
+[Joint-rule+plain-floor/TAFENG/SC6_DEL#5] OK t=2ms cand=2105 pat=6 heapDelta=14MB
+>> RUNNING Joint-rule+plain-floor/TAFENG/SC6_MOD#6  (heap free=591MB / total=864MB / max=49152MB)
+[Joint-rule+plain-floor/TAFENG/SC6_MOD#6] OK t=11ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Joint-rule+plain-floor/TAFENG/SC6_INS#7  (heap free=591MB / total=864MB / max=49152MB)
+[Joint-rule+plain-floor/TAFENG/SC6_INS#7] OK t=91ms cand=2110 pat=6 heapDelta=49MB
+>> RUNNING Joint-rule+plain-floor/TAFENG/SC6_INS#8  (heap free=590MB / total=864MB / max=49152MB)
+[Joint-rule+plain-floor/TAFENG/SC6_INS#8] OK t=92ms cand=2109 pat=6 heapDelta=49MB
+>> RUNNING Joint-rule+plain-floor/TAFENG/SC6_INS#9  (heap free=589MB / total=864MB / max=49152MB)
+[Joint-rule+plain-floor/TAFENG/SC6_INS#9] OK t=94ms cand=2122 pat=6 heapDelta=49MB
+>> RUNNING Joint-rule+plain-floor/TAFENG/SC6_MOD#10  (heap free=590MB / total=864MB / max=49152MB)
+[Joint-rule+plain-floor/TAFENG/SC6_MOD#10] OK t=99ms cand=2159 pat=6 heapDelta=55MB
+>> RUNNING Joint-rule+plain-floor/TAFENG/SC6_INS#11  (heap free=591MB / total=864MB / max=49152MB)
+[Joint-rule+plain-floor/TAFENG/SC6_INS#11] OK t=95ms cand=2162 pat=6 heapDelta=49MB
+>> RUNNING Joint-rule+plain-floor/TAFENG/SC6_INS#12  (heap free=590MB / total=864MB / max=49152MB)
+[Joint-rule+plain-floor/TAFENG/SC6_INS#12] OK t=96ms cand=2156 pat=6 heapDelta=49MB
+>> RUNNING Joint-rule+plain-floor/TAFENG/SC6_INS#13  (heap free=589MB / total=864MB / max=49152MB)
+[Joint-rule+plain-floor/TAFENG/SC6_INS#13] OK t=2ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Joint-rule+plain-floor/TAFENG/SC6_INS#14  (heap free=589MB / total=864MB / max=49152MB)
+[Joint-rule+plain-floor/TAFENG/SC6_INS#14] OK t=96ms cand=2141 pat=6 heapDelta=49MB
+>> RUNNING Joint-rule+plain-floor/TAFENG/SC6_INS#15  (heap free=588MB / total=864MB / max=49152MB)
+[Joint-rule+plain-floor/TAFENG/SC6_INS#15] OK t=97ms cand=2144 pat=6 heapDelta=55MB
+>> RUNNING Joint-rule+plain-floor/TAFENG/SC6_DEL#16  (heap free=588MB / total=864MB / max=49152MB)
+[Joint-rule+plain-floor/TAFENG/SC6_DEL#16] OK t=1ms cand=2144 pat=6 heapDelta=14MB
+>> RUNNING Joint-rule+plain-floor/TAFENG/SC6_INS#17  (heap free=588MB / total=864MB / max=49152MB)
+[Joint-rule+plain-floor/TAFENG/SC6_INS#17] OK t=1ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Joint-rule+plain-floor/TAFENG/SC6_MOD#18  (heap free=587MB / total=864MB / max=49152MB)
+[Joint-rule+plain-floor/TAFENG/SC6_MOD#18] OK t=98ms cand=2152 pat=6 heapDelta=55MB
+>> RUNNING Joint-rule+plain-floor/TAFENG/SC6_INS#19  (heap free=587MB / total=864MB / max=49152MB)
+[Joint-rule+plain-floor/TAFENG/SC6_INS#19] OK t=1ms cand=0 pat=6 heapDelta=14MB
+>> RUNNING Joint-rule+plain-floor/TAFENG/SC6_DEL#20  (heap free=588MB / total=864MB / max=49152MB)
+[Joint-rule+plain-floor/TAFENG/SC6_DEL#20] OK t=1ms cand=0 pat=6 heapDelta=14MB
+=== ALL SCENARIOS DONE (16.8s) ===

@@ -1,0 +1,60 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC2]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=4 | seed.index=0
+
+--- [SC2] Incremental sequence (100 batches, EVEN; D_init per Yan et al. Table 16) ---
+>> RUNNING Remine-HUSP-ULL/SIGN/SC2_INIT#0  (heap free=116MB / total=128MB / max=49152MB)
+[Remine-HUSP-ULL/SIGN/SC2_INIT#0] OK t=155ms cand=384337 pat=583 heapDelta=88MB
+>> RUNNING Remine-HUSP-ULL/SIGN/SC2_INC#1  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-ULL/SIGN/SC2_INC#1] OK t=119ms cand=401426 pat=611 heapDelta=64MB
+>> RUNNING Remine-HUSP-ULL/SIGN/SC2_INC#2  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-ULL/SIGN/SC2_INC#2] OK t=116ms cand=423380 pat=684 heapDelta=83MB
+>> RUNNING Remine-HUSP-ULL/SIGN/SC2_INC#3  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-ULL/SIGN/SC2_INC#3] OK t=118ms cand=413230 pat=663 heapDelta=82MB
+>> RUNNING Remine-HUSP-ULL/SIGN/SC2_INC#4  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-ULL/SIGN/SC2_INC#4] OK t=117ms cand=405312 pat=631 heapDelta=78MB
+>> RUNNING Remine-HUSP-ULL/SIGN/SC2_INC#5  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-ULL/SIGN/SC2_INC#5] OK t=119ms cand=406760 pat=652 heapDelta=84MB
+>> RUNNING Remine-HUSP-ULL/SIGN/SC2_INC#6  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-ULL/SIGN/SC2_INC#6] OK t=124ms cand=405397 pat=695 heapDelta=94MB
+>> RUNNING Remine-HUSP-ULL/SIGN/SC2_INC#7  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-ULL/SIGN/SC2_INC#7] OK t=128ms cand=410934 pat=664 heapDelta=102MB
+>> RUNNING Remine-HUSP-ULL/SIGN/SC2_INC#8  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-ULL/SIGN/SC2_INC#8] OK t=131ms cand=410718 pat=660 heapDelta=109MB
+>> RUNNING Remine-HUSP-ULL/SIGN/SC2_INC#9  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-ULL/SIGN/SC2_INC#9] OK t=130ms cand=409058 pat=632 heapDelta=112MB
+>> RUNNING Remine-HUSP-ULL/SIGN/SC2_INC#10  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-ULL/SIGN/SC2_INC#10] OK t=131ms cand=399208 pat=594 heapDelta=109MB
+>> RUNNING Remine-HUSP-ULL/SIGN/SC2_INC#11  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-ULL/SIGN/SC2_INC#11] OK t=129ms cand=393875 pat=564 heapDelta=105MB
+>> RUNNING Remine-HUSP-ULL/SIGN/SC2_INC#12  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-ULL/SIGN/SC2_INC#12] OK t=130ms cand=391209 pat=571 heapDelta=106MB
+>> RUNNING Remine-HUSP-ULL/SIGN/SC2_INC#13  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-ULL/SIGN/SC2_INC#13] OK t=131ms cand=387439 pat=556 heapDelta=109MB
+>> RUNNING Remine-HUSP-ULL/SIGN/SC2_INC#14  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-ULL/SIGN/SC2_INC#14] OK t=133ms cand=383221 pat=528 heapDelta=109MB
+>> RUNNING Remine-HUSP-ULL/SIGN/SC2_INC#15  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-ULL/SIGN/SC2_INC#15] OK t=133ms cand=376697 pat=506 heapDelta=107MB
+>> RUNNING Remine-HUSP-ULL/SIGN/SC2_INC#16  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-ULL/SIGN/SC2_INC#16] OK t=131ms cand=371830 pat=480 heapDelta=72MB
+>> RUNNING Remine-HUSP-ULL/SIGN/SC2_INC#17  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-ULL/SIGN/SC2_INC#17] OK t=134ms cand=374475 pat=461 heapDelta=112MB
+>> RUNNING Remine-HUSP-ULL/SIGN/SC2_INC#18  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-ULL/SIGN/SC2_INC#18] OK t=138ms cand=378390 pat=503 heapDelta=122MB
+>> RUNNING Remine-HUSP-ULL/SIGN/SC2_INC#19  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-ULL/SIGN/SC2_INC#19] OK t=139ms cand=373375 pat=471 heapDelta=122MB
+>> RUNNING Remine-HUSP-ULL/SIGN/SC2_INC#20  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-ULL/SIGN/SC2_INC#20] OK t=138ms cand=370321 pat=434 heapDelta=120MB
+>> RUNNING Remine-HUSP-ULL/SIGN/SC2_INC#21  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-ULL/SIGN/SC2_INC#21] OK t=138ms cand=362637 pat=415 heapDelta=117MB
+>> RUNNING Remine-HUSP-ULL/SIGN/SC2_INC#22  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-ULL/SIGN/SC2_INC#22] OK t=138ms cand=361698 pat=423 heapDelta=89MB
+>> RUNNING Remine-HUSP-ULL/SIGN/SC2_INC#23  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-ULL/SIGN/SC2_INC#23] OK t=143ms cand=360571 pat=434 heapDelta=127MB
+>> RUNNING Remine-HUSP-ULL/SIGN/SC2_INC#24  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-ULL/SIGN/SC2_INC#24] OK t=144ms cand=362890 pat=470 heapDelta=135MB
+>> RUNNING Remine-HUSP-ULL/SIGN/SC2_INC#25  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-ULL/SIGN/SC2_INC#25] OK t=145ms cand=363542 pat=456 heapDelta=138MB
+>> RUNNING Remine-HUSP-ULL/SIGN/SC2_INC#26  (heap free=115MB / total=128MB / max=49152MB)
+[Remine-HUSP-ULL/SIGN/SC2_INC#26] OK t=151ms cand=361709 pat=475 heapDelta=143MB

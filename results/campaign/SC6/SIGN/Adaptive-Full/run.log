@@ -1,0 +1,50 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC6]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC6] Mixed stream, exactly 14:3:3 ---
+>> [SC6] SIGN seed=42 opSize=5 plan=20 operations (14 insert, 3 delete, 3 modify)
+>> RUNNING Adaptive-Full/SIGN/SC6_INIT#0  (heap free=1007MB / total=1024MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INIT#0] OK t=198ms cand=70528 pat=583 heapDelta=19MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#1  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INS#1] OK t=131ms cand=74614 pat=611 heapDelta=4MB
+>> RUNNING Adaptive-Full/SIGN/SC6_DEL#2  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_DEL#2] OK t=5ms cand=74614 pat=644 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC6_MOD#3  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_MOD#3] OK t=192ms cand=80352 pat=738 heapDelta=3MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#4  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INS#4] OK t=121ms cand=78431 pat=708 heapDelta=3MB
+>> RUNNING Adaptive-Full/SIGN/SC6_DEL#5  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_DEL#5] OK t=3ms cand=78431 pat=707 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#6  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INS#6] OK t=116ms cand=76580 pat=670 heapDelta=3MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#7  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INS#7] OK t=118ms cand=76657 pat=687 heapDelta=3MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#8  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INS#8] OK t=124ms cand=77175 pat=741 heapDelta=3MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#9  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INS#9] OK t=126ms cand=77552 pat=701 heapDelta=3MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#10  (heap free=109MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INS#10] OK t=128ms cand=77091 pat=710 heapDelta=3MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#11  (heap free=108MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INS#11] OK t=129ms cand=76389 pat=677 heapDelta=3MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#12  (heap free=108MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INS#12] OK t=127ms cand=74545 pat=612 heapDelta=3MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#13  (heap free=108MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INS#13] OK t=126ms cand=72446 pat=581 heapDelta=3MB
+>> RUNNING Adaptive-Full/SIGN/SC6_MOD#14  (heap free=108MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_MOD#14] OK t=127ms cand=70644 pat=530 heapDelta=3MB
+>> RUNNING Adaptive-Full/SIGN/SC6_MOD#15  (heap free=108MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_MOD#15] OK t=122ms cand=68938 pat=519 heapDelta=3MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#16  (heap free=108MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INS#16] OK t=119ms cand=67785 pat=490 heapDelta=3MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#17  (heap free=108MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INS#17] OK t=117ms cand=66189 pat=475 heapDelta=2MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#18  (heap free=108MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INS#18] OK t=3ms cand=0 pat=455 heapDelta=1MB
+>> RUNNING Adaptive-Full/SIGN/SC6_INS#19  (heap free=108MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_INS#19] OK t=119ms cand=65731 pat=446 heapDelta=3MB
+>> RUNNING Adaptive-Full/SIGN/SC6_DEL#20  (heap free=108MB / total=128MB / max=49152MB)
+[Adaptive-Full/SIGN/SC6_DEL#20] OK t=2ms cand=65731 pat=460 heapDelta=1MB
+=== ALL SCENARIOS DONE (9.2s) ===
