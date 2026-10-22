@@ -1,0 +1,209 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC2]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=2 | seed.index=0
+
+--- [SC2] Incremental sequence (100 batches, EVEN; D_init per Yan et al. Table 16) ---
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INIT#0  (heap free=4329MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INIT#0] OK t=686ms cand=868475 pat=10 heapDelta=528MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#1  (heap free=4285MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#1] OK t=382ms cand=775683 pat=10 heapDelta=304MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#2  (heap free=4280MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#2] OK t=382ms cand=759317 pat=10 heapDelta=336MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#3  (heap free=4277MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#3] OK t=393ms cand=768909 pat=9 heapDelta=352MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#4  (heap free=4273MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#4] OK t=414ms cand=721067 pat=10 heapDelta=368MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#5  (heap free=4270MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#5] OK t=463ms cand=837457 pat=9 heapDelta=416MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#6  (heap free=4265MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#6] OK t=493ms cand=787182 pat=9 heapDelta=432MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#7  (heap free=4260MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#7] OK t=540ms cand=885623 pat=9 heapDelta=448MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#8  (heap free=4259MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#8] OK t=564ms cand=819269 pat=9 heapDelta=480MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#9  (heap free=4256MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#9] OK t=2065ms cand=810775 pat=9 heapDelta=496MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#10  (heap free=4251MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#10] OK t=2215ms cand=824640 pat=9 heapDelta=512MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#11  (heap free=4250MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#11] OK t=2334ms cand=811520 pat=9 heapDelta=544MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#12  (heap free=4247MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#12] OK t=2445ms cand=811485 pat=9 heapDelta=576MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#13  (heap free=4244MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#13] OK t=2539ms cand=756799 pat=9 heapDelta=592MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#14  (heap free=4241MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#14] OK t=2832ms cand=843981 pat=9 heapDelta=640MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#15  (heap free=4236MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#15] OK t=2885ms cand=796214 pat=9 heapDelta=656MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#16  (heap free=4234MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#16] OK t=3127ms cand=837338 pat=9 heapDelta=688MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#17  (heap free=4231MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#17] OK t=3290ms cand=833249 pat=9 heapDelta=720MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#18  (heap free=4227MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#18] OK t=3443ms cand=844396 pat=9 heapDelta=752MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#19  (heap free=4225MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#19] OK t=3748ms cand=1023938 pat=9 heapDelta=784MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#20  (heap free=4221MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#20] OK t=3890ms cand=982945 pat=9 heapDelta=816MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#21  (heap free=4216MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#21] OK t=5643ms cand=963249 pat=9 heapDelta=800MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#22  (heap free=4213MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#22] OK t=5971ms cand=950514 pat=9 heapDelta=832MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#23  (heap free=4209MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#23] OK t=6008ms cand=893333 pat=9 heapDelta=848MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#24  (heap free=4208MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#24] OK t=6482ms cand=980281 pat=9 heapDelta=896MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#25  (heap free=4204MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#25] OK t=7945ms cand=978248 pat=9 heapDelta=896MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#26  (heap free=4200MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#26] OK t=8082ms cand=969073 pat=9 heapDelta=912MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#27  (heap free=4197MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#27] OK t=8205ms cand=944596 pat=9 heapDelta=944MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#28  (heap free=4194MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#28] OK t=8630ms cand=959261 pat=9 heapDelta=976MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#29  (heap free=4190MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#29] OK t=8699ms cand=936852 pat=9 heapDelta=992MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#30  (heap free=4188MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#30] OK t=8944ms cand=921695 pat=9 heapDelta=1024MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#31  (heap free=4187MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#31] OK t=9167ms cand=933885 pat=9 heapDelta=1056MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#32  (heap free=4182MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#32] OK t=9485ms cand=942636 pat=9 heapDelta=1088MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#33  (heap free=4179MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#33] OK t=9651ms cand=935365 pat=9 heapDelta=1104MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#34  (heap free=4176MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#34] OK t=10026ms cand=951949 pat=9 heapDelta=1152MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#35  (heap free=4176MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#35] OK t=10217ms cand=938579 pat=9 heapDelta=1168MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#36  (heap free=4174MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#36] OK t=10517ms cand=944800 pat=9 heapDelta=1200MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#37  (heap free=4173MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#37] OK t=10725ms cand=941996 pat=9 heapDelta=1216MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#38  (heap free=4171MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#38] OK t=10867ms cand=933832 pat=9 heapDelta=1248MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#39  (heap free=4169MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#39] OK t=10996ms cand=937812 pat=9 heapDelta=1280MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#40  (heap free=4167MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#40] OK t=11295ms cand=954965 pat=9 heapDelta=1296MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#41  (heap free=4167MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#41] OK t=11486ms cand=942061 pat=9 heapDelta=1328MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#42  (heap free=4162MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#42] OK t=11520ms cand=910381 pat=9 heapDelta=1344MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#43  (heap free=4161MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#43] OK t=11537ms cand=876999 pat=9 heapDelta=1360MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#44  (heap free=4156MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#44] OK t=11779ms cand=884105 pat=9 heapDelta=1392MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#45  (heap free=4155MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#45] OK t=11922ms cand=874275 pat=9 heapDelta=1424MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#46  (heap free=4153MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#46] OK t=13210ms cand=882339 pat=9 heapDelta=1408MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#47  (heap free=4149MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#47] OK t=13258ms cand=873893 pat=9 heapDelta=1440MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#48  (heap free=4145MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#48] OK t=13766ms cand=885440 pat=9 heapDelta=1472MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#49  (heap free=4142MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#49] OK t=13821ms cand=892735 pat=9 heapDelta=1504MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#50  (heap free=4134MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#50] OK t=14073ms cand=889338 pat=9 heapDelta=1520MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#51  (heap free=4131MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#51] OK t=14204ms cand=894581 pat=9 heapDelta=1552MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#52  (heap free=4127MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#52] OK t=14704ms cand=904686 pat=9 heapDelta=1584MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#53  (heap free=4125MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#53] OK t=14745ms cand=869719 pat=9 heapDelta=1600MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#54  (heap free=4120MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#54] OK t=15129ms cand=862794 pat=9 heapDelta=1632MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#55  (heap free=4116MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#55] OK t=15086ms cand=844021 pat=9 heapDelta=1648MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#56  (heap free=4115MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#56] OK t=15171ms cand=824326 pat=9 heapDelta=1664MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#57  (heap free=4110MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#57] OK t=15440ms cand=818912 pat=9 heapDelta=1696MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#58  (heap free=4110MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#58] OK t=15947ms cand=885842 pat=9 heapDelta=1728MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#59  (heap free=4105MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#59] OK t=16200ms cand=877586 pat=9 heapDelta=1760MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#60  (heap free=4102MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#60] OK t=16167ms cand=854680 pat=9 heapDelta=1776MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#61  (heap free=4101MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#61] OK t=16403ms cand=842085 pat=9 heapDelta=1808MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#62  (heap free=4098MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#62] OK t=16592ms cand=842067 pat=9 heapDelta=1824MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#63  (heap free=4096MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#63] OK t=16819ms cand=844454 pat=9 heapDelta=1856MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#64  (heap free=4091MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#64] OK t=17024ms cand=845754 pat=9 heapDelta=1888MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#65  (heap free=4090MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#65] OK t=17347ms cand=860763 pat=9 heapDelta=1904MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#66  (heap free=4087MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#66] OK t=17341ms cand=859327 pat=9 heapDelta=1936MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#67  (heap free=4080MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#67] OK t=17601ms cand=852796 pat=9 heapDelta=1952MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#68  (heap free=4077MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#68] OK t=17739ms cand=851089 pat=9 heapDelta=1984MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#69  (heap free=4073MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#69] OK t=17815ms cand=832610 pat=9 heapDelta=2000MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#70  (heap free=4068MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#70] OK t=18237ms cand=844221 pat=9 heapDelta=2032MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#71  (heap free=4062MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#71] OK t=18515ms cand=862098 pat=9 heapDelta=2064MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#72  (heap free=4060MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#72] OK t=18868ms cand=864744 pat=9 heapDelta=2080MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#73  (heap free=4057MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#73] OK t=19596ms cand=923978 pat=9 heapDelta=2128MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#74  (heap free=4054MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#74] OK t=20363ms cand=924807 pat=9 heapDelta=2016MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#75  (heap free=4051MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#75] OK t=18988ms cand=932850 pat=9 heapDelta=1840MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#76  (heap free=4046MB / total=6720MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#76] OK t=19437ms cand=1003568 pat=9 heapDelta=1776MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#77  (heap free=7244MB / total=9920MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#77] OK t=21703ms cand=1014403 pat=9 heapDelta=2224MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#78  (heap free=7145MB / total=9824MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#78] OK t=22018ms cand=1033619 pat=9 heapDelta=2288MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#79  (heap free=6922MB / total=9600MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#79] OK t=22522ms cand=1043170 pat=9 heapDelta=2320MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#80  (heap free=6921MB / total=9600MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#80] OK t=22746ms cand=1031599 pat=9 heapDelta=2336MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#81  (heap free=6918MB / total=9600MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#81] OK t=22888ms cand=1021663 pat=9 heapDelta=2368MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#82  (heap free=6914MB / total=9600MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#82] OK t=23115ms cand=1019184 pat=9 heapDelta=2400MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#83  (heap free=6906MB / total=9600MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#83] OK t=23323ms cand=1026411 pat=9 heapDelta=2416MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#84  (heap free=6902MB / total=9600MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#84] OK t=23508ms cand=993963 pat=9 heapDelta=2432MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#85  (heap free=6897MB / total=9600MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#85] OK t=23570ms cand=1007046 pat=9 heapDelta=2464MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#86  (heap free=6894MB / total=9600MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#86] OK t=23452ms cand=985177 pat=9 heapDelta=2480MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#87  (heap free=6891MB / total=9600MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#87] OK t=23655ms cand=959084 pat=9 heapDelta=2512MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#88  (heap free=6888MB / total=9600MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#88] OK t=23885ms cand=953525 pat=9 heapDelta=2528MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#89  (heap free=6884MB / total=9600MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#89] OK t=24102ms cand=967189 pat=9 heapDelta=2560MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#90  (heap free=6881MB / total=9600MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#90] OK t=24456ms cand=949759 pat=9 heapDelta=2592MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#91  (heap free=6879MB / total=9600MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#91] OK t=24815ms cand=971797 pat=9 heapDelta=2624MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#92  (heap free=6875MB / total=9600MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#92] OK t=24935ms cand=971149 pat=9 heapDelta=2656MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#93  (heap free=6875MB / total=9600MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#93] OK t=25195ms cand=956047 pat=9 heapDelta=2672MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#94  (heap free=6869MB / total=9600MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#94] OK t=25681ms cand=961194 pat=9 heapDelta=2704MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#95  (heap free=6868MB / total=9600MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#95] OK t=25827ms cand=959896 pat=9 heapDelta=2720MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#96  (heap free=6864MB / total=9600MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#96] OK t=26177ms cand=967673 pat=9 heapDelta=2752MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#97  (heap free=6861MB / total=9600MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#97] OK t=26273ms cand=956076 pat=8 heapDelta=2768MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#98  (heap free=6856MB / total=9600MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#98] OK t=26477ms cand=958893 pat=9 heapDelta=2800MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#99  (heap free=6855MB / total=9600MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#99] OK t=27052ms cand=965038 pat=8 heapDelta=2832MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#100  (heap free=6853MB / total=9600MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/KOSARAK/SC2_INC#100] OK t=26787ms cand=939770 pat=9 heapDelta=2848MB
+=== ALL SCENARIOS DONE (1485.5s) ===
