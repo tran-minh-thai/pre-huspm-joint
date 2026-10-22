@@ -1,0 +1,209 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC2]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=2 | seed.index=0
+
+--- [SC2] Incremental sequence (100 batches, EVEN; D_init per Yan et al. Table 16) ---
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INIT#0  (heap free=562MB / total=768MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INIT#0] OK t=128727ms cand=62054305 pat=18 heapDelta=1074MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#1  (heap free=969MB / total=1408MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#1] OK t=1896ms cand=57729034 pat=18 heapDelta=47MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#2  (heap free=969MB / total=1408MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#2] OK t=127776ms cand=62541433 pat=18 heapDelta=875MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#3  (heap free=994MB / total=1440MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#3] OK t=1467ms cand=41072229 pat=18 heapDelta=48MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#4  (heap free=994MB / total=1440MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#4] OK t=130768ms cand=63031605 pat=18 heapDelta=890MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#5  (heap free=1022MB / total=1472MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#5] OK t=1885ms cand=53223370 pat=18 heapDelta=18MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#6  (heap free=1022MB / total=1472MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#6] OK t=919ms cand=29434421 pat=18 heapDelta=18MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#7  (heap free=1022MB / total=1472MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#7] OK t=130943ms cand=61888885 pat=18 heapDelta=968MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#8  (heap free=1121MB / total=1568MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#8] OK t=931ms cand=30113219 pat=18 heapDelta=17MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#9  (heap free=1121MB / total=1568MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#9] OK t=784ms cand=24013532 pat=18 heapDelta=17MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#10  (heap free=1122MB / total=1568MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#10] OK t=131568ms cand=60136646 pat=18 heapDelta=1051MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#11  (heap free=1155MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#11] OK t=1159ms cand=36333742 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#12  (heap free=1156MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#12] OK t=1339ms cand=34966981 pat=18 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#13  (heap free=1156MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#13] OK t=136579ms cand=60629943 pat=18 heapDelta=1021MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#14  (heap free=1150MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#14] OK t=940ms cand=28401309 pat=18 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#15  (heap free=1151MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#15] OK t=715ms cand=26761197 pat=19 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#16  (heap free=1151MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#16] OK t=140795ms cand=60447849 pat=19 heapDelta=1026MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#17  (heap free=1150MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#17] OK t=1253ms cand=40260708 pat=18 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#18  (heap free=1150MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#18] OK t=1274ms cand=32800595 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#19  (heap free=1150MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#19] OK t=142145ms cand=60019043 pat=17 heapDelta=1045MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#20  (heap free=1147MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#20] OK t=1127ms cand=33950492 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#21  (heap free=1149MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#21] OK t=1792ms cand=44802420 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#22  (heap free=1149MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#22] OK t=144474ms cand=58955947 pat=17 heapDelta=1042MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#23  (heap free=1149MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#23] OK t=746ms cand=26583678 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#24  (heap free=1150MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#24] OK t=1276ms cand=38878934 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#25  (heap free=1150MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#25] OK t=145389ms cand=57877705 pat=17 heapDelta=1050MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#26  (heap free=1180MB / total=1632MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#26] OK t=1537ms cand=39962413 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#27  (heap free=1181MB / total=1632MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#27] OK t=855ms cand=25010063 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#28  (heap free=1182MB / total=1632MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#28] OK t=146513ms cand=56677886 pat=17 heapDelta=1053MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#29  (heap free=1183MB / total=1632MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#29] OK t=1510ms cand=41076955 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#30  (heap free=1182MB / total=1632MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#30] OK t=1823ms cand=51864677 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#31  (heap free=1182MB / total=1632MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#31] OK t=152193ms cand=57362150 pat=17 heapDelta=1095MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#32  (heap free=1245MB / total=1696MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#32] OK t=1765ms cand=43354076 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#33  (heap free=1245MB / total=1696MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#33] OK t=1466ms cand=39894585 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#34  (heap free=1245MB / total=1696MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#34] OK t=157452ms cand=57805974 pat=17 heapDelta=1141MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#35  (heap free=1146MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#35] OK t=1233ms cand=37229363 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#36  (heap free=1147MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#36] OK t=764ms cand=21726300 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#37  (heap free=1147MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#37] OK t=160227ms cand=57216123 pat=17 heapDelta=1034MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#38  (heap free=1146MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#38] OK t=1905ms cand=50782977 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#39  (heap free=1146MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#39] OK t=1047ms cand=33038059 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#40  (heap free=1146MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#40] OK t=162647ms cand=56950324 pat=17 heapDelta=1072MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#41  (heap free=1145MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#41] OK t=1693ms cand=48175989 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#42  (heap free=1145MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#42] OK t=713ms cand=23680924 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#43  (heap free=1145MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#43] OK t=163013ms cand=56062528 pat=17 heapDelta=1076MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#44  (heap free=1148MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#44] OK t=877ms cand=26568440 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#45  (heap free=1148MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#45] OK t=1272ms cand=39956380 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#46  (heap free=1149MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#46] OK t=162003ms cand=54506825 pat=17 heapDelta=1040MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#47  (heap free=1150MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#47] OK t=591ms cand=17954370 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#48  (heap free=1150MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#48] OK t=1323ms cand=34347675 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#49  (heap free=1150MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#49] OK t=1243ms cand=31861482 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#50  (heap free=1150MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#50] OK t=166726ms cand=54222138 pat=17 heapDelta=1050MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#51  (heap free=1180MB / total=1632MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#51] OK t=1118ms cand=33300705 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#52  (heap free=1148MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#52] OK t=1447ms cand=38154822 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#53  (heap free=1147MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#53] OK t=1445ms cand=37396469 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#54  (heap free=1147MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#54] OK t=173049ms cand=54644964 pat=17 heapDelta=1031MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#55  (heap free=1175MB / total=1632MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#55] OK t=1666ms cand=41089209 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#56  (heap free=1175MB / total=1632MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#56] OK t=1727ms cand=49405604 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#57  (heap free=1175MB / total=1632MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#57] OK t=1245ms cand=34441860 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#58  (heap free=1175MB / total=1632MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#58] OK t=181105ms cand=55082406 pat=17 heapDelta=1096MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#59  (heap free=1137MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#59] OK t=1429ms cand=36924333 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#60  (heap free=1138MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#60] OK t=1071ms cand=32283226 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#61  (heap free=1138MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#61] OK t=1367ms cand=37242256 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#62  (heap free=1138MB / total=1600MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#62] OK t=184502ms cand=54525717 pat=17 heapDelta=1034MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#63  (heap free=1169MB / total=1632MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#63] OK t=1392ms cand=35842712 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#64  (heap free=1169MB / total=1632MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#64] OK t=996ms cand=30244635 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#65  (heap free=1171MB / total=1632MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#65] OK t=1511ms cand=39541207 pat=16 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#66  (heap free=1171MB / total=1632MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#66] OK t=190310ms cand=54630272 pat=16 heapDelta=1084MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#67  (heap free=1231MB / total=1696MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#67] OK t=1520ms cand=30987002 pat=16 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#68  (heap free=1231MB / total=1696MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#68] OK t=1592ms cand=41926419 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#69  (heap free=1231MB / total=1696MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#69] OK t=976ms cand=24673110 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#70  (heap free=1231MB / total=1696MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#70] OK t=199672ms cand=55213606 pat=17 heapDelta=1095MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#71  (heap free=1225MB / total=1696MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#71] OK t=1112ms cand=30403602 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#72  (heap free=1225MB / total=1696MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#72] OK t=792ms cand=23903406 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#73  (heap free=1225MB / total=1696MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#73] OK t=956ms cand=24638289 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#74  (heap free=1225MB / total=1696MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#74] OK t=202779ms cand=54640278 pat=17 heapDelta=1084MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#75  (heap free=1224MB / total=1696MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#75] OK t=1153ms cand=29538655 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#76  (heap free=1224MB / total=1696MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#76] OK t=1143ms cand=28855893 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#77  (heap free=1224MB / total=1696MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#77] OK t=1648ms cand=48251707 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#78  (heap free=1224MB / total=1696MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#78] OK t=206059ms cand=53272386 pat=17 heapDelta=1096MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#79  (heap free=1226MB / total=1696MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#79] OK t=1532ms cand=41123325 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#80  (heap free=1226MB / total=1696MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#80] OK t=1181ms cand=31713795 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#81  (heap free=1226MB / total=1696MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#81] OK t=873ms cand=27275856 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#82  (heap free=1226MB / total=1696MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#82] OK t=207805ms cand=52323283 pat=17 heapDelta=1087MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#83  (heap free=1224MB / total=1696MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#83] OK t=1429ms cand=30340173 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#84  (heap free=1224MB / total=1696MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#84] OK t=1189ms cand=32325688 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#85  (heap free=1224MB / total=1696MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#85] OK t=1155ms cand=34378484 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#86  (heap free=1224MB / total=1696MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#86] OK t=212950ms cand=51736406 pat=17 heapDelta=1220MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#87  (heap free=1352MB / total=1824MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#87] OK t=992ms cand=29743306 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#88  (heap free=1352MB / total=1824MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#88] OK t=1281ms cand=31764224 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#89  (heap free=1352MB / total=1824MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#89] OK t=558ms cand=16517959 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#90  (heap free=1352MB / total=1824MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#90] OK t=1136ms cand=28517411 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#91  (heap free=1352MB / total=1824MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#91] OK t=216194ms cand=51006564 pat=17 heapDelta=1207MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#92  (heap free=1255MB / total=1728MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#92] OK t=864ms cand=27073309 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#93  (heap free=1255MB / total=1728MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#93] OK t=625ms cand=19928384 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#94  (heap free=1255MB / total=1728MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#94] OK t=732ms cand=22381129 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#95  (heap free=1255MB / total=1728MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#95] OK t=1262ms cand=36684423 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#96  (heap free=1255MB / total=1728MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#96] OK t=218067ms cand=49974287 pat=17 heapDelta=1158MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#97  (heap free=1258MB / total=1728MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#97] OK t=932ms cand=28487438 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#98  (heap free=1258MB / total=1728MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#98] OK t=1708ms cand=48888410 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#99  (heap free=1258MB / total=1728MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#99] OK t=1818ms cand=42669022 pat=17 heapDelta=16MB
+>> RUNNING Pre-HUSPM-SWUmax/FIFA/SC2_INC#100  (heap free=1258MB / total=1728MB / max=49152MB)
+[Pre-HUSPM-SWUmax/FIFA/SC2_INC#100] OK t=233362ms cand=50367694 pat=17 heapDelta=1148MB
+=== ALL SCENARIOS DONE (5213.7s) ===
