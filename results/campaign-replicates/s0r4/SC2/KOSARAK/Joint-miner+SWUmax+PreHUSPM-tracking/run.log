@@ -1,0 +1,209 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC2]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=4 | seed.index=0
+
+--- [SC2] Incremental sequence (100 batches, EVEN; D_init per Yan et al. Table 16) ---
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INIT#0  (heap free=3018MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INIT#0] OK t=736ms cand=868475 pat=10 heapDelta=528MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#1  (heap free=2974MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#1] OK t=397ms cand=775683 pat=10 heapDelta=304MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#2  (heap free=2967MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#2] OK t=438ms cand=759317 pat=10 heapDelta=352MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#3  (heap free=2963MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#3] OK t=384ms cand=768909 pat=9 heapDelta=352MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#4  (heap free=2961MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#4] OK t=424ms cand=721067 pat=10 heapDelta=368MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#5  (heap free=2957MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#5] OK t=454ms cand=837457 pat=9 heapDelta=400MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#6  (heap free=2953MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#6] OK t=487ms cand=787182 pat=9 heapDelta=432MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#7  (heap free=2949MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#7] OK t=529ms cand=885623 pat=9 heapDelta=448MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#8  (heap free=2945MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#8] OK t=564ms cand=819269 pat=9 heapDelta=480MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#9  (heap free=2942MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#9] OK t=2022ms cand=810775 pat=9 heapDelta=496MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#10  (heap free=2940MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#10] OK t=2255ms cand=824640 pat=9 heapDelta=512MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#11  (heap free=2937MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#11] OK t=2291ms cand=811520 pat=9 heapDelta=544MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#12  (heap free=2932MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#12] OK t=2491ms cand=811485 pat=9 heapDelta=576MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#13  (heap free=2932MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#13] OK t=2604ms cand=756799 pat=9 heapDelta=592MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#14  (heap free=2927MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#14] OK t=2828ms cand=843981 pat=9 heapDelta=640MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#15  (heap free=2924MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#15] OK t=2929ms cand=796214 pat=9 heapDelta=656MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#16  (heap free=2920MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#16] OK t=3175ms cand=837338 pat=9 heapDelta=688MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#17  (heap free=2923MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#17] OK t=3324ms cand=833249 pat=9 heapDelta=720MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#18  (heap free=2924MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#18] OK t=3521ms cand=844396 pat=9 heapDelta=736MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#19  (heap free=2919MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#19] OK t=3770ms cand=1023938 pat=9 heapDelta=784MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#20  (heap free=2919MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#20] OK t=3964ms cand=982945 pat=9 heapDelta=816MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#21  (heap free=2911MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#21] OK t=5747ms cand=963249 pat=9 heapDelta=800MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#22  (heap free=2908MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#22] OK t=6005ms cand=950514 pat=9 heapDelta=816MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#23  (heap free=2905MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#23] OK t=6093ms cand=893333 pat=9 heapDelta=848MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#24  (heap free=2903MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#24] OK t=6536ms cand=980281 pat=9 heapDelta=880MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#25  (heap free=2899MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#25] OK t=7931ms cand=978248 pat=9 heapDelta=880MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#26  (heap free=2894MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#26] OK t=8136ms cand=969073 pat=9 heapDelta=896MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#27  (heap free=2893MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#27] OK t=8324ms cand=944596 pat=9 heapDelta=928MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#28  (heap free=2888MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#28] OK t=8612ms cand=959261 pat=9 heapDelta=960MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#29  (heap free=2885MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#29] OK t=8875ms cand=936852 pat=9 heapDelta=976MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#30  (heap free=2881MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#30] OK t=9025ms cand=921695 pat=9 heapDelta=1008MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#31  (heap free=2877MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#31] OK t=9273ms cand=933885 pat=9 heapDelta=1040MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#32  (heap free=2878MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#32] OK t=9531ms cand=942636 pat=9 heapDelta=1072MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#33  (heap free=2876MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#33] OK t=9716ms cand=935365 pat=9 heapDelta=1088MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#34  (heap free=2873MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#34] OK t=10226ms cand=951949 pat=9 heapDelta=1136MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#35  (heap free=2869MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#35] OK t=10243ms cand=938579 pat=9 heapDelta=1168MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#36  (heap free=2868MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#36] OK t=10664ms cand=944800 pat=9 heapDelta=1200MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#37  (heap free=2858MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#37] OK t=10824ms cand=941996 pat=9 heapDelta=1232MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#38  (heap free=2857MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#38] OK t=10911ms cand=933832 pat=9 heapDelta=1248MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#39  (heap free=2854MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#39] OK t=10991ms cand=937812 pat=9 heapDelta=1280MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#40  (heap free=2849MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#40] OK t=11307ms cand=954965 pat=9 heapDelta=1296MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#41  (heap free=2847MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#41] OK t=11368ms cand=942061 pat=9 heapDelta=1328MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#42  (heap free=2841MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#42] OK t=11626ms cand=910381 pat=9 heapDelta=1344MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#43  (heap free=2839MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#43] OK t=11682ms cand=876999 pat=9 heapDelta=1360MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#44  (heap free=2836MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#44] OK t=11848ms cand=884105 pat=9 heapDelta=1392MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#45  (heap free=2833MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#45] OK t=12025ms cand=874275 pat=9 heapDelta=1408MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#46  (heap free=2830MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#46] OK t=13383ms cand=882339 pat=9 heapDelta=1408MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#47  (heap free=2826MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#47] OK t=13336ms cand=873893 pat=9 heapDelta=1440MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#48  (heap free=2822MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#48] OK t=13745ms cand=885440 pat=9 heapDelta=1472MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#49  (heap free=2819MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#49] OK t=14019ms cand=892735 pat=9 heapDelta=1504MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#50  (heap free=2811MB / total=5408MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#50] OK t=14187ms cand=889338 pat=9 heapDelta=1520MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#51  (heap free=7128MB / total=9728MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#51] OK t=14724ms cand=894581 pat=9 heapDelta=1552MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#52  (heap free=7000MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#52] OK t=14854ms cand=904686 pat=9 heapDelta=1584MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#53  (heap free=6997MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#53] OK t=14945ms cand=869719 pat=9 heapDelta=1600MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#54  (heap free=6994MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#54] OK t=14918ms cand=862794 pat=9 heapDelta=1632MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#55  (heap free=6990MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#55] OK t=15251ms cand=844021 pat=9 heapDelta=1648MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#56  (heap free=6989MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#56] OK t=15457ms cand=824326 pat=9 heapDelta=1664MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#57  (heap free=6985MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#57] OK t=15595ms cand=818912 pat=9 heapDelta=1696MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#58  (heap free=6983MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#58] OK t=16358ms cand=885842 pat=9 heapDelta=1744MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#59  (heap free=6978MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#59] OK t=16406ms cand=877586 pat=9 heapDelta=1760MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#60  (heap free=6975MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#60] OK t=16244ms cand=854680 pat=9 heapDelta=1776MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#61  (heap free=6971MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#61] OK t=16554ms cand=842085 pat=9 heapDelta=1808MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#62  (heap free=6969MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#62] OK t=16900ms cand=842067 pat=9 heapDelta=1824MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#63  (heap free=6962MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#63] OK t=17163ms cand=844454 pat=9 heapDelta=1856MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#64  (heap free=6961MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#64] OK t=17277ms cand=845754 pat=9 heapDelta=1888MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#65  (heap free=6959MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#65] OK t=17637ms cand=860763 pat=9 heapDelta=1904MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#66  (heap free=6956MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#66] OK t=17808ms cand=859327 pat=9 heapDelta=1936MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#67  (heap free=6951MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#67] OK t=17907ms cand=852796 pat=9 heapDelta=1952MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#68  (heap free=6946MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#68] OK t=18144ms cand=851089 pat=9 heapDelta=1984MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#69  (heap free=6943MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#69] OK t=18188ms cand=832610 pat=9 heapDelta=2000MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#70  (heap free=6937MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#70] OK t=18518ms cand=844221 pat=9 heapDelta=2032MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#71  (heap free=6934MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#71] OK t=18877ms cand=862098 pat=9 heapDelta=2064MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#72  (heap free=6930MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#72] OK t=19055ms cand=864744 pat=9 heapDelta=2080MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#73  (heap free=6925MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#73] OK t=20070ms cand=923978 pat=9 heapDelta=2128MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#74  (heap free=6922MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#74] OK t=20745ms cand=924807 pat=9 heapDelta=2128MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#75  (heap free=6918MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#75] OK t=20889ms cand=932850 pat=9 heapDelta=2144MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#76  (heap free=6917MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#76] OK t=21517ms cand=1003568 pat=9 heapDelta=2192MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#77  (heap free=6916MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#77] OK t=22153ms cand=1014403 pat=9 heapDelta=2224MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#78  (heap free=6912MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#78] OK t=22262ms cand=1033619 pat=9 heapDelta=2288MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#79  (heap free=6909MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#79] OK t=22954ms cand=1043170 pat=9 heapDelta=2320MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#80  (heap free=6905MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#80] OK t=23228ms cand=1031599 pat=9 heapDelta=2336MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#81  (heap free=6902MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#81] OK t=23453ms cand=1021663 pat=9 heapDelta=2368MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#82  (heap free=6899MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#82] OK t=23700ms cand=1019184 pat=9 heapDelta=2400MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#83  (heap free=6889MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#83] OK t=23955ms cand=1026411 pat=9 heapDelta=2416MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#84  (heap free=6885MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#84] OK t=24096ms cand=993963 pat=9 heapDelta=2432MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#85  (heap free=6884MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#85] OK t=24219ms cand=1007046 pat=9 heapDelta=2464MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#86  (heap free=6879MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#86] OK t=23816ms cand=985177 pat=9 heapDelta=2480MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#87  (heap free=6879MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#87] OK t=24183ms cand=959084 pat=9 heapDelta=2512MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#88  (heap free=6877MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#88] OK t=24606ms cand=953525 pat=9 heapDelta=2528MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#89  (heap free=6872MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#89] OK t=24840ms cand=967189 pat=9 heapDelta=2560MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#90  (heap free=6870MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#90] OK t=25132ms cand=949759 pat=9 heapDelta=2592MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#91  (heap free=6868MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#91] OK t=25308ms cand=971797 pat=9 heapDelta=2624MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#92  (heap free=6865MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#92] OK t=25471ms cand=971149 pat=9 heapDelta=2656MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#93  (heap free=6862MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#93] OK t=25859ms cand=956047 pat=9 heapDelta=2672MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#94  (heap free=6859MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#94] OK t=26015ms cand=961194 pat=9 heapDelta=2704MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#95  (heap free=6858MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#95] OK t=26293ms cand=959896 pat=9 heapDelta=2720MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#96  (heap free=6854MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#96] OK t=26857ms cand=967673 pat=9 heapDelta=2752MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#97  (heap free=6853MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#97] OK t=26708ms cand=956076 pat=8 heapDelta=2768MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#98  (heap free=6851MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#98] OK t=27231ms cand=958893 pat=9 heapDelta=2800MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#99  (heap free=6847MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#99] OK t=27423ms cand=965038 pat=8 heapDelta=2832MB
+>> RUNNING Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#100  (heap free=6845MB / total=9600MB / max=49152MB)
+[Joint-miner+SWUmax+PreHUSPM-tracking/KOSARAK/SC2_INC#100] OK t=27457ms cand=939770 pat=9 heapDelta=2848MB
+=== ALL SCENARIOS DONE (1513.7s) ===
