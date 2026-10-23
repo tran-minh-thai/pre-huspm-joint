@@ -1,0 +1,209 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC2]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=4 | seed.index=0
+
+--- [SC2] Incremental sequence (100 batches, EVEN; D_init per Yan et al. Table 16) ---
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INIT#0  (heap free=562MB / total=768MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INIT#0] OK t=27871ms cand=62054305 pat=18 heapDelta=448MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#1  (heap free=468MB / total=768MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#1] OK t=1669ms cand=0 pat=18 heapDelta=166MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#2  (heap free=496MB / total=768MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#2] OK t=28559ms cand=62541433 pat=18 heapDelta=379MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#3  (heap free=499MB / total=800MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#3] OK t=1566ms cand=0 pat=18 heapDelta=172MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#4  (heap free=522MB / total=800MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#4] OK t=1148ms cand=0 pat=18 heapDelta=117MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#5  (heap free=540MB / total=800MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#5] OK t=30208ms cand=63478322 pat=18 heapDelta=432MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#6  (heap free=499MB / total=800MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#6] OK t=1390ms cand=0 pat=18 heapDelta=172MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#7  (heap free=522MB / total=800MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#7] OK t=817ms cand=0 pat=18 heapDelta=124MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#8  (heap free=533MB / total=800MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#8] OK t=30041ms cand=61259009 pat=18 heapDelta=423MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#9  (heap free=501MB / total=800MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#9] OK t=1398ms cand=0 pat=18 heapDelta=167MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#10  (heap free=527MB / total=800MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#10] OK t=907ms cand=0 pat=18 heapDelta=111MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#11  (heap free=539MB / total=800MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#11] OK t=30553ms cand=59698110 pat=17 heapDelta=429MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#12  (heap free=503MB / total=800MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#12] OK t=1618ms cand=0 pat=18 heapDelta=167MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#13  (heap free=525MB / total=800MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#13] OK t=922ms cand=0 pat=18 heapDelta=112MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#14  (heap free=540MB / total=800MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#14] OK t=31697ms cand=60059399 pat=18 heapDelta=424MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#15  (heap free=502MB / total=800MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#15] OK t=1129ms cand=0 pat=19 heapDelta=167MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#16  (heap free=520MB / total=800MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#16] OK t=1050ms cand=0 pat=19 heapDelta=119MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#17  (heap free=535MB / total=800MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#17] OK t=32572ms cand=60093007 pat=18 heapDelta=434MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#18  (heap free=503MB / total=800MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#18] OK t=1566ms cand=0 pat=17 heapDelta=167MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#19  (heap free=524MB / total=800MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#19] OK t=947ms cand=0 pat=17 heapDelta=111MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#20  (heap free=536MB / total=800MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#20] OK t=33138ms cand=58798484 pat=17 heapDelta=420MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#21  (heap free=504MB / total=800MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#21] OK t=1555ms cand=0 pat=17 heapDelta=160MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#22  (heap free=526MB / total=800MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#22] OK t=912ms cand=0 pat=17 heapDelta=112MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#23  (heap free=536MB / total=800MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#23] OK t=33786ms cand=58081068 pat=17 heapDelta=465MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#24  (heap free=536MB / total=832MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#24] OK t=1275ms cand=0 pat=17 heapDelta=155MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#25  (heap free=554MB / total=832MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#25] OK t=887ms cand=0 pat=17 heapDelta=112MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#26  (heap free=565MB / total=832MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#26] OK t=34525ms cand=57627058 pat=17 heapDelta=474MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#27  (heap free=567MB / total=864MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#27] OK t=1290ms cand=0 pat=17 heapDelta=152MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#28  (heap free=585MB / total=864MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#28] OK t=1041ms cand=0 pat=17 heapDelta=112MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#29  (heap free=599MB / total=864MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#29] OK t=35277ms cand=57228223 pat=17 heapDelta=522MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#30  (heap free=600MB / total=896MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#30] OK t=1497ms cand=0 pat=17 heapDelta=154MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#31  (heap free=619MB / total=896MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#31] OK t=1077ms cand=0 pat=17 heapDelta=104MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#32  (heap free=631MB / total=896MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#32] OK t=36933ms cand=57709437 pat=17 heapDelta=519MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#33  (heap free=599MB / total=896MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#33] OK t=1510ms cand=0 pat=17 heapDelta=154MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#34  (heap free=615MB / total=896MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#34] OK t=875ms cand=0 pat=17 heapDelta=115MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#35  (heap free=628MB / total=896MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#35] OK t=37881ms cand=57455967 pat=17 heapDelta=551MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#36  (heap free=628MB / total=928MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#36] OK t=1269ms cand=0 pat=17 heapDelta=160MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#37  (heap free=645MB / total=928MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#37] OK t=1011ms cand=0 pat=17 heapDelta=116MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#38  (heap free=655MB / total=928MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#38] OK t=814ms cand=0 pat=17 heapDelta=86MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#39  (heap free=664MB / total=928MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#39] OK t=39001ms cand=57333302 pat=17 heapDelta=581MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#40  (heap free=659MB / total=960MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#40] OK t=1238ms cand=0 pat=17 heapDelta=153MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#41  (heap free=675MB / total=960MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#41] OK t=1061ms cand=0 pat=17 heapDelta=117MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#42  (heap free=689MB / total=960MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#42] OK t=585ms cand=0 pat=17 heapDelta=87MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#43  (heap free=696MB / total=960MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#43] OK t=39594ms cand=56062528 pat=17 heapDelta=636MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#44  (heap free=725MB / total=1024MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#44] OK t=1208ms cand=0 pat=17 heapDelta=155MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#45  (heap free=740MB / total=1024MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#45] OK t=963ms cand=0 pat=17 heapDelta=107MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#46  (heap free=688MB / total=960MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#46] OK t=590ms cand=0 pat=17 heapDelta=85MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#47  (heap free=696MB / total=960MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#47] OK t=40153ms cand=53869969 pat=17 heapDelta=613MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#48  (heap free=694MB / total=992MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#48] OK t=1314ms cand=0 pat=17 heapDelta=153MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#49  (heap free=679MB / total=960MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#49] OK t=867ms cand=0 pat=17 heapDelta=106MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#50  (heap free=689MB / total=960MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#50] OK t=626ms cand=0 pat=17 heapDelta=85MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#51  (heap free=695MB / total=960MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#51] OK t=40603ms cand=53965789 pat=17 heapDelta=601MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#52  (heap free=694MB / total=992MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#52] OK t=1364ms cand=0 pat=17 heapDelta=149MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#53  (heap free=679MB / total=960MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#53] OK t=833ms cand=0 pat=17 heapDelta=106MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#54  (heap free=688MB / total=960MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#54] OK t=706ms cand=0 pat=17 heapDelta=85MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#55  (heap free=695MB / total=960MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#55] OK t=43409ms cand=55408577 pat=17 heapDelta=621MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#56  (heap free=691MB / total=992MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#56] OK t=1474ms cand=0 pat=17 heapDelta=151MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#57  (heap free=676MB / total=960MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#57] OK t=896ms cand=0 pat=17 heapDelta=106MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#58  (heap free=688MB / total=960MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#58] OK t=586ms cand=0 pat=17 heapDelta=96MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#59  (heap free=693MB / total=960MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#59] OK t=44032ms cand=54937618 pat=17 heapDelta=642MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#60  (heap free=724MB / total=1024MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#60] OK t=1182ms cand=0 pat=17 heapDelta=152MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#61  (heap free=736MB / total=1024MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#61] OK t=1066ms cand=0 pat=17 heapDelta=120MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#62  (heap free=687MB / total=960MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#62] OK t=686ms cand=0 pat=17 heapDelta=85MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#63  (heap free=694MB / total=960MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#63] OK t=45327ms cand=54563226 pat=17 heapDelta=658MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#64  (heap free=723MB / total=1024MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#64] OK t=1211ms cand=0 pat=17 heapDelta=155MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#65  (heap free=737MB / total=1024MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#65] OK t=994ms cand=0 pat=16 heapDelta=120MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#66  (heap free=681MB / total=960MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#66] OK t=741ms cand=0 pat=16 heapDelta=96MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#67  (heap free=690MB / total=960MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#67] OK t=47344ms cand=55647726 pat=16 heapDelta=653MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#68  (heap free=723MB / total=1024MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#68] OK t=1336ms cand=0 pat=17 heapDelta=153MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#69  (heap free=736MB / total=1024MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#69] OK t=893ms cand=0 pat=17 heapDelta=119MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#70  (heap free=683MB / total=960MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#70] OK t=702ms cand=0 pat=17 heapDelta=96MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#71  (heap free=689MB / total=960MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#71] OK t=574ms cand=0 pat=17 heapDelta=74MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#72  (heap free=693MB / total=960MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#72] OK t=48771ms cand=54807460 pat=17 heapDelta=617MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#73  (heap free=691MB / total=992MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#73] OK t=1235ms cand=0 pat=17 heapDelta=160MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#74  (heap free=704MB / total=992MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#74] OK t=1063ms cand=0 pat=17 heapDelta=119MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#75  (heap free=714MB / total=992MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#75] OK t=723ms cand=0 pat=17 heapDelta=87MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#76  (heap free=690MB / total=960MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#76] OK t=49711ms cand=53988907 pat=17 heapDelta=636MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#77  (heap free=722MB / total=1024MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#77] OK t=1341ms cand=0 pat=17 heapDelta=160MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#78  (heap free=735MB / total=1024MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#78] OK t=878ms cand=0 pat=17 heapDelta=119MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#79  (heap free=682MB / total=960MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#79] OK t=787ms cand=0 pat=17 heapDelta=96MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#80  (heap free=688MB / total=960MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#80] OK t=50598ms cand=53249877 pat=17 heapDelta=622MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#81  (heap free=723MB / total=1024MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#81] OK t=1184ms cand=0 pat=17 heapDelta=151MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#82  (heap free=734MB / total=1024MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#82] OK t=853ms cand=0 pat=17 heapDelta=120MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#83  (heap free=678MB / total=960MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#83] OK t=880ms cand=0 pat=17 heapDelta=96MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#84  (heap free=687MB / total=960MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#84] OK t=643ms cand=0 pat=17 heapDelta=74MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#85  (heap free=694MB / total=960MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#85] OK t=51865ms cand=52120488 pat=17 heapDelta=661MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#86  (heap free=754MB / total=1056MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#86] OK t=1259ms cand=0 pat=17 heapDelta=152MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#87  (heap free=767MB / total=1056MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#87] OK t=928ms cand=0 pat=17 heapDelta=120MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#88  (heap free=776MB / total=1056MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#88] OK t=810ms cand=0 pat=17 heapDelta=88MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#89  (heap free=687MB / total=960MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#89] OK t=492ms cand=0 pat=17 heapDelta=75MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#90  (heap free=691MB / total=960MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#90] OK t=52352ms cand=51020910 pat=17 heapDelta=682MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#91  (heap free=755MB / total=1056MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#91] OK t=1413ms cand=0 pat=17 heapDelta=152MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#92  (heap free=769MB / total=1056MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#92] OK t=811ms cand=0 pat=17 heapDelta=120MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#93  (heap free=774MB / total=1056MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#93] OK t=657ms cand=0 pat=17 heapDelta=96MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#94  (heap free=684MB / total=960MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#94] OK t=591ms cand=0 pat=17 heapDelta=87MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#95  (heap free=691MB / total=960MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#95] OK t=53313ms cand=50205833 pat=17 heapDelta=674MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#96  (heap free=755MB / total=1056MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#96] OK t=1209ms cand=0 pat=17 heapDelta=151MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#97  (heap free=768MB / total=1056MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#97] OK t=929ms cand=0 pat=17 heapDelta=120MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#98  (heap free=776MB / total=1056MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#98] OK t=821ms cand=0 pat=17 heapDelta=88MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#99  (heap free=688MB / total=960MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#99] OK t=55627ms cand=50691488 pat=17 heapDelta=636MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#100  (heap free=721MB / total=1024MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/FIFA/SC2_INC#100] OK t=973ms cand=0 pat=17 heapDelta=152MB
+=== ALL SCENARIOS DONE (1277.2s) ===
