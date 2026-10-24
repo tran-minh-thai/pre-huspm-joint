@@ -1,0 +1,17 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC7]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC7] Ablation: IUB pruning / block index / adaptive rescan ---
+>> WARM-UP (not measured) Pre-HUSPM-Joint-no-IPS/LEVIATHAN/SC7
+>> RUNNING Pre-HUSPM-Joint-no-IPS/LEVIATHAN/SC7#0  (heap free=167MB / total=224MB / max=49152MB)
+[Pre-HUSPM-Joint-no-IPS/LEVIATHAN/SC7#0] OK t=1830ms cand=29437666 pat=135 heapDelta=90MB
+>> RUNNING Pre-HUSPM-Joint-no-IPS/LEVIATHAN/SC7#0  (heap free=151MB / total=288MB / max=49152MB)
+[Pre-HUSPM-Joint-no-IPS/LEVIATHAN/SC7#0] OK t=1412ms cand=29437666 pat=135 heapDelta=134MB
+>> RUNNING Pre-HUSPM-Joint-no-IPS/LEVIATHAN/SC7#0  (heap free=411MB / total=608MB / max=49152MB)
+[Pre-HUSPM-Joint-no-IPS/LEVIATHAN/SC7#0] OK t=1382ms cand=29437666 pat=135 heapDelta=90MB
+   warm-up mines (ms, not measured): [1830, 1412, 1382]
+>> RUNNING Pre-HUSPM-Joint-no-IPS/LEVIATHAN/SC7#0  (heap free=163MB / total=224MB / max=49152MB)
+[Pre-HUSPM-Joint-no-IPS/LEVIATHAN/SC7#0] OK t=1379ms cand=29437666 pat=135 heapDelta=134MB
+=== ALL SCENARIOS DONE (8.3s) ===
