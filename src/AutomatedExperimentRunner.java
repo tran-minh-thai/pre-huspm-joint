@@ -99,6 +99,67 @@ public class AutomatedExperimentRunner {
     public static final int REPEAT_INDEX = Integer.getInteger("repeat.index", 0);
     public static final int SEED_INDEX = Integer.getInteger("seed.index", 0);
 
+    /**
+     * Static warm-up. A static scenario runs one arm on one database in a JVM, its thresholds in
+     * ascending order, so the first cell of the JVM also pays for compiling the miner: on
+     * C8T1S5I8N5K the proposal's miner at UUT took 431-455 ms on the first threshold and 69-74 ms
+     * on the last, with fewer nodes. Before the first measured static mine of an arm on a database
+     * in this JVM, the same mine (same arm, database and threshold, the lowest of the sweep since
+     * the sweep is ascending) is run untimed and discarded, as often as the warm-up rule below says. Applies to SC1, SC3 and the static
+     * mines of SC7. Off with -Dstatic.warmup=false, and never in live memory mode, whose protocol
+     * repeats short mines for its own reasons (repeatForLiveSamples).
+     */
+    public static final boolean STATIC_WARMUP =
+            Boolean.parseBoolean(System.getProperty("static.warmup", "true")) && !"live".equals(System.getProperty("mem.mode", "used"));
+    /**
+     * The warm-up rule, fixed before the re-measurement: untimed mines are repeated until two
+     * consecutive ones differ by less than 10%, at most 10; one mine over 10 s ends it. On the
+     * development machine the first cell of C8T1S5I8N5K took 348-524 ms after one untimed mine and
+     * 130-139 ms after three or five, against about 130 ms once warm (a probe, not a measurement).
+     */
+    static final int WARMUP_MAX_RUNS = 10;
+    static final double WARMUP_TOLERANCE = 0.10;
+    static final long WARMUP_LONG_MS = 10_000;
+    private static final Set<String> WARMED = new HashSet<>();
+    private static boolean warmingUp = false;
+
+    /**
+     * Runs the untimed warm-up of (algo, dataset, scenario) once per JVM. Returns null when the
+     * warm-up finished, or its failure row when it did not finish: a mine that fails or times out
+     * once is not run a second time, and its row is reported as the cell's outcome.
+     */
+    private static ExperimentMetrics warmUp(String algo, String dataset, String scenario,
+                                            java.util.function.Supplier<ExperimentMetrics> mine) {
+        if (!STATIC_WARMUP || warmingUp || !WARMED.add(algo + "|" + dataset + "|" + scenario)) return null;
+        System.out.println(">> WARM-UP (not measured) " + algo + "/" + dataset + "/" + scenario);
+        warmingUp = true;
+        ExperimentMetrics w = null;
+        List<Long> times = new ArrayList<>();
+        try {
+            // until two consecutive untimed mines differ by less than WARMUP_TOLERANCE, at most
+            // WARMUP_MAX_RUNS; one mine longer than WARMUP_LONG_MS is enough, since the transient it
+            // removes is under a second
+            while (times.size() < WARMUP_MAX_RUNS) {
+                w = mine.get();
+                if (w == null || failedRun(w)) break;
+                times.add(w.runtimeMs);
+                int n = times.size();
+                if (w.runtimeMs > WARMUP_LONG_MS) break;
+                if (n >= 2 && Math.abs(times.get(n - 1) - times.get(n - 2))
+                        < WARMUP_TOLERANCE * Math.max(1, times.get(n - 2))) break;
+            }
+        } finally {
+            warmingUp = false;
+        }
+        System.out.println("   warm-up mines (ms, not measured): " + times);
+        forceFullGC();
+        if (w != null && failedRun(w)) {
+            System.out.println("   warm-up did not finish (" + w.opType + "); its row is the cell's outcome");
+            return w;
+        }
+        return null;
+    }
+
     // === MEMORY MEASUREMENT MODE ===
     //
     // "used" (default): peak used heap sampled every 50 ms, including uncollected garbage.
@@ -1404,21 +1465,27 @@ public class AutomatedExperimentRunner {
                 // runs one arm per JVM, so without it this reference repeats once for every
                 // ablation in the list and the CSV carries six copies of one measurement.
                 if (!ADAPTIVE_ONLY && algoEnabled("Pre-HUSPM")) {
-                endMemArm();
-                announce("Pre-HUSPM", ds.name, "SC7_ref", 0);
-                PreHUSPMAlgorithm.PreHUSPMAlgo pre = new PreHUSPMAlgorithm.PreHUSPMAlgo(
-                        ds.defaultSu, slRatioFor(ds.name), ENABLE_PATTERN_EXPORT);
-                ExperimentMetrics m = measure("Pre-HUSPM", ds.name, 0, "SC7_ref",
-                        () -> pre.runInitialMining(full, totalUtil),
-                        () -> pre.candidateCount, () -> pre.patternCount, null, null);
-                attachPreHuspm(m, pre);
-                col.log(m);
+                ExperimentMetrics failedWarmUp = warmUp("Pre-HUSPM", ds.name, "SC7", () -> prehuspmReference(ds, full, totalUtil));
+                col.log(failedWarmUp != null ? failedWarmUp : prehuspmReference(ds, full, totalUtil));
                 }
                 }   // end of repeats loop
 
                 forceFullGC();
             }
         }
+    }
+
+    /** SC7's Pre-HUSPM reference: one static mine of the whole database, measured. */
+    private static ExperimentMetrics prehuspmReference(DatasetConfig ds, List<Sequence> full, double totalUtil) {
+        endMemArm();
+        announce("Pre-HUSPM", ds.name, "SC7_ref", 0);
+        PreHUSPMAlgorithm.PreHUSPMAlgo pre = new PreHUSPMAlgorithm.PreHUSPMAlgo(
+                ds.defaultSu, slRatioFor(ds.name), ENABLE_PATTERN_EXPORT);
+        ExperimentMetrics m = measure("Pre-HUSPM", ds.name, 0, "SC7_ref",
+                () -> pre.runInitialMining(full, totalUtil),
+                () -> pre.candidateCount, () -> pre.patternCount, null, null);
+        attachPreHuspm(m, pre);
+        return m;
     }
 
     private static void logAblation(ResultCollector col, DatasetConfig ds, List<Sequence> full,
@@ -1429,6 +1496,16 @@ public class AutomatedExperimentRunner {
         // to -Dalgo.only. campaign.ps1 gives each arm its own JVM; without this gate every
         // JVM would repeat every ablation.
         if (!algoEnabled(tag)) return;
+        ExperimentMetrics failedWarmUp = warmUp(tag, ds.name, "SC7", () -> ablationMine(ds, full, totalUtil, tag,
+                useBlockIndex, useIub, useIps));
+        if (failedWarmUp != null) { col.log(failedWarmUp); return; }
+        col.log(ablationMine(ds, full, totalUtil, tag, useBlockIndex, useIub, useIps));
+    }
+
+    /** One static mine of SC7's ablation, measured. */
+    private static ExperimentMetrics ablationMine(DatasetConfig ds, List<Sequence> full, double totalUtil, String tag,
+                                                  boolean useBlockIndex, boolean useIub, boolean useIps) {
+        endMemArm();
         PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp = new PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo(
                 ds.defaultSu, DEFAULT_KAPPA, DEFAULT_DELTA0, slRatioFor(ds.name),
                 PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.AblationMode.FULL,
@@ -1444,7 +1521,7 @@ public class AutomatedExperimentRunner {
                 null, () -> adp.prunedValueBound,
                             () -> adp.prelargeCount, () -> adp.uutValue, () -> adp.sftValue, adp::cancel);
         attachAdaptive(m, adp);
-        col.log(m);
+        return m;
     }
 
     /**
@@ -1955,7 +2032,7 @@ public class AutomatedExperimentRunner {
 
     /** Wrap a scenario call so its outcome feeds the repeat decisions. */
     private static ExperimentMetrics logged(ExperimentMetrics m) {
-        noteOutcome(m);
+        if (!warmingUp) noteOutcome(m);   // a warm-up is not a measurement
         return m;
     }
 
@@ -1965,6 +2042,9 @@ public class AutomatedExperimentRunner {
         if (ADAPTIVE_ONLY && !algo.equals(METHOD)) return null; // rerun the method only
         if (!algoEnabled(algo)) return null;   // -Dalgo.only: one arm per JVM
         if (skipRepeat(algo, dsName, tag, currentRepeat)) return null;
+        ExperimentMetrics failedWarmUp = warmUp(algo, dsName, tag.split("_")[0],
+                () -> runSingle(algo, dsName, db, totalUtil, su, iter, tag));
+        if (failedWarmUp != null) return logged(failedWarmUp);
 
         endMemArm();   // a static mine is measured against the heap at the start of the call
 

@@ -2,7 +2,7 @@
 """List the measured runs that executed the changed discard floor, and print the campaign commands
 that measure the same configurations again.
 
-    python3 analysis/affected_runs.py [--remove] [--extra-arm NAME:LIKE]
+    python3 analysis/affected_runs.py [--remove] [--extra-arm NAME:LIKE] [--static-warmup]
 
 Compiled without debug information, the floor change leaves 86 of 89 classes identical; in the
 proposal's class it changes the floor (jointFloor) and one field assignment in the constructor,
@@ -20,6 +20,9 @@ runs are kept, and counted. --include-no-direct lists the last kind too.
 them again. --extra-arm Joint-rule+min-floor:Joint-rule+plain-floor adds, for a new arm, every
 configuration measured for an existing one. Commands are printed for PowerShell 5.1, one per tree
 and scenario, with the databases measured there.
+
+--static-warmup lists instead every static timing run (SC1, SC3 and SC7's arms that mine once),
+for the re-measurement under the static warm-up.
 """
 import argparse
 import csv
@@ -37,6 +40,8 @@ FLOOR_ARMS = {"Pre-HUSPM-Joint-fixed-threshold", "Pre-HUSPM-Joint", "Pre-HUSPM-J
               "Joint-rule+plain-floor",
               "Pre-HUSPM-Joint-rescan-rule", "Pre-HUSPM-Joint-no-block-index", "Pre-HUSPM-Joint-bsz-1",
               "Pre-HUSPM-Joint-bsz-5", "Pre-HUSPM-Joint-bsz-10", "Pre-HUSPM-Joint-bsz-50", "Pre-HUSPM-Joint-bsz-200"}
+# SC7's arms that mine once (logAblation and the Pre-HUSPM reference)
+SC7_STATIC = {"Pre-HUSPM-Joint", "Pre-HUSPM-Joint-no-IUB", "Pre-HUSPM-Joint-no-IPS", "Pre-HUSPM"}
 TREES = ["campaign", "campaign-replicates", "campaign-mem", "campaign-mem-replicates",
          "campaign-mem-sampled", "campaign-mem-sampled-replicates"]
 
@@ -86,16 +91,25 @@ def main():
     ap.add_argument("--remove", action="store_true")
     ap.add_argument("--include-no-direct", action="store_true")
     ap.add_argument("--extra-arm", action="append", default=[])
+    ap.add_argument("--static-warmup", action="store_true",
+                    help="list the static mines of the timing trees instead (SC1, SC3, SC7's static arms)")
     a = ap.parse_args()
     all_runs = list(runs())
-    listed = [r for r in all_runs if r[2] in INCREMENTAL and r[4] in FLOOR_ARMS]
+    if a.static_warmup:
+        # The static warm-up (AutomatedExperimentRunner.STATIC_WARMUP) changes when a static mine
+        # is timed, not what it computes: every static timing run is measured again; memory trees
+        # (live mode, no warm-up) and incremental arms are kept.
+        listed = [r for r in all_runs if not r[0].startswith("campaign-mem")
+                  and (r[2] in ("SC1", "SC3") or (r[2] == "SC7" and r[4] in SC7_STATIC))]
+    else:
+        listed = [r for r in all_runs if r[2] in INCREMENTAL and r[4] in FLOOR_ARMS]
     extra = []
     for spec in a.extra_arm:
         new, like = spec.split(":")
         have = {(t, s, sc, ds) for t, s, sc, ds, arm, _ in all_runs if arm == new}
         extra += [(t, s, sc, ds, new, None) for t, s, sc, ds, arm, _ in all_runs
                   if arm == like and (t, s, sc, ds) not in have]
-    no_direct = [r for r in listed if not has_direct_update(r[5])]
+    no_direct = [] if a.static_warmup else [r for r in listed if not has_direct_update(r[5])]
     if not a.include_no_direct:
         listed = [r for r in listed if r not in no_direct]
     groups = defaultdict(lambda: defaultdict(set))

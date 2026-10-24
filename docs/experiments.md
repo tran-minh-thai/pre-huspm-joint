@@ -241,6 +241,22 @@ the arm, when less than 10 percent of the heap is free.
   The SC1 rows of `results/campaign-mem` predate this and are not read; SC2 is read from
   `results/campaign-mem`, since an incremental stream is not repeated.
 
+**Static warm-up.** A static scenario (SC1, SC3, and the mines of SC7's static arms and of its
+Pre-HUSPM reference) runs one arm on one database in a JVM, its thresholds in ascending order.
+Without a warm-up the first cells of the JVM also pay for compiling the miner: on
+C8T1S5I8N5K the proposal's miner at UUT took 431-455 ms at the first threshold and 69-74 ms at
+the last. So before the first measured mine of an arm on a database, the same mine (same arm,
+database and threshold, the lowest of the sweep) is run untimed and discarded, by a rule fixed
+before the re-measurement: until two consecutive untimed mines differ by less than 10 percent,
+at most 10 of them, and a single untimed mine longer than 10 s is enough (the transient is
+under a second). The rule comes from a probe on the development machine, not a measurement:
+the first cell of C8T1S5I8N5K took 641-650 ms with no untimed mine, 348-524 ms after one and
+130-139 ms after three or five. `run.log` lists the untimed mines of each JVM ("warm-up mines").
+A warm-up that runs out of memory or time is not repeated; its row is the cell's outcome. The
+memory campaign has no warm-up (`-Dmem.mode=live`), and `-Dstatic.warmup=false` turns it off.
+Every static timing run was measured again under the warm-up; `analysis/affected_runs.py
+--static-warmup` lists them, and the `commit` of an arm's `DONE` file names the code it ran.
+
 Status is encoded in `runtime_ms`: 0 or more is a completed run in milliseconds, -2 over the
 time limit, -1 a failure or a skipped call, -3 a memory-campaign row.
 
