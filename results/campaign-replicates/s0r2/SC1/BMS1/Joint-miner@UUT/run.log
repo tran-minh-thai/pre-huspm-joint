@@ -1,0 +1,25 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC1]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=2 | seed.index=0
+
+--- [SC1] Static baseline on D_init ---
+>> WARM-UP (not measured) Joint-miner@UUT/BMS1/SC1
+>> RUNNING Joint-miner@UUT/BMS1/SC1_su=0.012821#0  (heap free=163MB / total=224MB / max=49152MB)
+[Joint-miner@UUT/BMS1/SC1_su=0.012821#0] OK t=117ms cand=2833 pat=22 heapDelta=63MB
+>> RUNNING Joint-miner@UUT/BMS1/SC1_su=0.012821#0  (heap free=99MB / total=224MB / max=49152MB)
+[Joint-miner@UUT/BMS1/SC1_su=0.012821#0] OK t=72ms cand=2833 pat=22 heapDelta=45MB
+>> RUNNING Joint-miner@UUT/BMS1/SC1_su=0.012821#0  (heap free=113MB / total=224MB / max=49152MB)
+[Joint-miner@UUT/BMS1/SC1_su=0.012821#0] OK t=50ms cand=2833 pat=22 heapDelta=39MB
+>> RUNNING Joint-miner@UUT/BMS1/SC1_su=0.012821#0  (heap free=119MB / total=224MB / max=49152MB)
+[Joint-miner@UUT/BMS1/SC1_su=0.012821#0] OK t=51ms cand=2833 pat=22 heapDelta=39MB
+   warm-up mines (ms, not measured): [117, 72, 50, 51]
+>> RUNNING Joint-miner@UUT/BMS1/SC1_su=0.012821#0  (heap free=255MB / total=320MB / max=49152MB)
+[Joint-miner@UUT/BMS1/SC1_su=0.012821#0] OK t=29ms cand=2833 pat=22 heapDelta=42MB
+>> RUNNING Joint-miner@UUT/BMS1/SC1_su=0.013597#0  (heap free=255MB / total=320MB / max=49152MB)
+[Joint-miner@UUT/BMS1/SC1_su=0.013597#0] OK t=26ms cand=2134 pat=21 heapDelta=42MB
+>> RUNNING Joint-miner@UUT/BMS1/SC1_su=0.015293#0  (heap free=255MB / total=320MB / max=49152MB)
+[Joint-miner@UUT/BMS1/SC1_su=0.015293#0] OK t=26ms cand=1381 pat=18 heapDelta=42MB
+>> RUNNING Joint-miner@UUT/BMS1/SC1_su=0.016218#0  (heap free=255MB / total=320MB / max=49152MB)
+[Joint-miner@UUT/BMS1/SC1_su=0.016218#0] OK t=25ms cand=1135 pat=15 heapDelta=42MB
+=== ALL SCENARIOS DONE (12.6s) ===
