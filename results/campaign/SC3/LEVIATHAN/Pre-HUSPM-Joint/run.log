@@ -1,0 +1,23 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC3]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC3] Su sensitivity ---
+>> WARM-UP (not measured) Pre-HUSPM-Joint/LEVIATHAN/SC3
+>> RUNNING Pre-HUSPM-Joint/LEVIATHAN/SC3_su=0.014644#0  (heap free=168MB / total=224MB / max=49152MB)
+[Pre-HUSPM-Joint/LEVIATHAN/SC3_su=0.014644#0] OK t=893ms cand=17692 pat=173 heapDelta=68MB
+>> RUNNING Pre-HUSPM-Joint/LEVIATHAN/SC3_su=0.014644#0  (heap free=99MB / total=224MB / max=49152MB)
+[Pre-HUSPM-Joint/LEVIATHAN/SC3_su=0.014644#0] OK t=619ms cand=17692 pat=173 heapDelta=69MB
+>> RUNNING Pre-HUSPM-Joint/LEVIATHAN/SC3_su=0.014644#0  (heap free=93MB / total=224MB / max=49152MB)
+[Pre-HUSPM-Joint/LEVIATHAN/SC3_su=0.014644#0] OK t=605ms cand=17692 pat=173 heapDelta=69MB
+   warm-up mines (ms, not measured): [893, 619, 605]
+>> RUNNING Pre-HUSPM-Joint/LEVIATHAN/SC3_su=0.014644#0  (heap free=163MB / total=224MB / max=49152MB)
+[Pre-HUSPM-Joint/LEVIATHAN/SC3_su=0.014644#0] OK t=592ms cand=17692 pat=173 heapDelta=68MB
+>> RUNNING Pre-HUSPM-Joint/LEVIATHAN/SC3_su=0.01553#0  (heap free=164MB / total=224MB / max=49152MB)
+[Pre-HUSPM-Joint/LEVIATHAN/SC3_su=0.01553#0] OK t=540ms cand=15139 pat=135 heapDelta=63MB
+>> RUNNING Pre-HUSPM-Joint/LEVIATHAN/SC3_su=0.01647#0  (heap free=164MB / total=224MB / max=49152MB)
+[Pre-HUSPM-Joint/LEVIATHAN/SC3_su=0.01647#0] OK t=507ms cand=12990 pat=116 heapDelta=64MB
+>> RUNNING Pre-HUSPM-Joint/LEVIATHAN/SC3_su=0.017987#0  (heap free=164MB / total=224MB / max=49152MB)
+[Pre-HUSPM-Joint/LEVIATHAN/SC3_su=0.017987#0] OK t=441ms cand=10665 pat=81 heapDelta=62MB
+=== ALL SCENARIOS DONE (15.8s) ===
