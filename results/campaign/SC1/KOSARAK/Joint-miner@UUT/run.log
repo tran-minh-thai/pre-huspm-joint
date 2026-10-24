@@ -1,0 +1,27 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC1]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC1] Static baseline on D_init ---
+>> WARM-UP (not measured) Joint-miner@UUT/KOSARAK/SC1
+>> RUNNING Joint-miner@UUT/KOSARAK/SC1_su=0.022228#0  (heap free=2934MB / total=5312MB / max=49152MB)
+[Joint-miner@UUT/KOSARAK/SC1_su=0.022228#0] OK t=842ms cand=1703 pat=11 heapDelta=368MB
+>> RUNNING Joint-miner@UUT/KOSARAK/SC1_su=0.022228#0  (heap free=2581MB / total=5312MB / max=49152MB)
+[Joint-miner@UUT/KOSARAK/SC1_su=0.022228#0] OK t=493ms cand=1703 pat=11 heapDelta=304MB
+>> RUNNING Joint-miner@UUT/KOSARAK/SC1_su=0.022228#0  (heap free=2624MB / total=5312MB / max=49152MB)
+[Joint-miner@UUT/KOSARAK/SC1_su=0.022228#0] OK t=381ms cand=1703 pat=11 heapDelta=288MB
+>> RUNNING Joint-miner@UUT/KOSARAK/SC1_su=0.022228#0  (heap free=2640MB / total=5312MB / max=49152MB)
+[Joint-miner@UUT/KOSARAK/SC1_su=0.022228#0] OK t=333ms cand=1703 pat=11 heapDelta=256MB
+>> RUNNING Joint-miner@UUT/KOSARAK/SC1_su=0.022228#0  (heap free=2672MB / total=5312MB / max=49152MB)
+[Joint-miner@UUT/KOSARAK/SC1_su=0.022228#0] OK t=325ms cand=1703 pat=11 heapDelta=240MB
+   warm-up mines (ms, not measured): [842, 493, 381, 333, 325]
+>> RUNNING Joint-miner@UUT/KOSARAK/SC1_su=0.022228#0  (heap free=2913MB / total=5312MB / max=49152MB)
+[Joint-miner@UUT/KOSARAK/SC1_su=0.022228#0] OK t=326ms cand=1703 pat=11 heapDelta=240MB
+>> RUNNING Joint-miner@UUT/KOSARAK/SC1_su=0.025#0  (heap free=2913MB / total=5312MB / max=49152MB)
+[Joint-miner@UUT/KOSARAK/SC1_su=0.025#0] OK t=382ms cand=1202 pat=10 heapDelta=240MB
+>> RUNNING Joint-miner@UUT/KOSARAK/SC1_su=0.028117#0  (heap free=2913MB / total=5312MB / max=49152MB)
+[Joint-miner@UUT/KOSARAK/SC1_su=0.028117#0] OK t=325ms cand=869 pat=7 heapDelta=240MB
+>> RUNNING Joint-miner@UUT/KOSARAK/SC1_su=0.031623#0  (heap free=2913MB / total=5312MB / max=49152MB)
+[Joint-miner@UUT/KOSARAK/SC1_su=0.031623#0] OK t=270ms cand=612 pat=5 heapDelta=224MB
+=== ALL SCENARIOS DONE (35.7s) ===
