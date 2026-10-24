@@ -1,0 +1,31 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC1]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=2 | seed.index=0
+
+--- [SC1] Static baseline on D_init ---
+>> WARM-UP (not measured) Pre-HUSPM-Joint/BMS1/SC1
+>> RUNNING Pre-HUSPM-Joint/BMS1/SC1_su=0.012821#0  (heap free=163MB / total=224MB / max=49152MB)
+[Pre-HUSPM-Joint/BMS1/SC1_su=0.012821#0] OK t=143ms cand=9683 pat=22 heapDelta=64MB
+>> RUNNING Pre-HUSPM-Joint/BMS1/SC1_su=0.012821#0  (heap free=99MB / total=224MB / max=49152MB)
+[Pre-HUSPM-Joint/BMS1/SC1_su=0.012821#0] OK t=79ms cand=9683 pat=22 heapDelta=48MB
+>> RUNNING Pre-HUSPM-Joint/BMS1/SC1_su=0.012821#0  (heap free=110MB / total=224MB / max=49152MB)
+[Pre-HUSPM-Joint/BMS1/SC1_su=0.012821#0] OK t=91ms cand=9683 pat=22 heapDelta=41MB
+>> RUNNING Pre-HUSPM-Joint/BMS1/SC1_su=0.012821#0  (heap free=117MB / total=224MB / max=49152MB)
+[Pre-HUSPM-Joint/BMS1/SC1_su=0.012821#0] OK t=76ms cand=9683 pat=22 heapDelta=40MB
+>> RUNNING Pre-HUSPM-Joint/BMS1/SC1_su=0.012821#0  (heap free=502MB / total=608MB / max=49152MB)
+[Pre-HUSPM-Joint/BMS1/SC1_su=0.012821#0] OK t=55ms cand=9683 pat=22 heapDelta=46MB
+>> RUNNING Pre-HUSPM-Joint/BMS1/SC1_su=0.012821#0  (heap free=208MB / total=320MB / max=49152MB)
+[Pre-HUSPM-Joint/BMS1/SC1_su=0.012821#0] OK t=33ms cand=9683 pat=22 heapDelta=43MB
+>> RUNNING Pre-HUSPM-Joint/BMS1/SC1_su=0.012821#0  (heap free=211MB / total=320MB / max=49152MB)
+[Pre-HUSPM-Joint/BMS1/SC1_su=0.012821#0] OK t=33ms cand=9683 pat=22 heapDelta=43MB
+   warm-up mines (ms, not measured): [143, 79, 91, 76, 55, 33, 33]
+>> RUNNING Pre-HUSPM-Joint/BMS1/SC1_su=0.012821#0  (heap free=255MB / total=320MB / max=49152MB)
+[Pre-HUSPM-Joint/BMS1/SC1_su=0.012821#0] OK t=32ms cand=9683 pat=22 heapDelta=43MB
+>> RUNNING Pre-HUSPM-Joint/BMS1/SC1_su=0.013597#0  (heap free=255MB / total=320MB / max=49152MB)
+[Pre-HUSPM-Joint/BMS1/SC1_su=0.013597#0] OK t=30ms cand=6978 pat=21 heapDelta=43MB
+>> RUNNING Pre-HUSPM-Joint/BMS1/SC1_su=0.015293#0  (heap free=255MB / total=320MB / max=49152MB)
+[Pre-HUSPM-Joint/BMS1/SC1_su=0.015293#0] OK t=28ms cand=3584 pat=18 heapDelta=43MB
+>> RUNNING Pre-HUSPM-Joint/BMS1/SC1_su=0.016218#0  (heap free=255MB / total=320MB / max=49152MB)
+[Pre-HUSPM-Joint/BMS1/SC1_su=0.016218#0] OK t=26ms cand=2675 pat=15 heapDelta=42MB
+=== ALL SCENARIOS DONE (13.0s) ===
