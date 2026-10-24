@@ -1,0 +1,27 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC1]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC1] Static baseline on D_init ---
+>> WARM-UP (not measured) HUSP-SP/KOSARAK/SC1
+>> RUNNING HUSP-SP/KOSARAK/SC1_su=0.022228#0  (heap free=2390MB / total=4768MB / max=49152MB)
+[HUSP-SP/KOSARAK/SC1_su=0.022228#0] OK t=665ms cand=78500 pat=11 heapDelta=256MB
+>> RUNNING HUSP-SP/KOSARAK/SC1_su=0.022228#0  (heap free=2149MB / total=4768MB / max=49152MB)
+[HUSP-SP/KOSARAK/SC1_su=0.022228#0] OK t=476ms cand=78500 pat=11 heapDelta=208MB
+>> RUNNING HUSP-SP/KOSARAK/SC1_su=0.022228#0  (heap free=2197MB / total=4768MB / max=49152MB)
+[HUSP-SP/KOSARAK/SC1_su=0.022228#0] OK t=644ms cand=78500 pat=11 heapDelta=256MB
+>> RUNNING HUSP-SP/KOSARAK/SC1_su=0.022228#0  (heap free=2149MB / total=4768MB / max=49152MB)
+[HUSP-SP/KOSARAK/SC1_su=0.022228#0] OK t=439ms cand=78500 pat=11 heapDelta=176MB
+>> RUNNING HUSP-SP/KOSARAK/SC1_su=0.022228#0  (heap free=2229MB / total=4768MB / max=49152MB)
+[HUSP-SP/KOSARAK/SC1_su=0.022228#0] OK t=446ms cand=78500 pat=11 heapDelta=176MB
+   warm-up mines (ms, not measured): [665, 476, 644, 439, 446]
+>> RUNNING HUSP-SP/KOSARAK/SC1_su=0.022228#0  (heap free=2389MB / total=4768MB / max=49152MB)
+[HUSP-SP/KOSARAK/SC1_su=0.022228#0] OK t=462ms cand=78500 pat=11 heapDelta=176MB
+>> RUNNING HUSP-SP/KOSARAK/SC1_su=0.025#0  (heap free=2389MB / total=4768MB / max=49152MB)
+[HUSP-SP/KOSARAK/SC1_su=0.025#0] OK t=349ms cand=53964 pat=10 heapDelta=160MB
+>> RUNNING HUSP-SP/KOSARAK/SC1_su=0.028117#0  (heap free=2389MB / total=4768MB / max=49152MB)
+[HUSP-SP/KOSARAK/SC1_su=0.028117#0] OK t=307ms cand=40115 pat=7 heapDelta=160MB
+>> RUNNING HUSP-SP/KOSARAK/SC1_su=0.031623#0  (heap free=2389MB / total=4768MB / max=49152MB)
+[HUSP-SP/KOSARAK/SC1_su=0.031623#0] OK t=266ms cand=33135 pat=5 heapDelta=160MB
+=== ALL SCENARIOS DONE (36.2s) ===
