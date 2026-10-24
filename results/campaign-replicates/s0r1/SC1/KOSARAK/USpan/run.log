@@ -1,0 +1,19 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC1]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=1 | seed.index=0
+
+--- [SC1] Static baseline on D_init ---
+>> WARM-UP (not measured) USpan/KOSARAK/SC1
+>> RUNNING USpan/KOSARAK/SC1_su=0.022228#0  (heap free=2616MB / total=5376MB / max=49152MB)
+[USpan/KOSARAK/SC1_su=0.022228#0] OK t=46190ms cand=26267380 pat=11 heapDelta=2590MB
+   warm-up mines (ms, not measured): [46190]
+>> RUNNING USpan/KOSARAK/SC1_su=0.022228#0  (heap free=2998MB / total=5376MB / max=49152MB)
+[USpan/KOSARAK/SC1_su=0.022228#0] OK t=45794ms cand=26267380 pat=11 heapDelta=2611MB
+>> RUNNING USpan/KOSARAK/SC1_su=0.025#0  (heap free=2998MB / total=5376MB / max=49152MB)
+[USpan/KOSARAK/SC1_su=0.025#0] OK t=35326ms cand=16216965 pat=10 heapDelta=2624MB
+>> RUNNING USpan/KOSARAK/SC1_su=0.028117#0  (heap free=3005MB / total=5376MB / max=49152MB)
+[USpan/KOSARAK/SC1_su=0.028117#0] OK t=28279ms cand=9724531 pat=7 heapDelta=3475MB
+>> RUNNING USpan/KOSARAK/SC1_su=0.031623#0  (heap free=5439MB / total=7808MB / max=49152MB)
+[USpan/KOSARAK/SC1_su=0.031623#0] OK t=24164ms cand=5977231 pat=5 heapDelta=4672MB
+=== ALL SCENARIOS DONE (208.2s) ===
