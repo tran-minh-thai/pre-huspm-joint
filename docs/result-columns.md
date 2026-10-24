@@ -39,7 +39,7 @@ the heap was free before the call). A row without a suffix completed.
 |---|---|
 | `run_id` | `<algorithm>_<dataset>_<op_type>_<iteration>`, built before the call starts |
 | `timestamp` | local time when the row was created, at the start of the call, ISO-8601 |
-| `algorithm` | algorithm or arm name; SC4 writes `Pre-HUSPM[sl=<r_l>]` and `Adaptive[sl=<r_l>]` inside the arm directories `Pre-HUSPM` and `Adaptive-Full` |
+| `algorithm` | algorithm or arm name; SC4 writes `Pre-HUSPM[sl=<r_l>]` and `Pre-HUSPM-Joint[sl=<r_l>]` inside the arm directories `Pre-HUSPM` and `Pre-HUSPM-Joint` |
 | `dataset` | database name |
 | `iteration` | 0 for the initial or static mine; 1 to K for an increment; 1 to 20 for an SC6 operation |
 
@@ -81,7 +81,7 @@ scan. `results/invariant-root-items` counts them for every static configuration,
 
 Each column counts one pruning rule. Only the algorithms listed write a non-zero value.
 
-| Column | USpan | HUSP-ULL | HUSP-SP | IncUSP-Miner+ | Pre-HUSPM | Adaptive-Full |
+| Column | USpan | HUSP-ULL | HUSP-SP | IncUSP-Miner+ | Pre-HUSPM | Pre-HUSPM-Joint |
 |---|---|---|---|---|---|---|
 | `pruned_swu` | candidates removed by the global SWU test (1-items) and by the local SWU test (extensions) | 1-items whose SWU is below the threshold | root items deleted from the database because their SWU is below the threshold | | | |
 | `pruned_depth` | nodes cut by depth pruning | | | | | |
@@ -97,15 +97,15 @@ calls, and `explored_nodes` = the Algorithm 3 calls minus `pruned_peu`.
 
 ### Pre-large state and rescans
 
-These columns are written by the proposal (`Adaptive-Full`, `Adaptive[sl=...]`, the SC7
-`proposed_*` arms, and `Remine-from-scratch`, which runs the proposal's miner) and, where
+These columns are written by the proposal (`Pre-HUSPM-Joint`, `Pre-HUSPM-Joint-fixed-threshold`, `Pre-HUSPM-Joint[sl=...]`, the SC7
+`Pre-HUSPM-Joint-*` arms, and `Remine-from-scratch`, which runs the proposal's miner) and, where
 stated, by Pre-HUSPM. Their reading under each rescan rule is given in the next section.
 
 | Column | Meaning |
 |---|---|
 | `lut_dyn` | proposal: the absolute floor it mines at. Initial mine: `LUT_min * TSU` |
 | `cub_val` | proposal: utility inserted plus deleted since the last rescan; 0 on a row that rescanned. Pre-HUSPM: `buf` after the call, the rescan quantity (`SWUmax` or `TSU(d)`) summed over the batches absorbed by the safe update since the last rescan, this one included; 0 on a row that rescanned and on a static mine |
-| `cub_triggered` | proposal: `true` when this call rescanned the whole database; always `true` with the adaptive rescan switched off (SC7 `proposed_C5_off`); `false` on an initial mine. Pre-HUSPM: always `false` |
+| `cub_triggered` | proposal: `true` when this call rescanned the whole database; always `true` with the adaptive rescan switched off (SC7 `Pre-HUSPM-Joint-rescan-every-batch`); `false` on an initial mine. Pre-HUSPM: always `false` |
 | `op_type` | scenario and phase, with the status suffix (above). Labels: `SC1_su=<UUT>`, `SC2_INIT`, `SC2_INC`, `SC3_su=<UUT>`, `SC4`, `SC5_K=<K>_strat=<strategy>_INIT` and `_INC`, `SC6_INIT`, `SC6_INS`, `SC6_DEL`, `SC6_MOD`, `SC7` (static ablations), `SC7_ref` (Pre-HUSPM), `SC7_C5_INIT`, `SC7_C5_INC`, `SC7_C4_INIT`, `SC7_C4_INC` |
 | `prelarge_count` | number of pre-large patterns held after the call. Pre-HUSPM: buffered patterns with `r_l * UUT * TSU <= SWU_proj(X) < UUT * TSU` (Yan et al., 2025, Definition 12), `SWU_proj` being the PEU computed on the projected database. Proposal: tracked patterns below `UUT * TSU` |
 | `uut_val` | proposal only: the absolute threshold `UUT * TSU` |
@@ -197,10 +197,10 @@ The SC7 ablation arms switch these components off one at a time.
 |---|---|
 | C1, the value bound applied before materialisation | `pruned_value`, `explored_nodes` against `candidate_count` |
 | C2, the adaptive floor (rules other than `joint`) | `lut_dyn`, `sigma2`, `rho` |
-| C3, the IUB bound (`proposed_no_IUB` switches it off) | `pruned_iub`, `explored_nodes`, `runtime_ms` |
-| the irrelevant item pruning (`proposed_no_IPS` switches it off) | `explored_nodes`, `candidate_count`, `runtime_ms` |
-| C4, the block index (`proposed_no_block_index`; `proposed_bsz_<n>` sets the block size to n) | `blocks_read`, `blocks_skipped`, `block_size`, `runtime_ms` |
-| C5, the adaptive rescan decision (`proposed_C5_off` rescans every increment) | `rescan_count`, `cub_triggered`, `iau_max`, `sft_val`, `runtime_ms` |
+| C3, the IUB bound (`Pre-HUSPM-Joint-no-IUB` switches it off) | `pruned_iub`, `explored_nodes`, `runtime_ms` |
+| the irrelevant item pruning (`Pre-HUSPM-Joint-no-IPS` switches it off) | `explored_nodes`, `candidate_count`, `runtime_ms` |
+| C4, the block index (`Pre-HUSPM-Joint-no-block-index`; `Pre-HUSPM-Joint-bsz-<n>` sets the block size to n) | `blocks_read`, `blocks_skipped`, `block_size`, `runtime_ms` |
+| C5, the adaptive rescan decision (`Pre-HUSPM-Joint-rescan-every-batch` rescans every increment) | `rescan_count`, `cub_triggered`, `iau_max`, `sft_val`, `runtime_ms` |
 
 ## Memory measurement
 

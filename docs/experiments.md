@@ -8,7 +8,8 @@ scenario are in `docs/campaign-parameters.md`; column definitions are in
 
 | Name in results | Role | Reference | Implementation |
 |---|---|---|---|
-| `Adaptive-Full` | proposed method at the fixed floor `r_l`; in the static scenarios this is the method, in SC2, SC5 and the mixed streams the tables read it as `Adaptive-FixedFloor`, an ablation row | this repository | `PreHUSPMAdaptiveAlgorithm` |
+| `Pre-HUSPM-Joint` | the method: in the static scenarios its static mine, in SC2, SC5 and the mixed streams its maintenance with the rescan threshold selection, window `w = 5` (below) | this repository | `PreHUSPMAdaptiveAlgorithm` |
+| `Pre-HUSPM-Joint-fixed-threshold` | the method at the fixed lower threshold `r_l`, without the threshold selection; an ablation row of SC2, SC5 and the mixed streams | this repository | `PreHUSPMAdaptiveAlgorithm` |
 | `Pre-HUSPM-SWUmax` | pre-large incremental baseline, rescan test on `SWUmax` (Theorem 2 of Yan et al.); SC2 and SC5 | Yan et al., J. Supercomputing 2025 | `PreHUSPMAlgorithm`, `Variant.SWUMAX` |
 | `Pre-HUSPM-TSU` | the same baseline with the rescan test on `TSU(d)` (Theorem 1 of Yan et al.); SC2 and SC5 | Yan et al., J. Supercomputing 2025 | `PreHUSPMAlgorithm`, `Variant.TSU` |
 | `Pre-HUSPM` | the same baseline in the static scenarios (SC1, SC3, SC4, SC7), where both tests mine alike | Yan et al., J. Supercomputing 2025 | `PreHUSPMAlgorithm`, `runInitialMining` |
@@ -16,8 +17,8 @@ scenario are in `docs/campaign-parameters.md`; column definitions are in
 | `Remine-from-scratch` | mines the whole current database after every operation | - | the proposal's own static miner, `runInitialMining`, on a new instance each time |
 | `Remine-HUSP-ULL`, `Remine-HUSP-SP` | mine the whole current database after every operation with HUSP-ULL or HUSP-SP at UUT, which stop at the threshold where the proposal's miner goes down to `r_l * UUT`; SC2 and the mixed streams | - | `HUSPULLAlgorithm`, `HUSPSPAlgorithm`, a new instance each time |
 | `Joint-miner+SWUmax`, `Joint-miner+TSU` | the proposal with its rescan rule replaced by Pre-HUSPM's test on `SWUmax` or on `TSU(d)`, as `PreHUSPMAlgorithm` applies it; miner, tracking by utility and drop floor unchanged; SC2 (insertions only) | Yan et al., Theorems 2 and 1 | `PreHUSPMAdaptiveAlgorithm`, `TriggerRule.PRE_SWUMAX`, `PRE_TSU` |
-| `Adaptive-FloorSelect` | the proposal with the rescan floor selection, window `w = 5`: a rescan mines at UUT (floor ratio 1, budget 0) when the last `w` operations each charged more than the low budget `(1 - r_l) * UUT * TU` on their own, and at `r_l` otherwise; exact for every floor in `[r_l, 1]`; SC2, SC5 and the mixed streams. The rescan decisions and floors are reproduced from the data files by `analysis/insertion_alpha.py --floor-windows` | - | `PreHUSPMAdaptiveAlgorithm`, `floorWindow` (`-Dadapt.floorWindow=w`) |
-| `Adaptive-FloorSelect-w<n>`, n in {1, 2, 3, 10} | `Adaptive-FloorSelect` with window `w = n`, for the sensitivity to `w`; run only when named (`-Dalgo.only`, or `campaign.ps1 -WindowSweep`); SC2, SC5 and the mixed streams | - | `PreHUSPMAdaptiveAlgorithm`, `floorWindow` |
+| `Pre-HUSPM-Joint` (incremental scenarios) | the proposal with the rescan floor selection, window `w = 5`: a rescan mines at UUT (floor ratio 1, budget 0) when the last `w` operations each charged more than the low budget `(1 - r_l) * UUT * TU` on their own, and at `r_l` otherwise; exact for every floor in `[r_l, 1]`; SC2, SC5 and the mixed streams. The rescan decisions and floors are reproduced from the data files by `analysis/insertion_alpha.py --floor-windows` | - | `PreHUSPMAdaptiveAlgorithm`, `floorWindow` (`-Dadapt.floorWindow=w`) |
+| `Pre-HUSPM-Joint-w<n>`, n in {1, 2, 3, 10} | `Pre-HUSPM-Joint` with window `w = n`, for the sensitivity to `w`; run only when named (`-Dalgo.only`, or `campaign.ps1 -WindowSweep`); SC2, SC5 and the mixed streams | - | `PreHUSPMAdaptiveAlgorithm`, `floorWindow` |
 | `Remine-own-UUT` | the proposal's own miner on the whole current database after every operation at UUT (lower threshold ratio 1, no pre-large patterns), as the proposal's rescans at `lambda = UUT` mine; a new instance each time; SC2, SC5 and the mixed streams | - | `PreHUSPMAdaptiveAlgorithm`, `runInitialMining` with ratio 1 |
 | `Joint-miner@UUT` | the proposal's miner in one static mine with its cutoff at UUT, the cutoff of HUSP-ULL and HUSP-SP; SC1 and SC3 | - | `PreHUSPMAdaptiveAlgorithm`, `runInitialMining` with ratio 1 |
 | `Joint-rule+min-floor` | the proposal at the fixed lower threshold with the discard floor `L_ref + min_{i in X} A_i` instead of `L_ref + max_{i in X} A_i`; exact, since it drops no pattern the proposal keeps; SC2 and SC6 | - | `PreHUSPMAdaptiveAlgorithm`, `Floor.MIN` (`-Dadapt.floor=min`) |
@@ -38,9 +39,10 @@ adds at most 3 rescans to the fixed floor on every stream. Every bound from 3 to
 each stream out in turn; the windows it picks were fixed before the window arms were timed.
 
 **The method in the incremental scenarios** is the proposal with the rescan floor selection, arm
-`Adaptive-FloorSelect`: `analysis/make_figures.load_scenario` reads it as `Adaptive-Full` in SC2, SC5,
-SC6, SC6D and SC6B, and reads the arm `Adaptive-Full` on disk there as `Adaptive-FixedFloor`. The
-static scenarios mine once, which the selection does not change. The rescan-rule table compares the
+`Pre-HUSPM-Joint`; the arm at the fixed floor is `Pre-HUSPM-Joint-fixed-threshold`. The static
+scenarios mine once, which the selection does not change, and their arm `Pre-HUSPM-Joint` is that mine.
+The arms were named `Adaptive-FloorSelect` and `Adaptive-Full` until commit 12db2815
+(`docs/arm-names.md`). The rescan-rule table compares the
 three rules at the fixed floor and gives the method's rescans in its own column; the isolation table
 isolates the components at the fixed floor.
 
@@ -190,12 +192,12 @@ and KOSARAK's `r_l`, 0.80 if the proposal mines KOSARAK at that floor within 120
 BMS1 takes part in SC1 only: on the whole database 0.025 returns two patterns and 0.020
 exceeds three billion candidates (`results/thresholds/bms1-whole`), and its four levels lie
 below 0.020. In SC5 only BURST draws from the seed; EVEN, INCREASING and DECREASING are
-deterministic. SC7's arms are `proposed_full`, `proposed_no_IUB`, `proposed_no_IPS`, `Pre-HUSPM` (one mine each)
-and `proposed_C5_on`, `proposed_C5_off`, `proposed_no_block_index`, `proposed_bsz_<n>` (over the increments).
+deterministic. SC7's arms are `Pre-HUSPM-Joint`, `Pre-HUSPM-Joint-no-IUB`, `Pre-HUSPM-Joint-no-IPS`, `Pre-HUSPM` (one mine each)
+and `Pre-HUSPM-Joint-rescan-rule`, `Pre-HUSPM-Joint-rescan-every-batch`, `Pre-HUSPM-Joint-no-block-index`, `Pre-HUSPM-Joint-bsz-<n>` (over the increments).
 
 ### Block size, stated before the measurement
 
-The `proposed_bsz_<n>` arms repeat `proposed_C5_on` with blocks of n sequences, n in
+The `Pre-HUSPM-Joint-bsz-<n>` arms repeat `Pre-HUSPM-Joint-rescan-rule` with blocks of n sequences, n in
 {1, 5, 10, 50, 200}, beside the default 100. Blocks are cut inside each increment and never
 span two, so the effective block size is min(n, increment size): 5 sequences on SIGN, 199 or 200
 on C8T1S5I8N5K. Expected, for every n:
@@ -266,7 +268,7 @@ the seed in their own columns.
 | SC7 | three repeats of the four one-mine arms (full, IUB off, IPS off, Pre-HUSPM) on the seven databases | runtime of one mine |
 | SC6, SC6D, SC6B | five seeds (`s0` to `s4`: 42, 1337, 2024, 31415, 271828), every arm | each remining arm's time over the proposal's per kind of operation and over the stream, paired by seed (`table_SC6_by_op_arms.csv`, `table_SC6D_by_op.csv`, `table_SC6B_by_op.csv`) |
 | SC2 new arms | three repeats of `Remine-HUSP-ULL`, `Remine-HUSP-SP`, `Joint-miner+SWUmax`, `Joint-miner+TSU`, `Joint-rule+PreHUSPM-tracking` and `Joint-miner+SWUmax+PreHUSPM-tracking` on the seven databases | runtime summed over the increments (`table_SC2_remine.tex`, `table_SC2_rule_isolation.csv`) |
-| window arms | three repeats of `Adaptive-FloorSelect-w1`, `-w2`, `-w3`, `-w10` in SC2; one run in SC5; five seeds in SC6, SC6D and SC6B | as the method's |
+| window arms | three repeats of `Pre-HUSPM-Joint-w1`, `-w2`, `-w3`, `-w10` in SC2; one run in SC5; five seeds in SC6, SC6D and SC6B | as the method's |
 | memory | `s0r1`: SC1 on SIGN, TAFENG, C8T1S5I8N5K, BMS1 and KOSARAK, all six algorithms; SC2, all five arms, on SIGN and TAFENG | the live set between two runs |
 | others | one run | - |
 

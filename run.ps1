@@ -31,7 +31,7 @@ param(
     [ValidateSet('used','live')][string]$MemMode = 'used',
     [int]$MemIntervalMs = 1000,
     # Arms swept in live mode, one JVM each.
-    [string[]]$MemArms = @('USpan','HUSP-ULL','HUSP-SP','IncUSP-Miner+','Pre-HUSPM','Pre-HUSPM-SWUmax','Pre-HUSPM-TSU','Adaptive-Full'),
+    [string[]]$MemArms = @('USpan','HUSP-ULL','HUSP-SP','IncUSP-Miner+','Pre-HUSPM','Pre-HUSPM-SWUmax','Pre-HUSPM-TSU','Pre-HUSPM-Joint','Pre-HUSPM-Joint-fixed-threshold'),
     # Position = 0 here makes every other parameter non-positional; without it PowerShell
     # binds bare arguments to -Heap, -Stack, -TimeoutMin in order, so 'run.ps1 SC1 SC2'
     # would bind SC1 to -Heap.

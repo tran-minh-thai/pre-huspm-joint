@@ -3,7 +3,8 @@
 
     python3 analysis/incremental_agreement.py [--out DIR]
 
-Compares total_patterns_found of every algorithm with Adaptive-Full, row by row, on the
+Compares total_patterns_found of every algorithm with Pre-HUSPM-Joint-fixed-threshold (the method at the
+fixed lower threshold), row by row, on the
 scenarios with an update stream (SC2, SC5), over the timing campaign. A row is compared only
 when both algorithms finished it (runtime_ms >= 0). Prints, per scenario, algorithm and
 database, how many rows were compared and how many report fewer or more patterns.
@@ -38,7 +39,7 @@ def main():
     os.makedirs(a.out, exist_ok=True)
     lines = [["scenario", "algorithm", "database", "rows_compared", "fewer", "more", "max_share_missing"]]
     for sc in ["SC2", "SC5"]:
-        ref = rows(sc, "Adaptive-Full")
+        ref = rows(sc, "Pre-HUSPM-Joint-fixed-threshold")
         for alg in OTHERS:
             other = rows(sc, alg)
             per = collections.defaultdict(lambda: [0, 0, 0, 0.0])

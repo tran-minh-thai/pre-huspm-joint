@@ -42,8 +42,8 @@ param(
     # one is given explicitly.
     [string[]] $Algorithms,
     [int]      $CapSeconds = 28800,
-    # The window sensitivity study: the arms Adaptive-FloorSelect-w1, -w2, -w3 and -w10 of SC2,
-    # SC5, SC6, SC6D and SC6B (w = 5 is Adaptive-FloorSelect). Replaces the scenario's arm list,
+    # The window sensitivity study: the arms Pre-HUSPM-Joint-w1, -w2, -w3 and -w10 of SC2,
+    # SC5, SC6, SC6D and SC6B (w = 5 is Pre-HUSPM-Joint). Replaces the scenario's arm list,
     # so -Repeat and -SeedIndex measure replicates of these arms only.
     [switch]   $WindowSweep,
     # Heap ceiling for every arm, one value for the whole campaign. -Xmx is a ceiling, not a
@@ -113,15 +113,15 @@ $all8    = @('SIGN','LEVIATHAN','TAFENG','BIBLE','BMS1','C8T1S5I8N5K','KOSARAK',
 $subset3 = @('SIGN','LEVIATHAN','C8T1S5I8N5K')
 # The mixed streams also run on TAFENG, the database with measured utilities (AutomatedExperimentRunner.MIXED_SETS).
 $mixedSets = @('SIGN','LEVIATHAN','C8T1S5I8N5K','TAFENG')
-$static  = @('USpan','HUSP-ULL','HUSP-SP','IncUSP-Miner+','Pre-HUSPM','Adaptive-Full','Joint-miner@UUT')
-$incr    = @('Adaptive-Full','Pre-HUSPM-SWUmax','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+',
+$static  = @('USpan','HUSP-ULL','HUSP-SP','IncUSP-Miner+','Pre-HUSPM','Pre-HUSPM-Joint','Joint-miner@UUT')
+$incr    = @('Pre-HUSPM-Joint-fixed-threshold','Pre-HUSPM-SWUmax','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+',
              'Remine-HUSP-ULL','Remine-HUSP-SP','Joint-miner+SWUmax','Joint-miner+TSU','Joint-rule+PreHUSPM-tracking','Joint-miner+SWUmax+PreHUSPM-tracking',
-             'Adaptive-FloorSelect','Remine-own-UUT','Joint-rule+plain-floor','Joint-rule+min-floor')
+             'Pre-HUSPM-Joint','Remine-own-UUT','Joint-rule+plain-floor','Joint-rule+min-floor')
 # SC5 runs the method, its fixed-floor row, the four arms SC2 started with and the remining arms.
-$sc5     = @('Adaptive-Full','Pre-HUSPM-SWUmax','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+',
-             'Adaptive-FloorSelect','Remine-HUSP-ULL','Remine-HUSP-SP','Remine-own-UUT')
+$sc5     = @('Pre-HUSPM-Joint-fixed-threshold','Pre-HUSPM-SWUmax','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+',
+             'Pre-HUSPM-Joint','Remine-HUSP-ULL','Remine-HUSP-SP','Remine-own-UUT')
 # The mixed streams (SC6, SC6D, SC6B): AutomatedExperimentRunner.MIXED_ARMS.
-$mixed   = @('Adaptive-Full','Remine-from-scratch','Remine-HUSP-ULL','Remine-HUSP-SP','Adaptive-FloorSelect',
+$mixed   = @('Pre-HUSPM-Joint-fixed-threshold','Remine-from-scratch','Remine-HUSP-ULL','Remine-HUSP-SP','Pre-HUSPM-Joint',
              'Remine-own-UUT','Joint-rule+plain-floor','Joint-rule+min-floor')
 $scenarios = @('SC1','SC2','SC3','SC4','SC5','SC6','SC6D','SC6B','SC7','FIDELITY')
 if ($scenarios -notcontains $Scenario) { throw "Unknown scenario '$Scenario'. Known: $($scenarios -join ', ')." }
@@ -130,8 +130,8 @@ if ($scenarios -notcontains $Scenario) { throw "Unknown scenario '$Scenario'. Kn
 # the adaptive rescan) run in the runner on C5_ABLATION_SET, which is SIGN and C8T1S5I8N5K
 # once BMS1 is filtered out by scope. This list repeats that set; if the two drift apart the
 # stray arm is recorded as EMPTY and named by -List.
-$sc7Incremental = @('proposed_C5_on','proposed_C5_off','proposed_no_block_index',
-                    'proposed_bsz_1','proposed_bsz_5','proposed_bsz_10','proposed_bsz_50','proposed_bsz_200')
+$sc7Incremental = @('Pre-HUSPM-Joint-rescan-rule','Pre-HUSPM-Joint-rescan-every-batch','Pre-HUSPM-Joint-no-block-index',
+                    'Pre-HUSPM-Joint-bsz-1','Pre-HUSPM-Joint-bsz-5','Pre-HUSPM-Joint-bsz-10','Pre-HUSPM-Joint-bsz-50','Pre-HUSPM-Joint-bsz-200')
 $sc7IncSets     = @('SIGN','C8T1S5I8N5K')
 function Test-Arm($d, $a) {
     if ($Scenario -eq 'SC7' -and $sc7Incremental -contains $a -and $sc7IncSets -notcontains $d) {
@@ -140,7 +140,7 @@ function Test-Arm($d, $a) {
     return $true
 }
 
-$windowArms = @('Adaptive-FloorSelect-w1','Adaptive-FloorSelect-w2','Adaptive-FloorSelect-w3','Adaptive-FloorSelect-w10')
+$windowArms = @('Pre-HUSPM-Joint-w1','Pre-HUSPM-Joint-w2','Pre-HUSPM-Joint-w3','Pre-HUSPM-Joint-w10')
 if ($WindowSweep) {
     if (@('SC2','SC5','SC6','SC6D','SC6B') -notcontains $Scenario) {
         throw "-WindowSweep applies to SC2, SC5, SC6, SC6D and SC6B, not $Scenario."
@@ -152,14 +152,14 @@ if (-not $Algorithms) {
     $Algorithms = switch ($Scenario) {
         'SC1'   { $static }
         'SC3'   { $static }
-        'SC4'   { @('Pre-HUSPM','Adaptive-Full') }
+        'SC4'   { @('Pre-HUSPM','Pre-HUSPM-Joint') }
         'SC6'   { $mixed }
         'SC6D'  { $mixed }
         'SC6B'  { $mixed }
         'FIDELITY' { @('Pre-HUSPM-SWUmax','Pre-HUSPM-TSU') }
-        'SC7'   { @('proposed_full','proposed_no_block_index','proposed_no_IUB','proposed_no_IPS',
-                    'proposed_bsz_1','proposed_bsz_5','proposed_bsz_10','proposed_bsz_50','proposed_bsz_200',
-                    'proposed_C5_on','proposed_C5_off','Pre-HUSPM') }
+        'SC7'   { @('Pre-HUSPM-Joint','Pre-HUSPM-Joint-no-block-index','Pre-HUSPM-Joint-no-IUB','Pre-HUSPM-Joint-no-IPS',
+                    'Pre-HUSPM-Joint-bsz-1','Pre-HUSPM-Joint-bsz-5','Pre-HUSPM-Joint-bsz-10','Pre-HUSPM-Joint-bsz-50','Pre-HUSPM-Joint-bsz-200',
+                    'Pre-HUSPM-Joint-rescan-rule','Pre-HUSPM-Joint-rescan-every-batch','Pre-HUSPM') }
         'SC5'   { $sc5 }
         default { $incr }                          # SC2
     }
@@ -183,14 +183,14 @@ if (-not $Datasets) {
 # Check the names before anything uses them. Passed through -File, PowerShell hands an
 # array parameter the whole comma-joined string, so -Algorithms A,B arrives as one name
 # "A,B", which matches no algorithm. Use -Command "& { .\campaign.ps1 -Algorithms 'A','B' }".
-$knownAlgos = @('Adaptive-Full','Pre-HUSPM','Pre-HUSPM-SWUmax','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+',
+$knownAlgos = @('Pre-HUSPM-Joint','Pre-HUSPM-Joint-fixed-threshold','Pre-HUSPM','Pre-HUSPM-SWUmax','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+',
                 'Remine-HUSP-ULL','Remine-HUSP-SP','Joint-miner+SWUmax','Joint-miner+TSU','Joint-rule+PreHUSPM-tracking','Joint-miner+SWUmax+PreHUSPM-tracking',
-                'Adaptive-FloorSelect','Remine-own-UUT','Joint-rule+plain-floor','Joint-rule+min-floor','Joint-miner@UUT',
-                'Adaptive-FloorSelect-w1','Adaptive-FloorSelect-w2','Adaptive-FloorSelect-w3','Adaptive-FloorSelect-w10',
+                'Remine-own-UUT','Joint-rule+plain-floor','Joint-rule+min-floor','Joint-miner@UUT',
+                'Pre-HUSPM-Joint-w1','Pre-HUSPM-Joint-w2','Pre-HUSPM-Joint-w3','Pre-HUSPM-Joint-w10',
                 'USpan','HUSP-ULL','HUSP-SP',
-                'proposed_full','proposed_no_block_index','proposed_no_IUB','proposed_no_IPS',
-                'proposed_bsz_1','proposed_bsz_5','proposed_bsz_10','proposed_bsz_50','proposed_bsz_200',
-                'proposed_C5_on','proposed_C5_off')
+                'Pre-HUSPM-Joint-no-block-index','Pre-HUSPM-Joint-no-IUB','Pre-HUSPM-Joint-no-IPS',
+                'Pre-HUSPM-Joint-bsz-1','Pre-HUSPM-Joint-bsz-5','Pre-HUSPM-Joint-bsz-10','Pre-HUSPM-Joint-bsz-50','Pre-HUSPM-Joint-bsz-200',
+                'Pre-HUSPM-Joint-rescan-rule','Pre-HUSPM-Joint-rescan-every-batch')
 $knownSets  = @('SIGN','LEVIATHAN','TAFENG','BIBLE','BMS1','C8T1S5I8N5K','KOSARAK','FIFA','KOSARAK10K','BMS')
 foreach ($a in $Algorithms) {
     if ($knownAlgos -notcontains $a) {

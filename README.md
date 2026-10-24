@@ -66,10 +66,12 @@ any JVM other than the one pinned in `environment.lock.json`.
 | FIDELITY | the Pre-HUSPM implementation under its paper's setting, on SPMF's files (`./fetch-spmf-husp.sh` or `.\fetch-spmf-husp.ps1` first) | SIGN, FIFA, BIBLE, Kosarak10k, BMS |
 
 **Arm names** (`algorithm` column):
-- `Adaptive-Full` is the method at the fixed floor `r_l`.
-- `Adaptive-FloorSelect` is the method with the rescan floor selection.
-- In SC2, SC5 and SC6* the analysis reads `Adaptive-FloorSelect` as the method and
-  `Adaptive-Full` as `Adaptive-FixedFloor`.
+- `Pre-HUSPM-Joint` is the method: the static mine in SC1, SC3, SC4 and SC7's static ablations, the
+  maintenance with the rescan threshold selection in SC2, SC5 and SC6*.
+- `Pre-HUSPM-Joint-fixed-threshold` is the method at the fixed lower threshold `r_l` (SC2, SC5, SC6*).
+- `Pre-HUSPM-Joint-w<n>` are the other windows of the selection, `Pre-HUSPM-Joint-*` in SC7 the ablations.
+- The historical names (`Adaptive-Full`, `Adaptive-FloorSelect`, `proposed_*`) are mapped in
+  `docs/arm-names.md`.
 - The other arms are the baselines and controls:
   - `Pre-HUSPM-SWUmax`, `Pre-HUSPM-TSU` (`Pre-HUSPM` in the static scenarios)
   - `IncUSP-Miner+`, `USpan`, `HUSP-ULL`, `HUSP-SP`
@@ -117,7 +119,7 @@ with `DIR`.
 | `UUT` (threshold ratio) | per database, below | `src/common/Datasets.java` |
 | `r_l` (`LUT_min = r_l * UUT`) | 0.80 on every database | `Datasets.java` |
 | rescan rule | `joint` | `-Dadapt.trigger` |
-| rescan floor window `w` | 5 for `Adaptive-FloorSelect` (`Adaptive-FloorSelect-w<n>`: n = 1, 2, 3, 10); 0 (fixed floor) otherwise | `-Dadapt.armFloorWindow`, `-Dadapt.floorWindow` |
+| rescan floor window `w` | 5 for `Pre-HUSPM-Joint` in the incremental scenarios (`Pre-HUSPM-Joint-w<n>`: n = 1, 2, 3, 10); 0 (fixed floor) otherwise | `-Dadapt.armFloorWindow`, `-Dadapt.floorWindow` |
 | irrelevant item pruning | `once` per node | `-Dadapt.iip` |
 | batches `K` | 100 (SC5: 100, 67, 50, 25) | `-Dbatch.count` |
 | block size | 100 sequences, never across two batches | `-Dblock.size` |

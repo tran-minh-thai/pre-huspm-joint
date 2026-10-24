@@ -12,7 +12,7 @@ false after the first mine) of an arm in FLOOR_ARMS: the proposal's incremental 
 Joint-rule+plain-floor, whose floor value is unchanged but is now chosen by a switch inside the
 direct-update loop. The floor is never evaluated by a static mine (SC1, SC3, SC4, SC7's static
 ablations), by remining (Remine-*, a new instance mined from scratch at every operation), by
-proposed_C5_off (a rescan at every increment), by Pre-HUSPM, IncUSP-Miner+, HUSP-ULL, HUSP-SP or
+Pre-HUSPM-Joint-rescan-every-batch (a rescan at every increment), by Pre-HUSPM, IncUSP-Miner+, HUSP-ULL, HUSP-SP or
 USpan (classes unchanged), nor by a run of a FLOOR_ARMS arm that rescanned at every operation: those
 runs are kept, and counted. --include-no-direct lists the last kind too.
 
@@ -31,12 +31,12 @@ from collections import defaultdict
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 RESULTS = ROOT / "results"
 INCREMENTAL = {"SC2", "SC5", "SC6", "SC6D", "SC6B", "SC7"}
-FLOOR_ARMS = {"Adaptive-Full", "Adaptive-FloorSelect", "Adaptive-FloorSelect-w1", "Adaptive-FloorSelect-w2",
-              "Adaptive-FloorSelect-w3", "Adaptive-FloorSelect-w10", "Joint-miner+SWUmax", "Joint-miner+TSU",
+FLOOR_ARMS = {"Pre-HUSPM-Joint-fixed-threshold", "Pre-HUSPM-Joint", "Pre-HUSPM-Joint-w1", "Pre-HUSPM-Joint-w2",
+              "Pre-HUSPM-Joint-w3", "Pre-HUSPM-Joint-w10", "Joint-miner+SWUmax", "Joint-miner+TSU",
               "Joint-rule+PreHUSPM-tracking", "Joint-miner+SWUmax+PreHUSPM-tracking", "Joint-rule+min-floor",
               "Joint-rule+plain-floor",
-              "proposed_C5_on", "proposed_no_block_index", "proposed_bsz_1", "proposed_bsz_5",
-              "proposed_bsz_10", "proposed_bsz_50", "proposed_bsz_200"}
+              "Pre-HUSPM-Joint-rescan-rule", "Pre-HUSPM-Joint-no-block-index", "Pre-HUSPM-Joint-bsz-1",
+              "Pre-HUSPM-Joint-bsz-5", "Pre-HUSPM-Joint-bsz-10", "Pre-HUSPM-Joint-bsz-50", "Pre-HUSPM-Joint-bsz-200"}
 TREES = ["campaign", "campaign-replicates", "campaign-mem", "campaign-mem-replicates",
          "campaign-mem-sampled", "campaign-mem-sampled-replicates"]
 

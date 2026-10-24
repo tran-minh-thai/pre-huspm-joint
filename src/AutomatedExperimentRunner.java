@@ -29,7 +29,7 @@ import java.util.concurrent.*;
  * SC6 - Mixed insert/delete/modify stream (Adaptive vs the remining arms).
  * SC6D - SC6 with deletions in the majority.
  * SC6B - SC6 with one deletion beyond the rescan budget.
- * SC7 - Ablation: proposed_full, proposed_no_IUB, proposed_no_IPS, the incremental block-index and adaptive-rescan
+ * SC7 - Ablation: Pre-HUSPM-Joint, Pre-HUSPM-Joint-no-IUB, Pre-HUSPM-Joint-no-IPS, the incremental block-index and adaptive-rescan
  *       ablations, and a Pre-HUSPM reference.
  *
  * Each scenario writes one CSV file in RESULTS_DIR in the ExperimentMetrics format.
@@ -76,7 +76,7 @@ public class AutomatedExperimentRunner {
     /** Block size of the block index. Override with -Dblock.size=... */
     public static final int DEFAULT_BLOCK_SIZE = Integer.getInteger("block.size", 100);
     /**
-     * Block sizes of the SC7 block-size arms (proposed_bsz_<n>), beside the default.
+     * Block sizes of the SC7 block-size arms (Pre-HUSPM-Joint-bsz-<n>), beside the default.
      * A block never spans two increments, so the effective block size is
      * min(B_sz, increment size): 5 sequences on SIGN, 199 or 200 on C8T1S5I8N5K. Each value
      * divides the next, so the blocks of a smaller size refine those of a larger one and the
@@ -493,11 +493,11 @@ public class AutomatedExperimentRunner {
      * Databases that also get the incremental ablations of SC7 (adaptive rescan and block
      * index).
      *
-     * The static SC7 arms are one full mine each and cost seconds. proposed_C5_off is not: it
+     * The static SC7 arms are one full mine each and cost seconds. Pre-HUSPM-Joint-rescan-every-batch is not: it
      * rescans on EVERY batch by design, so at BATCH_COUNT=100 it mines from scratch a hundred
      * times. Its cost, a hundred full mines, decides who can be in this set.
      *
-     * KOSARAK is excluded: a full-scope mine takes 438 s, so proposed_C5_off alone would take
+     * KOSARAK is excluded: a full-scope mine takes 438 s, so Pre-HUSPM-Joint-rescan-every-batch alone would take
      * about twelve hours. The set matches SUBSET_3 apart from BMS1.
      *
      * BMS1 is listed although SC7 does not reach it: scopeOk filters it out because SC7 mines
@@ -684,7 +684,7 @@ public class AutomatedExperimentRunner {
                 if (full.isEmpty()) continue;
                 List<Sequence> dInit = dInitFor(ds, full);
                 double totalUtil = sumUtility(dInit);
-                String[] algos = {"USpan", "HUSP-ULL", "HUSP-SP", "IncUSP-Miner+", "Pre-HUSPM", "Adaptive-Full", "Joint-miner@UUT"};
+                String[] algos = {"USpan", "HUSP-ULL", "HUSP-SP", "IncUSP-Miner+", "Pre-HUSPM", METHOD, "Joint-miner@UUT"};
                 // SC1 has no randomness: no batch split, no generated operations. A seed
                 // changes nothing, so only the same configuration is repeated (JIT/GC noise).
                 for (double su : ds.suSweep) {
@@ -750,7 +750,7 @@ public class AutomatedExperimentRunner {
     private static void runSC3_SensitivitySu() throws IOException {
         System.out.println("\n--- [SC3] Su sensitivity ---");
         try (ResultCollector col = new ResultCollector(RESULTS_DIR + "SC3_su.csv")) {
-            String[] algos = {"USpan", "HUSP-ULL", "HUSP-SP", "IncUSP-Miner+", "Pre-HUSPM", "Adaptive-Full", "Joint-miner@UUT"};
+            String[] algos = {"USpan", "HUSP-ULL", "HUSP-SP", "IncUSP-Miner+", "Pre-HUSPM", METHOD, "Joint-miner@UUT"};
             for (DatasetConfig ds : DATASETS) {
                 if (!datasetEnabled(ds.name)) continue;
                 if (!calibrationOk(ds)) continue;
@@ -831,8 +831,8 @@ public class AutomatedExperimentRunner {
                         forceFullGC();
                     }
                     // --- Adaptive @ SAME slRatio (default kappa and delta0) ---
-                    if (algoEnabled("Adaptive-Full")) {
-                        String tag = "Adaptive[sl=" + slRatio + "]";
+                    if (algoEnabled(METHOD)) {
+                        String tag = METHOD + "[sl=" + slRatio + "]";
                         try {
                             PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp = new PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo(
                                     ds.defaultSu, DEFAULT_KAPPA, DEFAULT_DELTA0, slRatio,
@@ -917,9 +917,19 @@ public class AutomatedExperimentRunner {
     static final int SC6D_INSERTS = 6, SC6D_DELETES = 10, SC6D_MODIFIES = 4;
 
     /**
+     * The method's arms. METHOD is the method: in the static scenarios (SC1, SC3, SC4, SC7's static
+     * ablations) its static mine, in the incremental ones (SC2, SC5, SC6, SC6D, SC6B) its maintenance
+     * with the rescan threshold selection. FIXED_THRESHOLD is the maintenance at the fixed lower
+     * threshold, an ablation row of the incremental scenarios. Until commit 12db2815 these arms were
+     * named Adaptive-Full and Adaptive-FloorSelect (docs/arm-names.md).
+     */
+    static final String METHOD = "Pre-HUSPM-Joint";
+    static final String FIXED_THRESHOLD = "Pre-HUSPM-Joint-fixed-threshold";
+
+    /**
      * The arms of the mixed scenarios, all replaying the same plan:
      *
-     *   Adaptive-Full        incremental maintenance
+     *   Pre-HUSPM-Joint-fixed-threshold  incremental maintenance at the fixed lower threshold
      *   Remine-from-scratch  the proposal's own miner on the whole current database after
      *                        every operation, at its cutoff r_l * UUT
      *   Remine-HUSP-ULL      HUSP-ULL on the whole current database after every operation, at UUT
@@ -928,8 +938,9 @@ public class AutomatedExperimentRunner {
      * The remining arms keep no state between operations. The proposal comes first so that,
      * with -Dverify.husps=true, every other arm is compared with its patterns.
      */
-    static final String[] MIXED_ARMS = {"Adaptive-Full", "Remine-from-scratch", "Remine-HUSP-ULL", "Remine-HUSP-SP",
-            "Adaptive-FloorSelect", "Remine-own-UUT", "Joint-rule+plain-floor", "Joint-rule+min-floor"};
+    static final String[] MIXED_ARMS = {FIXED_THRESHOLD, "Remine-from-scratch", "Remine-HUSP-ULL", "Remine-HUSP-SP",
+            METHOD, "Remine-own-UUT", "Joint-rule+plain-floor", "Joint-rule+min-floor"};
+
 
     /**
      * Remining with the proposal's own miner after every operation, a new instance each time:
@@ -964,7 +975,7 @@ public class AutomatedExperimentRunner {
     }
 
     /**
-     * Window w of the rescan floor selection of arm Adaptive-FloorSelect
+     * Window w of the rescan floor selection of the method's incremental arm (METHOD)
      * (PreHUSPMAdaptiveAlgo.floorWindow): a rescan mines at UUT when the last w operations each
      * exceeded the low budget on their own. Fixed at 5 from the rescan counts the selection gives on
      * the SC2 streams, computed from the data files before any time was measured
@@ -973,17 +984,17 @@ public class AutomatedExperimentRunner {
     static final int FLOOR_WINDOW = Integer.getInteger("adapt.armFloorWindow", 5);
 
     /**
-     * The other windows of the sensitivity study, one arm each: Adaptive-FloorSelect-w<n> is
-     * Adaptive-FloorSelect with w = n. They run only when -Dalgo.only names them, so a run of a
+     * The other windows of the sensitivity study, one arm each: Pre-HUSPM-Joint-w<n> is
+     * the method with w = n. They run only when -Dalgo.only names them, so a run of a
      * whole scenario measures the arms of the main tables only.
      */
     static final int[] WINDOW_SWEEP = {1, 2, 3, 10};
 
-    static String windowArm(int w) { return "Adaptive-FloorSelect-w" + w; }
+    static String windowArm(int w) { return METHOD + "-w" + w; }
 
     /** The window of a floor-selection arm, 0 for any other arm. */
     static int floorWindowOf(String arm) {
-        if ("Adaptive-FloorSelect".equals(arm)) return FLOOR_WINDOW;
+        if (METHOD.equals(arm)) return FLOOR_WINDOW;
         for (int w : WINDOW_SWEEP) if (windowArm(w).equals(arm)) return w;
         return 0;
     }
@@ -1089,7 +1100,7 @@ public class AutomatedExperimentRunner {
     /** Replays the plan for one arm. */
     private static void runMixedArm(DatasetConfig ds, List<Sequence> dInit, double initTotalUtil,
                                     List<MixedPlan.Op> plan, ResultCollector col, String arm) throws IOException {
-        final boolean incremental = "Adaptive-Full".equals(arm) || floorWindowOf(arm) > 0 || PLAIN_FLOOR_ARM.equals(arm)
+        final boolean incremental = FIXED_THRESHOLD.equals(arm) || floorWindowOf(arm) > 0 || PLAIN_FLOOR_ARM.equals(arm)
                 || MIN_FLOOR_ARM.equals(arm);
 
         beginMemArm();
@@ -1213,7 +1224,7 @@ public class AutomatedExperimentRunner {
     /**
      * With -Dverify.husps=true, after every operation the pattern set of each arm and the
      * utility of each pattern are compared, outside the timed call, with those the proposal
-     * (Adaptive-Full, which runs first) reported after the same operation of the same stream.
+     * (FIXED_THRESHOLD, which runs first) reported after the same operation of the same stream.
      * One row per comparison goes to verify_husps.csv in the results directory; the run exits
      * with code 1 on any mismatch or on a row with no reference to compare with. Timing rows of
      * such a run are not measurements, and the mode refuses a campaign tree.
@@ -1238,7 +1249,7 @@ public class AutomatedExperimentRunner {
         Map<String, Double> got = patterns.get();
         String key = iter + "," + opType;
         String row;
-        if ("Adaptive-Full".equals(arm)) {
+        if (FIXED_THRESHOLD.equals(arm)) {
             verifyRef.put(key, got);
             row = verifyScope + "," + arm + "," + iter + "," + opType + "," + got.size() + "," + got.size()
                     + ",0,0,0,reference";
@@ -1363,28 +1374,28 @@ public class AutomatedExperimentRunner {
 
                 // --- Static ablation (one mine of the whole database): the IUB bound acts inside
                 //     the miner, so a single mine is where it shows. The PEU bound is always on. ---
-                logAblation(col, ds, full, totalUtil, "proposed_full", true, true, true);     // full proposal
+                logAblation(col, ds, full, totalUtil, METHOD, true, true, true);     // full proposal
                 forceFullGC();
-                logAblation(col, ds, full, totalUtil, "proposed_no_IUB", true, false, true);  // IUB pruning off
+                logAblation(col, ds, full, totalUtil, METHOD + "-no-IUB", true, false, true);  // IUB pruning off
                 forceFullGC();
-                logAblation(col, ds, full, totalUtil, "proposed_no_IPS", true, true, false);  // item removal (IPS) off
+                logAblation(col, ds, full, totalUtil, METHOD + "-no-IPS", true, true, false);  // item removal (IPS) off
                 forceFullGC();
 
                 // --- Incremental ablations, on the representative set: adaptive rescan and
                 //     the block index act only while the database grows.
-                //     proposed_C5_on is the full proposal on that stream and the reference
+                //     Pre-HUSPM-Joint-rescan-rule is the full proposal on that stream and the reference
                 //     for all three. ---
                 if (C5_ABLATION_SET.contains(ds.name)) {
-                    logIncrementalAblation(col, ds, full, "proposed_C5_on",  "SC7_C5", true,  true,  true);
+                    logIncrementalAblation(col, ds, full, METHOD + "-rescan-rule",  "SC7_C5", true,  true,  true);
                     forceFullGC();
-                    logIncrementalAblation(col, ds, full, "proposed_C5_off", "SC7_C5", false, true,  true);  // adaptive rescan off
+                    logIncrementalAblation(col, ds, full, METHOD + "-rescan-every-batch", "SC7_C5", false, true,  true);  // adaptive rescan off
                     forceFullGC();
-                    logIncrementalAblation(col, ds, full, "proposed_no_block_index", "SC7_C4", true, false, true); // block index off
+                    logIncrementalAblation(col, ds, full, METHOD + "-no-block-index", "SC7_C4", true, false, true); // block index off
                     forceFullGC();
                     // Block size: the same stream with the index on and blocks of B_SZ_SWEEP
-                    // sequences; proposed_C5_on is the default of DEFAULT_BLOCK_SIZE.
+                    // sequences; Pre-HUSPM-Joint-rescan-rule is the default of DEFAULT_BLOCK_SIZE.
                     for (int bsz : B_SZ_SWEEP) {
-                        logIncrementalAblation(col, ds, full, "proposed_bsz_" + bsz, "SC7_BSZ", true, true, true, bsz);
+                        logIncrementalAblation(col, ds, full, METHOD + "-bsz-" + bsz, "SC7_BSZ", true, true, true, bsz);
                         forceFullGC();
                     }
                 }
@@ -1414,7 +1425,7 @@ public class AutomatedExperimentRunner {
                                     double totalUtil, String tag, boolean useBlockIndex,
                                     boolean useIub, boolean useIps) {
         endMemArm();   // static: one mine, measured against the heap at the start of the call
-        // SC7's arms carry their own names (proposed_full, proposed_no_IUB, ...) and answer
+        // SC7's arms carry their own names (Pre-HUSPM-Joint, Pre-HUSPM-Joint-no-IUB, ...) and answer
         // to -Dalgo.only. campaign.ps1 gives each arm its own JVM; without this gate every
         // JVM would repeat every ablation.
         if (!algoEnabled(tag)) return;
@@ -1525,10 +1536,10 @@ public class AutomatedExperimentRunner {
         final double initTotal = sumUtility(dInit);
         beginVerify(tag, dsName);
 
-        // -------- Arm: Adaptive-Full --------
+        // -------- Arm: the method at the fixed lower threshold --------
         // First, so that with -Dverify.husps=true every other arm is compared with its patterns.
         // In the campaign each arm runs in a JVM of its own, so the order does not matter there.
-        if (algoEnabled("Adaptive-Full")) runAdaptiveStream("Adaptive-Full", null, null, 0, dsName, Su, dInit, batches, col, tag);
+        if (algoEnabled(FIXED_THRESHOLD)) runAdaptiveStream(FIXED_THRESHOLD, null, null, 0, dsName, Su, dInit, batches, col, tag);
         forceFullGC();
 
         // -------- Arm: IncUSP-Miner+ (isolated scope) --------
@@ -1753,7 +1764,7 @@ public class AutomatedExperimentRunner {
         forceFullGC();
 
         // -------- The proposal's miner and tracking behind Pre-HUSPM's two rescan tests --------
-        // Same miner, same tracking by exact utility, same drop floor as Adaptive-Full; only the
+        // Same miner, same tracking by exact utility, same drop floor as the fixed-threshold arm; only the
         // rescan condition differs (PreHUSPMAdaptiveAlgo.TriggerRule.PRE_SWUMAX, PRE_TSU).
         if (algoEnabled("Joint-miner+SWUmax")) runAdaptiveStream("Joint-miner+SWUmax",
                 PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.TriggerRule.PRE_SWUMAX, null, 0, dsName, Su, dInit, batches, col, tag);
@@ -1779,7 +1790,7 @@ public class AutomatedExperimentRunner {
                 batches, col, tag);
 
         // -------- The proposal with the rescan floor selection --------
-        if (algoEnabled("Adaptive-FloorSelect")) runAdaptiveStream("Adaptive-FloorSelect", null, null,
+        if (algoEnabled(METHOD)) runAdaptiveStream(METHOD, null, null,
                 FLOOR_WINDOW, dsName, Su, dInit, batches, col, tag);
         for (int w : WINDOW_SWEEP)
             if (algoNamed(windowArm(w))) runAdaptiveStream(windowArm(w), null, null, w, dsName, Su, dInit,
@@ -1788,7 +1799,7 @@ public class AutomatedExperimentRunner {
     }
 
     /**
-     * The proposal over a stream of insertions: Adaptive-Full under its own rule and tracking
+     * The proposal over a stream of insertions: the fixed-threshold arm under its own rule and tracking
      * (both null, floorWindow 0), or with another rescan rule, another tracking or the rescan
      * floor selection (floorWindow > 0), everything else unchanged.
      */
@@ -1951,7 +1962,7 @@ public class AutomatedExperimentRunner {
     /** The proposal as runSingle builds it for a static mine. */
     private static ExperimentMetrics runSingle(String algo, String dsName, List<Sequence> db,
                                                double totalUtil, double su, int iter, String tag) {
-        if (ADAPTIVE_ONLY && !algo.equals("Adaptive-Full")) return null; // rerun Adaptive only
+        if (ADAPTIVE_ONLY && !algo.equals(METHOD)) return null; // rerun the method only
         if (!algoEnabled(algo)) return null;   // -Dalgo.only: one arm per JVM
         if (skipRepeat(algo, dsName, tag, currentRepeat)) return null;
 
@@ -2039,7 +2050,7 @@ public class AutomatedExperimentRunner {
                     attachPreHuspm(m, pre[0]);
                     return logged(m);
                 }
-                case "Adaptive-Full":
+                case METHOD:
                 case "Joint-miner@UUT": {
                     // Joint-miner@UUT: the proposal's miner with its cutoff at UUT (lower threshold
                     // ratio 1, no pre-large patterns), the cutoff HUSP-ULL and HUSP-SP mine at.

@@ -260,7 +260,7 @@ def random_order_check(trials, seed):
     return trials, comps, bad, trials_with_rescans, first
 
 
-def campaign_rows(tree, name, arm="Adaptive-Full"):
+def campaign_rows(tree, name, arm="Pre-HUSPM-Joint-fixed-threshold"):
     paths = glob.glob(os.path.join(tree, "SC2", name, arm, "*.csv"))
     rows = []
     for p in paths:
@@ -274,7 +274,7 @@ def campaign_rows(tree, name, arm="Adaptive-Full"):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default=os.path.join(ROOT, "results", "invariant-insertion-alpha"))
-    ap.add_argument("--campaign", default=None, help="a tree holding SC2/<DB>/Adaptive-Full/*.csv")
+    ap.add_argument("--campaign", default=None, help="a tree holding SC2/<DB>/Pre-HUSPM-Joint-fixed-threshold/*.csv")
     ap.add_argument("--data", default=os.path.join(ROOT, "datasets"))
     ap.add_argument("--random-order", nargs=2, metavar=("TRIALS", "SEED"),
                     help="check the rescan order of the joint rule and the SWUmax test on random streams")
@@ -282,7 +282,7 @@ def main():
                     help="also simulate the rescan floor selection for each window W; writes "
                          "floor_selection.csv and floor_selection_batches.csv")
     ap.add_argument("--floor-campaign-window", type=int, default=5,
-                    help="the window of arm Adaptive-FloorSelect, compared with --campaign")
+                    help="the window of arm Pre-HUSPM-Joint, compared with --campaign")
     ap.add_argument("databases", nargs="*")
     a = ap.parse_args()
     floor_rows, floor_batch_rows = [], []
@@ -335,7 +335,7 @@ def main():
                       f"joint rule {sum(r for _, _, r in sim)}")
             if a.campaign:
                 fs = {b: (rs, f) for b, rs, f in floor_selection(it, bt, uut, rl, a.floor_campaign_window)}
-                got = {int(r["iteration"]): r for r in campaign_rows(a.campaign, name, "Adaptive-FloorSelect")}
+                got = {int(r["iteration"]): r for r in campaign_rows(a.campaign, name, "Pre-HUSPM-Joint")}
                 n = bad = 0
                 for b, (rs, f) in fs.items():
                     r = got.get(b)

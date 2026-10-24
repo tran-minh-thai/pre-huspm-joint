@@ -22,12 +22,12 @@
 #   SC1 static on D_init   : op_type "SC1_su=<v>", one row per threshold
 #   SC2 incremental        : op_type "SC2_INIT" then "SC2_INC" x 100, iteration 0..100
 #   SC3 static, whole DB   : op_type "SC3_su=<v>"
-#   SC4 pre-large floor    : algorithm "<Pre-HUSPM|Adaptive>[sl=<v>]", r_l in {.3,.5,.7,.9}
+#   SC4 pre-large floor    : algorithm "<Pre-HUSPM|Pre-HUSPM-Joint>[sl=<v>]", r_l in {.3,.5,.7,.9}
 #   SC5 batch grid         : op_type "SC5_K=<k>_strat=<S>_(INIT|INC)", K in {100,67,50,25}
-#   SC6 mixed I/D/M        : op_type "SC6_(INIT|INS|DEL|MOD)", Adaptive and Remine
-#   SC7 ablation           : static  proposed_full / proposed_no_IUB / proposed_no_IPS / Pre-HUSPM (one mine);
-#                            incremental proposed_C5_on / proposed_C5_off /
-#                            proposed_no_block_index ("SC7_C5_*" / "SC7_C4_*", 101 rows)
+#   SC6 mixed I/D/M        : op_type "SC6_(INIT|INS|DEL|MOD)", the method and the remining arms
+#   SC7 ablation           : static  Pre-HUSPM-Joint / -no-IUB / -no-IPS / Pre-HUSPM (one mine);
+#                            incremental Pre-HUSPM-Joint-rescan-rule / -rescan-every-batch /
+#                            -no-block-index ("SC7_C5_*" / "SC7_C4_*", 101 rows)
 #  Status suffixes on op_type: _OOM, _OT, _FAILED, _BUDGET, _SKIPPED_POISONED.
 #  runtime_ms: -1 failed, -2 overtime, -3 completed in live memory mode (time void).
 # =============================================================================
@@ -127,46 +127,46 @@ if not hasattr(_mathtext, "SHRINK_FACTOR"):
 _mathtext.SHRINK_FACTOR = 8 / FONT_PT
 
 # ---- Algorithms: order, labels, line styles, markers --------------------------
-STATIC_ORDER = ["USpan", "HUSP-ULL", "HUSP-SP", "IncUSP-Miner+", "Pre-HUSPM", "Adaptive-Full"]
-INC_ORDER    = ["IncUSP-Miner+", "Pre-HUSPM-SWUmax", "Pre-HUSPM-TSU", "Remine-from-scratch", "Adaptive-Full"]
-PROPOSED = "Adaptive-Full"
-# The method in the incremental scenarios is the proposal with the rescan floor selection (arm
-# Adaptive-FloorSelect, PreHUSPMAdaptiveAlgo.floorWindow = 5). load_scenario reads that arm as
-# PROPOSED there, and the proposal at the fixed floor r_l (arm Adaptive-Full on disk) as FIXED,
-# which stays as an ablation row. The static scenarios have one initial mine, the same in both.
-FLOOR_ARM = "Adaptive-FloorSelect"
-FIXED = "Adaptive-FixedFloor"
+PROPOSED = "Pre-HUSPM-Joint"
+STATIC_ORDER = ["USpan", "HUSP-ULL", "HUSP-SP", "IncUSP-Miner+", "Pre-HUSPM", PROPOSED]
+INC_ORDER    = ["IncUSP-Miner+", "Pre-HUSPM-SWUmax", "Pre-HUSPM-TSU", "Remine-from-scratch", PROPOSED]
+# PROPOSED is the method: in the incremental scenarios its maintenance with the rescan threshold
+# selection (PreHUSPMAdaptiveAlgo.floorWindow = 5), in the static ones its static mine. FIXED is the
+# method at the fixed lower threshold r_l, an ablation row of the incremental scenarios. The arms
+# carry these names on disk (until commit 12db2815 they were Adaptive-FloorSelect and Adaptive-Full;
+# docs/arm-names.md).
+FIXED = PROPOSED + "-fixed-threshold"
 METHOD_SCENARIOS = {"SC2", "SC5", "SC6", "SC6D", "SC6B"}
-# The window sensitivity arms (Adaptive-FloorSelect-w<n>, n != 5): read only by the window study,
+# The window sensitivity arms (Pre-HUSPM-Joint-w<n>, n != 5): read only by the window study,
 # never by the main tables and figures, where they would count as competitors.
-WINDOW_ARM = re.compile(r"^Adaptive-FloorSelect-w\d+$")
+WINDOW_ARM = re.compile(r"^Pre-HUSPM-Joint-w\d+$")
 WINDOWS = (1, 2, 3, 5, 10)
 
 
 def window_arm(w):
     """The arm of window w as the loader names it: w = 5 is the method in METHOD_SCENARIOS."""
-    return PROPOSED if w == 5 else f"Adaptive-FloorSelect-w{w}"
+    return PROPOSED if w == 5 else f"{PROPOSED}-w{w}"
 PROPOSED_LABEL = "Pre-HUSPM-Joint"
 ALGO_LABEL = {
     "USpan": "USpan", "HUSP-ULL": "HUSP-ULL", "HUSP-SP": "HUSP-SP",
     "IncUSP-Miner+": "IncUSP-Miner$^{+}$", "Pre-HUSPM": "Pre-HUSPM", "Pre-HUSPM-SWUmax": "Pre-HUSPM-SWUmax",
     "Pre-HUSPM-TSU": "Pre-HUSPM-TSU", "Remine-from-scratch": "Remine",
-    "Adaptive-Full": PROPOSED_LABEL, "Adaptive-FixedFloor": PROPOSED_LABEL + ", fixed lower threshold",
+    PROPOSED: PROPOSED_LABEL, FIXED: PROPOSED_LABEL + ", fixed lower threshold",
 }
 ALGO_LINESTYLE = {
     "USpan": (0, (1, 1.5)), "HUSP-ULL": (0, (4, 1.5)), "HUSP-SP": (0, (4, 1.5, 1, 1.5)),
     "IncUSP-Miner+": (0, (6, 2)), "Pre-HUSPM": (0, (2, 1.5)), "Pre-HUSPM-SWUmax": (0, (2, 1.5)), "Pre-HUSPM-TSU": (0, (6, 1.5, 1, 1.5, 1, 1.5)),
-    "Remine-from-scratch": (0, (8, 2, 2, 2)), "Adaptive-Full": "-",
+    "Remine-from-scratch": (0, (8, 2, 2, 2)), PROPOSED: "-",
 }
 ALGO_MARKER = {
     "USpan": "o", "HUSP-ULL": "s", "HUSP-SP": "v", "IncUSP-Miner+": "^",
     "Pre-HUSPM": "D", "Pre-HUSPM-SWUmax": "D", "Pre-HUSPM-TSU": "P", "Remine-from-scratch": "x",
-    "Adaptive-Full": "*",
+    PROPOSED: "*",
 }
 ALGO_HATCH = {
     "USpan": "", "HUSP-ULL": "////", "HUSP-SP": "\\\\", "IncUSP-Miner+": "xxxx",
     "Pre-HUSPM": "....", "Pre-HUSPM-SWUmax": "....", "Pre-HUSPM-TSU": "----", "Remine-from-scratch": "++",
-    "Adaptive-Full": "||||",
+    PROPOSED: "||||",
 }
 
 
@@ -174,7 +174,7 @@ ALGO_HATCH = {
 # vision deficiency). Lines and marker edges are coloured; nothing is filled, and the dash
 # patterns and hollow markers stay, so a figure printed in black and white still reads.
 ALGO_COLOR = {
-    "Adaptive-Full": "#D55E00", "Pre-HUSPM": "#0072B2", "Pre-HUSPM-SWUmax": "#0072B2",
+    PROPOSED: "#D55E00", "Pre-HUSPM": "#0072B2", "Pre-HUSPM-SWUmax": "#0072B2",
     "Pre-HUSPM-TSU": "#56B4E9", "Remine-from-scratch": "#000000", "IncUSP-Miner+": "#009E73",
     "HUSP-ULL": "#E69F00", "HUSP-SP": "#CC79A7", "USpan": "#7F7F7F",
 }
@@ -293,10 +293,6 @@ def load_scenario(sc, tree=TIMING_TREE, finished_only=True, replicates=False, wi
         df = pd.read_csv(csv_path)
         df.columns = [c.strip() for c in df.columns]
         df["arm"] = os.path.basename(arm_dir)
-        if sc in METHOD_SCENARIOS:
-            swap = {PROPOSED: FIXED, FLOOR_ARM: PROPOSED}
-            df["algorithm"] = df["algorithm"].replace(swap)
-            df["arm"] = df["arm"].replace(swap)
         df["replicate"] = tag
         frames.append(df)
     if skipped:
@@ -944,12 +940,12 @@ def figset_c5_ablation(tag="fig_C5_ablation"):
     df = load_scenario("SC7")
     if df is None:
         return
-    df = df[df["algorithm"].isin(["proposed_C5_on", "proposed_C5_off"]) & is_inc(df)]
+    df = df[df["algorithm"].isin([PROPOSED + "-rescan-rule", PROPOSED + "-rescan-every-batch"]) & is_inc(df)]
     if df.empty:
         return
     datasets = [d for d in ALL_DATASETS if d in set(df["dataset"])]
-    variants = [("proposed_C5_on", "Joint rescan rule", ""),
-                ("proposed_C5_off", "Rescan at every increment", "////")]
+    variants = [(PROPOSED + "-rescan-rule", "Joint rescan rule", ""),
+                (PROPOSED + "-rescan-every-batch", "Rescan at every increment", "////")]
     # Two panels of the common size (a third of the width each), centred.
     fig = plt.figure(figsize=(LINEWIDTH_IN, PANEL_H))
     gs = fig.add_gridspec(1, 2 * PANEL_COLS)
@@ -981,7 +977,7 @@ def figset_block_size(tag="fig_block_size"):
     import scenario_tables
     bs = scenario_tables.sc7_block_size()
     if bs.empty:
-        print(f"[not drawn] {tag}.pdf: no proposed_bsz_<n> arm in results/campaign/SC7")
+        print(f"[not drawn] {tag}.pdf: no Pre-HUSPM-Joint-bsz-<n> arm in results/campaign/SC7")
         path = os.path.join(OUT_DIR, f"{tag}.pdf")
         if os.path.exists(path):
             os.remove(path)
@@ -1028,7 +1024,7 @@ def export_ablation_table():
     df = load_mean("SC7")
     if df is None:
         return
-    static = {"proposed_full": "Full", "proposed_no_IUB": "-IUB", "proposed_no_IPS": "-IPS",
+    static = {PROPOSED: "Full", PROPOSED + "-no-IUB": "-IUB", PROPOSED + "-no-IPS": "-IPS",
               "Pre-HUSPM": "Pre-HUSPM"}
     rows = []
     for ds in [d for d in ALL_DATASETS if d in set(df["dataset"])]:
@@ -1063,8 +1059,8 @@ def export_ablation_table():
     tab["explored_bound"] = tab.apply(bound, axis=1) if len(tab) else []
     write_csv(tab, os.path.join(OUT_DIR, "table_SC7_static.csv"))
 
-    inc = {"proposed_C5_on": "Full", "proposed_C5_off": "-C5 (rescan every increment)",
-           "proposed_no_block_index": "-C4 (no block index)"}
+    inc = {PROPOSED + "-rescan-rule": "Full", PROPOSED + "-rescan-every-batch": "-C5 (rescan every increment)",
+           PROPOSED + "-no-block-index": "-C4 (no block index)"}
     rows = []
     for ds in [d for d in ALL_DATASETS if d in set(df["dataset"])]:
         for arm, label in inc.items():
@@ -1122,7 +1118,7 @@ def figset_sl_sensitivity(tag="fig_sl_sensitivity", metrics=("prelarge_count",))
     df = parse_sl(df)
     datasets = [d for d in FIG_DATASETS if d in set(df["dataset"])]
     pair = [("Pre-HUSPM", "////", "Pre-HUSPM", ALGO_COLOR["Pre-HUSPM"]),
-            ("Adaptive", "", PROPOSED_LABEL, ALGO_COLOR[PROPOSED])]
+            (PROPOSED, "", PROPOSED_LABEL, ALGO_COLOR[PROPOSED])]
     spec = {"prelarge_count": ("Pre-large set size", lambda x: np.asarray(x, float)),
             "runtime_ms": ("Runtime (s)", ms_to_s)}
     for metric in metrics:

@@ -69,7 +69,7 @@ after each increment.
 | item removal | `once` | `-Dadapt.iip`; chosen by the calibration (`results/calibration`, rule 1): the two variants are within 2 percent of each other in total. |
 | repeats | 1 per arm; replicates as separate arms | `-Repeat n` and `-SeedIndex k` measure a replicate in a fresh JVM, into `results/campaign-replicates/s<k>r<n>`. Three repeats for SC1 and for SC2's proposal and remining on SIGN, TAFENG, BIBLE and C8T1S5I8N5K; five seeds for SC6. See `docs/experiments.md`, "Repetition". |
 | `SUBSET_3` | SIGN, LEVIATHAN, C8T1S5I8N5K | Small and dense, medium, and the one database with more than one item per event. Used by SC3, SC4, SC5 and SC6. |
-| `C5_ABLATION_SET` | SIGN, C8T1S5I8N5K (BMS1 listed, filtered out by scope) | The databases of SC7's incremental ablations (block index and adaptive rescan). `proposed_C5_off` rescans every increment, so it costs a hundred full mines. |
+| `C5_ABLATION_SET` | SIGN, C8T1S5I8N5K (BMS1 listed, filtered out by scope) | The databases of SC7's incremental ablations (block index and adaptive rescan). `Pre-HUSPM-Joint-rescan-every-batch` rescans every increment, so it costs a hundred full mines. |
 | BMS1 | SC1 only | On the whole database 0.025 returns two patterns and 0.020 exceeds three billion candidates (`results/thresholds/bms1-whole`); its four levels lie below 0.020. |
 
 ## What each scenario costs
@@ -77,12 +77,12 @@ after each increment.
 | scenario | arms | arms per database |
 |---|---:|---|
 | SC1 | 48 | the six static algorithms on eight databases |
-| SC2 | 105 | `Adaptive-Full`, `Adaptive-FloorSelect`, `Pre-HUSPM-SWUmax`, `Pre-HUSPM-TSU`, `Remine-from-scratch`, `Remine-own-UUT`, `Remine-HUSP-ULL`, `Remine-HUSP-SP`, `IncUSP-Miner+`, `Joint-miner+SWUmax`, `Joint-miner+TSU`, `Joint-rule+PreHUSPM-tracking`, `Joint-miner+SWUmax+PreHUSPM-tracking`, `Joint-rule+min-floor`, `Joint-rule+plain-floor` on seven databases |
+| SC2 | 105 | `Pre-HUSPM-Joint-fixed-threshold`, `Pre-HUSPM-Joint`, `Pre-HUSPM-SWUmax`, `Pre-HUSPM-TSU`, `Remine-from-scratch`, `Remine-own-UUT`, `Remine-HUSP-ULL`, `Remine-HUSP-SP`, `IncUSP-Miner+`, `Joint-miner+SWUmax`, `Joint-miner+TSU`, `Joint-rule+PreHUSPM-tracking`, `Joint-miner+SWUmax+PreHUSPM-tracking`, `Joint-rule+min-floor`, `Joint-rule+plain-floor` on seven databases |
 | SC3 | 18 | the six static algorithms on SIGN, LEVIATHAN, C8T1S5I8N5K |
-| SC4 | 6 | `Pre-HUSPM` and `Adaptive-Full` on the same three |
-| SC5 | 27 | `Adaptive-Full`, `Adaptive-FloorSelect`, `Pre-HUSPM-SWUmax`, `Pre-HUSPM-TSU`, `Remine-from-scratch`, `Remine-own-UUT`, `Remine-HUSP-ULL`, `Remine-HUSP-SP`, `IncUSP-Miner+` on the same three |
-| SC6, SC6D, SC6B | 24 each, 32 in SC6 | `Adaptive-Full`, `Adaptive-FloorSelect`, `Remine-from-scratch`, `Remine-own-UUT`, `Remine-HUSP-ULL`, `Remine-HUSP-SP` on the same three and TAFENG; `Joint-rule+min-floor` and `Joint-rule+plain-floor` in SC6 |
-| SC7 | 44 | `proposed_full`, `proposed_no_IUB`, `proposed_no_IPS`, `Pre-HUSPM` on seven databases; `proposed_C5_on`, `proposed_C5_off`, `proposed_no_block_index` and the block sizes `proposed_bsz_1`, `_5`, `_10`, `_50`, `_200` on SIGN and C8T1S5I8N5K |
-| window sweep (`-WindowSweep`) | 28 in SC2, 12 in SC5 and in each mixed stream | `Adaptive-FloorSelect-w1`, `-w2`, `-w3`, `-w10` |
+| SC4 | 6 | `Pre-HUSPM` and `Pre-HUSPM-Joint` on the same three |
+| SC5 | 27 | `Pre-HUSPM-Joint-fixed-threshold`, `Pre-HUSPM-Joint`, `Pre-HUSPM-SWUmax`, `Pre-HUSPM-TSU`, `Remine-from-scratch`, `Remine-own-UUT`, `Remine-HUSP-ULL`, `Remine-HUSP-SP`, `IncUSP-Miner+` on the same three |
+| SC6, SC6D, SC6B | 24 each, 32 in SC6 | `Pre-HUSPM-Joint-fixed-threshold`, `Pre-HUSPM-Joint`, `Remine-from-scratch`, `Remine-own-UUT`, `Remine-HUSP-ULL`, `Remine-HUSP-SP` on the same three and TAFENG; `Joint-rule+min-floor` and `Joint-rule+plain-floor` in SC6 |
+| SC7 | 44 | `Pre-HUSPM-Joint`, `Pre-HUSPM-Joint-no-IUB`, `Pre-HUSPM-Joint-no-IPS`, `Pre-HUSPM` on seven databases; `Pre-HUSPM-Joint-rescan-rule`, `Pre-HUSPM-Joint-rescan-every-batch`, `Pre-HUSPM-Joint-no-block-index` and the block sizes `Pre-HUSPM-Joint-bsz-1`, `_5`, `_10`, `_50`, `_200` on SIGN and C8T1S5I8N5K |
+| window sweep (`-WindowSweep`) | 28 in SC2, 12 in SC5 and in each mixed stream | `Pre-HUSPM-Joint-w1`, `-w2`, `-w3`, `-w10` |
 | SC1, live memory | 48 | as SC1 |
-| SC2, live memory | 42 | `Adaptive-Full`, `Adaptive-FloorSelect`, `Pre-HUSPM-SWUmax`, `Pre-HUSPM-TSU`, `Remine-from-scratch`, `IncUSP-Miner+` on seven databases |
+| SC2, live memory | 42 | `Pre-HUSPM-Joint-fixed-threshold`, `Pre-HUSPM-Joint`, `Pre-HUSPM-SWUmax`, `Pre-HUSPM-TSU`, `Remine-from-scratch`, `IncUSP-Miner+` on seven databases |

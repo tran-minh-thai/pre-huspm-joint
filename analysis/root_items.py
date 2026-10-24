@@ -13,8 +13,8 @@ explored_nodes minus the items stopped at the root.
 Computed from the definitions on the `_seq` and `_eui` files, for every static configuration
 of the campaign: SC1 (D_init, the four thresholds of common.Datasets), SC3 (the whole database,
 the same thresholds, SIGN, LEVIATHAN, C8T1S5I8N5K) and SC7 (the whole database at the default
-threshold, with the pruning as in proposed_full and proposed_no_IUB, and without it as in
-proposed_no_IPS). The cutoff is r_l * UUT * TU(database).
+threshold, with the pruning as in Pre-HUSPM-Joint and Pre-HUSPM-Joint-no-IUB, and without it as in
+Pre-HUSPM-Joint-no-IPS). The cutoff is r_l * UUT * TU(database).
 
     ips = once:  B(i) = sum of u(s) over the sequences s holding i; items with B(i) < cutoff
                  are removed; remaining utility and PEU then ignore removed items.

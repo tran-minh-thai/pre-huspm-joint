@@ -388,7 +388,7 @@ replay the same plan at a seed, so the ratio is paired by seed.
 # ------------------------------------------------------------------------------ SC7
 def sc7():
     df = mf.load_mean("SC7")
-    arms = ["proposed_full", "proposed_no_IUB", "proposed_no_IPS", "Pre-HUSPM"]
+    arms = [mf.PROPOSED, mf.PROPOSED + "-no-IUB", mf.PROPOSED + "-no-IPS", "Pre-HUSPM"]
     st = df[df["algorithm"].isin(arms)]
 
     def cell(r, a, col, fmt):
@@ -405,20 +405,22 @@ def sc7():
     for ds in [d for d in mf.ALL_DATASETS if d in set(st["dataset"])]:
         r = {a: st[(st["dataset"] == ds) & (st["algorithm"] == a)].iloc[-1] for a in arms
              if len(st[(st["dataset"] == ds) & (st["algorithm"] == a)])}
-        c3.append([ds, cell(r, "proposed_full", "total_patterns_found", count),
-                   cell(r, "proposed_full", "runtime_ms", secs3), cell(r, "proposed_no_IUB", "runtime_ms", secs3),
-                   cell(r, "proposed_no_IPS", "runtime_ms", secs3), cell(r, "Pre-HUSPM", "runtime_ms", secs3),
-                   cell(r, "proposed_full", "explored_nodes", count), cell(r, "proposed_no_IUB", "explored_nodes", count),
-                   cell(r, "proposed_no_IPS", "explored_nodes", count)])
+        full, no_iub, no_ips = mf.PROPOSED, mf.PROPOSED + "-no-IUB", mf.PROPOSED + "-no-IPS"
+        c3.append([ds, cell(r, full, "total_patterns_found", count),
+                   cell(r, full, "runtime_ms", secs3), cell(r, no_iub, "runtime_ms", secs3),
+                   cell(r, no_ips, "runtime_ms", secs3), cell(r, "Pre-HUSPM", "runtime_ms", secs3),
+                   cell(r, full, "explored_nodes", count), cell(r, no_iub, "explored_nodes", count),
+                   cell(r, no_ips, "explored_nodes", count)])
     fin = st[st["finished"]]
     static_pairs = sum(max(0, g["algorithm"].nunique() - 1) for _, g in fin.groupby("dataset"))
     static_agree = all(g["total_patterns_found"].nunique() == 1 for _, g in fin.groupby("dataset"))
-    inc = df[df["algorithm"].isin(["proposed_C5_on", "proposed_C5_off", "proposed_no_block_index"]) & mf.is_inc(df)]
+    on_arm, off_arm, nb_arm = mf.PROPOSED + "-rescan-rule", mf.PROPOSED + "-rescan-every-batch", mf.PROPOSED + "-no-block-index"
+    inc = df[df["algorithm"].isin([on_arm, off_arm, nb_arm]) & mf.is_inc(df)]
     c5, c4 = [], []
     for ds in [d for d in mf.ALL_DATASETS if d in set(inc["dataset"])]:
         g = {a: inc[(inc["dataset"] == ds) & (inc["algorithm"] == a)].sort_values("iteration") for a in
-             ["proposed_C5_on", "proposed_C5_off", "proposed_no_block_index"]}
-        on, off, nb = g["proposed_C5_on"], g["proposed_C5_off"], g["proposed_no_block_index"]
+             [on_arm, off_arm, nb_arm]}
+        on, off, nb = g[on_arm], g[off_arm], g[nb_arm]
         ton, toff = mf.ms_to_s(on["runtime_ms"]).sum(), mf.ms_to_s(off["runtime_ms"]).sum()
         c5.append([ds, f"{ton:.1f} s, {int(on['rescan_count'].iloc[-1])} rescans",
                    f"{toff:.1f} s, {int(off['rescan_count'].iloc[-1])} rescans", f"{toff / ton:.2f}"])
@@ -428,8 +430,8 @@ def sc7():
                    f"{int(d_on['blocks_read'].sum()):,}", f"{int(d_nb['blocks_read'].sum()):,}"])
     agree = all(
         (inc[(inc["dataset"] == ds) & (inc["algorithm"] == a)].sort_values("iteration")["total_patterns_found"].to_numpy()
-         == inc[(inc["dataset"] == ds) & (inc["algorithm"] == "proposed_C5_on")].sort_values("iteration")["total_patterns_found"].to_numpy()).all()
-        for ds in set(inc["dataset"]) for a in ["proposed_C5_off", "proposed_no_block_index"])
+         == inc[(inc["dataset"] == ds) & (inc["algorithm"] == on_arm)].sort_values("iteration")["total_patterns_found"].to_numpy()).all()
+        for ds in set(inc["dataset"]) for a in [off_arm, nb_arm])
     bs = sc7_block_size()
     block_size_text = ""
     if len(bs):
@@ -681,13 +683,13 @@ Geometric mean of the baseline's runtime over the proposal's, on the cells where
 def sc4():
     df = mf.parse_sl(mf.load_scenario("SC4"))
     dss = [d for d in mf.ALL_DATASETS if d in set(df["dataset"])]
-    names = {"Adaptive": "Pre-HUSPM-Joint", "Pre-HUSPM": "Pre-HUSPM"}
+    names = {mf.PROPOSED: "Pre-HUSPM-Joint", "Pre-HUSPM": "Pre-HUSPM"}
     rows, counts, ratios = [], {}, []
     for d in dss:
         for sl in sorted(df.loc[df["dataset"] == d, "sl"].dropna().unique()):
             row = [d, f"{sl:g}"]
             got = {}
-            for base in ("Adaptive", "Pre-HUSPM"):
+            for base in (mf.PROPOSED, "Pre-HUSPM"):
                 g = df[(df["dataset"] == d) & (df["base_algo"] == base) & np.isclose(df["sl"], sl)]
                 if g.empty:
                     row.append("not run")
@@ -700,8 +702,8 @@ def sc4():
                 counts.setdefault(d, set()).add(int(r["total_patterns_found"]))
                 row.append(f"{int(r['prelarge_count']):,} / {int(r['peak_heap_mb']):,} MB / "
                            f"{float(r['runtime_ms']) / 1000:.1f}")
-            if len(got) == 2 and got["Adaptive"]["prelarge_count"] > 0:
-                ratios.append(got["Pre-HUSPM"]["prelarge_count"] / got["Adaptive"]["prelarge_count"])
+            if len(got) == 2 and got[mf.PROPOSED]["prelarge_count"] > 0:
+                ratios.append(got["Pre-HUSPM"]["prelarge_count"] / got[mf.PROPOSED]["prelarge_count"])
             rows.append(row)
     same = all(len(v) == 1 for v in counts.values())
     husp = ", ".join(f"{next(iter(v))} on {d}" for d, v in counts.items() if len(v) == 1)

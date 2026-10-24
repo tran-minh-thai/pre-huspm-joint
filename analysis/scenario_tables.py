@@ -30,6 +30,7 @@ import numpy as np
 import pandas as pd
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import rename_arms
 import make_figures as mf  # noqa: E402
 
 P = mf.PROPOSED
@@ -46,7 +47,7 @@ PREHUSPM_MAINTENANCE = "Joint-miner+SWUmax+PreHUSPM-tracking"
 ISOLATION_ARMS = ["Joint-miner+SWUmax", "Joint-miner+TSU", PREHUSPM_TRACKING, PREHUSPM_MAINTENANCE,
                   "Joint-rule+min-floor", "Joint-rule+plain-floor"]
 # In the incremental scenarios P is the method, the proposal with the rescan floor selection
-# (make_figures.load_scenario reads arm Adaptive-FloorSelect as P there); FIXED is the proposal at the
+# (arm Pre-HUSPM-Joint on disk); FIXED is the proposal at the
 # fixed floor r_l, kept as an ablation row: a version of the method, not a competitor.
 FIXED = mf.FIXED
 FS = FIXED     # the version of the proposal that is not a competitor
@@ -165,7 +166,7 @@ def sc4_cells():
     for (d, sl, base), g in df.groupby(["dataset", "sl", "base_algo"]):
         r = g.iloc[-1]
         ok = bool(r["finished"])
-        rows.append(dict(dataset=d, r_l=float(sl), algorithm="Pre-HUSPM-Joint" if base == "Adaptive" else base,
+        rows.append(dict(dataset=d, r_l=float(sl), algorithm=base,
                          status=r["status"], husps=int(r["total_patterns_found"]) if ok else np.nan,
                          prelarge=int(r["prelarge_count"]) if ok else np.nan,
                          peak_heap_mb=float(r["peak_heap_mb"]) if ok else np.nan,
@@ -470,11 +471,11 @@ def sc7_block_index():
     df = mf.load_scenario("SC7")
     if df is None:
         return pd.DataFrame()
-    inc = df[df["algorithm"].isin(["proposed_C5_on", "proposed_no_block_index"]) & mf.is_inc(df)]
+    inc = df[df["algorithm"].isin([P + "-rescan-rule", P + "-no-block-index"]) & mf.is_inc(df)]
     rows = []
     for d in [x for x in mf.ALL_DATASETS if x in set(inc["dataset"])]:
-        on = inc[(inc["dataset"] == d) & (inc["algorithm"] == "proposed_C5_on")]
-        nb = inc[(inc["dataset"] == d) & (inc["algorithm"] == "proposed_no_block_index")]
+        on = inc[(inc["dataset"] == d) & (inc["algorithm"] == P + "-rescan-rule")]
+        nb = inc[(inc["dataset"] == d) & (inc["algorithm"] == P + "-no-block-index")]
         d_on = on[on["cub_triggered"].astype(str).str.lower() == "false"]
         d_nb = nb[nb["cub_triggered"].astype(str).str.lower() == "false"]
         rows.append(dict(dataset=d, increments_without_rescan=len(d_on),
@@ -487,21 +488,21 @@ def sc7_block_index():
 
 
 def sc7_block_size():
-    """Block-size sweep of the block index on the SC2 stream. proposed_C5_on is the default
-    block size; proposed_bsz_<n> the others. Sequences read and time are summed over the
+    """Block-size sweep of the block index on the SC2 stream. Pre-HUSPM-Joint-rescan-rule is the default
+    block size; Pre-HUSPM-Joint-bsz-<n> the others. Sequences read and time are summed over the
     increments that took the direct update; the rescan decisions do not read the index, so
     every arm has the same set of such increments. counts_equal compares HUSP and pre-large
     counts with the default arm row by row."""
     df = mf.load_scenario("SC7")
     if df is None:
         return pd.DataFrame()
-    arms = {"proposed_C5_on": None}
-    arms.update({a: int(a.rsplit("_", 1)[1]) for a in set(df["algorithm"]) if str(a).startswith("proposed_bsz_")})
+    arms = {P + "-rescan-rule": None}
+    arms.update({a: int(a.rsplit("-", 1)[1]) for a in set(df["algorithm"]) if str(a).startswith(P + "-bsz-")})
     if len(arms) == 1:
         return pd.DataFrame()
     rows = []
     for d in [x for x in mf.ALL_DATASETS if x in set(df["dataset"])]:
-        ref = df[(df["dataset"] == d) & (df["algorithm"] == "proposed_C5_on")]
+        ref = df[(df["dataset"] == d) & (df["algorithm"] == P + "-rescan-rule")]
         if ref.empty:
             continue
         default_bsz = int(ref["block_size"].iloc[0])
@@ -1135,7 +1136,7 @@ def sc7_static_runtime(put, t7):
     if df is not None:
         for (d, a), g in df[df["finished"]].groupby(["dataset", "algorithm"]):
             runs[(d, a)] = mf.ms_to_s(g["runtime_ms"]).tolist()
-    arm = {"Full": "proposed_full", "-IUB": "proposed_no_IUB", "-IPS": "proposed_no_IPS", "Pre-HUSPM": "Pre-HUSPM"}
+    arm = {"Full": P, "-IUB": P + "-no-IUB", "-IPS": P + "-no-IPS", "Pre-HUSPM": "Pre-HUSPM"}
     full = t7[t7["variant"] == "Full"].set_index("dataset")["runtime_s"]
     for v in ("-IUB", "-IPS", "Pre-HUSPM"):
         x = t7[t7["variant"] == v].set_index("dataset")["runtime_s"]
@@ -1162,8 +1163,8 @@ def sc7_static_runtime(put, t7):
 
 
 # ------------------------------------------------------------------------------ window study
-# The rescan floor selection at w in mf.WINDOWS: the arm Adaptive-FloorSelect is w = 5 (read as the
-# method, P), Adaptive-FloorSelect-w<n> the others; the fixed floor (FIXED) is the reference.
+# The rescan floor selection at w in mf.WINDOWS: the arm Pre-HUSPM-Joint is w = 5 (the
+# method, P), Pre-HUSPM-Joint-w<n> the others; the fixed floor (FIXED) is the reference.
 WIN_ORDER = ["SIGN", "TAFENG", "C8T1S5I8N5K", "BIBLE", "LEVIATHAN", "FIFA", "KOSARAK"]   # as table_SC2_time
 
 
@@ -1781,7 +1782,7 @@ def export_all(out_dir=None):
     if not len(bs):
         if os.path.exists(bs_path):
             os.remove(bs_path)
-        print("[not written] table_SC7_block_size.csv: no proposed_bsz_<n> arm in results/campaign/SC7")
+        print("[not written] table_SC7_block_size.csv: no Pre-HUSPM-Joint-bsz-<n> arm in results/campaign/SC7")
     else:
         mf.write_csv(bs, bs_path)
         put("SC7_block_size_nested_monotone", f"{bs.attrs['nested_pairs_monotone']}/{bs.attrs['nested_pairs']}",
@@ -1815,6 +1816,8 @@ def export_all(out_dir=None):
                 cmp_rows = cmp_rows[cmp_rows["status"] != "reference"]
                 for sc, n in cmp_rows.groupby("scenario").size().items():
                     put(f"{key}_{sc}_comparisons", int(n), "table_verification.csv")
+                # records written before the arms were renamed carry the old names
+                cmp_rows["arm"] = [rename_arms.new_name(sc, a) or a for sc, a in zip(cmp_rows["scenario"], cmp_rows["arm"])]
                 for (sc, arm), n in cmp_rows.groupby(["scenario", "arm"]).size().items():
                     put(f"{key}_{sc}_{arm}_comparisons", int(n), "table_verification.csv")
         for col in ("runs", "operations", "with_target", "direct_delete", "direct_insert", "direct_modify",
