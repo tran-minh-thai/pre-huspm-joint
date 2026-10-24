@@ -1,0 +1,21 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC1]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=1 | seed.index=0
+
+--- [SC1] Static baseline on D_init ---
+>> WARM-UP (not measured) Joint-miner@UUT/FIFA/SC1
+>> RUNNING Joint-miner@UUT/FIFA/SC1_su=0.056234#0  (heap free=562MB / total=768MB / max=49152MB)
+[Joint-miner@UUT/FIFA/SC1_su=0.056234#0] OK t=2874ms cand=64712 pat=42 heapDelta=306MB
+>> RUNNING Joint-miner@UUT/FIFA/SC1_su=0.056234#0  (heap free=411MB / total=768MB / max=49152MB)
+[Joint-miner@UUT/FIFA/SC1_su=0.056234#0] OK t=2629ms cand=64712 pat=42 heapDelta=288MB
+   warm-up mines (ms, not measured): [2874, 2629]
+>> RUNNING Joint-miner@UUT/FIFA/SC1_su=0.056234#0  (heap free=556MB / total=768MB / max=49152MB)
+[Joint-miner@UUT/FIFA/SC1_su=0.056234#0] OK t=2575ms cand=64712 pat=42 heapDelta=320MB
+>> RUNNING Joint-miner@UUT/FIFA/SC1_su=0.059637#0  (heap free=557MB / total=768MB / max=49152MB)
+[Joint-miner@UUT/FIFA/SC1_su=0.059637#0] OK t=2105ms cand=51321 pat=18 heapDelta=288MB
+>> RUNNING Joint-miner@UUT/FIFA/SC1_su=0.067073#0  (heap free=557MB / total=768MB / max=49152MB)
+[Joint-miner@UUT/FIFA/SC1_su=0.067073#0] OK t=1436ms cand=32682 pat=5 heapDelta=288MB
+>> RUNNING Joint-miner@UUT/FIFA/SC1_su=0.075436#0  (heap free=558MB / total=768MB / max=49152MB)
+[Joint-miner@UUT/FIFA/SC1_su=0.075436#0] OK t=940ms cand=20521 pat=1 heapDelta=220MB
+=== ALL SCENARIOS DONE (27.6s) ===
