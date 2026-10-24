@@ -1,0 +1,21 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC1]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC1] Static baseline on D_init ---
+>> WARM-UP (not measured) IncUSP-Miner+/BIBLE/SC1
+>> RUNNING IncUSP-Miner+/BIBLE/SC1_su=0.0181#0  (heap free=547MB / total=768MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC1_su=0.0181#0] OK t=6171ms cand=10425746 pat=376 heapDelta=3945MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC1_su=0.0181#0  (heap free=3308MB / total=5408MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC1_su=0.0181#0] OK t=5969ms cand=10425746 pat=376 heapDelta=3269MB
+   warm-up mines (ms, not measured): [6171, 5969]
+>> RUNNING IncUSP-Miner+/BIBLE/SC1_su=0.0181#0  (heap free=632MB / total=864MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC1_su=0.0181#0] OK t=5993ms cand=10425746 pat=376 heapDelta=3469MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC1_su=0.022895#0  (heap free=635MB / total=864MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC1_su=0.022895#0] OK t=4466ms cand=7037385 pat=192 heapDelta=3240MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC1_su=0.02896#0  (heap free=636MB / total=864MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC1_su=0.02896#0] OK t=3328ms cand=4734791 pat=96 heapDelta=2157MB
+>> RUNNING IncUSP-Miner+/BIBLE/SC1_su=0.03257#0  (heap free=636MB / total=864MB / max=49152MB)
+[IncUSP-Miner+/BIBLE/SC1_su=0.03257#0] OK t=2861ms cand=3864671 pat=58 heapDelta=1907MB
+=== ALL SCENARIOS DONE (45.3s) ===
