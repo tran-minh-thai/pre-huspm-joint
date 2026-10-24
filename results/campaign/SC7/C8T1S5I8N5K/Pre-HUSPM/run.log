@@ -1,0 +1,17 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC7]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC7] Ablation: IUB pruning / block index / adaptive rescan ---
+>> WARM-UP (not measured) Pre-HUSPM/C8T1S5I8N5K/SC7
+>> RUNNING Pre-HUSPM/C8T1S5I8N5K/SC7_ref#0  (heap free=231MB / total=320MB / max=49152MB)
+[Pre-HUSPM/C8T1S5I8N5K/SC7_ref#0] OK t=979ms cand=3985560 pat=3438 heapDelta=453MB
+>> RUNNING Pre-HUSPM/C8T1S5I8N5K/SC7_ref#0  (heap free=354MB / total=896MB / max=49152MB)
+[Pre-HUSPM/C8T1S5I8N5K/SC7_ref#0] OK t=826ms cand=3985560 pat=3438 heapDelta=230MB
+>> RUNNING Pre-HUSPM/C8T1S5I8N5K/SC7_ref#0  (heap free=228MB / total=544MB / max=49152MB)
+[Pre-HUSPM/C8T1S5I8N5K/SC7_ref#0] OK t=779ms cand=3985560 pat=3438 heapDelta=468MB
+   warm-up mines (ms, not measured): [979, 826, 779]
+>> RUNNING Pre-HUSPM/C8T1S5I8N5K/SC7_ref#0  (heap free=338MB / total=448MB / max=49152MB)
+[Pre-HUSPM/C8T1S5I8N5K/SC7_ref#0] OK t=807ms cand=3985560 pat=3438 heapDelta=260MB
+=== ALL SCENARIOS DONE (10.4s) ===
