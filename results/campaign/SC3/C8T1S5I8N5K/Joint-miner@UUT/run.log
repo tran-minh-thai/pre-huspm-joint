@@ -1,0 +1,29 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC3]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC3] Su sensitivity ---
+>> WARM-UP (not measured) Joint-miner@UUT/C8T1S5I8N5K/SC3
+>> RUNNING Joint-miner@UUT/C8T1S5I8N5K/SC3_su=0.001099#0  (heap free=231MB / total=320MB / max=49152MB)
+[Joint-miner@UUT/C8T1S5I8N5K/SC3_su=0.001099#0] OK t=500ms cand=17469 pat=4256 heapDelta=115MB
+>> RUNNING Joint-miner@UUT/C8T1S5I8N5K/SC3_su=0.001099#0  (heap free=129MB / total=320MB / max=49152MB)
+[Joint-miner@UUT/C8T1S5I8N5K/SC3_su=0.001099#0] OK t=303ms cand=17469 pat=4256 heapDelta=114MB
+>> RUNNING Joint-miner@UUT/C8T1S5I8N5K/SC3_su=0.001099#0  (heap free=542MB / total=768MB / max=49152MB)
+[Joint-miner@UUT/C8T1S5I8N5K/SC3_su=0.001099#0] OK t=236ms cand=17469 pat=4256 heapDelta=128MB
+>> RUNNING Joint-miner@UUT/C8T1S5I8N5K/SC3_su=0.001099#0  (heap free=336MB / total=544MB / max=49152MB)
+[Joint-miner@UUT/C8T1S5I8N5K/SC3_su=0.001099#0] OK t=172ms cand=17469 pat=4256 heapDelta=106MB
+>> RUNNING Joint-miner@UUT/C8T1S5I8N5K/SC3_su=0.001099#0  (heap free=231MB / total=448MB / max=49152MB)
+[Joint-miner@UUT/C8T1S5I8N5K/SC3_su=0.001099#0] OK t=150ms cand=17469 pat=4256 heapDelta=103MB
+>> RUNNING Joint-miner@UUT/C8T1S5I8N5K/SC3_su=0.001099#0  (heap free=234MB / total=448MB / max=49152MB)
+[Joint-miner@UUT/C8T1S5I8N5K/SC3_su=0.001099#0] OK t=147ms cand=17469 pat=4256 heapDelta=102MB
+   warm-up mines (ms, not measured): [500, 303, 236, 172, 150, 147]
+>> RUNNING Joint-miner@UUT/C8T1S5I8N5K/SC3_su=0.001099#0  (heap free=338MB / total=448MB / max=49152MB)
+[Joint-miner@UUT/C8T1S5I8N5K/SC3_su=0.001099#0] OK t=147ms cand=17469 pat=4256 heapDelta=102MB
+>> RUNNING Joint-miner@UUT/C8T1S5I8N5K/SC3_su=0.001132#0  (heap free=338MB / total=448MB / max=49152MB)
+[Joint-miner@UUT/C8T1S5I8N5K/SC3_su=0.001132#0] OK t=135ms cand=14932 pat=3438 heapDelta=100MB
+>> RUNNING Joint-miner@UUT/C8T1S5I8N5K/SC3_su=0.0012#0  (heap free=338MB / total=448MB / max=49152MB)
+[Joint-miner@UUT/C8T1S5I8N5K/SC3_su=0.0012#0] OK t=117ms cand=11130 pat=2110 heapDelta=99MB
+>> RUNNING Joint-miner@UUT/C8T1S5I8N5K/SC3_su=0.001236#0  (heap free=338MB / total=448MB / max=49152MB)
+[Joint-miner@UUT/C8T1S5I8N5K/SC3_su=0.001236#0] OK t=111ms cand=9260 pat=1484 heapDelta=97MB
+=== ALL SCENARIOS DONE (18.3s) ===
