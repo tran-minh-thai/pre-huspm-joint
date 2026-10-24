@@ -1,0 +1,21 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC1]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC1] Static baseline on D_init ---
+>> WARM-UP (not measured) HUSP-SP/FIFA/SC1
+>> RUNNING HUSP-SP/FIFA/SC1_su=0.056234#0  (heap free=562MB / total=768MB / max=49152MB)
+[HUSP-SP/FIFA/SC1_su=0.056234#0] OK t=4089ms cand=260593 pat=42 heapDelta=366MB
+>> RUNNING HUSP-SP/FIFA/SC1_su=0.056234#0  (heap free=413MB / total=768MB / max=49152MB)
+[HUSP-SP/FIFA/SC1_su=0.056234#0] OK t=4037ms cand=260593 pat=42 heapDelta=423MB
+   warm-up mines (ms, not measured): [4089, 4037]
+>> RUNNING HUSP-SP/FIFA/SC1_su=0.056234#0  (heap free=563MB / total=768MB / max=49152MB)
+[HUSP-SP/FIFA/SC1_su=0.056234#0] OK t=4064ms cand=260593 pat=42 heapDelta=895MB
+>> RUNNING HUSP-SP/FIFA/SC1_su=0.059637#0  (heap free=565MB / total=768MB / max=49152MB)
+[HUSP-SP/FIFA/SC1_su=0.059637#0] OK t=3221ms cand=199847 pat=18 heapDelta=442MB
+>> RUNNING HUSP-SP/FIFA/SC1_su=0.067073#0  (heap free=565MB / total=768MB / max=49152MB)
+[HUSP-SP/FIFA/SC1_su=0.067073#0] OK t=2100ms cand=117077 pat=5 heapDelta=448MB
+>> RUNNING HUSP-SP/FIFA/SC1_su=0.075436#0  (heap free=566MB / total=768MB / max=49152MB)
+[HUSP-SP/FIFA/SC1_su=0.075436#0] OK t=1422ms cand=70726 pat=1 heapDelta=442MB
+=== ALL SCENARIOS DONE (35.2s) ===
