@@ -1,0 +1,25 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC3]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=2 | seed.index=0
+
+--- [SC3] Su sensitivity ---
+>> WARM-UP (not measured) Pre-HUSPM-Joint/SIGN/SC3
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC3_su=0.049134#0  (heap free=114MB / total=128MB / max=49152MB)
+[Pre-HUSPM-Joint/SIGN/SC3_su=0.049134#0] OK t=681ms cand=119634 pat=793 heapDelta=32MB
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC3_su=0.049134#0  (heap free=93MB / total=128MB / max=49152MB)
+[Pre-HUSPM-Joint/SIGN/SC3_su=0.049134#0] OK t=568ms cand=119634 pat=793 heapDelta=31MB
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC3_su=0.049134#0  (heap free=82MB / total=128MB / max=49152MB)
+[Pre-HUSPM-Joint/SIGN/SC3_su=0.049134#0] OK t=476ms cand=119634 pat=793 heapDelta=28MB
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC3_su=0.049134#0  (heap free=84MB / total=128MB / max=49152MB)
+[Pre-HUSPM-Joint/SIGN/SC3_su=0.049134#0] OK t=471ms cand=119634 pat=793 heapDelta=27MB
+   warm-up mines (ms, not measured): [681, 568, 476, 471]
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC3_su=0.049134#0  (heap free=114MB / total=128MB / max=49152MB)
+[Pre-HUSPM-Joint/SIGN/SC3_su=0.049134#0] OK t=465ms cand=119634 pat=793 heapDelta=25MB
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC3_su=0.065911#0  (heap free=114MB / total=128MB / max=49152MB)
+[Pre-HUSPM-Joint/SIGN/SC3_su=0.065911#0] OK t=243ms cand=51598 pat=141 heapDelta=22MB
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC3_su=0.083371#0  (heap free=114MB / total=128MB / max=49152MB)
+[Pre-HUSPM-Joint/SIGN/SC3_su=0.083371#0] OK t=146ms cand=26103 pat=31 heapDelta=20MB
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC3_su=0.091052#0  (heap free=114MB / total=128MB / max=49152MB)
+[Pre-HUSPM-Joint/SIGN/SC3_su=0.091052#0] OK t=118ms cand=20119 pat=16 heapDelta=19MB
+=== ALL SCENARIOS DONE (11.5s) ===
