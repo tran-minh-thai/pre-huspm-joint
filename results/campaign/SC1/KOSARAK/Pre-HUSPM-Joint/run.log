@@ -1,0 +1,25 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC1]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC1] Static baseline on D_init ---
+>> WARM-UP (not measured) Pre-HUSPM-Joint/KOSARAK/SC1
+>> RUNNING Pre-HUSPM-Joint/KOSARAK/SC1_su=0.022228#0  (heap free=4247MB / total=6624MB / max=49152MB)
+[Pre-HUSPM-Joint/KOSARAK/SC1_su=0.022228#0] OK t=961ms cand=3623 pat=11 heapDelta=352MB
+>> RUNNING Pre-HUSPM-Joint/KOSARAK/SC1_su=0.022228#0  (heap free=3909MB / total=6624MB / max=49152MB)
+[Pre-HUSPM-Joint/KOSARAK/SC1_su=0.022228#0] OK t=495ms cand=3623 pat=11 heapDelta=336MB
+>> RUNNING Pre-HUSPM-Joint/KOSARAK/SC1_su=0.022228#0  (heap free=3903MB / total=6624MB / max=49152MB)
+[Pre-HUSPM-Joint/KOSARAK/SC1_su=0.022228#0] OK t=405ms cand=3623 pat=11 heapDelta=288MB
+>> RUNNING Pre-HUSPM-Joint/KOSARAK/SC1_su=0.022228#0  (heap free=3951MB / total=6624MB / max=49152MB)
+[Pre-HUSPM-Joint/KOSARAK/SC1_su=0.022228#0] OK t=403ms cand=3623 pat=11 heapDelta=288MB
+   warm-up mines (ms, not measured): [961, 495, 405, 403]
+>> RUNNING Pre-HUSPM-Joint/KOSARAK/SC1_su=0.022228#0  (heap free=4224MB / total=6624MB / max=49152MB)
+[Pre-HUSPM-Joint/KOSARAK/SC1_su=0.022228#0] OK t=405ms cand=3623 pat=11 heapDelta=288MB
+>> RUNNING Pre-HUSPM-Joint/KOSARAK/SC1_su=0.025#0  (heap free=4224MB / total=6624MB / max=49152MB)
+[Pre-HUSPM-Joint/KOSARAK/SC1_su=0.025#0] OK t=369ms cand=2431 pat=10 heapDelta=256MB
+>> RUNNING Pre-HUSPM-Joint/KOSARAK/SC1_su=0.028117#0  (heap free=4224MB / total=6624MB / max=49152MB)
+[Pre-HUSPM-Joint/KOSARAK/SC1_su=0.028117#0] OK t=330ms cand=1618 pat=7 heapDelta=240MB
+>> RUNNING Pre-HUSPM-Joint/KOSARAK/SC1_su=0.031623#0  (heap free=4224MB / total=6624MB / max=49152MB)
+[Pre-HUSPM-Joint/KOSARAK/SC1_su=0.031623#0] OK t=343ms cand=1166 pat=5 heapDelta=240MB
+=== ALL SCENARIOS DONE (33.6s) ===
