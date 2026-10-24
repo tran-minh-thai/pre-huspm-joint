@@ -1,0 +1,27 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC1]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC1] Static baseline on D_init ---
+>> WARM-UP (not measured) Pre-HUSPM-Joint/TAFENG/SC1
+>> RUNNING Pre-HUSPM-Joint/TAFENG/SC1_su=0.002812#0  (heap free=630MB / total=864MB / max=49152MB)
+[Pre-HUSPM-Joint/TAFENG/SC1_su=0.002812#0] OK t=386ms cand=2874 pat=10 heapDelta=241MB
+>> RUNNING Pre-HUSPM-Joint/TAFENG/SC1_su=0.002812#0  (heap free=392MB / total=864MB / max=49152MB)
+[Pre-HUSPM-Joint/TAFENG/SC1_su=0.002812#0] OK t=203ms cand=2874 pat=10 heapDelta=188MB
+>> RUNNING Pre-HUSPM-Joint/TAFENG/SC1_su=0.002812#0  (heap free=431MB / total=864MB / max=49152MB)
+[Pre-HUSPM-Joint/TAFENG/SC1_su=0.002812#0] OK t=271ms cand=2874 pat=10 heapDelta=229MB
+>> RUNNING Pre-HUSPM-Joint/TAFENG/SC1_su=0.002812#0  (heap free=390MB / total=864MB / max=49152MB)
+[Pre-HUSPM-Joint/TAFENG/SC1_su=0.002812#0] OK t=221ms cand=2874 pat=10 heapDelta=197MB
+>> RUNNING Pre-HUSPM-Joint/TAFENG/SC1_su=0.002812#0  (heap free=422MB / total=864MB / max=49152MB)
+[Pre-HUSPM-Joint/TAFENG/SC1_su=0.002812#0] OK t=219ms cand=2874 pat=10 heapDelta=183MB
+   warm-up mines (ms, not measured): [386, 203, 271, 221, 219]
+>> RUNNING Pre-HUSPM-Joint/TAFENG/SC1_su=0.002812#0  (heap free=620MB / total=864MB / max=49152MB)
+[Pre-HUSPM-Joint/TAFENG/SC1_su=0.002812#0] OK t=163ms cand=2874 pat=10 heapDelta=160MB
+>> RUNNING Pre-HUSPM-Joint/TAFENG/SC1_su=0.003557#0  (heap free=620MB / total=864MB / max=49152MB)
+[Pre-HUSPM-Joint/TAFENG/SC1_su=0.003557#0] OK t=154ms cand=2123 pat=6 heapDelta=156MB
+>> RUNNING Pre-HUSPM-Joint/TAFENG/SC1_su=0.004499#0  (heap free=620MB / total=864MB / max=49152MB)
+[Pre-HUSPM-Joint/TAFENG/SC1_su=0.004499#0] OK t=145ms cand=1602 pat=5 heapDelta=151MB
+>> RUNNING Pre-HUSPM-Joint/TAFENG/SC1_su=0.005691#0  (heap free=620MB / total=864MB / max=49152MB)
+[Pre-HUSPM-Joint/TAFENG/SC1_su=0.005691#0] OK t=132ms cand=1153 pat=3 heapDelta=145MB
+=== ALL SCENARIOS DONE (19.7s) ===
