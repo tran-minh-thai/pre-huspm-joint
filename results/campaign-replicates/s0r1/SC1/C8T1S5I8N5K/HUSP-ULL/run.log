@@ -1,0 +1,25 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC1]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=1 | seed.index=0
+
+--- [SC1] Static baseline on D_init ---
+>> WARM-UP (not measured) HUSP-ULL/C8T1S5I8N5K/SC1
+>> RUNNING HUSP-ULL/C8T1S5I8N5K/SC1_su=0.001099#0  (heap free=230MB / total=320MB / max=49152MB)
+[HUSP-ULL/C8T1S5I8N5K/SC1_su=0.001099#0] OK t=203ms cand=443804 pat=6090 heapDelta=119MB
+>> RUNNING HUSP-ULL/C8T1S5I8N5K/SC1_su=0.001099#0  (heap free=114MB / total=320MB / max=49152MB)
+[HUSP-ULL/C8T1S5I8N5K/SC1_su=0.001099#0] OK t=124ms cand=443804 pat=6090 heapDelta=109MB
+>> RUNNING HUSP-ULL/C8T1S5I8N5K/SC1_su=0.001099#0  (heap free=122MB / total=320MB / max=49152MB)
+[HUSP-ULL/C8T1S5I8N5K/SC1_su=0.001099#0] OK t=104ms cand=443804 pat=6090 heapDelta=108MB
+>> RUNNING HUSP-ULL/C8T1S5I8N5K/SC1_su=0.001099#0  (heap free=764MB / total=960MB / max=49152MB)
+[HUSP-ULL/C8T1S5I8N5K/SC1_su=0.001099#0] OK t=107ms cand=443804 pat=6090 heapDelta=100MB
+   warm-up mines (ms, not measured): [203, 124, 104, 107]
+>> RUNNING HUSP-ULL/C8T1S5I8N5K/SC1_su=0.001099#0  (heap free=232MB / total=320MB / max=49152MB)
+[HUSP-ULL/C8T1S5I8N5K/SC1_su=0.001099#0] OK t=98ms cand=443804 pat=6090 heapDelta=119MB
+>> RUNNING HUSP-ULL/C8T1S5I8N5K/SC1_su=0.001132#0  (heap free=232MB / total=320MB / max=49152MB)
+[HUSP-ULL/C8T1S5I8N5K/SC1_su=0.001132#0] OK t=88ms cand=419535 pat=5067 heapDelta=126MB
+>> RUNNING HUSP-ULL/C8T1S5I8N5K/SC1_su=0.0012#0  (heap free=232MB / total=320MB / max=49152MB)
+[HUSP-ULL/C8T1S5I8N5K/SC1_su=0.0012#0] OK t=82ms cand=371224 pat=3427 heapDelta=126MB
+>> RUNNING HUSP-ULL/C8T1S5I8N5K/SC1_su=0.001236#0  (heap free=232MB / total=320MB / max=49152MB)
+[HUSP-ULL/C8T1S5I8N5K/SC1_su=0.001236#0] OK t=74ms cand=350837 pat=2722 heapDelta=124MB
+=== ALL SCENARIOS DONE (16.1s) ===
