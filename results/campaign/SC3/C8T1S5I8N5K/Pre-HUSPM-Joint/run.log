@@ -1,0 +1,27 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC3]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC3] Su sensitivity ---
+>> WARM-UP (not measured) Pre-HUSPM-Joint/C8T1S5I8N5K/SC3
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC3_su=0.001099#0  (heap free=231MB / total=320MB / max=49152MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC3_su=0.001099#0] OK t=985ms cand=45566 pat=4256 heapDelta=121MB
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC3_su=0.001099#0  (heap free=124MB / total=320MB / max=49152MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC3_su=0.001099#0] OK t=324ms cand=45566 pat=4256 heapDelta=135MB
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC3_su=0.001099#0  (heap free=715MB / total=960MB / max=49152MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC3_su=0.001099#0] OK t=277ms cand=45566 pat=4256 heapDelta=124MB
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC3_su=0.001099#0  (heap free=219MB / total=448MB / max=49152MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC3_su=0.001099#0] OK t=214ms cand=45566 pat=4256 heapDelta=118MB
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC3_su=0.001099#0  (heap free=219MB / total=448MB / max=49152MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC3_su=0.001099#0] OK t=218ms cand=45566 pat=4256 heapDelta=124MB
+   warm-up mines (ms, not measured): [985, 324, 277, 214, 218]
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC3_su=0.001099#0  (heap free=338MB / total=448MB / max=49152MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC3_su=0.001099#0] OK t=211ms cand=45566 pat=4256 heapDelta=122MB
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC3_su=0.001132#0  (heap free=338MB / total=448MB / max=49152MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC3_su=0.001132#0] OK t=229ms cand=40109 pat=3438 heapDelta=118MB
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC3_su=0.0012#0  (heap free=338MB / total=448MB / max=49152MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC3_su=0.0012#0] OK t=181ms cand=31102 pat=2110 heapDelta=112MB
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC3_su=0.001236#0  (heap free=338MB / total=448MB / max=49152MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC3_su=0.001236#0] OK t=172ms cand=27422 pat=1484 heapDelta=111MB
+=== ALL SCENARIOS DONE (19.1s) ===
