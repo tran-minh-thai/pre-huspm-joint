@@ -764,6 +764,63 @@ def static_at_uut_keys(put, t, src="table_static_joint_miner_uut.csv"):
             put(f"{k}_explored_with_root", int(r["explored_with_root"]), src)
 
 
+# ------------------------------------------------------------------------------ joint-rule tightness
+TIGHTNESS = os.path.join(mf.DATA_DIR, "invariant-joint-rule-tightness", "console.txt")
+
+
+def tightness_keys(put, src="invariant-joint-rule-tightness/console.txt"):
+    """Keys of the brute-force check of the discard floors and of the two tightness constructions
+    (analysis/joint_rule_tightness.py): per regime the states, discards and mismatching states of
+    each floor, the trigger construction on both sides of beta, the max-floor construction on both
+    sides of the floor, and the faults caught. A line that is missing ends the export."""
+    if not os.path.exists(TIGHTNESS):
+        print(f"[not written] tightness keys: {TIGHTNESS} is missing")
+        return
+    text = open(TIGHTNESS, encoding="utf-8").read()
+
+    def need(pattern, where):
+        m = re.search(pattern, where, flags=re.M)
+        if m is None:
+            sys.exit(f"{TIGHTNESS}: no line matches {pattern!r}")
+        return m
+
+    blocks = re.split(r"^== ", text, flags=re.M)[1:]
+    for b in blocks:
+        head = b.splitlines()[0]
+        if head.startswith("self-test"):
+            faults = re.findall(r"^fault: (.+) -> (caught|missed)$", b, flags=re.M)
+            put("tight_selftest_faults_caught", f"{sum(1 for _, r in faults if r == 'caught')}/{len(faults)}", src)
+            continue
+        m = need(r"regime (\w+): (\d+) random streams of (\d+) operations", head)
+        reg = m.group(1)
+        put(f"tight_{reg}_streams", int(m.group(2)), src)
+        put(f"tight_{reg}_operations_per_stream", int(m.group(3)), src)
+        for name, states, disc, above, mis in re.findall(
+                r"^floor (\w+)\s+\(.*?\): states (\d+), discards (\d+) \(at or above the min floor: (\d+)\), "
+                r"mismatching states (\d+)", b, flags=re.M):
+            k = f"tight_{reg}_floor_{name}"
+            put(f"{k}_states", int(states), src)
+            put(f"{k}_discards", int(disc), src)
+            put(f"{k}_discards_at_or_above_min_floor", int(above), src)
+            put(f"{k}_mismatching_states", int(mis), src)
+        t = need(r"^trigger: states with Phi > beta (\d+), construction gives an untracked HUSP (\d+); states with "
+                 r"Phi <= beta (\d+), succeeded (\d+); outside U- <= \(1 - lambda\) TU_ref (\d+)", b)
+        for key, v in zip(("above_beta", "above_beta_constructed", "at_or_below_beta",
+                           "at_or_below_beta_constructed", "outside_condition"), t.groups()):
+            put(f"tight_{reg}_trigger_{key}", int(v), src)
+        f = need(r"^max floor: patterns at or above it (\d+), made HUSPs (\d+); below it (\d+), made HUSPs (\d+); "
+                 r"excluded states \(no insertion, Phi = beta\) (\d+)", b)
+        for key, v in zip(("at_or_above", "at_or_above_made_husps", "below", "below_made_husps", "excluded_states"),
+                          f.groups()):
+            put(f"tight_{reg}_maxfloor_{key}", int(v), src)
+    for name, n, r in re.findall(r"^faulty floor (\w+): mismatching states over all regimes (\d+) -> (\w+)$", text,
+                                 flags=re.M):
+        put(f"tight_fault_{name}_mismatching_states", int(n), src)
+        put(f"tight_fault_{name}", r, src)
+    put("tight_all_claims_hold", "yes" if re.search(r"^all claims hold and every fault is caught$", text, flags=re.M)
+        else "no", src)
+
+
 # ------------------------------------------------------------------------------ fidelity
 FIDELITY_DIR = os.path.join(mf.DATA_DIR, mf.TIMING_TREE, "FIDELITY")
 FIDELITY_VARIANTS = {"Pre-HUSPM-SWUmax": "swumax", "Pre-HUSPM-TSU": "tsu"}
@@ -1364,32 +1421,46 @@ def sc2_tex(totals, region, reps=None):
                 cells.append(mf.pm(st[a], bold=low[a]))
         return cells
 
+    WORDS = {1: "one", 2: "two", 3: "three", 4: "four", 5: "five", 6: "six", 7: "seven", 8: "eight", 9: "nine", 10: "ten"}
+
+    def runs_phrase(arms):
+        """The caption's account of the runs behind the printed means: "of five runs" when every
+        finished cell rests on the same number, else the most common number and the cells that
+        differ."""
+        ns = {(d, a): S[(d, a)]["n"] for d in order for a in arms if S.get((d, a))}
+        if not ns:
+            return "one run each"
+        common = max(set(ns.values()), key=list(ns.values()).count)
+        word = lambda n: WORDS.get(n, str(n))
+        text = f"mean and standard deviation of {word(common)} runs"
+        other = sorted(f"{mf.ALGO_LABEL.get(a, a)} on {d} ({word(n)})" for (d, a), n in ns.items() if n != common)
+        return text + (f", except {'; '.join(other)}" if other else "")
+
     head = ("Database & \\begin{tabular}[b]{@{}r@{}}Pre-HUSPM-\\\\Joint\\end{tabular} & "
             "\\begin{tabular}[b]{@{}r@{}}Pre-HUSPM-\\\\SWUmax\\end{tabular} & "
             "\\begin{tabular}[b]{@{}r@{}}Pre-HUSPM-\\\\TSU\\end{tabular} & Remine & "
             "\\begin{tabular}[b]{@{}r@{}}IncUSP-\\\\Miner$^{+}$\\end{tabular} \\\\\\midrule")
     rows = [f"{d} & " + " & ".join(row(d, INC_ARMS)) + " \\\\" for d in order]
     time_tex = "\n".join(["\\begin{table}[!htbp]\\centering",
-                          "\\caption{Runtime (s) of SC2 over 100 increments; mean and standard deviation where "
-                          "three runs were made}\\label{tab:sc2_time}",
+                          f"\\caption{{Runtime (s) of SC2 over 100 increments, {runs_phrase(INC_ARMS)}}}\\label{{tab:sc2_time}}",
                           "\\setlength{\\tabcolsep}{4pt}",
                           "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}lrrrrr}\\toprule", head] + rows +
                          ["\\bottomrule\\end{tabular*}", "\\end{table}", ""])
     # Remining in three ways beside the proposal, in a table of its own: with the two static
     # miners the runtime table is wider than the text (measured: 89 pt over). None when
     # neither remining arm with a static miner has a row.
-    remine_arms = [P, REM, "Remine-HUSP-ULL", "Remine-HUSP-SP"]
+    remine_arms = [P, REM, "Remine-HUSP-ULL", "Remine-HUSP-SP", OWN_UUT]
     remine_tex = None
     if any((d, a) in T for d in order for a in remine_arms[2:]):
         rhead = ("Database & \\begin{tabular}[b]{@{}r@{}}Pre-HUSPM-\\\\Joint\\end{tabular} & "
                  "Remine & "
                  "\\begin{tabular}[b]{@{}r@{}}Remine-\\\\HUSP-ULL\\end{tabular} & "
-                 "\\begin{tabular}[b]{@{}r@{}}Remine-\\\\HUSP-SP\\end{tabular} \\\\\\midrule")
+                 "\\begin{tabular}[b]{@{}r@{}}Remine-\\\\HUSP-SP\\end{tabular} & "
+                 "\\begin{tabular}[b]{@{}r@{}}Remine-\\\\UUT\\end{tabular} \\\\\\midrule")
         rrows = [f"{d} & " + " & ".join(row(d, remine_arms)) + " \\\\" for d in order]
         remine_tex = "\n".join(["\\begin{table}[!htbp]\\centering",
-                                "\\caption{Runtime (s) of SC2 against remining after every increment; mean and "
-                                "standard deviation where three runs were made}\\label{tab:sc2_remine}",
-                                "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}lrrrr}\\toprule", rhead] + rrows +
+                                f"\\caption{{Runtime (s) of SC2 against remining, {runs_phrase(remine_arms)}}}\\label{{tab:sc2_remine}}",
+                                "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}lrrrrr}\\toprule", rhead] + rrows +
                                ["\\bottomrule\\end{tabular*}", "\\end{table}", ""])
     def rescans(d):
         v = [str(int(op.loc[d, c])) for c in ("rescans", "rescans_swumax", "rescans_tsu")]
@@ -1968,6 +2039,7 @@ def export_all(out_dir=None):
         if r["baseline_faster_on"]:
             put(f"{k}_baseline_faster_on_{r['baseline']}", r["baseline_faster_on"], "table_static_geomean.csv")
 
+    tightness_keys(put)
     fs, fi = fidelity()
     for name, t in (("table_PreHUSPM_fidelity.csv", fs), ("table_PreHUSPM_fidelity_increments.csv", fi)):
         if len(t):
@@ -2049,6 +2121,13 @@ def export_all(out_dir=None):
                 f"{int(g['runs_vs_closest_remine'].isin(['behind', 'overlapping']).sum())}/{len(g)}", src5)
             put(f"SC5_{d}_closest_remine_runs", f"proposal {', '.join(map(str, sorted(set(g['runs_proposal']))))}; "
                 f"remining {', '.join(map(str, sorted(set(g['runs_closest_remine']))))}", src5)
+        # the runs behind every arm of the SC5 tables, per database (one value when every cell has it)
+        rn = {}
+        for (d, k, sh, a), v in sc5_run_totals().items():
+            if a in REMINE_ARMS + [P, FIXED]:
+                rn.setdefault((d, a), set()).add(len(v))
+        for (d, a), ns in sorted(rn.items()):
+            put(f"SC5_{d}_runs_{a}", ", ".join(map(str, sorted(ns))), "table_SC5_cells.csv")
         for state in ("separated", "overlapping", "behind", "one run"):
             put(f"SC5_runs_vs_closest_remine_{state.replace(' ', '_')}",
                 f"{int((c5['runs_vs_closest_remine'] == state).sum())}/{len(c5)}", "table_SC5_cells.csv")
@@ -2166,6 +2245,11 @@ def export_all(out_dir=None):
             vh = os.path.join(VERIFY_DIR, r["check"].split(", ")[-1], "verify_husps.csv")
             if os.path.exists(vh):
                 cmp_rows = pd.read_csv(vh)
+                # the arm every other arm is compared with (it runs first on each stream)
+                ref = cmp_rows[cmp_rows["status"] == "reference"]
+                for sc, g in ref.groupby("scenario"):
+                    put(f"{key}_{sc}_reference_arm", "; ".join(sorted({rename_arms.new_name(sc, a) or a for a in g["arm"]})),
+                        "table_verification.csv")
                 cmp_rows = cmp_rows[cmp_rows["status"] != "reference"]
                 for sc, n in cmp_rows.groupby("scenario").size().items():
                     put(f"{key}_{sc}_comparisons", int(n), "table_verification.csv")

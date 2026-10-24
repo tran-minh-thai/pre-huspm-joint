@@ -133,6 +133,8 @@ STATIC_ORDER = ["USpan", "HUSP-ULL", "HUSP-SP", "IncUSP-Miner+", "Pre-HUSPM", PR
 # that mines no pre-large patterns (not a competitor)
 AT_UUT_ORDER = ["HUSP-ULL", "HUSP-SP", "Joint-miner@UUT"]
 INC_ORDER    = ["IncUSP-Miner+", "Pre-HUSPM-SWUmax", "Pre-HUSPM-TSU", "Remine-from-scratch", PROPOSED]
+# the SC2 cumulative-runtime figure also draws remining with the proposal's own miner at UUT
+INC_FIG_ORDER = INC_ORDER[:-1] + ["Remine-own-UUT", PROPOSED]
 # PROPOSED is the method: in the incremental scenarios its maintenance with the rescan threshold
 # selection (PreHUSPMAdaptiveAlgo.floorWindow = 5), in the static ones its static mine. FIXED is the
 # method at the fixed lower threshold r_l, an ablation row of the incremental scenarios. The arms
@@ -155,21 +157,21 @@ ALGO_LABEL = {
     "IncUSP-Miner+": "IncUSP-Miner$^{+}$", "Pre-HUSPM": "Pre-HUSPM", "Pre-HUSPM-SWUmax": "Pre-HUSPM-SWUmax",
     "Pre-HUSPM-TSU": "Pre-HUSPM-TSU", "Remine-from-scratch": "Remine",
     PROPOSED: PROPOSED_LABEL, FIXED: PROPOSED_LABEL + ", fixed lower threshold",
-    "Joint-miner@UUT": "Joint-miner@UUT",
+    "Joint-miner@UUT": "Joint-miner@UUT", "Remine-own-UUT": "Remine-UUT",
 }
 ALGO_LINESTYLE = {
     "USpan": (0, (1, 1.5)), "HUSP-ULL": (0, (4, 1.5)), "HUSP-SP": (0, (4, 1.5, 1, 1.5)),
     "IncUSP-Miner+": (0, (6, 2)), "Pre-HUSPM": (0, (2, 1.5)), "Pre-HUSPM-SWUmax": (0, (2, 1.5)), "Pre-HUSPM-TSU": (0, (6, 1.5, 1, 1.5, 1, 1.5)),
-    "Remine-from-scratch": (0, (8, 2, 2, 2)), PROPOSED: "-",
+    "Remine-from-scratch": (0, (8, 2, 2, 2)), "Remine-own-UUT": (0, (3, 1.5)), PROPOSED: "-",
 }
 ALGO_MARKER = {
     "USpan": "o", "HUSP-ULL": "s", "HUSP-SP": "v", "IncUSP-Miner+": "^",
-    "Pre-HUSPM": "D", "Pre-HUSPM-SWUmax": "D", "Pre-HUSPM-TSU": "P", "Remine-from-scratch": "x",
+    "Pre-HUSPM": "D", "Pre-HUSPM-SWUmax": "D", "Pre-HUSPM-TSU": "P", "Remine-from-scratch": "x", "Remine-own-UUT": "+",
     PROPOSED: "*",
 }
 ALGO_HATCH = {
     "USpan": "", "HUSP-ULL": "////", "HUSP-SP": "\\\\", "IncUSP-Miner+": "xxxx",
-    "Pre-HUSPM": "....", "Pre-HUSPM-SWUmax": "....", "Pre-HUSPM-TSU": "----", "Remine-from-scratch": "++",
+    "Pre-HUSPM": "....", "Pre-HUSPM-SWUmax": "....", "Pre-HUSPM-TSU": "----", "Remine-from-scratch": "++", "Remine-own-UUT": "oo",
     PROPOSED: "||||",
 }
 
@@ -181,6 +183,7 @@ ALGO_COLOR = {
     PROPOSED: "#D55E00", "Pre-HUSPM": "#0072B2", "Pre-HUSPM-SWUmax": "#0072B2",
     "Pre-HUSPM-TSU": "#56B4E9", "Remine-from-scratch": "#000000", "IncUSP-Miner+": "#009E73",
     "HUSP-ULL": "#E69F00", "HUSP-SP": "#CC79A7", "USpan": "#7F7F7F",
+    "Remine-own-UUT": "#882255",   # Tol's wine: not an Okabe-Ito colour taken by another method
 }
 # Series that are not methods (variants, stream cuts, databases) take colours in this order, in
 # the order they are drawn; the first is the proposal's, kept by the full variant.
@@ -722,7 +725,7 @@ def figset_incremental(tag="fig_incremental_cumulative", datasets=None):
     absent = []
     for i, (ax, ds) in enumerate(zip(axes, datasets)):
         sub = df[(df["dataset"] == ds) & is_inc(df)]
-        for algo in INC_ORDER:
+        for algo in INC_FIG_ORDER:
             a = sub[sub["algorithm"] == algo].sort_values("iteration")
             if a.empty:
                 continue
@@ -736,7 +739,7 @@ def figset_incremental(tag="fig_incremental_cumulative", datasets=None):
             if len(ok) < len(a):
                 ax.plot(ok["iteration"].iloc[-1], y[-1], marker="X", color="black",
                         markerfacecolor="black", ms=5, linestyle="none")
-        absent.append((i, ds, note_absent(df[df["dataset"] == ds], INC_ORDER,
+        absent.append((i, ds, note_absent(df[df["dataset"] == ds], INC_FIG_ORDER,
                                           os.path.join(DATA_DIR, TIMING_TREE, "SC2"), ds)))
         ax.set_xticks([0, 50, 100])
         panel_xlabel(ax, i, ds, "Increment")

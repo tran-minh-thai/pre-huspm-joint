@@ -50,7 +50,7 @@ pattern and marker, so a black-and-white print still reads.
 |---|---|---|
 | `fig_scalability_SC3_runtime_ms.pdf` | SC3 | runtime against UUT, six algorithms, SIGN / LEVIATHAN / C8T1S5I8N5K |
 | `fig_scalability_SC3_explored_nodes.pdf` | SC3 | explored nodes against UUT, same panels; a node counts when its candidate extensions are scanned, so the proposal's root items stopped at once by its node bound are subtracted (`results/invariant-root-items`, `docs/result-columns.md`) |
-| `fig_incremental_cumulative.pdf` | SC2 | cumulative runtime over the 100 increments (initial mine excluded), five arms, seven databases; a curve that stops early ends in a cross, and arms with no curve are named under the panels |
+| `fig_incremental_cumulative.pdf` | SC2 | cumulative runtime over the 100 increments (initial mine excluded), six arms (Remine-UUT, the arm `Remine-own-UUT`, among them), seven databases; a curve that stops early ends in a cross, and arms with no curve are named under the panels |
 | `fig_C5_ablation.pdf` | SC7 | runtime summed over the 100 increments and number of rescans, adaptive rescan decision against a rescan at every increment, SIGN and C8T1S5I8N5K |
 | `fig_block_size.pdf` | SC7 | against the block size `B_sz` (the default marked): (a) sequences read on the increments without a rescan, (b) their time, (c) the time of the whole stream; SIGN and C8T1S5I8N5K |
 | `fig_sl_sensitivity_prelarge_count.pdf` | SC4 | pre-large set size against `r_l`, Pre-HUSPM and the proposal, SIGN / LEVIATHAN / C8T1S5I8N5K |
