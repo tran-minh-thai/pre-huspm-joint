@@ -3,8 +3,8 @@
 The runs of SC1 measured for memory instead of time: at every sample the runner forces a full collection and reads the heap right after, so runtimes are void. The wait between samples is the larger of 20 ms and four
 times the last collection. A mine that ends before the sampler has taken 5 readings
 while it runs is run again, each time as a fresh instance, until it has (`live_repeats` on the row:
-the mines the reading rests on; the cap is 120 s). Over 192 completed cells the fewest
-readings taken while a mine runs is 5; 129 cells were run more
+the mines the reading rests on; the cap is 120 s). Over 224 completed cells the fewest
+readings taken while a mine runs is 5; 159 cells were run more
 than once, at most 44 times. Measured on `PC-THAI` (see `results/machine/PC-THAI.json` and `environment.lock.json`), `-Xmx48g`, one JVM per arm. Written by `analysis/scenario_readmes.py` from the arms' CSVs; rerun it rather than editing numbers here.
 
 Every run completed.

@@ -10,10 +10,14 @@ make_figures.main() calls export_all(). Writes:
                                  fastest, the fastest baseline over the proposal per cell
     table_static_geomean.csv     SC1, SC3: geometric mean of each baseline's runtime over the
                                  proposal's, on all cells and at the default threshold
+    table_static_joint_miner_uut.csv  SC1, SC3: the proposal's miner at UUT (Joint-miner@UUT)
+                                 against HUSP-ULL and HUSP-SP at the same cutoff, per cell
     table_SC4_cells.csv          SC4: pre-large set, heap and runtime per database, floor, arm
     table_SC2_memory.csv         memory SC2: state after the last increment and peak live set
     table_SC5_cells.csv          SC5: total time per (database, K, shape, arm), the proposal's
-                                 rescans and the fastest arm of the cell
+                                 rescans, the fastest arm of the cell, and the fastest way of
+                                 remining with its margin over the proposal
+    table_PreHUSPM_fidelity.csv  Pre-HUSPM reimplemented, in its paper's setting: rescans, time
     table_SC6_by_op.csv          SC6: rescans and time by kind of operation, all seeds
     table_SC7_block_index.csv    SC7: the increments without a rescan, with and without the index
     table_agreement.csv          HUSP-count agreement of every finished arm in SC1, SC3, SC5
@@ -39,11 +43,22 @@ INC_ARMS = [P, "Pre-HUSPM-SWUmax", "Pre-HUSPM-TSU", REM, "IncUSP-Miner+"]
 # SC2's competitors: the incremental baselines and every way of remining. The arms that change
 # one component of the proposal (ISOLATION_ARMS) are not competitors and appear in their own table.
 SC2_ARMS = INC_ARMS + ["Remine-HUSP-ULL", "Remine-HUSP-SP"]
+# Remining with the proposal's own miner at UUT: a control for how much of the lead comes from the
+# maintenance and how much from the cutoff. It is a way of remining, so it takes part in every
+# "fastest competitor" and runner-up count; the printed SC2 tables keep SC2_ARMS.
+OWN_UUT = "Remine-own-UUT"
+SC2_COMPETITORS = SC2_ARMS + [OWN_UUT]
+# the arms of the SC2 memory run: the incremental baselines, Remine, and remining with the proposal's
+# own miner at UUT (Remine-HUSP-ULL and Remine-HUSP-SP have no memory run)
+MEMORY_ARMS = INC_ARMS + [OWN_UUT]
+# every way of remining: a new mine of the whole database after every operation
+REMINE_ARMS = [REM, "Remine-HUSP-ULL", "Remine-HUSP-SP", OWN_UUT]
 # The proposal with one maintenance component changed: Pre-HUSPM's rescan tests, Pre-HUSPM's
 # tracking (alone and with its SWUmax test), and the discard floor L_ref + min_{i in X} A_i or L_ref
 # alone instead of L_ref + max_{i in X} A_i.
 PREHUSPM_TRACKING = "Joint-rule+PreHUSPM-tracking"
 PREHUSPM_MAINTENANCE = "Joint-miner+SWUmax+PreHUSPM-tracking"
+PREHUSPM_BASELINES = ("Pre-HUSPM-SWUmax", "Pre-HUSPM-TSU")
 ISOLATION_ARMS = ["Joint-miner+SWUmax", "Joint-miner+TSU", PREHUSPM_TRACKING, PREHUSPM_MAINTENANCE,
                   "Joint-rule+min-floor", "Joint-rule+plain-floor"]
 # In the incremental scenarios P is the method, the proposal with the rescan floor selection
@@ -190,7 +205,7 @@ def sc2_memory():
         return pd.DataFrame()
     rows = []
     for d in [x for x in mf.SC2_DATASETS if x in set(df["dataset"])]:
-        for a in INC_ARMS + [FS]:
+        for a in MEMORY_ARMS + [FS]:
             g = df[(df["dataset"] == d) & (df["algorithm"] == a)].sort_values("iteration")
             if g.empty:
                 continue
@@ -203,8 +218,10 @@ def sc2_memory():
                              peak_live_mb=float(ok["mem_live_mb"].max()) if len(ok) else np.nan))
     t = pd.DataFrame(rows)
     # the least state among the competitors; the floor selection is a version of the proposal
-    full = t[(t["increments_done"] == t["increments"]) & t["algorithm"].isin(INC_ARMS)]
-    least = full.loc[full.groupby("dataset")["retained_after_last_mb"].idxmin(), ["dataset", "algorithm"]]
+    full = t[(t["increments_done"] == t["increments"]) & t["algorithm"].isin(MEMORY_ARMS)]
+    # every arm at the least value of its database (a tie marks each of them)
+    low = full.groupby("dataset")["retained_after_last_mb"].min()
+    least = full[full["retained_after_last_mb"] == full["dataset"].map(low)][["dataset", "algorithm"]]
     t["least_retained"] = [bool(((least["dataset"] == r.dataset) & (least["algorithm"] == r.algorithm)).any())
                            for r in t.itertuples()]
     return t
@@ -227,7 +244,7 @@ def sc2_memory_keys(put, m2):
             # GB as the heap size is written: 48 GB is 49,152 MB
             put(f"{k}_retained_at_stop_gb", half_up(r.retained_after_last_mb / 1024, 1), src)
     full = m2[m2["increments_done"] == m2["increments"]]
-    groups = {a: [a] for a in INC_ARMS}
+    groups = {a: [a] for a in MEMORY_ARMS}
     groups["Pre-HUSPM-both"] = ["Pre-HUSPM-SWUmax", "Pre-HUSPM-TSU"]
     for name, arms in groups.items():
         g = full[full["algorithm"].isin(arms)]
@@ -300,9 +317,14 @@ def sc5_cells():
         runs_vs_closest = ("one run" if len(rp) < 2 or len(rc) < 2 else
                            "separated" if max(rp) < min(rc) else
                            "behind" if max(rc) < min(rp) else "overlapping")
+        # the fastest way of remining (mean over the runs), and the margin no run undoes: its
+        # fastest run over the proposal's slowest
+        rem = {a: v for a, v in done.items() if a in REMINE_ARMS}
+        crem = min(rem, key=rem.get) if rem else ""
+        rr = runs.get((d, int(k), s, crem), [])
         pr = g[g["algorithm"] == P]
         rows.append(dict(dataset=d, K=int(k), shape=s,
-                         **{f"total_s_{a}": tot.get(a, np.nan) for a in INC_ARMS},
+                         **{f"total_s_{a}": tot.get(a, np.nan) for a in INC_ARMS + REMINE_ARMS[1:]},
                          proposal_rescans=int(pr["rescan_count"].max()) if len(pr) else np.nan,
                          proposal_rescan_share=float(pr["rescan_count"].max()) / int(k) if len(pr) else np.nan,
                          remine_over_proposal=tot.get(REM, np.nan) / tot.get(P, np.nan)
@@ -311,7 +333,13 @@ def sc5_cells():
                          closest_over_proposal=others[close] / tot[P] if close and tot.get(P) else np.nan,
                          runs_proposal=len(rp), runs_closest=len(rc), runs_vs_closest=runs_vs_closest,
                          proposal_s_min=min(rp) if rp else np.nan, proposal_s_max=max(rp) if rp else np.nan,
-                         closest_s_min=min(rc) if rc else np.nan, closest_s_max=max(rc) if rc else np.nan))
+                         closest_s_min=min(rc) if rc else np.nan, closest_s_max=max(rc) if rc else np.nan,
+                         closest_remine=crem, runs_closest_remine=len(rr),
+                         closest_remine_over_proposal=rem[crem] / tot[P] if crem and tot.get(P) else np.nan,
+                         closest_remine_fastest_over_proposal_slowest=min(rr) / max(rp) if rr and rp else np.nan,
+                         runs_vs_closest_remine=("one run" if len(rp) < 2 or len(rr) < 2 else
+                                                 "separated" if max(rp) < min(rr) else
+                                                 "behind" if max(rr) < min(rp) else "overlapping")))
     return pd.DataFrame(rows)
 
 
@@ -372,7 +400,7 @@ def sc6_by_op():
 
 
 # Remining arms of the mixed streams (AutomatedExperimentRunner.MIXED_ARMS after the proposal)
-MIXED_REMINE = ["Remine-from-scratch", "Remine-HUSP-ULL", "Remine-HUSP-SP", FIXED]
+MIXED_REMINE = ["Remine-from-scratch", "Remine-HUSP-ULL", "Remine-HUSP-SP", OWN_UUT, FIXED]
 MIXED_KINDS = {"INS": "insertion", "DEL": "deletion", "MOD": "modification",
                "DEL_BIG": "deletion beyond the budget"}
 
@@ -551,8 +579,10 @@ def root_stopped():
     if not os.path.exists(ROOT_ITEMS):
         return {}
     r = pd.read_csv(ROOT_ITEMS)
-    return {(x["scenario"], x["dataset"], round(float(x["su"]), 9), x["ips"]): int(x["root_stopped"])
-            for _, x in r.iterrows()}
+    if "arm" not in r.columns:
+        r["arm"] = P
+    return {(x["scenario"], x["dataset"], round(float(x["su"]), 9), x["ips"]) + (() if x["arm"] == P else (x["arm"],)):
+            int(x["root_stopped"]) for _, x in r.iterrows()}
 
 
 def explored_one_convention():
@@ -587,6 +617,225 @@ def explored_one_convention():
                 row[f"ratio_{a}"] = (int(r["explored_nodes"]) / pb) if ok and pb else None
             rows.append(row)
     return pd.DataFrame(rows)
+
+
+# ------------------------------------------------------------------------------ miner at UUT
+AT_UUT = "Joint-miner@UUT"     # the proposal's miner with its cutoff at UUT, as HUSP-ULL and HUSP-SP
+AT_UUT_RIVALS = ("HUSP-ULL", "HUSP-SP")
+
+
+def _separation(a, b):
+    """'<x> faster separated' when every run of one side beats every run of the other, else
+    'overlapping'; 'one run' when a side has fewer than two runs."""
+    if len(a) < 2 or len(b) < 2:
+        return "one run"
+    if max(a) < min(b):
+        return "first faster separated"
+    if max(b) < min(a):
+        return "second faster separated"
+    return "overlapping"
+
+
+def static_at_uut():
+    """SC1 and SC3, the proposal's miner at UUT (AT_UUT) against HUSP-ULL and HUSP-SP at the same
+    cutoff, per (database, threshold): runtime over the replicates (mean, sample deviation, min,
+    max), the HUSP count against HUSP-ULL's, explored nodes counted both ways (with and without the
+    root items the node bound stops at once), the SC1 live set (every measurement), and each rival's
+    mean runtime, explored nodes and live set over AT_UUT's with the separation of the runs. The
+    proposal at r_l * UUT is the last column group, as the cost of its lower cutoff."""
+    stop = root_stopped()
+    live = {}
+    mem = mf.load_scenario("SC1", tree=mf.memory_tree("SC1"))
+    trees = [mem] + [mf.load_scenario("SC1", tree=os.path.relpath(rd, mf.DATA_DIR))
+                     for rd in mf.memory_replicate_dirs("SC1")]
+    for t in trees:
+        if t is None:
+            continue
+        for x in mf.parse_su(t).itertuples():
+            if x.finished:
+                live.setdefault((x.dataset, round(x.su, 9), x.algorithm), []).append(float(x.mem_live_mb))
+    rows = []
+    for sc in ("SC1", "SC3"):
+        df = mf.load_scenario(sc, replicates=True)
+        if df is None:
+            continue
+        df = mf.parse_su(df)
+        for (d, su), g in df.groupby(["dataset", "su"]):
+            j = g[g["algorithm"] == AT_UUT]
+            if j.empty:
+                continue
+            ok = j[j["finished"]]
+            t = mf.ms_to_s(ok["runtime_ms"])
+            row = dict(scenario=sc, dataset=d, su=f"{su:g}", default=bool(np.isclose(su, mf.default_su(d))),
+                       runs=len(ok), failed=int((~j["finished"]).sum()),
+                       time_s_mean=float(t.mean()) if len(t) else np.nan,
+                       time_s_sd=float(t.std(ddof=1)) if len(t) >= 2 else np.nan,
+                       time_s_min=float(t.min()) if len(t) else np.nan,
+                       time_s_max=float(t.max()) if len(t) else np.nan)
+            for col in ("total_patterns_found", "explored_nodes"):
+                if ok[col].nunique() > 1:
+                    raise ValueError(f"{sc} {d} {su:g}: the replicates of {AT_UUT} disagree on {col}")
+            row["husps"] = int(ok["total_patterns_found"].iloc[0]) if len(ok) else np.nan
+            row["explored_with_root"] = int(ok["explored_nodes"].iloc[0]) if len(ok) else np.nan
+            k = (sc, d, round(su, 9), "once", AT_UUT)
+            row["root_stopped"] = stop.get(k)
+            row["explored"] = (row["explored_with_root"] - row["root_stopped"]
+                               if row["root_stopped"] is not None and len(ok) else np.nan)
+            lv = live.get((d, round(su, 9), AT_UUT), []) if sc == "SC1" else []
+            row["live_mb"] = ";".join(f"{v:g}" for v in lv)
+            row["live_mb_mean"] = float(np.mean(lv)) if lv else np.nan
+            for a in AT_UUT_RIVALS + (P,):
+                b = g[(g["algorithm"] == a) & g["finished"]]
+                tb = mf.ms_to_s(b["runtime_ms"])
+                tag = "proposal" if a == P else a
+                row[f"{tag}_runs"] = len(b)
+                row[f"{tag}_time_s_mean"] = float(tb.mean()) if len(b) else np.nan
+                row[f"{tag}_over_jm"] = (float(tb.mean()) / row["time_s_mean"]
+                                         if len(b) and row["time_s_mean"] > 0 else np.nan)
+                sep = _separation(list(t), list(tb)) if len(b) else "absent"
+                row[f"{tag}_separation"] = sep.replace("first", "jm").replace("second", tag)
+                if a == P:
+                    continue
+                row[f"{a}_husps"] = int(b["total_patterns_found"].iloc[0]) if len(b) else np.nan
+                row[f"{a}_explored"] = int(b["explored_nodes"].iloc[0]) if len(b) else np.nan
+                row[f"{a}_explored_over_jm"] = (row[f"{a}_explored"] / row["explored"]
+                                                if len(b) and row["explored"] and row["explored"] > 0 else np.nan)
+                lb = live.get((d, round(su, 9), a), []) if sc == "SC1" else []
+                row[f"{a}_live_mb_mean"] = float(np.mean(lb)) if lb else np.nan
+                row[f"{a}_live_over_jm"] = (float(np.mean(lb)) / row["live_mb_mean"]
+                                            if lb and row["live_mb_mean"] > 0 else np.nan)
+            row["husps_equal_HUSP-ULL"] = (bool(row["husps"] == row["HUSP-ULL_husps"])
+                                           if len(ok) and row["HUSP-ULL_runs"] else None)
+            rows.append(row)
+    order = {d: i for i, d in enumerate(mf.ALL_DATASETS)}
+    out = pd.DataFrame(rows)
+    if len(out):
+        out = out.sort_values(["scenario", "dataset", "su"], key=lambda s: s.map(order) if s.name == "dataset"
+                              else (s.astype(float) if s.name == "su" else s)).reset_index(drop=True)
+    return out
+
+
+def static_at_uut_keys(put, t, src="table_static_joint_miner_uut.csv"):
+    """Keys of static_at_uut(), per scenario and scope (default threshold, all thresholds): the
+    geometric mean of each rival's runtime, explored nodes and live set over AT_UUT's, with min
+    and max of the runtime ratio; the cells where AT_UUT is faster, faster with every run
+    separated, or slower with every run separated; the HUSP agreement with HUSP-ULL; and, at the
+    default threshold, AT_UUT's runtime and explored nodes per database."""
+    for sc, gs in t.groupby("scenario"):
+        n_cmp = int(gs["husps_equal_HUSP-ULL"].notna().sum())
+        n_eq = int(gs["husps_equal_HUSP-ULL"].eq(True).sum())
+        put(f"{sc}_{AT_UUT}_husps_equal_HUSP-ULL", f"{n_eq}/{n_cmp}", src)
+        put(f"{sc}_{AT_UUT}_runs", int(gs["runs"].sum()), src)
+        # HUSP-SP counts a node below the root only when its PEU passes, as AT_UUT does once the
+        # root items its node bound stops at once are taken off: equal counts check those items
+        both = gs[gs["HUSP-SP_explored"].notna() & gs["explored"].notna()]
+        put(f"{sc}_{AT_UUT}_nodes_equal_HUSP-SP", f"{int((both['HUSP-SP_explored'] == both['explored']).sum())}/{len(both)}", src)
+        put(f"{sc}_{AT_UUT}_runs_failed", int(gs["failed"].sum()), src)
+        for scope, g in (("default", gs[gs["default"]]), ("all", gs)):
+            for a in AT_UUT_RIVALS + ("proposal",):
+                k = f"{sc}_{scope}_{a}_over_{AT_UUT}"
+                v = g[f"{a}_over_jm"].dropna()
+                put(f"{k}_geomean", f"{gmean(v):.2f}", src)
+                put(f"{k}_cells", len(v), src)
+                if len(v):
+                    put(f"{k}_min", f"{v.min():.2f}", src)
+                    put(f"{k}_max", f"{v.max():.2f}", src)
+                put(f"{k}_miner_faster", f"{int((v > 1).sum())}/{len(v)}", src)
+                put(f"{k}_miner_faster_separated", f"{int((g[f'{a}_separation'] == 'jm faster separated').sum())}/{len(v)}", src)
+                put(f"{k}_miner_slower_separated", f"{int((g[f'{a}_separation'] == f'{a} faster separated').sum())}/{len(v)}", src)
+                slower = g[g[f"{a}_over_jm"] < 1]
+                if len(slower):
+                    put(f"{k}_miner_slower_on", "; ".join(
+                        f"{r['dataset']}{'' if scope == 'default' else ' at ' + r['su']} {r[f'{a}_over_jm']:.2f}"
+                        for _, r in slower.iterrows()), src)
+                if a == "proposal":
+                    continue
+                e = g[f"{a}_explored_over_jm"].dropna()
+                put(f"{sc}_{scope}_nodes_{a}_over_{AT_UUT}_geomean", f"{gmean(e):.2f}", src)
+                put(f"{sc}_{scope}_nodes_{a}_over_{AT_UUT}_miner_fewer", f"{int((e > 1).sum())}/{len(e)}", src)
+                lv = g[f"{a}_live_over_jm"].dropna()
+                if len(lv):
+                    put(f"{sc}_{scope}_live_{a}_over_{AT_UUT}_geomean", f"{gmean(lv):.3g}", src)
+                    put(f"{sc}_{scope}_live_{a}_over_{AT_UUT}_miner_less", f"{int((lv > 1).sum())}/{len(lv)}", src)
+        for _, r in gs[gs["default"]].iterrows():
+            k = f"{sc}_{AT_UUT}_{r['dataset']}"
+            put(f"{k}_time_s", f"{r['time_s_mean']:.{mf.pm_digits(r['time_s_mean'])}f}", src)
+            put(f"{k}_explored", int(r["explored"]), src)
+            put(f"{k}_explored_with_root", int(r["explored_with_root"]), src)
+
+
+# ------------------------------------------------------------------------------ fidelity
+FIDELITY_DIR = os.path.join(mf.DATA_DIR, mf.TIMING_TREE, "FIDELITY")
+FIDELITY_VARIANTS = {"Pre-HUSPM-SWUmax": "swumax", "Pre-HUSPM-TSU": "tsu"}
+
+
+def fidelity():
+    """The reimplemented Pre-HUSPM in the setting of its paper (Su, Sl, sequences per increment and
+    the original database of the paper's Figure 2 and Table 16), from results/campaign/FIDELITY.
+    Returns (summary, increments): per database and variant the increments run, rescans and the
+    final cumulative time, with TSU's final time over SWUmax's; and per increment the rescan flag
+    and cumulative time of both variants side by side."""
+    rows, inc = [], []
+    if not os.path.isdir(FIDELITY_DIR):
+        return pd.DataFrame(), pd.DataFrame()
+    for d in sorted(os.listdir(FIDELITY_DIR)):
+        per = {}
+        for arm, tag in FIDELITY_VARIANTS.items():
+            f = os.path.join(FIDELITY_DIR, d, arm, "fidelity_increments.csv")
+            if not os.path.exists(f):
+                continue
+            t = pd.read_csv(f)
+            if t["increment"].duplicated().any() or list(t["increment"]) != list(range(len(t))):
+                raise ValueError(f"{f}: increments are not 0..n-1 once each")
+            last = t.iloc[-1]
+            rescans = int(t["rescanned"].astype(str).str.lower().eq("true").sum())
+            if rescans != int(last["rescans"]):
+                raise ValueError(f"{f}: {rescans} rescan flags but the counter ends at {int(last['rescans'])}")
+            per[tag] = t
+            rows.append(dict(dataset=d, variant=tag, su=float(last["su"]), sl=float(last["sl"]),
+                             od_num=int(t["od_num"].iloc[0]), per_increment=int(t["per_increment"].iloc[0]),
+                             increments=int(last["increment"]), sequences_final=int(last["sequences"]),
+                             rescans=rescans, final_s=float(last["cumulative_ms"]) / 1000.0,
+                             husps_final=int(last["husps"]), prelarge_final=int(last["prelarge"])))
+        if len(per) == 2:
+            a_, b_ = per["swumax"], per["tsu"]
+            if list(a_["sequences"]) != list(b_["sequences"]):
+                raise ValueError(f"{d}: the two variants did not replay the same increments")
+            for (_, x), (_, y) in zip(a_.iterrows(), b_.iterrows()):
+                inc.append(dict(dataset=d, increment=int(x["increment"]), sequences=int(x["sequences"]),
+                                swumax_rescanned=str(x["rescanned"]).lower() == "true",
+                                swumax_cumulative_s=float(x["cumulative_ms"]) / 1000.0,
+                                tsu_rescanned=str(y["rescanned"]).lower() == "true",
+                                tsu_cumulative_s=float(y["cumulative_ms"]) / 1000.0,
+                                husps_any=int(x["husps"]) > 0 or int(y["husps"]) > 0,
+                                husps_equal=int(x["husps"]) == int(y["husps"])))
+    summ = pd.DataFrame(rows)
+    if len(summ):
+        fin = summ.pivot(index="dataset", columns="variant", values="final_s")
+        summ["tsu_over_swumax"] = summ["dataset"].map((fin["tsu"] / fin["swumax"]).to_dict())
+    return summ, pd.DataFrame(inc)
+
+
+def fidelity_keys(put, summ, inc, src="table_PreHUSPM_fidelity.csv"):
+    for _, r in summ.iterrows():
+        k = f"fidelity_{r['dataset']}_{r['variant']}"
+        put(f"{k}_rescans", int(r["rescans"]), src)
+        put(f"{k}_final_s", f"{r['final_s']:.3f}", src)
+        put(f"{k}_increments", int(r["increments"]), src)
+    for d, g in summ.groupby("dataset"):
+        if g["tsu_over_swumax"].notna().any():
+            put(f"fidelity_{d}_tsu_over_swumax", f"{g['tsu_over_swumax'].iloc[0]:.2f}", src)
+    if len(inc):
+        # at the paper's thresholds no pattern may reach Su: then the two variants' outputs cannot
+        # differ and their agreement checks nothing, so the key gives the increments that had any
+        # HUSP to compare, not an agreement count
+        src_i = "table_PreHUSPM_fidelity_increments.csv"
+        put("fidelity_increments_with_a_husp", f"{int(inc['husps_any'].sum())}/{len(inc)}", src_i)
+        if inc["husps_any"].any():
+            sub = inc[inc["husps_any"]]
+            put("fidelity_husps_equal_increments", f"{int(sub['husps_equal'].sum())}/{len(sub)}", src_i)
+    put("fidelity_prelarge_final_range", f"{int(summ['prelarge_final'].min())} to {int(summ['prelarge_final'].max())}", src)
+    put("fidelity_databases", summ["dataset"].nunique(), src)
 
 
 # ------------------------------------------------------------------------------ verification
@@ -862,17 +1111,17 @@ def sc2_speedups(put, totals, reps=None):
     S = sc2_stats(totals, reps)
     dbs = sorted({d for d, _ in S})
     fastest = [d for d in dbs if S.get((d, P)) and all(
-        S[(d, a)] is None or S[(d, a)]["mean"] > S[(d, P)]["mean"] for a in SC2_ARMS if a != P and (d, a) in S)]
+        S[(d, a)] is None or S[(d, a)]["mean"] > S[(d, P)]["mean"] for a in SC2_COMPETITORS if a != P and (d, a) in S)]
     put("SC2_proposal_fastest", f"{len(fastest)}/{len(dbs)}", "table_SC2_totals.csv")
     # fastest with every run of the proposal faster than every run of each rival (a rival
     # measured once is a one-point range); a rival whose runs overlap the proposal's makes the
     # stream a tie, not a win
     sep_wins = [d for d in fastest if all(
         S[(d, a)] is None or S[(d, P)]["max"] < S[(d, a)]["min"]
-        for a in SC2_ARMS if a != P and (d, a) in S)]
+        for a in SC2_COMPETITORS if a != P and (d, a) in S)]
     put("SC2_proposal_fastest_separated", f"{len(sep_wins)}/{len(dbs)}", "table_SC2_totals.csv")
     put("SC2_proposal_not_fastest", "; ".join(d for d in dbs if d not in fastest) or "none", "table_SC2_totals.csv")
-    for a in SC2_ARMS:
+    for a in SC2_COMPETITORS:
         if a == P:
             continue
         r = {d: S[(d, a)]["mean"] / S[(d, P)]["mean"] for d in dbs
@@ -885,14 +1134,14 @@ def sc2_speedups(put, totals, reps=None):
         put(f"SC2_{a}_over_proposal_min", f"{r[lo]:.2f} ({lo})", "table_SC2_totals.csv")
         put(f"SC2_{a}_over_proposal_max", f"{r[hi]:.2f} ({hi})", "table_SC2_totals.csv")
         put(f"SC2_{a}_over_proposal_databases", len(r), "table_SC2_totals.csv")
-    second = {d: min((S[(d, b)]["mean"] for b in SC2_ARMS if b != P and S.get((d, b))), default=None)
+    second = {d: min((S[(d, b)]["mean"] for b in SC2_COMPETITORS if b != P and S.get((d, b))), default=None)
               for d in dbs}
     # per database: the runner-up, its time over the proposal's, the runs behind both, and
     # whether every run of the proposal is faster than every run of the runner-up
     for d in dbs:
         if not S.get((d, P)):
             continue
-        rivals = {b: S[(d, b)] for b in SC2_ARMS if b != P and S.get((d, b))}
+        rivals = {b: S[(d, b)] for b in SC2_COMPETITORS if b != P and S.get((d, b))}
         if not rivals:
             continue
         b = min(rivals, key=lambda x: rivals[x]["mean"])
@@ -927,7 +1176,7 @@ def sc2_floor_selection(totals, reps=None):
             continue
         g = df[(df["dataset"] == d) & (df["algorithm"] == P) & mf.is_inc(df)].sort_values("iteration")
         last = g.iloc[-1]
-        rivals = {b: S[(d, b)] for b in SC2_ARMS if b not in (P, FIXED) and S.get((d, b))}
+        rivals = {b: S[(d, b)] for b in SC2_COMPETITORS if b not in (P, FIXED) and S.get((d, b))}
         best = min(rivals, key=lambda b: rivals[b]["mean"]) if rivals else None
         def side(x, y):
             if x["max"] < y["min"]:
@@ -987,13 +1236,25 @@ def sc2_isolation(totals, reps=None):
             t = mf.ms_to_s(g["runtime_ms"])
             last = g.iloc[-1]
             tracked = g["total_patterns_found"].astype(float) + g["prelarge_count"].astype(float)
+            last_tracked = float(last["total_patterns_found"] + last["prelarge_count"])
+            if a in PREHUSPM_BASELINES:
+                # Pre-HUSPM tracks its buffer (LSWU and PSWU); prelarge_count is the PSWU part alone
+                # and total_patterns_found the HUSPs, so their sum misses the LSWU patterns that are
+                # not HUSPs. The buffer is known after a mine (explored_nodes) and only shrinks on a
+                # direct update, so its largest size is the largest after a rescan; after a direct
+                # update its size is not recorded.
+                tracked = g["explored_nodes"].astype(float).where(rescanned)
+                last_tracked = float(last["explored_nodes"]) if bool(rescanned.iloc[-1]) else np.nan
             rows.append(dict(dataset=d, algorithm=a, runs=st["n"] if st else np.nan,
                              time_s=st["mean"] if st else np.nan, time_s_std=st["std"] if st else np.nan,
                              finished=st is not None, rescans=int(rescanned.sum()),
                              rescan_time_s=float(t[rescanned].sum()), direct_time_s=float(t[~rescanned].sum()),
-                             tracked_after_last=int(last["total_patterns_found"] + last["prelarge_count"])
-                             if st else np.nan,
-                             tracked_max=int(tracked.max()) if st else np.nan,
+                             tracked_after_last=last_tracked if st else np.nan,
+                             tracked_max=int(tracked.max()) if st and tracked.notna().any() else np.nan,
+                             # the tracked set over the increments that took the direct update, where
+                             # the discard floor acts
+                             tracked_direct_mean=float(tracked[~rescanned].mean()) if st and (~rescanned).any()
+                             else np.nan, direct_increments=int((~rescanned).sum()),
                              # explored nodes summed over the increments that rescanned
                              rescan_nodes=int(g.loc[rescanned, "explored_nodes"].astype(float).sum())))
     return pd.DataFrame(rows)
@@ -1006,12 +1267,15 @@ def sc2_isolation_keys(put, iso):
             continue
         put(f"SC2_isolation_{r.algorithm}_{r.dataset}_time", f"{r.time_s:.2f}", src)
         put(f"SC2_isolation_{r.algorithm}_{r.dataset}_rescans", r.rescans, src)
-        put(f"SC2_isolation_{r.algorithm}_{r.dataset}_tracked", f"{r.tracked_after_last:,}", src)
-        put(f"SC2_isolation_{r.algorithm}_{r.dataset}_tracked_max", f"{r.tracked_max:,}", src)
+        put(f"SC2_isolation_{r.algorithm}_{r.dataset}_tracked", f"{int(r.tracked_after_last):,}"
+            if pd.notna(r.tracked_after_last) else "not recorded: the last increment took the direct update", src)
+        put(f"SC2_isolation_{r.algorithm}_{r.dataset}_tracked_max", f"{int(r.tracked_max):,}"
+            if pd.notna(r.tracked_max) else "not recorded", src)
         put(f"SC2_isolation_{r.algorithm}_{r.dataset}_nodes", f"{r.rescan_nodes:,}", src)
         put(f"SC2_isolation_{r.algorithm}_{r.dataset}_rescan_s", f"{r.rescan_time_s:.2f}", src)
         put(f"SC2_isolation_{r.algorithm}_{r.dataset}_direct_s", f"{r.direct_time_s:.2f}", src)
     T = {(r.dataset, r.algorithm): r for r in iso.itertuples() if r.finished}
+    RT = _sc2_run_totals()
     for d in sorted({r.dataset for r in iso.itertuples()}):
         pr = T.get((d, FIXED))
         if pr is None:
@@ -1031,6 +1295,31 @@ def sc2_isolation_keys(put, iso):
         x, y = T.get((d, PREHUSPM_MAINTENANCE)), T.get((d, "Pre-HUSPM-SWUmax"))
         if x is not None and y is not None:
             put(f"SC2_isolation_miner_Pre-HUSPM-SWUmax_over_{PREHUSPM_MAINTENANCE}_{d}", f"{y.time_s / x.time_s:.2f}", src)
+        # the discard floor: L_ref + min_{i in X} A_i and L_ref alone, against the proposal's
+        # L_ref + max_{i in X} A_i at the same fixed floor (the same rescans by construction)
+        for a, tag in (("Joint-rule+min-floor", "min_floor"), ("Joint-rule+plain-floor", "plain_floor")):
+            x = T.get((d, a))
+            if x is None:
+                continue
+            put(f"SC2_floor_{tag}_over_max_floor_{d}_time", f"{x.time_s / pr.time_s:.2f}", src)
+            put(f"SC2_floor_{tag}_over_max_floor_{d}_direct", f"{x.direct_time_s / pr.direct_time_s:.2f}"
+                if pr.direct_time_s > 0 else "", src)
+            put(f"SC2_floor_{tag}_over_max_floor_{d}_tracked", f"{x.tracked_after_last / pr.tracked_after_last:.2f}"
+                if pr.tracked_after_last else "", src)
+            put(f"SC2_floor_{tag}_over_max_floor_{d}_tracked_max", f"{x.tracked_max / pr.tracked_max:.2f}"
+                if pr.tracked_max else "", src)
+            if pr.direct_increments and pr.tracked_direct_mean > 0:
+                put(f"SC2_floor_{tag}_over_max_floor_{d}_tracked_direct", f"{x.tracked_direct_mean / pr.tracked_direct_mean:.2f}",
+                    src)
+                if tag == "min_floor":
+                    put(f"SC2_floor_{d}_direct_increments", pr.direct_increments, src)
+            put(f"SC2_floor_{tag}_{d}_rescans_equal_max_floor", "yes" if x.rescans == pr.rescans
+                else f"no ({x.rescans} and {pr.rescans})", src)
+            if (d, a) in RT and (d, FIXED) in RT:
+                side = _side(RT[(d, a)], RT[(d, FIXED)])
+                put(f"SC2_floor_{tag}_over_max_floor_{d}_separation",
+                    {"separated, faster": f"separated, {a} faster",
+                     "separated, slower": "separated, the max floor faster"}.get(side, side), src)
         # the tracking: the joint rule with Pre-HUSPM's tracking, against the proposal
         x = T.get((d, PREHUSPM_TRACKING))
         if x is not None:
@@ -1206,7 +1495,7 @@ def window_sc2():
     rows = []
     for d in [x for x in WIN_ORDER if (x, FIXED) in runs]:
         fixed = runs[(d, FIXED)]
-        comp = {b: runs[(d, b)] for b in SC2_ARMS if b != P and runs.get((d, b))}
+        comp = {b: runs[(d, b)] for b in SC2_COMPETITORS if b != P and runs.get((d, b))}
         best = min(comp, key=lambda b: np.mean(comp[b]))
         for w in mf.WINDOWS:
             a = mf.window_arm(w)
@@ -1516,13 +1805,39 @@ def sign_test_p(wins, n):
     return sum(comb(n, i) for i in range(wins, n + 1)) / 2 ** n
 
 
+def sc2_own_uut(put):
+    """SC2, remining with the proposal's own miner at UUT (OWN_UUT) against the method, per
+    database: the ratio of the mean times over the increments, the extremes over the runs (the
+    arm's fastest run over the method's slowest, and its slowest over the method's fastest),
+    whether every run of one side is beyond every run of the other, and the explored nodes summed
+    over the increments' mines of both arms in the main run. Both arms run the same miner and
+    count nodes the same way (root items stopped at once included)."""
+    T = _sc2_run_totals()
+    df = mf.load_scenario("SC2")
+    inc = df[mf.is_inc(df)]
+    src = "table_SC2_inference.csv"
+    for d in [x for x in WIN_ORDER if (x, P) in T and (x, OWN_UUT) in T]:
+        p, q = T[(d, P)], T[(d, OWN_UUT)]
+        k = f"SC2_{OWN_UUT}_over_proposal_{d}"
+        # the ratio of the means itself is SC2_<arm>_over_proposal_<db> of sc2_speedups
+        put(f"{k}_min", f"{min(q) / max(p):.2f}", src)
+        put(f"{k}_max", f"{max(q) / min(p):.2f}", src)
+        side = _side(q, p)
+        put(f"{k}_separation", {"separated, faster": f"separated, {OWN_UUT} faster",
+                                "separated, slower": "separated, the method faster"}.get(side, side), src)
+        put(f"{k}_runs", f"{len(q)} and {len(p)}", src)
+        for a, tag in ((OWN_UUT, "own"), (P, "proposal")):
+            g = inc[(inc["dataset"] == d) & (inc["algorithm"] == a)]
+            put(f"SC2_{OWN_UUT}_{d}_nodes_{tag}", int(g["explored_nodes"].sum()), "table_SC2_totals.csv")
+
+
 def sc2_inference(put, out):
     """Every SC2 arm against the method, per database: the ratio of the mean times (arm over
     method), the arm's fastest run over the method's slowest, a bootstrap interval for the ratio,
     and the runs behind each side; then a one-sided sign test over the streams for 'the method is
     faster than its closest competitor on every stream'."""
     T = _sc2_run_totals()
-    rivals = [a for a in SC2_ARMS + ["Remine-own-UUT"] if a != P]
+    rivals = [a for a in SC2_COMPETITORS if a != P]
     rows = []
     for d in [x for x in WIN_ORDER if (x, P) in T]:
         p = T[(d, P)]
@@ -1653,6 +1968,22 @@ def export_all(out_dir=None):
         if r["baseline_faster_on"]:
             put(f"{k}_baseline_faster_on_{r['baseline']}", r["baseline_faster_on"], "table_static_geomean.csv")
 
+    fs, fi = fidelity()
+    for name, t in (("table_PreHUSPM_fidelity.csv", fs), ("table_PreHUSPM_fidelity_increments.csv", fi)):
+        if len(t):
+            mf.write_csv(t, os.path.join(out, name))
+        else:
+            if os.path.exists(os.path.join(out, name)):
+                os.remove(os.path.join(out, name))
+            print(f"[not written] {name}: no run in {FIDELITY_DIR}")
+    if len(fs):
+        fidelity_keys(put, fs, fi)
+
+    at_uut = static_at_uut()
+    if len(at_uut):
+        mf.write_csv(at_uut, os.path.join(out, "table_static_joint_miner_uut.csv"))
+        static_at_uut_keys(put, at_uut)
+
     c4 = sc4_cells()
     mf.write_csv(c4, os.path.join(out, "table_SC4_cells.csv"))
     rr = sc4_ratio(c4)
@@ -1666,6 +1997,10 @@ def export_all(out_dir=None):
     if len(m2):
         lead = m2[m2["least_retained"]]
         put("SC2_memory_proposal_least", f"{int((lead['algorithm'] == P).sum())}/{lead['dataset'].nunique()}",
+            "table_SC2_memory.csv")
+        tied = [d for d, g in lead.groupby("dataset") if P in set(g["algorithm"]) and len(g) > 1]
+        put("SC2_memory_proposal_least_tied", "; ".join(
+            f"{d} with {', '.join(sorted(set(lead[lead['dataset'] == d]['algorithm']) - {P}))}" for d in tied) or "none",
             "table_SC2_memory.csv")
         sc2_memory_keys(put, m2)
 
@@ -1700,6 +2035,23 @@ def export_all(out_dir=None):
                 f"{(g['closest_s_min'] / g['proposal_s_max']).min():.3f}", "table_SC5_cells.csv")
             put(f"SC5_{d}_runs", f"proposal {', '.join(map(str, sorted(set(g['runs_proposal']))))}; "
                 f"closest {', '.join(map(str, sorted(set(g['runs_closest']))))}", "table_SC5_cells.csv")
+            # the fastest way of remining per cell (Remine, Remine-HUSP-ULL, Remine-HUSP-SP, Remine-own-UUT)
+            src5 = "table_SC5_cells.csv"
+            cr = g["closest_remine_over_proposal"]
+            put(f"SC5_{d}_closest_remine_over_proposal_mean", f"{cr.mean():.3f}", src5)
+            put(f"SC5_{d}_closest_remine_over_proposal_min", f"{cr.min():.3f}", src5)
+            put(f"SC5_{d}_closest_remine_over_proposal_max", f"{cr.max():.3f}", src5)
+            put(f"SC5_{d}_closest_remine_fastest_over_proposal_slowest_min",
+                f"{g['closest_remine_fastest_over_proposal_slowest'].min():.3f}", src5)
+            put(f"SC5_{d}_closest_remine_arms", "; ".join(
+                f"{a} {int((g['closest_remine'] == a).sum())}" for a in REMINE_ARMS if (g["closest_remine"] == a).any()), src5)
+            put(f"SC5_{d}_closest_remine_proposal_behind_or_overlapping",
+                f"{int(g['runs_vs_closest_remine'].isin(['behind', 'overlapping']).sum())}/{len(g)}", src5)
+            put(f"SC5_{d}_closest_remine_runs", f"proposal {', '.join(map(str, sorted(set(g['runs_proposal']))))}; "
+                f"remining {', '.join(map(str, sorted(set(g['runs_closest_remine']))))}", src5)
+        for state in ("separated", "overlapping", "behind", "one run"):
+            put(f"SC5_runs_vs_closest_remine_{state.replace(' ', '_')}",
+                f"{int((c5['runs_vs_closest_remine'] == state).sum())}/{len(c5)}", "table_SC5_cells.csv")
         near = c5[c5["closest_over_proposal"] < 1.10]
         put("SC5_cells_within_10pct", f"{len(near)}/{len(c5)}", "table_SC5_cells.csv")
         if len(near):
@@ -1739,6 +2091,7 @@ def export_all(out_dir=None):
     mixed_floor_keys(put)
     window_study(put, out)
     sc2_inference(put, out)
+    sc2_own_uut(put)
 
     # The mixed streams with every remining arm: SC6 (table_SC6_by_op_arms.csv beside the
     # table above, which keeps its form), SC6D and SC6B.
@@ -1758,7 +2111,7 @@ def export_all(out_dir=None):
             if r["kind"] != "stream":
                 put(f"{base}_rescans", f"{r['rescans']}/{r['operations']}", fname)
                 put(f"{base}_direct", f"{r['direct']}/{r['operations']}", fname)
-            for arm in ("Remine", "Remine-HUSP-ULL", "Remine-HUSP-SP", "FixedFloor"):
+            for arm in ("Remine", "Remine-HUSP-ULL", "Remine-HUSP-SP", OWN_UUT, "FixedFloor"):
                 key = "proposal_over" if r["kind"] == "stream" else "over_proposal"
                 m, sd, n = r.get(f"{key}_{arm}_mean"), r.get(f"{key}_{arm}_sd"), r.get(f"{key}_{arm}_seeds")
                 if pd.notna(m):
@@ -1816,6 +2169,10 @@ def export_all(out_dir=None):
                 cmp_rows = cmp_rows[cmp_rows["status"] != "reference"]
                 for sc, n in cmp_rows.groupby("scenario").size().items():
                     put(f"{key}_{sc}_comparisons", int(n), "table_verification.csv")
+                # per database, with the mismatches (a row whose status is not "match")
+                for (sc, db), g in cmp_rows.groupby(["scenario", "dataset"]):
+                    put(f"{key}_{sc}_{db}_comparisons", len(g), "table_verification.csv")
+                    put(f"{key}_{sc}_{db}_mismatches", int((g["status"] != "match").sum()), "table_verification.csv")
                 # records written before the arms were renamed carry the old names
                 cmp_rows["arm"] = [rename_arms.new_name(sc, a) or a for sc, a in zip(cmp_rows["scenario"], cmp_rows["arm"])]
                 for (sc, arm), n in cmp_rows.groupby(["scenario", "arm"]).size().items():
@@ -2027,6 +2384,14 @@ def export_all(out_dir=None):
                 put(f"noise_SC1_live_set_at_least_5mb_{stat}", f"{v:.4f}", "table_noise.csv")
                 put(f"noise_SC1_live_set_at_least_5mb_{stat}_pct", f"{100 * v:.1f}", "table_noise.csv")
 
+    # a key written twice has two sources, and a later change of one would leave the other behind
+    seen, twice = set(), []
+    for n in nums:
+        if n["key"] in seen:
+            twice.append(n["key"])
+        seen.add(n["key"])
+    if twice:
+        sys.exit(f"paper_numbers.csv: {len(twice)} keys written more than once: {', '.join(twice[:10])}")
     mf.write_csv(pd.DataFrame(nums), os.path.join(out, "paper_numbers.csv"))
     print(f"[saved] scenario tables and paper_numbers.csv ({len(nums)} numbers) in {out}")
 

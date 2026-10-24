@@ -14,7 +14,9 @@ Computed from the definitions on the `_seq` and `_eui` files, for every static c
 of the campaign: SC1 (D_init, the four thresholds of common.Datasets), SC3 (the whole database,
 the same thresholds, SIGN, LEVIATHAN, C8T1S5I8N5K) and SC7 (the whole database at the default
 threshold, with the pruning as in Pre-HUSPM-Joint and Pre-HUSPM-Joint-no-IUB, and without it as in
-Pre-HUSPM-Joint-no-IPS). The cutoff is r_l * UUT * TU(database).
+Pre-HUSPM-Joint-no-IPS). The cutoff is r_l * UUT * TU(database); for the control Joint-miner@UUT of
+SC1 and SC3 (the same miner with its cutoff at UUT) it is UUT * TU(database), in rows whose column
+`arm` says so.
 
     ips = once:  B(i) = sum of u(s) over the sequences s holding i; items with B(i) < cutoff
                  are removed; remaining utility and PEU then ignore removed items.
@@ -91,6 +93,11 @@ def root_counts(db, cutoff, ips):
     return len(items), len(removed), len(kept), stopped
 
 
+def mf_proposed():
+    import make_figures as mf
+    return mf.PROPOSED
+
+
 def sweeps():
     """name -> (d_init, default UUT, r_l, sweep) from common.Datasets, via make_figures' parser."""
     import make_figures as mf
@@ -106,19 +113,23 @@ def main():
     rows = []
     for name, (d_init, uut, rl, sweep) in tab.items():
         seqs = load(name, a.data)
-        cells = [("SC1", "D_init", seqs[:d_init], su, "once") for su in sweep]
+        method, at_uut = (mf_proposed(), rl), ("Joint-miner@UUT", 1.0)
+        cells = [("SC1", "D_init", seqs[:d_init], su, "once", method) for su in sweep]
         if name in SUBSET_3:
-            cells += [("SC3", "whole", seqs, su, "once") for su in sweep]
+            cells += [("SC3", "whole", seqs, su, "once", method) for su in sweep]
         if name != "BMS1":
-            cells += [("SC7", "whole", seqs, uut, "once"), ("SC7", "whole", seqs, uut, "off")]
-        for sc, scope, db, su, ips in cells:
+            cells += [("SC7", "whole", seqs, uut, "once", method), ("SC7", "whole", seqs, uut, "off", method)]
+        cells += [("SC1", "D_init", seqs[:d_init], su, "once", at_uut) for su in sweep]
+        if name in SUBSET_3:
+            cells += [("SC3", "whole", seqs, su, "once", at_uut) for su in sweep]
+        for sc, scope, db, su, ips, (arm, ratio) in cells:
             tu = sum(u for s in db for _, u in s)
-            cutoff = rl * su * tu
+            cutoff = ratio * su * tu
             n_items, n_removed, n_lists, n_stopped = root_counts(db, cutoff, ips)
             rows.append(dict(scenario=sc, dataset=name, scope=scope, sequences=len(db), su=f"{su:g}",
                              ips=ips, cutoff=repr(cutoff), items=n_items, removed_at_root=n_removed,
-                             root_lists=n_lists, root_stopped=n_stopped))
-            print(f"{sc} {name:12s} {scope:6s} su={su:g} ips={ips:4s} items={n_items} removed={n_removed} "
+                             root_lists=n_lists, root_stopped=n_stopped, arm=arm))
+            print(f"{sc} {name:12s} {scope:6s} su={su:g} ips={ips:4s} {arm:16s} items={n_items} removed={n_removed} "
                   f"lists={n_lists} stopped={n_stopped}")
     os.makedirs(a.out, exist_ok=True)
     path = os.path.join(a.out, "root_items.csv")

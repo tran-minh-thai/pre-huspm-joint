@@ -129,6 +129,9 @@ _mathtext.SHRINK_FACTOR = 8 / FONT_PT
 # ---- Algorithms: order, labels, line styles, markers --------------------------
 PROPOSED = "Pre-HUSPM-Joint"
 STATIC_ORDER = ["USpan", "HUSP-ULL", "HUSP-SP", "IncUSP-Miner+", "Pre-HUSPM", PROPOSED]
+# the miners with their cutoff at UUT: HUSP-ULL, HUSP-SP and the proposal's miner at UUT, a control
+# that mines no pre-large patterns (not a competitor)
+AT_UUT_ORDER = ["HUSP-ULL", "HUSP-SP", "Joint-miner@UUT"]
 INC_ORDER    = ["IncUSP-Miner+", "Pre-HUSPM-SWUmax", "Pre-HUSPM-TSU", "Remine-from-scratch", PROPOSED]
 # PROPOSED is the method: in the incremental scenarios its maintenance with the rescan threshold
 # selection (PreHUSPMAdaptiveAlgo.floorWindow = 5), in the static ones its static mine. FIXED is the
@@ -152,6 +155,7 @@ ALGO_LABEL = {
     "IncUSP-Miner+": "IncUSP-Miner$^{+}$", "Pre-HUSPM": "Pre-HUSPM", "Pre-HUSPM-SWUmax": "Pre-HUSPM-SWUmax",
     "Pre-HUSPM-TSU": "Pre-HUSPM-TSU", "Remine-from-scratch": "Remine",
     PROPOSED: PROPOSED_LABEL, FIXED: PROPOSED_LABEL + ", fixed lower threshold",
+    "Joint-miner@UUT": "Joint-miner@UUT",
 }
 ALGO_LINESTYLE = {
     "USpan": (0, (1, 1.5)), "HUSP-ULL": (0, (4, 1.5)), "HUSP-SP": (0, (4, 1.5, 1, 1.5)),
@@ -1460,6 +1464,43 @@ def stacked_header(label):
     return f"\\begin{{tabular}}[b]{{@{{}}r@{{}}}}{head}-\\\\{tail}\\end{{tabular}}"
 
 
+def write_sc1_runtime_tex(tab, cols, fname, caption, label):
+    """One SC1 runtime table at the default threshold over the columns cols of the replicate
+    table: mean and deviation of the runs per cell, the lowest mean of each row in bold."""
+    lines = ["\\begin{table}[!htbp]", "\\centering",
+             f"\\caption{{{caption}}}",
+             f"\\label{{{label}}}",
+             "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}l" + "r" * len(cols) + "}", "\\toprule",
+             "Database & " + " & ".join(stacked_header(ALGO_LABEL[c]) for c in cols) + " \\\\",
+             "\\midrule"]
+    for ds in [d for d in ALL_DATASETS if d in set(tab["dataset"])]:
+        stats = {}
+        for c in cols:
+            r = tab[(tab["dataset"] == ds) & (tab["algorithm"] == c)]
+            if not r.empty and r.iloc[0]["n"] > 0:
+                r = r.iloc[0]
+                stats[c] = dict(n=r["n"], mean=r["runtime_s_mean"], std=r["runtime_s_std"],
+                                min=r["runtime_s_min"], max=r["runtime_s_max"])
+        # the lowest mean of the row in bold (unrounded, with the cells whose runs overlap its
+        # runs); a run that did not finish takes no part
+        low = dict(zip(cols, lowest([f"{stats[c]['mean']:.{pm_digits(stats[c]['mean'])}f}"
+                                     if c in stats else None for c in cols],
+                                    [(stats[c]["min"], stats[c]["max"], stats[c]["n"]) if c in stats else None
+                                     for c in cols],
+                                    [stats[c]["mean"] if c in stats else None for c in cols])))
+        cells = []
+        for c in cols:
+            r = tab[(tab["dataset"] == ds) & (tab["algorithm"] == c)]
+            if r.empty:
+                cells.append("--"); continue
+            # six algorithms side by side do not fit with the deviation inline
+            cells.append(pm(stats[c], bold=low[c], inline=False) if c in stats else r.iloc[0]["status"])
+        lines.append(f"{ds} & " + " & ".join(cells) + " \\\\")
+    lines += ["\\bottomrule", "\\end{tabular*}", "\\end{table}", ""]
+    with open(os.path.join(OUT_DIR, fname), "w", encoding="utf-8") as fh:
+        fh.write("\n".join(lines))
+
+
 def export_replicate_tables():
     """Runtime spread over the replicates, each measured in a fresh JVM.
 
@@ -1481,7 +1522,7 @@ def export_replicate_tables():
         rows = []
         for ds in [d for d in ALL_DATASETS if d in set(df["dataset"])]:
             su = default_su(ds)
-            for algo in STATIC_ORDER:
+            for algo in STATIC_ORDER + ["Joint-miner@UUT"]:
                 a = df[(df["dataset"] == ds) & (df["algorithm"] == algo) & np.isclose(df["su"], su)]
                 if a.empty:
                     continue
@@ -1493,41 +1534,18 @@ def export_replicate_tables():
         tab = pd.DataFrame(rows)
         write_csv(tab, os.path.join(OUT_DIR, "table_SC1_runtime_replicates.csv"))
         out.append("table_SC1_runtime_replicates.csv")
-        cols = [a for a in STATIC_ORDER if a in set(tab["algorithm"])]
-        nmax = int(tab["n"].max()) if len(tab) else 0
-        lines = ["\\begin{table}[!htbp]", "\\centering",
-                 "\\caption{Runtime (s) of SC1 at the default threshold}",
-                 "\\label{tab:sc1_runtime}",
-                 "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}l" + "r" * len(cols) + "}", "\\toprule",
-                 "Database & " + " & ".join(stacked_header(ALGO_LABEL[c]) for c in cols) + " \\\\",
-                 "\\midrule"]
-        for ds in [d for d in ALL_DATASETS if d in set(tab["dataset"])]:
-            stats = {}
-            for c in cols:
-                r = tab[(tab["dataset"] == ds) & (tab["algorithm"] == c)]
-                if not r.empty and r.iloc[0]["n"] > 0:
-                    r = r.iloc[0]
-                    stats[c] = dict(n=r["n"], mean=r["runtime_s_mean"], std=r["runtime_s_std"],
-                                    min=r["runtime_s_min"], max=r["runtime_s_max"])
-            # the lowest mean of the row in bold (unrounded, with the cells whose runs overlap its
-            # runs); a run that did not finish takes no part
-            low = dict(zip(cols, lowest([f"{stats[c]['mean']:.{pm_digits(stats[c]['mean'])}f}"
-                                         if c in stats else None for c in cols],
-                                        [(stats[c]["min"], stats[c]["max"], stats[c]["n"]) if c in stats else None
-                                         for c in cols],
-                                        [stats[c]["mean"] if c in stats else None for c in cols])))
-            cells = []
-            for c in cols:
-                r = tab[(tab["dataset"] == ds) & (tab["algorithm"] == c)]
-                if r.empty:
-                    cells.append("--"); continue
-                # six algorithms side by side do not fit with the deviation inline
-                cells.append(pm(stats[c], bold=low[c], inline=False) if c in stats else r.iloc[0]["status"])
-            lines.append(f"{ds} & " + " & ".join(cells) + " \\\\")
-        lines += ["\\bottomrule", "\\end{tabular*}", "\\end{table}", ""]
-        with open(os.path.join(OUT_DIR, "table_SC1_runtime.tex"), "w", encoding="utf-8") as fh:
-            fh.write("\n".join(lines))
-        out.append("table_SC1_runtime.tex")
+        # the SC1 table, and beside it the three miners at the one cutoff UUT: HUSP-ULL, HUSP-SP and
+        # the proposal's miner with its cutoff at UUT (a seventh column does not fit the text width)
+        for fname, order, caption, label in (
+                ("table_SC1_runtime.tex", STATIC_ORDER, "Runtime (s) of SC1 at the default threshold",
+                 "tab:sc1_runtime"),
+                ("table_SC1_runtime_at_uut.tex", AT_UUT_ORDER,
+                 "Runtime (s) of SC1 at the default threshold, every miner with its cutoff at UUT",
+                 "tab:sc1_runtime_at_uut")):
+            cols = [a for a in order if a in set(tab["algorithm"])]
+            if cols:
+                write_sc1_runtime_tex(tab, cols, fname, caption, label)
+                out.append(fname)
 
     df = load_scenario("SC2", replicates=True)
     if df is not None:

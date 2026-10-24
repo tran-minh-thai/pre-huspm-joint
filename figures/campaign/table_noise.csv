@@ -1,200 +1,228 @@
 measure,dataset,threshold,algorithm,runs,mean,relative_spread
-SC1 runtime,BIBLE,0.018,Adaptive-Full,3,1.287,0.041
 SC1 runtime,BIBLE,0.018,HUSP-SP,3,0.882,0.01
 SC1 runtime,BIBLE,0.018,HUSP-ULL,3,0.854,0.028
 SC1 runtime,BIBLE,0.018,IncUSP-Miner+,3,6.134,0.01
+SC1 runtime,BIBLE,0.018,Joint-miner@UUT,3,1.033,0.038
 SC1 runtime,BIBLE,0.018,Pre-HUSPM,3,1.798,0.019
+SC1 runtime,BIBLE,0.018,Pre-HUSPM-Joint,3,1.287,0.041
 SC1 runtime,BIBLE,0.018,USpan,3,13.359,0.033
-SC1 runtime,BIBLE,0.023,Adaptive-Full,3,0.751,0.055
 SC1 runtime,BIBLE,0.023,HUSP-SP,3,0.602,0.04
 SC1 runtime,BIBLE,0.023,HUSP-ULL,3,0.59,0.015
 SC1 runtime,BIBLE,0.023,IncUSP-Miner+,3,4.487,0.008
+SC1 runtime,BIBLE,0.023,Joint-miner@UUT,3,0.574,0.016
 SC1 runtime,BIBLE,0.023,Pre-HUSPM,3,1.124,0.012
+SC1 runtime,BIBLE,0.023,Pre-HUSPM-Joint,3,0.751,0.055
 SC1 runtime,BIBLE,0.023,USpan,3,9.876,0.03
-SC1 runtime,BIBLE,0.029,Adaptive-Full,3,0.564,0.012
 SC1 runtime,BIBLE,0.029,HUSP-SP,3,0.428,0.013
 SC1 runtime,BIBLE,0.029,HUSP-ULL,3,0.441,0.009
 SC1 runtime,BIBLE,0.029,IncUSP-Miner+,3,3.321,0.005
+SC1 runtime,BIBLE,0.029,Joint-miner@UUT,3,0.436,0.019
 SC1 runtime,BIBLE,0.029,Pre-HUSPM,3,0.81,0.017
+SC1 runtime,BIBLE,0.029,Pre-HUSPM-Joint,3,0.564,0.012
 SC1 runtime,BIBLE,0.029,USpan,3,7.405,0.031
-SC1 runtime,BIBLE,0.033,Adaptive-Full,3,0.475,0.017
 SC1 runtime,BIBLE,0.033,HUSP-SP,3,0.365,0.027
 SC1 runtime,BIBLE,0.033,HUSP-ULL,3,0.37,0.023
 SC1 runtime,BIBLE,0.033,IncUSP-Miner+,3,2.873,0.008
+SC1 runtime,BIBLE,0.033,Joint-miner@UUT,3,0.378,0.003
 SC1 runtime,BIBLE,0.033,Pre-HUSPM,3,0.677,0.018
+SC1 runtime,BIBLE,0.033,Pre-HUSPM-Joint,3,0.475,0.017
 SC1 runtime,BIBLE,0.033,USpan,3,6.387,0.032
-SC1 runtime,BMS1,0.013,Adaptive-Full,3,0.143,0.018
 SC1 runtime,BMS1,0.013,HUSP-SP,3,0.15,0.13
 SC1 runtime,BMS1,0.013,HUSP-ULL,3,0.104,0.025
 SC1 runtime,BMS1,0.013,IncUSP-Miner+,3,0.496,0.005
+SC1 runtime,BMS1,0.013,Joint-miner@UUT,3,0.123,0.055
 SC1 runtime,BMS1,0.013,Pre-HUSPM,3,0.668,0.002
+SC1 runtime,BMS1,0.013,Pre-HUSPM-Joint,3,0.143,0.018
 SC1 runtime,BMS1,0.013,USpan,3,1.213,0.007
-SC1 runtime,BMS1,0.014,Adaptive-Full,3,0.071,0.11
 SC1 runtime,BMS1,0.014,HUSP-SP,3,0.085,0.269
 SC1 runtime,BMS1,0.014,HUSP-ULL,3,0.038,0.118
 SC1 runtime,BMS1,0.014,IncUSP-Miner+,3,0.297,0.002
+SC1 runtime,BMS1,0.014,Joint-miner@UUT,3,0.055,0.085
 SC1 runtime,BMS1,0.014,Pre-HUSPM,3,0.304,0.011
+SC1 runtime,BMS1,0.014,Pre-HUSPM-Joint,3,0.071,0.11
 SC1 runtime,BMS1,0.014,USpan,3,0.613,0.002
-SC1 runtime,BMS1,0.015,Adaptive-Full,3,0.044,0.026
 SC1 runtime,BMS1,0.015,HUSP-SP,3,0.086,0.154
 SC1 runtime,BMS1,0.015,HUSP-ULL,3,0.044,0.172
 SC1 runtime,BMS1,0.015,IncUSP-Miner+,3,0.178,0.01
+SC1 runtime,BMS1,0.015,Joint-miner@UUT,3,0.043,0.082
 SC1 runtime,BMS1,0.015,Pre-HUSPM,3,0.091,0.017
+SC1 runtime,BMS1,0.015,Pre-HUSPM-Joint,3,0.044,0.026
 SC1 runtime,BMS1,0.015,USpan,3,0.347,0.002
-SC1 runtime,BMS1,0.016,Adaptive-Full,3,0.038,0.099
 SC1 runtime,BMS1,0.016,HUSP-SP,3,0.07,0.291
 SC1 runtime,BMS1,0.016,HUSP-ULL,3,0.029,0.02
 SC1 runtime,BMS1,0.016,IncUSP-Miner+,3,0.144,0.014
+SC1 runtime,BMS1,0.016,Joint-miner@UUT,3,0.033,0.035
 SC1 runtime,BMS1,0.016,Pre-HUSPM,3,0.063,0.009
+SC1 runtime,BMS1,0.016,Pre-HUSPM-Joint,3,0.038,0.099
 SC1 runtime,BMS1,0.016,USpan,3,0.266,0.007
-SC1 runtime,C8T1S5I8N5K,0.001,Adaptive-Full,3,0.278,0.051
 SC1 runtime,C8T1S5I8N5K,0.001,HUSP-SP,3,0.242,0.018
 SC1 runtime,C8T1S5I8N5K,0.001,HUSP-ULL,3,0.213,0.026
 SC1 runtime,C8T1S5I8N5K,0.001,IncUSP-Miner+,3,2.993,0.01
+SC1 runtime,C8T1S5I8N5K,0.001,Joint-miner@UUT,3,0.444,0.028
 SC1 runtime,C8T1S5I8N5K,0.001,Pre-HUSPM,3,0.963,0.027
+SC1 runtime,C8T1S5I8N5K,0.001,Pre-HUSPM-Joint,3,0.278,0.051
 SC1 runtime,C8T1S5I8N5K,0.001,USpan,3,3.67,0.088
-SC1 runtime,C8T1S5I8N5K,0.001,Adaptive-Full,3,0.207,0.007
 SC1 runtime,C8T1S5I8N5K,0.001,HUSP-SP,3,0.127,0.073
 SC1 runtime,C8T1S5I8N5K,0.001,HUSP-ULL,3,0.114,0.015
 SC1 runtime,C8T1S5I8N5K,0.001,IncUSP-Miner+,3,2.524,0.02
+SC1 runtime,C8T1S5I8N5K,0.001,Joint-miner@UUT,3,0.266,0.108
 SC1 runtime,C8T1S5I8N5K,0.001,Pre-HUSPM,3,0.715,0.002
+SC1 runtime,C8T1S5I8N5K,0.001,Pre-HUSPM-Joint,3,0.207,0.007
 SC1 runtime,C8T1S5I8N5K,0.001,USpan,3,1.268,0.007
-SC1 runtime,C8T1S5I8N5K,0.001,Adaptive-Full,3,0.128,0.087
 SC1 runtime,C8T1S5I8N5K,0.001,HUSP-SP,3,0.124,0.319
 SC1 runtime,C8T1S5I8N5K,0.001,HUSP-ULL,3,0.091,0.028
 SC1 runtime,C8T1S5I8N5K,0.001,IncUSP-Miner+,3,2.091,0.015
+SC1 runtime,C8T1S5I8N5K,0.001,Joint-miner@UUT,3,0.119,0.557
 SC1 runtime,C8T1S5I8N5K,0.001,Pre-HUSPM,3,0.466,0.009
+SC1 runtime,C8T1S5I8N5K,0.001,Pre-HUSPM-Joint,3,0.128,0.087
 SC1 runtime,C8T1S5I8N5K,0.001,USpan,3,1.013,0.029
-SC1 runtime,C8T1S5I8N5K,0.001,Adaptive-Full,3,0.113,0.031
 SC1 runtime,C8T1S5I8N5K,0.001,HUSP-SP,3,0.114,0.348
 SC1 runtime,C8T1S5I8N5K,0.001,HUSP-ULL,3,0.08,0.026
 SC1 runtime,C8T1S5I8N5K,0.001,IncUSP-Miner+,3,1.933,0.006
+SC1 runtime,C8T1S5I8N5K,0.001,Joint-miner@UUT,3,0.071,0.037
 SC1 runtime,C8T1S5I8N5K,0.001,Pre-HUSPM,3,0.412,0.008
+SC1 runtime,C8T1S5I8N5K,0.001,Pre-HUSPM-Joint,3,0.113,0.031
 SC1 runtime,C8T1S5I8N5K,0.001,USpan,3,0.909,0.008
-SC1 runtime,FIFA,0.056,Adaptive-Full,3,5.563,0.011
 SC1 runtime,FIFA,0.056,HUSP-SP,3,4.03,0.006
 SC1 runtime,FIFA,0.056,HUSP-ULL,3,4.954,0.03
 SC1 runtime,FIFA,0.056,IncUSP-Miner+,3,439.806,0.004
+SC1 runtime,FIFA,0.056,Joint-miner@UUT,3,2.846,0.009
 SC1 runtime,FIFA,0.056,Pre-HUSPM,3,159.983,0.006
+SC1 runtime,FIFA,0.056,Pre-HUSPM-Joint,3,5.563,0.011
 SC1 runtime,FIFA,0.056,USpan,3,807.159,0.212
-SC1 runtime,FIFA,0.06,Adaptive-Full,3,4.449,0.003
 SC1 runtime,FIFA,0.06,HUSP-SP,3,3.189,0.005
 SC1 runtime,FIFA,0.06,HUSP-ULL,3,4.127,0.032
 SC1 runtime,FIFA,0.06,IncUSP-Miner+,3,351.705,0.003
+SC1 runtime,FIFA,0.06,Joint-miner@UUT,3,2.13,0.005
 SC1 runtime,FIFA,0.06,Pre-HUSPM,3,127.433,0.006
+SC1 runtime,FIFA,0.06,Pre-HUSPM-Joint,3,4.449,0.003
 SC1 runtime,FIFA,0.06,USpan,3,670.594,0.21
-SC1 runtime,FIFA,0.067,Adaptive-Full,3,2.981,0.005
 SC1 runtime,FIFA,0.067,HUSP-SP,3,2.137,0.009
 SC1 runtime,FIFA,0.067,HUSP-ULL,3,2.844,0.024
 SC1 runtime,FIFA,0.067,IncUSP-Miner+,3,229.753,0.005
+SC1 runtime,FIFA,0.067,Joint-miner@UUT,3,1.429,0.008
 SC1 runtime,FIFA,0.067,Pre-HUSPM,3,82.861,0.002
+SC1 runtime,FIFA,0.067,Pre-HUSPM-Joint,3,2.981,0.005
 SC1 runtime,FIFA,0.067,USpan,3,457.847,0.211
-SC1 runtime,FIFA,0.075,Adaptive-Full,3,1.997,0.004
 SC1 runtime,FIFA,0.075,HUSP-SP,3,1.458,0.039
 SC1 runtime,FIFA,0.075,HUSP-ULL,3,1.945,0.025
 SC1 runtime,FIFA,0.075,IncUSP-Miner+,3,147.024,0.006
+SC1 runtime,FIFA,0.075,Joint-miner@UUT,3,0.941,0.002
 SC1 runtime,FIFA,0.075,Pre-HUSPM,3,53.049,0.003
+SC1 runtime,FIFA,0.075,Pre-HUSPM-Joint,3,1.997,0.004
 SC1 runtime,FIFA,0.075,USpan,3,309.785,0.214
-SC1 runtime,KOSARAK,0.022,Adaptive-Full,3,0.778,0.115
 SC1 runtime,KOSARAK,0.022,HUSP-SP,3,0.597,0.029
 SC1 runtime,KOSARAK,0.022,HUSP-ULL,3,0.853,0.035
 SC1 runtime,KOSARAK,0.022,IncUSP-Miner+,3,12.328,0.011
+SC1 runtime,KOSARAK,0.022,Joint-miner@UUT,3,0.585,0.051
 SC1 runtime,KOSARAK,0.022,Pre-HUSPM,3,1.431,0.134
+SC1 runtime,KOSARAK,0.022,Pre-HUSPM-Joint,3,0.778,0.115
 SC1 runtime,KOSARAK,0.022,USpan,3,45.437,0.008
-SC1 runtime,KOSARAK,0.025,Adaptive-Full,3,0.424,0.031
 SC1 runtime,KOSARAK,0.025,HUSP-SP,3,0.38,0.07
 SC1 runtime,KOSARAK,0.025,HUSP-ULL,3,0.614,0.078
 SC1 runtime,KOSARAK,0.025,IncUSP-Miner+,3,8.132,0.02
+SC1 runtime,KOSARAK,0.025,Joint-miner@UUT,3,0.378,0.021
 SC1 runtime,KOSARAK,0.025,Pre-HUSPM,3,0.768,0.071
+SC1 runtime,KOSARAK,0.025,Pre-HUSPM-Joint,3,0.424,0.031
 SC1 runtime,KOSARAK,0.025,USpan,3,35.517,0.021
-SC1 runtime,KOSARAK,0.028,Adaptive-Full,3,0.346,0.019
 SC1 runtime,KOSARAK,0.028,HUSP-SP,3,0.346,0.031
 SC1 runtime,KOSARAK,0.028,HUSP-ULL,3,0.462,0.036
 SC1 runtime,KOSARAK,0.028,IncUSP-Miner+,3,5.804,0.07
+SC1 runtime,KOSARAK,0.028,Joint-miner@UUT,3,0.304,0.012
 SC1 runtime,KOSARAK,0.028,Pre-HUSPM,3,0.554,0.065
+SC1 runtime,KOSARAK,0.028,Pre-HUSPM-Joint,3,0.346,0.019
 SC1 runtime,KOSARAK,0.028,USpan,3,28.527,0.04
-SC1 runtime,KOSARAK,0.032,Adaptive-Full,3,0.328,0.053
 SC1 runtime,KOSARAK,0.032,HUSP-SP,3,0.279,0.007
 SC1 runtime,KOSARAK,0.032,HUSP-ULL,3,0.351,0.037
 SC1 runtime,KOSARAK,0.032,IncUSP-Miner+,3,4.222,0.041
+SC1 runtime,KOSARAK,0.032,Joint-miner@UUT,3,0.303,0.04
 SC1 runtime,KOSARAK,0.032,Pre-HUSPM,3,0.421,0.065
+SC1 runtime,KOSARAK,0.032,Pre-HUSPM-Joint,3,0.328,0.053
 SC1 runtime,KOSARAK,0.032,USpan,3,23.945,0.006
-SC1 runtime,LEVIATHAN,0.015,Adaptive-Full,3,0.573,0.018
 SC1 runtime,LEVIATHAN,0.015,HUSP-SP,3,0.341,0.054
 SC1 runtime,LEVIATHAN,0.015,HUSP-ULL,3,0.313,0.018
 SC1 runtime,LEVIATHAN,0.015,IncUSP-Miner+,3,3.528,0.007
+SC1 runtime,LEVIATHAN,0.015,Joint-miner@UUT,3,0.463,0.076
 SC1 runtime,LEVIATHAN,0.015,Pre-HUSPM,3,0.899,0.008
+SC1 runtime,LEVIATHAN,0.015,Pre-HUSPM-Joint,3,0.573,0.018
 SC1 runtime,LEVIATHAN,0.015,USpan,3,5.831,0.032
-SC1 runtime,LEVIATHAN,0.016,Adaptive-Full,3,0.277,0.116
 SC1 runtime,LEVIATHAN,0.016,HUSP-SP,3,0.257,0.006
 SC1 runtime,LEVIATHAN,0.016,HUSP-ULL,3,0.237,0.006
 SC1 runtime,LEVIATHAN,0.016,IncUSP-Miner+,3,3.157,0.004
+SC1 runtime,LEVIATHAN,0.016,Joint-miner@UUT,3,0.198,0.034
 SC1 runtime,LEVIATHAN,0.016,Pre-HUSPM,3,0.79,0.009
+SC1 runtime,LEVIATHAN,0.016,Pre-HUSPM-Joint,3,0.277,0.116
 SC1 runtime,LEVIATHAN,0.016,USpan,3,5.069,0.039
-SC1 runtime,LEVIATHAN,0.016,Adaptive-Full,3,0.212,0.017
 SC1 runtime,LEVIATHAN,0.016,HUSP-SP,3,0.22,0.008
 SC1 runtime,LEVIATHAN,0.016,HUSP-ULL,3,0.22,0.009
 SC1 runtime,LEVIATHAN,0.016,IncUSP-Miner+,3,2.874,0.005
+SC1 runtime,LEVIATHAN,0.016,Joint-miner@UUT,3,0.173,0.147
 SC1 runtime,LEVIATHAN,0.016,Pre-HUSPM,3,0.702,0.009
+SC1 runtime,LEVIATHAN,0.016,Pre-HUSPM-Joint,3,0.212,0.017
 SC1 runtime,LEVIATHAN,0.016,USpan,3,4.628,0.037
-SC1 runtime,LEVIATHAN,0.018,Adaptive-Full,3,0.188,0.003
 SC1 runtime,LEVIATHAN,0.018,HUSP-SP,3,0.182,0.015
 SC1 runtime,LEVIATHAN,0.018,HUSP-ULL,3,0.19,0.017
 SC1 runtime,LEVIATHAN,0.018,IncUSP-Miner+,3,2.549,0.011
+SC1 runtime,LEVIATHAN,0.018,Joint-miner@UUT,3,0.14,0.014
 SC1 runtime,LEVIATHAN,0.018,Pre-HUSPM,3,0.596,0.014
+SC1 runtime,LEVIATHAN,0.018,Pre-HUSPM-Joint,3,0.188,0.003
 SC1 runtime,LEVIATHAN,0.018,USpan,3,4.077,0.036
-SC1 runtime,SIGN,0.049,Adaptive-Full,3,0.362,0.141
 SC1 runtime,SIGN,0.049,HUSP-SP,3,0.287,0.007
 SC1 runtime,SIGN,0.049,HUSP-ULL,3,0.259,0.004
 SC1 runtime,SIGN,0.049,IncUSP-Miner+,3,3.245,0.007
+SC1 runtime,SIGN,0.049,Joint-miner@UUT,3,0.216,0.021
 SC1 runtime,SIGN,0.049,Pre-HUSPM,3,1.61,0.01
+SC1 runtime,SIGN,0.049,Pre-HUSPM-Joint,3,0.362,0.141
 SC1 runtime,SIGN,0.049,USpan,3,5.089,0.006
-SC1 runtime,SIGN,0.066,Adaptive-Full,3,0.137,0.205
 SC1 runtime,SIGN,0.066,HUSP-SP,3,0.111,0.005
 SC1 runtime,SIGN,0.066,HUSP-ULL,3,0.107,0.011
 SC1 runtime,SIGN,0.066,IncUSP-Miner+,3,1.634,0.014
+SC1 runtime,SIGN,0.066,Joint-miner@UUT,3,0.091,0.169
 SC1 runtime,SIGN,0.066,Pre-HUSPM,3,0.739,0.01
+SC1 runtime,SIGN,0.066,Pre-HUSPM-Joint,3,0.137,0.205
 SC1 runtime,SIGN,0.066,USpan,3,2.457,0.008
-SC1 runtime,SIGN,0.083,Adaptive-Full,3,0.078,0.262
 SC1 runtime,SIGN,0.083,HUSP-SP,3,0.06,0.01
 SC1 runtime,SIGN,0.083,HUSP-ULL,3,0.057,0.01
 SC1 runtime,SIGN,0.083,IncUSP-Miner+,3,0.955,0.006
+SC1 runtime,SIGN,0.083,Joint-miner@UUT,3,0.056,0.456
 SC1 runtime,SIGN,0.083,Pre-HUSPM,3,0.4,0.009
+SC1 runtime,SIGN,0.083,Pre-HUSPM-Joint,3,0.078,0.262
 SC1 runtime,SIGN,0.083,USpan,3,1.403,0.003
-SC1 runtime,SIGN,0.091,Adaptive-Full,3,0.051,0.02
 SC1 runtime,SIGN,0.091,HUSP-SP,3,0.049,0.012
 SC1 runtime,SIGN,0.091,HUSP-ULL,3,0.045,0.013
 SC1 runtime,SIGN,0.091,IncUSP-Miner+,3,0.744,0.006
+SC1 runtime,SIGN,0.091,Joint-miner@UUT,3,0.04,0.422
 SC1 runtime,SIGN,0.091,Pre-HUSPM,3,0.314,0.007
+SC1 runtime,SIGN,0.091,Pre-HUSPM-Joint,3,0.051,0.02
 SC1 runtime,SIGN,0.091,USpan,3,1.131,0.003
-SC1 runtime,TAFENG,0.003,Adaptive-Full,3,0.36,0.011
 SC1 runtime,TAFENG,0.003,HUSP-SP,3,0.488,0.057
 SC1 runtime,TAFENG,0.003,HUSP-ULL,3,0.282,0.022
 SC1 runtime,TAFENG,0.003,IncUSP-Miner+,3,0.769,0.011
+SC1 runtime,TAFENG,0.003,Joint-miner@UUT,3,0.33,0.025
 SC1 runtime,TAFENG,0.003,Pre-HUSPM,3,0.219,0.024
+SC1 runtime,TAFENG,0.003,Pre-HUSPM-Joint,3,0.36,0.011
 SC1 runtime,TAFENG,0.003,USpan,3,0.727,0.134
-SC1 runtime,TAFENG,0.004,Adaptive-Full,3,0.227,0.139
 SC1 runtime,TAFENG,0.004,HUSP-SP,3,0.256,0.014
 SC1 runtime,TAFENG,0.004,HUSP-ULL,3,0.154,0.028
 SC1 runtime,TAFENG,0.004,IncUSP-Miner+,3,0.525,0.044
+SC1 runtime,TAFENG,0.004,Joint-miner@UUT,3,0.219,0.034
 SC1 runtime,TAFENG,0.004,Pre-HUSPM,3,0.123,0.052
+SC1 runtime,TAFENG,0.004,Pre-HUSPM-Joint,3,0.227,0.139
 SC1 runtime,TAFENG,0.004,USpan,3,0.394,0.107
-SC1 runtime,TAFENG,0.004,Adaptive-Full,3,0.18,0.159
 SC1 runtime,TAFENG,0.004,HUSP-SP,3,0.18,0.122
 SC1 runtime,TAFENG,0.004,HUSP-ULL,3,0.128,0.016
 SC1 runtime,TAFENG,0.004,IncUSP-Miner+,3,0.477,0.041
+SC1 runtime,TAFENG,0.004,Joint-miner@UUT,3,0.156,0.037
 SC1 runtime,TAFENG,0.004,Pre-HUSPM,3,0.087,0.011
+SC1 runtime,TAFENG,0.004,Pre-HUSPM-Joint,3,0.18,0.159
 SC1 runtime,TAFENG,0.004,USpan,3,0.292,0.032
-SC1 runtime,TAFENG,0.006,Adaptive-Full,3,0.141,0.008
 SC1 runtime,TAFENG,0.006,HUSP-SP,3,0.164,0.534
 SC1 runtime,TAFENG,0.006,HUSP-ULL,3,0.118,0.042
 SC1 runtime,TAFENG,0.006,IncUSP-Miner+,3,0.376,0.055
+SC1 runtime,TAFENG,0.006,Joint-miner@UUT,3,0.132,0.039
 SC1 runtime,TAFENG,0.006,Pre-HUSPM,3,0.063,0.027
+SC1 runtime,TAFENG,0.006,Pre-HUSPM-Joint,3,0.141,0.008
 SC1 runtime,TAFENG,0.006,USpan,3,0.239,0.012
-SC1 live set,BIBLE,0.018,Adaptive-Full,2,65.5,0.046
-SC1 live set,BIBLE,0.023,Adaptive-Full,2,52.0,0.115
-SC1 live set,BIBLE,0.029,Adaptive-Full,2,48.5,0.021
-SC1 live set,BIBLE,0.033,Adaptive-Full,2,33.0,0.061
 SC1 live set,BIBLE,0.018,HUSP-SP,2,28.5,0.035
 SC1 live set,BIBLE,0.023,HUSP-SP,2,25.0,0.16
 SC1 live set,BIBLE,0.029,HUSP-SP,2,25.0,0.24
@@ -207,6 +235,14 @@ SC1 live set,BIBLE,0.018,IncUSP-Miner+,2,1146.0,0.005
 SC1 live set,BIBLE,0.023,IncUSP-Miner+,2,862.0,0.032
 SC1 live set,BIBLE,0.029,IncUSP-Miner+,2,630.5,0.005
 SC1 live set,BIBLE,0.033,IncUSP-Miner+,2,548.0,0.004
+SC1 live set,BIBLE,0.018,Joint-miner@UUT,2,62.5,0.08
+SC1 live set,BIBLE,0.023,Joint-miner@UUT,2,46.0,0.087
+SC1 live set,BIBLE,0.029,Joint-miner@UUT,2,26.0,0.231
+SC1 live set,BIBLE,0.033,Joint-miner@UUT,2,40.5,0.025
+SC1 live set,BIBLE,0.018,Pre-HUSPM-Joint,2,65.5,0.046
+SC1 live set,BIBLE,0.023,Pre-HUSPM-Joint,2,52.0,0.115
+SC1 live set,BIBLE,0.029,Pre-HUSPM-Joint,2,48.5,0.021
+SC1 live set,BIBLE,0.033,Pre-HUSPM-Joint,2,33.0,0.061
 SC1 live set,BIBLE,0.018,Pre-HUSPM,2,160.5,0.006
 SC1 live set,BIBLE,0.023,Pre-HUSPM,2,144.0,0.167
 SC1 live set,BIBLE,0.029,Pre-HUSPM,2,133.0,0.015
@@ -215,10 +251,6 @@ SC1 live set,BIBLE,0.018,USpan,2,66.5,0.045
 SC1 live set,BIBLE,0.023,USpan,2,65.5,0.076
 SC1 live set,BIBLE,0.029,USpan,2,61.0,0.033
 SC1 live set,BIBLE,0.033,USpan,2,60.5,0.017
-SC1 live set,BMS1,0.013,Adaptive-Full,2,30.5,0.033
-SC1 live set,BMS1,0.014,Adaptive-Full,2,22.0,0.091
-SC1 live set,BMS1,0.015,Adaptive-Full,2,26.5,0.415
-SC1 live set,BMS1,0.016,Adaptive-Full,2,26.0,0.385
 SC1 live set,BMS1,0.013,HUSP-SP,2,16.0,0.25
 SC1 live set,BMS1,0.014,HUSP-SP,2,15.0,0.4
 SC1 live set,BMS1,0.015,HUSP-SP,2,15.5,0.194
@@ -231,6 +263,14 @@ SC1 live set,BMS1,0.013,IncUSP-Miner+,2,56.5,0.053
 SC1 live set,BMS1,0.014,IncUSP-Miner+,2,41.0,0.0
 SC1 live set,BMS1,0.015,IncUSP-Miner+,2,35.5,0.197
 SC1 live set,BMS1,0.016,IncUSP-Miner+,2,35.0,0.057
+SC1 live set,BMS1,0.013,Joint-miner@UUT,2,25.0,0.0
+SC1 live set,BMS1,0.014,Joint-miner@UUT,2,21.0,0.095
+SC1 live set,BMS1,0.015,Joint-miner@UUT,2,25.0,0.4
+SC1 live set,BMS1,0.016,Joint-miner@UUT,2,25.0,0.24
+SC1 live set,BMS1,0.013,Pre-HUSPM-Joint,2,30.5,0.033
+SC1 live set,BMS1,0.014,Pre-HUSPM-Joint,2,22.0,0.091
+SC1 live set,BMS1,0.015,Pre-HUSPM-Joint,2,26.5,0.415
+SC1 live set,BMS1,0.016,Pre-HUSPM-Joint,2,26.0,0.385
 SC1 live set,BMS1,0.013,Pre-HUSPM,2,41.5,0.024
 SC1 live set,BMS1,0.014,Pre-HUSPM,2,35.0,0.057
 SC1 live set,BMS1,0.015,Pre-HUSPM,2,27.5,0.327
@@ -239,10 +279,6 @@ SC1 live set,BMS1,0.013,USpan,2,26.0,0.154
 SC1 live set,BMS1,0.014,USpan,2,23.5,0.043
 SC1 live set,BMS1,0.015,USpan,2,28.0,0.0
 SC1 live set,BMS1,0.016,USpan,2,28.0,0.0
-SC1 live set,C8T1S5I8N5K,0.001,Adaptive-Full,2,51.0,0.039
-SC1 live set,C8T1S5I8N5K,0.001,Adaptive-Full,2,48.0,0.0
-SC1 live set,C8T1S5I8N5K,0.001,Adaptive-Full,2,34.5,0.087
-SC1 live set,C8T1S5I8N5K,0.001,Adaptive-Full,2,34.0,0.059
 SC1 live set,C8T1S5I8N5K,0.001,HUSP-SP,2,23.0,0.174
 SC1 live set,C8T1S5I8N5K,0.001,HUSP-SP,2,21.0,0.381
 SC1 live set,C8T1S5I8N5K,0.001,HUSP-SP,2,20.0,0.2
@@ -255,6 +291,14 @@ SC1 live set,C8T1S5I8N5K,0.001,IncUSP-Miner+,2,865.5,0.001
 SC1 live set,C8T1S5I8N5K,0.001,IncUSP-Miner+,2,779.5,0.042
 SC1 live set,C8T1S5I8N5K,0.001,IncUSP-Miner+,2,615.5,0.002
 SC1 live set,C8T1S5I8N5K,0.001,IncUSP-Miner+,2,554.5,0.016
+SC1 live set,C8T1S5I8N5K,0.001,Joint-miner@UUT,2,44.5,0.112
+SC1 live set,C8T1S5I8N5K,0.001,Joint-miner@UUT,2,34.0,0.059
+SC1 live set,C8T1S5I8N5K,0.001,Joint-miner@UUT,2,29.5,0.237
+SC1 live set,C8T1S5I8N5K,0.001,Joint-miner@UUT,2,25.0,0.08
+SC1 live set,C8T1S5I8N5K,0.001,Pre-HUSPM-Joint,2,51.0,0.039
+SC1 live set,C8T1S5I8N5K,0.001,Pre-HUSPM-Joint,2,48.0,0.0
+SC1 live set,C8T1S5I8N5K,0.001,Pre-HUSPM-Joint,2,34.5,0.087
+SC1 live set,C8T1S5I8N5K,0.001,Pre-HUSPM-Joint,2,34.0,0.059
 SC1 live set,C8T1S5I8N5K,0.001,Pre-HUSPM,2,114.0,0.018
 SC1 live set,C8T1S5I8N5K,0.001,Pre-HUSPM,2,81.5,0.012
 SC1 live set,C8T1S5I8N5K,0.001,Pre-HUSPM,2,67.0,0.09
@@ -263,10 +307,6 @@ SC1 live set,C8T1S5I8N5K,0.001,USpan,2,40.5,0.025
 SC1 live set,C8T1S5I8N5K,0.001,USpan,2,39.0,0.0
 SC1 live set,C8T1S5I8N5K,0.001,USpan,2,37.0,0.0
 SC1 live set,C8T1S5I8N5K,0.001,USpan,2,36.0,0.0
-SC1 live set,FIFA,0.056,Adaptive-Full,2,55.5,0.018
-SC1 live set,FIFA,0.06,Adaptive-Full,2,46.0,0.043
-SC1 live set,FIFA,0.067,Adaptive-Full,2,46.0,0.0
-SC1 live set,FIFA,0.075,Adaptive-Full,2,41.0,0.0
 SC1 live set,FIFA,0.056,HUSP-SP,2,22.5,0.044
 SC1 live set,FIFA,0.06,HUSP-SP,2,22.5,0.044
 SC1 live set,FIFA,0.067,HUSP-SP,2,20.5,0.146
@@ -279,6 +319,14 @@ SC1 live set,FIFA,0.056,IncUSP-Miner+,2,42468.5,0.0
 SC1 live set,FIFA,0.06,IncUSP-Miner+,2,34323.0,0.001
 SC1 live set,FIFA,0.067,IncUSP-Miner+,2,22238.5,0.0
 SC1 live set,FIFA,0.075,IncUSP-Miner+,2,14169.0,0.0
+SC1 live set,FIFA,0.056,Joint-miner@UUT,2,49.5,0.02
+SC1 live set,FIFA,0.06,Joint-miner@UUT,2,41.0,0.0
+SC1 live set,FIFA,0.067,Joint-miner@UUT,2,41.0,0.0
+SC1 live set,FIFA,0.075,Joint-miner@UUT,2,34.0,0.0
+SC1 live set,FIFA,0.056,Pre-HUSPM-Joint,2,55.5,0.018
+SC1 live set,FIFA,0.06,Pre-HUSPM-Joint,2,46.0,0.043
+SC1 live set,FIFA,0.067,Pre-HUSPM-Joint,2,46.0,0.0
+SC1 live set,FIFA,0.075,Pre-HUSPM-Joint,2,41.0,0.0
 SC1 live set,FIFA,0.056,Pre-HUSPM,2,346.0,0.006
 SC1 live set,FIFA,0.06,Pre-HUSPM,2,285.0,0.007
 SC1 live set,FIFA,0.067,Pre-HUSPM,2,204.0,0.01
@@ -287,10 +335,6 @@ SC1 live set,FIFA,0.056,USpan,2,72.0,0.028
 SC1 live set,FIFA,0.06,USpan,2,72.0,0.028
 SC1 live set,FIFA,0.067,USpan,2,70.5,0.014
 SC1 live set,FIFA,0.075,USpan,2,71.0,0.0
-SC1 live set,KOSARAK,0.022,Adaptive-Full,2,106.5,0.047
-SC1 live set,KOSARAK,0.025,Adaptive-Full,2,69.5,0.187
-SC1 live set,KOSARAK,0.028,Adaptive-Full,2,72.0,0.056
-SC1 live set,KOSARAK,0.032,Adaptive-Full,2,55.5,0.126
 SC1 live set,KOSARAK,0.022,HUSP-SP,2,60.5,0.083
 SC1 live set,KOSARAK,0.025,HUSP-SP,2,58.5,0.085
 SC1 live set,KOSARAK,0.028,HUSP-SP,2,52.5,0.248
@@ -303,6 +347,14 @@ SC1 live set,KOSARAK,0.022,IncUSP-Miner+,2,534.0,0.007
 SC1 live set,KOSARAK,0.025,IncUSP-Miner+,2,348.5,0.049
 SC1 live set,KOSARAK,0.028,IncUSP-Miner+,2,268.0,0.007
 SC1 live set,KOSARAK,0.032,IncUSP-Miner+,2,227.0,0.009
+SC1 live set,KOSARAK,0.022,Joint-miner@UUT,2,95.5,0.031
+SC1 live set,KOSARAK,0.025,Joint-miner@UUT,2,67.0,0.328
+SC1 live set,KOSARAK,0.028,Joint-miner@UUT,2,63.0,0.032
+SC1 live set,KOSARAK,0.032,Joint-miner@UUT,2,59.0,0.034
+SC1 live set,KOSARAK,0.022,Pre-HUSPM-Joint,2,106.5,0.047
+SC1 live set,KOSARAK,0.025,Pre-HUSPM-Joint,2,69.5,0.187
+SC1 live set,KOSARAK,0.028,Pre-HUSPM-Joint,2,72.0,0.056
+SC1 live set,KOSARAK,0.032,Pre-HUSPM-Joint,2,55.5,0.126
 SC1 live set,KOSARAK,0.022,Pre-HUSPM,2,221.0,0.127
 SC1 live set,KOSARAK,0.025,Pre-HUSPM,2,208.5,0.024
 SC1 live set,KOSARAK,0.028,Pre-HUSPM,2,199.5,0.055
@@ -311,10 +363,6 @@ SC1 live set,KOSARAK,0.022,USpan,2,110.0,0.0
 SC1 live set,KOSARAK,0.025,USpan,2,106.0,0.0
 SC1 live set,KOSARAK,0.028,USpan,2,102.0,0.0
 SC1 live set,KOSARAK,0.032,USpan,2,98.0,0.0
-SC1 live set,LEVIATHAN,0.015,Adaptive-Full,2,16.0,0.0
-SC1 live set,LEVIATHAN,0.016,Adaptive-Full,2,14.5,0.207
-SC1 live set,LEVIATHAN,0.016,Adaptive-Full,2,13.0,0.0
-SC1 live set,LEVIATHAN,0.018,Adaptive-Full,2,13.0,0.0
 SC1 live set,LEVIATHAN,0.015,HUSP-SP,2,5.5,0.182
 SC1 live set,LEVIATHAN,0.016,HUSP-SP,2,6.0,0.0
 SC1 live set,LEVIATHAN,0.016,HUSP-SP,2,5.5,0.182
@@ -327,6 +375,14 @@ SC1 live set,LEVIATHAN,0.015,IncUSP-Miner+,2,549.5,0.009
 SC1 live set,LEVIATHAN,0.016,IncUSP-Miner+,2,504.0,0.012
 SC1 live set,LEVIATHAN,0.016,IncUSP-Miner+,2,460.5,0.002
 SC1 live set,LEVIATHAN,0.018,IncUSP-Miner+,2,406.0,0.0
+SC1 live set,LEVIATHAN,0.015,Joint-miner@UUT,2,15.5,0.194
+SC1 live set,LEVIATHAN,0.016,Joint-miner@UUT,2,12.0,0.0
+SC1 live set,LEVIATHAN,0.016,Joint-miner@UUT,2,12.5,0.08
+SC1 live set,LEVIATHAN,0.018,Joint-miner@UUT,2,12.0,0.0
+SC1 live set,LEVIATHAN,0.015,Pre-HUSPM-Joint,2,16.0,0.0
+SC1 live set,LEVIATHAN,0.016,Pre-HUSPM-Joint,2,14.5,0.207
+SC1 live set,LEVIATHAN,0.016,Pre-HUSPM-Joint,2,13.0,0.0
+SC1 live set,LEVIATHAN,0.018,Pre-HUSPM-Joint,2,13.0,0.0
 SC1 live set,LEVIATHAN,0.015,Pre-HUSPM,2,49.0,0.082
 SC1 live set,LEVIATHAN,0.016,Pre-HUSPM,2,41.0,0.049
 SC1 live set,LEVIATHAN,0.016,Pre-HUSPM,2,45.5,0.022
@@ -335,10 +391,6 @@ SC1 live set,LEVIATHAN,0.015,USpan,2,23.0,0.0
 SC1 live set,LEVIATHAN,0.016,USpan,2,24.0,0.0
 SC1 live set,LEVIATHAN,0.016,USpan,2,22.5,0.044
 SC1 live set,LEVIATHAN,0.018,USpan,2,22.0,0.0
-SC1 live set,SIGN,0.049,Adaptive-Full,2,5.0,0.0
-SC1 live set,SIGN,0.066,Adaptive-Full,2,4.0,0.0
-SC1 live set,SIGN,0.083,Adaptive-Full,2,3.0,0.0
-SC1 live set,SIGN,0.091,Adaptive-Full,2,3.0,0.0
 SC1 live set,SIGN,0.049,HUSP-SP,2,2.0,0.0
 SC1 live set,SIGN,0.066,HUSP-SP,2,1.0,0.0
 SC1 live set,SIGN,0.083,HUSP-SP,2,1.0,0.0
@@ -351,6 +403,14 @@ SC1 live set,SIGN,0.049,IncUSP-Miner+,2,577.0,0.0
 SC1 live set,SIGN,0.066,IncUSP-Miner+,2,272.0,0.0
 SC1 live set,SIGN,0.083,IncUSP-Miner+,2,150.0,0.067
 SC1 live set,SIGN,0.091,IncUSP-Miner+,2,113.0,0.0
+SC1 live set,SIGN,0.049,Joint-miner@UUT,2,4.0,0.0
+SC1 live set,SIGN,0.066,Joint-miner@UUT,2,3.0,0.0
+SC1 live set,SIGN,0.083,Joint-miner@UUT,2,3.0,0.0
+SC1 live set,SIGN,0.091,Joint-miner@UUT,2,3.0,0.0
+SC1 live set,SIGN,0.049,Pre-HUSPM-Joint,2,5.0,0.0
+SC1 live set,SIGN,0.066,Pre-HUSPM-Joint,2,4.0,0.0
+SC1 live set,SIGN,0.083,Pre-HUSPM-Joint,2,3.0,0.0
+SC1 live set,SIGN,0.091,Pre-HUSPM-Joint,2,3.0,0.0
 SC1 live set,SIGN,0.049,Pre-HUSPM,2,96.5,0.01
 SC1 live set,SIGN,0.066,Pre-HUSPM,2,37.5,0.027
 SC1 live set,SIGN,0.083,Pre-HUSPM,2,21.0,0.286
@@ -359,10 +419,6 @@ SC1 live set,SIGN,0.049,USpan,2,9.0,0.0
 SC1 live set,SIGN,0.066,USpan,2,8.0,0.0
 SC1 live set,SIGN,0.083,USpan,2,7.0,0.0
 SC1 live set,SIGN,0.091,USpan,2,7.5,0.133
-SC1 live set,TAFENG,0.003,Adaptive-Full,2,64.5,0.047
-SC1 live set,TAFENG,0.004,Adaptive-Full,2,24.0,0.5
-SC1 live set,TAFENG,0.004,Adaptive-Full,2,46.5,0.065
-SC1 live set,TAFENG,0.006,Adaptive-Full,2,50.5,0.059
 SC1 live set,TAFENG,0.003,HUSP-SP,2,32.5,0.031
 SC1 live set,TAFENG,0.004,HUSP-SP,2,31.0,0.0
 SC1 live set,TAFENG,0.004,HUSP-SP,2,28.0,0.0
@@ -375,6 +431,14 @@ SC1 live set,TAFENG,0.003,IncUSP-Miner+,2,118.5,0.143
 SC1 live set,TAFENG,0.004,IncUSP-Miner+,2,70.5,0.411
 SC1 live set,TAFENG,0.004,IncUSP-Miner+,2,81.0,0.198
 SC1 live set,TAFENG,0.006,IncUSP-Miner+,2,51.0,0.078
+SC1 live set,TAFENG,0.003,Joint-miner@UUT,2,57.0,0.351
+SC1 live set,TAFENG,0.004,Joint-miner@UUT,2,49.0,0.041
+SC1 live set,TAFENG,0.004,Joint-miner@UUT,2,43.5,0.115
+SC1 live set,TAFENG,0.006,Joint-miner@UUT,2,38.0,0.0
+SC1 live set,TAFENG,0.003,Pre-HUSPM-Joint,2,64.5,0.047
+SC1 live set,TAFENG,0.004,Pre-HUSPM-Joint,2,24.0,0.5
+SC1 live set,TAFENG,0.004,Pre-HUSPM-Joint,2,46.5,0.065
+SC1 live set,TAFENG,0.006,Pre-HUSPM-Joint,2,50.5,0.059
 SC1 live set,TAFENG,0.003,Pre-HUSPM,2,141.5,0.078
 SC1 live set,TAFENG,0.004,Pre-HUSPM,2,116.0,0.0
 SC1 live set,TAFENG,0.004,Pre-HUSPM,2,120.5,0.041
@@ -383,13 +447,13 @@ SC1 live set,TAFENG,0.003,USpan,2,60.0,0.2
 SC1 live set,TAFENG,0.004,USpan,2,64.0,0.125
 SC1 live set,TAFENG,0.004,USpan,2,66.5,0.015
 SC1 live set,TAFENG,0.006,USpan,2,40.0,0.85
-SC2 state after last increment,TAFENG,,Adaptive-FixedFloor,2,52.5,0.095
-SC2 state after last increment,SIGN,,Adaptive-FixedFloor,2,13.0,0.0
 SC2 state after last increment,TAFENG,,IncUSP-Miner+,2,86.5,0.012
-SC2 state after last increment,TAFENG,,Pre-HUSPM-SWUmax,2,76.5,0.065
-SC2 state after last increment,SIGN,,IncUSP-Miner+,2,862.0,0.002
-SC2 state after last increment,SIGN,,Pre-HUSPM-SWUmax,2,32.0,0.0
-SC2 state after last increment,TAFENG,,Pre-HUSPM-TSU,2,86.5,0.035
 SC2 state after last increment,SIGN,,Pre-HUSPM-TSU,2,32.0,0.0
 SC2 state after last increment,SIGN,,Remine-from-scratch,2,17.0,0.0
+SC2 state after last increment,SIGN,,IncUSP-Miner+,2,862.0,0.002
+SC2 state after last increment,SIGN,,Pre-HUSPM-Joint-fixed-threshold,2,12.5,0.08
+SC2 state after last increment,SIGN,,Pre-HUSPM-SWUmax,2,32.0,0.0
+SC2 state after last increment,TAFENG,,Pre-HUSPM-SWUmax,2,76.5,0.065
+SC2 state after last increment,TAFENG,,Pre-HUSPM-TSU,2,86.5,0.035
 SC2 state after last increment,TAFENG,,Remine-from-scratch,2,56.5,0.018
+SC2 state after last increment,TAFENG,,Pre-HUSPM-Joint-fixed-threshold,2,49.5,0.061

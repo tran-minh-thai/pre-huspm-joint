@@ -167,6 +167,14 @@ def sc2():
             f"against {int(reg.loc[d,'rescans'])})" for d in swu_faster) + ".")
     else:
         swu_line = "Neither Pre-HUSPM variant is faster than the proposal on any database where both complete."
+    # streams where the proposal's mean time is below every competitor's that finished, as
+    # scenario_tables.sc2_speedups counts them (SC2_proposal_fastest)
+    import scenario_tables as st
+    runs = st._sc2_run_totals()
+    wins = [d for d in dbs if (d, P) in runs and all(
+        np.mean(runs[(d, b)]) > np.mean(runs[(d, P)]) for b in st.SC2_COMPETITORS if b != P and (d, b) in runs)]
+    sc2_fastest = f"{len(wins)} of {len(dbs)}" + (
+        f" (not on {', '.join(d for d in dbs if d not in wins)})" if len(wins) < len(dbs) else "")
     text = f"""# SC2, one hundred increments
 
 Seven databases against five arms; `D_init` per `common.Datasets`, the remainder cut into 100
@@ -185,16 +193,19 @@ total utility of the inserted sequences. Both accumulate since the last rescan a
 
 Seconds over the increments alone; the initial mine of `D_init` is excluded. A total over a
 partial run is in parentheses: it is not comparable with a total over the whole stream. The
-fastest arm that completed the whole stream is in bold. One run per arm; the spread of the
-proposal and Remine over three runs is in the next table.
+fastest of the arms in this table that completed the whole stream is in bold. Each cell is the
+mean of the arm's runs (`make_figures.load_mean`); the spread of the runs is in the next table.
+Remine-HUSP-ULL, Remine-HUSP-SP and Remine-own-UUT (remining with the proposal's own miner at
+UUT) are not columns here: with them the proposal is the fastest on {sc2_fastest} streams
+(`SC2_proposal_fastest` in `figures/campaign/paper_numbers.csv`, from `table_SC2_totals.csv`).
 
 {table(["database", LABEL[P], "rescans"] + [LABEL[a] for a in INC], rt)}
 
-### Three runs
+### Every run
 
-On SIGN, TAFENG, BIBLE and C8T1S5I8N5K the proposal and Remine were each measured three times, each
-run in a fresh JVM (`results/campaign-replicates/s0r1`, `s0r2`). Seconds summed over the
-increments, mean ± sample standard deviation.
+The proposal and Remine, each run in a fresh JVM (the main run and `results/campaign-replicates/s0r<n>`;
+the number of runs is in the table). Seconds summed over the increments, mean ± sample standard
+deviation.
 
 {table(["database", "arm", "runs", "mean ± sd", "min", "max"], rep, ["---", "---", "---:", "---:", "---:", "---:"])}
 
@@ -274,7 +285,12 @@ def sc5():
     tot = cells.apply(lambda g: mf.ms_to_s(g["runtime_ms"]).sum() if g["finished"].all() else np.nan)
     resc = inc[inc["algorithm"] == P].groupby(["dataset", "K", "strat"])["rescan_count"].max()
     rows = []
-    for b in ["Pre-HUSPM-TSU", "Pre-HUSPM-SWUmax", "IncUSP-Miner+", REM]:
+    # every competitor: the incremental baselines and every way of remining (the proposal's own
+    # miner at UUT among them); the versions of the proposal are not competitors
+    rivals = ["Pre-HUSPM-TSU", "Pre-HUSPM-SWUmax", "IncUSP-Miner+", REM, "Remine-HUSP-ULL", "Remine-HUSP-SP",
+              "Remine-own-UUT"]
+    rivals = [b for b in rivals if b in set(inc["algorithm"])]
+    for b in rivals:
         r = []
         for (ds, k, s, a), v in tot.items():
             if a != b:
@@ -282,7 +298,7 @@ def sc5():
             p = tot.get((ds, k, s, P), np.nan)
             if np.isfinite(v) and np.isfinite(p) and p > 0:
                 r.append(v / p)
-        rows.append([LABEL[b], f"{gmean(r):.2f}", len(r), sum(1 for x in r if x < 1)])
+        rows.append([LABEL.get(b, b), f"{gmean(r):.2f}", len(r), sum(1 for x in r if x < 1)])
     dbs = [d for d in mf.FIG_DATASETS if d in set(df["dataset"])]
     fine = []
     for ds in dbs:
@@ -297,13 +313,13 @@ def sc5():
             p, q = tot.get((ds, 100, s, P), np.nan), tot.get((ds, 100, s, REM), np.nan)
             strat.append([ds, s, f"{p:.1f} s", f"{q:.1f} s", f"{p / q:.2f}", int(resc.get((ds, 100, s), 0))])
     wins = sum(1 for (ds, k, s, a), v in tot.items() if a == P and np.isfinite(v) and all(
-        not np.isfinite(tot.get((ds, k, s, b), np.nan)) or tot.get((ds, k, s, b)) > v for b in INC))
+        not np.isfinite(tot.get((ds, k, s, b), np.nan)) or tot.get((ds, k, s, b)) > v for b in rivals))
     ncell = len({(ds, k, s) for (ds, k, s, a) in tot.index if a == P})
     text = f"""# SC5, how the stream is cut
 
 The same incremental stream cut four ways - EVEN, INCREASING, DECREASING, BURST - at four
 increment counts, `K` in {{100, 67, 50, 25}}, the total incremental data fixed. SIGN, LEVIATHAN and
-C8T1S5I8N5K, `D_init` per `common.Datasets`, one run per arm. {HEAD}
+C8T1S5I8N5K, `D_init` per `common.Datasets`, each time the mean of the arm's runs. {HEAD}
 
 ## Against each baseline
 
