@@ -36,13 +36,29 @@ Arial at 9 pt (8 pt only where a legend would not fit otherwise), lines of at le
 fonts embedded. `save()` refuses a figure larger than 119 x 195 mm.
 Multi-panel figures use a grid of three equal columns, one legend placed where no data is drawn (in the empty grid cells when there are any, else inside a panel where a measured check finds no point, segment or bar under it, else above the panels), panel names
 under the axes as "(a) NAME", and the y label on the first column of each row; a two-panel figure
-is centred and keeps the full width. Each method has one line colour in every figure (Okabe-Ito):
-Pre-HUSPM-Joint `#D55E00`, Pre-HUSPM and Pre-HUSPM-SWUmax `#0072B2`, Pre-HUSPM-TSU `#56B4E9`,
-Remine-from-scratch `#000000`, IncUSP-Miner+ `#009E73`, HUSP-ULL `#E69F00`, HUSP-SP `#CC79A7`,
-USpan `#7F7F7F`. Series that are not methods (variants, stream cuts, databases) take
-`SERIES_COLORS` in drawing order, starting with the proposal's colour. Nothing is filled: markers
-are hollow, bars are white with a coloured outline and hatch, and every series keeps its own dash
-pattern and marker, so a black-and-white print still reads.
+is centred and keeps the full width. Each method has one style in every figure, read from one table, `SERIES_STYLE` in
+`make_figures.py` (colour, marker, dash pattern, bar texture):
+
+| series | colour | marker | texture |
+|---|---|---|---|
+| Pre-HUSPM-Joint | `#D62728` red | star | `\|\|\|\|` |
+| Pre-HUSPM, Pre-HUSPM-SWUmax | `#1F77B4` blue | diamond | `....` |
+| Pre-HUSPM-TSU | `#B8860B` dark goldenrod | plus (filled) | `----` |
+| IncUSP-Miner+ | `#2CA02C` green | triangle up | `xxxx` |
+| Remine-from-scratch | `#000000` black | x | `++` |
+| Remine-own-UUT (Remine-UUT) | `#E7298A` pink | plus | `oo` |
+| HUSP-ULL | `#7B3294` purple | square | `////` |
+| HUSP-SP | `#8C564B` brown | triangle down | `\\\\` |
+| USpan | `#01665E` dark teal | circle | none |
+
+The colours are dark and of distinct hues: every two of the nine differ by a CIE76 distance of at
+least 44.8 (Pre-HUSPM against USpan, the closest pair; 51.9 among the six incremental series), and
+each has a contrast ratio of at least 3.2 against white. Series that are not methods (variants,
+stream cuts, databases) take `SERIES_COLORS` in drawing order, starting with the proposal's colour. In the ablation
+figure the full variant is the proposal and keeps its texture; rescanning at every increment takes `**`,
+a texture no method uses.
+Nothing is filled: markers are hollow, bars are white with a coloured outline and texture, and every
+series keeps its own dash pattern and marker, so a black-and-white print still reads.
 
 ## Figures (`main()`)
 
@@ -56,7 +72,7 @@ pattern and marker, so a black-and-white print still reads.
 | `fig_sl_sensitivity_prelarge_count.pdf` | SC4 | pre-large set size against `r_l`, Pre-HUSPM and the proposal, SIGN / LEVIATHAN / C8T1S5I8N5K |
 | `fig_batch_ratio.pdf` | SC5 | the proposal's runtime over remining's, summed over the increments, against K, one line per strategy; below one the proposal is faster |
 | `fig_memory_static.pdf` | memory SC1 | live set at each database's default threshold, six algorithms, eight databases; a live set read as 0 MB (below the column's 1 MB resolution) is drawn at 1 MB |
-| `fig_memory_incremental.pdf` | memory SC2 | state held after each increment (`mem_retained_mb`), five arms, seven databases |
+| `fig_memory_incremental.pdf` | memory SC2 | state held after each increment (`mem_retained_mb`), the six arms of `fig_incremental_cumulative.pdf`, seven databases |
 
 `main_all()` adds `fig_scalability_SC1_runtime_ms.pdf` and
 `fig_scalability_SC1_explored_nodes.pdf` (SC1 on all eight databases) and

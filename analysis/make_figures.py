@@ -133,7 +133,7 @@ STATIC_ORDER = ["USpan", "HUSP-ULL", "HUSP-SP", "IncUSP-Miner+", "Pre-HUSPM", PR
 # that mines no pre-large patterns (not a competitor)
 AT_UUT_ORDER = ["HUSP-ULL", "HUSP-SP", "Joint-miner@UUT"]
 INC_ORDER    = ["IncUSP-Miner+", "Pre-HUSPM-SWUmax", "Pre-HUSPM-TSU", "Remine-from-scratch", PROPOSED]
-# the SC2 cumulative-runtime figure also draws remining with the proposal's own miner at UUT
+# the SC2 cumulative-runtime and state figures also draw remining with the proposal's own miner at UUT
 INC_FIG_ORDER = INC_ORDER[:-1] + ["Remine-own-UUT", PROPOSED]
 # PROPOSED is the method: in the incremental scenarios its maintenance with the rescan threshold
 # selection (PreHUSPMAdaptiveAlgo.floorWindow = 5), in the static ones its static mine. FIXED is the
@@ -159,35 +159,39 @@ ALGO_LABEL = {
     PROPOSED: PROPOSED_LABEL, FIXED: PROPOSED_LABEL + ", fixed lower threshold",
     "Joint-miner@UUT": "Miner-UUT", "Remine-own-UUT": "Remine-UUT",
 }
-ALGO_LINESTYLE = {
-    "USpan": (0, (1, 1.5)), "HUSP-ULL": (0, (4, 1.5)), "HUSP-SP": (0, (4, 1.5, 1, 1.5)),
-    "IncUSP-Miner+": (0, (6, 2)), "Pre-HUSPM": (0, (2, 1.5)), "Pre-HUSPM-SWUmax": (0, (2, 1.5)), "Pre-HUSPM-TSU": (0, (6, 1.5, 1, 1.5, 1, 1.5)),
-    "Remine-from-scratch": (0, (8, 2, 2, 2)), "Remine-own-UUT": (0, (3, 1.5)), PROPOSED: "-",
+# One table for every series that is a method: colour, marker, dash pattern and bar texture. Every
+# figure reads its styles from here, so a series looks the same in all of them. The colours are dark
+# and of distinct hues, so that the series drawn together in one figure differ clearly on a white
+# background:
+#   static figures       Pre-HUSPM-Joint, Pre-HUSPM, IncUSP-Miner+, HUSP-ULL, HUSP-SP, USpan
+#                        red, blue, green, purple, brown, dark teal
+#   incremental figures  Pre-HUSPM-Joint, Pre-HUSPM-SWUmax, Pre-HUSPM-TSU, IncUSP-Miner+, Remine,
+#                        Remine-UUT: red, blue, dark goldenrod, green, black, pink
+# Chosen by search over dark colours: every two of the nine differ by a CIE76 distance of at least
+# 44.8, and every colour has a contrast ratio of at least 3.2 against white.
+# Pre-HUSPM in the static scenarios and Pre-HUSPM-SWUmax are the same algorithm and share a style.
+# Lines and marker edges are coloured, nothing is filled, and the dash patterns, hollow markers and
+# textures stay, so a figure printed in black and white still reads.
+SERIES_STYLE = {
+    #  series                 colour     marker  dash pattern                    texture
+    PROPOSED:              ("#D62728", "*", "-",                              "||||"),
+    "Pre-HUSPM":           ("#1F77B4", "D", (0, (2, 1.5)),                    "...."),
+    "Pre-HUSPM-SWUmax":    ("#1F77B4", "D", (0, (2, 1.5)),                    "...."),
+    "Pre-HUSPM-TSU":       ("#B8860B", "P", (0, (6, 1.5, 1, 1.5, 1, 1.5)),    "----"),
+    "IncUSP-Miner+":       ("#2CA02C", "^", (0, (6, 2)),                      "xxxx"),
+    "Remine-from-scratch": ("#000000", "x", (0, (8, 2, 2, 2)),                "++"),
+    "Remine-own-UUT":      ("#E7298A", "+", (0, (3, 1.5)),                    "oo"),
+    "HUSP-ULL":            ("#7B3294", "s", (0, (4, 1.5)),                    "////"),
+    "HUSP-SP":             ("#8C564B", "v", (0, (4, 1.5, 1, 1.5)),            "\\\\"),
+    "USpan":               ("#01665E", "o", (0, (1, 1.5)),                    ""),
 }
-ALGO_MARKER = {
-    "USpan": "o", "HUSP-ULL": "s", "HUSP-SP": "v", "IncUSP-Miner+": "^",
-    "Pre-HUSPM": "D", "Pre-HUSPM-SWUmax": "D", "Pre-HUSPM-TSU": "P", "Remine-from-scratch": "x", "Remine-own-UUT": "+",
-    PROPOSED: "*",
-}
-ALGO_HATCH = {
-    "USpan": "", "HUSP-ULL": "////", "HUSP-SP": "\\\\", "IncUSP-Miner+": "xxxx",
-    "Pre-HUSPM": "....", "Pre-HUSPM-SWUmax": "....", "Pre-HUSPM-TSU": "----", "Remine-from-scratch": "++", "Remine-own-UUT": "oo",
-    PROPOSED: "||||",
-}
-
-
-# Line colours: one fixed colour per method in every figure (Okabe-Ito, readable with colour
-# vision deficiency). Lines and marker edges are coloured; nothing is filled, and the dash
-# patterns and hollow markers stay, so a figure printed in black and white still reads.
-ALGO_COLOR = {
-    PROPOSED: "#D55E00", "Pre-HUSPM": "#0072B2", "Pre-HUSPM-SWUmax": "#0072B2",
-    "Pre-HUSPM-TSU": "#56B4E9", "Remine-from-scratch": "#000000", "IncUSP-Miner+": "#009E73",
-    "HUSP-ULL": "#E69F00", "HUSP-SP": "#CC79A7", "USpan": "#7F7F7F",
-    "Remine-own-UUT": "#882255",   # Tol's wine: not an Okabe-Ito colour taken by another method
-}
+ALGO_COLOR = {a: v[0] for a, v in SERIES_STYLE.items()}
+ALGO_MARKER = {a: v[1] for a, v in SERIES_STYLE.items()}
+ALGO_LINESTYLE = {a: v[2] for a, v in SERIES_STYLE.items()}
+ALGO_HATCH = {a: v[3] for a, v in SERIES_STYLE.items()}
 # Series that are not methods (variants, stream cuts, databases) take colours in this order, in
-# the order they are drawn; the first is the proposal's, kept by the full variant.
-SERIES_COLORS = ["#D55E00", "#000000", "#009E73", "#CC79A7", "#E69F00", "#56B4E9", "#0072B2", "#7F7F7F"]
+# the order they are drawn; the first is the proposal's, kept by the full variant. Same dark hues.
+SERIES_COLORS = ["#D62728", "#000000", "#2CA02C", "#7B3294", "#B8860B", "#1F77B4", "#8C564B", "#01665E"]
 PANEL_COLS = 3          # every multi-panel figure: three columns of equal panels
 PANEL_H = 1.9           # height of one row of panels, in inches
 
@@ -951,8 +955,9 @@ def figset_c5_ablation(tag="fig_C5_ablation"):
     if df.empty:
         return
     datasets = [d for d in ALL_DATASETS if d in set(df["dataset"])]
-    variants = [(PROPOSED + "-rescan-rule", "Joint rescan rule", ""),
-                (PROPOSED + "-rescan-every-batch", "Rescan at every increment", "////")]
+    # the full variant is the proposal and keeps its texture; the other takes one no method uses
+    variants = [(PROPOSED + "-rescan-rule", "Joint rescan rule", ALGO_HATCH[PROPOSED]),
+                (PROPOSED + "-rescan-every-batch", "Rescan at every increment", "**")]
     # Two panels of the common size (a third of the width each), centred.
     fig = plt.figure(figsize=(LINEWIDTH_IN, PANEL_H))
     gs = fig.add_gridspec(1, 2 * PANEL_COLS)
@@ -1124,8 +1129,7 @@ def figset_sl_sensitivity(tag="fig_sl_sensitivity", metrics=("prelarge_count",))
         return
     df = parse_sl(df)
     datasets = [d for d in FIG_DATASETS if d in set(df["dataset"])]
-    pair = [("Pre-HUSPM", "////", "Pre-HUSPM", ALGO_COLOR["Pre-HUSPM"]),
-            (PROPOSED, "", PROPOSED_LABEL, ALGO_COLOR[PROPOSED])]
+    pair = [(a, ALGO_HATCH[a], ALGO_LABEL[a], ALGO_COLOR[a]) for a in ("Pre-HUSPM", PROPOSED)]
     spec = {"prelarge_count": ("Pre-large set size", lambda x: np.asarray(x, float)),
             "runtime_ms": ("Runtime (s)", ms_to_s)}
     for metric in metrics:
@@ -1241,7 +1245,7 @@ def figset_memory_incremental(tag="fig_memory_incremental", datasets=None):
     absent = []
     for i, (ax, ds) in enumerate(zip(axes, datasets)):
         sub = df[df["dataset"] == ds]
-        for algo in INC_ORDER:
+        for algo in INC_FIG_ORDER:
             a = sub[sub["algorithm"] == algo].sort_values("iteration")
             if a.empty:
                 continue
@@ -1254,7 +1258,7 @@ def figset_memory_incremental(tag="fig_memory_incremental", datasets=None):
             if len(ok) < len(a):
                 ax.plot(ok["iteration"].iloc[-1], y[-1], marker="X", color="black",
                         markerfacecolor="black", ms=5, linestyle="none")
-        absent.append((i, ds, note_absent(sub, INC_ORDER, os.path.join(DATA_DIR, MEMORY_TREE, "SC2"), ds)))
+        absent.append((i, ds, note_absent(sub, INC_FIG_ORDER, os.path.join(DATA_DIR, MEMORY_TREE, "SC2"), ds)))
         ax.set_xticks([0, 50, 100])
         panel_xlabel(ax, i, ds, "Increment (0 = $D_{\\mathrm{init}}$)")
         safe_log(ax)
