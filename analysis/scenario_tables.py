@@ -456,6 +456,161 @@ def mixed_by_op(sc):
     return pd.DataFrame(rows)
 
 
+# Arms of the seed-spread table of the mixed streams, in its row order, with their labels.
+MIXED_SPREAD_ARMS = [(P, mf.ALGO_LABEL[P]), ("Remine-from-scratch", "Remine"), (OWN_UUT, "Remine-UUT"),
+                     ("Remine-HUSP-ULL", "Remine-HUSP-ULL"), ("Remine-HUSP-SP", "Remine-HUSP-SP"),
+                     ("Joint-rule+min-floor", "min floor"), ("Joint-rule+plain-floor", "plain floor")]
+
+
+def mixed_seed_spread(put, out):
+    """SC6, SC6D and SC6B over the five seeds. For every (scenario, database, arm): the time of
+    the stream (the operations after the initial mine, summed) per seed, as mean, sample standard
+    deviation, min and max over the seeds where the arm finished every operation; for the
+    remining arms and the two floors also the ratio of that time to the proposal's, seed by
+    seed, and the seeds where the arm is faster. For the proposal: rescans and operations taking
+    the direct update by kind, mean and range over the seeds. Writes
+    table_SC6_seed_spread.csv, table_SC6_seed_spread.tex and table_SC6_seed_branches.tex."""
+    rows, branch = [], []
+    src = "table_SC6_seed_spread.csv"
+    for sc in ("SC6", "SC6D", "SC6B"):
+        df = mf.load_scenario(sc, replicates=True)
+        if df is None:
+            continue
+        ops = df[~df["op_type"].astype(str).str.contains("INIT")].copy()
+        ops["kind"] = ops["op_type"].astype(str).str.extract(r"SC6_(INS|DEL_BIG|DEL|MOD)")[0]
+        ops = ops[ops["kind"].notna()]
+        for d in [x for x in mf.ALL_DATASETS if x in set(ops["dataset"])]:
+            g = ops[ops["dataset"] == d]
+            per = {}
+            for arm, _ in MIXED_SPREAD_ARMS:
+                q = g[g["algorithm"] == arm]
+                per[arm] = {r: mf.ms_to_s(x["runtime_ms"]).sum() for r, x in q.groupby("replicate")
+                            if x["finished"].all() and len(x) == 20}
+            pp = per[P]
+            for arm, label in MIXED_SPREAD_ARMS:
+                v = per[arm]
+                if not v:
+                    continue
+                vals = list(v.values())
+                row = dict(scenario=sc, dataset=d, arm=label, seeds=len(v), mean_s=np.mean(vals),
+                           sd_s=np.std(vals, ddof=1) if len(vals) > 1 else np.nan,
+                           min_s=min(vals), max_s=max(vals))
+                common = sorted(set(v) & set(pp))
+                if arm != P and common:
+                    ratio = [v[r] / pp[r] for r in common]
+                    row.update(seeds_compared=len(common), over_proposal_mean=np.mean(ratio),
+                               over_proposal_min=min(ratio), over_proposal_max=max(ratio),
+                               seeds_faster_than_proposal=sum(v[r] < pp[r] for r in common))
+                rows.append(row)
+            # By kind of operation: the time of a remining arm over the proposal's, seed by seed.
+            for k, name in (("INS", "insertion"), ("DEL", "deletion"), ("MOD", "modification")):
+                pk = {r: mf.ms_to_s(x["runtime_ms"]).sum() for r, x in g[(g["algorithm"] == P) & (g["kind"] == k)]
+                      .groupby("replicate") if x["finished"].all()}
+                for arm, label in MIXED_SPREAD_ARMS[1:3]:
+                    qk = {r: mf.ms_to_s(x["runtime_ms"]).sum() for r, x in g[(g["algorithm"] == arm) & (g["kind"] == k)]
+                          .groupby("replicate") if x["finished"].all()}
+                    ratio = [qk[r] / pk[r] for r in sorted(set(pk) & set(qk)) if pk[r] > 0]
+                    if ratio:
+                        put(f"{sc}_{d}_{name}_{label}_over_proposal_by_seed",
+                            f"{np.mean(ratio):.2f} ({min(ratio):.2f} to {max(ratio):.2f}; faster than the proposal "
+                            f"in {sum(x < 1 for x in ratio)} of {len(ratio)} seeds)", src)
+            p = g[g["algorithm"] == P].sort_values(["replicate", "iteration"])
+            p = p.assign(rescanned=p.groupby("replicate")["rescan_count"].diff().fillna(p["rescan_count"]) > 0)
+            b = dict(scenario=sc, dataset=d, seeds=p["replicate"].nunique())
+            per_seed = p.groupby("replicate")
+            b["rescans_mean"] = per_seed["rescanned"].sum().mean()
+            b["rescans_min"], b["rescans_max"] = int(per_seed["rescanned"].sum().min()), int(per_seed["rescanned"].sum().max())
+            for k, name in (("INS", "insertion"), ("DEL", "deletion"), ("MOD", "modification"),
+                            ("DEL_BIG", "deletion_beyond_budget")):
+                pk = p[p["kind"] == k]
+                if not len(pk):
+                    continue
+                n = pk.groupby("replicate").size()
+                dr = (~pk["rescanned"]).groupby(pk["replicate"]).sum()
+                b[f"{name}_operations_per_seed"] = int(n.iloc[0])
+                b[f"{name}_direct_mean"] = dr.mean()
+                b[f"{name}_direct_min"], b[f"{name}_direct_max"] = int(dr.min()), int(dr.max())
+            branch.append(b)
+    t = pd.DataFrame(rows)
+    br = pd.DataFrame(branch)
+    tex_path, btex_path = os.path.join(out, "table_SC6_seed_spread.tex"), os.path.join(out, "table_SC6_seed_branches.tex")
+    if not len(t):
+        for path in (os.path.join(out, src), tex_path, btex_path):
+            if os.path.exists(path):
+                os.remove(path)
+        print("[not written] table_SC6_seed_spread: no finished arm of SC6, SC6D or SC6B")
+        return t
+    mf.write_csv(t, os.path.join(out, src))
+    mf.write_csv(br, os.path.join(out, "table_SC6_seed_branches.csv"))
+    for _, r in t.iterrows():
+        base = f"{r['scenario']}_{r['dataset']}_{r['arm'].replace(' ', '_')}_seed"
+        put(f"{base}_time", f"{r['mean_s']:.2f} ± {r['sd_s']:.2f} ({r['min_s']:.2f} to {r['max_s']:.2f}, {int(r['seeds'])} seeds)", src)
+        if pd.notna(r.get("seeds_compared")):
+            put(f"{base}_over_proposal", f"{r['over_proposal_mean']:.2f} ({r['over_proposal_min']:.2f} to "
+                f"{r['over_proposal_max']:.2f})", src)
+            put(f"{base}_faster_than_proposal", f"{int(r['seeds_faster_than_proposal'])}/{int(r['seeds_compared'])}", src)
+    for _, r in br.iterrows():
+        base = f"{r['scenario']}_{r['dataset']}_proposal_seed"
+        put(f"{base}_rescans", f"{r['rescans_mean']:.1f} ({r['rescans_min']} to {r['rescans_max']})", "table_SC6_seed_branches.csv")
+        for name in ("insertion", "deletion", "modification", "deletion_beyond_budget"):
+            if pd.notna(r.get(f"{name}_direct_mean")):
+                put(f"{base}_{name}_direct", f"{r[f'{name}_direct_mean']:.1f} ({int(r[f'{name}_direct_min'])} to "
+                    f"{int(r[f'{name}_direct_max'])}) of {int(r[f'{name}_operations_per_seed'])}", "table_SC6_seed_branches.csv")
+    # Over every (scenario, database): the seeds in which an arm is faster than the proposal.
+    for label in ("Remine", "Remine-UUT", "Remine-HUSP-ULL", "Remine-HUSP-SP"):
+        s = t[(t["arm"] == label) & t["seeds_compared"].notna()]
+        put(f"SC6_all_{label}_faster_than_proposal_seeds",
+            f"{int(s['seeds_faster_than_proposal'].sum())}/{int(s['seeds_compared'].sum())}", src)
+
+    names = {"SC6": "SC6", "SC6D": "SC6-D", "SC6B": "SC6-B"}
+    dbs = [d for d in mf.ALL_DATASETS if d in set(t["dataset"])]
+    lines = ["\\begin{table}[!htbp]\\centering",
+             "\\caption{Stream time (s) of SC6, SC6-D and SC6-B over five seeds}\\label{tab:sc6_seeds}",
+             "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}ll" + "r" * len(dbs) + "}\\toprule",
+             "Scenario & Arm & " + " & ".join(dbs) + " \\\\\\midrule"]
+    for sc in ("SC6", "SC6D", "SC6B"):
+        ts = t[t["scenario"] == sc]
+        if not len(ts):
+            continue
+        first = True
+        for _, label in MIXED_SPREAD_ARMS:
+            cells = []
+            for d in dbs:
+                r = ts[(ts["dataset"] == d) & (ts["arm"] == label)]
+                if not len(r):
+                    cells.append("--")
+                    continue
+                r = r.iloc[0]
+                cells.append(f"{r['mean_s']:.2f} $\\pm$ {r['sd_s']:.2f} [{r['min_s']:.2f}, {r['max_s']:.2f}]")
+            if all(c == "--" for c in cells):
+                continue
+            lines.append(f"{names[sc] if first else ''} & {label} & " + " & ".join(cells) + " \\\\")
+            first = False
+        lines.append("\\midrule" if sc != "SC6B" else "")
+    lines = [l for l in lines if l != ""]
+    if lines[-1] == "\\midrule":
+        lines.pop()
+    lines += ["\\bottomrule\\end{tabular*}", "\\end{table}", ""]
+    open(tex_path, "w", encoding="utf-8").write("\n".join(lines))
+
+    bl = ["\\begin{table}[!htbp]\\centering",
+          "\\caption{Rescans and direct updates of the proposal over five seeds}\\label{tab:sc6_branches}",
+          "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}llrrrr}\\toprule",
+          "Scenario & Database & Rescans & Direct ins. & Direct del. & Direct mod. \\\\\\midrule"]
+    rng = lambda r, c: (f"{r[c + '_mean']:.1f} [{int(r[c + '_min'])}, {int(r[c + '_max'])}]/"
+                        f"{int(r[c.replace('_direct', '') + '_operations_per_seed'])}"
+                        if pd.notna(r.get(c + "_mean")) else "--")
+    for _, r in br.iterrows():
+        dels = rng(r, "deletion_direct")
+        if pd.notna(r.get("deletion_beyond_budget_direct_mean")):
+            dels += f"; beyond {rng(r, 'deletion_beyond_budget_direct')}"
+        bl.append(f"{names[r['scenario']]} & {r['dataset']} & {r['rescans_mean']:.1f} [{r['rescans_min']}, {r['rescans_max']}] & "
+                  f"{rng(r, 'insertion_direct')} & {dels} & {rng(r, 'modification_direct')} \\\\")
+    bl += ["\\bottomrule\\end{tabular*}", "\\end{table}", ""]
+    open(btex_path, "w", encoding="utf-8").write("\n".join(bl))
+    return t
+
+
 def mixed_floor_keys(put):
     """The mixed streams: the fixed-floor proposal's rescans by kind of operation; for the method,
     the deletions that came right after a rescan mined at UUT (budget 0) and how many of them
@@ -2260,6 +2415,7 @@ def export_all(out_dir=None):
             put(f"SC6_{r.dataset}_{r.kind.replace(' ', '_')}_pooled_remine_over_proposal",
                 f"{r.remine_over_proposal:.2f}", "table_SC6_by_op.csv")
     mixed_floor_keys(put)
+    mixed_seed_spread(put, out)
     window_study(put, out)
     sc2_inference(put, out)
     sc2_own_uut(put)
