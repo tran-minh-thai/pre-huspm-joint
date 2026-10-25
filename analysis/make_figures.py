@@ -157,7 +157,7 @@ ALGO_LABEL = {
     "IncUSP-Miner+": "IncUSP-Miner$^{+}$", "Pre-HUSPM": "Pre-HUSPM", "Pre-HUSPM-SWUmax": "Pre-HUSPM-SWUmax",
     "Pre-HUSPM-TSU": "Pre-HUSPM-TSU", "Remine-from-scratch": "Remine",
     PROPOSED: PROPOSED_LABEL, FIXED: PROPOSED_LABEL + ", fixed lower threshold",
-    "Joint-miner@UUT": "Joint-miner@UUT", "Remine-own-UUT": "Remine-UUT",
+    "Joint-miner@UUT": "Miner-UUT", "Remine-own-UUT": "Remine-UUT",
 }
 ALGO_LINESTYLE = {
     "USpan": (0, (1, 1.5)), "HUSP-ULL": (0, (4, 1.5)), "HUSP-SP": (0, (4, 1.5, 1, 1.5)),

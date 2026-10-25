@@ -158,6 +158,7 @@ def static_tables():
                                   cells=s["n_fast"], proposal_fastest=s["fastest"],
                                   proposal_fastest_separated=len(s["separated"]),
                                   ties=len(s["ties"]), tie_cells="; ".join(s["ties"]),
+                                  separated_cells="; ".join(s["separated"]),
                                   best_over_proposal_median=float(np.median(vb)) if len(vb) else np.nan,
                                   best_over_proposal_min=float(vb.min()) if len(vb) else np.nan,
                                   best_over_proposal_max=float(vb.max()) if len(vb) else np.nan,
@@ -817,6 +818,19 @@ def tightness_keys(put, src="invariant-joint-rule-tightness/console.txt"):
                                  flags=re.M):
         put(f"tight_fault_{name}_mismatching_states", int(n), src)
         put(f"tight_fault_{name}", r, src)
+    # totals over the regimes, as one sentence of the paper states them
+    tot = {}
+    for b in blocks:
+        if not b.startswith("regime"):
+            continue
+        fm = need(r"^floor max\s+\(.*?\): states (\d+), discards (\d+)", b)
+        tr = need(r"construction gives an untracked HUSP (\d+)", b)
+        mf_ = need(r"patterns at or above it \d+, made HUSPs (\d+)", b)
+        for name, v in (("states", fm.group(1)), ("floor_max_discards", fm.group(2)),
+                        ("trigger_constructed", tr.group(1)), ("maxfloor_made_husps", mf_.group(1))):
+            tot[name] = tot.get(name, 0) + int(v)
+    for name, v in tot.items():
+        put(f"tight_total_{name}", f"{v:,}", src)
     put("tight_all_claims_hold", "yes" if re.search(r"^all claims hold and every fault is caught$", text, flags=re.M)
         else "no", src)
 
@@ -1522,6 +1536,11 @@ def sc7_static_runtime(put, t7):
         for (d, a), g in df[df["finished"]].groupby(["dataset", "algorithm"]):
             runs[(d, a)] = mf.ms_to_s(g["runtime_ms"]).tolist()
     arm = {"Full": P, "-IUB": P + "-no-IUB", "-IPS": P + "-no-IPS", "Pre-HUSPM": "Pre-HUSPM"}
+    # without the node check the miner explores the same nodes: databases where the counts are equal
+    ex = t7.pivot(index="dataset", columns="variant", values="explored")
+    if {"Full", "-IUB"} <= set(ex.columns):
+        both = ex[["Full", "-IUB"]].dropna()
+        put("SC7_IUB_explored_equal", f"{int((both['Full'] == both['-IUB']).sum())}/{len(both)}", "table_SC7_static.csv")
     full = t7[t7["variant"] == "Full"].set_index("dataset")["runtime_s"]
     for v in ("-IUB", "-IPS", "Pre-HUSPM"):
         x = t7[t7["variant"] == v].set_index("dataset")["runtime_s"]
@@ -2053,6 +2072,8 @@ def export_all(out_dir=None):
         put(f"{k}_proposal_fastest_separated", f"{r['proposal_fastest_separated']}/{r['cells']}",
             "table_static_summary.csv")
         put(f"{k}_ties_with_fastest_baseline", f"{r['ties']}/{r['cells']}", "table_static_summary.csv")
+        if r["separated_cells"]:
+            put(f"{k}_proposal_fastest_separated_cells", r["separated_cells"], "table_static_summary.csv")
         if r["tie_cells"]:
             put(f"{k}_tie_cells", r["tie_cells"], "table_static_summary.csv")
         put(f"{k}_pairs_agree", f"{r['pairs_agree']}/{r['pairs']}", "table_static_summary.csv")

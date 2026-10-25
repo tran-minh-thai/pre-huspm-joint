@@ -1,5 +1,5 @@
-scenario,scope,pairs,pairs_agree,cells,proposal_fastest,proposal_fastest_separated,ties,tie_cells,best_over_proposal_median,best_over_proposal_min,best_over_proposal_max,excluded
-SC1,all thresholds,32,32,32,5,3,6,BMS1 at 0.015293 (HUSP-ULL); BMS1 at 0.016218 (HUSP-ULL); C8T1S5I8N5K at 0.001132 (HUSP-ULL); LEVIATHAN at 0.014644 (HUSP-SP); LEVIATHAN at 0.01553 (HUSP-ULL); LEVIATHAN at 0.01647 (HUSP-ULL),0.829,0.379,1.108,
-SC1,default threshold,8,8,8,1,1,2,C8T1S5I8N5K at 0.001132 (HUSP-ULL); LEVIATHAN at 0.01553 (HUSP-ULL),0.849,0.546,1.087,
-SC3,all thresholds,12,12,12,2,1,3,SIGN at 0.049134 (HUSP-ULL); SIGN at 0.083371 (HUSP-SP); SIGN at 0.091052 (HUSP-SP),0.904,0.61,1.056,
-SC3,default threshold,3,3,3,1,1,0,,0.901,0.654,1.056,
+scenario,scope,pairs,pairs_agree,cells,proposal_fastest,proposal_fastest_separated,ties,tie_cells,separated_cells,best_over_proposal_median,best_over_proposal_min,best_over_proposal_max,excluded
+SC1,all thresholds,32,32,32,5,3,6,BMS1 at 0.015293 (HUSP-ULL); BMS1 at 0.016218 (HUSP-ULL); C8T1S5I8N5K at 0.001132 (HUSP-ULL); LEVIATHAN at 0.014644 (HUSP-SP); LEVIATHAN at 0.01553 (HUSP-ULL); LEVIATHAN at 0.01647 (HUSP-ULL),BMS1 at 0.012821; BMS1 at 0.013597; KOSARAK at 0.022228,0.829,0.379,1.108,
+SC1,default threshold,8,8,8,1,1,2,C8T1S5I8N5K at 0.001132 (HUSP-ULL); LEVIATHAN at 0.01553 (HUSP-ULL),BMS1 at 0.013597,0.849,0.546,1.087,
+SC3,all thresholds,12,12,12,2,1,3,SIGN at 0.049134 (HUSP-ULL); SIGN at 0.083371 (HUSP-SP); SIGN at 0.091052 (HUSP-SP),SIGN at 0.065911,0.904,0.61,1.056,
+SC3,default threshold,3,3,3,1,1,0,,SIGN at 0.065911,0.901,0.654,1.056,
