@@ -30,9 +30,10 @@ javac -encoding UTF-8 -d build $(find src -name '*.java')
 HEAP=2g ./run.sh TEST SC1                                # smoke test on examples/, about 20 s (Windows: .\run.ps1 TEST SC1)
 ```
 
-`fetch-datasets` downloads release `v1.2.1-measured-quantity` of
-[huspm-datasets](https://github.com/tran-minh-thai/huspm-datasets). TAFENG is not
-redistributed; build it from the Ta-Feng file
+`fetch-datasets` downloads the seven SPMF sequence files and release `v2.0.0-utilities` of
+[huspm-datasets](https://github.com/tran-minh-thai/huspm-datasets), which holds only the generated
+quantities and profits, assembles the databases, and checks them against `datasets.sha256`. It
+needs Python 3. Build TAFENG from the Ta-Feng file
 ([Kaggle](https://www.kaggle.com/datasets/chiranjivdas09/ta-feng-grocery-dataset)):
 
 ```bash

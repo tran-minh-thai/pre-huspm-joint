@@ -1,32 +1,30 @@
 <#
-  Fetch the quantitative sequence databases into datasets\.
+  Assemble the quantitative sequence databases into datasets\.
 
-  The databases are not kept in this repository. They are shared across several
-  studies, so they live in one place and each study pins the exact release it
-  measured on:
+  The sequences come from the SPMF dataset collection and are not kept or redistributed
+  here. The generated utilities are release v2.0.0-utilities of
 
       https://github.com/tran-minh-thai/huspm-datasets
 
-  Every file is checked against the SHA-256 manifest attached to that release, so
-  a mismatch stops the script rather than producing numbers on the wrong bytes.
+  This script downloads that release, downloads the SPMF files it names, and runs the
+  release's tools\assemble.py, which checks each SPMF file and each assembled file against
+  the checksums of the release. The assembled files are then checked once more against
+  datasets.sha256 in this repository, the checksums of the files every result was measured on.
 
-      .\fetch-datasets.ps1                                  pinned release
-      .\fetch-datasets.ps1 -Release v1.1.1-seed42-lognormal  a different one
-      .\fetch-datasets.ps1 -Force                            re-download
-      .\fetch-datasets.ps1 -VerifyOnly                       check what is there
+      .\fetch-datasets.ps1               assemble what is missing
+      .\fetch-datasets.ps1 -Force        assemble again
+      .\fetch-datasets.ps1 -VerifyOnly   check what is there
 
-  TAFENG is not part of the release and is not downloaded. Ta-Feng is redistributed
-  under terms this project does not rely on, so the database is built locally from the
-  raw file and pinned by checksum instead; see tafeng\ and the README. This script
-  reports whether it is present and correct, and -VerifyOnly fails if it is not.
+  Needs tar (Windows 10 1803 and later) and Python 3. TAFENG is not part of the release; it
+  is built locally from the Ta-Feng file (see tafeng\ and the README). This script reports
+  whether it is present and correct, and -VerifyOnly fails if it is not.
 #>
 
 [CmdletBinding()]
 param(
-    # The release this study measures on. Changing it changes the data, and
-    # therefore every result: re-run everything after changing it.
-    [string]$Release = 'v1.2.1-measured-quantity',
     [string]$Dir     = 'datasets',
+    [string]$Python  = 'python',
+    [string]$BaseUrl = 'https://github.com/tran-minh-thai/huspm-datasets/releases/download/v2.0.0-utilities',
     [switch]$Force,
     [switch]$VerifyOnly
 )
@@ -34,64 +32,37 @@ param(
 $ErrorActionPreference = 'Stop'
 Set-Location -Path $PSScriptRoot
 
-$repo    = 'tran-minh-thai/huspm-datasets'
-$baseUrl = "https://github.com/$repo/releases/download/$Release"
-$archive = "huspm-datasets-$Release.tar.gz"
+$release       = 'v2.0.0-utilities'
+# The release archive, pinned: a release asset can be replaced, this checksum cannot.
+$archiveSha256 = '5d3ea0463ec1570b2b0ff530fbbd40ca204744443758ac620b6a3a777b31cad5'
+$archive       = "huspm-datasets-$release.tar.gz"
+$pinned        = Join-Path $PSScriptRoot 'datasets.sha256'
 
 New-Item -ItemType Directory -Force -Path $Dir | Out-Null
-$manifestPath = Join-Path $Dir 'MANIFEST.sha256'
 
-function Get-Asset([string]$name, [string]$dest) {
-    Write-Host "    $name"
-    Invoke-WebRequest -Uri "$baseUrl/$name" -OutFile $dest -UseBasicParsing
-}
-
-# The manifest belongs to the release, not to the default branch: the copy on main
-# always describes the newest release and would silently disagree with a pinned one.
-if (-not $VerifyOnly) {
-    Write-Host "==> release $Release"
-    Get-Asset 'MANIFEST.sha256' $manifestPath
-}
-if (-not (Test-Path $manifestPath)) {
-    throw "No manifest in $Dir. Run without -VerifyOnly first."
-}
-
-$expected = @{}
-foreach ($line in Get-Content $manifestPath) {
-    if ($line -match '^\s*([0-9a-fA-F]{64})\s+(\S.*)$') {
-        $expected[$Matches[2].Trim()] = $Matches[1].ToLower()
+function Read-Sums([string]$path) {
+    $sums = @{}
+    foreach ($line in Get-Content -LiteralPath $path) {
+        if ($line -match '^\s*([0-9a-fA-F]{64})\s+(\S.*)$') { $sums[$Matches[2].Trim()] = $Matches[1].ToLower() }
     }
+    return $sums
 }
-if ($expected.Count -eq 0) { throw "Manifest is empty or malformed: $manifestPath" }
 
-function Test-Datasets {
+function Test-Files($sums) {
     $missing = 0; $wrong = 0
-    foreach ($name in $expected.Keys) {
+    foreach ($name in $sums.Keys) {
         $path = Join-Path $Dir $name
-        if (-not (Test-Path $path)) { $missing++; continue }
-        if ((Get-FileHash $path -Algorithm SHA256).Hash.ToLower() -ne $expected[$name]) { $wrong++ }
+        if (-not (Test-Path -LiteralPath $path)) { $missing++; continue }
+        if ((Get-FileHash -LiteralPath $path -Algorithm SHA256).Hash.ToLower() -ne $sums[$name]) { $wrong++ }
     }
-    return @{ missing = $missing; wrong = $wrong; total = $expected.Count }
+    return @{ missing = $missing; wrong = $wrong; total = $sums.Count }
 }
 
-# TAFENG is built locally rather than downloaded, so its checksums live in this
-# repository rather than in the release manifest: the study that consumes the data is
-# what pins its version. Returns $true when both files are present and correct.
+# TAFENG is built locally rather than assembled, so its checksums live in tafeng\.
 function Test-Tafeng {
-    $sums = Join-Path $PSScriptRoot 'tafeng/TAFENG.sha256'
-    if (-not (Test-Path $sums)) { return $true }        # no recipe here, nothing claimed
-    $bad = @()
-    foreach ($line in Get-Content $sums) {
-        if ($line -notmatch '^\s*([0-9a-fA-F]{64})\s+(\S.*)$') { continue }
-        $name = $Matches[2].Trim(); $want = $Matches[1].ToLower()
-        $path = Join-Path $Dir $name
-        if (-not (Test-Path $path)) { $bad += "$name missing"; continue }
-        if ((Get-FileHash $path -Algorithm SHA256).Hash.ToLower() -ne $want) {
-            $bad += "$name does not match"
-        }
-    }
-    if ($bad.Count -eq 0) { Write-Host '==> TAFENG present and verified'; return $true }
-    Write-Host "==> TAFENG not ready: $($bad -join ', ')"
+    $s = Test-Files (Read-Sums (Join-Path $PSScriptRoot 'tafeng/TAFENG.sha256'))
+    if ($s.missing -eq 0 -and $s.wrong -eq 0) { Write-Host '==> TAFENG present and verified'; return $true }
+    Write-Host "==> TAFENG not ready: $($s.missing) missing, $($s.wrong) not matching tafeng\TAFENG.sha256"
     Write-Host '    Ta-Feng is not redistributed here. Get ta_feng_all_months_merged.csv'
     Write-Host '    (Kaggle: chiranjivdas09/ta-feng-grocery-dataset), then build it:'
     Write-Host "        python tafeng/build_tafeng.py --zip <archive.zip> --out-dir $Dir --name TAFENG"
@@ -99,47 +70,47 @@ function Test-Tafeng {
     return $false
 }
 
-$state = Test-Datasets
-if (-not $Force -and -not $VerifyOnly -and $state.missing -eq 0 -and $state.wrong -eq 0) {
-    Write-Host "==> $($state.total) files already present and verified; nothing to do"
-    if (-not (Test-Tafeng)) { exit 1 }
-    exit 0
-}
+$expected = Read-Sums $pinned
+if ($expected.Count -eq 0) { throw "No checksum listed in $pinned" }
+$state = Test-Files $expected
+
 if ($VerifyOnly) {
-    Write-Host ("==> {0} files: {1} verified, {2} missing, {3} corrupt" -f
+    Write-Host ("==> {0} files: {1} verified, {2} missing, {3} not matching datasets.sha256" -f
                 $state.total, ($state.total - $state.missing - $state.wrong), $state.missing, $state.wrong)
     $tafengOk = Test-Tafeng
     if ($state.missing -gt 0 -or $state.wrong -gt 0 -or -not $tafengOk) { exit 1 }
     exit 0
 }
+if (-not $Force -and $state.missing -eq 0 -and $state.wrong -eq 0) {
+    Write-Host "==> $($state.total) files already present and verified; nothing to do"
+    if (-not (Test-Tafeng)) { exit 1 }
+    exit 0
+}
 
-Write-Host "==> downloading"
 $tmp = Join-Path ([System.IO.Path]::GetTempPath()) "husp-datasets-$PID"
 New-Item -ItemType Directory -Force -Path $tmp | Out-Null
 try {
+    Write-Host "==> release $release"
     $tarPath = Join-Path $tmp $archive
-    Get-Asset $archive $tarPath
-
-    Write-Host "==> extracting"
-    # tar ships with Windows 10 1803 and later.
+    Invoke-WebRequest -Uri "$BaseUrl/$archive" -OutFile $tarPath -UseBasicParsing
+    $have = (Get-FileHash -LiteralPath $tarPath -Algorithm SHA256).Hash.ToLower()
+    if ($have -ne $archiveSha256) { throw "$archive has SHA-256 $have, expected $archiveSha256. Not using it." }
     & tar -xzf $tarPath -C $tmp
     if ($LASTEXITCODE -ne 0) { throw "tar failed on $tarPath" }
+    $rel = Join-Path $tmp "huspm-datasets-$release"
 
-    # Archives built on macOS carry ._NAME resource forks beside the real files.
-    Get-ChildItem $tmp -Recurse -File |
-        Where-Object { $expected.ContainsKey($_.Name) -and -not $_.Name.StartsWith('._') } |
-        ForEach-Object { Copy-Item $_.FullName (Join-Path $Dir $_.Name) -Force }
+    Write-Host "==> assembling from the SPMF files (kept in $Dir\spmf\)"
+    & $Python (Join-Path $rel 'tools/assemble.py') --release $rel --spmf (Join-Path $Dir 'spmf') --out $Dir --download
+    if ($LASTEXITCODE -ne 0) { throw "assemble.py stopped with exit code $LASTEXITCODE. Do not measure on these files." }
 } finally {
-    Remove-Item $tmp -Recurse -Force -ErrorAction SilentlyContinue
+    Remove-Item -LiteralPath $tmp -Recurse -Force -ErrorAction SilentlyContinue
 }
 
-Write-Host "==> verifying"
-$state = Test-Datasets
+Write-Host "==> verifying against datasets.sha256"
+$state = Test-Files $expected
 if ($state.missing -gt 0 -or $state.wrong -gt 0) {
-    throw ("Verification failed: {0} missing, {1} corrupt out of {2}. " -f
-           $state.missing, $state.wrong, $state.total) +
-          "Do not measure on these files."
+    throw ("Verification failed: {0} missing, {1} not matching datasets.sha256, out of {2}. " -f
+           $state.missing, $state.wrong, $state.total) + "Do not measure on these files."
 }
-Write-Host ("==> {0} files verified against the manifest of {1}" -f $state.total, $Release)
+Write-Host ("==> {0} files verified against datasets.sha256" -f $state.total)
 Test-Tafeng | Out-Null
-Write-Host "==> record this release tag alongside any results measured on it"

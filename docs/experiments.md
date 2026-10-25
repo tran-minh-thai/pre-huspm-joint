@@ -93,11 +93,13 @@ database, so it follows the database as it grows.
 
 ## 2. Datasets
 
-Eight databases. The data are not kept in this repository: seven are release assets of
-`tran-minh-thai/huspm-datasets`, pinned to `v1.2.1-measured-quantity` and verified against
-that release's `MANIFEST.sha256` by `fetch-datasets.ps1` / `fetch-datasets.sh`; TAFENG is
-built locally from the raw Ta-Feng file by `tafeng/build_tafeng.py` and pinned by
-`tafeng/TAFENG.sha256`.
+Eight databases. The data are not kept in this repository. The sequences of seven come from
+the SPMF dataset collection; their generated quantities and profits are release
+`v2.0.0-utilities` of `tran-minh-thai/huspm-datasets`. `fetch-datasets.ps1` / `fetch-datasets.sh`
+download both, assemble the databases with the release's `tools/assemble.py`, and verify them
+against `datasets.sha256`. These are the bytes every result was measured on; the measurements
+read them from release `v1.2.1-measured-quantity`, which holds the same 14 files. TAFENG is built
+locally from the raw Ta-Feng file by `tafeng/build_tafeng.py` and pinned by `tafeng/TAFENG.sha256`.
 
 | Database | Sequences | Distinct items | Events / sequence | Items / event | Total utility | Utilities |
 |---|---:|---:|---:|---:|---:|---|

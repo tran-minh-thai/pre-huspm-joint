@@ -21,7 +21,7 @@ results_backup/
 !results/**/*.log
 
 # Databases are not kept in this repository. They are shared across several studies
-# and are pinned to a release of https://github.com/tran-minh-thai/huspm-datasets.
+# and are assembled from SPMF files and a release of https://github.com/tran-minh-thai/huspm-datasets.
 # Fetch them with ./fetch-datasets.ps1 (or .sh); see README.
 datasets/*
 !datasets/.gitkeep

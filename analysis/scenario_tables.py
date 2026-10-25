@@ -1849,6 +1849,33 @@ def window_study(put, out):
 
 
 
+def assembly_keys(put):
+    """The check that the seven SPMF databases assembled from the SPMF files and release
+    v2.0.0-utilities equal the files the results were measured on
+    (results/invariant-dataset-assembly, analysis/check_database_assembly.py); the latest record.
+    A record that is missing or did not finish gives a status key and no counts."""
+    runs = sorted(d for d in glob.glob(os.path.join(mf.DATA_DIR, "invariant-dataset-assembly", "*"))
+                  if os.path.isdir(d))
+    src = "invariant-dataset-assembly/assembly.csv"
+    if not runs:
+        put("dataset_assembly_status", "missing", src)
+        return
+    run = runs[-1]
+    meta = os.path.join(run, "run_meta.json")
+    code = json.load(open(meta, encoding="utf-8")).get("exit_code") if os.path.exists(meta) else None
+    put("dataset_assembly_status", "finished" if code == 0 else ("not finished" if code is None else f"exit {code}"), src)
+    if code is None:
+        return
+    t = pd.read_csv(os.path.join(run, "assembly.csv"))
+    sp = pd.read_csv(os.path.join(run, "spmf_files.csv"))
+    put("dataset_assembly_databases", len(sp), src)
+    put("dataset_assembly_spmf_files_matching", f"{int((sp['spmf_sha256'] == sp['spmf_sha256_in_release']).sum())}/{len(sp)}", src)
+    put("dataset_assembly_files_compared", len(t), src)
+    put("dataset_assembly_files_identical_to_pinned", f"{int(t['identical_to_pinned'].sum())}/{len(t)}", src)
+    put("dataset_assembly_files_identical_to_measured_release",
+        f"{int(t['identical_to_measured_release'].sum())}/{len(t)}", src)
+
+
 def datasets_table(put, out):
     """The database table: the shape of each database counted on the data files
     (results/invariant-database-stats, analysis/database_stats.py) with D_init and the default UUT
@@ -2505,6 +2532,7 @@ def export_all(out_dir=None):
     open(os.path.join(out, "table_thresholds.tex"), "w", encoding="utf-8").write("\n".join(lines))
 
     datasets_table(put, out)
+    assembly_keys(put)
     repeated_sequence_keys(put)
     bms1_whole(put)
     memory_guard_stops(put)
