@@ -564,15 +564,19 @@ def mixed_seed_spread(put, out):
 
     names = {"SC6": "SC6", "SC6D": "SC6-D", "SC6B": "SC6-B"}
     dbs = [d for d in mf.ALL_DATASETS if d in set(t["dataset"])]
+    # Each cell on two lines (mean and standard deviation over [min, max]) and each scenario as a
+    # group row, so that four databases fit the text width at the text size.
+    # "{}" after the line break, or "[min, max]" is read as its optional vertical space
+    two = lambda a, b: f"\\begin{{tabular}}[t]{{@{{}}r@{{}}}}{a}\\\\{{}}{b}\\end{{tabular}}"
     lines = ["\\begin{table}[!htbp]\\centering",
              "\\caption{Stream time (s) of SC6, SC6-D and SC6-B over five seeds}\\label{tab:sc6_seeds}",
-             "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}ll" + "r" * len(dbs) + "}\\toprule",
-             "Scenario & Arm & " + " & ".join(dbs) + " \\\\\\midrule"]
+             "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}l" + "r" * len(dbs) + "}\\toprule",
+             "Arm & " + " & ".join(dbs) + " \\\\"]
     for sc in ("SC6", "SC6D", "SC6B"):
         ts = t[t["scenario"] == sc]
         if not len(ts):
             continue
-        first = True
+        lines.append(f"\\midrule\\multicolumn{{{len(dbs) + 1}}}{{l}}{{{names[sc]}}} \\\\")
         for _, label in MIXED_SPREAD_ARMS:
             cells = []
             for d in dbs:
@@ -581,31 +585,33 @@ def mixed_seed_spread(put, out):
                     cells.append("--")
                     continue
                 r = r.iloc[0]
-                cells.append(f"{r['mean_s']:.2f} $\\pm$ {r['sd_s']:.2f} [{r['min_s']:.2f}, {r['max_s']:.2f}]")
+                cells.append(two(f"{r['mean_s']:.2f} $\\pm$ {r['sd_s']:.2f}", f"[{r['min_s']:.2f}, {r['max_s']:.2f}]"))
             if all(c == "--" for c in cells):
                 continue
-            lines.append(f"{names[sc] if first else ''} & {label} & " + " & ".join(cells) + " \\\\")
-            first = False
-        lines.append("\\midrule" if sc != "SC6B" else "")
-    lines = [l for l in lines if l != ""]
-    if lines[-1] == "\\midrule":
-        lines.pop()
+            lines.append(f"{label} & " + " & ".join(cells) + " \\\\")
     lines += ["\\bottomrule\\end{tabular*}", "\\end{table}", ""]
     open(tex_path, "w", encoding="utf-8").write("\n".join(lines))
 
+    rng = lambda r, c: (f"{r[c + '_mean']:.1f} [{int(r[c + '_min'])}, {int(r[c + '_max'])}]"
+                        if pd.notna(r.get(c + "_mean")) else "--")
     bl = ["\\begin{table}[!htbp]\\centering",
           "\\caption{Rescans and direct updates of the proposal over five seeds}\\label{tab:sc6_branches}",
-          "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}llrrrr}\\toprule",
-          "Scenario & Database & Rescans & Direct ins. & Direct del. & Direct mod. \\\\\\midrule"]
-    rng = lambda r, c: (f"{r[c + '_mean']:.1f} [{int(r[c + '_min'])}, {int(r[c + '_max'])}]/"
-                        f"{int(r[c.replace('_direct', '') + '_operations_per_seed'])}"
-                        if pd.notna(r.get(c + "_mean")) else "--")
-    for _, r in br.iterrows():
-        dels = rng(r, "deletion_direct")
-        if pd.notna(r.get("deletion_beyond_budget_direct_mean")):
-            dels += f"; beyond {rng(r, 'deletion_beyond_budget_direct')}"
-        bl.append(f"{names[r['scenario']]} & {r['dataset']} & {r['rescans_mean']:.1f} [{r['rescans_min']}, {r['rescans_max']}] & "
-                  f"{rng(r, 'insertion_direct')} & {dels} & {rng(r, 'modification_direct')} \\\\")
+          "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}lrrrrr}\\toprule",
+          "Database & Rescans & \\multicolumn{4}{c}{Direct updates} \\\\\\cmidrule{3-6}",
+          " & & Insertion & Deletion & \\begin{tabular}[b]{@{}r@{}}Deletion beyond\\\\the budget\\end{tabular} & Modification \\\\"]
+    for sc in ("SC6", "SC6D", "SC6B"):
+        bs = br[br["scenario"] == sc]
+        if not len(bs):
+            continue
+        r0 = bs.iloc[0]
+        per = ", ".join(f"{int(r0[f'{k}_operations_per_seed'])} {k.replace('_', ' ')}{'s' if int(r0[f'{k}_operations_per_seed']) > 1 else ''}"
+                        for k in ("insertion", "deletion", "deletion_beyond_budget", "modification")
+                        if pd.notna(r0.get(f"{k}_operations_per_seed")))
+        bl.append(f"\\midrule\\multicolumn{{6}}{{l}}{{{names[sc]}: {per} per seed}} \\\\")
+        for _, r in bs.iterrows():
+            bl.append(f"{r['dataset']} & {r['rescans_mean']:.1f} [{r['rescans_min']}, {r['rescans_max']}] & "
+                      f"{rng(r, 'insertion_direct')} & {rng(r, 'deletion_direct')} & "
+                      f"{rng(r, 'deletion_beyond_budget_direct')} & {rng(r, 'modification_direct')} \\\\")
     bl += ["\\bottomrule\\end{tabular*}", "\\end{table}", ""]
     open(btex_path, "w", encoding="utf-8").write("\n".join(bl))
     return t

@@ -1,0 +1,13 @@
+scenario,dataset,seeds,rescans_mean,rescans_min,rescans_max,insertion_operations_per_seed,insertion_direct_mean,insertion_direct_min,insertion_direct_max,deletion_operations_per_seed,deletion_direct_mean,deletion_direct_min,deletion_direct_max,modification_operations_per_seed,modification_direct_mean,modification_direct_min,modification_direct_max,deletion_beyond_budget_operations_per_seed,deletion_beyond_budget_direct_mean,deletion_beyond_budget_direct_min,deletion_beyond_budget_direct_max
+SC6,SIGN,5,15.8,15,17,14,1.6,1,2,3,2.6,2,3,3,0.0,0,0,,,,
+SC6,LEVIATHAN,5,17.6,17,18,14,0.0,0,0,3,2.4,2,3,3,0.0,0,0,,,,
+SC6,C8T1S5I8N5K,5,14.0,14,14,14,2.6,2,3,3,2.8,2,3,3,0.6,0,1,,,,
+SC6,TAFENG,5,11.2,11,12,14,4.8,4,6,3,3.0,3,3,3,1.0,0,2,,,,
+SC6D,SIGN,5,10.0,10,10,6,0.0,0,0,10,10.0,10,10,4,0.0,0,0,,,,
+SC6D,LEVIATHAN,5,10.0,10,10,6,0.0,0,0,10,10.0,10,10,4,0.0,0,0,,,,
+SC6D,C8T1S5I8N5K,5,9.0,9,9,6,0.6,0,1,10,10.0,10,10,4,0.4,0,1,,,,
+SC6D,TAFENG,5,7.0,7,7,6,1.4,1,2,10,10.0,10,10,4,1.6,1,2,,,,
+SC6B,SIGN,5,17.8,16,19,14,0.6,0,2,2,1.6,1,2,3,0.0,0,0,1.0,0.0,0.0,0.0
+SC6B,LEVIATHAN,5,18.4,18,19,14,0.0,0,0,2,1.6,1,2,3,0.0,0,0,1.0,0.0,0.0,0.0
+SC6B,C8T1S5I8N5K,5,16.6,15,19,14,1.4,0,3,2,1.8,1,2,3,0.2,0,1,1.0,0.0,0.0,0.0
+SC6B,TAFENG,5,13.0,12,14,14,4.2,3,5,2,2.0,2,2,3,0.8,0,2,1.0,0.0,0.0,0.0

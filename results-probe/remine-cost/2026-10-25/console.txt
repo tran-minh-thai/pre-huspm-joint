@@ -1,0 +1,25 @@
+SIGN: 730 sequences, D_init 230, 100 increments, UUT 0.065911, r_l 0.80
+  pass 1 (rescan after every increment): 18943 ms over 100 increments, 100 rescans
+  pass 2 (remine, new instance per increment): 18793 ms
+  pass 3 steps, summed over the increments (ms): new instance 5, block index 36, sequences 78, scratch 1, pools 6, density 13, mine 18664; same mine again, warm 18760
+LEVIATHAN: 5834 sequences, D_init 2834, 100 increments, UUT 0.015530, r_l 0.80
+  pass 1 (rescan after every increment): 37953 ms over 100 increments, 100 rescans
+  pass 2 (remine, new instance per increment): 38375 ms
+  pass 3 steps, summed over the increments (ms): new instance 2, block index 223, sequences 402, scratch 1, pools 8, density 116, mine 37700; same mine again, warm 37985
+C8T1S5I8N5K: 47132 sequences, D_init 27133, 100 increments, UUT 0.001132, r_l 0.80
+  pass 1 (rescan after every increment): 11200 ms over 100 increments, 100 rescans
+  pass 2 (remine, new instance per increment): 13175 ms
+  pass 3 steps, summed over the increments (ms): new instance 1, block index 879, sequences 895, scratch 14, pools 5, density 358, mine 11168; same mine again, warm 11430
+TAFENG: 60665 sequences, D_init 40665, 100 increments, UUT 0.003557, r_l 0.80
+  pass 1 (rescan after every increment): 10519 ms over 100 increments, 100 rescans
+  pass 2 (remine, new instance per increment): 14020 ms
+  pass 3 steps, summed over the increments (ms): new instance 1, block index 1338, sequences 1933, scratch 3, pools 5, density 535, mine 10369; same mine again, warm 10364
+BIBLE: 36369 sequences, D_init 21369, 100 increments, UUT 0.022895, r_l 0.80
+  pass 1 (rescan after every increment): 89846 ms over 100 increments, 100 rescans
+  pass 2 (remine, new instance per increment): 92472 ms
+  pass 3 steps, summed over the increments (ms): new instance 1, block index 890, sequences 1687, scratch 2, pools 4, density 469, mine 89678; same mine again, warm 89702
+FIFA: 20450 sequences, D_init 10450, 100 increments, UUT 0.059637, r_l 0.80
+  pass 1 (rescan after every increment): 681802 ms over 100 increments, 100 rescans
+  pass 2 (remine, new instance per increment): 686081 ms
+  pass 3 steps, summed over the increments (ms): new instance 4, block index 749, sequences 1760, scratch 1, pools 5, density 377, mine 681896; same mine again, warm 681705
+increments compared with pass 1: 600, differing in cutoff or patterns: 0

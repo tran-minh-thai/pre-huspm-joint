@@ -803,6 +803,314 @@ SC6B_TAFENG_deletion_beyond_the_budget_fixed_floor_rescans,5/5,table_SC6B_by_op.
 SC6B_TAFENG_deletions_after_a_mine_at_uut,0 of 0 rescanned,table_SC6B_by_op.csv
 SC6B_TAFENG_deletions_rescanned_total,0/10,table_SC6B_by_op.csv
 SC6B_large_deletion_positions,2 to 20 (20 database and seed pairs),table_SC6B_by_op.csv
+SC6_SIGN_insertion_Remine_over_proposal_by_seed,1.27 (1.21 to 1.34; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6_SIGN_insertion_Remine-UUT_over_proposal_by_seed,0.74 (0.70 to 0.80; faster than the proposal in 5 of 5 seeds),table_SC6_seed_spread.csv
+SC6_SIGN_deletion_Remine_over_proposal_by_seed,28.69 (2.82 to 70.17; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6_SIGN_deletion_Remine-UUT_over_proposal_by_seed,16.59 (1.66 to 39.83; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6_SIGN_modification_Remine_over_proposal_by_seed,0.89 (0.71 to 1.14; faster than the proposal in 3 of 5 seeds),table_SC6_seed_spread.csv
+SC6_SIGN_modification_Remine-UUT_over_proposal_by_seed,0.52 (0.42 to 0.70; faster than the proposal in 5 of 5 seeds),table_SC6_seed_spread.csv
+SC6_LEVIATHAN_insertion_Remine_over_proposal_by_seed,1.05 (1.02 to 1.07; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6_LEVIATHAN_insertion_Remine-UUT_over_proposal_by_seed,0.78 (0.74 to 0.80; faster than the proposal in 5 of 5 seeds),table_SC6_seed_spread.csv
+SC6_LEVIATHAN_deletion_Remine_over_proposal_by_seed,47.31 (2.91 to 121.83; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6_LEVIATHAN_deletion_Remine-UUT_over_proposal_by_seed,34.64 (2.16 to 89.17; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6_LEVIATHAN_modification_Remine_over_proposal_by_seed,1.01 (0.99 to 1.04; faster than the proposal in 1 of 5 seeds),table_SC6_seed_spread.csv
+SC6_LEVIATHAN_modification_Remine-UUT_over_proposal_by_seed,0.74 (0.73 to 0.76; faster than the proposal in 5 of 5 seeds),table_SC6_seed_spread.csv
+SC6_C8T1S5I8N5K_insertion_Remine_over_proposal_by_seed,1.53 (1.50 to 1.57; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6_C8T1S5I8N5K_insertion_Remine-UUT_over_proposal_by_seed,1.20 (1.01 to 1.37; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6_C8T1S5I8N5K_deletion_Remine_over_proposal_by_seed,2.99 (2.08 to 3.58; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6_C8T1S5I8N5K_deletion_Remine-UUT_over_proposal_by_seed,2.07 (1.06 to 2.58; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6_C8T1S5I8N5K_modification_Remine_over_proposal_by_seed,1.01 (0.83 to 1.15; faster than the proposal in 2 of 5 seeds),table_SC6_seed_spread.csv
+SC6_C8T1S5I8N5K_modification_Remine-UUT_over_proposal_by_seed,0.80 (0.55 to 1.12; faster than the proposal in 4 of 5 seeds),table_SC6_seed_spread.csv
+SC6_TAFENG_insertion_Remine_over_proposal_by_seed,2.44 (2.24 to 2.68; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6_TAFENG_insertion_Remine-UUT_over_proposal_by_seed,2.29 (2.05 to 2.55; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6_TAFENG_deletion_Remine_over_proposal_by_seed,195.23 (161.00 to 243.50; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6_TAFENG_deletion_Remine-UUT_over_proposal_by_seed,185.60 (150.33 to 231.00; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6_TAFENG_modification_Remine_over_proposal_by_seed,2.32 (1.53 to 3.98; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6_TAFENG_modification_Remine-UUT_over_proposal_by_seed,2.21 (1.45 to 3.82; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6D_SIGN_insertion_Remine_over_proposal_by_seed,1.03 (1.00 to 1.05; faster than the proposal in 1 of 5 seeds),table_SC6_seed_spread.csv
+SC6D_SIGN_insertion_Remine-UUT_over_proposal_by_seed,0.61 (0.57 to 0.63; faster than the proposal in 5 of 5 seeds),table_SC6_seed_spread.csv
+SC6D_SIGN_deletion_Remine_over_proposal_by_seed,53.91 (43.85 to 66.32; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6D_SIGN_deletion_Remine-UUT_over_proposal_by_seed,31.32 (25.78 to 37.89; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6D_SIGN_modification_Remine_over_proposal_by_seed,1.03 (1.02 to 1.05; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6D_SIGN_modification_Remine-UUT_over_proposal_by_seed,0.62 (0.59 to 0.68; faster than the proposal in 5 of 5 seeds),table_SC6_seed_spread.csv
+SC6D_LEVIATHAN_insertion_Remine_over_proposal_by_seed,1.01 (0.97 to 1.06; faster than the proposal in 2 of 5 seeds),table_SC6_seed_spread.csv
+SC6D_LEVIATHAN_insertion_Remine-UUT_over_proposal_by_seed,0.74 (0.72 to 0.76; faster than the proposal in 5 of 5 seeds),table_SC6_seed_spread.csv
+SC6D_LEVIATHAN_deletion_Remine_over_proposal_by_seed,145.31 (117.37 to 183.54; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6D_LEVIATHAN_deletion_Remine-UUT_over_proposal_by_seed,105.73 (86.79 to 128.23; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6D_LEVIATHAN_modification_Remine_over_proposal_by_seed,1.01 (0.98 to 1.04; faster than the proposal in 3 of 5 seeds),table_SC6_seed_spread.csv
+SC6D_LEVIATHAN_modification_Remine-UUT_over_proposal_by_seed,0.74 (0.73 to 0.75; faster than the proposal in 5 of 5 seeds),table_SC6_seed_spread.csv
+SC6D_C8T1S5I8N5K_insertion_Remine_over_proposal_by_seed,1.32 (1.04 to 1.57; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6D_C8T1S5I8N5K_insertion_Remine-UUT_over_proposal_by_seed,1.04 (0.72 to 1.26; faster than the proposal in 2 of 5 seeds),table_SC6_seed_spread.csv
+SC6D_C8T1S5I8N5K_deletion_Remine_over_proposal_by_seed,3.02 (2.68 to 3.30; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6D_C8T1S5I8N5K_deletion_Remine-UUT_over_proposal_by_seed,2.24 (1.97 to 2.60; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6D_C8T1S5I8N5K_modification_Remine_over_proposal_by_seed,0.87 (0.75 to 0.94; faster than the proposal in 5 of 5 seeds),table_SC6_seed_spread.csv
+SC6D_C8T1S5I8N5K_modification_Remine-UUT_over_proposal_by_seed,0.66 (0.57 to 0.70; faster than the proposal in 5 of 5 seeds),table_SC6_seed_spread.csv
+SC6D_TAFENG_insertion_Remine_over_proposal_by_seed,2.05 (1.65 to 2.49; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6D_TAFENG_insertion_Remine-UUT_over_proposal_by_seed,1.92 (1.54 to 2.34; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6D_TAFENG_deletion_Remine_over_proposal_by_seed,223.13 (183.22 to 279.83; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6D_TAFENG_deletion_Remine-UUT_over_proposal_by_seed,206.53 (168.11 to 261.00; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6D_TAFENG_modification_Remine_over_proposal_by_seed,2.28 (1.73 to 3.01; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6D_TAFENG_modification_Remine-UUT_over_proposal_by_seed,2.19 (1.63 to 2.87; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6B_SIGN_insertion_Remine_over_proposal_by_seed,1.19 (1.14 to 1.23; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6B_SIGN_insertion_Remine-UUT_over_proposal_by_seed,0.67 (0.66 to 0.69; faster than the proposal in 5 of 5 seeds),table_SC6_seed_spread.csv
+SC6B_SIGN_deletion_Remine_over_proposal_by_seed,26.93 (1.82 to 52.40; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6B_SIGN_deletion_Remine-UUT_over_proposal_by_seed,14.45 (1.14 to 30.20; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6B_SIGN_modification_Remine_over_proposal_by_seed,0.99 (0.79 to 1.07; faster than the proposal in 1 of 5 seeds),table_SC6_seed_spread.csv
+SC6B_SIGN_modification_Remine-UUT_over_proposal_by_seed,0.57 (0.43 to 0.66; faster than the proposal in 5 of 5 seeds),table_SC6_seed_spread.csv
+SC6B_LEVIATHAN_insertion_Remine_over_proposal_by_seed,1.07 (1.02 to 1.11; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6B_LEVIATHAN_insertion_Remine-UUT_over_proposal_by_seed,0.80 (0.78 to 0.82; faster than the proposal in 5 of 5 seeds),table_SC6_seed_spread.csv
+SC6B_LEVIATHAN_deletion_Remine_over_proposal_by_seed,84.38 (1.95 to 155.67; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6B_LEVIATHAN_deletion_Remine-UUT_over_proposal_by_seed,61.91 (1.42 to 115.00; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6B_LEVIATHAN_modification_Remine_over_proposal_by_seed,0.86 (0.76 to 1.01; faster than the proposal in 4 of 5 seeds),table_SC6_seed_spread.csv
+SC6B_LEVIATHAN_modification_Remine-UUT_over_proposal_by_seed,0.65 (0.56 to 0.74; faster than the proposal in 5 of 5 seeds),table_SC6_seed_spread.csv
+SC6B_C8T1S5I8N5K_insertion_Remine_over_proposal_by_seed,1.48 (1.40 to 1.58; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6B_C8T1S5I8N5K_insertion_Remine-UUT_over_proposal_by_seed,1.14 (1.07 to 1.24; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6B_C8T1S5I8N5K_deletion_Remine_over_proposal_by_seed,2.39 (1.28 to 3.50; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6B_C8T1S5I8N5K_deletion_Remine-UUT_over_proposal_by_seed,1.71 (0.94 to 2.55; faster than the proposal in 1 of 5 seeds),table_SC6_seed_spread.csv
+SC6B_C8T1S5I8N5K_modification_Remine_over_proposal_by_seed,0.86 (0.68 to 1.08; faster than the proposal in 4 of 5 seeds),table_SC6_seed_spread.csv
+SC6B_C8T1S5I8N5K_modification_Remine-UUT_over_proposal_by_seed,0.72 (0.50 to 1.09; faster than the proposal in 4 of 5 seeds),table_SC6_seed_spread.csv
+SC6B_TAFENG_insertion_Remine_over_proposal_by_seed,2.48 (2.36 to 2.74; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6B_TAFENG_insertion_Remine-UUT_over_proposal_by_seed,2.32 (2.20 to 2.48; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6B_TAFENG_deletion_Remine_over_proposal_by_seed,195.20 (146.50 to 261.00; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6B_TAFENG_deletion_Remine-UUT_over_proposal_by_seed,183.30 (135.00 to 249.00; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6B_TAFENG_modification_Remine_over_proposal_by_seed,2.27 (1.50 to 3.50; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6B_TAFENG_modification_Remine-UUT_over_proposal_by_seed,2.14 (1.42 to 3.28; faster than the proposal in 0 of 5 seeds),table_SC6_seed_spread.csv
+SC6_SIGN_Pre-HUSPM-Joint_seed_time,"2.01 ± 0.05 (1.96 to 2.06, 5 seeds)",table_SC6_seed_spread.csv
+SC6_SIGN_Remine_seed_time,"2.68 ± 0.13 (2.49 to 2.80, 5 seeds)",table_SC6_seed_spread.csv
+SC6_SIGN_Remine_seed_over_proposal,1.33 (1.27 to 1.42),table_SC6_seed_spread.csv
+SC6_SIGN_Remine_seed_faster_than_proposal,0/5,table_SC6_seed_spread.csv
+SC6_SIGN_Remine-UUT_seed_time,"1.57 ± 0.08 (1.47 to 1.65, 5 seeds)",table_SC6_seed_spread.csv
+SC6_SIGN_Remine-UUT_seed_over_proposal,0.78 (0.75 to 0.82),table_SC6_seed_spread.csv
+SC6_SIGN_Remine-UUT_seed_faster_than_proposal,5/5,table_SC6_seed_spread.csv
+SC6_SIGN_Remine-HUSP-ULL_seed_time,"2.37 ± 0.11 (2.21 to 2.49, 5 seeds)",table_SC6_seed_spread.csv
+SC6_SIGN_Remine-HUSP-ULL_seed_over_proposal,1.18 (1.13 to 1.26),table_SC6_seed_spread.csv
+SC6_SIGN_Remine-HUSP-ULL_seed_faster_than_proposal,0/5,table_SC6_seed_spread.csv
+SC6_SIGN_Remine-HUSP-SP_seed_time,"2.49 ± 0.11 (2.33 to 2.60, 5 seeds)",table_SC6_seed_spread.csv
+SC6_SIGN_Remine-HUSP-SP_seed_over_proposal,1.24 (1.19 to 1.32),table_SC6_seed_spread.csv
+SC6_SIGN_Remine-HUSP-SP_seed_faster_than_proposal,0/5,table_SC6_seed_spread.csv
+SC6_SIGN_min_floor_seed_time,"2.05 ± 0.08 (1.93 to 2.14, 5 seeds)",table_SC6_seed_spread.csv
+SC6_SIGN_min_floor_seed_over_proposal,1.02 (0.99 to 1.04),table_SC6_seed_spread.csv
+SC6_SIGN_min_floor_seed_faster_than_proposal,1/5,table_SC6_seed_spread.csv
+SC6_SIGN_plain_floor_seed_time,"2.04 ± 0.09 (1.92 to 2.14, 5 seeds)",table_SC6_seed_spread.csv
+SC6_SIGN_plain_floor_seed_over_proposal,1.01 (0.98 to 1.05),table_SC6_seed_spread.csv
+SC6_SIGN_plain_floor_seed_faster_than_proposal,2/5,table_SC6_seed_spread.csv
+SC6_LEVIATHAN_Pre-HUSPM-Joint_seed_time,"4.17 ± 0.11 (4.01 to 4.29, 5 seeds)",table_SC6_seed_spread.csv
+SC6_LEVIATHAN_Remine_seed_time,"4.93 ± 0.06 (4.87 to 5.01, 5 seeds)",table_SC6_seed_spread.csv
+SC6_LEVIATHAN_Remine_seed_over_proposal,1.18 (1.13 to 1.24),table_SC6_seed_spread.csv
+SC6_LEVIATHAN_Remine_seed_faster_than_proposal,0/5,table_SC6_seed_spread.csv
+SC6_LEVIATHAN_Remine-UUT_seed_time,"3.63 ± 0.03 (3.60 to 3.68, 5 seeds)",table_SC6_seed_spread.csv
+SC6_LEVIATHAN_Remine-UUT_seed_over_proposal,0.87 (0.84 to 0.91),table_SC6_seed_spread.csv
+SC6_LEVIATHAN_Remine-UUT_seed_faster_than_proposal,5/5,table_SC6_seed_spread.csv
+SC6_LEVIATHAN_Remine-HUSP-ULL_seed_time,"4.86 ± 0.07 (4.81 to 4.99, 5 seeds)",table_SC6_seed_spread.csv
+SC6_LEVIATHAN_Remine-HUSP-ULL_seed_over_proposal,1.17 (1.13 to 1.21),table_SC6_seed_spread.csv
+SC6_LEVIATHAN_Remine-HUSP-ULL_seed_faster_than_proposal,0/5,table_SC6_seed_spread.csv
+SC6_LEVIATHAN_Remine-HUSP-SP_seed_time,"4.76 ± 0.06 (4.69 to 4.86, 5 seeds)",table_SC6_seed_spread.csv
+SC6_LEVIATHAN_Remine-HUSP-SP_seed_over_proposal,1.14 (1.09 to 1.19),table_SC6_seed_spread.csv
+SC6_LEVIATHAN_Remine-HUSP-SP_seed_faster_than_proposal,0/5,table_SC6_seed_spread.csv
+SC6_LEVIATHAN_min_floor_seed_time,"4.10 ± 0.11 (3.99 to 4.23, 5 seeds)",table_SC6_seed_spread.csv
+SC6_LEVIATHAN_min_floor_seed_over_proposal,0.98 (0.95 to 1.05),table_SC6_seed_spread.csv
+SC6_LEVIATHAN_min_floor_seed_faster_than_proposal,4/5,table_SC6_seed_spread.csv
+SC6_LEVIATHAN_plain_floor_seed_time,"4.13 ± 0.08 (4.06 to 4.27, 5 seeds)",table_SC6_seed_spread.csv
+SC6_LEVIATHAN_plain_floor_seed_over_proposal,0.99 (0.96 to 1.02),table_SC6_seed_spread.csv
+SC6_LEVIATHAN_plain_floor_seed_faster_than_proposal,3/5,table_SC6_seed_spread.csv
+SC6_C8T1S5I8N5K_Pre-HUSPM-Joint_seed_time,"1.79 ± 0.07 (1.69 to 1.86, 5 seeds)",table_SC6_seed_spread.csv
+SC6_C8T1S5I8N5K_Remine_seed_time,"2.72 ± 0.09 (2.63 to 2.85, 5 seeds)",table_SC6_seed_spread.csv
+SC6_C8T1S5I8N5K_Remine_seed_over_proposal,1.52 (1.48 to 1.56),table_SC6_seed_spread.csv
+SC6_C8T1S5I8N5K_Remine_seed_faster_than_proposal,0/5,table_SC6_seed_spread.csv
+SC6_C8T1S5I8N5K_Remine-UUT_seed_time,"2.08 ± 0.22 (1.75 to 2.29, 5 seeds)",table_SC6_seed_spread.csv
+SC6_C8T1S5I8N5K_Remine-UUT_seed_over_proposal,1.16 (0.98 to 1.27),table_SC6_seed_spread.csv
+SC6_C8T1S5I8N5K_Remine-UUT_seed_faster_than_proposal,1/5,table_SC6_seed_spread.csv
+SC6_C8T1S5I8N5K_Remine-HUSP-ULL_seed_time,"2.06 ± 0.07 (1.96 to 2.14, 5 seeds)",table_SC6_seed_spread.csv
+SC6_C8T1S5I8N5K_Remine-HUSP-ULL_seed_over_proposal,1.15 (1.10 to 1.23),table_SC6_seed_spread.csv
+SC6_C8T1S5I8N5K_Remine-HUSP-ULL_seed_faster_than_proposal,0/5,table_SC6_seed_spread.csv
+SC6_C8T1S5I8N5K_Remine-HUSP-SP_seed_time,"2.42 ± 0.04 (2.36 to 2.47, 5 seeds)",table_SC6_seed_spread.csv
+SC6_C8T1S5I8N5K_Remine-HUSP-SP_seed_over_proposal,1.36 (1.27 to 1.41),table_SC6_seed_spread.csv
+SC6_C8T1S5I8N5K_Remine-HUSP-SP_seed_faster_than_proposal,0/5,table_SC6_seed_spread.csv
+SC6_C8T1S5I8N5K_min_floor_seed_time,"1.76 ± 0.05 (1.69 to 1.83, 5 seeds)",table_SC6_seed_spread.csv
+SC6_C8T1S5I8N5K_min_floor_seed_over_proposal,0.98 (0.93 to 1.03),table_SC6_seed_spread.csv
+SC6_C8T1S5I8N5K_min_floor_seed_faster_than_proposal,3/5,table_SC6_seed_spread.csv
+SC6_C8T1S5I8N5K_plain_floor_seed_time,"1.80 ± 0.05 (1.73 to 1.86, 5 seeds)",table_SC6_seed_spread.csv
+SC6_C8T1S5I8N5K_plain_floor_seed_over_proposal,1.01 (0.99 to 1.02),table_SC6_seed_spread.csv
+SC6_C8T1S5I8N5K_plain_floor_seed_faster_than_proposal,2/5,table_SC6_seed_spread.csv
+SC6_TAFENG_Pre-HUSPM-Joint_seed_time,"1.21 ± 0.04 (1.17 to 1.28, 5 seeds)",table_SC6_seed_spread.csv
+SC6_TAFENG_Remine_seed_time,"3.33 ± 0.02 (3.31 to 3.35, 5 seeds)",table_SC6_seed_spread.csv
+SC6_TAFENG_Remine_seed_over_proposal,2.76 (2.62 to 2.84),table_SC6_seed_spread.csv
+SC6_TAFENG_Remine_seed_faster_than_proposal,0/5,table_SC6_seed_spread.csv
+SC6_TAFENG_Remine-UUT_seed_time,"3.14 ± 0.02 (3.11 to 3.17, 5 seeds)",table_SC6_seed_spread.csv
+SC6_TAFENG_Remine-UUT_seed_over_proposal,2.60 (2.44 to 2.66),table_SC6_seed_spread.csv
+SC6_TAFENG_Remine-UUT_seed_faster_than_proposal,0/5,table_SC6_seed_spread.csv
+SC6_TAFENG_Remine-HUSP-ULL_seed_time,"2.94 ± 0.03 (2.91 to 2.98, 5 seeds)",table_SC6_seed_spread.csv
+SC6_TAFENG_Remine-HUSP-ULL_seed_over_proposal,2.44 (2.30 to 2.50),table_SC6_seed_spread.csv
+SC6_TAFENG_Remine-HUSP-ULL_seed_faster_than_proposal,0/5,table_SC6_seed_spread.csv
+SC6_TAFENG_Remine-HUSP-SP_seed_time,"5.32 ± 0.04 (5.28 to 5.38, 5 seeds)",table_SC6_seed_spread.csv
+SC6_TAFENG_Remine-HUSP-SP_seed_over_proposal,4.41 (4.14 to 4.59),table_SC6_seed_spread.csv
+SC6_TAFENG_Remine-HUSP-SP_seed_faster_than_proposal,0/5,table_SC6_seed_spread.csv
+SC6_TAFENG_min_floor_seed_time,"1.17 ± 0.04 (1.11 to 1.22, 5 seeds)",table_SC6_seed_spread.csv
+SC6_TAFENG_min_floor_seed_over_proposal,0.97 (0.90 to 1.03),table_SC6_seed_spread.csv
+SC6_TAFENG_min_floor_seed_faster_than_proposal,3/5,table_SC6_seed_spread.csv
+SC6_TAFENG_plain_floor_seed_time,"1.17 ± 0.02 (1.14 to 1.19, 5 seeds)",table_SC6_seed_spread.csv
+SC6_TAFENG_plain_floor_seed_over_proposal,0.97 (0.92 to 1.00),table_SC6_seed_spread.csv
+SC6_TAFENG_plain_floor_seed_faster_than_proposal,5/5,table_SC6_seed_spread.csv
+SC6D_SIGN_Pre-HUSPM-Joint_seed_time,"1.20 ± 0.06 (1.14 to 1.30, 5 seeds)",table_SC6_seed_spread.csv
+SC6D_SIGN_Remine_seed_time,"2.40 ± 0.10 (2.30 to 2.54, 5 seeds)",table_SC6_seed_spread.csv
+SC6D_SIGN_Remine_seed_over_proposal,1.99 (1.96 to 2.03),table_SC6_seed_spread.csv
+SC6D_SIGN_Remine_seed_faster_than_proposal,0/5,table_SC6_seed_spread.csv
+SC6D_SIGN_Remine-UUT_seed_time,"1.41 ± 0.06 (1.37 to 1.51, 5 seeds)",table_SC6_seed_spread.csv
+SC6D_SIGN_Remine-UUT_seed_over_proposal,1.17 (1.15 to 1.21),table_SC6_seed_spread.csv
+SC6D_SIGN_Remine-UUT_seed_faster_than_proposal,0/5,table_SC6_seed_spread.csv
+SC6D_SIGN_Remine-HUSP-ULL_seed_time,"2.12 ± 0.09 (2.02 to 2.26, 5 seeds)",table_SC6_seed_spread.csv
+SC6D_SIGN_Remine-HUSP-ULL_seed_over_proposal,1.76 (1.73 to 1.82),table_SC6_seed_spread.csv
+SC6D_SIGN_Remine-HUSP-ULL_seed_faster_than_proposal,0/5,table_SC6_seed_spread.csv
+SC6D_SIGN_Remine-HUSP-SP_seed_time,"2.22 ± 0.09 (2.11 to 2.36, 5 seeds)",table_SC6_seed_spread.csv
+SC6D_SIGN_Remine-HUSP-SP_seed_over_proposal,1.85 (1.81 to 1.90),table_SC6_seed_spread.csv
+SC6D_SIGN_Remine-HUSP-SP_seed_faster_than_proposal,0/5,table_SC6_seed_spread.csv
+SC6D_LEVIATHAN_Pre-HUSPM-Joint_seed_time,"2.24 ± 0.06 (2.19 to 2.33, 5 seeds)",table_SC6_seed_spread.csv
+SC6D_LEVIATHAN_Remine_seed_time,"4.53 ± 0.21 (4.37 to 4.81, 5 seeds)",table_SC6_seed_spread.csv
+SC6D_LEVIATHAN_Remine_seed_over_proposal,2.02 (1.98 to 2.07),table_SC6_seed_spread.csv
+SC6D_LEVIATHAN_Remine_seed_faster_than_proposal,0/5,table_SC6_seed_spread.csv
+SC6D_LEVIATHAN_Remine-UUT_seed_time,"3.31 ± 0.05 (3.23 to 3.36, 5 seeds)",table_SC6_seed_spread.csv
+SC6D_LEVIATHAN_Remine-UUT_seed_over_proposal,1.48 (1.44 to 1.51),table_SC6_seed_spread.csv
+SC6D_LEVIATHAN_Remine-UUT_seed_faster_than_proposal,0/5,table_SC6_seed_spread.csv
+SC6D_LEVIATHAN_Remine-HUSP-ULL_seed_time,"4.43 ± 0.09 (4.31 to 4.55, 5 seeds)",table_SC6_seed_spread.csv
+SC6D_LEVIATHAN_Remine-HUSP-ULL_seed_over_proposal,1.98 (1.95 to 2.00),table_SC6_seed_spread.csv
+SC6D_LEVIATHAN_Remine-HUSP-ULL_seed_faster_than_proposal,0/5,table_SC6_seed_spread.csv
+SC6D_LEVIATHAN_Remine-HUSP-SP_seed_time,"4.36 ± 0.08 (4.27 to 4.44, 5 seeds)",table_SC6_seed_spread.csv
+SC6D_LEVIATHAN_Remine-HUSP-SP_seed_over_proposal,1.94 (1.88 to 2.01),table_SC6_seed_spread.csv
+SC6D_LEVIATHAN_Remine-HUSP-SP_seed_faster_than_proposal,0/5,table_SC6_seed_spread.csv
+SC6D_C8T1S5I8N5K_Pre-HUSPM-Joint_seed_time,"1.64 ± 0.16 (1.54 to 1.92, 5 seeds)",table_SC6_seed_spread.csv
+SC6D_C8T1S5I8N5K_Remine_seed_time,"2.59 ± 0.10 (2.52 to 2.76, 5 seeds)",table_SC6_seed_spread.csv
+SC6D_C8T1S5I8N5K_Remine_seed_over_proposal,1.59 (1.37 to 1.75),table_SC6_seed_spread.csv
+SC6D_C8T1S5I8N5K_Remine_seed_faster_than_proposal,0/5,table_SC6_seed_spread.csv
+SC6D_C8T1S5I8N5K_Remine-UUT_seed_time,"1.97 ± 0.03 (1.93 to 2.00, 5 seeds)",table_SC6_seed_spread.csv
+SC6D_C8T1S5I8N5K_Remine-UUT_seed_over_proposal,1.21 (1.03 to 1.27),table_SC6_seed_spread.csv
+SC6D_C8T1S5I8N5K_Remine-UUT_seed_faster_than_proposal,0/5,table_SC6_seed_spread.csv
+SC6D_C8T1S5I8N5K_Remine-HUSP-ULL_seed_time,"1.97 ± 0.02 (1.94 to 1.99, 5 seeds)",table_SC6_seed_spread.csv
+SC6D_C8T1S5I8N5K_Remine-HUSP-ULL_seed_over_proposal,1.21 (1.04 to 1.26),table_SC6_seed_spread.csv
+SC6D_C8T1S5I8N5K_Remine-HUSP-ULL_seed_faster_than_proposal,0/5,table_SC6_seed_spread.csv
+SC6D_C8T1S5I8N5K_Remine-HUSP-SP_seed_time,"2.36 ± 0.03 (2.31 to 2.39, 5 seeds)",table_SC6_seed_spread.csv
+SC6D_C8T1S5I8N5K_Remine-HUSP-SP_seed_over_proposal,1.44 (1.23 to 1.54),table_SC6_seed_spread.csv
+SC6D_C8T1S5I8N5K_Remine-HUSP-SP_seed_faster_than_proposal,0/5,table_SC6_seed_spread.csv
+SC6D_TAFENG_Pre-HUSPM-Joint_seed_time,"0.77 ± 0.02 (0.73 to 0.79, 5 seeds)",table_SC6_seed_spread.csv
+SC6D_TAFENG_Remine_seed_time,"3.22 ± 0.02 (3.20 to 3.26, 5 seeds)",table_SC6_seed_spread.csv
+SC6D_TAFENG_Remine_seed_over_proposal,4.18 (4.04 to 4.36),table_SC6_seed_spread.csv
+SC6D_TAFENG_Remine_seed_faster_than_proposal,0/5,table_SC6_seed_spread.csv
+SC6D_TAFENG_Remine-UUT_seed_time,"3.01 ± 0.04 (2.97 to 3.06, 5 seeds)",table_SC6_seed_spread.csv
+SC6D_TAFENG_Remine-UUT_seed_over_proposal,3.92 (3.84 to 4.04),table_SC6_seed_spread.csv
+SC6D_TAFENG_Remine-UUT_seed_faster_than_proposal,0/5,table_SC6_seed_spread.csv
+SC6D_TAFENG_Remine-HUSP-ULL_seed_time,"2.78 ± 0.03 (2.75 to 2.82, 5 seeds)",table_SC6_seed_spread.csv
+SC6D_TAFENG_Remine-HUSP-ULL_seed_over_proposal,3.61 (3.47 to 3.79),table_SC6_seed_spread.csv
+SC6D_TAFENG_Remine-HUSP-ULL_seed_faster_than_proposal,0/5,table_SC6_seed_spread.csv
+SC6D_TAFENG_Remine-HUSP-SP_seed_time,"4.91 ± 0.34 (4.43 to 5.17, 5 seeds)",table_SC6_seed_spread.csv
+SC6D_TAFENG_Remine-HUSP-SP_seed_over_proposal,6.38 (5.77 to 6.64),table_SC6_seed_spread.csv
+SC6D_TAFENG_Remine-HUSP-SP_seed_faster_than_proposal,0/5,table_SC6_seed_spread.csv
+SC6B_SIGN_Pre-HUSPM-Joint_seed_time,"2.07 ± 0.10 (1.91 to 2.18, 5 seeds)",table_SC6_seed_spread.csv
+SC6B_SIGN_Remine_seed_time,"2.55 ± 0.19 (2.23 to 2.75, 5 seeds)",table_SC6_seed_spread.csv
+SC6B_SIGN_Remine_seed_over_proposal,1.23 (1.17 to 1.33),table_SC6_seed_spread.csv
+SC6B_SIGN_Remine_seed_faster_than_proposal,0/5,table_SC6_seed_spread.csv
+SC6B_SIGN_Remine-UUT_seed_time,"1.44 ± 0.10 (1.34 to 1.57, 5 seeds)",table_SC6_seed_spread.csv
+SC6B_SIGN_Remine-UUT_seed_over_proposal,0.70 (0.65 to 0.75),table_SC6_seed_spread.csv
+SC6B_SIGN_Remine-UUT_seed_faster_than_proposal,5/5,table_SC6_seed_spread.csv
+SC6B_SIGN_Remine-HUSP-ULL_seed_time,"2.26 ± 0.17 (2.00 to 2.40, 5 seeds)",table_SC6_seed_spread.csv
+SC6B_SIGN_Remine-HUSP-ULL_seed_over_proposal,1.09 (1.05 to 1.15),table_SC6_seed_spread.csv
+SC6B_SIGN_Remine-HUSP-ULL_seed_faster_than_proposal,0/5,table_SC6_seed_spread.csv
+SC6B_SIGN_Remine-HUSP-SP_seed_time,"2.35 ± 0.17 (2.08 to 2.50, 5 seeds)",table_SC6_seed_spread.csv
+SC6B_SIGN_Remine-HUSP-SP_seed_over_proposal,1.14 (1.09 to 1.20),table_SC6_seed_spread.csv
+SC6B_SIGN_Remine-HUSP-SP_seed_faster_than_proposal,0/5,table_SC6_seed_spread.csv
+SC6B_LEVIATHAN_Pre-HUSPM-Joint_seed_time,"4.08 ± 0.21 (3.97 to 4.45, 5 seeds)",table_SC6_seed_spread.csv
+SC6B_LEVIATHAN_Remine_seed_time,"4.54 ± 0.19 (4.22 to 4.74, 5 seeds)",table_SC6_seed_spread.csv
+SC6B_LEVIATHAN_Remine_seed_over_proposal,1.11 (1.06 to 1.15),table_SC6_seed_spread.csv
+SC6B_LEVIATHAN_Remine_seed_faster_than_proposal,0/5,table_SC6_seed_spread.csv
+SC6B_LEVIATHAN_Remine-UUT_seed_time,"3.38 ± 0.17 (3.15 to 3.62, 5 seeds)",table_SC6_seed_spread.csv
+SC6B_LEVIATHAN_Remine-UUT_seed_over_proposal,0.83 (0.79 to 0.85),table_SC6_seed_spread.csv
+SC6B_LEVIATHAN_Remine-UUT_seed_faster_than_proposal,5/5,table_SC6_seed_spread.csv
+SC6B_LEVIATHAN_Remine-HUSP-ULL_seed_time,"4.52 ± 0.23 (4.25 to 4.76, 5 seeds)",table_SC6_seed_spread.csv
+SC6B_LEVIATHAN_Remine-HUSP-ULL_seed_over_proposal,1.11 (1.07 to 1.19),table_SC6_seed_spread.csv
+SC6B_LEVIATHAN_Remine-HUSP-ULL_seed_faster_than_proposal,0/5,table_SC6_seed_spread.csv
+SC6B_LEVIATHAN_Remine-HUSP-SP_seed_time,"4.40 ± 0.23 (4.11 to 4.64, 5 seeds)",table_SC6_seed_spread.csv
+SC6B_LEVIATHAN_Remine-HUSP-SP_seed_over_proposal,1.08 (1.03 to 1.16),table_SC6_seed_spread.csv
+SC6B_LEVIATHAN_Remine-HUSP-SP_seed_faster_than_proposal,0/5,table_SC6_seed_spread.csv
+SC6B_C8T1S5I8N5K_Pre-HUSPM-Joint_seed_time,"1.91 ± 0.16 (1.77 to 2.15, 5 seeds)",table_SC6_seed_spread.csv
+SC6B_C8T1S5I8N5K_Remine_seed_time,"2.58 ± 0.06 (2.48 to 2.64, 5 seeds)",table_SC6_seed_spread.csv
+SC6B_C8T1S5I8N5K_Remine_seed_over_proposal,1.35 (1.23 to 1.47),table_SC6_seed_spread.csv
+SC6B_C8T1S5I8N5K_Remine_seed_faster_than_proposal,0/5,table_SC6_seed_spread.csv
+SC6B_C8T1S5I8N5K_Remine-UUT_seed_time,"1.99 ± 0.13 (1.86 to 2.22, 5 seeds)",table_SC6_seed_spread.csv
+SC6B_C8T1S5I8N5K_Remine-UUT_seed_over_proposal,1.05 (0.87 to 1.11),table_SC6_seed_spread.csv
+SC6B_C8T1S5I8N5K_Remine-UUT_seed_faster_than_proposal,1/5,table_SC6_seed_spread.csv
+SC6B_C8T1S5I8N5K_Remine-HUSP-ULL_seed_time,"1.97 ± 0.06 (1.91 to 2.06, 5 seeds)",table_SC6_seed_spread.csv
+SC6B_C8T1S5I8N5K_Remine-HUSP-ULL_seed_over_proposal,1.03 (0.90 to 1.13),table_SC6_seed_spread.csv
+SC6B_C8T1S5I8N5K_Remine-HUSP-ULL_seed_faster_than_proposal,2/5,table_SC6_seed_spread.csv
+SC6B_C8T1S5I8N5K_Remine-HUSP-SP_seed_time,"2.30 ± 0.08 (2.18 to 2.38, 5 seeds)",table_SC6_seed_spread.csv
+SC6B_C8T1S5I8N5K_Remine-HUSP-SP_seed_over_proposal,1.21 (1.02 to 1.33),table_SC6_seed_spread.csv
+SC6B_C8T1S5I8N5K_Remine-HUSP-SP_seed_faster_than_proposal,0/5,table_SC6_seed_spread.csv
+SC6B_TAFENG_Pre-HUSPM-Joint_seed_time,"1.15 ± 0.08 (1.06 to 1.25, 5 seeds)",table_SC6_seed_spread.csv
+SC6B_TAFENG_Remine_seed_time,"2.93 ± 0.20 (2.76 to 3.27, 5 seeds)",table_SC6_seed_spread.csv
+SC6B_TAFENG_Remine_seed_over_proposal,2.56 (2.37 to 2.65),table_SC6_seed_spread.csv
+SC6B_TAFENG_Remine_seed_faster_than_proposal,0/5,table_SC6_seed_spread.csv
+SC6B_TAFENG_Remine-UUT_seed_time,"2.75 ± 0.20 (2.57 to 3.09, 5 seeds)",table_SC6_seed_spread.csv
+SC6B_TAFENG_Remine-UUT_seed_over_proposal,2.40 (2.26 to 2.47),table_SC6_seed_spread.csv
+SC6B_TAFENG_Remine-UUT_seed_faster_than_proposal,0/5,table_SC6_seed_spread.csv
+SC6B_TAFENG_Remine-HUSP-ULL_seed_time,"2.48 ± 0.25 (2.27 to 2.91, 5 seeds)",table_SC6_seed_spread.csv
+SC6B_TAFENG_Remine-HUSP-ULL_seed_over_proposal,2.16 (1.99 to 2.32),table_SC6_seed_spread.csv
+SC6B_TAFENG_Remine-HUSP-ULL_seed_faster_than_proposal,0/5,table_SC6_seed_spread.csv
+SC6B_TAFENG_Remine-HUSP-SP_seed_time,"4.52 ± 0.24 (4.35 to 4.96, 5 seeds)",table_SC6_seed_spread.csv
+SC6B_TAFENG_Remine-HUSP-SP_seed_over_proposal,3.95 (3.70 to 4.11),table_SC6_seed_spread.csv
+SC6B_TAFENG_Remine-HUSP-SP_seed_faster_than_proposal,0/5,table_SC6_seed_spread.csv
+SC6_SIGN_proposal_seed_rescans,15.8 (15 to 17),table_SC6_seed_branches.csv
+SC6_SIGN_proposal_seed_insertion_direct,1.6 (1 to 2) of 14,table_SC6_seed_branches.csv
+SC6_SIGN_proposal_seed_deletion_direct,2.6 (2 to 3) of 3,table_SC6_seed_branches.csv
+SC6_SIGN_proposal_seed_modification_direct,0.0 (0 to 0) of 3,table_SC6_seed_branches.csv
+SC6_LEVIATHAN_proposal_seed_rescans,17.6 (17 to 18),table_SC6_seed_branches.csv
+SC6_LEVIATHAN_proposal_seed_insertion_direct,0.0 (0 to 0) of 14,table_SC6_seed_branches.csv
+SC6_LEVIATHAN_proposal_seed_deletion_direct,2.4 (2 to 3) of 3,table_SC6_seed_branches.csv
+SC6_LEVIATHAN_proposal_seed_modification_direct,0.0 (0 to 0) of 3,table_SC6_seed_branches.csv
+SC6_C8T1S5I8N5K_proposal_seed_rescans,14.0 (14 to 14),table_SC6_seed_branches.csv
+SC6_C8T1S5I8N5K_proposal_seed_insertion_direct,2.6 (2 to 3) of 14,table_SC6_seed_branches.csv
+SC6_C8T1S5I8N5K_proposal_seed_deletion_direct,2.8 (2 to 3) of 3,table_SC6_seed_branches.csv
+SC6_C8T1S5I8N5K_proposal_seed_modification_direct,0.6 (0 to 1) of 3,table_SC6_seed_branches.csv
+SC6_TAFENG_proposal_seed_rescans,11.2 (11 to 12),table_SC6_seed_branches.csv
+SC6_TAFENG_proposal_seed_insertion_direct,4.8 (4 to 6) of 14,table_SC6_seed_branches.csv
+SC6_TAFENG_proposal_seed_deletion_direct,3.0 (3 to 3) of 3,table_SC6_seed_branches.csv
+SC6_TAFENG_proposal_seed_modification_direct,1.0 (0 to 2) of 3,table_SC6_seed_branches.csv
+SC6D_SIGN_proposal_seed_rescans,10.0 (10 to 10),table_SC6_seed_branches.csv
+SC6D_SIGN_proposal_seed_insertion_direct,0.0 (0 to 0) of 6,table_SC6_seed_branches.csv
+SC6D_SIGN_proposal_seed_deletion_direct,10.0 (10 to 10) of 10,table_SC6_seed_branches.csv
+SC6D_SIGN_proposal_seed_modification_direct,0.0 (0 to 0) of 4,table_SC6_seed_branches.csv
+SC6D_LEVIATHAN_proposal_seed_rescans,10.0 (10 to 10),table_SC6_seed_branches.csv
+SC6D_LEVIATHAN_proposal_seed_insertion_direct,0.0 (0 to 0) of 6,table_SC6_seed_branches.csv
+SC6D_LEVIATHAN_proposal_seed_deletion_direct,10.0 (10 to 10) of 10,table_SC6_seed_branches.csv
+SC6D_LEVIATHAN_proposal_seed_modification_direct,0.0 (0 to 0) of 4,table_SC6_seed_branches.csv
+SC6D_C8T1S5I8N5K_proposal_seed_rescans,9.0 (9 to 9),table_SC6_seed_branches.csv
+SC6D_C8T1S5I8N5K_proposal_seed_insertion_direct,0.6 (0 to 1) of 6,table_SC6_seed_branches.csv
+SC6D_C8T1S5I8N5K_proposal_seed_deletion_direct,10.0 (10 to 10) of 10,table_SC6_seed_branches.csv
+SC6D_C8T1S5I8N5K_proposal_seed_modification_direct,0.4 (0 to 1) of 4,table_SC6_seed_branches.csv
+SC6D_TAFENG_proposal_seed_rescans,7.0 (7 to 7),table_SC6_seed_branches.csv
+SC6D_TAFENG_proposal_seed_insertion_direct,1.4 (1 to 2) of 6,table_SC6_seed_branches.csv
+SC6D_TAFENG_proposal_seed_deletion_direct,10.0 (10 to 10) of 10,table_SC6_seed_branches.csv
+SC6D_TAFENG_proposal_seed_modification_direct,1.6 (1 to 2) of 4,table_SC6_seed_branches.csv
+SC6B_SIGN_proposal_seed_rescans,17.8 (16 to 19),table_SC6_seed_branches.csv
+SC6B_SIGN_proposal_seed_insertion_direct,0.6 (0 to 2) of 14,table_SC6_seed_branches.csv
+SC6B_SIGN_proposal_seed_deletion_direct,1.6 (1 to 2) of 2,table_SC6_seed_branches.csv
+SC6B_SIGN_proposal_seed_modification_direct,0.0 (0 to 0) of 3,table_SC6_seed_branches.csv
+SC6B_SIGN_proposal_seed_deletion_beyond_budget_direct,0.0 (0 to 0) of 1,table_SC6_seed_branches.csv
+SC6B_LEVIATHAN_proposal_seed_rescans,18.4 (18 to 19),table_SC6_seed_branches.csv
+SC6B_LEVIATHAN_proposal_seed_insertion_direct,0.0 (0 to 0) of 14,table_SC6_seed_branches.csv
+SC6B_LEVIATHAN_proposal_seed_deletion_direct,1.6 (1 to 2) of 2,table_SC6_seed_branches.csv
+SC6B_LEVIATHAN_proposal_seed_modification_direct,0.0 (0 to 0) of 3,table_SC6_seed_branches.csv
+SC6B_LEVIATHAN_proposal_seed_deletion_beyond_budget_direct,0.0 (0 to 0) of 1,table_SC6_seed_branches.csv
+SC6B_C8T1S5I8N5K_proposal_seed_rescans,16.6 (15 to 19),table_SC6_seed_branches.csv
+SC6B_C8T1S5I8N5K_proposal_seed_insertion_direct,1.4 (0 to 3) of 14,table_SC6_seed_branches.csv
+SC6B_C8T1S5I8N5K_proposal_seed_deletion_direct,1.8 (1 to 2) of 2,table_SC6_seed_branches.csv
+SC6B_C8T1S5I8N5K_proposal_seed_modification_direct,0.2 (0 to 1) of 3,table_SC6_seed_branches.csv
+SC6B_C8T1S5I8N5K_proposal_seed_deletion_beyond_budget_direct,0.0 (0 to 0) of 1,table_SC6_seed_branches.csv
+SC6B_TAFENG_proposal_seed_rescans,13.0 (12 to 14),table_SC6_seed_branches.csv
+SC6B_TAFENG_proposal_seed_insertion_direct,4.2 (3 to 5) of 14,table_SC6_seed_branches.csv
+SC6B_TAFENG_proposal_seed_deletion_direct,2.0 (2 to 2) of 2,table_SC6_seed_branches.csv
+SC6B_TAFENG_proposal_seed_modification_direct,0.8 (0 to 2) of 3,table_SC6_seed_branches.csv
+SC6B_TAFENG_proposal_seed_deletion_beyond_budget_direct,0.0 (0 to 0) of 1,table_SC6_seed_branches.csv
+SC6_all_Remine_faster_than_proposal_seeds,0/60,table_SC6_seed_spread.csv
+SC6_all_Remine-UUT_faster_than_proposal_seeds,22/60,table_SC6_seed_spread.csv
+SC6_all_Remine-HUSP-ULL_faster_than_proposal_seeds,2/60,table_SC6_seed_spread.csv
+SC6_all_Remine-HUSP-SP_faster_than_proposal_seeds,0/60,table_SC6_seed_spread.csv
 SC2_window_1_SIGN_time,8.89 ± 0.04 (3 runs),table_SC2_window.csv
 SC2_window_1_SIGN_over_fixed_floor,"0.92 (separated, faster)",table_SC2_window.csv
 SC2_window_1_SIGN_over_best_competitor,"0.82 (Remine-own-UUT; separated, faster)",table_SC2_window.csv
