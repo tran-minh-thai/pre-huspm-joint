@@ -59,6 +59,7 @@ checked against USpan, HUSP-ULL and HUSP-SP by `verify.BaselineAgreement`.
 | item pruning against exhaustive enumeration (ItemRemovalCheck random) | finished | 1,444 | 1,951 |  |  |  | 0 |  |
 | item pruning on and off on real databases, init (ItemRemovalCheck real) | finished | 8 |  |  |  |  | 0 |  |
 | item pruning on and off on real databases, whole (ItemRemovalCheck real) | finished | 7 |  |  |  |  | 0 |  |
+| running example of the manuscript (RunningExampleCheck) | finished | 29 |  |  |  |  | 0 |  |
 | fault injection, random streams and hand-built cases | finished | 4 |  |  |  |  |  | 4 |
 | fault injection, adversarial runs on real databases | finished | 4 |  |  |  |  |  | 4 |
 | fault injection into the item pruning | finished | 4 |  |  |  |  |  | 4 |
@@ -368,5 +369,7 @@ checked against USpan, HUSP-ULL and HUSP-SP by `verify.BaselineAgreement`.
     java -Dadapt.tracking=prehuspm -Xmx24g -Xss64m -cp build-v31 verify.DirectPathVerifier ALL --insert-only --ops 16 --out results/verify-joint/prehuspm-tracking-random
     # random: exit 0, commit e84b5a89, 2026-10-17T14:33:05
     java -Xmx24g -Xss64m -cp build-v31 verify.DirectPathVerifier ALL --ops 16 --out results/verify-joint/random
+    # running-example: exit 0, commit d15b36a2, 2026-10-25T13:06:18
+    java -cp build-rex verify.RunningExampleCheck
     # static-joint-miner-uut: exit 0, commit 90622229, 2026-10-16T21:29:19
     java -Xmx24g -Xss64m -cp build-v30 -Drepeats=1 -Dalgo.only=HUSP-ULL,Joint-miner@UUT -Dresults.dir=results/verify-joint/static-joint-miner-uut/ AutomatedExperimentRunner SC1 SC3
