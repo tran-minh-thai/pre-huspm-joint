@@ -3573,6 +3573,12 @@ DB_TAFENG_avg_length,13.40,table_datasets.csv
 DB_TAFENG_elements_per_sequence,13.40,table_datasets.csv
 DB_TAFENG_items_per_element,1.00,table_datasets.csv
 DB_TAFENG_total_utility,"106,639,001",table_datasets.csv
+dataset_assembly_status,finished,invariant-dataset-assembly/assembly.csv
+dataset_assembly_databases,7,invariant-dataset-assembly/assembly.csv
+dataset_assembly_spmf_files_matching,7/7,invariant-dataset-assembly/assembly.csv
+dataset_assembly_files_compared,14,invariant-dataset-assembly/assembly.csv
+dataset_assembly_files_identical_to_pinned,14/14,invariant-dataset-assembly/assembly.csv
+dataset_assembly_files_identical_to_measured_release,14/14,invariant-dataset-assembly/assembly.csv
 BMS1_repeated_core_length,149,invariant-repeated-sequences/BMS1_repeated.csv
 BMS1_repeated_core_copies,11,invariant-repeated-sequences/BMS1_repeated.csv
 BMS1_repeated_containing_lengths,154,invariant-repeated-sequences/BMS1_repeated.csv

@@ -1,0 +1,16 @@
+{
+  "command": "python3 analysis/check_database_assembly.py --out results/invariant-dataset-assembly/2026-10-25",
+  "path_substitutions": 0,
+  "build_dir": "build",
+  "git_commit": "344654657b2c4141a66a71823a98e58766e731b3",
+  "tree": "clean",
+  "source_sha256": "a948ff2821a136cef75fbffaa576506e183aa3b460a6054dc0b698ae9b124184",
+  "source_files": 40,
+  "java": "openjdk version \"26.0.1\" 2026-04-21",
+  "os": "Darwin 27.0.0 (macOS-27.0.1-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-10-25T19:52:39",
+  "end": "2026-10-25T19:53:11",
+  "exit_code": 0
+}

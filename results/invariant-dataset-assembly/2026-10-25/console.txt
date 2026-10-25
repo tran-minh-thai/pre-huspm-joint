@@ -1,0 +1,19 @@
+release archive huspm-datasets-v2.0.0-utilities.tar.gz: SHA-256 matches the checksum pinned in fetch-datasets.sh
+SIGN: downloading https://www.philippe-fournier-viger.com/spmf/publicdatasets/SIGN.txt
+SIGN: SIGN_seq.txt and SIGN_eui.txt written and verified
+LEVIATHAN: downloading https://www.philippe-fournier-viger.com/spmf/publicdatasets/LEVIATHAN.txt
+LEVIATHAN: LEVIATHAN_seq.txt and LEVIATHAN_eui.txt written and verified
+FIFA: downloading https://www.philippe-fournier-viger.com/spmf/publicdatasets/FIFA.txt
+FIFA: FIFA_seq.txt and FIFA_eui.txt written and verified
+BIBLE: downloading https://www.philippe-fournier-viger.com/spmf/publicdatasets/BIBLE.txt
+BIBLE: BIBLE_seq.txt and BIBLE_eui.txt written and verified
+C8T1S5I8N5K: downloading https://www.philippe-fournier-viger.com/spmf/publicdatasets/data.slen_8.tlen_1.seq.patlen_5.lit.patlen_8.nitems_5000_spmf.txt
+C8T1S5I8N5K: C8T1S5I8N5K_seq.txt and C8T1S5I8N5K_eui.txt written and verified
+BMS1: downloading https://www.philippe-fournier-viger.com/spmf/publicdatasets/BMS1_spmf.txt
+BMS1: BMS1_seq.txt and BMS1_eui.txt written and verified
+KOSARAK: downloading https://www.philippe-fournier-viger.com/spmf/publicdatasets/kosarak_sequences.txt
+KOSARAK: KOSARAK_seq.txt and KOSARAK_eui.txt written and verified
+7 of 7 databases assembled and verified
+SPMF files matching the release checksums: 7 of 7
+assembled files identical to datasets.sha256: 14 of 14
+assembled files identical to release v1.2.1-measured-quantity: 14 of 14
