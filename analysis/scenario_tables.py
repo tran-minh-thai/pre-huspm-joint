@@ -1050,6 +1050,16 @@ def verification():
                              status="finished", runs=len(blocks),
                              operations=sum(1 for _, r in blocks if r.startswith("every mode returns")),
                              mismatches=sum(1 for _, r in blocks if not r.startswith("every mode returns"))))
+    # Pre-HUSPM's tracking on the proposal's miner against the reimplemented Pre-HUSPM's buffer
+    # (verify.PreHuspmTrackingCheck): patterns, utilities and bounds compared.
+    out = _console("prehuspm-tracking-equivalence")
+    label = "Pre-HUSPM's tracking against Pre-HUSPM's buffer (PreHuspmTrackingCheck)"
+    if _status("prehuspm-tracking-equivalence") != "finished":
+        rows.append(dict(check=label, status=_status("prehuspm-tracking-equivalence")))
+    else:
+        m = re.search(r"(\d+) patterns after the initial mines and (\d+) over the increments compared, (\d+) differing", out)
+        rows.append(dict(check=label, status="finished", patterns_initial=int(m.group(1)),
+                         patterns_increments=int(m.group(2)), mismatches=int(m.group(3))))
     # The running example of the manuscript (verify.RunningExampleCheck): the values it states.
     out = _console("running-example")
     if _status("running-example") != "finished":
@@ -2317,7 +2327,8 @@ def export_all(out_dir=None):
                 for (sc, arm), n in cmp_rows.groupby(["scenario", "arm"]).size().items():
                     put(f"{key}_{sc}_{arm}_comparisons", int(n), "table_verification.csv")
         for col in ("runs", "operations", "with_target", "direct_delete", "direct_insert", "direct_modify",
-                    "mismatches", "caught", "rescans_at_uut", "rescans_back_to_low", "direct_at_uut", "stopped_by_heap"):
+                    "mismatches", "caught", "rescans_at_uut", "rescans_back_to_low", "direct_at_uut", "stopped_by_heap",
+                    "patterns_initial", "patterns_increments"):
             if col in r and pd.notna(r[col]):
                 put(f"{key}_{col}", int(r[col]), "table_verification.csv")
         if pd.notna(r.get("stopped_by_heap")) and r["stopped_by_heap"] > 0:

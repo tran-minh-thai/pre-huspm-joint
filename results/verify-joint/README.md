@@ -59,6 +59,7 @@ checked against USpan, HUSP-ULL and HUSP-SP by `verify.BaselineAgreement`.
 | item pruning against exhaustive enumeration (ItemRemovalCheck random) | finished | 1,444 | 1,951 |  |  |  | 0 |  |
 | item pruning on and off on real databases, init (ItemRemovalCheck real) | finished | 8 |  |  |  |  | 0 |  |
 | item pruning on and off on real databases, whole (ItemRemovalCheck real) | finished | 7 |  |  |  |  | 0 |  |
+| Pre-HUSPM's tracking against Pre-HUSPM's buffer (PreHuspmTrackingCheck) | finished |  |  |  |  |  | 0 |  |
 | running example of the manuscript (RunningExampleCheck) | finished | 29 |  |  |  |  | 0 |  |
 | fault injection, random streams and hand-built cases | finished | 4 |  |  |  |  |  | 4 |
 | fault injection, adversarial runs on real databases | finished | 4 |  |  |  |  |  | 4 |
