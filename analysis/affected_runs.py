@@ -2,7 +2,7 @@
 """List the measured runs that executed the changed discard floor, and print the campaign commands
 that measure the same configurations again.
 
-    python3 analysis/affected_runs.py [--remove] [--extra-arm NAME:LIKE] [--static-warmup]
+    python3 analysis/affected_runs.py [--remove] [--extra-arm NAME:LIKE] [--static-warmup | --remine]
 
 Compiled without debug information, the floor change leaves 86 of 89 classes identical; in the
 proposal's class it changes the floor (jointFloor) and one field assignment in the constructor,
@@ -23,6 +23,10 @@ and scenario, with the databases measured there.
 
 --static-warmup lists instead every static timing run (SC1, SC3 and SC7's arms that mine once),
 for the re-measurement under the static warm-up.
+
+--remine lists instead every run of the two remining arms with the proposal's miner
+(Remine-from-scratch, Remine-own-UUT) in the incremental scenarios, timing and memory trees alike:
+they now call runRemine, which does not rebuild what depends on the sequences alone.
 """
 import argparse
 import csv
@@ -40,6 +44,8 @@ FLOOR_ARMS = {"Pre-HUSPM-Joint-fixed-threshold", "Pre-HUSPM-Joint", "Pre-HUSPM-J
               "Joint-rule+plain-floor",
               "Pre-HUSPM-Joint-rescan-rule", "Pre-HUSPM-Joint-no-block-index", "Pre-HUSPM-Joint-bsz-1",
               "Pre-HUSPM-Joint-bsz-5", "Pre-HUSPM-Joint-bsz-10", "Pre-HUSPM-Joint-bsz-50", "Pre-HUSPM-Joint-bsz-200"}
+# the remining arms that run the proposal's miner (runRemine)
+REMINE_ARMS = {"Remine-from-scratch", "Remine-own-UUT"}
 # SC7's arms that mine once (logAblation and the Pre-HUSPM reference)
 SC7_STATIC = {"Pre-HUSPM-Joint", "Pre-HUSPM-Joint-no-IUB", "Pre-HUSPM-Joint-no-IPS", "Pre-HUSPM"}
 TREES = ["campaign", "campaign-replicates", "campaign-mem", "campaign-mem-replicates",
@@ -91,6 +97,8 @@ def main():
     ap.add_argument("--remove", action="store_true")
     ap.add_argument("--include-no-direct", action="store_true")
     ap.add_argument("--extra-arm", action="append", default=[])
+    ap.add_argument("--remine", action="store_true",
+                    help="list the runs of Remine-from-scratch and Remine-own-UUT instead")
     ap.add_argument("--static-warmup", action="store_true",
                     help="list the static mines of the timing trees instead (SC1, SC3, SC7's static arms)")
     a = ap.parse_args()
@@ -101,6 +109,8 @@ def main():
         # (live mode, no warm-up) and incremental arms are kept.
         listed = [r for r in all_runs if not r[0].startswith("campaign-mem")
                   and (r[2] in ("SC1", "SC3") or (r[2] == "SC7" and r[4] in SC7_STATIC))]
+    elif a.remine:
+        listed = [r for r in all_runs if r[2] in INCREMENTAL and r[4] in REMINE_ARMS]
     else:
         listed = [r for r in all_runs if r[2] in INCREMENTAL and r[4] in FLOOR_ARMS]
     extra = []
@@ -109,7 +119,7 @@ def main():
         have = {(t, s, sc, ds) for t, s, sc, ds, arm, _ in all_runs if arm == new}
         extra += [(t, s, sc, ds, new, None) for t, s, sc, ds, arm, _ in all_runs
                   if arm == like and (t, s, sc, ds) not in have]
-    no_direct = [] if a.static_warmup else [r for r in listed if not has_direct_update(r[5])]
+    no_direct = [] if a.static_warmup or a.remine else [r for r in listed if not has_direct_update(r[5])]
     if not a.include_no_direct:
         listed = [r for r in listed if r not in no_direct]
     groups = defaultdict(lambda: defaultdict(set))

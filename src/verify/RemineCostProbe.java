@@ -34,6 +34,8 @@ import java.util.TreeMap;
  *              rescans (the SC7 arm Pre-HUSPM-Joint-rescan-every-batch); runIncrementalMining timed;
  *   2. remine  a new instance per increment mining the whole current database with
  *              runInitialMining (the SC2 arm Remine-from-scratch); timed;
+ *   4. runRemine  a new instance per increment calling runRemine, the call of the remining arms
+ *              since the remining cost was measured, which leaves out what depends on the sequences alone;
  *   3. steps   the same as pass 2, but the calls runInitialMining makes are made one by one and
  *              timed each: the new instance, the block index over the whole database, the per-sequence
  *              remaining utilities and flat arrays, the scratch arrays, the pool warm-up, the density
@@ -141,7 +143,9 @@ public final class RemineCostProbe {
         int warmT = fWarmT.getInt(null), warmL = fWarmL.getInt(null);
 
         int failures = 0, compared = 0;
-        try (PrintWriter csv = new PrintWriter(Files.newBufferedWriter(Path.of(out, "remine_cost.csv"), StandardCharsets.UTF_8))) {
+        try (PrintWriter csv = new PrintWriter(Files.newBufferedWriter(Path.of(out, "remine_cost.csv"), StandardCharsets.UTF_8));
+             PrintWriter remine4 = new PrintWriter(Files.newBufferedWriter(Path.of(out, "run_remine.csv"), StandardCharsets.UTF_8))) {
+            remine4.println("dataset,increment,run_remine_ms,equals_rescan");
             csv.println("dataset,increment,sequences,rescan_ms,remine_ms,step_new_instance_ms,step_block_index_ms,"
                     + "step_sequences_ms,step_scratch_ms,step_pools_ms,step_density_ms,step_mine_ms,mine_again_warm_ms,"
                     + "cutoff_rescan,cutoff_remine,large,prelarge,remine_equals_rescan,steps_equal_rescan");
@@ -282,6 +286,31 @@ public final class RemineCostProbe {
                 System.out.printf("  pass 3 steps, summed over the increments (ms): new instance %.0f, block index %.0f, "
                         + "sequences %.0f, scratch %.0f, pools %.0f, density %.0f, mine %.0f; same mine again, warm %.0f%n",
                         sum[0], sum[1], sum[2], sum[3], sum[4], sum[5], sum[6], sum[7]);
+                System.gc();
+
+                // Pass 4: runRemine, the remining arms' call, with a new instance per increment.
+                soFar = new ArrayList<>(dInit);
+                total = sum(dInit);
+                double rrMs = 0;
+                int rrEqual = 0;
+                for (int b = 0; b < n; b++) {
+                    List<Sequence> delta = batches.get(b);
+                    total += sum(delta);
+                    soFar.addAll(delta);
+                    final List<Sequence> snap = new ArrayList<>(soFar);
+                    PreHUSPMAdaptiveAlgo r = fresh(su, sl);
+                    long t0 = System.nanoTime();
+                    r.runRemine(snap, total);
+                    double t = ms(t0);
+                    rrMs += t;
+                    boolean eq = r.lutDynValue == pCut[b] && patterns(r).equals(pPat[b]);
+                    rrEqual += eq ? 1 : 0;
+                    compared++;
+                    if (!eq) failures++;
+                    remine4.printf("%s,%d,%.3f,%b%n", ds, b + 1, t, eq);
+                }
+                System.out.printf("  pass 4 (runRemine, new instance per increment): %.0f ms, %d of %d increments equal to pass 1%n",
+                        rrMs, rrEqual, n);
                 System.gc();
             }
         }

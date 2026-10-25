@@ -1075,6 +1075,53 @@ public class PreHUSPMAdaptiveAlgorithm {
             this.tsuAtLastRescan = currentTotalUtility; // TSU reference for the safety bounds
         }
 
+        /**
+         * Mines the whole database db on this instance as runInitialMining does, for the remining
+         * arms, which call it on a new instance after every operation and so keep no pattern between
+         * operations. It leaves out what depends only on the sequences and that the mine does not need
+         * rebuilt: the block index, read only by the direct updates, which remining never makes; the
+         * density measure, read only by the density floor (useDensityFloor), which it refuses; and the
+         * remaining utilities and flat arrays of a sequence that already has them, since they are
+         * stored on the sequence and computed from it alone. A rescan of the proposal skips the same
+         * work for the sequences it has seen, so the two mine the same database at the same cutoff
+         * with the same setup.
+         */
+        public void runRemine(List<Sequence> db, double currentTotalUtility) {
+            if (useDensityFloor) throw new IllegalStateException("runRemine does not measure the density floor");
+            cancelled = false;
+            rescanCount = 0; patternCount = 0;
+            candidateCount = 0; exploredNodes = 0; blocksReadCount = 0; numBlocksSkipped = 0;
+            prunedValueBound = 0; prunedIub = 0; removedItems = 0; removedItemsRoot = 0;
+            cubValue = 0; cubTriggeredRescan = false;
+            resetIau();
+            insertedSinceRescan = 0; deletedSinceRescan = 0; preBuf = 0;
+            if (floorWindow > 0) { Sl_min = slMinRatioEff * Su; overLowRun = 0; rescansAtUut = 0; }
+            largeMap.clear(); prelargeMap.clear();
+            this.repetition = Double.NaN;   // not measured here, so the column reads NaN rather than 0
+            dbClear();
+            for (Sequence s : db) {
+                if (s.flatItems == null) {
+                    s.calculateRemainingUtilities();
+                    s.buildFlatRepresentation();
+                }
+                if (s.flatLen > maxFlatLen) maxFlatLen = s.flatLen;
+                dbPut(s.id, s);
+                for (int k = 0; k < s.flatLen; k++) if (s.flatItems[k] > maxItemId) maxItemId = s.flatItems[k];
+            }
+            allocateScratch(maxItemId + 1);
+            ensureScratchCapacity(maxFlatLen);
+            trackerPool.warmup(POOL_WARMUP_TRACKERS);
+            trackerListPool.warmup(POOL_WARMUP_TRACKER_LISTS);
+
+            double uut_abs = currentTotalUtility * Su;
+            this.uutValue = uut_abs;
+            this.lutDynValue = currentTotalUtility * Sl_min;
+            this.sftValue = uut_abs - this.lutDynValue;
+
+            mineWithBudget(db, uut_abs, currentTotalUtility);
+            this.tsuAtLastRescan = currentTotalUtility;
+        }
+
         // ================= PHASE 2: INSERTION =================
         public void runIncrementalMining(List<Sequence> deltaD, List<Sequence> dSoFar, double newTotalUtility) {
             refuseUnderPeuTracking(null);

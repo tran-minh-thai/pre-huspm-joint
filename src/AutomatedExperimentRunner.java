@@ -992,7 +992,7 @@ public class AutomatedExperimentRunner {
      *
      *   Pre-HUSPM-Joint-fixed-threshold  incremental maintenance at the fixed lower threshold
      *   Remine-from-scratch  the proposal's own miner on the whole current database after
-     *                        every operation, at its cutoff r_l * UUT
+     *                        every operation, at its cutoff r_l * UUT (runRemine)
      *   Remine-HUSP-ULL      HUSP-ULL on the whole current database after every operation, at UUT
      *   Remine-HUSP-SP       HUSP-SP on the whole current database after every operation, at UUT
      *
@@ -1212,7 +1212,7 @@ public class AutomatedExperimentRunner {
                 PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo rm = newAdaptive(ds.defaultSu, ownRemineRatio(arm, ds.name));
                 announce(arm, ds.name, op.tag(), op.iter);
                 m = measureAdaptive(rm, arm, ds.name, op.iter, op.tag(),
-                        () -> rm.runInitialMining(snapshot, newTotal));
+                        () -> rm.runRemine(snapshot, newTotal));
                 m.rescanCount = 0;   // no incremental rescan in this reference
                 if (!failedRun(m)) verifyHusps(arm, op.iter, op.tag(), rm::exportLargeAsStrings);
             } else if (!incremental) {
@@ -1779,8 +1779,10 @@ public class AutomatedExperimentRunner {
                     col.log(skippedMetric(rarm, dsName, batchIdx, tag + "_INC"));
                     continue;
                 }
-                // A new instance per batch: mining from scratch keeps NO state from the
-                // previous batch.
+                // A new instance per batch: mining from scratch keeps NO pattern from the
+                // previous batch. runRemine does not rebuild what depends on the sequences
+                // alone (block index, flat arrays of sequences already seen, density measure),
+                // as a rescan of the proposal does not.
                 final List<Sequence> snapshot = new ArrayList<>(dSoFar);
                 final double finalTotal = newTotal;
                 PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo rm =
@@ -1790,7 +1792,7 @@ public class AutomatedExperimentRunner {
                                 ENABLE_PATTERN_EXPORT);
                 announce(rarm, dsName, tag + "_INC", batchIdx);
                 ExperimentMetrics mb = measure(rarm, dsName, batchIdx, tag + "_INC",
-                        () -> rm.runInitialMining(snapshot, finalTotal),
+                        () -> rm.runRemine(snapshot, finalTotal),
                         () -> rm.candidateCount, () -> rm.patternCount,
                         () -> rm.lutDynValue, () -> rm.cubValue, () -> rm.cubTriggeredRescan,
                         null, () -> rm.prunedValueBound,
