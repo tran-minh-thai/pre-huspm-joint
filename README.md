@@ -127,6 +127,7 @@ with `DIR`.
 | seeds (SC6*) | 42, 1337, 2024, 31415, 271828 | `AutomatedExperimentRunner.SEEDS` |
 | time limit | 120 min per call, 8 h per arm | `-Dtimeout.min`, `campaign.ps1 -CapSeconds` |
 | memory guard | stop an arm when less than 10% of the heap is free before a batch | `AutomatedExperimentRunner` |
+| static warm-up | before the first timed static mine of a JVM, untimed mines until two consecutive ones differ by less than 10%, at most 10, one over 10 s being enough | `-Dstatic.warmup` |
 | live-set sampling | at least 20 ms apart, longer as the live set grows; short mines repeated until 5 samples or 120 s | `-Dmem.interval.ms`, `-Dmem.minSamples`, `-Dmem.repeatMaxMs` |
 | JVM | Eclipse Temurin 25.0.4.1+1, `-Xmx48g -Xss64m` | `environment.lock.json`, `campaign.ps1` |
 | machine | AMD Ryzen 9 9950X, 64 GB, Windows 11 | `results/machine/PC-THAI.json` |
@@ -145,6 +146,23 @@ with `DIR`.
 The first `D_init` sequences are mined first; the rest form the update stream. The four
 threshold levels of SC1 and SC3, and the remaining settings, are listed in
 `docs/experiments.md` and `docs/campaign-parameters.md`.
+
+## Code paths not used by the measurements
+
+`PreHUSPMAdaptiveAlgorithm` contains four paths that no measured run takes. Each is off by its
+default value, and `campaign.ps1` passes none of the properties that turn them on.
+
+| Path | Default | Used by |
+|---|---|---|
+| Candidate budget at a rescan (`mineWithBudget`): when a rescan exceeds the budget, `r_l` is raised by 0.05 and the database mined again | off (`-Dadapt.rescanBudget=0`, `-Dadapt.rescanMillis=0`) | the reference mine of `verify.DirectPathVerifier`, which looks for the target pattern of an adversarial operation and must not mine without bound; never by an arm |
+| Adaptive band (`kappa`, `delta0`) of the rescan rules `iaumax`, `cub` and `swumax` | inactive under `joint` and under the tests of Pre-HUSPM (`pre_swumax`, `pre_tsu`), which keep the tracking of `joint` | the control rule `iaumax` of the correctness checks (`verify.MixedBudgetFuzz`, `verify.MixedBudgetProbe`, record `results/verify-joint/fuzz`), which shows that the checks detect an unsound rule; `cub` and `swumax` are kept for comparison and run in no record |
+| Mining each batch for new patterns after a direct update (`mineNewPatternsPerBatch`) | `false` | nothing |
+| Starting floor raised by the repetition of the database (`useDensityFloor`) | off (`-Dadapt.densityFloor`) | nothing |
+
+The measured runs show that none of these paths was taken: every `run.log` reports the
+configuration it ran with (`adapt.trigger=joint`, `adapt.iip=once`), and the column
+`rescan_retries`, which counts the retries of the candidate budget, is 0 in every row of every
+campaign tree.
 
 ## Layout
 
