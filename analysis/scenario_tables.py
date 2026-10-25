@@ -1050,6 +1050,14 @@ def verification():
                              status="finished", runs=len(blocks),
                              operations=sum(1 for _, r in blocks if r.startswith("every mode returns")),
                              mismatches=sum(1 for _, r in blocks if not r.startswith("every mode returns"))))
+    # The running example of the manuscript (verify.RunningExampleCheck): the values it states.
+    out = _console("running-example")
+    if _status("running-example") != "finished":
+        rows.append(dict(check="running example of the manuscript (RunningExampleCheck)", status=_status("running-example")))
+    else:
+        m = re.search(r"^Running example: (\d+) values compared, (\d+) mismatching$", out, flags=re.M)
+        rows.append(dict(check="running example of the manuscript (RunningExampleCheck)", status="finished",
+                         operations=int(m.group(1)), mismatches=int(m.group(2))))
     for name, label in (("fault-injection", "fault injection, random streams and hand-built cases"),
                         ("fault-injection-real", "fault injection, adversarial runs on real databases"),
                         ("fault-injection-ips", "fault injection into the item pruning"),
