@@ -1,5 +1,5 @@
 scenario,scope,pairs,pairs_agree,cells,proposal_fastest,proposal_fastest_separated,ties,tie_cells,best_over_proposal_median,best_over_proposal_min,best_over_proposal_max,excluded
-SC1,all thresholds,32,32,32,1,1,2,BMS1 at 0.015293 (HUSP-ULL); KOSARAK at 0.028117 (HUSP-SP),0.731,0.446,1.036,
-SC1,default threshold,8,8,8,0,0,0,,0.751,0.54,0.895,
-SC3,all thresholds,12,12,12,1,0,3,SIGN at 0.065911 (HUSP-ULL); SIGN at 0.083371 (HUSP-SP); SIGN at 0.091052 (HUSP-ULL),0.821,0.308,1.058,
-SC3,default threshold,3,3,3,0,0,1,SIGN at 0.065911 (HUSP-ULL),0.889,0.557,0.898,
+SC1,all thresholds,32,32,32,5,3,6,BMS1 at 0.015293 (HUSP-ULL); BMS1 at 0.016218 (HUSP-ULL); C8T1S5I8N5K at 0.001132 (HUSP-ULL); LEVIATHAN at 0.014644 (HUSP-SP); LEVIATHAN at 0.01553 (HUSP-ULL); LEVIATHAN at 0.01647 (HUSP-ULL),0.829,0.379,1.108,
+SC1,default threshold,8,8,8,1,1,2,C8T1S5I8N5K at 0.001132 (HUSP-ULL); LEVIATHAN at 0.01553 (HUSP-ULL),0.849,0.546,1.087,
+SC3,all thresholds,12,12,12,2,1,3,SIGN at 0.049134 (HUSP-ULL); SIGN at 0.083371 (HUSP-SP); SIGN at 0.091052 (HUSP-SP),0.904,0.61,1.056,
+SC3,default threshold,3,3,3,1,1,0,,0.901,0.654,1.056,

@@ -1,0 +1,16 @@
+{
+  "command": "python3 analysis/warmup_effect.py",
+  "path_substitutions": 0,
+  "build_dir": "build",
+  "git_commit": "b1e4ea9884532c69f552137fd58d32cd294e9664",
+  "tree": "src clean, other files modified",
+  "source_sha256": "21b0969e502a5f1fb50757dc87ec4d5e4f648d5dec81d6ab442434decf85900d",
+  "source_files": 39,
+  "java": "openjdk version \"26.0.1\" 2026-04-21",
+  "os": "Darwin 27.0.0 (macOS-27.0.1-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-10-25T07:13:20",
+  "end": "2026-10-25T07:13:26",
+  "exit_code": 0
+}

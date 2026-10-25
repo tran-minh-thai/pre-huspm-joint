@@ -821,6 +821,31 @@ def tightness_keys(put, src="invariant-joint-rule-tightness/console.txt"):
         else "no", src)
 
 
+# ------------------------------------------------------------------------------ static warm-up
+WARMUP_EFFECT = os.path.join(mf.DATA_DIR, "static-warmup-effect")
+
+
+def warmup_effect_keys(put, src="static-warmup-effect/warmup_effect_summary.csv"):
+    """Each algorithm's static runtime with the warm-up over its runtime without it
+    (analysis/warmup_effect.py): geometric mean, minimum and maximum over the cells, per scenario;
+    and the counter values compared between the two, which must agree."""
+    f = os.path.join(WARMUP_EFFECT, "warmup_effect_summary.csv")
+    if not os.path.exists(f):
+        print(f"[not written] warm-up keys: {f} is missing")
+        return
+    for r in pd.read_csv(f).itertuples():
+        k = f"warmup_{r.scenario}_{r.algorithm}"
+        put(f"{k}_cells", int(r.cells), src)
+        put(f"{k}_warm_over_cold_geomean", f"{r.geomean_warm_over_cold:.2f}", src)
+        put(f"{k}_warm_over_cold_range", f"{r.min:.2f} to {r.max:.2f}", src)
+    con = open(os.path.join(WARMUP_EFFECT, "console.txt"), encoding="utf-8").read()
+    m = re.search(r"counter values compared: (\d+); differing: (\d+)", con)
+    if m is None:
+        sys.exit(f"{WARMUP_EFFECT}/console.txt: no counter comparison line")
+    put("warmup_counters_compared", int(m.group(1)), "static-warmup-effect/console.txt")
+    put("warmup_counters_differing", int(m.group(2)), "static-warmup-effect/console.txt")
+
+
 # ------------------------------------------------------------------------------ fidelity
 FIDELITY_DIR = os.path.join(mf.DATA_DIR, mf.TIMING_TREE, "FIDELITY")
 FIDELITY_VARIANTS = {"Pre-HUSPM-SWUmax": "swumax", "Pre-HUSPM-TSU": "tsu"}
@@ -2040,6 +2065,7 @@ def export_all(out_dir=None):
             put(f"{k}_baseline_faster_on_{r['baseline']}", r["baseline_faster_on"], "table_static_geomean.csv")
 
     tightness_keys(put)
+    warmup_effect_keys(put)
     fs, fi = fidelity()
     for name, t in (("table_PreHUSPM_fidelity.csv", fs), ("table_PreHUSPM_fidelity_increments.csv", fi)):
         if len(t):

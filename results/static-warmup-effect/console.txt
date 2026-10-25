@@ -1,0 +1,19 @@
+SC1 HUSP-SP                  cells  32  warm/cold geomean 0.872  0.54..1.13
+SC1 HUSP-ULL                 cells  32  warm/cold geomean 0.878  0.34..1.04
+SC1 IncUSP-Miner+            cells  32  warm/cold geomean 0.975  0.76..1.08
+SC1 Joint-miner@UUT          cells  32  warm/cold geomean 0.708  0.23..1.00
+SC1 Pre-HUSPM                cells  32  warm/cold geomean 0.956  0.60..1.04
+SC1 Pre-HUSPM-Joint          cells  32  warm/cold geomean 0.784  0.22..1.01
+SC1 USpan                    cells  32  warm/cold geomean 0.916  0.37..1.02
+SC3 HUSP-SP                  cells  12  warm/cold geomean 0.841  0.49..1.04
+SC3 HUSP-ULL                 cells  12  warm/cold geomean 0.897  0.59..1.01
+SC3 IncUSP-Miner+            cells  12  warm/cold geomean 0.994  0.94..1.01
+SC3 Joint-miner@UUT          cells  12  warm/cold geomean 0.761  0.31..1.00
+SC3 Pre-HUSPM                cells  12  warm/cold geomean 0.994  0.91..1.05
+SC3 Pre-HUSPM-Joint          cells  12  warm/cold geomean 0.771  0.30..1.06
+SC3 USpan                    cells  12  warm/cold geomean 0.915  0.43..1.00
+SC7 Pre-HUSPM                cells   7  warm/cold geomean 0.894  0.61..1.03
+SC7 Pre-HUSPM-Joint          cells   7  warm/cold geomean 0.634  0.33..0.96
+SC7 Pre-HUSPM-Joint-no-IPS   cells   7  warm/cold geomean 0.687  0.43..0.99
+SC7 Pre-HUSPM-Joint-no-IUB   cells   7  warm/cold geomean 0.655  0.46..0.96
+cells: 336; counter values compared: 1008; differing: 0; cells on one side only: 0

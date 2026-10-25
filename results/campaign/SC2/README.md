@@ -130,7 +130,7 @@ of 100 increments and still finish faster than remining.
 **Beyond it**: LEVIATHAN, 2 of 100 within budget, KOSARAK, 0 of 100 within budget.
 Maintenance degenerates into remining: LEVIATHAN 28.0 s against remining's 37.1 s (-24.4 %); KOSARAK 278 s against remining's 683 s (-59.2 %),
 one run each. Two runs of one SC1 configuration on the same JDK differ by a factor between
-0.69 and 1.25 (70 configurations of at least one second), so differences
+0.89 and 1.10 (67 configurations of at least one second), so differences
 of a few percent between single runs are not resolved here.
 
 ## KOSARAK cannot be moved by tuning
