@@ -1,8 +1,8 @@
 dataset,window,time_s,runs,over_fixed_floor,vs_fixed_floor,best_competitor,over_best_competitor,vs_best,fastest
-SIGN,5,9.429,5,0.973,"separated, faster",Remine-own-UUT,0.872,"separated, faster",True
+SIGN,5,9.429,5,0.973,"separated, faster",Remine-own-UUT,0.876,"separated, faster",True
 TAFENG,5,5.919,5,0.998,overlapping,Pre-HUSPM-SWUmax,0.802,"separated, faster",True
-C8T1S5I8N5K,3,8.405,3,0.931,"separated, faster",Remine-own-UUT,0.83,"separated, faster",True
+C8T1S5I8N5K,3,8.405,3,0.931,"separated, faster",Remine-own-UUT,1.426,"separated, slower",False
 BIBLE,5,52.524,5,0.964,"separated, faster",IncUSP-Miner+,0.913,"separated, faster",True
-LEVIATHAN,5,28.026,5,0.796,"separated, faster",Remine-own-UUT,1.023,"separated, slower",False
-FIFA,5,176.145,5,0.99,overlapping,Remine-own-UUT,0.555,"separated, faster",True
-KOSARAK,5,278.41,5,0.445,"separated, faster",Remine-own-UUT,0.814,"separated, faster",True
+LEVIATHAN,5,28.026,5,0.796,"separated, faster",Remine-own-UUT,1.064,"separated, slower",False
+FIFA,5,176.145,5,0.99,overlapping,Remine-own-UUT,0.549,"separated, faster",True
+KOSARAK,5,278.41,5,0.445,"separated, faster",Remine-own-UUT,0.991,overlapping,False
