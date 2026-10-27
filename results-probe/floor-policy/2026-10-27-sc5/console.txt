@@ -1,0 +1,165 @@
+SIGN: replay agrees with the measured decisions on 100/100 increments (window 5) and 100/100 (fixed lower threshold)
+  measured: proposal 9.43 s, fixed 9.69 s, Remine-UUT 10.76 s
+  priced:   window 5 9.93, fixed 10.2, at the threshold always 10.76, cost rule 9.4, with shadow 10.76, break-even 9.39, offline optimum 8.89
+TAFENG: replay agrees with the measured decisions on 100/100 increments (window 5) and 100/100 (fixed lower threshold)
+  measured: proposal 5.92 s, fixed 5.93 s, Remine-UUT 10.37 s
+  priced:   window 5 5.93, fixed 5.94, at the threshold always 10.23, cost rule 6.02, with shadow 6.02, break-even 6.02, offline optimum 5.73
+C8T1S5I8N5K: replay agrees with the measured decisions on 100/100 increments (window 5) and 100/100 (fixed lower threshold)
+  measured: proposal 8.94 s, fixed 9.03 s, Remine-UUT 5.9 s
+  priced:   window 5 8.77, fixed 8.95, at the threshold always 5.9, cost rule 5.99, with shadow 5.9, break-even 5.9, offline optimum 5.77
+BIBLE: replay agrees with the measured decisions on 100/100 increments (window 5) and 100/100 (fixed lower threshold)
+  measured: proposal 52.52 s, fixed 54.5 s, Remine-UUT 67.84 s
+  priced:   window 5 53.55, fixed 55.4, at the threshold always 67.84, cost rule 67.77, with shadow 54.78, break-even 54.37, offline optimum 50.36
+LEVIATHAN: replay agrees with the measured decisions on 100/100 increments (window 5) and 100/100 (fixed lower threshold)
+  measured: proposal 28.03 s, fixed 35.23 s, Remine-UUT 26.33 s
+  priced:   window 5 27.74, fixed 35.29, at the threshold always 26.33, cost rule 26.64, with shadow 26.33, break-even 26.55, offline optimum 25.91
+FIFA: replay agrees with the measured decisions on 100/100 increments (window 5) and 100/100 (fixed lower threshold)
+  measured: proposal 176.14 s, fixed 178.01 s, Remine-UUT 320.77 s
+  priced:   window 5 180.88, fixed 180.88, at the threshold always 318.63, cost rule 182.58, with shadow 182.8, break-even 182.8, offline optimum 176.72
+KOSARAK: replay agrees with the measured decisions on 100/100 increments (window 5) and 100/100 (fixed lower threshold)
+  measured: proposal 278.41 s, fixed 626.12 s, Remine-UUT 281.02 s
+  priced:   window 5 281.26, fixed 628.66, at the threshold always 281.02, cost rule 288.2, with shadow 281.69, break-even 288.04, offline optimum 281.02
+SIGN SC5_K=100_strat=EVEN: replay agrees with the measured decisions on 100/100 increments (window 5) and 100/100 (fixed lower threshold)
+  measured: proposal 9.51 s, fixed 9.7 s, Remine-UUT 10.71 s
+  priced:   window 5 9.99, fixed 10.27, at the threshold always 10.71, cost rule 10.0, with shadow 10.71, break-even 9.43, offline optimum 8.9
+SIGN SC5_K=100_strat=INCREASING: replay agrees with the measured decisions on 100/100 increments (window 5) and 100/100 (fixed lower threshold)
+  measured: proposal 8.56 s, fixed 8.49 s, Remine-UUT 9.75 s
+  priced:   window 5 8.96, fixed 8.96, at the threshold always 9.55, cost rule 9.22, with shadow 9.1, break-even 9.09, offline optimum 8.09
+SIGN SC5_K=100_strat=DECREASING: replay agrees with the measured decisions on 100/100 increments (window 5) and 100/100 (fixed lower threshold)
+  measured: proposal 7.82 s, fixed 8.68 s, Remine-UUT 11.5 s
+  priced:   window 5 8.24, fixed 9.17, at the threshold always 11.5, cost rule 9.83, with shadow 8.88, break-even 7.79, offline optimum 7.37
+SIGN SC5_K=100_strat=BURST: replay agrees with the measured decisions on 100/100 increments (window 5) and 100/100 (fixed lower threshold)
+  measured: proposal 7.54 s, fixed 7.5 s, Remine-UUT 10.73 s
+  priced:   window 5 7.93, fixed 7.93, at the threshold always 10.73, cost rule 8.02, with shadow 8.15, break-even 8.44, offline optimum 7.28
+SIGN SC5_K=67_strat=EVEN: replay agrees with the measured decisions on 67/67 increments (window 5) and 67/67 (fixed lower threshold)
+  measured: proposal 6.56 s, fixed 8.14 s, Remine-UUT 7.18 s
+  priced:   window 5 6.96, fixed 8.61, at the threshold always 7.18, cost rule 7.24, with shadow 7.18, break-even 6.72, offline optimum 6.45
+SIGN SC5_K=67_strat=INCREASING: replay agrees with the measured decisions on 67/67 increments (window 5) and 67/67 (fixed lower threshold)
+  measured: proposal 6.15 s, fixed 9.27 s, Remine-UUT 6.51 s
+  priced:   window 5 6.59, fixed 9.82, at the threshold always 6.38, cost rule 6.56, with shadow 6.43, break-even 6.53, offline optimum 6.24
+SIGN SC5_K=67_strat=DECREASING: replay agrees with the measured decisions on 67/67 increments (window 5) and 67/67 (fixed lower threshold)
+  measured: proposal 6.08 s, fixed 7.66 s, Remine-UUT 7.78 s
+  priced:   window 5 6.46, fixed 8.13, at the threshold always 7.78, cost rule 7.27, with shadow 7.88, break-even 6.23, offline optimum 6.0
+SIGN SC5_K=67_strat=BURST: replay agrees with the measured decisions on 67/67 increments (window 5) and 67/67 (fixed lower threshold)
+  measured: proposal 6.75 s, fixed 6.58 s, Remine-UUT 7.14 s
+  priced:   window 5 7.11, fixed 7.0, at the threshold always 7.14, cost rule 7.05, with shadow 7.14, break-even 6.54, offline optimum 5.83
+SIGN SC5_K=50_strat=EVEN: replay agrees with the measured decisions on 50/50 increments (window 5) and 50/50 (fixed lower threshold)
+  measured: proposal 5.64 s, fixed 8.21 s, Remine-UUT 5.33 s
+  priced:   window 5 6.04, fixed 8.73, at the threshold always 5.33, cost rule 5.53, with shadow 5.33, break-even 5.41, offline optimum 5.29
+SIGN SC5_K=50_strat=INCREASING: replay agrees with the measured decisions on 50/50 increments (window 5) and 50/50 (fixed lower threshold)
+  measured: proposal 4.55 s, fixed 7.14 s, Remine-UUT 4.85 s
+  priced:   window 5 4.9, fixed 7.59, at the threshold always 4.72, cost rule 4.89, with shadow 4.81, break-even 4.9, offline optimum 4.66
+SIGN SC5_K=50_strat=DECREASING: replay agrees with the measured decisions on 50/50 increments (window 5) and 50/50 (fixed lower threshold)
+  measured: proposal 5.0 s, fixed 6.22 s, Remine-UUT 5.84 s
+  priced:   window 5 5.32, fixed 6.61, at the threshold always 5.84, cost rule 5.43, with shadow 5.94, break-even 4.88, offline optimum 4.79
+SIGN SC5_K=50_strat=BURST: replay agrees with the measured decisions on 50/50 increments (window 5) and 50/50 (fixed lower threshold)
+  measured: proposal 5.38 s, fixed 5.67 s, Remine-UUT 5.35 s
+  priced:   window 5 5.69, fixed 6.02, at the threshold always 5.35, cost rule 5.56, with shadow 5.35, break-even 5.11, offline optimum 4.65
+SIGN SC5_K=25_strat=EVEN: replay agrees with the measured decisions on 25/25 increments (window 5) and 25/25 (fixed lower threshold)
+  measured: proposal 2.72 s, fixed 4.24 s, Remine-UUT 2.68 s
+  priced:   window 5 2.92, fixed 4.49, at the threshold always 2.68, cost rule 2.9, with shadow 2.68, break-even 2.78, offline optimum 2.68
+SIGN SC5_K=25_strat=INCREASING: replay agrees with the measured decisions on 25/25 increments (window 5) and 25/25 (fixed lower threshold)
+  measured: proposal 2.41 s, fixed 3.76 s, Remine-UUT 2.43 s
+  priced:   window 5 2.59, fixed 4.0, at the threshold always 2.37, cost rule 2.57, with shadow 2.37, break-even 2.44, offline optimum 2.37
+SIGN SC5_K=25_strat=DECREASING: replay agrees with the measured decisions on 25/25 increments (window 5) and 25/25 (fixed lower threshold)
+  measured: proposal 2.78 s, fixed 3.96 s, Remine-UUT 2.95 s
+  priced:   window 5 2.96, fixed 4.19, at the threshold always 2.95, cost rule 3.08, with shadow 2.95, break-even 2.76, offline optimum 2.7
+SIGN SC5_K=25_strat=BURST: replay agrees with the measured decisions on 25/25 increments (window 5) and 25/25 (fixed lower threshold)
+  measured: proposal 2.81 s, fixed 4.22 s, Remine-UUT 2.67 s
+  priced:   window 5 3.0, fixed 4.47, at the threshold always 2.67, cost rule 2.88, with shadow 2.67, break-even 2.67, offline optimum 2.67
+C8T1S5I8N5K SC5_K=100_strat=EVEN: replay agrees with the measured decisions on 100/100 increments (window 5) and 100/100 (fixed lower threshold)
+  measured: proposal 8.85 s, fixed 8.99 s, Remine-UUT 5.9 s
+  priced:   window 5 8.83, fixed 9.01, at the threshold always 5.9, cost rule 6.01, with shadow 5.9, break-even 5.9, offline optimum 5.77
+C8T1S5I8N5K SC5_K=100_strat=INCREASING: replay agrees with the measured decisions on 100/100 increments (window 5) and 100/100 (fixed lower threshold)
+  measured: proposal 6.56 s, fixed 7.71 s, Remine-UUT 5.64 s
+  priced:   window 5 6.44, fixed 7.69, at the threshold always 5.37, cost rule 5.27, with shadow 5.33, break-even 5.33, offline optimum 4.8
+C8T1S5I8N5K SC5_K=100_strat=DECREASING: replay agrees with the measured decisions on 100/100 increments (window 5) and 100/100 (fixed lower threshold)
+  measured: proposal 6.84 s, fixed 7.64 s, Remine-UUT 6.18 s
+  priced:   window 5 6.76, fixed 7.68, at the threshold always 6.18, cost rule 6.26, with shadow 5.5, break-even 5.57, offline optimum 5.25
+C8T1S5I8N5K SC5_K=100_strat=BURST: replay agrees with the measured decisions on 100/100 increments (window 5) and 100/100 (fixed lower threshold)
+  measured: proposal 6.34 s, fixed 6.31 s, Remine-UUT 5.83 s
+  priced:   window 5 6.26, fixed 6.24, at the threshold always 5.83, cost rule 5.91, with shadow 5.94, break-even 5.89, offline optimum 5.04
+C8T1S5I8N5K SC5_K=67_strat=EVEN: replay agrees with the measured decisions on 67/67 increments (window 5) and 67/67 (fixed lower threshold)
+  measured: proposal 5.26 s, fixed 7.01 s, Remine-UUT 3.9 s
+  priced:   window 5 5.2, fixed 7.02, at the threshold always 3.9, cost rule 3.98, with shadow 3.9, break-even 3.9, offline optimum 3.88
+C8T1S5I8N5K SC5_K=67_strat=INCREASING: replay agrees with the measured decisions on 67/67 increments (window 5) and 67/67 (fixed lower threshold)
+  measured: proposal 4.05 s, fixed 5.96 s, Remine-UUT 3.78 s
+  priced:   window 5 3.94, fixed 5.9, at the threshold always 3.61, cost rule 3.71, with shadow 3.6, break-even 3.6, offline optimum 3.42
+C8T1S5I8N5K SC5_K=67_strat=DECREASING: replay agrees with the measured decisions on 67/67 increments (window 5) and 67/67 (fixed lower threshold)
+  measured: proposal 4.85 s, fixed 6.3 s, Remine-UUT 4.14 s
+  priced:   window 5 4.77, fixed 6.26, at the threshold always 4.14, cost rule 4.21, with shadow 3.98, break-even 3.98, offline optimum 3.68
+C8T1S5I8N5K SC5_K=67_strat=BURST: replay agrees with the measured decisions on 67/67 increments (window 5) and 67/67 (fixed lower threshold)
+  measured: proposal 5.05 s, fixed 5.06 s, Remine-UUT 3.87 s
+  priced:   window 5 4.96, fixed 4.96, at the threshold always 3.87, cost rule 3.94, with shadow 3.9, break-even 4.0, offline optimum 3.68
+C8T1S5I8N5K SC5_K=50_strat=EVEN: replay agrees with the measured decisions on 50/50 increments (window 5) and 50/50 (fixed lower threshold)
+  measured: proposal 3.16 s, fixed 5.66 s, Remine-UUT 2.9 s
+  priced:   window 5 3.04, fixed 5.62, at the threshold always 2.9, cost rule 2.97, with shadow 2.9, break-even 2.9, offline optimum 2.9
+C8T1S5I8N5K SC5_K=50_strat=INCREASING: replay agrees with the measured decisions on 50/50 increments (window 5) and 50/50 (fixed lower threshold)
+  measured: proposal 3.31 s, fixed 4.67 s, Remine-UUT 2.8 s
+  priced:   window 5 3.18, fixed 4.61, at the threshold always 2.67, cost rule 2.77, with shadow 2.69, break-even 2.69, offline optimum 2.57
+C8T1S5I8N5K SC5_K=50_strat=DECREASING: replay agrees with the measured decisions on 50/50 increments (window 5) and 50/50 (fixed lower threshold)
+  measured: proposal 3.37 s, fixed 5.15 s, Remine-UUT 3.06 s
+  priced:   window 5 3.26, fixed 5.12, at the threshold always 3.06, cost rule 3.13, with shadow 3.06, break-even 2.98, offline optimum 2.83
+C8T1S5I8N5K SC5_K=50_strat=BURST: replay agrees with the measured decisions on 50/50 increments (window 5) and 50/50 (fixed lower threshold)
+  measured: proposal 4.58 s, fixed 4.68 s, Remine-UUT 2.88 s
+  priced:   window 5 4.52, fixed 4.62, at the threshold always 2.88, cost rule 2.96, with shadow 2.88, break-even 2.95, offline optimum 2.83
+C8T1S5I8N5K SC5_K=25_strat=EVEN: replay agrees with the measured decisions on 25/25 increments (window 5) and 25/25 (fixed lower threshold)
+  measured: proposal 1.67 s, fixed 2.86 s, Remine-UUT 1.45 s
+  priced:   window 5 1.6, fixed 2.82, at the threshold always 1.45, cost rule 1.52, with shadow 1.45, break-even 1.45, offline optimum 1.45
+C8T1S5I8N5K SC5_K=25_strat=INCREASING: replay agrees with the measured decisions on 25/25 increments (window 5) and 25/25 (fixed lower threshold)
+  measured: proposal 1.6 s, fixed 2.6 s, Remine-UUT 1.41 s
+  priced:   window 5 1.52, fixed 2.54, at the threshold always 1.36, cost rule 1.44, with shadow 1.36, break-even 1.36, offline optimum 1.36
+C8T1S5I8N5K SC5_K=25_strat=DECREASING: replay agrees with the measured decisions on 25/25 increments (window 5) and 25/25 (fixed lower threshold)
+  measured: proposal 1.81 s, fixed 2.79 s, Remine-UUT 1.54 s
+  priced:   window 5 1.76, fixed 2.79, at the threshold always 1.54, cost rule 1.61, with shadow 1.54, break-even 1.54, offline optimum 1.53
+C8T1S5I8N5K SC5_K=25_strat=BURST: replay agrees with the measured decisions on 25/25 increments (window 5) and 25/25 (fixed lower threshold)
+  measured: proposal 1.68 s, fixed 2.84 s, Remine-UUT 1.46 s
+  priced:   window 5 1.6, fixed 2.81, at the threshold always 1.46, cost rule 1.54, with shadow 1.46, break-even 1.46, offline optimum 1.46
+LEVIATHAN SC5_K=100_strat=EVEN: replay agrees with the measured decisions on 100/100 increments (window 5) and 100/100 (fixed lower threshold)
+  measured: proposal 28.02 s, fixed 36.0 s, Remine-UUT 26.36 s
+  priced:   window 5 27.77, fixed 35.31, at the threshold always 26.36, cost rule 26.69, with shadow 26.36, break-even 26.57, offline optimum 25.94
+LEVIATHAN SC5_K=100_strat=INCREASING: replay agrees with the measured decisions on 100/100 increments (window 5) and 100/100 (fixed lower threshold)
+  measured: proposal 22.41 s, fixed 30.16 s, Remine-UUT 22.97 s
+  priced:   window 5 22.23, fixed 29.83, at the threshold always 22.65, cost rule 22.35, with shadow 22.17, break-even 22.32, offline optimum 21.85
+LEVIATHAN SC5_K=100_strat=DECREASING: replay agrees with the measured decisions on 100/100 increments (window 5) and 100/100 (fixed lower threshold)
+  measured: proposal 25.0 s, fixed 29.46 s, Remine-UUT 29.65 s
+  priced:   window 5 24.97, fixed 29.17, at the threshold always 29.65, cost rule 29.99, with shadow 24.36, break-even 24.25, offline optimum 23.15
+LEVIATHAN SC5_K=100_strat=BURST: replay agrees with the measured decisions on 100/100 increments (window 5) and 100/100 (fixed lower threshold)
+  measured: proposal 24.8 s, fixed 27.25 s, Remine-UUT 26.84 s
+  priced:   window 5 24.82, fixed 26.95, at the threshold always 26.84, cost rule 26.4, with shadow 24.8, break-even 24.68, offline optimum 22.17
+LEVIATHAN SC5_K=67_strat=EVEN: replay agrees with the measured decisions on 67/67 increments (window 5) and 67/67 (fixed lower threshold)
+  measured: proposal 17.99 s, fixed 24.68 s, Remine-UUT 17.72 s
+  priced:   window 5 17.98, fixed 24.49, at the threshold always 17.72, cost rule 18.06, with shadow 17.72, break-even 17.93, offline optimum 17.72
+LEVIATHAN SC5_K=67_strat=INCREASING: replay agrees with the measured decisions on 67/67 increments (window 5) and 67/67 (fixed lower threshold)
+  measured: proposal 15.32 s, fixed 20.44 s, Remine-UUT 15.34 s
+  priced:   window 5 15.19, fixed 20.18, at the threshold always 15.18, cost rule 15.31, with shadow 15.12, break-even 15.27, offline optimum 14.8
+LEVIATHAN SC5_K=67_strat=DECREASING: replay agrees with the measured decisions on 67/67 increments (window 5) and 67/67 (fixed lower threshold)
+  measured: proposal 18.2 s, fixed 23.77 s, Remine-UUT 20.05 s
+  priced:   window 5 18.2, fixed 23.59, at the threshold always 20.05, cost rule 20.4, with shadow 18.54, break-even 18.75, offline optimum 17.94
+LEVIATHAN SC5_K=67_strat=BURST: replay agrees with the measured decisions on 67/67 increments (window 5) and 67/67 (fixed lower threshold)
+  measured: proposal 18.57 s, fixed 23.83 s, Remine-UUT 17.67 s
+  priced:   window 5 18.51, fixed 23.54, at the threshold always 17.67, cost rule 18.02, with shadow 17.67, break-even 17.88, offline optimum 17.24
+LEVIATHAN SC5_K=50_strat=EVEN: replay agrees with the measured decisions on 50/50 increments (window 5) and 50/50 (fixed lower threshold)
+  measured: proposal 13.52 s, fixed 18.43 s, Remine-UUT 13.15 s
+  priced:   window 5 13.4, fixed 18.16, at the threshold always 13.15, cost rule 13.49, with shadow 13.15, break-even 13.36, offline optimum 13.15
+LEVIATHAN SC5_K=50_strat=INCREASING: replay agrees with the measured decisions on 50/50 increments (window 5) and 50/50 (fixed lower threshold)
+  measured: proposal 11.63 s, fixed 15.45 s, Remine-UUT 11.46 s
+  priced:   window 5 11.49, fixed 15.18, at the threshold always 11.3, cost rule 11.65, with shadow 11.36, break-even 11.58, offline optimum 11.1
+LEVIATHAN SC5_K=50_strat=DECREASING: replay agrees with the measured decisions on 50/50 increments (window 5) and 50/50 (fixed lower threshold)
+  measured: proposal 14.05 s, fixed 18.24 s, Remine-UUT 14.84 s
+  priced:   window 5 13.99, fixed 18.0, at the threshold always 14.84, cost rule 14.85, with shadow 14.16, break-even 14.37, offline optimum 13.58
+LEVIATHAN SC5_K=50_strat=BURST: replay agrees with the measured decisions on 50/50 increments (window 5) and 50/50 (fixed lower threshold)
+  measured: proposal 13.58 s, fixed 18.52 s, Remine-UUT 13.22 s
+  priced:   window 5 13.47, fixed 18.26, at the threshold always 13.22, cost rule 13.56, with shadow 13.22, break-even 13.44, offline optimum 13.22
+LEVIATHAN SC5_K=25_strat=EVEN: replay agrees with the measured decisions on 25/25 increments (window 5) and 25/25 (fixed lower threshold)
+  measured: proposal 6.95 s, fixed 9.29 s, Remine-UUT 6.62 s
+  priced:   window 5 6.89, fixed 9.16, at the threshold always 6.62, cost rule 6.99, with shadow 6.62, break-even 6.84, offline optimum 6.62
+LEVIATHAN SC5_K=25_strat=INCREASING: replay agrees with the measured decisions on 25/25 increments (window 5) and 25/25 (fixed lower threshold)
+  measured: proposal 6.12 s, fixed 8.17 s, Remine-UUT 5.79 s
+  priced:   window 5 6.05, fixed 8.03, at the threshold always 5.79, cost rule 6.16, with shadow 5.79, break-even 6.03, offline optimum 5.79
+LEVIATHAN SC5_K=25_strat=DECREASING: replay agrees with the measured decisions on 25/25 increments (window 5) and 25/25 (fixed lower threshold)
+  measured: proposal 7.58 s, fixed 9.93 s, Remine-UUT 7.46 s
+  priced:   window 5 7.54, fixed 9.83, at the threshold always 7.46, cost rule 7.73, with shadow 7.46, break-even 7.7, offline optimum 7.23
+LEVIATHAN SC5_K=25_strat=BURST: replay agrees with the measured decisions on 25/25 increments (window 5) and 25/25 (fixed lower threshold)
+  measured: proposal 6.9 s, fixed 9.21 s, Remine-UUT 6.56 s
+  priced:   window 5 6.83, fixed 9.07, at the threshold always 6.56, cost rule 6.94, with shadow 6.56, break-even 6.79, offline optimum 6.56
