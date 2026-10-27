@@ -1,0 +1,16 @@
+{
+  "command": "java -Xmx8g -cp build-probe verify.MixedPlanDump --out results-probe/floor-policy/mixed-plans/mixed_plans.tsv",
+  "path_substitutions": 0,
+  "build_dir": "build-probe",
+  "git_commit": "b19a3dacae8c803121539185c7bd2ade8d0b34c1",
+  "tree": "clean",
+  "source_sha256": "de2f6d451825a39abde855c394f9a66e40712c8be2e040757488cdab8ae8cb77",
+  "source_files": 42,
+  "java": "openjdk version \"26.0.1\" 2026-04-21",
+  "os": "Darwin 27.0.0 (macOS-27.0.1-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-10-27T09:36:42",
+  "end": "2026-10-27T09:36:44",
+  "exit_code": 0
+}
