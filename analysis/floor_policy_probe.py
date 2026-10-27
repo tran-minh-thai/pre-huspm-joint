@@ -30,6 +30,7 @@ not measurements; the script also prices the measured policies so the size of th
 import argparse
 import csv
 import os
+import re
 import pathlib
 import statistics
 import sys
@@ -138,34 +139,63 @@ def measured(df, db, arm):
     return rows
 
 
+def streams(a):
+    """(label, database, rows of that stream after the initial mine, D_init, increments): the seven SC2
+    streams and, with --sc5, the 48 SC5 cells, whose increment sizes are read from the runner's own
+    log line '>> [SC5] <db> <tag> seed=42 -> sizes=[...]'."""
+    sc2 = mf.load_scenario("SC2", replicates=True)
+    for db in a.db:
+        seqs = load(db)
+        n_init = mf.DATASETS[db]["d_init"]
+        sdf = sc2[(sc2["dataset"] == db) & (sc2["iteration"] > 0)]
+        yield db, db, sdf, seqs[:n_init], even_batches(seqs[n_init:], K)
+    if not a.sc5:
+        return
+    sc5 = mf.load_scenario("SC5", replicates=True)
+    for db in [d for d in a.db if d in set(sc5["dataset"])]:
+        seqs = load(db)
+        n_init = mf.DATASETS[db]["d_init"]
+        rest = seqs[n_init:]
+        log = (ROOT / "results" / "campaign" / "SC5" / db / mf.PROPOSED / "run.log").read_text(errors="replace")
+        for m in re.finditer(r">> \[SC5\] " + re.escape(db) + r" (SC5_K=\d+_strat=\w+) seed=\d+ -> sizes=\[([0-9, ]+)\]", log):
+            tag, sizes = m.group(1), [int(x) for x in m.group(2).split(",")]
+            assert sum(sizes) == len(rest), (db, tag, sum(sizes), len(rest))
+            batches, idx = [], 0
+            for z in sizes:
+                batches.append(rest[idx:idx + z])
+                idx += z
+            sdf = sc5[(sc5["dataset"] == db) & (sc5["iteration"] > 0)
+                      & (sc5["op_type"].astype(str).str.startswith(tag + "_"))]
+            yield f"{db} {tag}", db, sdf, seqs[:n_init], [b for b in batches if b]
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", required=True)
     ap.add_argument("--db", nargs="*", default=DBS)
+    ap.add_argument("--sc5", action="store_true", help="also the 48 cells of SC5")
     a = ap.parse_args()
     out = ROOT / a.out
     out.mkdir(parents=True, exist_ok=True)
-    df = mf.load_scenario("SC2", replicates=True)
     summary = []
-    for db in a.db:
+    for label, db, sdf, init, batches in streams(a):
         su, rl = mf.DATASETS[db]["default_uut"], 0.8
-        n_init = mf.DATASETS[db]["d_init"]
-        seqs = load(db)
-        init, batches = seqs[:n_init], even_batches(seqs[n_init:], K)
         init_total = sum(u for u, _ in init)
+        K = len(batches)
+        rows_of = lambda arm: sdf[sdf["algorithm"] == arm]
 
         # what was measured, per increment (iteration 1..K), mean over the runs
         def per_inc(arm):
-            rows = measured(df, db, arm)
+            rows = rows_of(arm)
             return {int(i): g["runtime_ms"].mean() / 1000 for i, g in rows.groupby("iteration")}
         cL, cU = per_inc("Remine-from-scratch"), per_inc("Remine-own-UUT")
-        fx = measured(df, db, mf.FIXED)
+        fx = rows_of(mf.FIXED)
         direct_rows = fx[fx["cub_triggered"].astype(str).str.lower() == "false"]
         cD = float(direct_rows["runtime_ms"].median()) / 1000 if len(direct_rows) else 0.0
 
         # replay check against the measured runs (first run of each arm)
         def measured_path(arm):
-            rows = measured(df, db, arm)
+            rows = rows_of(arm)
             rows = rows[rows["replicate"] == "s0r0"].sort_values("iteration")
             path, prev_r, prev_u = [], 0, 0
             for _, x in rows.iterrows():
@@ -181,10 +211,10 @@ def main():
         agree_w5 = sum(x == y for x, y in zip(sim_w5, m_w5))
         agree_fx = sum(x == y for x, y in zip(sim_fixed, m_fixed))
         ok = agree_w5 == K == len(m_w5) and agree_fx == K == len(m_fixed)
-        print(f"{db}: replay agrees with the measured decisions on {agree_w5}/{len(m_w5)} increments (window 5) "
+        print(f"{label}: replay agrees with the measured decisions on {agree_w5}/{len(m_w5)} increments (window 5) "
               f"and {agree_fx}/{len(m_fixed)} (fixed lower threshold)")
         if not ok:
-            summary.append(dict(dataset=db, replay_window5=f"{agree_w5}/{len(m_w5)}",
+            summary.append(dict(stream=label, dataset=db, replay_window5=f"{agree_w5}/{len(m_w5)}",
                                 replay_fixed=f"{agree_fx}/{len(m_fixed)}"))
             continue
 
@@ -339,8 +369,8 @@ def main():
         sys.setrecursionlimit(10000)
         v_opt = V(-1, False)
 
-        meas = lambda arm: measured(df, db, arm).groupby("replicate")["runtime_ms"].sum().mean() / 1000
-        row = dict(dataset=db, replay_window5=f"{agree_w5}/{K}", replay_fixed=f"{agree_fx}/{K}",
+        meas = lambda arm: rows_of(arm).groupby("replicate")["runtime_ms"].sum().mean() / 1000
+        row = dict(stream=label, dataset=db, replay_window5=f"{agree_w5}/{K}", replay_fixed=f"{agree_fx}/{K}",
                    measured_proposal_s=round(meas(mf.PROPOSED), 2), priced_window5_s=round(price(sim_w5), 2),
                    measured_fixed_s=round(meas(mf.FIXED), 2), priced_fixed_s=round(price(sim_fixed), 2),
                    measured_remine_uut_s=round(meas("Remine-own-UUT"), 2), priced_always_threshold_s=round(price(sim_U), 2),
