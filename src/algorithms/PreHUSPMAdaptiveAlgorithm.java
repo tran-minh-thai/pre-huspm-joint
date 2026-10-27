@@ -630,8 +630,121 @@ public class PreHUSPMAdaptiveAlgorithm {
         /** Rescans the selection mined at UUT since the initial mine. */
         public int rescansAtUut = 0;
 
+        /**
+         * How a rescan chooses its floor: WINDOW, the selection above (floorWindow > 0), or
+         * BREAK_EVEN (-Dadapt.floorRule=breakEven).
+         *
+         * BREAK_EVEN. A rescan at r_l costs rho times one at UUT and is followed by a units taken by
+         * the direct update at delta each, relative to a rescan at UUT; after a rescan at UUT the
+         * budget is zero and the next unit rescans. Per unit, the rescan at r_l is the cheaper iff
+         * a >= (rho - 1) / (1 - delta). rho and delta are the ratios of the last observed times: of a
+         * mine at r_l, of a mine at UUT, and of a unit taken directly. a is the mean of the last
+         * breakEvenWindow absorptions, each the number of units taken directly between a rescan at
+         * r_l and the next rescan. While the stream runs at UUT no rescan at r_l is made, so the
+         * absorption it would have had is measured by a shadow: the JOINT counters at floor r_l,
+         * started after a rescan at UUT and fed every unit until they would trigger. The JOINT
+         * decision depends on the data and the floor alone, never on what a mine returns, so the
+         * shadow's count is exactly what a rescan at r_l would have absorbed. The first rescan after
+         * the initial mine (at r_l) is at UUT, so both mine times are known. Exact for every floor
+         * in [r_l, 1], as WINDOW. Decisions depend on measured times, so two runs may differ.
+         */
+        public enum FloorRule { WINDOW, BREAK_EVEN }
+        public FloorRule floorRule = "breakEven".equals(System.getProperty("adapt.floorRule"))
+                ? FloorRule.BREAK_EVEN : FloorRule.WINDOW;
+        public int breakEvenWindow = Integer.getInteger("adapt.breakEvenWindow", 5);
+        /** The three ratios the last BREAK_EVEN decision used (NaN before the first). */
+        public double floorRho = Double.NaN, floorDelta = Double.NaN, floorAbsorption = Double.NaN;
+        /** Time of the mine made by the last call, in ms; NaN when it made none. */
+        public double mineMs = Double.NaN;
+        private long lastLowMineNs = -1, lastHighMineNs = -1, lastDirectNs = -1;
+        private final java.util.ArrayList<Integer> absorptions = new java.util.ArrayList<>();
+        /** Units taken directly since the last rescan at r_l; -1 when the last rescan was at UUT. */
+        private int directSinceLow = -1;
+        private ShadowJoint shadow = null;
+        private int shadowUnits = 0;
+        private boolean shadowTriggeredInUnit = false;
+
+        private boolean selectsFloor() { return floorWindow > 0 || floorRule == FloorRule.BREAK_EVEN; }
+
+        /**
+         * A modification is one unit that mines at most once (-Dadapt.mergeModification=false
+         * restores two units, one per phase). When its deletion phase would rescan, no mine is made
+         * there: the deleted sequences leave the lookup, the insertion phase runs with the rescan
+         * forced, and the one mine reads the database after the modification. Exact: that mine
+         * is a mine of the whole current database, as the second of the two mines was. JOINT with
+         * tracking by utility only; other rules keep the two phases.
+         */
+        public boolean mergeModification = !"false".equals(System.getProperty("adapt.mergeModification"));
+        private boolean forceRescan = false;
+        private boolean inModification = false;
+
+        /** JOINT's counters at floor r_l, fed the operations a stream at UUT takes. */
+        private final class ShadowJoint {
+            private double[] a = new double[256];
+            private double aMax = 0, ins = 0, del = 0;
+            private final double ref;
+            private int stamp = 1;
+            private int[] seen = new int[256];
+            ShadowJoint(double ref) { this.ref = ref; }
+            boolean insert(List<Sequence> seqs) {
+                for (Sequence s : seqs) {
+                    double u = s.sequenceUtility;
+                    ins += u;
+                    for (QItemset is : s.itemsets) for (QItem it : is.items) {
+                        int id = it.id;
+                        if (id >= a.length) a = java.util.Arrays.copyOf(a, Math.max(id + 1, a.length * 2));
+                        if (id >= seen.length) seen = java.util.Arrays.copyOf(seen, Math.max(id + 1, seen.length * 2));
+                        if (seen[id] == stamp) continue;
+                        seen[id] = stamp;
+                        a[id] += u;
+                        if (a[id] > aMax) aMax = a[id];
+                    }
+                    stamp++;
+                }
+                return triggered();
+            }
+            boolean delete(double u) { del += u; return triggered(); }
+            private boolean triggered() { return aMax - Su * ins + Su * del > (Su - slMinRatioEff * Su) * ref; }
+        }
+
+        /** BREAK_EVEN: the phases of a unit have been fed to the shadow; settle it before the decision. */
+        private void settleShadow() {
+            if (shadow == null) return;
+            if (shadowTriggeredInUnit) { absorptions.add(shadowUnits); shadow = null; }
+            else shadowUnits++;
+            shadowTriggeredInUnit = false;
+        }
+
+        // Units: an insertion, a deletion, or (mergeModification) a modification. The time of a unit
+        // taken directly is the delta of BREAK_EVEN; directSinceLow counts such units.
+        private int unitDepth = 0;
+        private long unitStartNs = 0;
+        private boolean unitRescanned = false;
+
+        private void beginUnit() {
+            if (unitDepth++ == 0) { unitStartNs = System.nanoTime(); unitRescanned = false; mineMs = Double.NaN; }
+        }
+
+        private void endUnit() {
+            if (--unitDepth > 0) return;
+            if (!unitRescanned) {
+                lastDirectNs = System.nanoTime() - unitStartNs;
+                if (directSinceLow >= 0) directSinceLow++;
+            }
+        }
+
+        /** mineWithBudget, timed: the time goes to the floor the mine ran at. */
+        private void timedMine(List<Sequence> db, double uut, double tsuRef) {
+            long t0 = System.nanoTime();
+            mineWithBudget(db, uut, tsuRef);
+            long dt = System.nanoTime() - t0;
+            if (Sl_min >= Su) lastHighMineNs = dt; else lastLowMineNs = dt;
+            mineMs = dt / 1e6;
+            unitRescanned = true;
+        }
+
         private void noteOwnCharge(double ownCharge, double newTotal) {
-            if (floorWindow <= 0) return;
+            if (!selectsFloor()) return;
             if (triggerRule != TriggerRule.JOINT || tracking != Tracking.UTILITY)
                 throw new UnsupportedOperationException("the floor selection is defined under the JOINT rule "
                         + "with tracking by utility, not " + triggerRule + " with " + tracking);
@@ -640,8 +753,26 @@ public class PreHUSPMAdaptiveAlgorithm {
 
         /** At a rescan, once tsuAtLastRescan is the new reference: the floor this rescan mines at. */
         private void selectRescanFloor() {
-            if (floorWindow <= 0) return;
-            boolean high = overLowRun >= floorWindow;
+            if (!selectsFloor()) return;
+            boolean high;
+            if (floorRule == FloorRule.BREAK_EVEN) {
+                if (directSinceLow >= 0) absorptions.add(directSinceLow);
+                if (lastHighMineNs < 0 || lastLowMineNs < 0) {
+                    high = true;
+                } else {
+                    floorRho = (double) lastLowMineNs / lastHighMineNs;
+                    floorDelta = lastDirectNs < 0 ? 0.0 : (double) lastDirectNs / lastHighMineNs;
+                    int n = absorptions.size(), from = Math.max(0, n - breakEvenWindow);
+                    double sum = 0;
+                    for (int i = from; i < n; i++) sum += absorptions.get(i);
+                    floorAbsorption = n == 0 ? 1.0 : sum / (n - from);
+                    high = floorAbsorption < (floorRho - 1) / Math.max(1e-9, 1 - floorDelta);
+                }
+                if (high && shadow == null) { shadow = new ShadowJoint(tsuAtLastRescan); shadowUnits = 0; }
+                directSinceLow = high ? -1 : 0;
+            } else {
+                high = overLowRun >= floorWindow;
+            }
             Sl_min = high ? Su : slMinRatioEff * Su;
             if (high) rescansAtUut++;
         }
@@ -1032,7 +1163,11 @@ public class PreHUSPMAdaptiveAlgorithm {
             cubValue = 0; cubTriggeredRescan = false;
             resetIau();
             insertedSinceRescan = 0; deletedSinceRescan = 0; preBuf = 0;
-            if (floorWindow > 0) { Sl_min = slMinRatioEff * Su; overLowRun = 0; rescansAtUut = 0; }
+            if (selectsFloor()) { Sl_min = slMinRatioEff * Su; overLowRun = 0; rescansAtUut = 0; }
+            lastLowMineNs = lastHighMineNs = lastDirectNs = -1;
+            absorptions.clear(); directSinceLow = -1; shadow = null; shadowUnits = 0; shadowTriggeredInUnit = false;
+            floorRho = floorDelta = floorAbsorption = Double.NaN;
+            unitDepth = 0; forceRescan = false; inModification = false;
             largeMap.clear(); prelargeMap.clear();
             dbClear();
             globalBlockIndex = new BlockIndex();
@@ -1071,7 +1206,8 @@ public class PreHUSPMAdaptiveAlgorithm {
             // pre-large floor (lutDynValue); same unit as cubValue.
             this.sftValue = uut_abs - this.lutDynValue;
 
-            mineWithBudget(dInit, uut_abs, currentTotalUtility);
+            mineMs = Double.NaN;
+            timedMine(dInit, uut_abs, currentTotalUtility);
             this.tsuAtLastRescan = currentTotalUtility; // TSU reference for the safety bounds
         }
 
@@ -1124,6 +1260,11 @@ public class PreHUSPMAdaptiveAlgorithm {
 
         // ================= PHASE 2: INSERTION =================
         public void runIncrementalMining(List<Sequence> deltaD, List<Sequence> dSoFar, double newTotalUtility) {
+            beginUnit();
+            try { insertionPhase(deltaD, dSoFar, newTotalUtility); } finally { endUnit(); }
+        }
+
+        private void insertionPhase(List<Sequence> deltaD, List<Sequence> dSoFar, double newTotalUtility) {
             refuseUnderPeuTracking(null);
             cancelled = false; // clear a cancellation left by an earlier measurement
             // candidateCount is reset every batch: the candidate budget applies per batch,
@@ -1171,9 +1312,12 @@ public class PreHUSPMAdaptiveAlgorithm {
             this.sigmaDSquared = joint ? 0 : calculateVariance(deltaD);
             this.rhoD = (joint || batchTotalUtil == 0) ? 0 : (swuMax / batchTotalUtil);
 
-            if (floorWindow > 0)
+            if (selectsFloor())
                 noteOwnCharge(algorithms.PreHUSPMAlgorithm.PreHUSPMAlgo.maxItemSwu(deltaD) - Su * batchTotalUtil,
                         newTotalUtility);
+            // BREAK_EVEN: feed the shadow; an insertion ends its unit (a modification's too)
+            if (shadow != null) shadowTriggeredInUnit |= shadow.insert(deltaD);
+            settleShadow();
 
             // --- Step 2: test the trigger ---
             // Insertion safety bound of Hong et al.: (UUT - LUT_min)/(1 - UUT) * TSU_ref.
@@ -1193,7 +1337,8 @@ public class PreHUSPMAdaptiveAlgorithm {
                 this.sftValue = safetyBoundF;
             }
             // Adaptive rescan ablation: useAdaptiveRescan=false rescans every batch.
-            this.cubTriggeredRescan = useAdaptiveRescan ? (triggerQuantity > safetyBoundF) : true;
+            this.cubTriggeredRescan = forceRescan || (useAdaptiveRescan ? (triggerQuantity > safetyBoundF) : true);
+            forceRescan = false;
             this.iauMaxAtDecision = triggerQuantity;   // recorded before resetIau() below
 
             // --- Step 3: on rescan, reset the counters before computing Delta ---
@@ -1256,7 +1401,7 @@ public class PreHUSPMAdaptiveAlgorithm {
             if (cubTriggeredRescan) {
                 // Safety bound exceeded: mine the whole current database again.
                 largeMap.clear(); prelargeMap.clear();
-                mineWithBudget(dSoFar, uut_abs, newTotalUtility);
+                timedMine(dSoFar, uut_abs, newTotalUtility);
 
             } else {
                 // Safe: update the large and pre-large patterns directly.
@@ -1315,6 +1460,11 @@ public class PreHUSPMAdaptiveAlgorithm {
          * newTotalUtility = TSU(dAfter). CUB adds u(s) for every deleted sequence.
          */
         public void runDeletion(List<Sequence> deletedSeqs, List<Sequence> dAfter, double newTotalUtility) {
+            beginUnit();
+            try { deletionPhase(deletedSeqs, dAfter, newTotalUtility); } finally { endUnit(); }
+        }
+
+        private void deletionPhase(List<Sequence> deletedSeqs, List<Sequence> dAfter, double newTotalUtility) {
             refuseUnderPreTest("a deletion");
             refuseUnderPeuTracking("a deletion");
             cancelled = false; // clear a cancellation left by an earlier measurement
@@ -1342,6 +1492,9 @@ public class PreHUSPMAdaptiveAlgorithm {
             this.cubValue += deletedTotal;   // perturbation accumulated since the last rescan
             this.deletedSinceRescan += deletedTotal;
             noteOwnCharge(Su * deletedTotal, newTotalUtility);
+            // BREAK_EVEN: feed the shadow; a deletion ends its unit unless it is a merged modification's
+            if (shadow != null) shadowTriggeredInUnit |= shadow.delete(deletedTotal);
+            if (!inModification) settleShadow();
 
             // F_del = (Su - Sl_min)/Su * TSU_lastRescan (deletion bound of Hong et al.).
             double safetyBoundDel = ((Su - Sl_min) / Su) * tsuAtLastRescan;
@@ -1392,7 +1545,7 @@ public class PreHUSPMAdaptiveAlgorithm {
                 largeMap.clear(); prelargeMap.clear();
                 // Remove the deleted sequences from the lookup so mining never reads them.
                 for (Sequence s : deletedSeqs) dbRemove(s.id);
-                mineWithBudget(dAfter, uut_abs, newTotalUtility);
+                timedMine(dAfter, uut_abs, newTotalUtility);
             } else {
                 // Direct update: subtract the utility contributed by the deleted sequences.
                 List<CompactPattern> tracked = new ArrayList<>();
@@ -1437,12 +1590,42 @@ public class PreHUSPMAdaptiveAlgorithm {
             int n = Math.min(oldSeqs.size(), newSeqs.size());
             for (int i = 0; i < n; i++) delta += Math.abs(newSeqs.get(i).sequenceUtility - oldSeqs.get(i).sequenceUtility);
             double cubBefore = this.cubValue;
-            runDeletion(oldSeqs, subtract(dAfter, newSeqs), totalUtilityOf(subtract(dAfter, newSeqs)));
-            runIncrementalMining(newSeqs, dAfter, newTotalUtility);
-            if (!strictModificationBudget) {
-                this.cubValue = cubBefore + delta;   // net-change charge, NOT sound
+            boolean merge = mergeModification && strictModificationBudget
+                    && triggerRule == TriggerRule.JOINT && tracking == Tracking.UTILITY;
+            if (!merge) {
+                runDeletion(oldSeqs, subtract(dAfter, newSeqs), totalUtilityOf(subtract(dAfter, newSeqs)));
+                runIncrementalMining(newSeqs, dAfter, newTotalUtility);
+                if (!strictModificationBudget) {
+                    this.cubValue = cubBefore + delta;   // net-change charge, NOT sound
+                }
+                // cubTriggeredRescan keeps the value set by the insertion phase.
+                return;
             }
-            // cubTriggeredRescan keeps the value set by the insertion phase.
+            beginUnit();
+            inModification = true;
+            try {
+                List<Sequence> mid = subtract(dAfter, newSeqs);
+                double midTotal = totalUtilityOf(mid), del = 0;
+                for (Sequence s : oldSeqs) del += s.sequenceUtility;
+                // the deletion phase's JOINT test, without its side effects
+                boolean deletionRescans = !useAdaptiveRescan || iauMax - Su * insertedSinceRescan
+                        + Su * (deletedSinceRescan + del) > (Su - Sl_min) * tsuAtLastRescan;
+                if (!deletionRescans) {
+                    deletionPhase(oldSeqs, mid, midTotal);      // takes the direct update
+                    insertionPhase(newSeqs, dAfter, newTotalUtility);
+                } else {
+                    // as the deletion phase would, without its mine
+                    noteOwnCharge(Su * del, midTotal);
+                    if (shadow != null) shadowTriggeredInUnit |= shadow.delete(del);
+                    for (Sequence s : oldSeqs) dbRemove(s.id);
+                    forceRescan = true;
+                    insertionPhase(newSeqs, dAfter, newTotalUtility);   // the one mine, on dAfter
+                }
+            } finally {
+                inModification = false;
+                forceRescan = false;
+                endUnit();
+            }
         }
 
         private List<Sequence> subtract(List<Sequence> all, List<Sequence> remove) {

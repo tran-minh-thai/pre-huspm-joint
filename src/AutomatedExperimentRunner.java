@@ -1036,28 +1036,27 @@ public class AutomatedExperimentRunner {
     }
 
     /**
-     * Window w of the rescan floor selection of the method's incremental arm (METHOD)
-     * (PreHUSPMAdaptiveAlgo.floorWindow): a rescan mines at UUT when the last w operations each
-     * exceeded the low budget on their own. Fixed at 5 from the rescan counts the selection gives on
-     * the SC2 streams, computed from the data files before any time was measured
-     * (analysis/insertion_alpha.py --floor-windows); -Dadapt.armFloorWindow overrides it for probes.
+     * The method's incremental arm (METHOD) chooses the floor of each rescan by the break-even rule
+     * (PreHUSPMAdaptiveAlgo.FloorRule.BREAK_EVEN). The window selection (floorWindow = w: a rescan
+     * mines at UUT when the last w operations each exceeded the low budget on their own) is the
+     * comparison, one arm per window: Pre-HUSPM-Joint-w<n>. w = 5 was the method's rule before the
+     * break-even rule. They run only when -Dalgo.only names them, so a run of a whole scenario
+     * measures the arms of the main tables only.
      */
-    static final int FLOOR_WINDOW = Integer.getInteger("adapt.armFloorWindow", 5);
-
-    /**
-     * The other windows of the sensitivity study, one arm each: Pre-HUSPM-Joint-w<n> is
-     * the method with w = n. They run only when -Dalgo.only names them, so a run of a
-     * whole scenario measures the arms of the main tables only.
-     */
-    static final int[] WINDOW_SWEEP = {1, 2, 3, 10};
+    static final int[] WINDOW_SWEEP = {1, 2, 3, 5, 10};
 
     static String windowArm(int w) { return METHOD + "-w" + w; }
 
     /** The window of a floor-selection arm, 0 for any other arm. */
     static int floorWindowOf(String arm) {
-        if (METHOD.equals(arm)) return FLOOR_WINDOW;
         for (int w : WINDOW_SWEEP) if (windowArm(w).equals(arm)) return w;
         return 0;
+    }
+
+    /** Applies the arm's rescan floor rule: break-even for METHOD, the window of a window arm. */
+    static void setFloorRule(PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp, String arm) {
+        if (METHOD.equals(arm)) adp.floorRule = PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.FloorRule.BREAK_EVEN;
+        else if (floorWindowOf(arm) > 0) adp.floorWindow = floorWindowOf(arm);
     }
 
     /** True when -Dalgo.only names the arm; for the arms that a full run leaves out. */
@@ -1161,7 +1160,7 @@ public class AutomatedExperimentRunner {
     /** Replays the plan for one arm. */
     private static void runMixedArm(DatasetConfig ds, List<Sequence> dInit, double initTotalUtil,
                                     List<MixedPlan.Op> plan, ResultCollector col, String arm) throws IOException {
-        final boolean incremental = FIXED_THRESHOLD.equals(arm) || floorWindowOf(arm) > 0 || PLAIN_FLOOR_ARM.equals(arm)
+        final boolean incremental = FIXED_THRESHOLD.equals(arm) || METHOD.equals(arm) || floorWindowOf(arm) > 0 || PLAIN_FLOOR_ARM.equals(arm)
                 || MIN_FLOOR_ARM.equals(arm);
 
         beginMemArm();
@@ -1171,7 +1170,7 @@ public class AutomatedExperimentRunner {
         final PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp = !ownMiner ? null
                 : isOwnRemine(arm) ? newAdaptive(ds.defaultSu, ownRemineRatio(arm, ds.name))
                 : newAdaptive(ds.name, ds.defaultSu);
-        if (floorWindowOf(arm) > 0) adp.floorWindow = floorWindowOf(arm);
+        if (incremental) setFloorRule(adp, arm);
         if (adp != null) adp.floor = floorOf(arm);
         ExperimentMetrics mInit;
         if (ownMiner) {
@@ -1870,7 +1869,7 @@ public class AutomatedExperimentRunner {
 
         // -------- The proposal with the rescan floor selection --------
         if (algoEnabled(METHOD)) runAdaptiveStream(METHOD, null, null,
-                FLOOR_WINDOW, dsName, Su, dInit, batches, col, tag);
+                0, dsName, Su, dInit, batches, col, tag);
         for (int w : WINDOW_SWEEP)
             if (algoNamed(windowArm(w))) runAdaptiveStream(windowArm(w), null, null, w, dsName, Su, dInit,
                     batches, col, tag);
@@ -1895,6 +1894,7 @@ public class AutomatedExperimentRunner {
         if (rule != null) adp.triggerRule = rule;
         if (tracking != null) adp.tracking = tracking;
         if (floorWindow > 0) adp.floorWindow = floorWindow;
+        if (METHOD.equals(label)) setFloorRule(adp, label);
         adp.floor = floorOf(label);
         boolean poisoned = false;
         announce(label, dsName, tag + "_INIT", 0);
@@ -1968,6 +1968,10 @@ public class AutomatedExperimentRunner {
         m.slMinEff      = floorInForce(adp);
         m.rescanRetries = adp.rescanRetries;
         m.rescansAtUut  = adp.rescansAtUut;
+        m.floorRho        = adp.floorRho;
+        m.floorDelta      = adp.floorDelta;
+        m.floorAbsorption = adp.floorAbsorption;
+        m.mineMs          = adp.mineMs;
         m.blockSize     = adp.blockSize;            // the instance's own value, not the default
         // The work counters are not: a run that broke off leaves partial counts, and a
         // partial count in the record is worse than none.
@@ -1992,7 +1996,9 @@ public class AutomatedExperimentRunner {
 
     /** The floor ratio of the tracked set: 1 after a rescan the floor selection mined at UUT, r_l otherwise. */
     private static double floorInForce(PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp) {
-        return adp.floorWindow > 0 && adp.Sl_min >= adp.Su ? 1.0 : adp.slMinRatioEff;
+        boolean selects = adp.floorWindow > 0
+                || adp.floorRule == PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.FloorRule.BREAK_EVEN;
+        return selects && adp.Sl_min >= adp.Su ? 1.0 : adp.slMinRatioEff;
     }
 
     /**

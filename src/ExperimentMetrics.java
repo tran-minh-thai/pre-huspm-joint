@@ -111,6 +111,9 @@ public class ExperimentMetrics {
     public int liveRepeats = 1;
     /** Rescans the floor selection mined at UUT (PreHUSPMAdaptiveAlgo.floorWindow > 0); 0 otherwise. */
     public int rescansAtUut = 0;
+    /** BREAK_EVEN floor rule (PreHUSPMAdaptiveAlgo.floorRule): the ratios its last decision used, and
+     *  the time of the mine this row made, in ms; NaN when they do not apply. */
+    public double floorRho = Double.NaN, floorDelta = Double.NaN, floorAbsorption = Double.NaN, mineMs = Double.NaN;
     /** Bytes allocated by the mining thread, in MB. Deterministic, independent of GC scheduling. */
     public long allocatedMb;
 
@@ -175,6 +178,8 @@ public class ExperimentMetrics {
                 .add(String.valueOf(rescanRetries));
         sj.add(String.valueOf(liveRepeats));     // appended last so earlier columns keep their positions
         sj.add(String.valueOf(rescansAtUut));
+        sj.add(String.valueOf(floorRho)).add(String.valueOf(floorDelta)).add(String.valueOf(floorAbsorption))
+                .add(String.valueOf(mineMs));
         return sj.toString();
     }
 
@@ -189,6 +194,7 @@ public class ExperimentMetrics {
                 "sigma2,rho," +
                 "mem_mode,mem_live_mb,mem_retained_mb,gc_forced,wall_ms_perturbed,allocated_mb," +
                 "seed,repeat,block_size,kappa,delta0,trigger_rule,iau_max,iau_tightness," +
-                "repetition,sl_min_eff,rescan_retries,live_repeats,rescans_at_uut";
+                "repetition,sl_min_eff,rescan_retries,live_repeats,rescans_at_uut," +
+                "floor_rho,floor_delta,floor_absorption,mine_ms";
     }
 }
