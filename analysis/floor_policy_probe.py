@@ -18,8 +18,8 @@ reproduce, increment by increment, the rescans and the rescans at the threshold 
 A database whose replay disagrees is reported and not priced.
 
 Policies priced: the fixed lower threshold, window 5 (the proposal), remining at the threshold after
-every operation, a cost rule, and the offline optimum over floor choices (a lower bound no online
-rule can beat). The cost rule chooses the lower threshold at a rescan only when the mean time per
+every operation, two cost rules, the break-even rule, and the offline optimum over floor choices (a
+lower bound no online rule can beat). The cost rule chooses the lower threshold at a rescan only when the mean time per
 operation of a rescan at the lower threshold, spread over the operations it absorbed on average after
 earlier such rescans, is below the time of a rescan at the threshold; costs are the last observed
 ones at each floor, and one rescan at the threshold is tried at the first rescan so both are known.
@@ -256,6 +256,52 @@ def main():
                 path.append("U" if up else "L")
             return path
         sim_cost2 = run_cost_rule2()
+
+        # Break-even rule: a rescan at the lower threshold costs rho times one at the threshold and
+        # absorbs a operations at delta each (delta = direct / rescan at the threshold), so it is the
+        # cheaper per operation iff a >= (rho - 1) / (1 - delta). rho is the ratio of the last costs
+        # observed at the two floors (the initial mine is at the lower threshold; the first rescan is
+        # at the threshold, so both are known from there on); a is the mean absorption of the last
+        # cycles, real or shadow.
+        def run_break_even(window=5):
+            r = Replay(su, rl, init_total)
+            shadow, shadow_ops = None, 0
+            absorbed = []
+            last_L, last_U = cL[1], None
+            path = []
+            for t, b in enumerate(batches):
+                rescan, _ = r.step(b)
+                if shadow is not None:
+                    if shadow.step(b)[0]:
+                        absorbed.append(shadow_ops)
+                        shadow = None
+                    else:
+                        shadow_ops += 1
+                if not rescan:
+                    path.append("D")
+                    continue
+                k = len(path) - 1
+                while k >= 0 and path[k] == "D":
+                    k -= 1
+                if k >= 0 and path[k] == "L":
+                    absorbed.append(len(path) - 1 - k)
+                if last_U is None:
+                    up = True
+                else:
+                    rho = last_L / last_U
+                    delta = cD / last_U
+                    a_hat = statistics.mean(absorbed[-window:]) if absorbed else 1.0
+                    up = a_hat < (rho - 1) / max(1e-9, 1 - delta)
+                r.rescan(up)
+                if up:
+                    last_U = cU[t + 1]
+                    if shadow is None:
+                        shadow, shadow_ops = Replay(su, rl, r.total), 0
+                else:
+                    last_L = cL[t + 1]
+                path.append("U" if up else "L")
+            return path
+        sim_be = run_break_even()
         sim_U = run_policy(su, rl, init_total, batches, lambda t, path, r: True)
 
         # offline optimum: right after a rescan the counters are zero, so the next rescan depends only on
@@ -298,7 +344,8 @@ def main():
                    measured_proposal_s=round(meas(mf.PROPOSED), 2), priced_window5_s=round(price(sim_w5), 2),
                    measured_fixed_s=round(meas(mf.FIXED), 2), priced_fixed_s=round(price(sim_fixed), 2),
                    measured_remine_uut_s=round(meas("Remine-own-UUT"), 2), priced_always_threshold_s=round(price(sim_U), 2),
-                   priced_cost_rule_s=round(price(sim_cost), 2), priced_cost_rule_shadow_s=round(price(sim_cost2), 2),
+                   priced_cost_rule_s=round(price(sim_cost), 2), priced_cost_rule_shadow_s=round(price(sim_cost2), 2), priced_break_even_s=round(price(sim_be), 2),
+                   break_even_path="".join(sim_be),
                    priced_offline_optimum_s=round(v_opt, 2), cost_rule_shadow_path="".join(sim_cost2),
                    window5_path="".join(sim_w5), cost_rule_path="".join(sim_cost), direct_s=round(cD, 4))
         summary.append(row)
@@ -306,7 +353,7 @@ def main():
               f"Remine-UUT {row['measured_remine_uut_s']} s")
         print(f"  priced:   window 5 {row['priced_window5_s']}, fixed {row['priced_fixed_s']}, at the threshold "
               f"always {row['priced_always_threshold_s']}, cost rule {row['priced_cost_rule_s']}, with shadow "
-              f"{row['priced_cost_rule_shadow_s']}, offline optimum "
+              f"{row['priced_cost_rule_shadow_s']}, break-even {row['priced_break_even_s']}, offline optimum "
               f"{row['priced_offline_optimum_s']}")
     keys = sorted({k for r in summary for k in r}, key=lambda k: list(summary[-1]).index(k) if k in summary[-1] else 99)
     with open(out / "floor_policy.csv", "w", newline="", encoding="utf-8") as f:
