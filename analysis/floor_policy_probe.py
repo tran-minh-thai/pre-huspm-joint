@@ -219,6 +219,8 @@ def evaluate(stream, su, rl):
     def mean_per_op(arm):
         return {int(i): g["runtime_ms"].mean() / 1000 for i, g in rows_of(arm).groupby("iteration")}
     cL, cU = mean_per_op("Remine-from-scratch"), mean_per_op("Remine-own-UUT")
+    nodes = lambda arm: {int(i): g["explored_nodes"].mean() for i, g in rows_of(arm).groupby("iteration")}
+    nL, nU = nodes("Remine-from-scratch"), nodes("Remine-own-UUT")
     fxr = rows_of(mf.FIXED).sort_values(["replicate", "iteration"])
     fxr = fxr.assign(rescanned=fxr.groupby("replicate")["rescan_count"].diff().fillna(fxr["rescan_count"]) > 0)
     direct = fxr[~fxr["rescanned"]]
@@ -234,12 +236,13 @@ def evaluate(stream, su, rl):
         return sum(sum(cD_phase(p) for p in unit) if x == "D" else (cU if x == "U" else cL)[stream.op_of[unit[0]]]
                    for unit, x in zip(units, path))
 
-    def break_even(merge, window=5):
+    def break_even(merge, window=5, dL=None, dU=None):
         units = units_of(stream, merge)
         r = Replay(su, rl, sum(u for u, _ in stream.init))
         shadow, shadow_n = None, 0
         absorbed, path = [], []
-        last_L, last_U = cL[1], None
+        xL, xU = (cL, cU) if dL is None else (dL, dU)
+        last_L, last_U = xL[1], None
         for u, unit in enumerate(units):
             trig = False
             for p in unit:
@@ -264,18 +267,18 @@ def evaluate(stream, su, rl):
             if last_U is None:
                 up = True
             else:
-                d = sum(cD_phase(p) for p in unit)
+                d = sum(cD_phase(p) for p in unit) if dL is None else 0.0
                 rho, delta = last_L / last_U, d / last_U
                 a_hat = statistics.mean(absorbed[-window:]) if absorbed else 1.0
                 up = a_hat < (rho - 1) / max(1e-9, 1 - delta)
             r.rescan(up)
             o = stream.op_of[unit[0]]
             if up:
-                last_U = cU[o]
+                last_U = xU[o]
                 if shadow is None:
                     shadow, shadow_n = Replay(su, rl, r.total), 0
             else:
-                last_L = cL[o]
+                last_L = xL[o]
             path.append("U" if up else "L")
         return path
 
@@ -361,6 +364,7 @@ def evaluate(stream, su, rl):
                measured_remine_uut_s=round(total("Remine-own-UUT"), 3),
                priced_always_threshold_s=round(price(run(stream, su, rl, lambda u, path, r: True), False), 3),
                priced_break_even_s=round(price(break_even(False), False), 3),
+               priced_break_even_nodes_s=round(price(break_even(False, dL=nL, dU=nU), False), 3),
                priced_offline_optimum_s=round(optimum(False), 3),
                priced_window_rule10_s=round(price(window_rule(False, 10), False), 3),
                priced_window_rule20_s=round(price(window_rule(False, 20), False), 3))
@@ -369,6 +373,7 @@ def evaluate(stream, su, rl):
         row.update(priced_window5_merged_s=round(price(run(stream, su, rl, window5, True), True), 3),
                    priced_always_threshold_merged_s=round(price(run(stream, su, rl, lambda u, path, r: True, True), True), 3),
                    priced_break_even_merged_s=round(price(break_even(True), True), 3),
+                   priced_break_even_nodes_merged_s=round(price(break_even(True, dL=nL, dU=nU), True), 3),
                    priced_offline_optimum_merged_s=round(optimum(True), 3),
                    priced_window_rule10_merged_s=round(price(window_rule(True, 10), True), 3),
                    priced_window_rule20_merged_s=round(price(window_rule(True, 20), True), 3))
