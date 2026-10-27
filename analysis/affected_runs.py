@@ -24,6 +24,10 @@ and scenario, with the databases measured there.
 --static-warmup lists instead every static timing run (SC1, SC3 and SC7's arms that mine once),
 for the re-measurement under the static warm-up.
 
+--mixed-family lists instead every run of the proposal's family (the method, the fixed lower threshold,
+the two floors and the window arms) in SC6, SC6D and SC6B: a modification now mines at most once
+(PreHUSPMAdaptiveAlgo.mergeModification), which changes all of them.
+
 --remine lists instead every run of the two remining arms with the proposal's miner
 (Remine-from-scratch, Remine-own-UUT) in the incremental scenarios, timing and memory trees alike:
 they now call runRemine, which does not rebuild what depends on the sequences alone.
@@ -31,6 +35,7 @@ they now call runRemine, which does not rebuild what depends on the sequences al
 import argparse
 import csv
 import pathlib
+import re
 import shutil
 import sys
 from collections import defaultdict
@@ -44,6 +49,9 @@ FLOOR_ARMS = {"Pre-HUSPM-Joint-fixed-threshold", "Pre-HUSPM-Joint", "Pre-HUSPM-J
               "Joint-rule+plain-floor",
               "Pre-HUSPM-Joint-rescan-rule", "Pre-HUSPM-Joint-no-block-index", "Pre-HUSPM-Joint-bsz-1",
               "Pre-HUSPM-Joint-bsz-5", "Pre-HUSPM-Joint-bsz-10", "Pre-HUSPM-Joint-bsz-50", "Pre-HUSPM-Joint-bsz-200"}
+MIXED = {"SC6", "SC6D", "SC6B"}
+FAMILY = {"Pre-HUSPM-Joint", "Pre-HUSPM-Joint-fixed-threshold", "Joint-rule+plain-floor", "Joint-rule+min-floor"}
+WINDOW = re.compile(r"Pre-HUSPM-Joint-w\d+$")
 # the remining arms that run the proposal's miner (runRemine)
 REMINE_ARMS = {"Remine-from-scratch", "Remine-own-UUT"}
 # SC7's arms that mine once (logAblation and the Pre-HUSPM reference)
@@ -97,6 +105,8 @@ def main():
     ap.add_argument("--remove", action="store_true")
     ap.add_argument("--include-no-direct", action="store_true")
     ap.add_argument("--extra-arm", action="append", default=[])
+    ap.add_argument("--mixed-family", action="store_true",
+                    help="list the runs of the proposal's family in SC6, SC6D and SC6B instead")
     ap.add_argument("--remine", action="store_true",
                     help="list the runs of Remine-from-scratch and Remine-own-UUT instead")
     ap.add_argument("--static-warmup", action="store_true",
@@ -109,6 +119,8 @@ def main():
         # (live mode, no warm-up) and incremental arms are kept.
         listed = [r for r in all_runs if not r[0].startswith("campaign-mem")
                   and (r[2] in ("SC1", "SC3") or (r[2] == "SC7" and r[4] in SC7_STATIC))]
+    elif a.mixed_family:
+        listed = [r for r in all_runs if r[2] in MIXED and (r[4] in FAMILY or WINDOW.match(r[4]))]
     elif a.remine:
         listed = [r for r in all_runs if r[2] in INCREMENTAL and r[4] in REMINE_ARMS]
     else:
@@ -119,7 +131,7 @@ def main():
         have = {(t, s, sc, ds) for t, s, sc, ds, arm, _ in all_runs if arm == new}
         extra += [(t, s, sc, ds, new, None) for t, s, sc, ds, arm, _ in all_runs
                   if arm == like and (t, s, sc, ds) not in have]
-    no_direct = [] if a.static_warmup or a.remine else [r for r in listed if not has_direct_update(r[5])]
+    no_direct = [] if a.static_warmup or a.remine or a.mixed_family else [r for r in listed if not has_direct_update(r[5])]
     if not a.include_no_direct:
         listed = [r for r in listed if r not in no_direct]
     groups = defaultdict(lambda: defaultdict(set))

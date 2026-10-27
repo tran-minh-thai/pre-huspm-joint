@@ -12,9 +12,13 @@ in sequences that contain item `i`). The database is mined again only when
     max_i A_i - UUT * U+ + UUT * U-  >  (UUT - lambda) * TU_ref
 
 Otherwise every tracked pattern is updated directly. One budget covers insertions and
-deletions together. In the incremental scenarios a rescan mines at `lambda = UUT` when
-each of the last `w = 5` batches exceeded the low budget on its own, and at
-`lambda = LUT_min` otherwise. The reported set is exact for either choice.
+deletions together. In the incremental scenarios a rescan chooses `lambda` by a break-even
+rule: it mines at `lambda = UUT` when the recent number of operations a mine
+at `LUT_min` absorbs is below `(rho - 1) / (1 - delta)`, with `rho` and
+`delta` the measured costs of the last mine at `LUT_min` and of the last
+direct update relative to the last mine at UUT, and at `lambda = LUT_min`
+otherwise. A modification mines at most once. The reported set is exact for
+either choice.
 
 The repository holds the method, five baselines, the experiment harness, the correctness
 checks and every measured result.
@@ -70,7 +74,8 @@ any JVM other than the one pinned in `environment.lock.json`.
 - `Pre-HUSPM-Joint` is the method: the static mine in SC1, SC3, SC4 and SC7's static ablations, the
   maintenance with the rescan threshold selection in SC2, SC5 and SC6*.
 - `Pre-HUSPM-Joint-fixed-threshold` is the method at the fixed lower threshold `r_l` (SC2, SC5, SC6*).
-- `Pre-HUSPM-Joint-w<n>` are the other windows of the selection, `Pre-HUSPM-Joint-*` in SC7 the ablations.
+- `Pre-HUSPM-Joint-w<n>` choose the floor by a window rule instead (UUT when the last `n` operations
+  each exceeded the low budget); `-w5` is the comparison arm, `Pre-HUSPM-Joint-*` in SC7 the ablations.
 - The historical names (`Adaptive-Full`, `Adaptive-FloorSelect`, `proposed_*`) are mapped in
   `docs/arm-names.md`.
 - The other arms are the baselines and controls:
@@ -120,7 +125,8 @@ with `DIR`.
 | `UUT` (threshold ratio) | per database, below | `src/common/Datasets.java` |
 | `r_l` (`LUT_min = r_l * UUT`) | 0.80 on every database | `Datasets.java` |
 | rescan rule | `joint` | `-Dadapt.trigger` |
-| rescan floor window `w` | 5 for `Pre-HUSPM-Joint` in the incremental scenarios (`Pre-HUSPM-Joint-w<n>`: n = 1, 2, 3, 10); 0 (fixed floor) otherwise | `-Dadapt.armFloorWindow`, `-Dadapt.floorWindow` |
+| rescan floor rule | break-even for `Pre-HUSPM-Joint` in the incremental scenarios, over the last 5 absorptions; window `w = n` for `Pre-HUSPM-Joint-w<n>` (n = 1, 2, 3, 5, 10); fixed floor otherwise | `-Dadapt.floorRule`, `-Dadapt.breakEvenWindow`, `-Dadapt.floorWindow` |
+| modification | one unit, mines at most once | `-Dadapt.mergeModification` |
 | irrelevant item pruning | `once` per node | `-Dadapt.iip` |
 | batches `K` | 100 (SC5: 100, 67, 50, 25) | `-Dbatch.count` |
 | block size | 100 sequences, never across two batches | `-Dblock.size` |

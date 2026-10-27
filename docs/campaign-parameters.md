@@ -83,6 +83,6 @@ after each increment.
 | SC5 | 27 | `Pre-HUSPM-Joint-fixed-threshold`, `Pre-HUSPM-Joint`, `Pre-HUSPM-SWUmax`, `Pre-HUSPM-TSU`, `Remine-from-scratch`, `Remine-own-UUT`, `Remine-HUSP-ULL`, `Remine-HUSP-SP`, `IncUSP-Miner+` on the same three |
 | SC6, SC6D, SC6B | 24 each, 32 in SC6 | `Pre-HUSPM-Joint-fixed-threshold`, `Pre-HUSPM-Joint`, `Remine-from-scratch`, `Remine-own-UUT`, `Remine-HUSP-ULL`, `Remine-HUSP-SP` on the same three and TAFENG; `Joint-rule+min-floor` and `Joint-rule+plain-floor` in SC6 |
 | SC7 | 44 | `Pre-HUSPM-Joint`, `Pre-HUSPM-Joint-no-IUB`, `Pre-HUSPM-Joint-no-IPS`, `Pre-HUSPM` on seven databases; `Pre-HUSPM-Joint-rescan-rule`, `Pre-HUSPM-Joint-rescan-every-batch`, `Pre-HUSPM-Joint-no-block-index` and the block sizes `Pre-HUSPM-Joint-bsz-1`, `_5`, `_10`, `_50`, `_200` on SIGN and C8T1S5I8N5K |
-| window sweep (`-WindowSweep`) | 28 in SC2, 12 in SC5 and in each mixed stream | `Pre-HUSPM-Joint-w1`, `-w2`, `-w3`, `-w10` |
+| window sweep (`-WindowSweep`) | 35 in SC2, 15 in SC5, 20 in each mixed stream (four databases) | `Pre-HUSPM-Joint-w1`, `-w2`, `-w3`, `-w5`, `-w10` |
 | SC1, live memory | 48 | as SC1 |
 | SC2, live memory | 42 | `Pre-HUSPM-Joint-fixed-threshold`, `Pre-HUSPM-Joint`, `Pre-HUSPM-SWUmax`, `Pre-HUSPM-TSU`, `Remine-from-scratch`, `IncUSP-Miner+` on seven databases |

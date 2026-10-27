@@ -7,7 +7,7 @@ table below and checks that every rewritten file maps back to its original bytes
 
 | scenario | old name | new name | role |
 |---|---|---|---|
-| SC2, SC5, SC6, SC6D, SC6B | `Adaptive-FloorSelect` | `Pre-HUSPM-Joint` | the method: maintenance with the rescan threshold selection, window 5 |
+| SC2, SC5, SC6, SC6D, SC6B | `Adaptive-FloorSelect` | `Pre-HUSPM-Joint` | the method: maintenance with the rescan threshold selection, window 5, up to the break-even floor rule; the runs measured under that rule were renamed `Pre-HUSPM-Joint-w5` in SC2 and SC5 (`analysis/rename_to_window5.py`) |
 | SC2, SC5, SC6, SC6D, SC6B | `Adaptive-FloorSelect-w<n>` | `Pre-HUSPM-Joint-w<n>` | the selection with window n (sensitivity study) |
 | SC2, SC5, SC6, SC6D, SC6B | `Adaptive-Full` | `Pre-HUSPM-Joint-fixed-threshold` | the method at the fixed lower threshold, an ablation row |
 | SC1, SC3, SC4 | `Adaptive-Full` | `Pre-HUSPM-Joint` | the method's static mine |

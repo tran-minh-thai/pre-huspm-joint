@@ -140,7 +140,7 @@ function Test-Arm($d, $a) {
     return $true
 }
 
-$windowArms = @('Pre-HUSPM-Joint-w1','Pre-HUSPM-Joint-w2','Pre-HUSPM-Joint-w3','Pre-HUSPM-Joint-w10')
+$windowArms = @('Pre-HUSPM-Joint-w1','Pre-HUSPM-Joint-w2','Pre-HUSPM-Joint-w3','Pre-HUSPM-Joint-w5','Pre-HUSPM-Joint-w10')
 if ($WindowSweep) {
     if (@('SC2','SC5','SC6','SC6D','SC6B') -notcontains $Scenario) {
         throw "-WindowSweep applies to SC2, SC5, SC6, SC6D and SC6B, not $Scenario."
