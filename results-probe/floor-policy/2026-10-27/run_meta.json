@@ -1,0 +1,16 @@
+{
+  "command": "~/.venvs/pre-huspm-adaptive/bin/python analysis/floor_policy_probe.py --out results-probe/floor-policy/2026-10-27",
+  "path_substitutions": 1,
+  "build_dir": "build-probe",
+  "git_commit": "14f2ff03b39dea62187d7a70176d01968ddeeb02",
+  "tree": "clean",
+  "source_sha256": "4655c907c2144ceea439c553db74153a0f845155353f4647dbe7fdcae3cc7479",
+  "source_files": 41,
+  "java": "openjdk version \"26.0.1\" 2026-04-21",
+  "os": "Darwin 27.0.0 (macOS-27.0.1-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-10-27T09:21:46",
+  "end": "2026-10-27T09:21:58",
+  "exit_code": 0
+}
