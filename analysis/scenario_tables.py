@@ -1746,13 +1746,13 @@ def sc7_static_runtime(put, t7):
 
 
 # ------------------------------------------------------------------------------ window study
-# The rescan floor selection at w in mf.WINDOWS: the arm Pre-HUSPM-Joint is w = 5 (the
-# method, P), Pre-HUSPM-Joint-w<n> the others; the fixed floor (FIXED) is the reference.
+# The rescan floor selection by the window rule at w in mf.WINDOWS, one arm Pre-HUSPM-Joint-w<n> each
+# (w = 5 was the method's rule before the break-even rule); the fixed floor (FIXED) is the reference.
 WIN_ORDER = ["SIGN", "TAFENG", "C8T1S5I8N5K", "BIBLE", "LEVIATHAN", "FIFA", "KOSARAK"]   # as table_SC2_time
 
 
 def _is_window(a):
-    return a == P or bool(mf.WINDOW_ARM.match(a))
+    return bool(mf.WINDOW_ARM.match(a))
 
 
 def _side(x, y):

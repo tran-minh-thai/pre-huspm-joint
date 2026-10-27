@@ -142,15 +142,16 @@ INC_FIG_ORDER = INC_ORDER[:-1] + ["Remine-own-UUT", PROPOSED]
 # docs/arm-names.md).
 FIXED = PROPOSED + "-fixed-threshold"
 METHOD_SCENARIOS = {"SC2", "SC5", "SC6", "SC6D", "SC6B"}
-# The window sensitivity arms (Pre-HUSPM-Joint-w<n>, n != 5): read only by the window study,
-# never by the main tables and figures, where they would count as competitors.
+# The window arms (Pre-HUSPM-Joint-w<n>): the rescan floor chosen by the window rule, the method's rule
+# before the break-even rule (w = 5). Read only by the window study, never by the main tables and
+# figures, where they would count as competitors.
 WINDOW_ARM = re.compile(r"^Pre-HUSPM-Joint-w\d+$")
 WINDOWS = (1, 2, 3, 5, 10)
 
 
 def window_arm(w):
-    """The arm of window w as the loader names it: w = 5 is the method in METHOD_SCENARIOS."""
-    return PROPOSED if w == 5 else f"{PROPOSED}-w{w}"
+    """The arm of window w."""
+    return f"{PROPOSED}-w{w}"
 PROPOSED_LABEL = "Pre-HUSPM-Joint"
 ALGO_LABEL = {
     "USpan": "USpan", "HUSP-ULL": "HUSP-ULL", "HUSP-SP": "HUSP-SP",
