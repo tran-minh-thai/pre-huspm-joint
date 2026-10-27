@@ -1,0 +1,21 @@
+SIGN: replay agrees with the measured decisions on 100/100 increments (window 5) and 100/100 (fixed lower threshold)
+  measured: proposal 9.43 s, fixed 9.69 s, Remine-UUT 10.76 s
+  priced:   window 5 9.93, fixed 10.2, at the threshold always 10.76, cost rule 9.4, with shadow 10.76, break-even 9.39, offline optimum 8.89
+TAFENG: replay agrees with the measured decisions on 100/100 increments (window 5) and 100/100 (fixed lower threshold)
+  measured: proposal 5.92 s, fixed 5.93 s, Remine-UUT 10.37 s
+  priced:   window 5 5.93, fixed 5.94, at the threshold always 10.23, cost rule 6.02, with shadow 6.02, break-even 6.02, offline optimum 5.73
+C8T1S5I8N5K: replay agrees with the measured decisions on 100/100 increments (window 5) and 100/100 (fixed lower threshold)
+  measured: proposal 8.94 s, fixed 9.03 s, Remine-UUT 5.9 s
+  priced:   window 5 8.77, fixed 8.95, at the threshold always 5.9, cost rule 5.99, with shadow 5.9, break-even 5.9, offline optimum 5.77
+BIBLE: replay agrees with the measured decisions on 100/100 increments (window 5) and 100/100 (fixed lower threshold)
+  measured: proposal 52.52 s, fixed 54.5 s, Remine-UUT 67.84 s
+  priced:   window 5 53.55, fixed 55.4, at the threshold always 67.84, cost rule 67.77, with shadow 54.78, break-even 54.37, offline optimum 50.36
+LEVIATHAN: replay agrees with the measured decisions on 100/100 increments (window 5) and 100/100 (fixed lower threshold)
+  measured: proposal 28.03 s, fixed 35.23 s, Remine-UUT 26.33 s
+  priced:   window 5 27.74, fixed 35.29, at the threshold always 26.33, cost rule 26.64, with shadow 26.33, break-even 26.55, offline optimum 25.91
+FIFA: replay agrees with the measured decisions on 100/100 increments (window 5) and 100/100 (fixed lower threshold)
+  measured: proposal 176.14 s, fixed 178.01 s, Remine-UUT 320.77 s
+  priced:   window 5 180.88, fixed 180.88, at the threshold always 318.63, cost rule 182.58, with shadow 182.8, break-even 182.8, offline optimum 176.72
+KOSARAK: replay agrees with the measured decisions on 100/100 increments (window 5) and 100/100 (fixed lower threshold)
+  measured: proposal 278.41 s, fixed 626.12 s, Remine-UUT 281.02 s
+  priced:   window 5 281.26, fixed 628.66, at the threshold always 281.02, cost rule 288.2, with shadow 281.69, break-even 288.04, offline optimum 281.02
