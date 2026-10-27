@@ -1,0 +1,4 @@
+Fault injection into analysis/check_break_even.py (sha256 0f4132fac024e00d), same inputs as console.txt.
+Each line: the replaced expression, then the check's summary on the injected copy.
+'a_log < (rho - 1)' -> 'a_log > (rho - 1)': streams: 60; break-even decisions checked: 982; failing: 922
+'statistics.mean(absorbed[-window:])' -> 'statistics.mean(absorbed[-(window+1):])': streams: 60; break-even decisions checked: 982; failing: 434

@@ -1,0 +1,191 @@
+
+=== SIGN | UUT=0.065911 | r_l=0.80 | rule=JOINT | 16 operations | budget share 1/6 ===
+  target after 0 rescans: <26 117 132 144 245 253> u=47341.0 (L_r=47350.9)
+  op  1 delete n=13    path=direct after=init          ref=474 got=474 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  2 insert n=1     path=direct after=delete/direct ref=485 got=485 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  3 modify n=1     path=direct after=insert/direct ref=487 got=487 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  4 insert n=1     path=rescan after=modify/direct ref=485 got=485 missing=0 extra=0 maxUtilGap=0.000000  OK
+  target after 1 rescans: <26 117 139 143 245> u=57674.0 (L_r=46141.8)
+  op  5 delete n=12    path=rescan after=insert/rescan ref=512 got=512 missing=0 extra=0 maxUtilGap=0.000000  OK
+  target after 2 rescans: <1 132 143 144 245 253> u=55728.0 (L_r=44593.3)
+  op  6 insert n=1     path=rescan after=delete/rescan ref=509 got=509 missing=0 extra=0 maxUtilGap=0.000000  OK
+  target after 3 rescans: <9 27 245> u=55876.0 (L_r=44712.7)
+  op  7 modify n=1     path=rescan after=insert/rescan ref=523 got=523 missing=0 extra=0 maxUtilGap=0.000000  OK
+  target after 4 rescans: <27 117 139 143 245> u=55840.0 (L_r=44763.6)
+  op  8 insert n=2     path=rescan after=modify/rescan ref=514 got=514 missing=0 extra=0 maxUtilGap=0.000000  OK
+  target after 5 rescans: <36 132 143 144 245 253> u=45044.0 (L_r=45046.5)
+  op  9 delete n=11    path=direct after=insert/rescan ref=519 got=519 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 10 insert n=1     path=direct after=delete/direct ref=513 got=513 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 11 modify n=1     path=direct after=insert/direct ref=500 got=500 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 12 insert n=1     path=direct after=modify/direct ref=499 got=499 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 13 delete n=14    path=rescan after=insert/direct ref=536 got=536 missing=0 extra=0 maxUtilGap=0.000000  OK
+  target after 6 rescans: <18 27 143 144 245 253> u=42285.0 (L_r=42285.4)
+  op 14 insert n=1     path=direct after=delete/rescan ref=570 got=570 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 15 modify n=1     path=direct after=insert/direct ref=584 got=584 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 16 insert n=2     path=direct after=modify/direct ref=582 got=582 missing=0 extra=0 maxUtilGap=0.000000  OK
+
+=== LEVIATHAN | UUT=0.015530 | r_l=0.80 | rule=JOINT | 16 operations | budget share 1/6 ===
+  target after 0 rescans: <18 17 40> u=63329.0 (L_r=63456.5)
+  op  1 delete n=112   path=direct after=init          ref=109 got=109 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  2 insert n=2     path=direct after=delete/direct ref=109 got=109 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  3 modify n=2     path=direct after=insert/direct ref=111 got=111 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  4 insert n=1     path=direct after=modify/direct ref=112 got=112 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  5 delete n=102   path=direct after=insert/direct ref=117 got=117 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  6 insert n=2     path=rescan after=delete/direct ref=117 got=117 missing=0 extra=0 maxUtilGap=0.000000  OK
+  target after 1 rescans: <18 8 18 8 18> u=73818.0 (L_r=59273.1)
+  op  7 modify n=2     path=rescan after=insert/rescan ref=117 got=117 missing=0 extra=0 maxUtilGap=0.000000  OK
+  target after 2 rescans: <29 18 8 18> u=59253.0 (L_r=59279.6)
+  op  8 insert n=2     path=direct after=modify/rescan ref=117 got=117 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  9 delete n=117   path=direct after=insert/direct ref=121 got=121 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 10 insert n=2     path=direct after=delete/direct ref=122 got=122 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 11 modify n=1     path=direct after=insert/direct ref=122 got=122 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 12 insert n=2     path=rescan after=modify/direct ref=122 got=122 missing=0 extra=0 maxUtilGap=0.000000  OK
+  target after 3 rescans: <8 8 18 40> u=57469.0 (L_r=57481.5)
+  op 13 delete n=92    path=direct after=insert/rescan ref=125 got=125 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 14 insert n=1     path=direct after=delete/direct ref=125 got=125 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 15 modify n=1     path=direct after=insert/direct ref=125 got=125 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 16 insert n=1     path=direct after=modify/direct ref=125 got=125 missing=0 extra=0 maxUtilGap=0.000000  OK
+
+=== BIBLE | UUT=0.022895 | r_l=0.80 | rule=JOINT | 16 operations | budget share 1/6 ===
+  target after 0 rescans: <356 10 46 125> u=338099.0 (L_r=338147.3)
+  op  1 delete n=674   path=direct after=init          ref=238 got=238 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  2 insert n=10    path=direct after=delete/direct ref=236 got=236 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  3 modify n=10    path=direct after=insert/direct ref=236 got=236 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  4 insert n=12    path=direct after=modify/direct ref=236 got=236 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  5 delete n=613   path=direct after=insert/direct ref=245 got=245 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  6 insert n=15    path=rescan after=delete/direct ref=245 got=245 missing=0 extra=0 maxUtilGap=0.000000  OK
+  target after 1 rescans: <356 10 125> u=395480.0 (L_r=316464.6)
+  op  7 modify n=10    path=rescan after=insert/rescan ref=245 got=245 missing=0 extra=0 maxUtilGap=0.000000  OK
+  target after 2 rescans: <10 46 10 31 31> u=316405.0 (L_r=316563.3)
+  op  8 insert n=18    path=direct after=modify/rescan ref=245 got=245 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  9 delete n=702   path=direct after=insert/direct ref=266 got=266 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 10 insert n=16    path=direct after=delete/direct ref=266 got=266 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 11 modify n=17    path=direct after=insert/direct ref=265 got=265 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 12 insert n=14    path=direct after=modify/direct ref=265 got=265 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 13 delete n=701   path=rescan after=insert/direct ref=284 got=284 missing=0 extra=0 maxUtilGap=0.000000  OK
+  target after 3 rescans: <356 10 46 10 46 10 10 10> u=296197.0 (L_r=296210.3)
+  op 14 insert n=14    path=direct after=delete/rescan ref=282 got=282 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 15 modify n=20    path=direct after=insert/direct ref=282 got=282 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 16 insert n=20    path=direct after=modify/direct ref=282 got=282 missing=0 extra=0 maxUtilGap=0.000000  OK
+
+=== BMS1 | UUT=0.013597 | r_l=0.80 | rule=JOINT | 16 operations | budget share 1/6 ===
+  target after 0 rescans: <34885> u=36294.0 (L_r=36809.5)
+  op  1 delete n=971   path=direct after=init          ref=22 got=22 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  2 insert n=6     path=direct after=delete/direct ref=22 got=22 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  3 modify n=3     path=direct after=insert/direct ref=22 got=22 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  4 insert n=6     path=rescan after=modify/direct ref=22 got=22 missing=0 extra=0 maxUtilGap=0.000000  OK
+  target after 1 rescans: <10311 10315> u=44191.0 (L_r=35657.4)
+  op  5 delete n=1020  path=rescan after=insert/rescan ref=23 got=23 missing=0 extra=0 maxUtilGap=0.000000  OK
+  target after 2 rescans: <12739> u=41440.0 (L_r=34466.2)
+  op  6 insert n=2     path=rescan after=delete/rescan ref=23 got=23 missing=0 extra=0 maxUtilGap=0.000000  OK
+  target after 3 rescans: <32201> u=34102.0 (L_r=34482.3)
+  op  7 modify n=6     path=direct after=insert/rescan ref=23 got=23 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  8 insert n=5     path=direct after=modify/direct ref=23 got=23 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  9 delete n=979   path=direct after=insert/direct ref=23 got=23 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 10 insert n=4     path=direct after=delete/direct ref=23 got=23 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 11 modify n=5     path=direct after=insert/direct ref=23 got=23 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 12 insert n=2     path=rescan after=modify/direct ref=23 got=23 missing=0 extra=0 maxUtilGap=0.000000  OK
+  target after 4 rescans: <12879> u=32984.0 (L_r=33417.9)
+  op 13 delete n=910   path=direct after=insert/rescan ref=23 got=23 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 14 insert n=8     path=direct after=delete/direct ref=23 got=23 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 15 modify n=4     path=direct after=insert/direct ref=23 got=23 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 16 insert n=4     path=direct after=modify/direct ref=23 got=23 missing=0 extra=0 maxUtilGap=0.000000  OK
+
+=== FIFA | UUT=0.059637 | r_l=0.80 | rule=JOINT | 16 operations | budget share 1/6 ===
+  target after 0 rescans: <147 90> u=1032268.0 (L_r=1032276.7)
+  op  1 delete n=510   path=direct after=init          ref=29 got=29 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  2 insert n=13    path=direct after=delete/direct ref=30 got=30 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  3 modify n=14    path=direct after=insert/direct ref=31 got=31 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  4 insert n=12    path=direct after=modify/direct ref=31 got=31 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  5 delete n=531   path=direct after=insert/direct ref=43 got=43 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  6 insert n=17    path=rescan after=delete/direct ref=44 got=44 missing=0 extra=0 maxUtilGap=0.000000  OK
+  target after 1 rescans: <2 31 68> u=1212645.0 (L_r=971570.2)
+  op  7 modify n=16    path=rescan after=insert/rescan ref=46 got=46 missing=0 extra=0 maxUtilGap=0.000000  OK
+  target after 2 rescans: <46 15 155 2 31> u=972276.0 (L_r=972387.0)
+  op  8 insert n=14    path=direct after=modify/rescan ref=47 got=47 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  9 delete n=364   path=direct after=insert/direct ref=59 got=59 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 10 insert n=10    path=direct after=delete/direct ref=60 got=60 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 11 modify n=10    path=direct after=insert/direct ref=63 got=63 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 12 insert n=12    path=direct after=modify/direct ref=64 got=64 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 13 delete n=404   path=rescan after=insert/direct ref=90 got=90 missing=0 extra=0 maxUtilGap=0.000000  OK
+  target after 3 rescans: <17 2 90 57> u=915375.0 (L_r=915415.5)
+  op 14 insert n=12    path=direct after=delete/rescan ref=93 got=93 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 15 modify n=11    path=direct after=insert/direct ref=98 got=98 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 16 insert n=11    path=direct after=modify/direct ref=97 got=97 missing=0 extra=0 maxUtilGap=0.000000  OK
+
+=== KOSARAK | UUT=0.025000 | r_l=0.80 | rule=JOINT | 16 operations | budget share 1/6 ===
+  target after 0 rescans: <11 6 3 64> u=3762982.0 (L_r=3870842.5)
+  op  1 delete n=17560 path=direct after=init          ref=9 got=9 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  2 insert n=69    path=direct after=delete/direct ref=9 got=9 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  3 modify n=73    path=direct after=insert/direct ref=9 got=9 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  4 insert n=78    path=direct after=modify/direct ref=9 got=9 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  5 delete n=17458 path=direct after=insert/direct ref=9 got=9 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  6 insert n=88    path=rescan after=delete/direct ref=9 got=9 missing=0 extra=0 maxUtilGap=0.000000  OK
+  target after 1 rescans: <1 64> u=4385447.0 (L_r=3625859.6)
+  op  7 modify n=42    path=rescan after=insert/rescan ref=9 got=9 missing=0 extra=0 maxUtilGap=0.000000  OK
+  target after 2 rescans: <1 64> u=4413087.0 (L_r=3628743.7)
+  op  8 insert n=58    path=rescan after=modify/rescan ref=9 got=9 missing=0 extra=0 maxUtilGap=0.000000  OK
+  target after 3 rescans: <1 64> u=4450734.0 (L_r=3631924.8)
+  op  9 delete n=17116 path=rescan after=insert/rescan ref=10 got=10 missing=0 extra=0 maxUtilGap=0.000000  OK
+  target after 4 rescans: <1 6 64> u=4180870.0 (L_r=3510856.5)
+  op 10 insert n=40    path=rescan after=delete/rescan ref=10 got=10 missing=0 extra=0 maxUtilGap=0.000000  OK
+  target after 5 rescans: <1 6 64> u=4207505.0 (L_r=3513859.2)
+  op 11 modify n=55    path=rescan after=insert/rescan ref=10 got=10 missing=0 extra=0 maxUtilGap=0.000000  OK
+  target after 6 rescans: <1 6 64> u=4237400.0 (L_r=3516649.4)
+  op 12 insert n=42    path=rescan after=modify/rescan ref=10 got=10 missing=0 extra=0 maxUtilGap=0.000000  OK
+  target after 7 rescans: <218 6 64> u=3241647.0 (L_r=3519745.4)
+  op 13 delete n=16703 path=direct after=insert/rescan ref=10 got=10 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 14 insert n=61    path=direct after=delete/direct ref=10 got=10 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 15 modify n=46    path=direct after=insert/direct ref=10 got=10 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 16 insert n=38    path=direct after=modify/direct ref=10 got=10 missing=0 extra=0 maxUtilGap=0.000000  OK
+
+=== C8T1S5I8N5K | UUT=0.001132 | r_l=0.80 | rule=JOINT | 16 operations | budget share 1/6 ===
+  target after 0 rescans: <(6352 12784 14528 20020 27243 29424 31075 32810 43496)> u=21498.0 (L_r=21498.2)
+  op  1 delete n=806   path=direct after=init          ref=7150 got=7150 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  2 insert n=1     path=direct after=delete/direct ref=7754 got=7754 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  3 modify n=1     path=rescan after=insert/direct ref=8583 got=8583 missing=0 extra=0 maxUtilGap=0.000000  OK
+  target after 1 rescans: <(11870 13282 14864 23153 42190 50075 67533)> u=25982.0 (L_r=20785.7)
+  op  4 insert n=1     path=rescan after=modify/rescan ref=8842 got=8842 missing=0 extra=0 maxUtilGap=0.000000  OK
+  target after 2 rescans: <(11325 12784 15636 20020 29424 32810 34884 42667 43496)> u=25984.0 (L_r=20787.7)
+  op  5 delete n=792   path=rescan after=insert/rescan ref=9240 got=9240 missing=0 extra=0 maxUtilGap=0.000000  OK
+  target after 3 rescans: <(6352 14528 20020 29424 32810 34884 42667 43496 55826)> u=25117.0 (L_r=20094.3)
+  op  6 insert n=1     path=rescan after=delete/rescan ref=11048 got=11048 missing=0 extra=0 maxUtilGap=0.000000  OK
+  target after 4 rescans: <(12784 15636 20020 27243 29424 42667 55570 55826)> u=20098.0 (L_r=20098.0)
+  op  7 modify n=1     path=direct after=insert/rescan ref=12920 got=12920 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  8 insert n=1     path=rescan after=modify/direct ref=14963 got=14963 missing=0 extra=0 maxUtilGap=0.000000  OK
+  target after 5 rescans: <(23303 24473 24994 41972 52995 66549 68240) (12964 30636 32771 37182 46407 49375 58699 59742 63390 65527)> u=20102.0 (L_r=20102.1)
+  op  9 delete n=762   path=direct after=insert/rescan ref=14112 got=14112 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 10 insert n=1     path=direct after=delete/direct ref=14122 got=14122 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 11 modify n=1     path=direct after=insert/direct ref=14127 got=14127 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 12 insert n=1     path=rescan after=modify/direct ref=14212 got=14212 missing=0 extra=0 maxUtilGap=0.000000  OK
+  no target: the reference mine ran out of heap
+  target after 6 rescans: <> u=0.0 (L_r=19434.6)
+  op 13 delete n=714   path=direct after=insert/rescan ref=13971 got=13971 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 14 insert n=2     path=direct after=delete/direct ref=13959 got=13959 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 15 modify n=1     path=direct after=insert/direct ref=13966 got=13966 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 16 insert n=1     path=direct after=modify/direct ref=13958 got=13958 missing=0 extra=0 maxUtilGap=0.000000  OK
+
+=== TAFENG | UUT=0.003557 | r_l=0.80 | rule=JOINT | 16 operations | budget share 1/6 ===
+  no target: the reference mine ran out of heap
+  target after 0 rescans: <> u=0.0 (L_r=158443.4)
+  op  1 delete n=1070  path=direct after=init          ref=6 got=6 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  2 insert n=3     path=direct after=delete/direct ref=6 got=6 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  3 modify n=3     path=direct after=insert/direct ref=6 got=6 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  4 insert n=3     path=direct after=modify/direct ref=6 got=6 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  5 delete n=928   path=direct after=insert/direct ref=6 got=6 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  6 insert n=3     path=direct after=delete/direct ref=6 got=6 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  7 modify n=2     path=direct after=insert/direct ref=6 got=6 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  8 insert n=3     path=direct after=modify/direct ref=6 got=6 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op  9 delete n=823   path=direct after=insert/direct ref=4 got=4 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 10 insert n=8     path=direct after=delete/direct ref=4 got=4 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 11 modify n=4     path=direct after=insert/direct ref=4 got=4 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 12 insert n=6     path=direct after=modify/direct ref=4 got=4 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 13 delete n=927   path=direct after=insert/direct ref=4 got=4 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 14 insert n=3     path=direct after=delete/direct ref=4 got=4 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 15 modify n=3     path=direct after=insert/direct ref=4 got=4 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 16 insert n=1     path=direct after=modify/direct ref=4 got=4 missing=0 extra=0 maxUtilGap=0.000000  OK
+
+operations by kind/path: {delete/direct=25, delete/rescan=7, insert/direct=46, insert/direct after direct delete=21, insert/direct after direct modify=19, insert/rescan=18, modify/direct=25, modify/rescan=7, rescan mined at UUT=18}
+databases stopped by the heap: 0
+mismatching operations: 0
+verification.csv -> results/verify-joint/break-even-adversarial/verification.csv
