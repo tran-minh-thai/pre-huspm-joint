@@ -480,6 +480,22 @@ def evaluate(stream, su, rl, be_window=5):
             if W == 5:
                 agree = sum(a == b for a, b in zip(per_op(path, stream, merged), m_be))
                 row["cold_w5_agrees_with_measured"] = f"{agree}/{len(m_be)}"
+    # The rule by explored nodes (the method from 0a56c546): rho from the node counts of the mines,
+    # which remining at the same floor reports exactly, the first from the initial mine; delta 0.
+    ir = stream.init_rows
+    n0 = (ir[(ir["algorithm"] == mf.PROPOSED) & (ir["replicate"] == rep)]["explored_nodes"] if ir is not None
+          else pd.Series(dtype=float))
+    if len(n0) and n0.notna().all():
+        path = break_even(merged, window=be_window, dL=nL, dU=nU, init_low=float(n0.iloc[0]))
+        row["priced_break_even_by_nodes_s"] = round(price(path, merged), 3)
+        agree = sum(a == b for a, b in zip(per_op(path, stream, merged), m_be))
+        row["nodes_rule_agrees_with_measured"] = f"{agree}/{len(m_be)}"
+        for W in (1, 2, 3, 5, 10, 20):
+            pw = break_even(merged, window=W, dL=nL, dU=nU, init_low=float(n0.iloc[0]))
+            row[f"priced_break_even_by_nodes_w{W}_s"] = round(price(pw, merged), 3)
+            ops = per_op(pw, stream, merged)
+            row[f"nodes_w{W}_rescans"] = sum(x for x, _ in ops)
+            row[f"nodes_w{W}_rescans_at_uut"] = sum(y for _, y in ops)
     row.update(bound_against_threshold(stream, su, rl, merged, units_of, break_even, run, cL, cU, cD_phase))
     row.update(
                measured_fixed_s=round(total(mf.FIXED), 3), priced_fixed_s=round(price(fx, merged), 3),

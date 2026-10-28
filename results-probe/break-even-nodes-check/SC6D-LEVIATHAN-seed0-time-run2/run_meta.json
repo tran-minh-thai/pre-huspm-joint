@@ -1,0 +1,16 @@
+{
+  "command": "java -Xmx16g -Xss64m -cp build -Ddataset.only=LEVIATHAN -Dalgo.only=Pre-HUSPM-Joint-time -Drepeats=1 -Drepeat.index=0 -Dseed.index=0 -Dresults.dir=results-probe/break-even-nodes-check/SC6D-LEVIATHAN-seed0-time-run2/ AutomatedExperimentRunner SC6D",
+  "path_substitutions": 0,
+  "build_dir": "build",
+  "git_commit": "0a56c54619b585fc490badd557fac10253ff87de",
+  "tree": "src clean, other files modified",
+  "source_sha256": "3ed1e90a068a88e46499767df1671c63d52edc1a6ea41b205fd05164572d9282",
+  "source_files": 42,
+  "java": "openjdk version \"25.0.4.1\" 2026-08-18 LTS",
+  "os": "Darwin 27.2.0 (macOS-27.2-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-10-29T06:48:57",
+  "end": "2026-10-29T06:49:09",
+  "exit_code": 0
+}
