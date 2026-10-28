@@ -1068,15 +1068,27 @@ public class AutomatedExperimentRunner {
         return 0;
     }
 
-    /** Applies the arm's rescan floor rule: break-even for METHOD and for a break-even sensitivity
-     *  arm (with its window), the window of a window arm. */
+    /** The break-even rule measuring mines by their time instead of the nodes they explore (window 5):
+     *  a comparison arm, run only when named. */
+    static final String TIME_BREAK_EVEN_ARM = METHOD + "-time";
+
+    /** Applies the arm's rescan floor rule: break-even by explored nodes for METHOD and for a
+     *  break-even sensitivity arm (with its window), break-even by time for TIME_BREAK_EVEN_ARM,
+     *  the window of a window arm. */
     static void setFloorRule(PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp, String arm) {
-        if (METHOD.equals(arm)) adp.floorRule = PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.FloorRule.BREAK_EVEN;
-        else if (breakEvenWindowOf(arm) > 0) {
+        if (METHOD.equals(arm) || breakEvenWindowOf(arm) > 0 || TIME_BREAK_EVEN_ARM.equals(arm)) {
             adp.floorRule = PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.FloorRule.BREAK_EVEN;
-            adp.breakEvenWindow = breakEvenWindowOf(arm);
+            adp.breakEvenCost = TIME_BREAK_EVEN_ARM.equals(arm)
+                    ? PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.BreakEvenCost.TIME
+                    : PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.BreakEvenCost.NODES;
+            if (breakEvenWindowOf(arm) > 0) adp.breakEvenWindow = breakEvenWindowOf(arm);
         }
         else if (floorWindowOf(arm) > 0) adp.floorWindow = floorWindowOf(arm);
+    }
+
+    /** True for the arms that select the floor by the break-even rule. */
+    static boolean isBreakEvenArm(String arm) {
+        return METHOD.equals(arm) || breakEvenWindowOf(arm) > 0 || TIME_BREAK_EVEN_ARM.equals(arm);
     }
 
     /** True when -Dalgo.only names the arm; for the arms that a full run leaves out. */
@@ -1172,6 +1184,7 @@ public class AutomatedExperimentRunner {
                             if (algoNamed(windowArm(w))) runMixedArm(ds, dInit, initTotalUtil, plan, col, windowArm(w));
                         for (int n : BREAK_EVEN_SWEEP)
                             if (algoNamed(breakEvenArm(n))) runMixedArm(ds, dInit, initTotalUtil, plan, col, breakEvenArm(n));
+                        if (algoNamed(TIME_BREAK_EVEN_ARM)) runMixedArm(ds, dInit, initTotalUtil, plan, col, TIME_BREAK_EVEN_ARM);
                     }
                     forceFullGC();
                 }
@@ -1183,7 +1196,7 @@ public class AutomatedExperimentRunner {
     private static void runMixedArm(DatasetConfig ds, List<Sequence> dInit, double initTotalUtil,
                                     List<MixedPlan.Op> plan, ResultCollector col, String arm) throws IOException {
         final boolean incremental = FIXED_THRESHOLD.equals(arm) || METHOD.equals(arm) || floorWindowOf(arm) > 0 || PLAIN_FLOOR_ARM.equals(arm)
-                || MIN_FLOOR_ARM.equals(arm) || breakEvenWindowOf(arm) > 0;
+                || MIN_FLOOR_ARM.equals(arm) || isBreakEvenArm(arm);
 
         beginMemArm();
         // The initial mine on D_init: the proposal's for the proposal and for remining with the
@@ -1898,6 +1911,8 @@ public class AutomatedExperimentRunner {
         for (int n : BREAK_EVEN_SWEEP)
             if (algoNamed(breakEvenArm(n))) runAdaptiveStream(breakEvenArm(n), null, null, 0, dsName, Su, dInit,
                     batches, col, tag);
+        if (algoNamed(TIME_BREAK_EVEN_ARM)) runAdaptiveStream(TIME_BREAK_EVEN_ARM, null, null, 0, dsName, Su, dInit,
+                batches, col, tag);
         forceFullGC();
     }
 
@@ -1919,7 +1934,7 @@ public class AutomatedExperimentRunner {
         if (rule != null) adp.triggerRule = rule;
         if (tracking != null) adp.tracking = tracking;
         if (floorWindow > 0) adp.floorWindow = floorWindow;
-        if (METHOD.equals(label) || breakEvenWindowOf(label) > 0) setFloorRule(adp, label);
+        if (isBreakEvenArm(label)) setFloorRule(adp, label);
         adp.floor = floorOf(label);
         boolean poisoned = false;
         announce(label, dsName, tag + "_INIT", 0);

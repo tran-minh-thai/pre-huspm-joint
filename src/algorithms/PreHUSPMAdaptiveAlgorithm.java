@@ -646,17 +646,27 @@ public class PreHUSPMAdaptiveAlgorithm {
          * decision depends on the data and the floor alone, never on what a mine returns, so the
          * shadow's count is exactly what a rescan at r_l would have absorbed. The first rescan after
          * the initial mine (at r_l) is at UUT, so both mine times are known. Exact for every floor
-         * in [r_l, 1], as WINDOW. Decisions depend on measured times, so two runs may differ.
+         * in [r_l, 1], as WINDOW. With breakEvenCost = TIME, rho and delta are ratios of measured
+         * times, so two runs may take different decisions. With breakEvenCost = NODES they are ratios
+         * of the nodes the miner explored: rho is the nodes of the last mine at r_l over those of the
+         * last mine at UUT, and delta is 0, since a unit taken directly explores no node. The node
+         * count of a mine depends on the database and the floor alone, so every decision, and with
+         * it the whole run, is the same in every run.
          */
         public enum FloorRule { WINDOW, BREAK_EVEN }
         public FloorRule floorRule = "breakEven".equals(System.getProperty("adapt.floorRule"))
                 ? FloorRule.BREAK_EVEN : FloorRule.WINDOW;
         public int breakEvenWindow = Integer.getInteger("adapt.breakEvenWindow", 5);
+        /** What the BREAK_EVEN rule measures a mine by: its time or the nodes it explores. */
+        public enum BreakEvenCost { TIME, NODES }
+        public BreakEvenCost breakEvenCost = "nodes".equals(System.getProperty("adapt.breakEvenCost"))
+                ? BreakEvenCost.NODES : BreakEvenCost.TIME;
         /** The three ratios the last BREAK_EVEN decision used (NaN before the first). */
         public double floorRho = Double.NaN, floorDelta = Double.NaN, floorAbsorption = Double.NaN;
         /** Time of the mine made by the last call, in ms; NaN when it made none. */
         public double mineMs = Double.NaN;
         private long lastLowMineNs = -1, lastHighMineNs = -1, lastDirectNs = -1;
+        private long lastLowMineNodes = -1, lastHighMineNodes = -1;
         private final java.util.ArrayList<Integer> absorptions = new java.util.ArrayList<>();
         /** Units taken directly since the last rescan at r_l; -1 when the last rescan was at UUT. */
         private int directSinceLow = -1;
@@ -735,10 +745,11 @@ public class PreHUSPMAdaptiveAlgorithm {
 
         /** mineWithBudget, timed: the time goes to the floor the mine ran at. */
         private void timedMine(List<Sequence> db, double uut, double tsuRef) {
-            long t0 = System.nanoTime();
+            long t0 = System.nanoTime(), n0 = exploredNodes;
             mineWithBudget(db, uut, tsuRef);
-            long dt = System.nanoTime() - t0;
-            if (Sl_min >= Su) lastHighMineNs = dt; else lastLowMineNs = dt;
+            long dt = System.nanoTime() - t0, dn = exploredNodes - n0;
+            if (Sl_min >= Su) { lastHighMineNs = dt; lastHighMineNodes = dn; }
+            else { lastLowMineNs = dt; lastLowMineNodes = dn; }
             mineMs = dt / 1e6;
             unitRescanned = true;
         }
@@ -757,11 +768,13 @@ public class PreHUSPMAdaptiveAlgorithm {
             boolean high;
             if (floorRule == FloorRule.BREAK_EVEN) {
                 if (directSinceLow >= 0) absorptions.add(directSinceLow);
-                if (lastHighMineNs < 0 || lastLowMineNs < 0) {
+                boolean nodes = breakEvenCost == BreakEvenCost.NODES;
+                long low = nodes ? lastLowMineNodes : lastLowMineNs, hi = nodes ? lastHighMineNodes : lastHighMineNs;
+                if (hi < 0 || low < 0) {
                     high = true;
                 } else {
-                    floorRho = (double) lastLowMineNs / lastHighMineNs;
-                    floorDelta = lastDirectNs < 0 ? 0.0 : (double) lastDirectNs / lastHighMineNs;
+                    floorRho = (double) low / Math.max(1L, hi);
+                    floorDelta = nodes || lastDirectNs < 0 ? 0.0 : (double) lastDirectNs / lastHighMineNs;
                     int n = absorptions.size(), from = Math.max(0, n - breakEvenWindow);
                     double sum = 0;
                     for (int i = from; i < n; i++) sum += absorptions.get(i);
@@ -1165,6 +1178,7 @@ public class PreHUSPMAdaptiveAlgorithm {
             insertedSinceRescan = 0; deletedSinceRescan = 0; preBuf = 0;
             if (selectsFloor()) { Sl_min = slMinRatioEff * Su; overLowRun = 0; rescansAtUut = 0; }
             lastLowMineNs = lastHighMineNs = lastDirectNs = -1;
+            lastLowMineNodes = lastHighMineNodes = -1;
             absorptions.clear(); directSinceLow = -1; shadow = null; shadowUnits = 0; shadowTriggeredInUnit = false;
             floorRho = floorDelta = floorAbsorption = Double.NaN;
             unitDepth = 0; forceRescan = false; inModification = false;

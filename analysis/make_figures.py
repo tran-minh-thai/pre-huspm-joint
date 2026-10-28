@@ -145,9 +145,10 @@ METHOD_SCENARIOS = {"SC2", "SC5", "SC6", "SC6D", "SC6B"}
 # The window arms (Pre-HUSPM-Joint-w<n>): the rescan floor chosen by the window rule, the method's rule
 # before the break-even rule (w = 5). Read only by the window study, never by the main tables and
 # figures, where they would count as competitors.
-# The window arms (-w<n>) and the break-even sensitivity arms (-be<n>): left out of every table
-# unless a loader asks for them (windows=True), and never counted as competitors.
-WINDOW_ARM = re.compile(r"^Pre-HUSPM-Joint-(w|be)\d+$")
+# The window arms (-w<n>), the break-even sensitivity arms (-be<n>) and the break-even rule by time
+# (-time): left out of every table unless a loader asks for them (windows=True), and never counted
+# as competitors.
+WINDOW_ARM = re.compile(r"^Pre-HUSPM-Joint-((w|be)\d+|time)$")
 WINDOWS = (1, 2, 3, 5, 10)
 
 
