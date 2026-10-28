@@ -201,19 +201,37 @@ def measured_per_op(rows):
     return out
 
 
+def logged_ratios(rows):
+    """Per operation of the first run: the (rho, delta) the measured BREAK_EVEN decision of that
+    operation used, from floor_rho and floor_delta; NaN where it made none."""
+    rows = rows[rows["replicate"] == sorted(rows["replicate"].unique())[0]]
+    return {int(x["iteration"]): (float(x["floor_rho"]), float(x["floor_delta"])) for _, x in rows.iterrows()}
+
+
 def evaluate(stream, su, rl):
     rows_of = lambda arm: stream.rows[stream.rows["algorithm"] == arm]
-    m_w5, m_fx = measured_per_op(rows_of(mf.PROPOSED)), measured_per_op(rows_of(mf.FIXED))
+    # The measured arms of the family run merged modifications (a modification mines at most once).
+    merged = any(k == "MOD" for k in stream.kind_of)
     window5 = lambda u, path, r: r.over_low_run >= 5
     fixed = lambda u, path, r: False
-    w5, fx = run(stream, su, rl, window5), run(stream, su, rl, fixed)
-    agree_w5 = sum(a == b for a, b in zip(per_op(w5, stream), m_w5))
-    agree_fx = sum(a == b for a, b in zip(per_op(fx, stream), m_fx))
+    m_fx = measured_per_op(rows_of(mf.FIXED))
+    fx = run(stream, su, rl, fixed, merged)
+    agree_fx = sum(a == b for a, b in zip(per_op(fx, stream, merged), m_fx))
+    # The window arm w = 5 is measured on the three databases of the window sweep only.
+    w5_rows = rows_of(mf.PROPOSED + "-w5")
+    if len(w5_rows):
+        m_w5 = measured_per_op(w5_rows)
+        w5 = run(stream, su, rl, window5, merged)
+        agree_w5, n_w5 = sum(a == b for a, b in zip(per_op(w5, stream, merged), m_w5)), len(m_w5)
+    else:
+        agree_w5 = n_w5 = None
     row = dict(stream=stream.label, dataset=stream.db, operations=stream.n_ops,
-               replay_window5=f"{agree_w5}/{len(m_w5)}", replay_fixed=f"{agree_fx}/{len(m_fx)}")
-    print(f"{stream.label}: replay agrees on {agree_w5}/{len(m_w5)} operations (window 5) and "
-          f"{agree_fx}/{len(m_fx)} (fixed lower threshold)")
-    if not (agree_w5 == len(m_w5) == stream.n_ops and agree_fx == len(m_fx) == stream.n_ops):
+               replay_window5="not measured" if n_w5 is None else f"{agree_w5}/{n_w5}",
+               replay_fixed=f"{agree_fx}/{len(m_fx)}")
+    print(f"{stream.label}: replay agrees on "
+          + ("window 5 not measured" if n_w5 is None else f"{agree_w5}/{n_w5} operations (window 5)")
+          + f" and {agree_fx}/{len(m_fx)} (fixed lower threshold)")
+    if not ((n_w5 is None or agree_w5 == n_w5 == stream.n_ops) and agree_fx == len(m_fx) == stream.n_ops):
         return row
 
     def mean_per_op(arm):
@@ -236,7 +254,10 @@ def evaluate(stream, su, rl):
         return sum(sum(cD_phase(p) for p in unit) if x == "D" else (cU if x == "U" else cL)[stream.op_of[unit[0]]]
                    for unit, x in zip(units, path))
 
-    def break_even(merge, window=5, dL=None, dU=None):
+    def break_even(merge, window=5, dL=None, dU=None, logged=None, del_low=False):
+        """logged: per operation, the (rho, delta) the measured run used, in place of the priced
+        ones, to replay the measured decisions. del_low: a rescan made by a deletion mines at the
+        lower threshold; insertions and modifications decide by the rule."""
         units = units_of(stream, merge)
         r = Replay(su, rl, sum(u for u, _ in stream.init))
         shadow, shadow_n = None, 0
@@ -264,15 +285,19 @@ def evaluate(stream, su, rl):
                 k -= 1
             if k >= 0 and path[k] == "L":
                 absorbed.append(len(path) - 1 - k)
-            if last_U is None:
+            o = stream.op_of[unit[0]]
+            if del_low and stream.kind_of[unit[0]] == "DEL":
+                up = False
+            elif last_U is None:
                 up = True
             else:
                 d = sum(cD_phase(p) for p in unit) if dL is None else 0.0
                 rho, delta = last_L / last_U, d / last_U
+                if logged is not None:
+                    rho, delta = logged[o]
                 a_hat = statistics.mean(absorbed[-window:]) if absorbed else 1.0
                 up = a_hat < (rho - 1) / max(1e-9, 1 - delta)
             r.rescan(up)
-            o = stream.op_of[unit[0]]
             if up:
                 last_U = xU[o]
                 if shadow is None:
@@ -358,8 +383,24 @@ def evaluate(stream, su, rl):
         return V(-1, False)
 
     total = lambda arm: rows_of(arm).groupby("replicate")["runtime_ms"].sum().mean() / 1000
-    row.update(measured_proposal_s=round(total(mf.PROPOSED), 3), priced_window5_s=round(price(w5, False), 3),
-               measured_fixed_s=round(total(mf.FIXED), 3), priced_fixed_s=round(price(fx, False), 3),
+    # The measured method (break-even, merged modifications): its decisions replayed with the
+    # ratios it logged. The times behind those ratios are measured, so this checks the replay of
+    # the absorptions and the shadow, not the prices.
+    m_be = measured_per_op(rows_of(mf.PROPOSED))
+    be_logged = break_even(merged, logged=logged_ratios(rows_of(mf.PROPOSED)))
+    agree_be = sum(a == b for a, b in zip(per_op(be_logged, stream, merged), m_be))
+    print(f"  break-even replayed with the logged ratios: {agree_be}/{len(m_be)} operations agree")
+    row.update(replay_break_even_logged=f"{agree_be}/{len(m_be)}",
+               measured_break_even_s=round(total(mf.PROPOSED), 3),
+               measured_window5_s=round(total(mf.PROPOSED + "-w5"), 3) if len(w5_rows) else "",
+               priced_break_even_as_merged_s=round(price(break_even(merged), merged), 3),
+               priced_break_even_deletions_low_s=round(price(break_even(merged, del_low=True), merged), 3),
+               priced_window5_as_merged_s=round(price(run(stream, su, rl, window5, merged), merged), 3),
+               priced_offline_optimum_as_merged_s=round(optimum(merged), 3))
+    if len(w5_rows) and not merged:
+        row.update(priced_window5_s=round(price(w5, False), 3))
+    row.update(
+               measured_fixed_s=round(total(mf.FIXED), 3), priced_fixed_s=round(price(fx, merged), 3),
                measured_remine_s=round(total("Remine-from-scratch"), 3),
                measured_remine_uut_s=round(total("Remine-own-UUT"), 3),
                priced_always_threshold_s=round(price(run(stream, su, rl, lambda u, path, r: True), False), 3),
@@ -382,7 +423,7 @@ def evaluate(stream, su, rl):
 
 
 def streams(a):
-    sc2 = mf.load_scenario("SC2", replicates=True)
+    sc2 = mf.load_scenario("SC2", replicates=True, windows=True)
     cache = {}
     def seqs_of(db):
         if db not in cache:
@@ -399,7 +440,7 @@ def streams(a):
         rows = sc2[(sc2["dataset"] == db) & (sc2["iteration"] > 0)]
         yield insert_stream(db, db, rows, seqs[:n_init], even_batches(seqs[n_init:], K))
     if a.sc5:
-        sc5 = mf.load_scenario("SC5", replicates=True)
+        sc5 = mf.load_scenario("SC5", replicates=True, windows=True)
         for db in [d for d in a.db if d in set(sc5["dataset"])]:
             seqs, n_init = seqs_of(db), mf.DATASETS[db]["d_init"]
             rest = seqs[n_init:]
@@ -419,7 +460,7 @@ def streams(a):
         for r in csv.DictReader(open(ROOT / a.plans), delimiter="\t"):
             plans[(r["scenario"], r["dataset"], int(r["seed"]))].append(r)
         for sc in ("SC6", "SC6D", "SC6B"):
-            df = mf.load_scenario(sc, replicates=True)
+            df = mf.load_scenario(sc, replicates=True, windows=True)
             for (scn, db, seed), ops in sorted(plans.items()):
                 if scn != sc or db not in a.db:
                     continue
