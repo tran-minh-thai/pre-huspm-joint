@@ -201,6 +201,67 @@ def measured_per_op(rows):
     return out
 
 
+def bound_against_threshold(stream, su, rl, merged, units_of, break_even, run, cL, cU, cD_phase):
+    """The candidate bound against always rescanning at the threshold, on the priced costs:
+
+        cost(break-even) <= cost(always at UUT) + sum over its mistaken low decisions of (c_L(t) - c_U(t))
+
+    where a low decision at unit t opens a cycle C (t and the units taken directly after it) and is
+    mistaken when its cycle cost c_L(t) + sum d(u) exceeds sum_{u in C} c_U(u). It needs that a
+    rescan at UUT is followed by a rescan at the next unit (always at UUT then rescans every unit,
+    checked here) and that a direct unit costs at most a rescan at UUT at that unit (counted).
+    Also reports the inequality without its bound term ('never worse than always at UUT'), which
+    the check must refute where mistakes cost, to show it is not vacuous, and the general form,
+    which drops the second condition by adding, per mistaken cycle, sum (d(u) - c_U(u))^+."""
+    units = units_of(stream, merged)
+    up = run(stream, su, rl, lambda u, path, r: True, merged)
+    first = next((k for k, x in enumerate(up) if x != "D"), len(up))
+    always_every = all(x == "U" for x in up[first:])
+    cost_u = sum(cU[stream.op_of[unit[0]]] for unit in units)
+    path = break_even(merged)
+    cost_be = bound = bound_general = 0.0
+    lows = mistaken = d_over = 0
+    i = 0
+    while i < len(units):
+        o = stream.op_of[units[i][0]]
+        if path[i] == "U":
+            cost_be += cU[o]
+            i += 1
+            continue
+        if path[i] == "D":                 # before the first rescan: the initial mine's cycle
+            cost_be += sum(cD_phase(p) for p in units[i])
+            cost_u -= cU[o] - sum(cD_phase(p) for p in units[i])   # always at UUT takes it directly too
+            i += 1
+            continue
+        lows += 1
+        c, cu, over = cL[o], cU[o], 0.0
+        j = i + 1
+        while j < len(units) and path[j] == "D":
+            oj = stream.op_of[units[j][0]]
+            dj = sum(cD_phase(p) for p in units[j])
+            d_over += dj > cU[oj]
+            over += max(0.0, dj - cU[oj])
+            c += dj
+            cu += cU[oj]
+            j += 1
+        if c > cu:
+            mistaken += 1
+            bound += cL[o] - cU[o]
+            bound_general += cL[o] - cU[o] + over
+        cost_be += c
+        i = j
+    holds = cost_be <= cost_u + bound + 1e-9
+    holds_general = cost_be <= cost_u + bound_general + 1e-9
+    # the same inequality without its bound term: must fail where mistakes cost (the check is not vacuous)
+    holds_without_term = cost_be <= cost_u + 1e-9
+    return dict(bound_always_uut_rescans_every_unit=always_every, bound_low_decisions=lows,
+                bound_mistaken_low=mistaken, bound_direct_over_uut=d_over,
+                bound_cost_break_even_s=round(cost_be, 4), bound_cost_always_uut_s=round(cost_u, 4),
+                bound_term_s=round(bound, 4), bound_holds=bool(holds),
+                bound_holds_without_term=bool(holds_without_term),
+                bound_general_term_s=round(bound_general, 4), bound_general_holds=bool(holds_general))
+
+
 def logged_ratios(rows):
     """Per operation of the first run: the (rho, delta) the measured BREAK_EVEN decision of that
     operation used, from floor_rho and floor_delta; NaN where it made none."""
@@ -399,6 +460,7 @@ def evaluate(stream, su, rl):
                priced_offline_optimum_as_merged_s=round(optimum(merged), 3))
     if len(w5_rows) and not merged:
         row.update(priced_window5_s=round(price(w5, False), 3))
+    row.update(bound_against_threshold(stream, su, rl, merged, units_of, break_even, run, cL, cU, cD_phase))
     row.update(
                measured_fixed_s=round(total(mf.FIXED), 3), priced_fixed_s=round(price(fx, merged), 3),
                measured_remine_s=round(total("Remine-from-scratch"), 3),
