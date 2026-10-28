@@ -1915,6 +1915,114 @@ def window_mixed():
     return pd.DataFrame(rows)
 
 
+def break_even_vs_window_mixed():
+    """SC6, SC6D and SC6B: the method (break-even floor rule) against the window arm w = 5, per
+    database: the ratio of their stream times per seed (seeds where both finished every operation),
+    and over the seeds the deletions that rescanned and their time, for each of the two."""
+    rows = []
+    w5 = mf.window_arm(5)
+    for sc in ("SC6", "SC6D", "SC6B"):
+        df = mf.load_scenario(sc, replicates=True, windows=True)
+        if df is None:
+            continue
+        df = df.copy()
+        df["kind"] = df["op_type"].astype(str).str.extract(r"SC6_(INS|DEL_BIG|DEL|MOD|INIT)")[0]
+        ops = df[df["kind"].notna() & (df["kind"] != "INIT")]
+        for d in [x for x in mf.ALL_DATASETS if x in set(ops["dataset"])]:
+            g = ops[ops["dataset"] == d]
+
+            def per_seed(arm):
+                x = g[g["algorithm"] == arm]
+                return {r: (len(y), float(mf.ms_to_s(y["runtime_ms"]).sum())) for r, y in x.groupby("replicate")
+                        if y["finished"].all()}
+
+            def deletions(arm):
+                s = g[g["algorithm"] == arm].sort_values(["replicate", "iteration"])
+                s = s.assign(rescanned=s.groupby("replicate")["rescan_count"].diff().fillna(s["rescan_count"]) > 0)
+                x = s[s["kind"] == "DEL"]
+                return len(x), int(x["rescanned"].sum()), float(mf.ms_to_s(x["runtime_ms"]).sum())
+            be, win = per_seed(P), per_seed(w5)
+            if not win:
+                continue
+            r = [be[k][1] / win[k][1] for k in be if k in win and be[k][0] == win[k][0] and win[k][1] > 0]
+            n_be, res_be, t_be = deletions(P)
+            n_w, res_w, t_w = deletions(w5)
+            rows.append(dict(scenario=sc, dataset=d, seeds=len(r),
+                             over_window5=np.mean(r) if r else np.nan, over_window5_min=min(r) if r else np.nan,
+                             over_window5_max=max(r) if r else np.nan, faster_seeds=sum(x < 1 for x in r),
+                             deletions=n_be, deletions_rescanned_break_even=res_be, deletion_time_s_break_even=t_be,
+                             deletions_window5=n_w, deletions_rescanned_window5=res_w, deletion_time_s_window5=t_w))
+    return pd.DataFrame(rows)
+
+
+def break_even_floor_estimate():
+    """Per incremental scenario, the method's streams (database, run, and in SC5 the cell): how many
+    never mined at the lower threshold after the initial mine, the rho of its first decision (the
+    initial mine at the lower threshold over the first mine at UUT, as the rule computes it), and,
+    for comparison, the rho remining measures warm at the same operations (Remine-from-scratch over
+    Remine-own-UUT, the median over operations)."""
+    rows = []
+    for sc in ("SC2", "SC5", "SC6", "SC6D", "SC6B"):
+        df = mf.load_scenario(sc, replicates=True)
+        if df is None:
+            continue
+        cell = (df["op_type"].astype(str).str.extract(r"^(SC5_K=\d+_strat=\w+)_")[0] if sc == "SC5"
+                else pd.Series("", index=df.index))
+        df = df.assign(cell=cell.fillna(""))
+        key = ["dataset", "replicate", "cell"]
+        e = df[df["algorithm"] == P]
+        streams = stuck = 0
+        first = []
+        for k, g in e.groupby(key):
+            inc = g[g["iteration"] > 0].sort_values("iteration")
+            if not len(inc):
+                continue
+            streams += 1
+            if inc["rescan_count"].max() > 0 and inc["rescan_count"].max() == inc["rescans_at_uut"].max():
+                stuck += 1
+            fr = inc["floor_rho"].dropna()
+            if len(fr):
+                first.append(float(fr.iloc[0]))
+        warm = []
+        lo = df[df["algorithm"] == REM].set_index(key + ["iteration"])["runtime_ms"]
+        hi = df[df["algorithm"] == "Remine-own-UUT"].set_index(key + ["iteration"])["runtime_ms"]
+        lo, hi = lo[~lo.index.duplicated()], hi[~hi.index.duplicated()]
+        j = pd.concat([lo.rename("lo"), hi.rename("hi")], axis=1).dropna()
+        j = j[(j.index.get_level_values("iteration") > 0) & (j["lo"] > 0) & (j["hi"] > 0)]
+        if len(j):
+            warm = list(j["lo"] / j["hi"])
+        rows.append(dict(scenario=sc, streams=streams, without_low_rescan=stuck, first_decisions=len(first),
+                         first_rho_median=np.median(first) if first else np.nan,
+                         first_rho_min=min(first) if first else np.nan, first_rho_max=max(first) if first else np.nan,
+                         remine_rho_operations=len(warm), remine_rho_median=np.median(warm) if warm else np.nan))
+    return pd.DataFrame(rows)
+
+
+def break_even_study(put, out):
+    t = break_even_vs_window_mixed()
+    mf.write_csv(t, os.path.join(out, "table_SC6_break_even_vs_window.csv"))
+    src = "table_SC6_break_even_vs_window.csv"
+    for r in t.itertuples():
+        b = f"{r.scenario}_{r.dataset}_break_even"
+        put(f"{b}_over_window5", f"{r.over_window5:.2f} ({r.over_window5_min:.2f} to {r.over_window5_max:.2f}; "
+            f"faster in {r.faster_seeds} of {r.seeds} seeds)", src)
+        put(f"{b}_deletions_rescanned", f"{r.deletions_rescanned_break_even} of {r.deletions}", src)
+        put(f"{b}_deletion_time_s", f"{r.deletion_time_s_break_even:.2f}", src)
+        put(f"{r.scenario}_{r.dataset}_window5_deletions_rescanned", f"{r.deletions_rescanned_window5} of {r.deletions_window5}", src)
+        put(f"{r.scenario}_{r.dataset}_window5_deletion_time_s", f"{r.deletion_time_s_window5:.2f}", src)
+    put("SC6_family_break_even_faster_than_window5_seeds", f"{int(t['faster_seeds'].sum())}/{int(t['seeds'].sum())}", src)
+    f = break_even_floor_estimate()
+    mf.write_csv(f, os.path.join(out, "table_break_even_floor_estimate.csv"))
+    src = "table_break_even_floor_estimate.csv"
+    for r in f.itertuples():
+        put(f"{r.scenario}_break_even_streams_without_low_rescan", f"{r.without_low_rescan}/{r.streams}", src)
+        put(f"{r.scenario}_break_even_first_rho", f"median {r.first_rho_median:.2f} ({r.first_rho_min:.2f} to "
+            f"{r.first_rho_max:.2f}; {r.first_decisions} streams)", src)
+        put(f"{r.scenario}_remine_rho", f"median {r.remine_rho_median:.2f} ({r.remine_rho_operations} operations)", src)
+    put("break_even_streams_without_low_rescan", f"{int(f['without_low_rescan'].sum())}/{int(f['streams'].sum())}", src)
+    return t, f
+
+
 def window_husp_check():
     """Every row of a window arm against the fixed floor's row of the same database, seed, operation
     and iteration: the HUSP counts must be equal. The counts do not depend on the repeat, so a
@@ -2423,6 +2531,7 @@ def export_all(out_dir=None):
     mixed_floor_keys(put)
     mixed_seed_spread(put, out)
     window_study(put, out)
+    break_even_study(put, out)
     sc2_inference(put, out)
     sc2_own_uut(put)
 

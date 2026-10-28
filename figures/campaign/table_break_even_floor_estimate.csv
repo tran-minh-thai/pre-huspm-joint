@@ -1,0 +1,6 @@
+scenario,streams,without_low_rescan,first_decisions,first_rho_median,first_rho_min,first_rho_max,remine_rho_operations,remine_rho_median
+SC2,35,9,35,2.27,0.947,4.102,3500,1.625
+SC5,144,20,144,1.611,1.266,4.735,8712,1.663
+SC6,20,13,20,2.18,1.087,2.986,400,1.467
+SC6D,20,7,20,1.883,1.133,3.198,400,1.41
+SC6B,20,15,20,1.901,1.157,2.703,400,1.465

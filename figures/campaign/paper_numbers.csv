@@ -1490,6 +1490,68 @@ SC6B_window_10_C8T1S5I8N5K_deletions_after_a_mine_at_uut,0 of 0 rescanned,table_
 window_husp_check_comparisons,37408,table_SC2_window.csv
 window_husp_check_mismatches,0,table_SC2_window.csv
 window_husp_check_rows_without_reference,0,table_SC2_window.csv
+SC6_SIGN_break_even_over_window5,0.74 (0.70 to 0.83; faster in 5 of 5 seeds),table_SC6_break_even_vs_window.csv
+SC6_SIGN_break_even_deletions_rescanned,15 of 15,table_SC6_break_even_vs_window.csv
+SC6_SIGN_break_even_deletion_time_s,1.10,table_SC6_break_even_vs_window.csv
+SC6_SIGN_window5_deletions_rescanned,2 of 15,table_SC6_break_even_vs_window.csv
+SC6_SIGN_window5_deletion_time_s,0.29,table_SC6_break_even_vs_window.csv
+SC6_LEVIATHAN_break_even_over_window5,0.84 (0.82 to 0.87; faster in 5 of 5 seeds),table_SC6_break_even_vs_window.csv
+SC6_LEVIATHAN_break_even_deletions_rescanned,15 of 15,table_SC6_break_even_vs_window.csv
+SC6_LEVIATHAN_break_even_deletion_time_s,2.70,table_SC6_break_even_vs_window.csv
+SC6_LEVIATHAN_window5_deletions_rescanned,3 of 15,table_SC6_break_even_vs_window.csv
+SC6_LEVIATHAN_window5_deletion_time_s,0.77,table_SC6_break_even_vs_window.csv
+SC6_C8T1S5I8N5K_break_even_over_window5,0.76 (0.61 to 1.08; faster in 4 of 5 seeds),table_SC6_break_even_vs_window.csv
+SC6_C8T1S5I8N5K_break_even_deletions_rescanned,12 of 15,table_SC6_break_even_vs_window.csv
+SC6_C8T1S5I8N5K_break_even_deletion_time_s,0.90,table_SC6_break_even_vs_window.csv
+SC6_C8T1S5I8N5K_window5_deletions_rescanned,1 of 15,table_SC6_break_even_vs_window.csv
+SC6_C8T1S5I8N5K_window5_deletion_time_s,0.88,table_SC6_break_even_vs_window.csv
+SC6D_SIGN_break_even_over_window5,1.02 (0.96 to 1.07; faster in 2 of 5 seeds),table_SC6_break_even_vs_window.csv
+SC6D_SIGN_break_even_deletions_rescanned,21 of 50,table_SC6_break_even_vs_window.csv
+SC6D_SIGN_break_even_deletion_time_s,1.64,table_SC6_break_even_vs_window.csv
+SC6D_SIGN_window5_deletions_rescanned,0 of 50,table_SC6_break_even_vs_window.csv
+SC6D_SIGN_window5_deletion_time_s,0.11,table_SC6_break_even_vs_window.csv
+SC6D_LEVIATHAN_break_even_over_window5,1.35 (1.25 to 1.44; faster in 0 of 5 seeds),table_SC6_break_even_vs_window.csv
+SC6D_LEVIATHAN_break_even_deletions_rescanned,40 of 50,table_SC6_break_even_vs_window.csv
+SC6D_LEVIATHAN_break_even_deletion_time_s,6.52,table_SC6_break_even_vs_window.csv
+SC6D_LEVIATHAN_window5_deletions_rescanned,0 of 50,table_SC6_break_even_vs_window.csv
+SC6D_LEVIATHAN_window5_deletion_time_s,0.09,table_SC6_break_even_vs_window.csv
+SC6D_C8T1S5I8N5K_break_even_over_window5,0.84 (0.70 to 1.02; faster in 4 of 5 seeds),table_SC6_break_even_vs_window.csv
+SC6D_C8T1S5I8N5K_break_even_deletions_rescanned,39 of 50,table_SC6_break_even_vs_window.csv
+SC6D_C8T1S5I8N5K_break_even_deletion_time_s,2.94,table_SC6_break_even_vs_window.csv
+SC6D_C8T1S5I8N5K_window5_deletions_rescanned,0 of 50,table_SC6_break_even_vs_window.csv
+SC6D_C8T1S5I8N5K_window5_deletion_time_s,2.22,table_SC6_break_even_vs_window.csv
+SC6B_SIGN_break_even_over_window5,0.67 (0.64 to 0.72; faster in 5 of 5 seeds),table_SC6_break_even_vs_window.csv
+SC6B_SIGN_break_even_deletions_rescanned,10 of 10,table_SC6_break_even_vs_window.csv
+SC6B_SIGN_break_even_deletion_time_s,0.66,table_SC6_break_even_vs_window.csv
+SC6B_SIGN_window5_deletions_rescanned,2 of 10,table_SC6_break_even_vs_window.csv
+SC6B_SIGN_window5_deletion_time_s,0.27,table_SC6_break_even_vs_window.csv
+SC6B_LEVIATHAN_break_even_over_window5,0.83 (0.75 to 0.88; faster in 5 of 5 seeds),table_SC6_break_even_vs_window.csv
+SC6B_LEVIATHAN_break_even_deletions_rescanned,10 of 10,table_SC6_break_even_vs_window.csv
+SC6B_LEVIATHAN_break_even_deletion_time_s,1.63,table_SC6_break_even_vs_window.csv
+SC6B_LEVIATHAN_window5_deletions_rescanned,2 of 10,table_SC6_break_even_vs_window.csv
+SC6B_LEVIATHAN_window5_deletion_time_s,0.46,table_SC6_break_even_vs_window.csv
+SC6B_C8T1S5I8N5K_break_even_over_window5,0.73 (0.57 to 1.10; faster in 4 of 5 seeds),table_SC6_break_even_vs_window.csv
+SC6B_C8T1S5I8N5K_break_even_deletions_rescanned,10 of 10,table_SC6_break_even_vs_window.csv
+SC6B_C8T1S5I8N5K_break_even_deletion_time_s,0.71,table_SC6_break_even_vs_window.csv
+SC6B_C8T1S5I8N5K_window5_deletions_rescanned,1 of 10,table_SC6_break_even_vs_window.csv
+SC6B_C8T1S5I8N5K_window5_deletion_time_s,0.65,table_SC6_break_even_vs_window.csv
+SC6_family_break_even_faster_than_window5_seeds,34/45,table_SC6_break_even_vs_window.csv
+SC2_break_even_streams_without_low_rescan,9/35,table_break_even_floor_estimate.csv
+SC2_break_even_first_rho,median 2.27 (0.95 to 4.10; 35 streams),table_break_even_floor_estimate.csv
+SC2_remine_rho,median 1.62 (3500 operations),table_break_even_floor_estimate.csv
+SC5_break_even_streams_without_low_rescan,20/144,table_break_even_floor_estimate.csv
+SC5_break_even_first_rho,median 1.61 (1.27 to 4.73; 144 streams),table_break_even_floor_estimate.csv
+SC5_remine_rho,median 1.66 (8712 operations),table_break_even_floor_estimate.csv
+SC6_break_even_streams_without_low_rescan,13/20,table_break_even_floor_estimate.csv
+SC6_break_even_first_rho,median 2.18 (1.09 to 2.99; 20 streams),table_break_even_floor_estimate.csv
+SC6_remine_rho,median 1.47 (400 operations),table_break_even_floor_estimate.csv
+SC6D_break_even_streams_without_low_rescan,7/20,table_break_even_floor_estimate.csv
+SC6D_break_even_first_rho,median 1.88 (1.13 to 3.20; 20 streams),table_break_even_floor_estimate.csv
+SC6D_remine_rho,median 1.41 (400 operations),table_break_even_floor_estimate.csv
+SC6B_break_even_streams_without_low_rescan,15/20,table_break_even_floor_estimate.csv
+SC6B_break_even_first_rho,median 1.90 (1.16 to 2.70; 20 streams),table_break_even_floor_estimate.csv
+SC6B_remine_rho,median 1.46 (400 operations),table_break_even_floor_estimate.csv
+break_even_streams_without_low_rescan,64/239,table_break_even_floor_estimate.csv
 SC2_inference_Pre-HUSPM-SWUmax_over_proposal_SIGN_ratio,5.69,table_SC2_inference.csv
 SC2_inference_Pre-HUSPM-SWUmax_over_proposal_SIGN_fastest_over_slowest,5.59,table_SC2_inference.csv
 SC2_inference_Pre-HUSPM-SWUmax_over_proposal_SIGN_ci95,5.64 to 5.75,table_SC2_inference.csv

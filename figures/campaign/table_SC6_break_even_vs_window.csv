@@ -1,0 +1,10 @@
+scenario,dataset,seeds,over_window5,over_window5_min,over_window5_max,faster_seeds,deletions,deletions_rescanned_break_even,deletion_time_s_break_even,deletions_window5,deletions_rescanned_window5,deletion_time_s_window5
+SC6,SIGN,5,0.744,0.698,0.833,5,15,15,1.096,15,2,0.29
+SC6,LEVIATHAN,5,0.84,0.818,0.871,5,15,15,2.697,15,3,0.765
+SC6,C8T1S5I8N5K,5,0.76,0.607,1.081,4,15,12,0.903,15,1,0.875
+SC6D,SIGN,5,1.015,0.96,1.071,2,50,21,1.636,50,0,0.112
+SC6D,LEVIATHAN,5,1.349,1.254,1.443,0,50,40,6.523,50,0,0.087
+SC6D,C8T1S5I8N5K,5,0.844,0.705,1.02,4,50,39,2.942,50,0,2.218
+SC6B,SIGN,5,0.667,0.638,0.717,5,10,10,0.664,10,2,0.267
+SC6B,LEVIATHAN,5,0.826,0.748,0.877,5,10,10,1.635,10,2,0.462
+SC6B,C8T1S5I8N5K,5,0.728,0.575,1.099,4,10,10,0.705,10,1,0.65
