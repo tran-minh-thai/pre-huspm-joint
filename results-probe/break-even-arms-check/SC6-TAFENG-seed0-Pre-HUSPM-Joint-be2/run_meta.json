@@ -1,0 +1,16 @@
+{
+  "command": "java -Xmx16g -Xss64m -cp build -Ddataset.only=TAFENG -Dalgo.only=Pre-HUSPM-Joint-be2 -Drepeats=1 -Dresults.dir=results-probe/break-even-arms-check/SC6-TAFENG-seed0-Pre-HUSPM-Joint-be2/ -Drepeat.index=0 -Dseed.index=0 AutomatedExperimentRunner SC6",
+  "path_substitutions": 0,
+  "build_dir": "build",
+  "git_commit": "0ec822326466d7e8a929e80329c354798c21ad4f",
+  "tree": "clean",
+  "source_sha256": "1bd6528dfaac90368bd069f29cdcc7cc5f10e661bf0dd6e21e92f7b2cf4ceaaf",
+  "source_files": 42,
+  "java": "openjdk version \"26.0.1\" 2026-04-21",
+  "os": "Darwin 27.0.0 (macOS-27.0.1-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-10-28T15:48:47",
+  "end": "2026-10-28T15:48:57",
+  "exit_code": 0
+}
