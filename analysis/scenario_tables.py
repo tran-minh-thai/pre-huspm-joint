@@ -2043,6 +2043,69 @@ def mixed_shares(put, out):
     return t
 
 
+BE_SWEEP = (1, 2, 3, 10, 20)
+
+
+def break_even_window_sensitivity(put, out):
+    """The break-even rule at absorption windows 1, 2, 3, 10 and 20 (arms Pre-HUSPM-Joint-be<n>)
+    against the method (window 5), measured. Per scenario and database: the stream time, the mean
+    over the repeats both have (SC2: repeats 0-2, SC5: repeat 0), summed over the streams (SC5 cells,
+    SC6* seeds); the ratio to window 5; and, per run, the rescans and the rescans at UUT, to show
+    how often runs of one arm on one stream took different decisions (the decisions depend on
+    measured mine times)."""
+    arms = {5: P, **{n: f"{P}-be{n}" for n in BE_SWEEP}}
+    rows, paths = [], []
+    for sc in ("SC2", "SC5", "SC6", "SC6D", "SC6B"):
+        df = mf.load_scenario(sc, replicates=True, windows=True)
+        if df is None:
+            continue
+        d = df[(df["iteration"] > 0) & df["algorithm"].isin(arms.values())]
+        cell = (d["op_type"].astype(str).str.extract(r"^(SC5_K=\d+_strat=\w+)_")[0] if sc == "SC5"
+                else pd.Series("", index=d.index))
+        d = d.assign(cell=cell.fillna(""), seed=d["replicate"].str.extract(r"^s(\d+)")[0],
+                     rep=d["replicate"].str.extract(r"r(\d+)$")[0])
+        if not d["finished"].all():
+            raise ValueError(f"{sc}: unfinished rows among the window arms; the sensitivity table needs complete runs")
+        if sc in ("SC2", "SC5"):
+            d = d[d["rep"].isin({"SC2": ["0", "1", "2"], "SC5": ["0"]}[sc])]
+        run = d.groupby(["algorithm", "dataset", "cell", "seed", "rep"]).agg(
+            ms=("runtime_ms", "sum"), rescans=("rescan_count", "max"), at_uut=("rescans_at_uut", "max")).reset_index()
+        for (a, db, c, s), g in run.groupby(["algorithm", "dataset", "cell", "seed"]):
+            paths.append(dict(scenario=sc, algorithm=a, dataset=db, runs=len(g),
+                              decisions=len(set(zip(g["rescans"], g["at_uut"])))))
+        stream = run.groupby(["algorithm", "dataset", "cell", "seed"])["ms"].mean().reset_index()
+        for db, g in stream.groupby("dataset"):
+            tot = {w: float(g[g["algorithm"] == a]["ms"].sum()) / 1000 for w, a in arms.items()}
+            n = {w: int((g["algorithm"] == a).sum()) for w, a in arms.items()}
+            if len(set(n.values())) != 1:
+                raise ValueError(f"{sc} {db}: the window arms cover different streams: {n}")
+            for w in arms:
+                rows.append(dict(scenario=sc, dataset=db, window=w, streams=n[w], time_s=tot[w],
+                                 over_window5=tot[w] / tot[5]))
+    t = pd.DataFrame(rows)
+    mf.write_csv(t, os.path.join(out, "table_break_even_window_sensitivity.csv"))
+    src = "table_break_even_window_sensitivity.csv"
+    for r in t[t["window"] != 5].itertuples():
+        put(f"{r.scenario}_{r.dataset}_break_even_window_{r.window}_over_window5", f"{r.over_window5:.3f}", src)
+    s = t.groupby(["scenario", "window"])["time_s"].sum().unstack()
+    for sc, r in s.iterrows():
+        for w in BE_SWEEP:
+            put(f"{sc}_break_even_window_{w}_total_over_window5", f"{r[w] / r[5]:.3f}", src)
+        mid = [r[w] / r[5] for w in (2, 3, 10)]
+        put(f"{sc}_break_even_windows_2_to_10_total_over_window5", f"{min(mid):.3f} to {max(mid):.3f}", src)
+    g = t[t["window"] != 5]
+    for w, h in g.groupby("window"):
+        m = h.loc[h["over_window5"].idxmax()]
+        put(f"break_even_window_{w}_slowest_group", f"{m.scenario} {m.dataset}: {m.over_window5:.3f}", src)
+    p = pd.DataFrame(paths)
+    multi = p[p["runs"] > 1]
+    put("SC2_break_even_streams_with_runs_on_different_decisions",
+        f"{int((multi['decisions'] > 1).sum())}/{len(multi)}", src)
+    put("SC2_method_streams_with_runs_on_different_decisions",
+        f"{int((multi[multi['algorithm'] == P]['decisions'] > 1).sum())}/{int((multi['algorithm'] == P).sum())}", src)
+    return t
+
+
 def units_after_a_rescan():
     """Every floor-selecting arm (the method and the window arms) in every incremental scenario: the
     units right after a rescan at UUT, and how many of them were taken directly (no rescan); the
@@ -2621,6 +2684,7 @@ def export_all(out_dir=None):
     window_study(put, out)
     break_even_study(put, out)
     mixed_shares(put, out)
+    break_even_window_sensitivity(put, out)
     sc2_inference(put, out)
     sc2_own_uut(put)
 
