@@ -1998,7 +1998,36 @@ def break_even_floor_estimate():
     return pd.DataFrame(rows)
 
 
+def units_after_a_rescan():
+    """Every floor-selecting arm (the method and the window arms) in every incremental scenario: the
+    units right after a rescan at UUT, and how many of them were taken directly (no rescan); the
+    same after a rescan at the lower threshold, where direct units are expected, as a control."""
+    arms = {P} | {mf.window_arm(w) for w in mf.WINDOWS}
+    n = {"uut": [0, 0], "low": [0, 0]}
+    for sc in ("SC2", "SC5", "SC6", "SC6D", "SC6B"):
+        df = mf.load_scenario(sc, replicates=True, windows=True)
+        if df is None:
+            continue
+        df = df[df["algorithm"].isin(arms)]
+        cell = (df["op_type"].astype(str).str.extract(r"^(SC5_K=\d+_strat=\w+)_")[0] if sc == "SC5"
+                else pd.Series("", index=df.index))
+        df = df.assign(cell=cell.fillna(""))
+        for _, g in df.groupby(["algorithm", "dataset", "replicate", "cell"]):
+            g = g[g["iteration"] > 0].sort_values("iteration")
+            rc = g["rescan_count"].diff().fillna(g["rescan_count"].iloc[0] if len(g) else 0).values
+            ru = g["rescans_at_uut"].diff().fillna(g["rescans_at_uut"].iloc[0] if len(g) else 0).values
+            for i in range(len(g) - 1):
+                if rc[i] > 0:
+                    k = "uut" if ru[i] > 0 else "low"
+                    n[k][0] += 1
+                    n[k][1] += int(rc[i + 1] == 0)
+    return n
+
+
 def break_even_study(put, out):
+    n = units_after_a_rescan()
+    put("units_after_uut_rescan_taken_directly", f"{n['uut'][1]} of {n['uut'][0]}", "results/campaign*")
+    put("units_after_low_rescan_taken_directly", f"{n['low'][1]} of {n['low'][0]}", "results/campaign*")
     t = break_even_vs_window_mixed()
     mf.write_csv(t, os.path.join(out, "table_SC6_break_even_vs_window.csv"))
     src = "table_SC6_break_even_vs_window.csv"

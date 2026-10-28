@@ -1490,6 +1490,8 @@ SC6B_window_10_C8T1S5I8N5K_deletions_after_a_mine_at_uut,0 of 0 rescanned,table_
 window_husp_check_comparisons,37408,table_SC2_window.csv
 window_husp_check_mismatches,0,table_SC2_window.csv
 window_husp_check_rows_without_reference,0,table_SC2_window.csv
+units_after_uut_rescan_taken_directly,0 of 24989,results/campaign*
+units_after_low_rescan_taken_directly,7378 of 14027,results/campaign*
 SC6_SIGN_break_even_over_window5,0.74 (0.70 to 0.83; faster in 5 of 5 seeds),table_SC6_break_even_vs_window.csv
 SC6_SIGN_break_even_deletions_rescanned,15 of 15,table_SC6_break_even_vs_window.csv
 SC6_SIGN_break_even_deletion_time_s,1.10,table_SC6_break_even_vs_window.csv
