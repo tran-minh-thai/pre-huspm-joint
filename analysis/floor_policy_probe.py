@@ -272,7 +272,7 @@ def logged_ratios(rows):
     return {int(x["iteration"]): (float(x["floor_rho"]), float(x["floor_delta"])) for _, x in rows.iterrows()}
 
 
-def evaluate(stream, su, rl):
+def evaluate(stream, su, rl, be_window=5):
     rows_of = lambda arm: stream.rows[stream.rows["algorithm"] == arm]
     # The measured arms of the family run merged modifications (a modification mines at most once).
     merged = any(k == "MOD" for k in stream.kind_of)
@@ -453,7 +453,7 @@ def evaluate(stream, su, rl):
     # ratios it logged. The times behind those ratios are measured, so this checks the replay of
     # the absorptions and the shadow, not the prices.
     m_be = measured_per_op(rows_of(mf.PROPOSED))
-    be_logged = break_even(merged, logged=logged_ratios(rows_of(mf.PROPOSED)))
+    be_logged = break_even(merged, window=be_window, logged=logged_ratios(rows_of(mf.PROPOSED)))
     agree_be = sum(a == b for a, b in zip(per_op(be_logged, stream, merged), m_be))
     print(f"  break-even replayed with the logged ratios: {agree_be}/{len(m_be)} operations agree")
     row.update(replay_break_even_logged=f"{agree_be}/{len(m_be)}",
