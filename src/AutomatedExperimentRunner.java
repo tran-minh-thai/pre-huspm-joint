@@ -1053,9 +1053,29 @@ public class AutomatedExperimentRunner {
         return 0;
     }
 
-    /** Applies the arm's rescan floor rule: break-even for METHOD, the window of a window arm. */
+    /**
+     * The sensitivity of the break-even rule to the number of absorptions it averages
+     * (breakEvenWindow, 5 for METHOD): one arm per value, Pre-HUSPM-Joint-be<n>, the method in every
+     * other respect. They run only when -Dalgo.only names them.
+     */
+    static final int[] BREAK_EVEN_SWEEP = {1, 2, 3, 10, 20};
+
+    static String breakEvenArm(int n) { return METHOD + "-be" + n; }
+
+    /** The absorption window of a break-even sensitivity arm, 0 for any other arm. */
+    static int breakEvenWindowOf(String arm) {
+        for (int n : BREAK_EVEN_SWEEP) if (breakEvenArm(n).equals(arm)) return n;
+        return 0;
+    }
+
+    /** Applies the arm's rescan floor rule: break-even for METHOD and for a break-even sensitivity
+     *  arm (with its window), the window of a window arm. */
     static void setFloorRule(PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp, String arm) {
         if (METHOD.equals(arm)) adp.floorRule = PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.FloorRule.BREAK_EVEN;
+        else if (breakEvenWindowOf(arm) > 0) {
+            adp.floorRule = PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.FloorRule.BREAK_EVEN;
+            adp.breakEvenWindow = breakEvenWindowOf(arm);
+        }
         else if (floorWindowOf(arm) > 0) adp.floorWindow = floorWindowOf(arm);
     }
 
@@ -1150,6 +1170,8 @@ public class AutomatedExperimentRunner {
                             if (algoEnabled(arm)) runMixedArm(ds, dInit, initTotalUtil, plan, col, arm);
                         for (int w : WINDOW_SWEEP)
                             if (algoNamed(windowArm(w))) runMixedArm(ds, dInit, initTotalUtil, plan, col, windowArm(w));
+                        for (int n : BREAK_EVEN_SWEEP)
+                            if (algoNamed(breakEvenArm(n))) runMixedArm(ds, dInit, initTotalUtil, plan, col, breakEvenArm(n));
                     }
                     forceFullGC();
                 }
@@ -1161,7 +1183,7 @@ public class AutomatedExperimentRunner {
     private static void runMixedArm(DatasetConfig ds, List<Sequence> dInit, double initTotalUtil,
                                     List<MixedPlan.Op> plan, ResultCollector col, String arm) throws IOException {
         final boolean incremental = FIXED_THRESHOLD.equals(arm) || METHOD.equals(arm) || floorWindowOf(arm) > 0 || PLAIN_FLOOR_ARM.equals(arm)
-                || MIN_FLOOR_ARM.equals(arm);
+                || MIN_FLOOR_ARM.equals(arm) || breakEvenWindowOf(arm) > 0;
 
         beginMemArm();
         // The initial mine on D_init: the proposal's for the proposal and for remining with the
@@ -1873,6 +1895,9 @@ public class AutomatedExperimentRunner {
         for (int w : WINDOW_SWEEP)
             if (algoNamed(windowArm(w))) runAdaptiveStream(windowArm(w), null, null, w, dsName, Su, dInit,
                     batches, col, tag);
+        for (int n : BREAK_EVEN_SWEEP)
+            if (algoNamed(breakEvenArm(n))) runAdaptiveStream(breakEvenArm(n), null, null, 0, dsName, Su, dInit,
+                    batches, col, tag);
         forceFullGC();
     }
 
@@ -1894,7 +1919,7 @@ public class AutomatedExperimentRunner {
         if (rule != null) adp.triggerRule = rule;
         if (tracking != null) adp.tracking = tracking;
         if (floorWindow > 0) adp.floorWindow = floorWindow;
-        if (METHOD.equals(label)) setFloorRule(adp, label);
+        if (METHOD.equals(label) || breakEvenWindowOf(label) > 0) setFloorRule(adp, label);
         adp.floor = floorOf(label);
         boolean poisoned = false;
         announce(label, dsName, tag + "_INIT", 0);
