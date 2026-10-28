@@ -1554,6 +1554,68 @@ SC6B_break_even_streams_without_low_rescan,15/20,table_break_even_floor_estimate
 SC6B_break_even_first_rho,median 1.90 (1.16 to 2.70; 20 streams),table_break_even_floor_estimate.csv
 SC6B_remine_rho,median 1.46 (400 operations),table_break_even_floor_estimate.csv
 break_even_streams_without_low_rescan,64/239,table_break_even_floor_estimate.csv
+SC6_SIGN_proposal_share_of_remine_pct,55.2 (5 seeds),table_SC6_shares.csv
+SC6_SIGN_proposal_modification_share_of_remine_pct,56.9 (5 seeds),table_SC6_shares.csv
+SC6_SIGN_proposal_share_of_remine_uut_pct,96.6 (5 seeds),table_SC6_shares.csv
+SC6_SIGN_proposal_modification_share_of_remine_uut_pct,98.0 (5 seeds),table_SC6_shares.csv
+SC6_LEVIATHAN_proposal_share_of_remine_pct,73.9 (5 seeds),table_SC6_shares.csv
+SC6_LEVIATHAN_proposal_modification_share_of_remine_pct,73.6 (5 seeds),table_SC6_shares.csv
+SC6_LEVIATHAN_proposal_share_of_remine_uut_pct,102.4 (5 seeds),table_SC6_shares.csv
+SC6_LEVIATHAN_proposal_modification_share_of_remine_uut_pct,102.1 (5 seeds),table_SC6_shares.csv
+SC6_C8T1S5I8N5K_proposal_share_of_remine_pct,70.6 (5 seeds),table_SC6_shares.csv
+SC6_C8T1S5I8N5K_proposal_modification_share_of_remine_pct,73.9 (5 seeds),table_SC6_shares.csv
+SC6_C8T1S5I8N5K_proposal_share_of_remine_uut_pct,111.6 (5 seeds),table_SC6_shares.csv
+SC6_C8T1S5I8N5K_proposal_modification_share_of_remine_uut_pct,104.5 (5 seeds),table_SC6_shares.csv
+SC6_TAFENG_proposal_share_of_remine_pct,63.3 (5 seeds),table_SC6_shares.csv
+SC6_TAFENG_proposal_modification_share_of_remine_pct,83.4 (5 seeds),table_SC6_shares.csv
+SC6_TAFENG_proposal_share_of_remine_uut_pct,68.4 (5 seeds),table_SC6_shares.csv
+SC6_TAFENG_proposal_modification_share_of_remine_uut_pct,87.1 (5 seeds),table_SC6_shares.csv
+SC6D_SIGN_proposal_share_of_remine_pct,54.1 (5 seeds),table_SC6_shares.csv
+SC6D_SIGN_proposal_modification_share_of_remine_pct,80.2 (5 seeds),table_SC6_shares.csv
+SC6D_SIGN_proposal_share_of_remine_uut_pct,92.8 (5 seeds),table_SC6_shares.csv
+SC6D_SIGN_proposal_modification_share_of_remine_uut_pct,135.7 (5 seeds),table_SC6_shares.csv
+SC6D_LEVIATHAN_proposal_share_of_remine_pct,71.8 (5 seeds),table_SC6_shares.csv
+SC6D_LEVIATHAN_proposal_modification_share_of_remine_pct,84.1 (5 seeds),table_SC6_shares.csv
+SC6D_LEVIATHAN_proposal_share_of_remine_uut_pct,98.4 (5 seeds),table_SC6_shares.csv
+SC6D_LEVIATHAN_proposal_modification_share_of_remine_uut_pct,113.8 (5 seeds),table_SC6_shares.csv
+SC6D_C8T1S5I8N5K_proposal_share_of_remine_pct,70.3 (5 seeds),table_SC6_shares.csv
+SC6D_C8T1S5I8N5K_proposal_modification_share_of_remine_pct,80.4 (5 seeds),table_SC6_shares.csv
+SC6D_C8T1S5I8N5K_proposal_share_of_remine_uut_pct,104.8 (5 seeds),table_SC6_shares.csv
+SC6D_C8T1S5I8N5K_proposal_modification_share_of_remine_uut_pct,118.2 (5 seeds),table_SC6_shares.csv
+SC6D_TAFENG_proposal_share_of_remine_pct,45.1 (5 seeds),table_SC6_shares.csv
+SC6D_TAFENG_proposal_modification_share_of_remine_pct,85.3 (5 seeds),table_SC6_shares.csv
+SC6D_TAFENG_proposal_share_of_remine_uut_pct,50.6 (5 seeds),table_SC6_shares.csv
+SC6D_TAFENG_proposal_modification_share_of_remine_uut_pct,93.0 (5 seeds),table_SC6_shares.csv
+SC6B_SIGN_proposal_share_of_remine_pct,55.2 (5 seeds),table_SC6_shares.csv
+SC6B_SIGN_proposal_modification_share_of_remine_pct,55.1 (5 seeds),table_SC6_shares.csv
+SC6B_SIGN_proposal_share_of_remine_uut_pct,92.1 (5 seeds),table_SC6_shares.csv
+SC6B_SIGN_proposal_modification_share_of_remine_uut_pct,92.3 (5 seeds),table_SC6_shares.csv
+SC6B_LEVIATHAN_proposal_share_of_remine_pct,73.1 (5 seeds),table_SC6_shares.csv
+SC6B_LEVIATHAN_proposal_modification_share_of_remine_pct,71.9 (5 seeds),table_SC6_shares.csv
+SC6B_LEVIATHAN_proposal_share_of_remine_uut_pct,103.3 (5 seeds),table_SC6_shares.csv
+SC6B_LEVIATHAN_proposal_modification_share_of_remine_uut_pct,103.5 (5 seeds),table_SC6_shares.csv
+SC6B_C8T1S5I8N5K_proposal_share_of_remine_pct,69.1 (5 seeds),table_SC6_shares.csv
+SC6B_C8T1S5I8N5K_proposal_modification_share_of_remine_pct,86.9 (5 seeds),table_SC6_shares.csv
+SC6B_C8T1S5I8N5K_proposal_share_of_remine_uut_pct,103.3 (5 seeds),table_SC6_shares.csv
+SC6B_C8T1S5I8N5K_proposal_modification_share_of_remine_uut_pct,116.0 (5 seeds),table_SC6_shares.csv
+SC6B_TAFENG_proposal_share_of_remine_pct,76.3 (5 seeds),table_SC6_shares.csv
+SC6B_TAFENG_proposal_modification_share_of_remine_pct,96.3 (5 seeds),table_SC6_shares.csv
+SC6B_TAFENG_proposal_share_of_remine_uut_pct,86.9 (5 seeds),table_SC6_shares.csv
+SC6B_TAFENG_proposal_modification_share_of_remine_uut_pct,107.8 (5 seeds),table_SC6_shares.csv
+mixed_proposal_share_of_remine_range_pct,45.1 to 76.3,table_SC6_shares.csv
+mixed_proposal_faster_than_remine_groups,12/12,table_SC6_shares.csv
+mixed_modification_faster_than_remine_groups,12/12,table_SC6_shares.csv
+mixed_C8T1S5I8N5K_proposal_share_of_remine_range_pct,69.1 to 70.6,table_SC6_shares.csv
+mixed_LEVIATHAN_proposal_share_of_remine_range_pct,71.8 to 73.9,table_SC6_shares.csv
+mixed_SIGN_proposal_share_of_remine_range_pct,54.1 to 55.2,table_SC6_shares.csv
+mixed_TAFENG_proposal_share_of_remine_range_pct,45.1 to 76.3,table_SC6_shares.csv
+mixed_proposal_share_of_remine_uut_range_pct,50.6 to 111.6,table_SC6_shares.csv
+mixed_proposal_faster_than_remine_uut_groups,7/12,table_SC6_shares.csv
+mixed_modification_faster_than_remine_uut_groups,4/12,table_SC6_shares.csv
+mixed_C8T1S5I8N5K_proposal_share_of_remine_uut_range_pct,103.3 to 111.6,table_SC6_shares.csv
+mixed_LEVIATHAN_proposal_share_of_remine_uut_range_pct,98.4 to 103.3,table_SC6_shares.csv
+mixed_SIGN_proposal_share_of_remine_uut_range_pct,92.1 to 96.6,table_SC6_shares.csv
+mixed_TAFENG_proposal_share_of_remine_uut_range_pct,50.6 to 86.9,table_SC6_shares.csv
 SC2_inference_Pre-HUSPM-SWUmax_over_proposal_SIGN_ratio,5.69,table_SC2_inference.csv
 SC2_inference_Pre-HUSPM-SWUmax_over_proposal_SIGN_fastest_over_slowest,5.59,table_SC2_inference.csv
 SC2_inference_Pre-HUSPM-SWUmax_over_proposal_SIGN_ci95,5.64 to 5.75,table_SC2_inference.csv
@@ -1951,6 +2013,9 @@ SC2_inference_closest_KOSARAK,"Remine-own-UUT: 0.98, fastest over slowest 0.96, 
 SC2_inference_closest_LEVIATHAN,"Remine-own-UUT: 0.98, fastest over slowest 0.95, interval 0.97 to 0.99 (5 and 5 runs)",table_SC2_inference.csv
 SC2_inference_closest_SIGN,"Remine-own-UUT: 1.21, fastest over slowest 1.19, interval 1.20 to 1.23 (5 and 5 runs)",table_SC2_inference.csv
 SC2_inference_closest_TAFENG,"Pre-HUSPM-SWUmax: 1.20, fastest over slowest 1.18, interval 1.19 to 1.21 (5 and 5 runs)",table_SC2_inference.csv
+SC2_faster_than_published_and_remine_below_streams,7/7,table_SC2_inference.csv
+SC2_closest_published_or_remine_below,"IncUSP-Miner+ on BIBLE: 1.06, interval 1.05 to 1.07",table_SC2_inference.csv
+SC2_remine_uut_faster_streams,"3/7 (C8T1S5I8N5K, LEVIATHAN, KOSARAK)",table_SC2_inference.csv
 SC2_Remine-own-UUT_over_proposal_SIGN_min,1.19,table_SC2_inference.csv
 SC2_Remine-own-UUT_over_proposal_SIGN_max,1.25,table_SC2_inference.csv
 SC2_Remine-own-UUT_over_proposal_SIGN_separation,"separated, the method faster",table_SC2_inference.csv

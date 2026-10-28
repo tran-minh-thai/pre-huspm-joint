@@ -1998,6 +1998,51 @@ def break_even_floor_estimate():
     return pd.DataFrame(rows)
 
 
+def mixed_shares(put, out):
+    """SC6, SC6D and SC6B: the method's time as a share of remining's below the threshold
+    (Remine-from-scratch) and at the threshold (Remine-own-UUT), per database, pooled over the seeds
+    where both arms finished every operation; and the same for the modifications alone."""
+    rows = []
+    for sc in ("SC6", "SC6D", "SC6B"):
+        df = mf.load_scenario(sc, replicates=True)
+        if df is None:
+            continue
+        df = df.copy()
+        df["kind"] = df["op_type"].astype(str).str.extract(r"SC6_(INS|DEL_BIG|DEL|MOD|INIT)")[0]
+        ops = df[df["kind"].notna() & (df["kind"] != "INIT")]
+        for d in [x for x in mf.ALL_DATASETS if x in set(ops["dataset"])]:
+            g = ops[ops["dataset"] == d]
+
+            def runs(arm):
+                x = g[g["algorithm"] == arm]
+                return {r: y for r, y in x.groupby("replicate") if y["finished"].all()}
+            pm, rl, ru = runs(P), runs(REM), runs(OWN_UUT)
+            for other, name in ((rl, "remine"), (ru, "remine_uut")):
+                seeds = [r for r in pm if r in other and len(pm[r]) == len(other[r])]
+                if not seeds:
+                    continue
+                tot = lambda R, k=None: sum(float(R[r]["runtime_ms"][R[r]["kind"] == k].sum() if k else R[r]["runtime_ms"].sum())
+                                            for r in seeds)
+                rows.append(dict(scenario=sc, dataset=d, against=name, seeds=len(seeds),
+                                 share_pct=100 * tot(pm) / tot(other),
+                                 modification_share_pct=100 * tot(pm, "MOD") / tot(other, "MOD")))
+    t = pd.DataFrame(rows)
+    mf.write_csv(t, os.path.join(out, "table_SC6_shares.csv"))
+    src = "table_SC6_shares.csv"
+    for r in t.itertuples():
+        put(f"{r.scenario}_{r.dataset}_proposal_share_of_{r.against}_pct", f"{r.share_pct:.1f} ({r.seeds} seeds)", src)
+        put(f"{r.scenario}_{r.dataset}_proposal_modification_share_of_{r.against}_pct",
+            f"{r.modification_share_pct:.1f} ({r.seeds} seeds)", src)
+    for name, g in t.groupby("against"):
+        put(f"mixed_proposal_share_of_{name}_range_pct", f"{g['share_pct'].min():.1f} to {g['share_pct'].max():.1f}", src)
+        put(f"mixed_proposal_faster_than_{name}_groups", f"{int((g['share_pct'] < 100).sum())}/{len(g)}", src)
+        put(f"mixed_modification_faster_than_{name}_groups",
+            f"{int((g['modification_share_pct'] < 100).sum())}/{len(g)}", src)
+        for d, h in g.groupby("dataset"):
+            put(f"mixed_{d}_proposal_share_of_{name}_range_pct", f"{h['share_pct'].min():.1f} to {h['share_pct'].max():.1f}", src)
+    return t
+
+
 def units_after_a_rescan():
     """Every floor-selecting arm (the method and the window arms) in every incremental scenario: the
     units right after a rescan at UUT, and how many of them were taken directly (no rescan); the
@@ -2325,6 +2370,20 @@ def sc2_inference(put, out):
         put(f"SC2_inference_closest_{r.dataset}", f"{r.arm}: {r.ratio:.2f}, fastest over slowest "
             f"{r.fastest_over_slowest:.2f}, interval {r.ci_low:.2f} to {r.ci_high:.2f} "
             f"({r.runs_arm} and {r.runs_method} runs)", src)
+    # The published baselines and remining below the threshold, without remining at the threshold
+    # with the proposal's own miner: the streams where the method is faster than all of them, with
+    # an interval above 1, and the closest of them; then the streams where remining at the threshold
+    # is faster, with an interval below 1.
+    pub = comp[comp["arm"] != OWN_UUT]
+    near = pub.loc[pub.groupby("dataset")["ratio"].idxmin()]
+    ahead = near[near["ci_low"] > 1]
+    put("SC2_faster_than_published_and_remine_below_streams", f"{len(ahead)}/{len(near)}", src)
+    m = near.loc[near["ratio"].idxmin()]
+    put("SC2_closest_published_or_remine_below", f"{m.arm} on {m.dataset}: {m.ratio:.2f}, interval "
+        f"{m.ci_low:.2f} to {m.ci_high:.2f}", src)
+    own = comp[(comp["arm"] == OWN_UUT) & (comp["ci_high"] < 1)]
+    put("SC2_remine_uut_faster_streams", f"{len(own)}/{int(comp['dataset'].nunique())}"
+        + (f" ({', '.join(own['dataset'])})" if len(own) else ""), src)
     return t
 
 def half_up(value, digits=2):
@@ -2561,6 +2620,7 @@ def export_all(out_dir=None):
     mixed_seed_spread(put, out)
     window_study(put, out)
     break_even_study(put, out)
+    mixed_shares(put, out)
     sc2_inference(put, out)
     sc2_own_uut(put)
 
