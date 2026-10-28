@@ -48,6 +48,8 @@ import statistics
 import sys
 from collections import defaultdict
 
+import pandas as pd
+
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "analysis"))
 import make_figures as mf  # noqa: E402
@@ -141,9 +143,10 @@ class Stream:
     """One measured stream: D_init, its phases with the operation each belongs to and its kind, and
     the rows measured on it (operations after the initial mine)."""
 
-    def __init__(self, label, db, init, phases, op_of, kind_of, rows, n_ops):
+    def __init__(self, label, db, init, phases, op_of, kind_of, rows, n_ops, init_rows=None):
         self.label, self.db, self.init, self.phases = label, db, init, phases
         self.op_of, self.kind_of, self.rows, self.n_ops = op_of, kind_of, rows, n_ops
+        self.init_rows = init_rows        # the rows of the initial mine (iteration 0)
 
 
 def units_of(stream, merge):
@@ -315,16 +318,18 @@ def evaluate(stream, su, rl):
         return sum(sum(cD_phase(p) for p in unit) if x == "D" else (cU if x == "U" else cL)[stream.op_of[unit[0]]]
                    for unit, x in zip(units, path))
 
-    def break_even(merge, window=5, dL=None, dU=None, logged=None, del_low=False):
+    def break_even(merge, window=5, dL=None, dU=None, logged=None, del_low=False, init_low=None):
         """logged: per operation, the (rho, delta) the measured run used, in place of the priced
         ones, to replay the measured decisions. del_low: a rescan made by a deletion mines at the
-        lower threshold; insertions and modifications decide by the rule."""
+        lower threshold; insertions and modifications decide by the rule. init_low: the time of the
+        mine at the lower threshold known before the first decision, in place of remining's at the first
+        operation (the measured run knows its initial mine, made in a cold virtual machine)."""
         units = units_of(stream, merge)
         r = Replay(su, rl, sum(u for u, _ in stream.init))
         shadow, shadow_n = None, 0
         absorbed, path = [], []
         xL, xU = (cL, cU) if dL is None else (dL, dU)
-        last_L, last_U = xL[1], None
+        last_L, last_U = (xL[1] if init_low is None else init_low), None
         for u, unit in enumerate(units):
             trig = False
             for p in unit:
@@ -460,6 +465,21 @@ def evaluate(stream, su, rl):
                priced_offline_optimum_as_merged_s=round(optimum(merged), 3))
     if len(w5_rows) and not merged:
         row.update(priced_window5_s=round(price(w5, False), 3))
+    # Sensitivity to the number of absorptions the rule averages, priced warm (remining's costs) and
+    # cold (the first rho from the measured initial mine, as the measured run has it).
+    rep = sorted(rows_of(mf.PROPOSED)["replicate"].unique())[0]
+    ir = stream.init_rows
+    init = (ir[(ir["algorithm"] == mf.PROPOSED) & (ir["replicate"] == rep)]["mine_ms"] if ir is not None
+            else pd.Series(dtype=float))
+    init_low = float(init.iloc[0]) / 1000 if len(init) and init.notna().all() else None
+    for W in (1, 2, 3, 5, 10, 20):
+        row[f"priced_break_even_w{W}_s"] = round(price(break_even(merged, window=W), merged), 3)
+        if init_low is not None:
+            path = break_even(merged, window=W, init_low=init_low)
+            row[f"priced_break_even_cold_w{W}_s"] = round(price(path, merged), 3)
+            if W == 5:
+                agree = sum(a == b for a, b in zip(per_op(path, stream, merged), m_be))
+                row["cold_w5_agrees_with_measured"] = f"{agree}/{len(m_be)}"
     row.update(bound_against_threshold(stream, su, rl, merged, units_of, break_even, run, cL, cU, cD_phase))
     row.update(
                measured_fixed_s=round(total(mf.FIXED), 3), priced_fixed_s=round(price(fx, merged), 3),
@@ -492,15 +512,16 @@ def streams(a):
             cache[db] = load(db)
         return cache[db]
 
-    def insert_stream(label, db, rows, init, batches):
+    def insert_stream(label, db, rows, init, batches, init_rows=None):
         batches = [b for b in batches if b]
         return Stream(label, db, init, [(+1, b) for b in batches], list(range(1, len(batches) + 1)),
-                      ["INS"] * len(batches), rows, len(batches))
+                      ["INS"] * len(batches), rows, len(batches), init_rows)
 
     for db in a.db:
         seqs, n_init = seqs_of(db), mf.DATASETS[db]["d_init"]
         rows = sc2[(sc2["dataset"] == db) & (sc2["iteration"] > 0)]
-        yield insert_stream(db, db, rows, seqs[:n_init], even_batches(seqs[n_init:], K))
+        yield insert_stream(db, db, rows, seqs[:n_init], even_batches(seqs[n_init:], K),
+                            sc2[(sc2["dataset"] == db) & (sc2["iteration"] == 0)])
     if a.sc5:
         sc5 = mf.load_scenario("SC5", replicates=True, windows=True)
         for db in [d for d in a.db if d in set(sc5["dataset"])]:
@@ -516,7 +537,9 @@ def streams(a):
                     idx += z
                 rows = sc5[(sc5["dataset"] == db) & (sc5["iteration"] > 0)
                            & sc5["op_type"].astype(str).str.startswith(tag + "_")]
-                yield insert_stream(f"{db} {tag}", db, rows, seqs[:n_init], batches)
+                init_rows = sc5[(sc5["dataset"] == db) & (sc5["iteration"] == 0)
+                                & sc5["op_type"].astype(str).str.startswith(tag + "_")]
+                yield insert_stream(f"{db} {tag}", db, rows, seqs[:n_init], batches, init_rows)
     if a.sc6:
         plans = defaultdict(list)
         for r in csv.DictReader(open(ROOT / a.plans), delimiter="\t"):
@@ -540,7 +563,9 @@ def streams(a):
                         phases.append((-1, idx(o["a"]))); op_of.append(it); kind_of.append("MOD")
                         phases.append((+1, idx(o["b"]))); op_of.append(it); kind_of.append("MOD")
                 rows = df[(df["dataset"] == db) & (df["iteration"] > 0) & (df["seed"] == seed)]
-                yield Stream(f"{sc} {db} seed {seed}", db, seqs[:n_init], phases, op_of, kind_of, rows, len(ops))
+                init_rows = df[(df["dataset"] == db) & (df["iteration"] == 0) & (df["seed"] == seed)]
+                yield Stream(f"{sc} {db} seed {seed}", db, seqs[:n_init], phases, op_of, kind_of, rows, len(ops),
+                             init_rows)
 
 
 def main():
