@@ -44,7 +44,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 RESULTS = ROOT / "results"
 INCREMENTAL = {"SC2", "SC5", "SC6", "SC6D", "SC6B", "SC7"}
 FLOOR_ARMS = {"Pre-HUSPM-Joint-fixed-threshold", "Pre-HUSPM-Joint", "Pre-HUSPM-Joint-w1", "Pre-HUSPM-Joint-w2",
-              "Pre-HUSPM-Joint-w3", "Pre-HUSPM-Joint-w10", "Joint-miner+SWUmax", "Joint-miner+TSU",
+              "Pre-HUSPM-Joint-w3", "Pre-HUSPM-Joint-w5", "Pre-HUSPM-Joint-w10", "Joint-miner+SWUmax", "Joint-miner+TSU",
               "Joint-rule+PreHUSPM-tracking", "Joint-miner+SWUmax+PreHUSPM-tracking", "Joint-rule+min-floor",
               "Joint-rule+plain-floor",
               "Pre-HUSPM-Joint-rescan-rule", "Pre-HUSPM-Joint-no-block-index", "Pre-HUSPM-Joint-bsz-1",

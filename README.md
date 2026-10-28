@@ -50,7 +50,8 @@ python tafeng/build_tafeng.py --zip archive.zip --out-dir datasets --name TAFENG
 `./run.sh SC2` (or `.\run.ps1 SC2`) runs one scenario into `results/run-<time>-<commit>/` with a
 manifest. The published results come from `campaign.ps1`. It runs one JVM per arm
 (algorithm, database, scenario) and commits each finished arm. Before measuring, it refuses
-any JVM other than the one pinned in `environment.lock.json`.
+any JVM other than the one pinned in `environment.lock.json`. `.\use-pinned-jdk.ps1` fetches that
+JDK (the zip and SHA-256 of the lock file) into `..\jdk\` and sets `JAVA_HOME` for the session.
 
 ```powershell
 .\campaign.ps1 -Scenario SC2                   # timing

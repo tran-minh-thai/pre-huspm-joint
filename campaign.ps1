@@ -42,8 +42,8 @@ param(
     # one is given explicitly.
     [string[]] $Algorithms,
     [int]      $CapSeconds = 28800,
-    # The window sensitivity study: the arms Pre-HUSPM-Joint-w1, -w2, -w3 and -w10 of SC2,
-    # SC5, SC6, SC6D and SC6B (w = 5 is Pre-HUSPM-Joint). Replaces the scenario's arm list,
+    # The window sensitivity study: the arms Pre-HUSPM-Joint-w1, -w2, -w3, -w5 and -w10 of SC2,
+    # SC5, SC6, SC6D and SC6B (the method, Pre-HUSPM-Joint, uses the break-even rule). Replaces the scenario's arm list,
     # so -Repeat and -SeedIndex measure replicates of these arms only.
     [switch]   $WindowSweep,
     # Heap ceiling for every arm, one value for the whole campaign. -Xmx is a ceiling, not a
@@ -186,7 +186,7 @@ if (-not $Datasets) {
 $knownAlgos = @('Pre-HUSPM-Joint','Pre-HUSPM-Joint-fixed-threshold','Pre-HUSPM','Pre-HUSPM-SWUmax','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+',
                 'Remine-HUSP-ULL','Remine-HUSP-SP','Joint-miner+SWUmax','Joint-miner+TSU','Joint-rule+PreHUSPM-tracking','Joint-miner+SWUmax+PreHUSPM-tracking',
                 'Remine-own-UUT','Joint-rule+plain-floor','Joint-rule+min-floor','Joint-miner@UUT',
-                'Pre-HUSPM-Joint-w1','Pre-HUSPM-Joint-w2','Pre-HUSPM-Joint-w3','Pre-HUSPM-Joint-w10',
+                'Pre-HUSPM-Joint-w1','Pre-HUSPM-Joint-w2','Pre-HUSPM-Joint-w3','Pre-HUSPM-Joint-w5','Pre-HUSPM-Joint-w10',
                 'USpan','HUSP-ULL','HUSP-SP',
                 'Pre-HUSPM-Joint-no-block-index','Pre-HUSPM-Joint-no-IUB','Pre-HUSPM-Joint-no-IPS',
                 'Pre-HUSPM-Joint-bsz-1','Pre-HUSPM-Joint-bsz-5','Pre-HUSPM-Joint-bsz-10','Pre-HUSPM-Joint-bsz-50','Pre-HUSPM-Joint-bsz-200',
