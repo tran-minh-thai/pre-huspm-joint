@@ -1,5 +1,5 @@
 dataset,seeds,counts_agree_all,seeds_with_ratio,ratio_mean,ratio_std,ratio_min,ratio_max
-C8T1S5I8N5K,5,True,5,0.88,0.045,0.83,0.926
-LEVIATHAN,5,True,5,0.858,0.026,0.824,0.883
-SIGN,5,True,5,0.745,0.035,0.691,0.789
-TAFENG,5,True,5,0.597,0.031,0.557,0.645
+C8T1S5I8N5K,5,True,5,0.709,0.17,0.527,0.984
+LEVIATHAN,5,True,5,0.739,0.032,0.689,0.777
+SIGN,5,True,5,0.553,0.049,0.529,0.641
+TAFENG,5,True,5,0.633,0.021,0.597,0.65

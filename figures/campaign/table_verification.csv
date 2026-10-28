@@ -5,11 +5,14 @@ check,status,runs,operations,direct_delete,direct_insert,direct_modify,mismatche
 "hand-built cases (MixedBudgetProbe), rule iaumax",finished,,8,,,,3,,,,,,,,
 rescan rule acceptance (RescanRuleAcceptanceTest),finished,,49,,,,0,,,,,,,,
 "rescan rule acceptance, floor-selection-acceptance",finished,9,49,,,,0,,,,,,,,
+"rescan rule acceptance, merge-acceptance",finished,9,49,,,,0,,,,,,,,
 "rescan rule acceptance, min-floor-acceptance",finished,9,49,,,,0,,,,,,,,
 "rescan rule acceptance, plain-floor-acceptance",finished,9,49,,,,0,,,,,,,,
 "rescan rule acceptance, pre-tests-acceptance",finished,9,49,,,,0,,,,,,,,
 "rescan rule acceptance, prehuspm-tracking-acceptance",finished,9,49,,,,0,,,,,,,,
+"random streams (MixedBudgetFuzz), break-even-fuzz, rule joint",finished,4,170000,24957,9548,9000,0,,,,,,,,
 "random streams (MixedBudgetFuzz), floor-selection-fuzz, rule joint",finished,12,510000,120279,41812,39215,0,,,,,,,,
+"random streams (MixedBudgetFuzz), merge-fuzz, rule joint",finished,4,170000,47844,15636,14821,0,,,,,,,,
 "random streams (MixedBudgetFuzz), min-floor-fuzz, rule joint",finished,4,170000,47587,15481,14626,0,,,,,,,,
 "random streams (MixedBudgetFuzz), plain-floor-fuzz, rule joint",finished,4,170000,47587,15481,14626,0,,,,,,,,
 "random streams (MixedBudgetFuzz), pre-tests-fuzz, rule joint",finished,4,170000,0,63216,0,0,,,,,,,,
@@ -19,8 +22,10 @@ rescan rule acceptance (RescanRuleAcceptanceTest),finished,,49,,,,0,,,,,,,,
 "random streams (MixedBudgetFuzz), prehuspm-tracking-fuzz, rule pre_swumax",finished,4,170000,0,56718,0,0,,,,,,,,
 "bound invariant B(X) >= u(X), prehuspm-tracking-fuzz",finished,8,7748983,,,,0,,,,,,,,
 "patterns against the proposal after every operation, husps-mixed",finished,1,8820,,,,0,,,,,,,,
+"patterns against the proposal after every operation, husps-mixed-break-even",finished,1,5040,,,,0,,,,,,,,
 "patterns against the proposal after every operation, husps-mixed-remine",finished,1,2520,,,,0,,,,,,,,
 "patterns against the proposal after every operation, husps-sc2",finished,7,7070,,,,0,,,,,,,,
+"patterns against the proposal after every operation, husps-sc2-break-even",finished,7,1414,,,,0,,,,,,,,
 "patterns against the proposal after every operation, husps-sc2-remine",finished,7,1414,,,,0,,,,,,,,
 item pruning against exhaustive enumeration (ItemRemovalCheck random),finished,2000,1444,,,,0,1951,,,,,,,
 "item pruning on and off on real databases, init (ItemRemovalCheck real)",finished,8,8,,,,0,,,,,,,,
@@ -34,11 +39,17 @@ fault injection into the rescan floor selection,finished,,2,,,,,,,,2,,,,
 "direct path on real databases, adversarial operations",finished,8,128,30,49,30,0,108,,,,0,0,0,0
 "direct path on real databases, adversarial-tafeng operations",finished,1,16,4,8,4,0,0,,,,0,0,0,0
 "direct path on real databases, adversarial-tafeng-probe0.7 operations",finished,1,16,4,6,4,0,12,,,,0,0,0,0
+"direct path on real databases, break-even-adversarial operations",finished,8,128,25,46,25,0,108,,,,18,7,0,0
+"direct path on real databases, break-even-random operations",finished,8,128,24,46,20,0,0,,,,30,4,0,0
+"direct path on real databases, break-even-switching-adversarial operations",finished,8,150,21,40,14,0,123,,,,39,11,0,3
+"direct path on real databases, break-even-switching-random operations",finished,8,184,26,53,23,0,0,,,,38,8,0,1
 "direct path on real databases, floor-selection-adversarial operations",finished,8,128,30,49,30,0,108,,,,0,0,0,0
 "direct path on real databases, floor-selection-random operations",finished,8,128,30,58,28,0,0,,,,0,0,0,0
 "direct path on real databases, floor-selection-random-floors operations",finished,8,128,30,58,28,0,0,,,,0,0,0,0
 "direct path on real databases, floor-selection-switching-adversarial operations",finished,8,168,18,33,17,0,141,,,,49,49,0,3
 "direct path on real databases, floor-selection-switching-random operations",finished,8,176,19,42,22,0,0,,,,44,44,0,2
+"direct path on real databases, merge-adversarial operations",finished,8,128,30,49,30,0,108,,,,0,0,0,0
+"direct path on real databases, merge-random operations",finished,8,128,30,58,28,0,0,,,,0,0,0,0
 "direct path on real databases, min-floor-adversarial operations",finished,8,128,30,49,30,0,108,,,,0,0,0,0
 "direct path on real databases, min-floor-random operations",finished,8,128,30,58,28,0,0,,,,0,0,0,0
 "direct path on real databases, plain-floor-adversarial operations",finished,8,128,30,49,30,0,108,,,,0,0,0,0
