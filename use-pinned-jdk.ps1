@@ -82,8 +82,20 @@ if (-not $jdkHome) {
 }
 
 # Ask the JDK itself, as campaign.ps1 does: from the properties, not from 'java -version'.
-$java  = Join-Path (Join-Path $jdkHome 'bin') $JavaExe
-$props = & $java -XshowSettings:properties -version 2>&1 | ForEach-Object { "$_" }
+# java prints them on stderr. Through '& java 2>&1', Windows PowerShell 5.1 turns each stderr
+# line into an error record, which stops this script at the first one under 'Stop'; reading
+# the process's streams directly behaves the same in every PowerShell.
+$java = Join-Path (Join-Path $jdkHome 'bin') $JavaExe
+$psi  = New-Object System.Diagnostics.ProcessStartInfo $java, '-XshowSettings:properties -version'
+$psi.UseShellExecute = $false
+$psi.RedirectStandardOutput = $true
+$psi.RedirectStandardError  = $true
+$proc   = [System.Diagnostics.Process]::Start($psi)
+$stdout = $proc.StandardOutput.ReadToEndAsync()
+$stderr = $proc.StandardError.ReadToEnd()
+$proc.WaitForExit()
+if ($proc.ExitCode -ne 0) { throw "$java -XshowSettings:properties -version exited with $($proc.ExitCode): $stderr" }
+$props = ($stderr + "`n" + $stdout.Result) -split "`r?`n"
 $runtime = (($props | Where-Object { $_ -match '^\s*java\.runtime\.version = ' } | Select-Object -First 1) -replace '^\s*java\.runtime\.version = ', '').Trim()
 $vend    = (($props | Where-Object { $_ -match '^\s*java\.vendor = ' } | Select-Object -First 1) -replace '^\s*java\.vendor = ', '').Trim()
 if ($runtime -ne $want) { throw "$java reports java.runtime.version '$runtime'; ${LockPath} pins '$want'." }
