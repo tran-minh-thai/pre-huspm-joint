@@ -1,0 +1,16 @@
+{
+  "command": "~/.venvs/pre-huspm-adaptive/bin/python analysis/floor_policy_probe.py --out results-probe/floor-policy/2026-10-28-break-even-measured --sc5 --sc6",
+  "path_substitutions": 1,
+  "build_dir": "build",
+  "git_commit": "a69e164816ddf99dc66214d0982a38938f3dc337",
+  "tree": "clean",
+  "source_sha256": "cd3184e653617cc3928706382d0f1e642ff0ee64eedcdb83ac07b21586612a82",
+  "source_files": 42,
+  "java": "openjdk version \"26.0.1\" 2026-04-21",
+  "os": "Darwin 27.0.0 (macOS-27.0.1-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-10-28T14:55:59",
+  "end": "2026-10-28T14:56:48",
+  "exit_code": 0
+}
