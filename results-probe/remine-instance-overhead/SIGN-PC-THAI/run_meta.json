@@ -1,0 +1,14 @@
+{
+    "command":  "java -Xmx48g -Xss64m -cp build RemineInstanceProbe SIGN 4",
+    "git_commit":  "028261e8d0ea436053a0a88b9c1a8680bf646f39",
+    "java":  [
+                 "java.runtime.version = 25.0.4.1+1-LTS",
+                 "java.vendor = Eclipse Adoptium"
+             ],
+    "os":  "Microsoft Windows NT 10.0.26300.0",
+    "machine":  "PC-THAI",
+    "role":  "probe: remining on a fresh or a reused instance against the proposal, one JVM",
+    "start":  "2026-10-30T06:50:45",
+    "end":  "2026-10-30T06:53:06",
+    "exit_code":  0
+}
