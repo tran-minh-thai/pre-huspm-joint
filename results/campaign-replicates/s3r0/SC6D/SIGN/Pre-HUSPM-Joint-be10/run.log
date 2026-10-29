@@ -1,0 +1,50 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 8 | Scenarios: [SC6D]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=3
+
+--- [SC6D] Mixed stream, exactly 6:10:4 ---
+>> [SC6D] SIGN seed=31415 opSize=5 plan=20 operations (6 insert, 10 delete, 4 modify)
+>> RUNNING Pre-HUSPM-Joint-be10/SIGN/SC6_INIT#0  (heap free=1007MB / total=1024MB / max=49152MB)
+[Pre-HUSPM-Joint-be10/SIGN/SC6_INIT#0] OK t=192ms cand=70528 pat=583 heapDelta=19MB
+>> RUNNING Pre-HUSPM-Joint-be10/SIGN/SC6_INS#1  (heap free=109MB / total=128MB / max=49152MB)
+[Pre-HUSPM-Joint-be10/SIGN/SC6_INS#1] OK t=110ms cand=37276 pat=611 heapDelta=2MB
+>> RUNNING Pre-HUSPM-Joint-be10/SIGN/SC6_DEL#2  (heap free=109MB / total=128MB / max=49152MB)
+[Pre-HUSPM-Joint-be10/SIGN/SC6_DEL#2] OK t=64ms cand=74593 pat=619 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-be10/SIGN/SC6_INS#3  (heap free=109MB / total=128MB / max=49152MB)
+[Pre-HUSPM-Joint-be10/SIGN/SC6_INS#3] OK t=71ms cand=39984 pat=707 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-be10/SIGN/SC6_MOD#4  (heap free=109MB / total=128MB / max=49152MB)
+[Pre-HUSPM-Joint-be10/SIGN/SC6_MOD#4] OK t=71ms cand=39732 pat=692 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-be10/SIGN/SC6_MOD#5  (heap free=109MB / total=128MB / max=49152MB)
+[Pre-HUSPM-Joint-be10/SIGN/SC6_MOD#5] OK t=67ms cand=39419 pat=666 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-be10/SIGN/SC6_INS#6  (heap free=109MB / total=128MB / max=49152MB)
+[Pre-HUSPM-Joint-be10/SIGN/SC6_INS#6] OK t=70ms cand=39497 pat=691 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-be10/SIGN/SC6_DEL#7  (heap free=109MB / total=128MB / max=49152MB)
+[Pre-HUSPM-Joint-be10/SIGN/SC6_DEL#7] OK t=69ms cand=79166 pat=707 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-be10/SIGN/SC6_DEL#8  (heap free=109MB / total=128MB / max=49152MB)
+[Pre-HUSPM-Joint-be10/SIGN/SC6_DEL#8] OK t=67ms cand=118393 pat=715 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-be10/SIGN/SC6_INS#9  (heap free=109MB / total=128MB / max=49152MB)
+[Pre-HUSPM-Joint-be10/SIGN/SC6_INS#9] OK t=70ms cand=39712 pat=766 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-be10/SIGN/SC6_INS#10  (heap free=109MB / total=128MB / max=49152MB)
+[Pre-HUSPM-Joint-be10/SIGN/SC6_INS#10] OK t=72ms cand=39899 pat=720 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-be10/SIGN/SC6_DEL#11  (heap free=109MB / total=128MB / max=49152MB)
+[Pre-HUSPM-Joint-be10/SIGN/SC6_DEL#11] OK t=72ms cand=80067 pat=664 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-be10/SIGN/SC6_MOD#12  (heap free=109MB / total=128MB / max=49152MB)
+[Pre-HUSPM-Joint-be10/SIGN/SC6_MOD#12] OK t=71ms cand=40049 pat=677 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-be10/SIGN/SC6_DEL#13  (heap free=109MB / total=128MB / max=49152MB)
+[Pre-HUSPM-Joint-be10/SIGN/SC6_DEL#13] OK t=72ms cand=80869 pat=709 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-be10/SIGN/SC6_DEL#14  (heap free=109MB / total=128MB / max=49152MB)
+[Pre-HUSPM-Joint-be10/SIGN/SC6_DEL#14] OK t=65ms cand=119856 pat=673 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-be10/SIGN/SC6_MOD#15  (heap free=109MB / total=128MB / max=49152MB)
+[Pre-HUSPM-Joint-be10/SIGN/SC6_MOD#15] OK t=67ms cand=39247 pat=667 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-be10/SIGN/SC6_DEL#16  (heap free=109MB / total=128MB / max=49152MB)
+[Pre-HUSPM-Joint-be10/SIGN/SC6_DEL#16] OK t=63ms cand=78131 pat=657 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-be10/SIGN/SC6_DEL#17  (heap free=109MB / total=128MB / max=49152MB)
+[Pre-HUSPM-Joint-be10/SIGN/SC6_DEL#17] OK t=62ms cand=117225 pat=653 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-be10/SIGN/SC6_DEL#18  (heap free=109MB / total=128MB / max=49152MB)
+[Pre-HUSPM-Joint-be10/SIGN/SC6_DEL#18] OK t=61ms cand=156350 pat=630 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-be10/SIGN/SC6_INS#19  (heap free=109MB / total=128MB / max=49152MB)
+[Pre-HUSPM-Joint-be10/SIGN/SC6_INS#19] OK t=60ms cand=38317 pat=570 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-be10/SIGN/SC6_DEL#20  (heap free=109MB / total=128MB / max=49152MB)
+[Pre-HUSPM-Joint-be10/SIGN/SC6_DEL#20] OK t=59ms cand=76301 pat=577 heapDelta=1MB
+=== ALL SCENARIOS DONE (8.4s) ===
