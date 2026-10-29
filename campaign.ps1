@@ -92,7 +92,12 @@ param(
     # Run verify.DirectPathVerifier in adversarial mode on one database, with this machine's
     # heap. Writes results/verify-joint/adversarial-<database> (console.txt, run_meta.json in
     # the format of analysis/record_run.py) and pushes it.
-    [string]   $VerifyAdversarial = ''
+    [string]   $VerifyAdversarial = '',
+    # Probe, not campaign: run the arms of -Algorithms one after the other on each database of
+    # -Datasets in this one session, swapping their order from one database to the next so that a
+    # drift over the session favours neither. Writes results-probe/same-session/<Scenario>-<host>-<date>
+    # (each arm's CSV and log, and run_meta.json) and pushes it; the result trees are not touched.
+    [switch]   $SameSession
 )
 # 'Continue', not 'Stop'. Native tools write progress to stderr - java -version does, git
 # does - and under 'Stop' PowerShell turns every such line into a terminating error. The
@@ -328,7 +333,9 @@ Write-Host "host=$host_  java=$ver"
 Write-Host "compiling..."
 if (Test-Path build) { Remove-Item -Recurse -Force build }
 New-Item -ItemType Directory build | Out-Null
-& (Join-Path (Split-Path $java) 'javac.exe') -encoding UTF-8 -d build `
+$javac = Join-Path (Split-Path $java) 'javac.exe'
+if (-not (Test-Path $javac)) { $javac = Join-Path (Split-Path $java) 'javac' }
+& $javac -encoding UTF-8 -d build `
     (Get-ChildItem -Recurse -Filter *.java src | ForEach-Object { $_.FullName })
 if ($LASTEXITCODE -ne 0) { throw "compile failed" }
 
@@ -360,6 +367,64 @@ if ($Calibrate) {
         if ($LASTEXITCODE -ne 0) { throw "calibration results committed but not pushed; run git push" }
     }
     if ($rc -ne 0) { throw "calibration failed; see $cal/run.log" }
+    return
+}
+
+if ($SameSession) {
+    if ((git status --porcelain -- src 2>$null | Out-String).Trim()) { throw "src/ has uncommitted changes; probe from a commit." }
+    if ($Algorithms.Count -lt 2) { throw "-SameSession compares arms: name at least two with -Algorithms." }
+    $out = "results-probe/same-session/$Scenario-$host_-$(Get-Date -Format 'yyyy-MM-dd')"
+    if (Test-Path $out) { throw "$out exists. Delete it to run again." }
+    New-Item -ItemType Directory -Force $out | Out-Null
+    $start = Get-Date -Format 's'
+    $cells = @()
+    $i = 0
+    foreach ($d in $Datasets) {
+        $order = @($Algorithms)
+        if ($i % 2 -eq 1) { [array]::Reverse($order) }
+        foreach ($a in $order) {
+            $dir = "$out/$d/$a"
+            New-Item -ItemType Directory -Force $dir | Out-Null
+            $vargs = @("-Xmx${HeapGb}g", '-Xss64m', '-cp', 'build', "-Ddataset.only=$d", "-Dalgo.only=$a",
+                       '-Drepeats=1', "-Dresults.dir=$dir/") + $memArgs + @('AutomatedExperimentRunner', $Scenario)
+            $t0 = Get-Date
+            Write-Host "#### same session: $d / $a start $(Get-Date -f HH:mm:ss)"
+            $p = Start-Process -FilePath $java -PassThru -NoNewWindow `
+                 -RedirectStandardOutput "$dir/run.log" -RedirectStandardError "$dir/run.err" -ArgumentList $vargs
+            $null = $p.Handle
+            $p.WaitForExit()
+            $cells += [ordered]@{ dataset = $d; algorithm = $a; position = [array]::IndexOf($order, $a);
+                                  exit_code = $p.ExitCode; seconds = [int]((Get-Date) - $t0).TotalSeconds }
+            if ((Get-Item "$dir/run.err").Length -eq 0) { Remove-Item "$dir/run.err" }
+        }
+        $i++
+    }
+    $meta = [ordered]@{
+        command     = "java -Xmx${HeapGb}g -Xss64m -cp build -Ddataset.only=<database> -Dalgo.only=<arm> -Drepeats=1 " +
+                      "-Dresults.dir=<dir>/ $($memArgs -join ' ') AutomatedExperimentRunner $Scenario"
+        arms        = @($Algorithms)
+        datasets    = @($Datasets)
+        build_dir   = 'build'
+        git_commit  = (git rev-parse HEAD 2>$null | Out-String).Trim()
+        tree        = if ((git status --porcelain 2>$null | Out-String).Trim()) { 'src clean, other files modified' } else { 'clean' }
+        java        = $ver
+        os          = [Environment]::OSVersion.VersionString
+        machine     = $host_
+        role        = 'probe: arms timed in one session, order swapped per database'
+        start       = $start
+        end         = Get-Date -Format 's'
+        cells       = $cells
+    }
+    [IO.File]::WriteAllText((Join-Path $PWD "$out/run_meta.json"), ($meta | ConvertTo-Json -Depth 4) + "`n")
+    $bad = @($cells | Where-Object { $_.exit_code -ne 0 })
+    if (-not $NoGit) {
+        git add $out 2>&1 | Out-Null
+        git commit -q -m "Same-session probe $Scenario on $host_ ($($Algorithms -join ', '); $($cells.Count) cells, $($bad.Count) failed)" 2>&1 | Out-Null
+        git pull -q --rebase 2>&1 | Out-Null
+        git push -q 2>&1 | Out-Null
+        if ($LASTEXITCODE -ne 0) { throw "probe committed but not pushed; run git push" }
+    }
+    if ($bad.Count) { throw "$($bad.Count) of $($cells.Count) cells did not exit 0; see $out" }
     return
 }
 
