@@ -1,0 +1,125 @@
+{
+    "command":  "java -Xmx48g -Xss64m -cp build -Ddataset.only=\u003cdatabase\u003e -Dalgo.only=\u003carm\u003e -Drepeats=1 -Dresults.dir=\u003cdir\u003e/ -Drepeat.index=0 -Dseed.index=0 AutomatedExperimentRunner SC2",
+    "arms":  [
+                 "Remine-own-UUT",
+                 "Pre-HUSPM-Joint"
+             ],
+    "datasets":  [
+                     "SIGN",
+                     "LEVIATHAN",
+                     "TAFENG",
+                     "BIBLE",
+                     "C8T1S5I8N5K",
+                     "KOSARAK",
+                     "FIFA"
+                 ],
+    "build_dir":  "build",
+    "git_commit":  "c0384858198681c8fad10a9a2bf2b6f84d169888",
+    "tree":  "src clean, other files modified",
+    "java":  "25.0.4.1+1-LTS (Eclipse Adoptium)",
+    "os":  "Microsoft Windows NT 10.0.26300.0",
+    "machine":  "PC-THAI",
+    "role":  "probe: arms timed in one session, order swapped per database",
+    "start":  "2026-10-30T05:32:43",
+    "end":  "2026-10-30T06:16:28",
+    "cells":  [
+                  {
+                      "dataset":  "SIGN",
+                      "algorithm":  "Pre-HUSPM-Joint",
+                      "position":  0,
+                      "exit_code":  0,
+                      "seconds":  44
+                  },
+                  {
+                      "dataset":  "SIGN",
+                      "algorithm":  "Remine-own-UUT",
+                      "position":  1,
+                      "exit_code":  0,
+                      "seconds":  75
+                  },
+                  {
+                      "dataset":  "LEVIATHAN",
+                      "algorithm":  "Remine-own-UUT",
+                      "position":  0,
+                      "exit_code":  0,
+                      "seconds":  120
+                  },
+                  {
+                      "dataset":  "LEVIATHAN",
+                      "algorithm":  "Pre-HUSPM-Joint",
+                      "position":  1,
+                      "exit_code":  0,
+                      "seconds":  77
+                  },
+                  {
+                      "dataset":  "TAFENG",
+                      "algorithm":  "Remine-own-UUT",
+                      "position":  0,
+                      "exit_code":  0,
+                      "seconds":  143
+                  },
+                  {
+                      "dataset":  "TAFENG",
+                      "algorithm":  "Pre-HUSPM-Joint",
+                      "position":  1,
+                      "exit_code":  0,
+                      "seconds":  80
+                  },
+                  {
+                      "dataset":  "BIBLE",
+                      "algorithm":  "Pre-HUSPM-Joint",
+                      "position":  0,
+                      "exit_code":  0,
+                      "seconds":  125
+                  },
+                  {
+                      "dataset":  "BIBLE",
+                      "algorithm":  "Remine-own-UUT",
+                      "position":  1,
+                      "exit_code":  0,
+                      "seconds":  191
+                  },
+                  {
+                      "dataset":  "C8T1S5I8N5K",
+                      "algorithm":  "Pre-HUSPM-Joint",
+                      "position":  0,
+                      "exit_code":  0,
+                      "seconds":  77
+                  },
+                  {
+                      "dataset":  "C8T1S5I8N5K",
+                      "algorithm":  "Remine-own-UUT",
+                      "position":  1,
+                      "exit_code":  0,
+                      "seconds":  134
+                  },
+                  {
+                      "dataset":  "KOSARAK",
+                      "algorithm":  "Remine-own-UUT",
+                      "position":  0,
+                      "exit_code":  0,
+                      "seconds":  488
+                  },
+                  {
+                      "dataset":  "KOSARAK",
+                      "algorithm":  "Pre-HUSPM-Joint",
+                      "position":  1,
+                      "exit_code":  0,
+                      "seconds":  396
+                  },
+                  {
+                      "dataset":  "FIFA",
+                      "algorithm":  "Remine-own-UUT",
+                      "position":  0,
+                      "exit_code":  0,
+                      "seconds":  431
+                  },
+                  {
+                      "dataset":  "FIFA",
+                      "algorithm":  "Pre-HUSPM-Joint",
+                      "position":  1,
+                      "exit_code":  0,
+                      "seconds":  244
+                  }
+              ]
+}
