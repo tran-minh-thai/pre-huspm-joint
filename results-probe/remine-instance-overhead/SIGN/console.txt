@@ -1,0 +1,13 @@
+round 0 FRESH  11790.5 ms, explored nodes 452472
+round 0 REUSED 12161.7 ms, explored nodes 452472
+round 0 METHOD 12468.2 ms, explored nodes 452472
+round 1 METHOD 12531.2 ms, explored nodes 452472
+round 1 REUSED 11420.0 ms, explored nodes 452472
+round 1 FRESH  11840.0 ms, explored nodes 452472
+round 2 FRESH  11536.4 ms, explored nodes 452472
+round 2 REUSED 12010.4 ms, explored nodes 452472
+round 2 METHOD 12603.9 ms, explored nodes 452472
+round 3 METHOD 12762.1 ms, explored nodes 452472
+round 3 REUSED 12457.8 ms, explored nodes 452472
+round 3 FRESH  12831.5 ms, explored nodes 452472
+over 4 rounds: FRESH 11999.6 ms, REUSED 12012.5 ms, METHOD 12591.3 ms (its mines 12582.8 ms); nodes equal: true
