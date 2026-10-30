@@ -4454,3 +4454,46 @@ noise_SC2_state_after_last_increment_max,0.0800,table_noise.csv
 noise_SC2_state_after_last_increment_max_pct,8.0,table_noise.csv
 noise_SC2_state_after_last_increment_algorithms,"IncUSP-Miner+, Pre-HUSPM-Joint-fixed-threshold, Pre-HUSPM-SWUmax, Pre-HUSPM-TSU, Remine-from-scratch",table_noise.csv
 noise_SC2_state_after_last_increment_databases,"SIGN, TAFENG",table_noise.csv
+jit_tie_band,"0.921 to 1.086 (largest time ratio between two arms making the same search, 4 SC2 streams)",table_SC2_identical_search.csv
+classes_SC1_method_vs_HUSP-SP,"wins 8, ties 10, losses 14 of 32",table_comparison_classes.csv
+classes_SC1_method_vs_HUSP-SP_ties,SIGN 0.049134 1.019; SIGN 0.065911 0.924; SIGN 0.083371 0.957; SIGN 0.091052 0.941; LEVIATHAN 0.014644 0.984; LEVIATHAN 0.01553 0.995; LEVIATHAN 0.01647 1.060; LEVIATHAN 0.017987 0.966; KOSARAK 0.025 0.922; KOSARAK 0.028117 0.958,table_comparison_classes.csv
+classes_SC1_method_vs_HUSP-ULL,"wins 6, ties 10, losses 16 of 32",table_comparison_classes.csv
+classes_SC1_method_vs_HUSP-ULL_ties,SIGN 0.049134 0.973; LEVIATHAN 0.014644 0.985; LEVIATHAN 0.01553 0.989; LEVIATHAN 0.01647 0.984; LEVIATHAN 0.017987 1.012; FIFA 0.067073 0.929; FIFA 0.075436 0.965; BMS1 0.016218 1.025; KOSARAK 0.031623 1.029; TAFENG 0.003557 0.930,table_comparison_classes.csv
+classes_SC1_miner_at_threshold_vs_HUSP-SP,"wins 25, ties 6, losses 1 of 32",table_comparison_classes.csv
+classes_SC1_miner_at_threshold_vs_HUSP-SP_ties,BIBLE 0.022895 1.042; BIBLE 0.02896 1.061; BIBLE 0.03257 0.978; KOSARAK 0.025 1.022; KOSARAK 0.028117 1.035; KOSARAK 0.031623 0.987,table_comparison_classes.csv
+classes_SC1_miner_at_threshold_vs_HUSP-ULL,"wins 21, ties 11, losses 0 of 32",table_comparison_classes.csv
+classes_SC1_miner_at_threshold_vs_HUSP-ULL_ties,BIBLE 0.0181 1.077; BIBLE 0.022895 1.031; BIBLE 0.02896 1.010; BIBLE 0.03257 0.996; BMS1 0.012821 1.039; BMS1 0.016218 1.038; C8T1S5I8N5K 0.001099 0.964; TAFENG 0.002812 0.987; TAFENG 0.003557 0.987; TAFENG 0.004499 0.956; TAFENG 0.005691 0.938,table_comparison_classes.csv
+classes_SC2_method_vs_IncUSP-Miner+,"wins 5, ties 1, losses 0 of 6",table_comparison_classes.csv
+classes_SC2_method_vs_IncUSP-Miner+_ties,BIBLE 1.065,table_comparison_classes.csv
+classes_SC2_method_vs_Joint-miner+SWUmax,"wins 3, ties 4, losses 0 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Joint-miner+SWUmax_ties,SIGN 0.982; TAFENG 1.049; BIBLE 1.008; FIFA 1.058,table_comparison_classes.csv
+classes_SC2_method_vs_Joint-miner+SWUmax+PreHUSPM-tracking,"wins 6, ties 0, losses 1 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Joint-miner+TSU,"wins 6, ties 1, losses 0 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Joint-miner+TSU_ties,SIGN 0.981,table_comparison_classes.csv
+classes_SC2_method_vs_Joint-rule+PreHUSPM-tracking,"wins 5, ties 1, losses 1 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Joint-rule+PreHUSPM-tracking_ties,BIBLE 1.085,table_comparison_classes.csv
+classes_SC2_method_vs_Joint-rule+min-floor,"wins 3, ties 4, losses 0 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Joint-rule+min-floor_ties,SIGN 0.983; TAFENG 0.969; BIBLE 1.002; FIFA 0.984,table_comparison_classes.csv
+classes_SC2_method_vs_Joint-rule+plain-floor,"wins 3, ties 4, losses 0 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Joint-rule+plain-floor_ties,SIGN 0.983; TAFENG 0.960; BIBLE 1.002; FIFA 0.984,table_comparison_classes.csv
+classes_SC2_method_vs_Pre-HUSPM-Joint-fixed-threshold,"wins 3, ties 4, losses 0 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Pre-HUSPM-Joint-fixed-threshold_ties,SIGN 0.978; TAFENG 0.967; BIBLE 1.009; FIFA 0.997,table_comparison_classes.csv
+classes_SC2_method_vs_Pre-HUSPM-SWUmax,"wins 7, ties 0, losses 0 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Pre-HUSPM-TSU,"wins 7, ties 0, losses 0 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Remine-HUSP-SP,"wins 7, ties 0, losses 0 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Remine-HUSP-ULL,"wins 7, ties 0, losses 0 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Remine-from-scratch,"wins 7, ties 0, losses 0 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Remine-own-UUT,"wins 3, ties 4, losses 0 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Remine-own-UUT_ties,SIGN 1.086; C8T1S5I8N5K 0.975; LEVIATHAN 0.989; KOSARAK 1.015,table_comparison_classes.csv
+classes_SC2_method_vs_closest_published_or_remine_below,"wins 6, ties 1, losses 0 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_closest_published_or_remine_below_ties,BIBLE 1.065,table_comparison_classes.csv
+classes_SC5_method_vs_closest,"wins 6, ties 42, losses 0 of 48",table_comparison_classes.csv
+classes_mixed_method_vs_Remine-from-scratch,"wins 12, ties 0, losses 0 of 12",table_comparison_classes.csv
+classes_mixed_method_vs_Remine-own-UUT,"wins 6, ties 6, losses 0 of 12",table_comparison_classes.csv
+classes_mixed_method_vs_Remine-own-UUT_ties,SC6 SIGN 1.044; SC6 LEVIATHAN 0.984; SC6 C8T1S5I8N5K 0.963; SC6D SIGN 1.082; SC6D C8T1S5I8N5K 0.938; SC6B LEVIATHAN 0.990,table_comparison_classes.csv
+classes_mixed_method_vs_window5,"wins 7, ties 1, losses 1 of 9",table_comparison_classes.csv
+classes_mixed_method_vs_window5_ties,SC6D SIGN 0.990,table_comparison_classes.csv
+classes_mixed_modification_vs_Remine-from-scratch,"wins 11, ties 1, losses 0 of 12",table_comparison_classes.csv
+classes_mixed_modification_vs_Remine-from-scratch_ties,SC6D C8T1S5I8N5K 1.064,table_comparison_classes.csv
+classes_mixed_modification_vs_Remine-own-UUT,"wins 3, ties 7, losses 2 of 12",table_comparison_classes.csv
+classes_mixed_modification_vs_Remine-own-UUT_ties,SC6 SIGN 1.045; SC6 LEVIATHAN 0.993; SC6 C8T1S5I8N5K 0.989; SC6 TAFENG 1.051; SC6D SIGN 0.962; SC6B SIGN 1.086; SC6B LEVIATHAN 0.987,table_comparison_classes.csv

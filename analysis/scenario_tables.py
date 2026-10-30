@@ -29,6 +29,7 @@ import json
 import os
 import re
 import sys
+import time
 
 import numpy as np
 import pandas as pd
@@ -36,6 +37,8 @@ import pandas as pd
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import rename_arms
 import make_figures as mf  # noqa: E402
+
+_STARTED = time.time()   # tables older than this were not written by this run
 
 P = mf.PROPOSED
 REM = "Remine-from-scratch"
@@ -2184,6 +2187,72 @@ def identical_search_keys(put, out):
     return t
 
 
+def _fresh_table(out, name):
+    """A table this run wrote: refuses one left over from an earlier run, which would be read as if new."""
+    path = os.path.join(out, name)
+    if not os.path.exists(path) or os.path.getmtime(path) < _STARTED:
+        raise FileNotFoundError(f"{path}: not written by this run; the comparison classes would read an old table")
+    return pd.read_csv(path)
+
+
+def comparison_classes(put, out):
+    """Every comparison the text draws on, classified as a win, a tie or a loss of the first arm against
+    the second, with a tie band measured rather than chosen: two arms that make the same search at every
+    increment (SC2, `identical`) still differ by up to a factor b in time, because each runs in its own
+    JVM and is compiled differently, so any ratio within [1/b, b] is a tie. ratio = time of the second
+    arm over time of the first; above b the first arm wins."""
+    identical = _fresh_table(out, "table_SC2_identical_search.csv")
+    same = identical[identical["identical"]]["remine_uut_over_method"]
+    if not len(same):
+        raise ValueError("no stream with the same search: the tie band cannot be measured")
+    b = float(np.exp(np.abs(np.log(same)).max()))
+    put("jit_tie_band", f"{1 / b:.3f} to {b:.3f} (largest time ratio between two arms making the same search, "
+        f"{len(same)} SC2 streams)", "table_SC2_identical_search.csv")
+    cls = lambda r: "win" if r > b else ("loss" if r < 1 / b else "tie")
+    rows = []
+
+    def add(family, group, first, second, ratio):
+        rows.append(dict(family=family, group=group, first=first, second=second, ratio=ratio, cls=cls(ratio)))
+
+    inf = _fresh_table(out, "table_SC2_inference.csv")
+    for r in inf.itertuples():
+        add(f"SC2_method_vs_{r.arm}", r.dataset, P, r.arm, r.ratio)
+    comp = inf[inf["competitor"] & (inf["arm"] != OWN_UUT)]
+    for db, g in comp.groupby("dataset"):
+        m = g.loc[g["ratio"].idxmin()]
+        add("SC2_method_vs_closest_published_or_remine_below", db, P, m.arm, m.ratio)
+    sc5 = _fresh_table(out, "table_SC5_cells.csv")
+    for r in sc5.itertuples():
+        add("SC5_method_vs_closest", f"{r.dataset} K={r.K} {r.shape}", P, r.closest, r.closest_over_proposal)
+    sh = _fresh_table(out, "table_SC6_shares.csv")
+    for r in sh.itertuples():
+        arm = REM if r.against == "remine" else OWN_UUT
+        add(f"mixed_method_vs_{arm}", f"{r.scenario} {r.dataset}", P, arm, 100 / r.share_pct)
+        add(f"mixed_modification_vs_{arm}", f"{r.scenario} {r.dataset}", P, arm, 100 / r.modification_share_pct)
+    bw = _fresh_table(out, "table_SC6_break_even_vs_window.csv")
+    for r in bw.itertuples():
+        add("mixed_method_vs_window5", f"{r.scenario} {r.dataset}", P, mf.window_arm(5), 1 / r.over_window5)
+    st = _fresh_table(out, "table_static_joint_miner_uut.csv")
+    st = st[st["scenario"] == "SC1"]
+    for _, r in st.iterrows():          # column names hold '-', so by name, not by attribute
+        g = f"{r['dataset']} {r['su']:g}"
+        for other in ("HUSP-ULL", "HUSP-SP"):
+            jm = float(r[f"{other}_over_jm"])
+            add(f"SC1_miner_at_threshold_vs_{other}", g, "Joint-miner@UUT", other, jm)
+            add(f"SC1_method_vs_{other}", g, P, other, jm / float(r["proposal_over_jm"]))
+    c = pd.DataFrame(rows)
+    mf.write_csv(c, os.path.join(out, "table_comparison_classes.csv"))
+    src = "table_comparison_classes.csv"
+    for fam, g in c.groupby("family"):
+        n = g["cls"].value_counts()
+        put(f"classes_{fam}", f"wins {int(n.get('win', 0))}, ties {int(n.get('tie', 0))}, losses {int(n.get('loss', 0))} "
+            f"of {len(g)}", src)
+        ties = g[g["cls"] == "tie"]
+        if len(ties) and len(ties) <= 12:
+            put(f"classes_{fam}_ties", "; ".join(f"{x.group} {x.ratio:.3f}" for x in ties.itertuples()), src)
+    return c, b
+
+
 def units_after_a_rescan():
     """Every floor-selecting arm (the method and the window arms) in every incremental scenario: the
     units right after a rescan at UUT, and how many of them were taken directly (no rescan); the
@@ -3064,6 +3133,9 @@ def export_all(out_dir=None):
             for stat, v in (("median", big["relative_spread"].median()), ("max", big["relative_spread"].max())):
                 put(f"noise_SC1_live_set_at_least_5mb_{stat}", f"{v:.4f}", "table_noise.csv")
                 put(f"noise_SC1_live_set_at_least_5mb_{stat}_pct", f"{100 * v:.1f}", "table_noise.csv")
+
+    # after every table above is written: the classes read them
+    comparison_classes(put, out)
 
     # a key written twice has two sources, and a later change of one would leave the other behind
     seen, twice = set(), []
