@@ -2052,6 +2052,113 @@ def mixed_shares(put, out):
     return t
 
 
+# Arms of the pooled mixed ratios, with the tag of their keys.
+MIXED_POOLED_ARMS = [(REM, "Remine"), ("Remine-HUSP-ULL", "Remine-HUSP-ULL"), ("Remine-HUSP-SP", "Remine-HUSP-SP"),
+                     (OWN_UUT, "Remine-UUT"), (FIXED, "FixedFloor"), (mf.window_arm(5), "window5")]
+MIXED_POOLED_KINDS = [("stream", None), ("insertion", "INS"), ("deletion", "DEL"), ("modification", "MOD"),
+                      ("deletion_beyond_the_budget", "DEL_BIG")]
+
+
+def mixed_pooled(put, out):
+    """SC6, SC6D and SC6B: the proposal against every remining arm, the fixed lower threshold and the
+    window rule at w=5, as the ratio of the two times summed over the seeds where both arms finished
+    every operation (the pooled ratio the comparison classes use), with the range of the per-seed
+    ratios beside it. Over the whole stream the ratio is the proposal's time over the arm's; for one
+    kind of operation it is the arm's time over the proposal's. Writes table_SC6_pooled.csv; keys
+    <SC>_<DB>_stream_pooled_proposal_over_<arm> and <SC>_<DB>_<kind>_pooled_<arm>_over_proposal,
+    with _seeds and _seed_range, and ranges over the databases of a scenario, over the databases
+    other than TAFENG, and over the three scenarios."""
+    rows = []
+    for sc in ("SC6", "SC6D", "SC6B"):
+        df = mf.load_scenario(sc, replicates=True, windows=True)
+        if df is None:
+            continue
+        ops = df[~df["op_type"].astype(str).str.contains("INIT")].copy()
+        ops["kind"] = ops["op_type"].astype(str).str.extract(r"SC6_(INS|DEL_BIG|DEL|MOD)")[0]
+        ops = ops[ops["kind"].notna()]
+        for d in [x for x in mf.ALL_DATASETS if x in set(ops["dataset"])]:
+            g = ops[ops["dataset"] == d]
+            # seeds where an arm finished every operation of the stream
+            full = lambda arm: {r for r, x in g[g["algorithm"] == arm].groupby("replicate") if x["finished"].all()}
+            n_ops = lambda arm, r: int(((g["algorithm"] == arm) & (g["replicate"] == r)).sum())
+            done_p = full(P)
+            for kind, code in MIXED_POOLED_KINDS:
+                gk = g if code is None else g[g["kind"] == code]
+                if code is not None and not (gk["algorithm"] == P).any():
+                    continue
+                t = lambda arm: gk[gk["algorithm"] == arm].groupby("replicate")["runtime_ms"].sum()
+                tp = t(P)
+                for arm, tag in MIXED_POOLED_ARMS:
+                    ta = t(arm)
+                    seeds = sorted(r for r in done_p & full(arm) if n_ops(arm, r) == n_ops(P, r) and r in ta and r in tp)
+                    if not seeds:
+                        continue
+                    sp, sa = float(tp[seeds].sum()), float(ta[seeds].sum())
+                    if kind == "stream":
+                        pooled, per = sp / sa, [tp[r] / ta[r] for r in seeds]
+                    else:
+                        pooled, per = sa / sp, [ta[r] / tp[r] for r in seeds]
+                    rows.append(dict(scenario=sc, dataset=d, kind=kind, arm=tag, seeds=len(seeds), pooled=pooled,
+                                     seed_min=min(per), seed_max=max(per),
+                                     arm_over_proposal=sa / sp))
+    t = pd.DataFrame(rows)
+    path = os.path.join(out, "table_SC6_pooled.csv")
+    if not len(t):
+        if os.path.exists(path):
+            os.remove(path)
+        print("[not written] table_SC6_pooled.csv: no finished arm of SC6, SC6D or SC6B")
+        return t
+    mf.write_csv(t, path)
+    src = "table_SC6_pooled.csv"
+    name = lambda kind, arm: "stream_pooled_proposal_over_" + arm if kind == "stream" else f"{kind}_pooled_{arm}_over_proposal"
+    for r in t.itertuples():
+        base = f"{r.scenario}_{r.dataset}_{name(r.kind, r.arm)}"
+        put(base, f"{r.pooled:.3f}", src)
+        put(f"{base}_seeds", str(r.seeds), src)
+        put(f"{base}_seed_range", f"{r.seed_min:.3f} to {r.seed_max:.3f}", src)
+
+    def rng(h):
+        lo, hi = h.loc[h["pooled"].idxmin()], h.loc[h["pooled"].idxmax()]
+        where = lambda x: f"{x.scenario} {x.dataset}" if h["scenario"].nunique() > 1 else x.dataset
+        return f"{lo.pooled:.3f} ({where(lo)}) to {hi.pooled:.3f} ({where(hi)})"
+    # the two remining controls with another miner, taken together, as the text names them
+    both = t[t["arm"].isin(["Remine-HUSP-ULL", "Remine-HUSP-SP"])].assign(arm="Remine-HUSP-ULL-or-SP")
+    tt = pd.concat([t, both], ignore_index=True)
+    for (kind, arm), h in tt.groupby(["kind", "arm"]):
+        nm = name(kind, arm)
+        for sc, hs in h.groupby("scenario"):
+            put(f"{sc}_{nm}_range", rng(hs), src)
+            o = hs[hs["dataset"] != "TAFENG"]
+            if len(o) and len(o) < len(hs):
+                put(f"{sc}_{nm}_range_without_TAFENG", rng(o), src)
+        put(f"mixed_{nm}_range", rng(h), src)
+        o = h[h["dataset"] != "TAFENG"]
+        if len(o) and len(o) < len(h):
+            put(f"mixed_{nm}_range_without_TAFENG", rng(o), src)
+            put(f"mixed_{nm}_range_TAFENG", rng(h[h["dataset"] == "TAFENG"]), src)
+    # every kind of operation together (not the stream), per scenario, without TAFENG
+    kinds = tt[tt["kind"] != "stream"]
+    for (sc, arm), h in kinds.groupby(["scenario", "arm"]):
+        o = h[h["dataset"] != "TAFENG"]
+        if len(o):
+            lo, hi = o.loc[o["pooled"].idxmin()], o.loc[o["pooled"].idxmax()]
+            put(f"{sc}_every_kind_pooled_{arm}_over_proposal_range_without_TAFENG",
+                f"{lo.pooled:.3f} ({lo.dataset} {lo.kind}) to {hi.pooled:.3f} ({hi.dataset} {hi.kind})", src)
+    # the same ratios as table_SC6_shares, which the comparison classes read: they must agree
+    sh = _fresh_table(out, "table_SC6_shares.csv")
+    for r in sh.itertuples():
+        tag = "Remine" if r.against == "remine" else "Remine-UUT"
+        for kind, col in (("stream", "share_pct"), ("modification", "modification_share_pct")):
+            m = t[(t["scenario"] == r.scenario) & (t["dataset"] == r.dataset) & (t["kind"] == kind) & (t["arm"] == tag)]
+            if len(m) != 1:
+                raise ValueError(f"table_SC6_pooled: no single row for {r.scenario} {r.dataset} {kind} {tag}")
+            share = 100 / float(m["arm_over_proposal"].iloc[0])
+            if abs(share - getattr(r, col)) > 0.0005 + 1e-9:   # the shares table is written to 3 decimals
+                raise ValueError(f"table_SC6_pooled and table_SC6_shares disagree on {r.scenario} {r.dataset} {kind} "
+                                 f"{tag}: {share} against {getattr(r, col)}")
+    return t
+
+
 BE_SWEEP = (1, 2, 3, 10, 20)
 
 
@@ -2245,9 +2352,13 @@ def comparison_classes(put, out):
         arm = REM if r.against == "remine" else OWN_UUT
         add(f"mixed_method_vs_{arm}", f"{r.scenario} {r.dataset}", P, arm, 100 / r.share_pct)
         add(f"mixed_modification_vs_{arm}", f"{r.scenario} {r.dataset}", P, arm, 100 / r.modification_share_pct)
-    bw = _fresh_table(out, "table_SC6_break_even_vs_window.csv")
-    for r in bw.itertuples():
-        add("mixed_method_vs_window5", f"{r.scenario} {r.dataset}", P, mf.window_arm(5), 1 / r.over_window5)
+    # the mixed streams, pooled over the seeds like the shares above: the window rule at w=5 (whose
+    # family read the mean of the per-seed ratios until 2026-10-30), and every arm and kind of operation
+    po = _fresh_table(out, "table_SC6_pooled.csv")
+    for r in po.itertuples():
+        if r.kind == "stream" and r.arm == "window5":
+            add("mixed_method_vs_window5", f"{r.scenario} {r.dataset}", P, mf.window_arm(5), r.arm_over_proposal)
+        add(f"mixed_pooled_{r.kind}_vs_{r.arm}", f"{r.scenario} {r.dataset}", P, r.arm, r.arm_over_proposal)
     st = _fresh_table(out, "table_static_joint_miner_uut.csv")
     for _, r in st[st["scenario"].isin(["SC1", "SC3"])].iterrows():   # names hold '-': by name
         g = f"{r['dataset']} {r['su']:g}"
@@ -2275,9 +2386,15 @@ def comparison_classes(put, out):
         n = g["cls"].value_counts()
         put(f"classes_{fam}", f"wins {int(n.get('win', 0))}, ties {int(n.get('tie', 0))}, losses {int(n.get('loss', 0))} "
             f"of {len(g)}", src)
-        ties = g[g["cls"] == "tie"]
-        if len(ties) and len(ties) <= 12:
-            put(f"classes_{fam}_ties", "; ".join(f"{x.group} {x.ratio:.3f}" for x in ties.itertuples()), src)
+        for c_, word in (("tie", "ties"), ("win", "wins"), ("loss", "losses")):
+            h = g[g["cls"] == c_]
+            if len(h) and len(h) <= 12:
+                put(f"classes_{fam}_{word}", "; ".join(f"{x.group} {x.ratio:.3f}" for x in h.itertuples()), src)
+            if len(h) and c_ != "tie":
+                # the ratio (second arm over first) and its inverse (first over second) over these groups
+                put(f"classes_{fam}_{word}_range", f"{h['ratio'].min():.3f} to {h['ratio'].max():.3f}", src)
+                put(f"classes_{fam}_{word}_range_first_over_second",
+                    f"{1 / h['ratio'].max():.3f} to {1 / h['ratio'].min():.3f}", src)
     return c, b
 
 
@@ -2901,6 +3018,7 @@ def export_all(out_dir=None):
     window_study(put, out)
     break_even_study(put, out)
     mixed_shares(put, out)
+    mixed_pooled(put, out)
     break_even_window_sensitivity(put, out)
     identical_search_keys(put, out)
     time_rule_keys(put, out)
