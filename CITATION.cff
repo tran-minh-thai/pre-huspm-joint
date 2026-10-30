@@ -4,13 +4,26 @@ message: If you use this software, please cite the accompanying paper.
 type: software
 authors:
   - family-names: Tran
-    given-names: Minh-Thai
+    given-names: Thai
     email: thaitm@huflit.edu.vn
-    affiliation: Ho Chi Minh City University of Foreign Languages and Information Technology
+    affiliation: Ho Chi Minh City University of Foreign Languages – Information Technology
   - family-names: Trinh
     given-names: Cuong
+    email: trinhphicuong@tdtu.edu.vn
     affiliation: Ton Duc Thang University
   - family-names: Huynh
     given-names: Bao
+    email: hq.bao@hutech.edu.vn
+    affiliation: HUTECH University
 license: MIT
 repository-code: https://github.com/tran-minh-thai/pre-huspm-joint
+preferred-citation:
+  type: article
+  title: Maintaining high-utility sequential patterns under insertions, deletions and modifications with a joint pre-large budget
+  authors:
+    - family-names: Tran
+      given-names: Thai
+    - family-names: Trinh
+      given-names: Cuong
+    - family-names: Huynh
+      given-names: Bao

@@ -1,9 +1,11 @@
-# Probes on the development machine
+# Probes
 
-Runs made to decide what to measure, not measurements. Every timing here comes from the
-development machine, not from the measurement machine (`results/machine/`), and no table, figure
-or key of the paper reads this tree: `analysis/make_figures.py` and `analysis/scenario_tables.py`
-read `results/` only. Counts and pattern comparisons recorded here do not depend on the machine.
+Runs made to decide what to measure, not measurements. Their timings come from the development
+machine, except two records run on the measurement machine (`results/machine/`) in probe mode:
+`same-session/SC2-PC-THAI-2026-10-30` and `remine-instance-overhead/SIGN-PC-THAI`. The tables and
+figures read `results/` only. `analysis/scenario_tables.py` reads these two records for the 12 keys
+of `paper_numbers.csv` prefixed `probe_`, whose source is marked "(probe)". Counts and pattern
+comparisons recorded here do not depend on the machine.
 
 | directory | tool | question |
 |---|---|---|

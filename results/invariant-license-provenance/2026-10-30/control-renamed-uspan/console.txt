@@ -1,0 +1,7 @@
+identifiers renamed: 223
+SPMF files scanned: 3051
+
+== RenamedUSpan.java
+  lines 0.000 (0/263) ca/pfv/spmf/algorithmmanager/AlgorithmManager.java; 0.000 (0/263) ca/pfv/spmf/algorithmmanager/AlgorithmType.java
+  raw   0.010 (29/2994) ca/pfv/spmf/algorithms/sequentialpatterns/uspan/AlgoUSpan.java; 0.003 (9/2994) ca/pfv/spmf/algorithms/frequentpatterns/hui_miner/AlgoTHUI.java
+  shape 0.992 (1948/1964) ca/pfv/spmf/algorithms/sequentialpatterns/uspan/AlgoUSpan.java; 0.360 (708/1964) ca/pfv/spmf/algorithms/frequentpatterns/UFH/AlgoUFH.java
