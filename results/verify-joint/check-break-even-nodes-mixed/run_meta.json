@@ -1,0 +1,16 @@
+{
+  "command": "~/.venvs/pre-huspm-adaptive/bin/python analysis/check_break_even.py --results results/verify-joint/husps-mixed-break-even-nodes --plans results-probe/floor-policy/mixed-plans/mixed_plans.tsv",
+  "path_substitutions": 1,
+  "build_dir": "build-nodes",
+  "git_commit": "9a3843be4c0f937b715e3e76cc390ae4bacae4eb",
+  "tree": "src clean, other files modified",
+  "source_sha256": "add7747760811927b75d0ce574b2077b78dff2f3b1ddbe7151c31d60538f22b3",
+  "source_files": 42,
+  "java": "openjdk version \"25.0.4.1\" 2026-08-18 LTS",
+  "os": "Darwin 27.2.0 (macOS-27.2-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-10-30T09:45:17",
+  "end": "2026-10-30T09:45:26",
+  "exit_code": 0
+}

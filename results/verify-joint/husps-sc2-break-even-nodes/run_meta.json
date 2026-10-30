@@ -1,0 +1,16 @@
+{
+  "command": "bash -c rc=0; for d in SIGN TAFENG C8T1S5I8N5K LEVIATHAN BIBLE KOSARAK FIFA; do java -Xmx20g -Xss64m -cp build-nodes -Dverify.husps=true -Drepeats=1 -Ddataset.only=$d -Dalgo.only=Pre-HUSPM-Joint-fixed-threshold,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w5 -Dresults.dir=results/verify-joint/husps-sc2-break-even-nodes/ AutomatedExperimentRunner SC2 || rc=1; done; exit $rc",
+  "path_substitutions": 0,
+  "build_dir": "build-nodes",
+  "git_commit": "fc8472096144924562e223fa0a5e7287d2bcccdf",
+  "tree": "src clean, other files modified",
+  "source_sha256": "3ed1e90a068a88e46499767df1671c63d52edc1a6ea41b205fd05164572d9282",
+  "source_files": 42,
+  "java": "openjdk version \"25.0.4.1\" 2026-08-18 LTS",
+  "os": "Darwin 27.2.0 (macOS-27.2-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-10-30T08:01:38",
+  "end": "2026-10-30T08:55:10",
+  "exit_code": 0
+}

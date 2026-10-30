@@ -1,0 +1,16 @@
+{
+  "command": "java -Xmx16g -Xss64m -cp build-nodes -Dverify.husps=true -Dseeds=5 -Drepeats=1 -Ddataset.only=SIGN,LEVIATHAN,C8T1S5I8N5K,TAFENG -Dalgo.only=Pre-HUSPM-Joint-fixed-threshold,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w5,Joint-rule+plain-floor,Joint-rule+min-floor -Dresults.dir=results/verify-joint/husps-mixed-break-even-nodes/ AutomatedExperimentRunner SC6 SC6D SC6B",
+  "path_substitutions": 0,
+  "build_dir": "build-nodes",
+  "git_commit": "9a3843be4c0f937b715e3e76cc390ae4bacae4eb",
+  "tree": "src clean, other files modified",
+  "source_sha256": "add7747760811927b75d0ce574b2077b78dff2f3b1ddbe7151c31d60538f22b3",
+  "source_files": 42,
+  "java": "openjdk version \"25.0.4.1\" 2026-08-18 LTS",
+  "os": "Darwin 27.2.0 (macOS-27.2-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-10-30T08:55:18",
+  "end": "2026-10-30T09:45:16",
+  "exit_code": 0
+}
