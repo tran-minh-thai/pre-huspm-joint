@@ -1786,6 +1786,13 @@ probe_one_jvm_SIGN_remine_reused_s,10.13,results-probe/remine-instance-overhead/
 probe_one_jvm_SIGN_method_s,10.08,results-probe/remine-instance-overhead/SIGN-PC-THAI/console.txt (probe)
 probe_one_jvm_SIGN_spread_pct,0.8,results-probe/remine-instance-overhead/SIGN-PC-THAI/console.txt (probe)
 probe_one_jvm_SIGN_nodes_equal,true,results-probe/remine-instance-overhead/SIGN-PC-THAI/console.txt (probe)
+time_based_SC2_total_over_proposal,1.013,table_time_rule.csv
+time_based_SC5_total_over_proposal,0.992,table_time_rule.csv
+time_based_SC6_total_over_proposal,1.006,table_time_rule.csv
+time_based_SC6B_total_over_proposal,1.032,table_time_rule.csv
+time_based_SC6D_total_over_proposal,1.090,table_time_rule.csv
+time_based_total_over_proposal,"1.008 (1073.2 s over 1065.1 s, 115 streams)",table_time_rule.csv
+time_based_streams_with_runs_on_different_decisions,"35/55 (SC2 4/7, SC5 31/48)",table_time_rule.csv
 SC2_inference_Pre-HUSPM-SWUmax_over_proposal_SIGN_ratio,5.09,table_SC2_inference.csv
 SC2_inference_Pre-HUSPM-SWUmax_over_proposal_SIGN_fastest_over_slowest,4.99,table_SC2_inference.csv
 SC2_inference_Pre-HUSPM-SWUmax_over_proposal_SIGN_ci95,5.04 to 5.14,table_SC2_inference.csv
@@ -2679,6 +2686,14 @@ verify_random_streams_mixedbudgetfuzz_break_even_fuzz_rule_joint_direct_insert,9
 verify_random_streams_mixedbudgetfuzz_break_even_fuzz_rule_joint_direct_modify,9000,table_verification.csv
 verify_random_streams_mixedbudgetfuzz_break_even_fuzz_rule_joint_mismatches,0,table_verification.csv
 verify_random_streams_mixedbudgetfuzz_break_even_fuzz_rule_joint_direct_total,43505,table_verification.csv
+verify_random_streams_mixedbudgetfuzz_break_even_nodes_fuzz_rule_joint_status,finished,table_verification.csv
+verify_random_streams_mixedbudgetfuzz_break_even_nodes_fuzz_rule_joint_runs,4,table_verification.csv
+verify_random_streams_mixedbudgetfuzz_break_even_nodes_fuzz_rule_joint_operations,170000,table_verification.csv
+verify_random_streams_mixedbudgetfuzz_break_even_nodes_fuzz_rule_joint_direct_delete,28996,table_verification.csv
+verify_random_streams_mixedbudgetfuzz_break_even_nodes_fuzz_rule_joint_direct_insert,11400,table_verification.csv
+verify_random_streams_mixedbudgetfuzz_break_even_nodes_fuzz_rule_joint_direct_modify,10649,table_verification.csv
+verify_random_streams_mixedbudgetfuzz_break_even_nodes_fuzz_rule_joint_mismatches,0,table_verification.csv
+verify_random_streams_mixedbudgetfuzz_break_even_nodes_fuzz_rule_joint_direct_total,51045,table_verification.csv
 verify_random_streams_mixedbudgetfuzz_floor_selection_fuzz_rule_joint_status,finished,table_verification.csv
 verify_random_streams_mixedbudgetfuzz_floor_selection_fuzz_rule_joint_runs,12,table_verification.csv
 verify_random_streams_mixedbudgetfuzz_floor_selection_fuzz_rule_joint_operations,510000,table_verification.csv
@@ -3058,6 +3073,19 @@ verify_direct_path_on_real_databases_break_even_adversarial_operations_rescans_b
 verify_direct_path_on_real_databases_break_even_adversarial_operations_direct_at_uut,0,table_verification.csv
 verify_direct_path_on_real_databases_break_even_adversarial_operations_stopped_by_heap,0,table_verification.csv
 verify_direct_path_on_real_databases_break_even_adversarial_operations_direct_total,96,table_verification.csv
+verify_direct_path_on_real_databases_break_even_nodes_random_operations_status,finished,table_verification.csv
+verify_direct_path_on_real_databases_break_even_nodes_random_operations_runs,8,table_verification.csv
+verify_direct_path_on_real_databases_break_even_nodes_random_operations_operations,128,table_verification.csv
+verify_direct_path_on_real_databases_break_even_nodes_random_operations_with_target,0,table_verification.csv
+verify_direct_path_on_real_databases_break_even_nodes_random_operations_direct_delete,26,table_verification.csv
+verify_direct_path_on_real_databases_break_even_nodes_random_operations_direct_insert,49,table_verification.csv
+verify_direct_path_on_real_databases_break_even_nodes_random_operations_direct_modify,20,table_verification.csv
+verify_direct_path_on_real_databases_break_even_nodes_random_operations_mismatches,0,table_verification.csv
+verify_direct_path_on_real_databases_break_even_nodes_random_operations_rescans_at_uut,24,table_verification.csv
+verify_direct_path_on_real_databases_break_even_nodes_random_operations_rescans_back_to_low,4,table_verification.csv
+verify_direct_path_on_real_databases_break_even_nodes_random_operations_direct_at_uut,0,table_verification.csv
+verify_direct_path_on_real_databases_break_even_nodes_random_operations_stopped_by_heap,0,table_verification.csv
+verify_direct_path_on_real_databases_break_even_nodes_random_operations_direct_total,95,table_verification.csv
 verify_direct_path_on_real_databases_break_even_random_operations_status,finished,table_verification.csv
 verify_direct_path_on_real_databases_break_even_random_operations_runs,8,table_verification.csv
 verify_direct_path_on_real_databases_break_even_random_operations_operations,128,table_verification.csv
@@ -4485,9 +4513,23 @@ classes_SC2_method_vs_Remine-HUSP-ULL,"wins 7, ties 0, losses 0 of 7",table_comp
 classes_SC2_method_vs_Remine-from-scratch,"wins 7, ties 0, losses 0 of 7",table_comparison_classes.csv
 classes_SC2_method_vs_Remine-own-UUT,"wins 3, ties 4, losses 0 of 7",table_comparison_classes.csv
 classes_SC2_method_vs_Remine-own-UUT_ties,SIGN 1.086; C8T1S5I8N5K 0.975; LEVIATHAN 0.989; KOSARAK 1.015,table_comparison_classes.csv
+classes_SC2_method_vs_best_window,"wins 1, ties 5, losses 1 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_best_window_ties,BIBLE 0.957; FIFA 0.982; KOSARAK 1.003; LEVIATHAN 1.014; TAFENG 0.966,table_comparison_classes.csv
 classes_SC2_method_vs_closest_published_or_remine_below,"wins 6, ties 1, losses 0 of 7",table_comparison_classes.csv
 classes_SC2_method_vs_closest_published_or_remine_below_ties,BIBLE 1.065,table_comparison_classes.csv
+classes_SC3_method_vs_HUSP-SP,"wins 1, ties 4, losses 7 of 12",table_comparison_classes.csv
+classes_SC3_method_vs_HUSP-SP_ties,SIGN 0.049134 1.042; SIGN 0.083371 1.040; SIGN 0.091052 0.994; LEVIATHAN 0.01647 0.962,table_comparison_classes.csv
+classes_SC3_method_vs_HUSP-ULL,"wins 0, ties 7, losses 5 of 12",table_comparison_classes.csv
+classes_SC3_method_vs_HUSP-ULL_ties,SIGN 0.049134 0.998; SIGN 0.065911 1.056; SIGN 0.083371 1.047; SIGN 0.091052 1.023; LEVIATHAN 0.014644 0.934; LEVIATHAN 0.01553 0.943; LEVIATHAN 0.01647 0.925,table_comparison_classes.csv
+classes_SC3_miner_at_threshold_vs_HUSP-SP,"wins 10, ties 2, losses 0 of 12",table_comparison_classes.csv
+classes_SC3_miner_at_threshold_vs_HUSP-SP_ties,C8T1S5I8N5K 0.0012 1.070; C8T1S5I8N5K 0.001236 1.053,table_comparison_classes.csv
+classes_SC3_miner_at_threshold_vs_HUSP-ULL,"wins 10, ties 2, losses 0 of 12",table_comparison_classes.csv
+classes_SC3_miner_at_threshold_vs_HUSP-ULL_ties,C8T1S5I8N5K 0.001099 1.033; C8T1S5I8N5K 0.001132 1.002,table_comparison_classes.csv
 classes_SC5_method_vs_closest,"wins 6, ties 42, losses 0 of 48",table_comparison_classes.csv
+classes_SC7_full_vs_no_item_pruning,"wins 6, ties 1, losses 0 of 7",table_comparison_classes.csv
+classes_SC7_full_vs_no_item_pruning_ties,TAFENG 1.039,table_comparison_classes.csv
+classes_SC7_full_vs_no_node_check,"wins 0, ties 7, losses 0 of 7",table_comparison_classes.csv
+classes_SC7_full_vs_no_node_check_ties,BIBLE 0.995; C8T1S5I8N5K 1.060; FIFA 0.999; KOSARAK 1.034; LEVIATHAN 1.011; SIGN 0.972; TAFENG 1.078,table_comparison_classes.csv
 classes_mixed_method_vs_Remine-from-scratch,"wins 12, ties 0, losses 0 of 12",table_comparison_classes.csv
 classes_mixed_method_vs_Remine-own-UUT,"wins 6, ties 6, losses 0 of 12",table_comparison_classes.csv
 classes_mixed_method_vs_Remine-own-UUT_ties,SC6 SIGN 1.044; SC6 LEVIATHAN 0.984; SC6 C8T1S5I8N5K 0.963; SC6D SIGN 1.082; SC6D C8T1S5I8N5K 0.938; SC6B LEVIATHAN 0.990,table_comparison_classes.csv

@@ -336,3 +336,72 @@ SC1_miner_at_threshold_vs_HUSP-ULL,TAFENG 0.005691,Joint-miner@UUT,HUSP-ULL,0.93
 SC1_method_vs_HUSP-ULL,TAFENG 0.005691,Pre-HUSPM-Joint,HUSP-ULL,0.87,loss
 SC1_miner_at_threshold_vs_HUSP-SP,TAFENG 0.005691,Joint-miner@UUT,HUSP-SP,0.909,loss
 SC1_method_vs_HUSP-SP,TAFENG 0.005691,Pre-HUSPM-Joint,HUSP-SP,0.843,loss
+SC3_miner_at_threshold_vs_HUSP-ULL,SIGN 0.049134,Joint-miner@UUT,HUSP-ULL,1.607,win
+SC3_method_vs_HUSP-ULL,SIGN 0.049134,Pre-HUSPM-Joint,HUSP-ULL,0.998,tie
+SC3_miner_at_threshold_vs_HUSP-SP,SIGN 0.049134,Joint-miner@UUT,HUSP-SP,1.677,win
+SC3_method_vs_HUSP-SP,SIGN 0.049134,Pre-HUSPM-Joint,HUSP-SP,1.042,tie
+SC3_miner_at_threshold_vs_HUSP-ULL,SIGN 0.065911,Joint-miner@UUT,HUSP-ULL,1.652,win
+SC3_method_vs_HUSP-ULL,SIGN 0.065911,Pre-HUSPM-Joint,HUSP-ULL,1.056,tie
+SC3_miner_at_threshold_vs_HUSP-SP,SIGN 0.065911,Joint-miner@UUT,HUSP-SP,1.812,win
+SC3_method_vs_HUSP-SP,SIGN 0.065911,Pre-HUSPM-Joint,HUSP-SP,1.158,win
+SC3_miner_at_threshold_vs_HUSP-ULL,SIGN 0.083371,Joint-miner@UUT,HUSP-ULL,1.668,win
+SC3_method_vs_HUSP-ULL,SIGN 0.083371,Pre-HUSPM-Joint,HUSP-ULL,1.047,tie
+SC3_miner_at_threshold_vs_HUSP-SP,SIGN 0.083371,Joint-miner@UUT,HUSP-SP,1.657,win
+SC3_method_vs_HUSP-SP,SIGN 0.083371,Pre-HUSPM-Joint,HUSP-SP,1.04,tie
+SC3_miner_at_threshold_vs_HUSP-ULL,SIGN 0.091052,Joint-miner@UUT,HUSP-ULL,1.627,win
+SC3_method_vs_HUSP-ULL,SIGN 0.091052,Pre-HUSPM-Joint,HUSP-ULL,1.023,tie
+SC3_miner_at_threshold_vs_HUSP-SP,SIGN 0.091052,Joint-miner@UUT,HUSP-SP,1.582,win
+SC3_method_vs_HUSP-SP,SIGN 0.091052,Pre-HUSPM-Joint,HUSP-SP,0.994,tie
+SC3_miner_at_threshold_vs_HUSP-ULL,LEVIATHAN 0.014644,Joint-miner@UUT,HUSP-ULL,1.276,win
+SC3_method_vs_HUSP-ULL,LEVIATHAN 0.014644,Pre-HUSPM-Joint,HUSP-ULL,0.934,tie
+SC3_miner_at_threshold_vs_HUSP-SP,LEVIATHAN 0.014644,Joint-miner@UUT,HUSP-SP,1.237,win
+SC3_method_vs_HUSP-SP,LEVIATHAN 0.014644,Pre-HUSPM-Joint,HUSP-SP,0.906,loss
+SC3_miner_at_threshold_vs_HUSP-ULL,LEVIATHAN 0.01553,Joint-miner@UUT,HUSP-ULL,1.298,win
+SC3_method_vs_HUSP-ULL,LEVIATHAN 0.01553,Pre-HUSPM-Joint,HUSP-ULL,0.943,tie
+SC3_miner_at_threshold_vs_HUSP-SP,LEVIATHAN 0.01553,Joint-miner@UUT,HUSP-SP,1.241,win
+SC3_method_vs_HUSP-SP,LEVIATHAN 0.01553,Pre-HUSPM-Joint,HUSP-SP,0.902,loss
+SC3_miner_at_threshold_vs_HUSP-ULL,LEVIATHAN 0.01647,Joint-miner@UUT,HUSP-ULL,1.273,win
+SC3_method_vs_HUSP-ULL,LEVIATHAN 0.01647,Pre-HUSPM-Joint,HUSP-ULL,0.925,tie
+SC3_miner_at_threshold_vs_HUSP-SP,LEVIATHAN 0.01647,Joint-miner@UUT,HUSP-SP,1.324,win
+SC3_method_vs_HUSP-SP,LEVIATHAN 0.01647,Pre-HUSPM-Joint,HUSP-SP,0.962,tie
+SC3_miner_at_threshold_vs_HUSP-ULL,LEVIATHAN 0.017987,Joint-miner@UUT,HUSP-ULL,1.246,win
+SC3_method_vs_HUSP-ULL,LEVIATHAN 0.017987,Pre-HUSPM-Joint,HUSP-ULL,0.914,loss
+SC3_miner_at_threshold_vs_HUSP-SP,LEVIATHAN 0.017987,Joint-miner@UUT,HUSP-SP,1.222,win
+SC3_method_vs_HUSP-SP,LEVIATHAN 0.017987,Pre-HUSPM-Joint,HUSP-SP,0.897,loss
+SC3_miner_at_threshold_vs_HUSP-ULL,C8T1S5I8N5K 0.001099,Joint-miner@UUT,HUSP-ULL,1.033,tie
+SC3_method_vs_HUSP-ULL,C8T1S5I8N5K 0.001099,Pre-HUSPM-Joint,HUSP-ULL,0.61,loss
+SC3_miner_at_threshold_vs_HUSP-SP,C8T1S5I8N5K 0.001099,Joint-miner@UUT,HUSP-SP,1.477,win
+SC3_method_vs_HUSP-SP,C8T1S5I8N5K 0.001099,Pre-HUSPM-Joint,HUSP-SP,0.872,loss
+SC3_miner_at_threshold_vs_HUSP-ULL,C8T1S5I8N5K 0.001132,Joint-miner@UUT,HUSP-ULL,1.002,tie
+SC3_method_vs_HUSP-ULL,C8T1S5I8N5K 0.001132,Pre-HUSPM-Joint,HUSP-ULL,0.654,loss
+SC3_miner_at_threshold_vs_HUSP-SP,C8T1S5I8N5K 0.001132,Joint-miner@UUT,HUSP-SP,1.088,win
+SC3_method_vs_HUSP-SP,C8T1S5I8N5K 0.001132,Pre-HUSPM-Joint,HUSP-SP,0.71,loss
+SC3_miner_at_threshold_vs_HUSP-ULL,C8T1S5I8N5K 0.0012,Joint-miner@UUT,HUSP-ULL,1.133,win
+SC3_method_vs_HUSP-ULL,C8T1S5I8N5K 0.0012,Pre-HUSPM-Joint,HUSP-ULL,0.713,loss
+SC3_miner_at_threshold_vs_HUSP-SP,C8T1S5I8N5K 0.0012,Joint-miner@UUT,HUSP-SP,1.07,tie
+SC3_method_vs_HUSP-SP,C8T1S5I8N5K 0.0012,Pre-HUSPM-Joint,HUSP-SP,0.674,loss
+SC3_miner_at_threshold_vs_HUSP-ULL,C8T1S5I8N5K 0.001236,Joint-miner@UUT,HUSP-ULL,1.118,win
+SC3_method_vs_HUSP-ULL,C8T1S5I8N5K 0.001236,Pre-HUSPM-Joint,HUSP-ULL,0.7,loss
+SC3_miner_at_threshold_vs_HUSP-SP,C8T1S5I8N5K 0.001236,Joint-miner@UUT,HUSP-SP,1.053,tie
+SC3_method_vs_HUSP-SP,C8T1S5I8N5K 0.001236,Pre-HUSPM-Joint,HUSP-SP,0.659,loss
+SC7_full_vs_no_node_check,BIBLE,Pre-HUSPM-Joint,Pre-HUSPM-Joint-no-IUB,0.995,tie
+SC7_full_vs_no_item_pruning,BIBLE,Pre-HUSPM-Joint,Pre-HUSPM-Joint-no-IPS,1.771,win
+SC7_full_vs_no_node_check,C8T1S5I8N5K,Pre-HUSPM-Joint,Pre-HUSPM-Joint-no-IUB,1.06,tie
+SC7_full_vs_no_item_pruning,C8T1S5I8N5K,Pre-HUSPM-Joint,Pre-HUSPM-Joint-no-IPS,5.313,win
+SC7_full_vs_no_node_check,FIFA,Pre-HUSPM-Joint,Pre-HUSPM-Joint-no-IUB,0.999,tie
+SC7_full_vs_no_item_pruning,FIFA,Pre-HUSPM-Joint,Pre-HUSPM-Joint-no-IPS,11.112,win
+SC7_full_vs_no_node_check,KOSARAK,Pre-HUSPM-Joint,Pre-HUSPM-Joint-no-IUB,1.034,tie
+SC7_full_vs_no_item_pruning,KOSARAK,Pre-HUSPM-Joint,Pre-HUSPM-Joint-no-IPS,8.964,win
+SC7_full_vs_no_node_check,LEVIATHAN,Pre-HUSPM-Joint,Pre-HUSPM-Joint-no-IUB,1.011,tie
+SC7_full_vs_no_item_pruning,LEVIATHAN,Pre-HUSPM-Joint,Pre-HUSPM-Joint-no-IPS,2.585,win
+SC7_full_vs_no_node_check,SIGN,Pre-HUSPM-Joint,Pre-HUSPM-Joint-no-IUB,0.972,tie
+SC7_full_vs_no_item_pruning,SIGN,Pre-HUSPM-Joint,Pre-HUSPM-Joint-no-IPS,1.544,win
+SC7_full_vs_no_node_check,TAFENG,Pre-HUSPM-Joint,Pre-HUSPM-Joint-no-IUB,1.078,tie
+SC7_full_vs_no_item_pruning,TAFENG,Pre-HUSPM-Joint,Pre-HUSPM-Joint-no-IPS,1.039,tie
+SC2_method_vs_best_window,BIBLE,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w3,0.957,tie
+SC2_method_vs_best_window,C8T1S5I8N5K,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w1,1.147,win
+SC2_method_vs_best_window,FIFA,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w2,0.982,tie
+SC2_method_vs_best_window,KOSARAK,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w3,1.003,tie
+SC2_method_vs_best_window,LEVIATHAN,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w1,1.014,tie
+SC2_method_vs_best_window,SIGN,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w1,0.896,loss
+SC2_method_vs_best_window,TAFENG,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w5,0.966,tie

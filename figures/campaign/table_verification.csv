@@ -11,6 +11,7 @@ rescan rule acceptance (RescanRuleAcceptanceTest),finished,,49,,,,0,,,,,,,,
 "rescan rule acceptance, pre-tests-acceptance",finished,9,49,,,,0,,,,,,,,
 "rescan rule acceptance, prehuspm-tracking-acceptance",finished,9,49,,,,0,,,,,,,,
 "random streams (MixedBudgetFuzz), break-even-fuzz, rule joint",finished,4,170000,24957,9548,9000,0,,,,,,,,
+"random streams (MixedBudgetFuzz), break-even-nodes-fuzz, rule joint",finished,4,170000,28996,11400,10649,0,,,,,,,,
 "random streams (MixedBudgetFuzz), floor-selection-fuzz, rule joint",finished,12,510000,120279,41812,39215,0,,,,,,,,
 "random streams (MixedBudgetFuzz), merge-fuzz, rule joint",finished,4,170000,47844,15636,14821,0,,,,,,,,
 "random streams (MixedBudgetFuzz), min-floor-fuzz, rule joint",finished,4,170000,47587,15481,14626,0,,,,,,,,
@@ -40,6 +41,7 @@ fault injection into the rescan floor selection,finished,,2,,,,,,,,2,,,,
 "direct path on real databases, adversarial-tafeng operations",finished,1,16,4,8,4,0,0,,,,0,0,0,0
 "direct path on real databases, adversarial-tafeng-probe0.7 operations",finished,1,16,4,6,4,0,12,,,,0,0,0,0
 "direct path on real databases, break-even-adversarial operations",finished,8,128,25,46,25,0,108,,,,18,7,0,0
+"direct path on real databases, break-even-nodes-random operations",finished,8,128,26,49,20,0,0,,,,24,4,0,0
 "direct path on real databases, break-even-random operations",finished,8,128,24,46,20,0,0,,,,30,4,0,0
 "direct path on real databases, break-even-switching-adversarial operations",finished,8,150,21,40,14,0,123,,,,39,11,0,3
 "direct path on real databases, break-even-switching-random operations",finished,8,184,26,53,23,0,0,,,,38,8,0,1

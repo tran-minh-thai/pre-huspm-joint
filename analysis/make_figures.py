@@ -1702,6 +1702,8 @@ def export_status_summary():
 # %% ------------------------------------------------------------------ Cell 9
 #    DRIVER - the main figures and tables
 def main():
+    # every table of this run is newer than this; scenario_tables refuses older ones where it reads tables
+    os.environ["HUSP_RUN_STARTED"] = repr(__import__("time").time())
     print(f"DATA_DIR = {DATA_DIR}\nOUT_DIR  = {OUT_DIR}")
     print(f"databases from common.Datasets: {', '.join(DATASETS) or 'none found'}\n")
 

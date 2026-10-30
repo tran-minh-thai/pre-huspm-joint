@@ -38,7 +38,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import rename_arms
 import make_figures as mf  # noqa: E402
 
-_STARTED = time.time()   # tables older than this were not written by this run
+_STARTED = float(os.environ.get("HUSP_RUN_STARTED") or time.time())   # tables older than this were not written by this run
 
 P = mf.PROPOSED
 REM = "Remine-from-scratch"
@@ -1161,7 +1161,10 @@ def verification():
     # The later runs of the same checks, found by their directory names: the acceptance test
     # (its latest version has the most cases), the random streams of the new rules and of the
     # floor selection, and the pattern checks of the runner (-Dverify.husps=true).
-    later = sorted(os.path.basename(d) for d in glob.glob(os.path.join(VERIFY_DIR, "*")) if os.path.isdir(d))
+    # A check still running has no run_meta.json yet (analysis/record_run.py writes it at the end):
+    # it is left out, so no key is read from a partial output.
+    done = lambda d: os.path.exists(os.path.join(d, "run_meta.json"))
+    later = sorted(os.path.basename(d) for d in glob.glob(os.path.join(VERIFY_DIR, "*")) if os.path.isdir(d) and done(d))
     for name in [n for n in later if n.endswith("-acceptance")]:
         m = re.search(r"acceptance: (\d+) passed, (\d+) failed", _console(name) or "")
         rows.append(dict(check=f"rescan rule acceptance, {name}", status=_status(name) if m else "missing",
@@ -1245,7 +1248,7 @@ def verification():
                          operations=len(faults), caught=sum(f == "True" for f in faults)))
     # Every DirectPathVerifier run, found by its output file rather than by name.
     runs = sorted(os.path.basename(os.path.dirname(f))
-                  for f in glob.glob(os.path.join(VERIFY_DIR, "*", "verification.csv")))
+                  for f in glob.glob(os.path.join(VERIFY_DIR, "*", "verification.csv")) if done(os.path.dirname(f)))
     for name in runs or ["random", "adversarial"]:
         path = os.path.join(VERIFY_DIR, name, "verification.csv")
         out = _console(name)
@@ -2088,6 +2091,16 @@ def break_even_window_sensitivity(put, out):
     t = pd.DataFrame(rows)
     mf.write_csv(t, os.path.join(out, "table_break_even_window_sensitivity.csv"))
     src = "table_break_even_window_sensitivity.csv"
+    tot = t.groupby(["scenario", "window"])["time_s"].sum().unstack()
+    names = {"SC2": "SC2", "SC5": "SC5", "SC6": "SC6", "SC6D": "SC6-D", "SC6B": "SC6-B"}
+    head = " & ".join(f"$m={w}$" for w in BE_SWEEP)
+    body = "\n".join(f"{names[sc]} & " + " & ".join(f"{tot.loc[sc, w] / tot.loc[sc, 5]:.3f}" for w in BE_SWEEP) + " \\\\"
+                     for sc in ("SC2", "SC5", "SC6", "SC6D", "SC6B") if sc in tot.index)
+    tex = ("\\begin{table}[!htbp]\\centering\n"
+           "\\caption{Total runtime at $m$ over that at $m=5$}\\label{tab:be_window}\n"
+           "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}l" + "r" * len(BE_SWEEP) + "}\\toprule\n"
+           f"Scenario & {head} \\\\\\midrule\n{body}\n\\bottomrule\\end{{tabular*}}\n\\end{{table}}\n")
+    open(os.path.join(out, "table_break_even_window.tex"), "w", encoding="utf-8").write(tex)
     for r in t[t["window"] != 5].itertuples():
         put(f"{r.scenario}_{r.dataset}_break_even_window_{r.window}_over_window5", f"{r.over_window5:.3f}", src)
     s = t.groupby(["scenario", "window"])["time_s"].sum().unstack()
@@ -2233,13 +2246,25 @@ def comparison_classes(put, out):
     for r in bw.itertuples():
         add("mixed_method_vs_window5", f"{r.scenario} {r.dataset}", P, mf.window_arm(5), 1 / r.over_window5)
     st = _fresh_table(out, "table_static_joint_miner_uut.csv")
-    st = st[st["scenario"] == "SC1"]
-    for _, r in st.iterrows():          # column names hold '-', so by name, not by attribute
+    for _, r in st[st["scenario"].isin(["SC1", "SC3"])].iterrows():   # names hold '-': by name
         g = f"{r['dataset']} {r['su']:g}"
         for other in ("HUSP-ULL", "HUSP-SP"):
             jm = float(r[f"{other}_over_jm"])
-            add(f"SC1_miner_at_threshold_vs_{other}", g, "Joint-miner@UUT", other, jm)
-            add(f"SC1_method_vs_{other}", g, P, other, jm / float(r["proposal_over_jm"]))
+            add(f"{r['scenario']}_miner_at_threshold_vs_{other}", g, "Joint-miner@UUT", other, jm)
+            add(f"{r['scenario']}_method_vs_{other}", g, P, other, jm / float(r["proposal_over_jm"]))
+    s7 = _fresh_table(out, "table_SC7_static.csv")
+    for db, g in s7.groupby("dataset"):
+        full = g[g["variant"] == "Full"]["runtime_s"]
+        for v, fam in (("-IUB", "SC7_full_vs_no_node_check"), ("-IPS", "SC7_full_vs_no_item_pruning")):
+            x = g[g["variant"] == v]["runtime_s"]
+            if len(full) and len(x):
+                add(fam, db, P, P + {"-IUB": "-no-IUB", "-IPS": "-no-IPS"}[v], float(x.iloc[0]) / float(full.iloc[0]))
+    win = _fresh_table(out, "table_SC2_window.csv")
+    for db, g in win.groupby("dataset"):
+        m = inf[inf["dataset"] == db]["method_s"]
+        if len(m):
+            best = g.loc[g["time_s"].idxmin()]
+            add("SC2_method_vs_best_window", db, P, mf.window_arm(int(best["window"])), float(best["time_s"]) / float(m.iloc[0]))
     c = pd.DataFrame(rows)
     mf.write_csv(c, os.path.join(out, "table_comparison_classes.csv"))
     src = "table_comparison_classes.csv"
@@ -2251,6 +2276,48 @@ def comparison_classes(put, out):
         if len(ties) and len(ties) <= 12:
             put(f"classes_{fam}_ties", "; ".join(f"{x.group} {x.ratio:.3f}" for x in ties.itertuples()), src)
     return c, b
+
+
+TIME_ARM = P + "-time"
+
+
+def time_rule_keys(put, out):
+    """The break-even rule by time (comparison arm Pre-HUSPM-Joint-time) against the method (by explored
+    nodes): on the streams measured more than once (SC2 streams, SC5 cells), how many had runs that took
+    different decisions at some operation; and the total time of the rule by time over the method's, per
+    scenario and over all, each stream's time the mean over its runs and both totals over the same streams."""
+    rows, diff = [], {}
+    for sc in ("SC2", "SC5", "SC6", "SC6D", "SC6B"):
+        df = mf.load_scenario(sc, replicates=True, windows=True)
+        if df is None:
+            continue
+        d = df[(df["iteration"] > 0) & df["algorithm"].isin([P, TIME_ARM])]
+        cell = (d["op_type"].astype(str).str.extract(r"^(SC5_K=\d+_strat=\w+)_")[0] if sc == "SC5"
+                else pd.Series("", index=d.index))
+        d = d.assign(cell=cell.fillna(""), seed=d["replicate"].str.extract(r"^(s\d+)")[0])
+        for (a, db, c, s), g in d.groupby(["algorithm", "dataset", "cell", "seed"]):
+            if a == TIME_ARM and g["replicate"].nunique() > 1:
+                pv = g.pivot_table(index="iteration", columns="replicate", values=["rescan_count", "rescans_at_uut"])
+                k = diff.setdefault(sc, [0, 0])
+                k[1] += 1
+                k[0] += int(bool((pv["rescan_count"].nunique(axis=1) > 1).any()
+                                 or (pv["rescans_at_uut"].nunique(axis=1) > 1).any()))
+            rows.append(dict(scenario=sc, algorithm=a, dataset=db, cell=c, seed=s,
+                             time_s=float(g.groupby("replicate")["runtime_ms"].sum().mean()) / 1000))
+    t = pd.DataFrame(rows)
+    both = t.pivot_table(index=["scenario", "dataset", "cell", "seed"], columns="algorithm", values="time_s").dropna()
+    src = "table_time_rule.csv"
+    s = both.groupby(level="scenario")[[TIME_ARM, P]].sum()
+    s["time_over_method"] = s[TIME_ARM] / s[P]
+    mf.write_csv(s.reset_index(), os.path.join(out, src))
+    for sc, r in s.iterrows():
+        put(f"time_based_{sc}_total_over_proposal", f"{r['time_over_method']:.3f}", src)
+    tm, tp = float(s[TIME_ARM].sum()), float(s[P].sum())
+    put("time_based_total_over_proposal", f"{tm / tp:.3f} ({tm:.1f} s over {tp:.1f} s, {len(both)} streams)", src)
+    n = sum(v[0] for v in diff.values()); m = sum(v[1] for v in diff.values())
+    put("time_based_streams_with_runs_on_different_decisions",
+        f"{n}/{m} (" + ", ".join(f"{sc} {v[0]}/{v[1]}" for sc, v in sorted(diff.items())) + ")", src)
+    return s
 
 
 def units_after_a_rescan():
@@ -2833,6 +2900,7 @@ def export_all(out_dir=None):
     mixed_shares(put, out)
     break_even_window_sensitivity(put, out)
     identical_search_keys(put, out)
+    time_rule_keys(put, out)
     sc2_inference(put, out)
     sc2_own_uut(put)
 
