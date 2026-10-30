@@ -1,0 +1,231 @@
+SIGN: replay agrees on 100/100 operations (window 5) and 100/100 (fixed lower threshold)
+  break-even replayed with the logged ratios: 100/100 operations agree
+TAFENG: replay agrees on 100/100 operations (window 5) and 100/100 (fixed lower threshold)
+  break-even replayed with the logged ratios: 100/100 operations agree
+C8T1S5I8N5K: replay agrees on 100/100 operations (window 5) and 100/100 (fixed lower threshold)
+  break-even replayed with the logged ratios: 100/100 operations agree
+BIBLE: replay agrees on 100/100 operations (window 5) and 100/100 (fixed lower threshold)
+  break-even replayed with the logged ratios: 100/100 operations agree
+LEVIATHAN: replay agrees on 100/100 operations (window 5) and 100/100 (fixed lower threshold)
+  break-even replayed with the logged ratios: 100/100 operations agree
+FIFA: replay agrees on 100/100 operations (window 5) and 100/100 (fixed lower threshold)
+  break-even replayed with the logged ratios: 100/100 operations agree
+KOSARAK: replay agrees on 100/100 operations (window 5) and 100/100 (fixed lower threshold)
+  break-even replayed with the logged ratios: 100/100 operations agree
+SIGN SC5_K=100_strat=EVEN: replay agrees on 100/100 operations (window 5) and 100/100 (fixed lower threshold)
+  break-even replayed with the logged ratios: 100/100 operations agree
+SIGN SC5_K=100_strat=INCREASING: replay agrees on 100/100 operations (window 5) and 100/100 (fixed lower threshold)
+  break-even replayed with the logged ratios: 100/100 operations agree
+SIGN SC5_K=100_strat=DECREASING: replay agrees on 100/100 operations (window 5) and 100/100 (fixed lower threshold)
+  break-even replayed with the logged ratios: 100/100 operations agree
+SIGN SC5_K=100_strat=BURST: replay agrees on 100/100 operations (window 5) and 100/100 (fixed lower threshold)
+  break-even replayed with the logged ratios: 100/100 operations agree
+SIGN SC5_K=67_strat=EVEN: replay agrees on 67/67 operations (window 5) and 67/67 (fixed lower threshold)
+  break-even replayed with the logged ratios: 67/67 operations agree
+SIGN SC5_K=67_strat=INCREASING: replay agrees on 67/67 operations (window 5) and 67/67 (fixed lower threshold)
+  break-even replayed with the logged ratios: 67/67 operations agree
+SIGN SC5_K=67_strat=DECREASING: replay agrees on 67/67 operations (window 5) and 67/67 (fixed lower threshold)
+  break-even replayed with the logged ratios: 67/67 operations agree
+SIGN SC5_K=67_strat=BURST: replay agrees on 67/67 operations (window 5) and 67/67 (fixed lower threshold)
+  break-even replayed with the logged ratios: 67/67 operations agree
+SIGN SC5_K=50_strat=EVEN: replay agrees on 50/50 operations (window 5) and 50/50 (fixed lower threshold)
+  break-even replayed with the logged ratios: 50/50 operations agree
+SIGN SC5_K=50_strat=INCREASING: replay agrees on 50/50 operations (window 5) and 50/50 (fixed lower threshold)
+  break-even replayed with the logged ratios: 50/50 operations agree
+SIGN SC5_K=50_strat=DECREASING: replay agrees on 50/50 operations (window 5) and 50/50 (fixed lower threshold)
+  break-even replayed with the logged ratios: 50/50 operations agree
+SIGN SC5_K=50_strat=BURST: replay agrees on 50/50 operations (window 5) and 50/50 (fixed lower threshold)
+  break-even replayed with the logged ratios: 50/50 operations agree
+SIGN SC5_K=25_strat=EVEN: replay agrees on 25/25 operations (window 5) and 25/25 (fixed lower threshold)
+  break-even replayed with the logged ratios: 25/25 operations agree
+SIGN SC5_K=25_strat=INCREASING: replay agrees on 25/25 operations (window 5) and 25/25 (fixed lower threshold)
+  break-even replayed with the logged ratios: 25/25 operations agree
+SIGN SC5_K=25_strat=DECREASING: replay agrees on 25/25 operations (window 5) and 25/25 (fixed lower threshold)
+  break-even replayed with the logged ratios: 25/25 operations agree
+SIGN SC5_K=25_strat=BURST: replay agrees on 25/25 operations (window 5) and 25/25 (fixed lower threshold)
+  break-even replayed with the logged ratios: 25/25 operations agree
+C8T1S5I8N5K SC5_K=100_strat=EVEN: replay agrees on 100/100 operations (window 5) and 100/100 (fixed lower threshold)
+  break-even replayed with the logged ratios: 100/100 operations agree
+C8T1S5I8N5K SC5_K=100_strat=INCREASING: replay agrees on 100/100 operations (window 5) and 100/100 (fixed lower threshold)
+  break-even replayed with the logged ratios: 100/100 operations agree
+C8T1S5I8N5K SC5_K=100_strat=DECREASING: replay agrees on 100/100 operations (window 5) and 100/100 (fixed lower threshold)
+  break-even replayed with the logged ratios: 100/100 operations agree
+C8T1S5I8N5K SC5_K=100_strat=BURST: replay agrees on 100/100 operations (window 5) and 100/100 (fixed lower threshold)
+  break-even replayed with the logged ratios: 100/100 operations agree
+C8T1S5I8N5K SC5_K=67_strat=EVEN: replay agrees on 67/67 operations (window 5) and 67/67 (fixed lower threshold)
+  break-even replayed with the logged ratios: 67/67 operations agree
+C8T1S5I8N5K SC5_K=67_strat=INCREASING: replay agrees on 67/67 operations (window 5) and 67/67 (fixed lower threshold)
+  break-even replayed with the logged ratios: 67/67 operations agree
+C8T1S5I8N5K SC5_K=67_strat=DECREASING: replay agrees on 67/67 operations (window 5) and 67/67 (fixed lower threshold)
+  break-even replayed with the logged ratios: 67/67 operations agree
+C8T1S5I8N5K SC5_K=67_strat=BURST: replay agrees on 67/67 operations (window 5) and 67/67 (fixed lower threshold)
+  break-even replayed with the logged ratios: 67/67 operations agree
+C8T1S5I8N5K SC5_K=50_strat=EVEN: replay agrees on 50/50 operations (window 5) and 50/50 (fixed lower threshold)
+  break-even replayed with the logged ratios: 50/50 operations agree
+C8T1S5I8N5K SC5_K=50_strat=INCREASING: replay agrees on 50/50 operations (window 5) and 50/50 (fixed lower threshold)
+  break-even replayed with the logged ratios: 50/50 operations agree
+C8T1S5I8N5K SC5_K=50_strat=DECREASING: replay agrees on 50/50 operations (window 5) and 50/50 (fixed lower threshold)
+  break-even replayed with the logged ratios: 50/50 operations agree
+C8T1S5I8N5K SC5_K=50_strat=BURST: replay agrees on 50/50 operations (window 5) and 50/50 (fixed lower threshold)
+  break-even replayed with the logged ratios: 50/50 operations agree
+C8T1S5I8N5K SC5_K=25_strat=EVEN: replay agrees on 25/25 operations (window 5) and 25/25 (fixed lower threshold)
+  break-even replayed with the logged ratios: 25/25 operations agree
+C8T1S5I8N5K SC5_K=25_strat=INCREASING: replay agrees on 25/25 operations (window 5) and 25/25 (fixed lower threshold)
+  break-even replayed with the logged ratios: 25/25 operations agree
+C8T1S5I8N5K SC5_K=25_strat=DECREASING: replay agrees on 25/25 operations (window 5) and 25/25 (fixed lower threshold)
+  break-even replayed with the logged ratios: 25/25 operations agree
+C8T1S5I8N5K SC5_K=25_strat=BURST: replay agrees on 25/25 operations (window 5) and 25/25 (fixed lower threshold)
+  break-even replayed with the logged ratios: 25/25 operations agree
+LEVIATHAN SC5_K=100_strat=EVEN: replay agrees on 100/100 operations (window 5) and 100/100 (fixed lower threshold)
+  break-even replayed with the logged ratios: 100/100 operations agree
+LEVIATHAN SC5_K=100_strat=INCREASING: replay agrees on 100/100 operations (window 5) and 100/100 (fixed lower threshold)
+  break-even replayed with the logged ratios: 100/100 operations agree
+LEVIATHAN SC5_K=100_strat=DECREASING: replay agrees on 100/100 operations (window 5) and 100/100 (fixed lower threshold)
+  break-even replayed with the logged ratios: 100/100 operations agree
+LEVIATHAN SC5_K=100_strat=BURST: replay agrees on 100/100 operations (window 5) and 100/100 (fixed lower threshold)
+  break-even replayed with the logged ratios: 100/100 operations agree
+LEVIATHAN SC5_K=67_strat=EVEN: replay agrees on 67/67 operations (window 5) and 67/67 (fixed lower threshold)
+  break-even replayed with the logged ratios: 67/67 operations agree
+LEVIATHAN SC5_K=67_strat=INCREASING: replay agrees on 67/67 operations (window 5) and 67/67 (fixed lower threshold)
+  break-even replayed with the logged ratios: 67/67 operations agree
+LEVIATHAN SC5_K=67_strat=DECREASING: replay agrees on 67/67 operations (window 5) and 67/67 (fixed lower threshold)
+  break-even replayed with the logged ratios: 67/67 operations agree
+LEVIATHAN SC5_K=67_strat=BURST: replay agrees on 67/67 operations (window 5) and 67/67 (fixed lower threshold)
+  break-even replayed with the logged ratios: 67/67 operations agree
+LEVIATHAN SC5_K=50_strat=EVEN: replay agrees on 50/50 operations (window 5) and 50/50 (fixed lower threshold)
+  break-even replayed with the logged ratios: 50/50 operations agree
+LEVIATHAN SC5_K=50_strat=INCREASING: replay agrees on 50/50 operations (window 5) and 50/50 (fixed lower threshold)
+  break-even replayed with the logged ratios: 50/50 operations agree
+LEVIATHAN SC5_K=50_strat=DECREASING: replay agrees on 50/50 operations (window 5) and 50/50 (fixed lower threshold)
+  break-even replayed with the logged ratios: 50/50 operations agree
+LEVIATHAN SC5_K=50_strat=BURST: replay agrees on 50/50 operations (window 5) and 50/50 (fixed lower threshold)
+  break-even replayed with the logged ratios: 50/50 operations agree
+LEVIATHAN SC5_K=25_strat=EVEN: replay agrees on 25/25 operations (window 5) and 25/25 (fixed lower threshold)
+  break-even replayed with the logged ratios: 25/25 operations agree
+LEVIATHAN SC5_K=25_strat=INCREASING: replay agrees on 25/25 operations (window 5) and 25/25 (fixed lower threshold)
+  break-even replayed with the logged ratios: 25/25 operations agree
+LEVIATHAN SC5_K=25_strat=DECREASING: replay agrees on 25/25 operations (window 5) and 25/25 (fixed lower threshold)
+  break-even replayed with the logged ratios: 25/25 operations agree
+LEVIATHAN SC5_K=25_strat=BURST: replay agrees on 25/25 operations (window 5) and 25/25 (fixed lower threshold)
+  break-even replayed with the logged ratios: 25/25 operations agree
+SC6 C8T1S5I8N5K seed 42: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6 C8T1S5I8N5K seed 1337: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6 C8T1S5I8N5K seed 2024: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6 C8T1S5I8N5K seed 31415: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6 C8T1S5I8N5K seed 271828: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6 LEVIATHAN seed 42: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6 LEVIATHAN seed 1337: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6 LEVIATHAN seed 2024: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6 LEVIATHAN seed 31415: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6 LEVIATHAN seed 271828: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6 SIGN seed 42: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6 SIGN seed 1337: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6 SIGN seed 2024: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6 SIGN seed 31415: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6 SIGN seed 271828: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6 TAFENG seed 42: replay agrees on window 5 not measured and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6 TAFENG seed 1337: replay agrees on window 5 not measured and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6 TAFENG seed 2024: replay agrees on window 5 not measured and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6 TAFENG seed 31415: replay agrees on window 5 not measured and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6 TAFENG seed 271828: replay agrees on window 5 not measured and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6D C8T1S5I8N5K seed 42: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6D C8T1S5I8N5K seed 1337: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6D C8T1S5I8N5K seed 2024: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6D C8T1S5I8N5K seed 31415: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6D C8T1S5I8N5K seed 271828: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6D LEVIATHAN seed 42: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6D LEVIATHAN seed 1337: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6D LEVIATHAN seed 2024: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6D LEVIATHAN seed 31415: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6D LEVIATHAN seed 271828: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6D SIGN seed 42: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6D SIGN seed 1337: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6D SIGN seed 2024: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6D SIGN seed 31415: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6D SIGN seed 271828: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6D TAFENG seed 42: replay agrees on window 5 not measured and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6D TAFENG seed 1337: replay agrees on window 5 not measured and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6D TAFENG seed 2024: replay agrees on window 5 not measured and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6D TAFENG seed 31415: replay agrees on window 5 not measured and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6D TAFENG seed 271828: replay agrees on window 5 not measured and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6B C8T1S5I8N5K seed 42: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6B C8T1S5I8N5K seed 1337: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6B C8T1S5I8N5K seed 2024: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6B C8T1S5I8N5K seed 31415: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6B C8T1S5I8N5K seed 271828: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6B LEVIATHAN seed 42: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6B LEVIATHAN seed 1337: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6B LEVIATHAN seed 2024: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6B LEVIATHAN seed 31415: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6B LEVIATHAN seed 271828: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6B SIGN seed 42: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6B SIGN seed 1337: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6B SIGN seed 2024: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6B SIGN seed 31415: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6B SIGN seed 271828: replay agrees on 20/20 operations (window 5) and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6B TAFENG seed 42: replay agrees on window 5 not measured and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6B TAFENG seed 1337: replay agrees on window 5 not measured and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6B TAFENG seed 2024: replay agrees on window 5 not measured and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6B TAFENG seed 31415: replay agrees on window 5 not measured and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+SC6B TAFENG seed 271828: replay agrees on window 5 not measured and 20/20 (fixed lower threshold)
+  break-even replayed with the logged ratios: 20/20 operations agree
+streams: 115; replayed and priced: 115; not replayed: []
