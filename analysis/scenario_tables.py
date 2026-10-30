@@ -2181,12 +2181,17 @@ def offline_optimum_nodes(put):
     put("offline_optimum_nodes_above_a_policy", f"{above} of {len(t) * len(pols)} stream and policy pairs", src)
     agree = t["nodes_rule_agrees_with_measured"].str.split("/", expand=True).astype(int)
     put("offline_optimum_nodes_method_replay", f"{int(agree[0].sum())}/{int(agree[1].sum())}", src)
-    bf = t[pd.to_numeric(t["nodes_bruteforce_optimum"], errors="coerce").notna()]
-    bad = int((bf["nodes_bruteforce_optimum"].astype(float) != bf["nodes_offline_optimum"]).sum())
-    put("offline_optimum_nodes_bruteforce", f"{len(bf) - bad} of {len(bf)} streams agree "
-        f"({len(t) - len(bf)} with more than 4096 choice sequences not enumerated)", src)
+    # the programme against an enumeration of every floor-choice sequence on each stream's longest
+    # prefix with at most 1024 sequences
+    bad = int((t["nodes_check_prefix_optimum_enumerated"] != t["nodes_check_prefix_optimum_programme"]).sum())
+    bad += int((t["nodes_check_prefix_sequences"] != t["nodes_check_prefix_sequences_counted"]).sum())
+    put("offline_optimum_nodes_enumeration_check", f"{len(t) - bad} of {len(t)} streams agree on their longest prefix "
+        f"with at most 1024 choice sequences ({int(t['nodes_check_prefix_sequences'].sum())} sequences replayed, "
+        f"prefixes of {int(t['nodes_check_prefix_units'].min())} to {int(t['nodes_check_prefix_units'].max())} units)", src)
+    put("offline_optimum_nodes_choice_sequences_whole_streams",
+        f"{int(t['nodes_choice_sequences'].min())} to {float(t['nodes_choice_sequences'].max()):.3g}", src)
     if above or bad or agree[0].sum() != agree[1].sum():
-        raise ValueError(f"offline optimum in nodes: {above} pairs above a policy, {bad} disagreeing with brute force")
+        raise ValueError(f"offline optimum in nodes: {above} pairs above a policy, {bad} disagreeing with the enumeration")
     for sc, g in list(t.groupby("scenario")) + [("all", t)]:
         b = f"offline_optimum_nodes_{sc}"
         for p in pols + ("offline_optimum",):

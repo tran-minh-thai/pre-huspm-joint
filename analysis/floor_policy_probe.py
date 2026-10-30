@@ -164,15 +164,16 @@ def units_of(stream, merge):
 
 
 NODES_ONLY = False
-BRUTE_LEAVES = 4096
+BRUTE_LEAVES = 1024
 
 
-def run(stream, su, rl, choose, merge=False):
+def run(stream, su, rl, choose, merge=False, upto=None):
     """Replays a policy; choose(u, path, replay) -> True to rescan at the threshold. Returns per
-    unit 'D' (direct), 'L' or 'U' (rescan at the lower threshold or at the threshold)."""
+    unit 'D' (direct), 'L' or 'U' (rescan at the lower threshold or at the threshold); with upto,
+    for the first upto units only."""
     r = Replay(su, rl, sum(u for u, _ in stream.init))
     path = []
-    for u, unit in enumerate(units_of(stream, merge)):
+    for u, unit in enumerate(units_of(stream, merge)[:upto]):
         trig = False
         for p in unit:
             trig = r.step(stream.phases[p]) or trig
@@ -417,11 +418,13 @@ def evaluate(stream, su, rl, be_window=5):
             path.append("U" if up else "L")
         return path
 
-    def optimum(merge, low=None, high=None, direct=None):
+    def optimum(merge, low=None, high=None, direct=None, leaves=False, upto=None):
         """Offline optimum: right after a rescan the counters are zero, so the next rescan depends
         only on the unit of that rescan and its floor; a dynamic programme over (unit, floor).
         low, high: the cost of a mine at the lower threshold and at the threshold per operation
-        (default: remining's times); direct: the cost of a direct phase (default: cD_phase)."""
+        (default: remining's times); direct: the cost of a direct phase (default: cD_phase).
+        leaves=True: the number of floor-choice sequences instead, the leaves of the decision tree.
+        upto: the stream's first upto units only."""
         cl = cL if low is None else low
         cu = cU if high is None else high
         cd = cD_phase if direct is None else direct
@@ -429,7 +432,7 @@ def evaluate(stream, su, rl, be_window=5):
         totals = [sum(u for u, _ in stream.init)]
         for unit in units:
             totals.append(totals[-1] + sum(stream.phases[p][0] * sum(u for u, _ in stream.phases[p][1]) for p in unit))
-        n = len(units)
+        n = len(units) if upto is None else min(upto, len(units))
         nxt, memo = {}, {}
 
         def forward(u0, up):
@@ -456,8 +459,14 @@ def evaluate(stream, su, rl, be_window=5):
                     cost += min(cl[o] + V(u, False), cu[o] + V(u, True))
                 memo[(u0, up)] = cost
             return memo[(u0, up)]
+
+        def N(u0, up):
+            if (u0, up) not in memo:
+                u, _ = forward(u0, up)
+                memo[(u0, up)] = 1 if u >= n else N(u, False) + N(u, True)
+            return memo[(u0, up)]
         sys.setrecursionlimit(20000)
-        return V(-1, False)
+        return N(-1, False) if leaves else V(-1, False)
 
     total = lambda arm: rows_of(arm).groupby("replicate")["runtime_ms"].sum().mean() / 1000
     # The measured method (break-even, merged modifications): its decisions replayed with the
@@ -520,8 +529,16 @@ def evaluate(stream, su, rl, be_window=5):
             row[f"nodes_{name}_rescans"] = sum(x != "D" for x in pth)
             row[f"nodes_{name}_rescans_at_threshold"] = sum(x == "U" for x in pth)
         row["nodes_offline_optimum"] = int(round(optimum(merged, low=nL, high=nU, direct=lambda p: 0.0)))
-        # An independent check of the dynamic programme: every sequence of floor choices replayed by
-        # run(), on the streams whose decision tree has at most BRUTE_LEAVES leaves.
+        # An independent check of the dynamic programme: on the longest prefix of the stream whose
+        # decision tree has at most BRUTE_LEAVES leaves, every sequence of floor choices replayed by
+        # run() (a separate replay), its nodes summed, the least compared with the programme's.
+        row["nodes_choice_sequences"] = optimum(merged, leaves=True)
+        n_units = len(units)
+        L = 0
+        while L < n_units and optimum(merged, leaves=True, upto=L + 1) <= BRUTE_LEAVES:
+            L += 1
+        prefix_cost = lambda pth: sum(0 if x == "D" else (nU if x == "U" else nL)[stream.op_of[unit[0]]]
+                                      for unit, x in zip(units[:L], pth))
         leaves, best = 0, None
 
         def dfs(prefix):
@@ -533,23 +550,21 @@ def evaluate(stream, su, rl, be_window=5):
                     return bits.pop(0)
                 beyond[0] = True
                 return False
-            pth = run(stream, su, rl, choose, merged)
+            pth = run(stream, su, rl, choose, merged, upto=L)
             if beyond[0]:
                 dfs(prefix + [False])
                 dfs(prefix + [True])
                 return
             leaves += 1
-            if leaves > BRUTE_LEAVES:
-                raise OverflowError
-            c = node_cost(pth)
+            c = prefix_cost(pth)
             best = c if best is None else min(best, c)
-        try:
-            dfs([])
-            row["nodes_bruteforce_optimum"] = int(round(best))
-            row["nodes_bruteforce_leaves"] = leaves
-        except OverflowError:
-            row["nodes_bruteforce_optimum"] = ""
-            row["nodes_bruteforce_leaves"] = f">{BRUTE_LEAVES}"
+        dfs([])
+        row["nodes_check_prefix_units"] = L
+        row["nodes_check_prefix_sequences"] = leaves
+        row["nodes_check_prefix_sequences_counted"] = optimum(merged, leaves=True, upto=L)
+        row["nodes_check_prefix_optimum_enumerated"] = int(round(best))
+        row["nodes_check_prefix_optimum_programme"] = int(round(optimum(merged, low=nL, high=nU,
+                                                                        direct=lambda p: 0.0, upto=L)))
     row.update(bound_against_threshold(stream, su, rl, merged, units_of, break_even, run, cL, cU, cD_phase))
     # The bound holds for any choice of the floor: the rule by explored nodes (the method) and the
     # window rule at every window, on the same priced costs.
