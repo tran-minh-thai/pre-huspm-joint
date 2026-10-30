@@ -27,8 +27,12 @@ import java.util.Map;
  *   2. the mine of D with the proposal's settings: <(a)> 20, <(c)> 14, <(a)(g)> 16, budget 3.4;
  *   3. Example 1: inserting S5 gives Phi = 3 and no rescan, <(a)(g)> discarded, <(a)> and <(c)>
  *      unchanged; inserting S5 again gives Phi = 6 and a rescan;
- *   4. Example 2 with w = 1: a batch of S5 twice rescans at lambda = UUT with cutoff 19, then a
- *      batch of S5 once rescans back at LUT_min with cutoff 16.
+ *   4. Example 2, the break-even rule by explored nodes (the method's rule): the mine of D at 13.6
+ *      visits 65 nodes; a batch of S5 twice (Phi = 6 > 3.4) rescans, at lambda = UUT since it is the
+ *      first rescan, with cutoff 19, visiting 57 nodes; a batch of S5 once (Phi = 3 > 0) rescans, and
+ *      with no absorption yet (a = 1; the second counter, Phi = 3 <= 3.8, has not triggered) and
+ *      rho = 65/57, a >= rho - 1, so lambda = LUT_min with cutoff 16; one more S5 (Phi = 3 <= 4 = beta)
+ *      takes the direct branch.
  * Exits 1 on any mismatch and prints the number of values compared.
  */
 public final class RunningExampleCheck {
@@ -129,23 +133,38 @@ public final class RunningExampleCheck {
         check("Example 1, second S5: Phi", p.iauMaxAtDecision, 6);
         check("Example 1, second S5: rescans", p.rescanCount - r0, 1);
 
-        // 4. Example 2 with w = 1
+        // 4. Example 2: the break-even rule by explored nodes
         PreHUSPMAdaptiveAlgo s = proposal(0.8);
-        s.floorWindow = 1;
+        s.floorRule = PreHUSPMAdaptiveAlgo.FloorRule.BREAK_EVEN;
+        s.breakEvenCost = PreHUSPMAdaptiveAlgo.BreakEvenCost.NODES;
         s.runInitialMining(new ArrayList<>(d), 68);
+        check("Example 2, mine of D: nodes visited", s.exploredNodes, 65);
         List<Sequence> c2 = new ArrayList<>(d);
         List<Sequence> d1 = List.of(s5(), s5());
         c2.addAll(d1);
         s.runIncrementalMining(new ArrayList<>(d1), new ArrayList<>(c2), tu(c2));
         check("Example 2, d1 = S5 twice: Phi", s.iauMaxAtDecision, 6);
+        check("Example 2, d1: budget beta of the decision", s.sftValue, 3.4);
         check("Example 2, d1: rescans", s.rescanCount, 1);
+        check("Example 2, d1: rescans at UUT", s.rescansAtUut, 1);
         check("Example 2, d1: rescan at lambda = UUT, cutoff", s.lutDynValue, 19);
+        check("Example 2, d1: nodes visited", s.exploredNodes, 57);
         List<Sequence> d2 = List.of(s5());
         c2.addAll(d2);
         s.runIncrementalMining(new ArrayList<>(d2), new ArrayList<>(c2), tu(c2));
         check("Example 2, d2 = S5 once: Phi", s.iauMaxAtDecision, 3);
         check("Example 2, d2: rescans", s.rescanCount, 2);
-        check("Example 2, d2: rescan back at LUT_min, cutoff", s.lutDynValue, 16);
+        check("Example 2, d2: rescans at UUT", s.rescansAtUut, 1);
+        check("Example 2, d2: absorption a", s.floorAbsorption, 1);
+        check("Example 2, d2: rho = 65/57", s.floorRho, 65.0 / 57.0);
+        check("Example 2, d2: delta", s.floorDelta, 0);
+        check("Example 2, d2: rescan at LUT_min, cutoff", s.lutDynValue, 16);
+        List<Sequence> d3 = List.of(s5());
+        c2.addAll(d3);
+        s.runIncrementalMining(new ArrayList<>(d3), new ArrayList<>(c2), tu(c2));
+        check("Example 2, d3 = S5 once: Phi", s.iauMaxAtDecision, 3);
+        check("Example 2, d3: budget beta of the decision", s.sftValue, 4);
+        check("Example 2, d3: direct branch (no rescan)", s.rescanCount, 2);
 
         System.out.printf("Running example: %d values compared, %d mismatching%n", compared, failed);
         System.exit(failed == 0 && compared > 0 ? 0 : 1);
