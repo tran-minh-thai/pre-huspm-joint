@@ -3,7 +3,7 @@
 
     python3 analysis/rename_arms.py [--apply] [--root DIR]
 
-Historical names (measured up to commit 12db2815) and their new names:
+Historical names (measured up to commit 88f3017c) and their new names:
 
     scenario                       old                              new
     SC2, SC5, SC6, SC6D, SC6B      Adaptive-FloorSelect             Pre-HUSPM-Joint

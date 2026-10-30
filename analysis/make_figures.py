@@ -138,7 +138,7 @@ INC_FIG_ORDER = INC_ORDER[:-1] + ["Remine-own-UUT", PROPOSED]
 # PROPOSED is the method: in the incremental scenarios its maintenance with the rescan threshold
 # selection (PreHUSPMAdaptiveAlgo.floorWindow = 5), in the static ones its static mine. FIXED is the
 # method at the fixed lower threshold r_l, an ablation row of the incremental scenarios. The arms
-# carry these names on disk (until commit 12db2815 they were Adaptive-FloorSelect and Adaptive-Full;
+# carry these names on disk (until commit 88f3017c they were Adaptive-FloorSelect and Adaptive-Full;
 # docs/arm-names.md).
 FIXED = PROPOSED + "-fixed-threshold"
 METHOD_SCENARIOS = {"SC2", "SC5", "SC6", "SC6D", "SC6B"}

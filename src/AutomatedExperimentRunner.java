@@ -981,7 +981,7 @@ public class AutomatedExperimentRunner {
      * The method's arms. METHOD is the method: in the static scenarios (SC1, SC3, SC4, SC7's static
      * ablations) its static mine, in the incremental ones (SC2, SC5, SC6, SC6D, SC6B) its maintenance
      * with the rescan threshold selection. FIXED_THRESHOLD is the maintenance at the fixed lower
-     * threshold, an ablation row of the incremental scenarios. Until commit 12db2815 these arms were
+     * threshold, an ablation row of the incremental scenarios. Until commit 88f3017c these arms were
      * named Adaptive-Full and Adaptive-FloorSelect (docs/arm-names.md).
      */
     static final String METHOD = "Pre-HUSPM-Joint";

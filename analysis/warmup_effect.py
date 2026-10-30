@@ -3,7 +3,7 @@
 without it (read from git at COLD_COMMIT, the last commit that holds them) against the runs
 measured with it (the working tree).
 
-    python3 analysis/warmup_effect.py [--cold-commit 2a7997c4] [--out results/static-warmup-effect]
+    python3 analysis/warmup_effect.py [--cold-commit 0ede3e29] [--out results/static-warmup-effect]
 
 For SC1, SC3 and SC7's static arms, per (scenario, database, threshold, algorithm), the mean
 runtime over the replicates without and with the warm-up, and their ratio; then per scenario and
@@ -75,7 +75,7 @@ def warm():
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    ap.add_argument("--cold-commit", default="2a7997c4")
+    ap.add_argument("--cold-commit", default="0ede3e29")
     ap.add_argument("--out", default=str(ROOT / "results" / "static-warmup-effect"))
     a = ap.parse_args()
     c, w = cold(a.cold_commit), warm()

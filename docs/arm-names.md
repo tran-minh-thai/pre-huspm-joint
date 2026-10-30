@@ -1,6 +1,6 @@
 # Arm names
 
-Until commit 12db2815 the proposal's arms carried historical names. They were renamed to their roles
+Until commit 88f3017c the proposal's arms carried historical names. They were renamed to their roles
 in the code, in `campaign.ps1`, in the analysis and in the result trees `results/campaign*`
 (directories and the `algorithm` and `run_id` columns), by `analysis/rename_arms.py`, which holds the
 table below and checks that every rewritten file maps back to its original bytes.

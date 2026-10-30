@@ -482,7 +482,7 @@ def evaluate(stream, su, rl, be_window=5):
             if W == 5:
                 agree = sum(a == b for a, b in zip(per_op(path, stream, merged), m_be))
                 row["cold_w5_agrees_with_measured"] = f"{agree}/{len(m_be)}"
-    # The rule by explored nodes (the method from 0a56c546): rho from the node counts of the mines,
+    # The rule by explored nodes (the method from 0e95c6c2): rho from the node counts of the mines,
     # which remining at the same floor reports exactly, the first from the initial mine; delta 0.
     ir = stream.init_rows
     n0 = (ir[(ir["algorithm"] == mf.PROPOSED) & (ir["replicate"] == rep)]["explored_nodes"] if ir is not None

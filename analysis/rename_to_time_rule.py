@@ -3,7 +3,7 @@
 
     python3 analysis/rename_to_time_rule.py [--apply]
 
-From 0a56c546 the method, Pre-HUSPM-Joint, measures mines by the nodes they explore; up to it the
+From 0e95c6c2 the method, Pre-HUSPM-Joint, measures mines by the nodes they explore; up to it the
 arm measured them by their time. The rule by time is kept as the comparison arm Pre-HUSPM-Joint-time,
 whose code path is the earlier method's (the time branch of FloorRule.BREAK_EVEN, merged
 modifications), so the earlier runs are that arm and keep their measurements under the new name.
