@@ -163,6 +163,10 @@ def units_of(stream, merge):
     return out
 
 
+NODES_ONLY = False
+BRUTE_LEAVES = 4096
+
+
 def run(stream, su, rl, choose, merge=False):
     """Replays a policy; choose(u, path, replay) -> True to rescan at the threshold. Returns per
     unit 'D' (direct), 'L' or 'U' (rescan at the lower threshold or at the threshold)."""
@@ -413,9 +417,14 @@ def evaluate(stream, su, rl, be_window=5):
             path.append("U" if up else "L")
         return path
 
-    def optimum(merge):
+    def optimum(merge, low=None, high=None, direct=None):
         """Offline optimum: right after a rescan the counters are zero, so the next rescan depends
-        only on the unit of that rescan and its floor; a dynamic programme over (unit, floor)."""
+        only on the unit of that rescan and its floor; a dynamic programme over (unit, floor).
+        low, high: the cost of a mine at the lower threshold and at the threshold per operation
+        (default: remining's times); direct: the cost of a direct phase (default: cD_phase)."""
+        cl = cL if low is None else low
+        cu = cU if high is None else high
+        cd = cD_phase if direct is None else direct
         units = units_of(stream, merge)
         totals = [sum(u for u, _ in stream.init)]
         for unit in units:
@@ -434,7 +443,7 @@ def evaluate(stream, su, rl, be_window=5):
                         trig = r.step(stream.phases[p]) or trig
                     if trig:
                         break
-                    cost += sum(cD_phase(p) for p in units[u])
+                    cost += sum(cd(p) for p in units[u])
                     u += 1
                 nxt[(u0, up)] = (u, cost)
             return nxt[(u0, up)]
@@ -444,7 +453,7 @@ def evaluate(stream, su, rl, be_window=5):
                 u, cost = forward(u0, up)
                 if u < n:
                     o = stream.op_of[units[u][0]]
-                    cost += min(cL[o] + V(u, False), cU[o] + V(u, True))
+                    cost += min(cl[o] + V(u, False), cu[o] + V(u, True))
                 memo[(u0, up)] = cost
             return memo[(u0, up)]
         sys.setrecursionlimit(20000)
@@ -498,6 +507,49 @@ def evaluate(stream, su, rl, be_window=5):
             ops = per_op(pw, stream, merged)
             row[f"nodes_w{W}_rescans"] = sum(x for x, _ in ops)
             row[f"nodes_w{W}_rescans_at_uut"] = sum(y for _, y in ops)
+        # In explored nodes: each policy's rescans priced by the nodes remining reports at the same
+        # floor and operation, a direct phase costing 0, and the offline optimum on the same costs.
+        units = units_of(stream, merged)
+        node_cost = lambda pth: sum(0 if x == "D" else (nU if x == "U" else nL)[stream.op_of[unit[0]]]
+                                    for unit, x in zip(units, pth))
+        pols = dict(method=path, always_threshold=run(stream, su, rl, lambda u, pth, r: True, merged),
+                    fixed_lower_threshold=run(stream, su, rl, fixed, merged),
+                    window5=run(stream, su, rl, window5, merged))
+        for name, pth in pols.items():
+            row[f"nodes_{name}"] = int(round(node_cost(pth)))
+            row[f"nodes_{name}_rescans"] = sum(x != "D" for x in pth)
+            row[f"nodes_{name}_rescans_at_threshold"] = sum(x == "U" for x in pth)
+        row["nodes_offline_optimum"] = int(round(optimum(merged, low=nL, high=nU, direct=lambda p: 0.0)))
+        # An independent check of the dynamic programme: every sequence of floor choices replayed by
+        # run(), on the streams whose decision tree has at most BRUTE_LEAVES leaves.
+        leaves, best = 0, None
+
+        def dfs(prefix):
+            nonlocal leaves, best
+            bits, beyond = list(prefix), [False]
+
+            def choose(u, pth, r):
+                if bits:
+                    return bits.pop(0)
+                beyond[0] = True
+                return False
+            pth = run(stream, su, rl, choose, merged)
+            if beyond[0]:
+                dfs(prefix + [False])
+                dfs(prefix + [True])
+                return
+            leaves += 1
+            if leaves > BRUTE_LEAVES:
+                raise OverflowError
+            c = node_cost(pth)
+            best = c if best is None else min(best, c)
+        try:
+            dfs([])
+            row["nodes_bruteforce_optimum"] = int(round(best))
+            row["nodes_bruteforce_leaves"] = leaves
+        except OverflowError:
+            row["nodes_bruteforce_optimum"] = ""
+            row["nodes_bruteforce_leaves"] = f">{BRUTE_LEAVES}"
     row.update(bound_against_threshold(stream, su, rl, merged, units_of, break_even, run, cL, cU, cD_phase))
     # The bound holds for any choice of the floor: the rule by explored nodes (the method) and the
     # window rule at every window, on the same priced costs.
@@ -528,7 +580,8 @@ def evaluate(stream, su, rl, be_window=5):
                    priced_offline_optimum_merged_s=round(optimum(True), 3),
                    priced_window_rule10_merged_s=round(price(window_rule(True, 10), True), 3),
                    priced_window_rule20_merged_s=round(price(window_rule(True, 20), True), 3))
-    print("  " + ", ".join(f"{k} {v}" for k, v in row.items() if k.startswith(("measured", "priced"))))
+    if not NODES_ONLY:
+        print("  " + ", ".join(f"{k} {v}" for k, v in row.items() if k.startswith(("measured", "priced"))))
     return row
 
 
@@ -604,16 +657,23 @@ def main():
     ap.add_argument("--sc6", action="store_true", help="also SC6, SC6D and SC6B (needs --plans)")
     ap.add_argument("--plans", default="results-probe/floor-policy/mixed-plans/mixed_plans.tsv",
                     help="plans written by verify.MixedPlanDump, relative to the repository")
+    ap.add_argument("--nodes", action="store_true",
+                    help="write and print only the counts in explored nodes and the replay checks, no time")
     a = ap.parse_args()
+    global NODES_ONLY
+    NODES_ONLY = a.nodes
     out = ROOT / a.out
     out.mkdir(parents=True, exist_ok=True)
     summary = [evaluate(s, mf.DATASETS[s.db]["default_uut"], 0.8) for s in streams(a)]
+    if a.nodes:
+        summary = [{k: v for k, v in r.items() if k in ("stream", "dataset", "operations") or k.startswith(("replay_", "nodes_"))}
+                   for r in summary]
     keys = list(dict.fromkeys(k for r in summary for k in r))
     with open(out / "floor_policy.csv", "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=keys, lineterminator="\n")
         w.writeheader()
         w.writerows(summary)
-    bad = [r["stream"] for r in summary if "priced_break_even_s" not in r]
+    bad = [r["stream"] for r in summary if ("nodes_offline_optimum" if a.nodes else "priced_break_even_s") not in r]
     print(f"streams: {len(summary)}; replayed and priced: {len(summary) - len(bad)}; not replayed: {bad}")
     return 1 if bad else 0
 

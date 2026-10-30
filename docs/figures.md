@@ -70,7 +70,7 @@ series keeps its own dash pattern and marker, so a black-and-white print still r
 | `fig_C5_ablation.pdf` | SC7 | runtime summed over the 100 increments and number of rescans, adaptive rescan decision against a rescan at every increment, SIGN and C8T1S5I8N5K |
 | `fig_block_size.pdf` | SC7 | against the block size `B_sz` (the default marked): (a) sequences read on the increments without a rescan, (b) their time, (c) the time of the whole stream; SIGN and C8T1S5I8N5K |
 | `fig_sl_sensitivity_prelarge_count.pdf` | SC4 | pre-large set size against `r_l`, Pre-HUSPM and the proposal, SIGN / LEVIATHAN / C8T1S5I8N5K |
-| `fig_batch_ratio.pdf` | SC5 | the proposal's runtime over remining's, summed over the increments, against K, one line per strategy; below one the proposal is faster |
+| `fig_batch_ratio.pdf` | SC5 | the proposal's runtime over Remine-UUT's (its closest competitor in every cell), summed over the increments of the mean run, against K, one line per strategy; below one the proposal is faster; the two thin dashed lines bound the tie band (`jit_tie_band`) |
 | `fig_memory_static.pdf` | memory SC1 | live set at each database's default threshold, six algorithms, eight databases; a live set read as 0 MB (below the column's 1 MB resolution) is drawn at 1 MB |
 | `fig_memory_incremental.pdf` | memory SC2 | state held after each increment (`mem_retained_mb`), the six arms of `fig_incremental_cumulative.pdf`, seven databases |
 

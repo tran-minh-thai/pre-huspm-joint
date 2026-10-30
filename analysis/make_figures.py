@@ -1172,9 +1172,10 @@ STRAT_STYLE = {"EVEN": ("-", "o"), "INCREASING": ((0, (4, 1.5)), "s"),
                "DECREASING": ((0, (1, 1.5)), "^"), "BURST": ((0, (6, 1.5, 1, 1.5)), "D")}
 
 
-def figset_batch_ratio(tag="fig_batch_ratio"):
-    """SC5: the proposal's time over remine-from-scratch's, summed over the increments,
-    against K, one line per strategy. Below one, the proposal is faster."""
+def figset_batch_ratio(tag="fig_batch_ratio", band=None):
+    """SC5: the proposal's time over Remine-UUT's (its closest competitor in every cell), summed over
+    the increments of the mean run, against K, one line per strategy. Below one, the proposal is
+    faster. band: the tie band b, drawn as two thin lines at 1/b and b."""
     df = load_mean("SC5")
     if df is None:
         return
@@ -1188,15 +1189,18 @@ def figset_batch_ratio(tag="fig_batch_ratio"):
             for k in KS:
                 cell = inc[(inc["dataset"] == ds) & (inc["K"] == k) & (inc["strat"] == strat)]
                 p = cell[cell["algorithm"] == PROPOSED]["runtime_ms"].sum()
-                q = cell[cell["algorithm"] == "Remine-from-scratch"]["runtime_ms"].sum()
-                ys.append(100.0 * p / q if p > 0 and q > 0 else np.nan)
+                q = cell[cell["algorithm"] == "Remine-own-UUT"]["runtime_ms"].sum()
+                ys.append(p / q if p > 0 and q > 0 else np.nan)
             ls, mk = STRAT_STYLE[strat]
             ax.plot(KS, ys, **series_style(si, linestyle=ls, marker=mk, label=strat.capitalize()))
-        ax.axhline(100.0, color="black", lw=0.5)
+        ax.axhline(1.0, color="black", lw=0.5)
+        if band:
+            for y in (1 / band, band):
+                ax.axhline(y, color="0.45", lw=0.4, ls=(0, (4, 2)))
         ax.set_xticks(KS)
         panel_xlabel(ax, i, ds, "Increments $K$")
         if i == 0:
-            ax.set_ylabel("Time relative to Remine (%)")
+            ax.set_ylabel("Time over Remine-UUT")
     fig.tight_layout(w_pad=0.6)
     place_legend(fig, axes, tag, ncol=2)
     save(fig, f"{tag}.pdf")
@@ -1712,7 +1716,6 @@ def main():
     figset_c5_ablation()                               # SC7 C5 on / off
     figset_block_size()                                # SC7 block size, three panels
     figset_sl_sensitivity()                            # SC4 pre-large set vs r_l
-    figset_batch_ratio()                               # SC5 proposed / remine against K
     figset_memory_static()                             # SC1 live set, default threshold
     figset_memory_incremental()                        # SC2 state held per increment
 
@@ -1726,6 +1729,8 @@ def main():
     export_status_summary()                            # every non-OK row, by outcome
     import scenario_tables                             # summary CSVs, paper_numbers.csv, SC2 LaTeX tables
     scenario_tables.export_all()
+    # SC5 over Remine-UUT against K, with the tie band the tables above measured
+    figset_batch_ratio(band=scenario_tables.tie_band(OUT_DIR)[0])
     print("\nDONE.")
 
 

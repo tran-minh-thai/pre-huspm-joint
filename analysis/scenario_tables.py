@@ -2159,6 +2159,47 @@ def mixed_pooled(put, out):
     return t
 
 
+OFFLINE_OPTIMUM = os.path.join(mf.DATA_DIR, "invariant-offline-optimum-nodes", "2026-10-30")
+
+
+def offline_optimum_nodes(put):
+    """The rescan floor choices in explored nodes (results/invariant-offline-optimum-nodes, written by
+    analysis/floor_policy_probe.py --nodes): per scenario the nodes of the method, of mining every rescan
+    at the threshold, of the fixed lower threshold and of the offline optimum, a direct update costing 0;
+    the method over the optimum; and the checks behind them."""
+    path = os.path.join(OFFLINE_OPTIMUM, "floor_policy.csv")
+    src = "invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv"
+    if not os.path.exists(path):
+        print(f"[not written] offline optimum keys: {path} missing")
+        return
+    t = pd.read_csv(path)
+    sc_of = lambda s: "SC5" if "SC5_" in s else (s.split()[0] if s.split()[0] in ("SC6", "SC6D", "SC6B") else "SC2")
+    t = t.assign(scenario=t["stream"].map(sc_of))
+    pols = ("method", "always_threshold", "fixed_lower_threshold", "window5")
+    above = sum(int((t["nodes_offline_optimum"] > t[f"nodes_{p}"]).sum()) for p in pols)
+    put("offline_optimum_nodes_streams", len(t), src)
+    put("offline_optimum_nodes_above_a_policy", f"{above} of {len(t) * len(pols)} stream and policy pairs", src)
+    agree = t["nodes_rule_agrees_with_measured"].str.split("/", expand=True).astype(int)
+    put("offline_optimum_nodes_method_replay", f"{int(agree[0].sum())}/{int(agree[1].sum())}", src)
+    bf = t[pd.to_numeric(t["nodes_bruteforce_optimum"], errors="coerce").notna()]
+    bad = int((bf["nodes_bruteforce_optimum"].astype(float) != bf["nodes_offline_optimum"]).sum())
+    put("offline_optimum_nodes_bruteforce", f"{len(bf) - bad} of {len(bf)} streams agree "
+        f"({len(t) - len(bf)} with more than 4096 choice sequences not enumerated)", src)
+    if above or bad or agree[0].sum() != agree[1].sum():
+        raise ValueError(f"offline optimum in nodes: {above} pairs above a policy, {bad} disagreeing with brute force")
+    for sc, g in list(t.groupby("scenario")) + [("all", t)]:
+        b = f"offline_optimum_nodes_{sc}"
+        for p in pols + ("offline_optimum",):
+            put(f"{b}_{p}_total", int(g[f"nodes_{p}"].sum()), src)
+        r = g["nodes_method"] / g["nodes_offline_optimum"]
+        put(f"{b}_method_over_optimum_total", f"{g['nodes_method'].sum() / g['nodes_offline_optimum'].sum():.3f}", src)
+        lo, hi = g.loc[r.idxmin()], g.loc[r.idxmax()]
+        put(f"{b}_method_over_optimum_range", f"{r.min():.3f} ({lo['stream']}) to {r.max():.3f} ({hi['stream']})", src)
+        put(f"{b}_method_equals_optimum", f"{int((g['nodes_method'] == g['nodes_offline_optimum']).sum())} of {len(g)}", src)
+        for p in ("always_threshold", "fixed_lower_threshold"):
+            put(f"{b}_{p}_over_optimum_total", f"{g[f'nodes_{p}'].sum() / g['nodes_offline_optimum'].sum():.3f}", src)
+
+
 BE_SWEEP = (1, 2, 3, 10, 20)
 
 
@@ -2318,17 +2359,23 @@ def _fresh_table(out, name):
     return pd.read_csv(path)
 
 
+def tie_band(out):
+    """The tie band b and the ratios it comes from: the largest time ratio, either way, between the
+    method and Remine-UUT on the SC2 streams where both make the same search at every increment."""
+    identical = _fresh_table(out, "table_SC2_identical_search.csv")
+    same = identical[identical["identical"]]["remine_uut_over_method"]
+    if not len(same):
+        raise ValueError("no stream with the same search: the tie band cannot be measured")
+    return float(np.exp(np.abs(np.log(same)).max())), same
+
+
 def comparison_classes(put, out):
     """Every comparison the text draws on, classified as a win, a tie or a loss of the first arm against
     the second, with a tie band measured rather than chosen: two arms that make the same search at every
     increment (SC2, `identical`) still differ by up to a factor b in time, because each runs in its own
     JVM and is compiled differently, so any ratio within [1/b, b] is a tie. ratio = time of the second
     arm over time of the first; above b the first arm wins."""
-    identical = _fresh_table(out, "table_SC2_identical_search.csv")
-    same = identical[identical["identical"]]["remine_uut_over_method"]
-    if not len(same):
-        raise ValueError("no stream with the same search: the tie band cannot be measured")
-    b = float(np.exp(np.abs(np.log(same)).max()))
+    b, same = tie_band(out)
     put("jit_tie_band", f"{1 / b:.3f} to {b:.3f} (largest time ratio between two arms making the same search, "
         f"{len(same)} SC2 streams)", "table_SC2_identical_search.csv")
     cls = lambda r: "win" if r > b else ("loss" if r < 1 / b else "tie")
@@ -2366,6 +2413,28 @@ def comparison_classes(put, out):
             jm = float(r[f"{other}_over_jm"])
             add(f"{r['scenario']}_miner_at_threshold_vs_{other}", g, "Joint-miner@UUT", other, jm)
             add(f"{r['scenario']}_method_vs_{other}", g, P, other, jm / float(r["proposal_over_jm"]))
+    # The same pairs on the first mine of a virtual machine, before any warm-up: the static runs of the
+    # campaign trees measured without it (analysis/warmup_effect.py reads them from git), mean over runs.
+    cold = pd.read_csv(os.path.join(WARMUP_EFFECT, "warmup_effect.csv"))
+    for sc in ("SC1", "SC3"):
+        g_sc = cold[cold["scenario"] == sc]
+        expected = st[st["scenario"] == sc]
+        cells, runs = 0, []
+        for (d, op), g in g_sc.groupby(["dataset", "op_type"]):
+            tm = dict(zip(g["algorithm"], g["cold_ms"]))
+            rn = dict(zip(g["algorithm"], g["runs_cold"]))
+            if not all(a in tm for a in (AT_UUT, P, "HUSP-ULL", "HUSP-SP")):
+                continue
+            cells += 1
+            runs += [int(rn[a]) for a in (AT_UUT, P, "HUSP-ULL", "HUSP-SP")]
+            grp = f"{d} {float(op.split('=')[1]):g}"
+            for other in ("HUSP-ULL", "HUSP-SP"):
+                add(f"{sc}_cold_miner_at_threshold_vs_{other}", grp, "Joint-miner@UUT", other, tm[other] / tm[AT_UUT])
+                add(f"{sc}_cold_method_vs_{other}", grp, P, other, tm[other] / tm[P])
+        put(f"{sc}_cold_cells", f"{cells} of {len(expected)}", "static-warmup-effect/warmup_effect.csv")
+        if runs:
+            put(f"{sc}_cold_runs_per_cell", f"{min(runs)} to {max(runs)}" if min(runs) != max(runs) else str(runs[0]),
+                "static-warmup-effect/warmup_effect.csv")
     s7 = _fresh_table(out, "table_SC7_static.csv")
     for db, g in s7.groupby("dataset"):
         full = g[g["variant"] == "Full"]["runtime_s"]
@@ -3019,6 +3088,7 @@ def export_all(out_dir=None):
     break_even_study(put, out)
     mixed_shares(put, out)
     mixed_pooled(put, out)
+    offline_optimum_nodes(put)
     break_even_window_sensitivity(put, out)
     identical_search_keys(put, out)
     time_rule_keys(put, out)
