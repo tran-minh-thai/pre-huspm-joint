@@ -2106,6 +2106,84 @@ def break_even_window_sensitivity(put, out):
     return t
 
 
+SAME_SESSION = os.path.join("results-probe", "same-session", "SC2-PC-THAI-2026-10-30")
+ONE_JVM = os.path.join("results-probe", "remine-instance-overhead", "SIGN-PC-THAI", "console.txt")
+
+
+def identical_search_keys(put, out):
+    """SC2: the streams on which the method and remining at the threshold (Remine-own-UUT) explore the
+    same nodes at every increment, so make the same search, and the ratio of their times there and on
+    the other streams (mean over the runs). Then two probes on the measurement machine, keys named
+    probe_: the same two arms timed in one session, and on SIGN remining on a fresh or a reused
+    instance against the method in one JVM, which separates the search from the way each JVM compiles it."""
+    d = mf.load_scenario("SC2", replicates=True)
+    d = d[d["iteration"] > 0]
+    rows = []
+    for db, g in d.groupby("dataset"):
+        m, r = g[g["algorithm"] == P], g[g["algorithm"] == OWN_UUT]
+        if not len(m) or not len(r):
+            continue
+        first = lambda x: x[x["replicate"] == sorted(x["replicate"].unique())[0]].set_index("iteration")["explored_nodes"]
+        nm, nr = first(m), first(r)
+        same = int((nm == nr.reindex(nm.index)).sum())
+        tm = float(m.groupby("replicate")["runtime_ms"].sum().mean()) / 1000
+        tr = float(r.groupby("replicate")["runtime_ms"].sum().mean()) / 1000
+        rows.append(dict(dataset=db, increments=len(nm), same_nodes=same, method_s=tm, remine_uut_s=tr,
+                         remine_uut_over_method=tr / tm, identical=same == len(nm)))
+    t = pd.DataFrame(rows)
+    mf.write_csv(t, os.path.join(out, "table_SC2_identical_search.csv"))
+    src = "table_SC2_identical_search.csv"
+    ident, absorb = t[t["identical"]], t[~t["identical"]]
+    put("SC2_identical_search_streams", f"{len(ident)}/{len(t)} ({', '.join(sorted(ident['dataset']))})", src)
+    if len(ident):
+        put("SC2_identical_search_remine_uut_over_method_range",
+            f"{ident['remine_uut_over_method'].min():.3f} to {ident['remine_uut_over_method'].max():.3f}", src)
+    put("SC2_absorbing_streams_remine_uut_over_method",
+        "; ".join(f"{r.dataset} {r.remine_uut_over_method:.3f}" for r in absorb.sort_values("dataset").itertuples()), src)
+    for r in t.itertuples():
+        put(f"SC2_{r.dataset}_same_nodes_as_remine_uut", f"{r.same_nodes} of {r.increments}", src)
+    # SIGN, by segment of the stream: a steady ratio rules out warm-up
+    g = d[d["dataset"] == "SIGN"]
+    if len(g):
+        m = g[g["algorithm"] == P].groupby("iteration")["runtime_ms"].mean()
+        r = g[g["algorithm"] == OWN_UUT].groupby("iteration")["runtime_ms"].mean()
+        segs = [(6, 10), (11, 25), (26, 50), (51, 100)]
+        q = [float(r.loc[a:b].sum() / m.loc[a:b].sum()) for a, b in segs]
+        put("SC2_SIGN_remine_uut_over_method_increments_6_to_100", f"{min(q):.3f} to {max(q):.3f}", src)
+        put("SC2_SIGN_remine_uut_over_method_increments_1_to_5", f"{float(r.loc[1:5].sum() / m.loc[1:5].sum()):.3f}", src)
+    # probe: the two arms in one session (one run each)
+    ss = os.path.join(mf.REPO_DIR, SAME_SESSION)
+    if not os.path.isdir(ss):
+        raise FileNotFoundError(f"{ss}: the same-session probe the probe_ keys are read from is missing")
+    psrc = SAME_SESSION + " (probe)"
+    for db in sorted(os.listdir(ss)):
+        if not os.path.isdir(os.path.join(ss, db)):
+            continue
+        tot = {}
+        for a in (P, OWN_UUT):
+            f = glob.glob(os.path.join(ss, db, a, "*.csv"))
+            x = pd.read_csv(f[0])
+            tot[a] = float(x[x["iteration"] > 0]["runtime_ms"].sum())
+        put(f"probe_same_session_SC2_{db}_remine_uut_over_method", f"{tot[OWN_UUT] / tot[P]:.3f}", psrc)
+    # probe: one JVM on SIGN
+    oj = os.path.join(mf.REPO_DIR, ONE_JVM)
+    if not os.path.exists(oj):
+        raise FileNotFoundError(f"{oj}: the one-JVM probe the probe_ keys are read from is missing")
+    import re as _re
+    last = [l for l in open(oj, encoding="utf-8") if l.startswith("over ")]
+    mm = _re.search(r"FRESH ([\d.]+) ms, REUSED ([\d.]+) ms, METHOD ([\d.]+) ms.*nodes equal: (\w+)", last[-1])
+    if not mm:
+        raise ValueError(f"{oj}: no summary line")
+    fr, re_, me = (float(mm.group(i)) / 1000 for i in (1, 2, 3))
+    osrc = ONE_JVM + " (probe)"
+    put("probe_one_jvm_SIGN_remine_fresh_s", f"{fr:.2f}", osrc)
+    put("probe_one_jvm_SIGN_remine_reused_s", f"{re_:.2f}", osrc)
+    put("probe_one_jvm_SIGN_method_s", f"{me:.2f}", osrc)
+    put("probe_one_jvm_SIGN_spread_pct", f"{100 * (max(fr, re_, me) / min(fr, re_, me) - 1):.1f}", osrc)
+    put("probe_one_jvm_SIGN_nodes_equal", mm.group(4), osrc)
+    return t
+
+
 def units_after_a_rescan():
     """Every floor-selecting arm (the method and the window arms) in every incremental scenario: the
     units right after a rescan at UUT, and how many of them were taken directly (no rescan); the
@@ -2685,6 +2763,7 @@ def export_all(out_dir=None):
     break_even_study(put, out)
     mixed_shares(put, out)
     break_even_window_sensitivity(put, out)
+    identical_search_keys(put, out)
     sc2_inference(put, out)
     sc2_own_uut(put)
 

@@ -1762,6 +1762,30 @@ break_even_window_10_slowest_group,SC6D LEVIATHAN: 1.055,table_break_even_window
 break_even_window_20_slowest_group,SC2 BIBLE: 1.231,table_break_even_window_sensitivity.csv
 SC2_break_even_streams_with_runs_on_different_decisions,0/42,table_break_even_window_sensitivity.csv
 SC2_method_streams_with_runs_on_different_decisions,0/7,table_break_even_window_sensitivity.csv
+SC2_identical_search_streams,"4/7 (C8T1S5I8N5K, KOSARAK, LEVIATHAN, SIGN)",table_SC2_identical_search.csv
+SC2_identical_search_remine_uut_over_method_range,0.975 to 1.086,table_SC2_identical_search.csv
+SC2_absorbing_streams_remine_uut_over_method,BIBLE 1.256; FIFA 1.796; TAFENG 1.692,table_SC2_identical_search.csv
+SC2_BIBLE_same_nodes_as_remine_uut,49 of 100,table_SC2_identical_search.csv
+SC2_C8T1S5I8N5K_same_nodes_as_remine_uut,100 of 100,table_SC2_identical_search.csv
+SC2_FIFA_same_nodes_as_remine_uut,3 of 100,table_SC2_identical_search.csv
+SC2_KOSARAK_same_nodes_as_remine_uut,100 of 100,table_SC2_identical_search.csv
+SC2_LEVIATHAN_same_nodes_as_remine_uut,100 of 100,table_SC2_identical_search.csv
+SC2_SIGN_same_nodes_as_remine_uut,100 of 100,table_SC2_identical_search.csv
+SC2_TAFENG_same_nodes_as_remine_uut,8 of 100,table_SC2_identical_search.csv
+SC2_SIGN_remine_uut_over_method_increments_6_to_100,1.083 to 1.088,table_SC2_identical_search.csv
+SC2_SIGN_remine_uut_over_method_increments_1_to_5,1.117,table_SC2_identical_search.csv
+probe_same_session_SC2_BIBLE_remine_uut_over_method,1.192,results-probe/same-session/SC2-PC-THAI-2026-10-30 (probe)
+probe_same_session_SC2_C8T1S5I8N5K_remine_uut_over_method,0.951,results-probe/same-session/SC2-PC-THAI-2026-10-30 (probe)
+probe_same_session_SC2_FIFA_remine_uut_over_method,1.775,results-probe/same-session/SC2-PC-THAI-2026-10-30 (probe)
+probe_same_session_SC2_KOSARAK_remine_uut_over_method,1.009,results-probe/same-session/SC2-PC-THAI-2026-10-30 (probe)
+probe_same_session_SC2_LEVIATHAN_remine_uut_over_method,1.007,results-probe/same-session/SC2-PC-THAI-2026-10-30 (probe)
+probe_same_session_SC2_SIGN_remine_uut_over_method,1.086,results-probe/same-session/SC2-PC-THAI-2026-10-30 (probe)
+probe_same_session_SC2_TAFENG_remine_uut_over_method,1.683,results-probe/same-session/SC2-PC-THAI-2026-10-30 (probe)
+probe_one_jvm_SIGN_remine_fresh_s,10.16,results-probe/remine-instance-overhead/SIGN-PC-THAI/console.txt (probe)
+probe_one_jvm_SIGN_remine_reused_s,10.13,results-probe/remine-instance-overhead/SIGN-PC-THAI/console.txt (probe)
+probe_one_jvm_SIGN_method_s,10.08,results-probe/remine-instance-overhead/SIGN-PC-THAI/console.txt (probe)
+probe_one_jvm_SIGN_spread_pct,0.8,results-probe/remine-instance-overhead/SIGN-PC-THAI/console.txt (probe)
+probe_one_jvm_SIGN_nodes_equal,true,results-probe/remine-instance-overhead/SIGN-PC-THAI/console.txt (probe)
 SC2_inference_Pre-HUSPM-SWUmax_over_proposal_SIGN_ratio,5.09,table_SC2_inference.csv
 SC2_inference_Pre-HUSPM-SWUmax_over_proposal_SIGN_fastest_over_slowest,4.99,table_SC2_inference.csv
 SC2_inference_Pre-HUSPM-SWUmax_over_proposal_SIGN_ci95,5.04 to 5.14,table_SC2_inference.csv
