@@ -1228,9 +1228,12 @@ def verification():
         rows.append(dict(check=label, status="finished", patterns_initial=int(m.group(1)),
                          patterns_increments=int(m.group(2)), mismatches=int(m.group(3))))
     # The running example of the manuscript (verify.RunningExampleCheck): the values it states.
-    out = _console("running-example")
-    if _status("running-example") != "finished":
-        rows.append(dict(check="running example of the manuscript (RunningExampleCheck)", status=_status("running-example")))
+    # Example 2 under the method's rule (the break-even rule by explored nodes) from ae62486d on;
+    # results/verify-joint/running-example keeps the earlier check, with Example 2 under w = 1.
+    rex = "running-example-break-even-nodes"
+    out = _console(rex)
+    if _status(rex) != "finished":
+        rows.append(dict(check="running example of the manuscript (RunningExampleCheck)", status=_status(rex)))
     else:
         m = re.search(r"^Running example: (\d+) values compared, (\d+) mismatching$", out, flags=re.M)
         rows.append(dict(check="running example of the manuscript (RunningExampleCheck)", status="finished",

@@ -204,7 +204,7 @@ def measured_per_op(rows):
     return out
 
 
-def bound_against_threshold(stream, su, rl, merged, units_of, break_even, run, cL, cU, cD_phase):
+def bound_against_threshold(stream, su, rl, merged, units_of, break_even, run, cL, cU, cD_phase, path=None, prefix="bound"):
     """The candidate bound against always rescanning at the threshold, on the priced costs:
 
         cost(break-even) <= cost(always at UUT) + sum over its mistaken low decisions of (c_L(t) - c_U(t))
@@ -221,7 +221,8 @@ def bound_against_threshold(stream, su, rl, merged, units_of, break_even, run, c
     first = next((k for k, x in enumerate(up) if x != "D"), len(up))
     always_every = all(x == "U" for x in up[first:])
     cost_u = sum(cU[stream.op_of[unit[0]]] for unit in units)
-    path = break_even(merged)
+    if path is None:                   # the rule by time, priced warm (the first check)
+        path = break_even(merged)
     cost_be = bound = bound_general = 0.0
     lows = mistaken = d_over = 0
     i = 0
@@ -257,12 +258,13 @@ def bound_against_threshold(stream, su, rl, merged, units_of, break_even, run, c
     holds_general = cost_be <= cost_u + bound_general + 1e-9
     # the same inequality without its bound term: must fail where mistakes cost (the check is not vacuous)
     holds_without_term = cost_be <= cost_u + 1e-9
-    return dict(bound_always_uut_rescans_every_unit=always_every, bound_low_decisions=lows,
-                bound_mistaken_low=mistaken, bound_direct_over_uut=d_over,
-                bound_cost_break_even_s=round(cost_be, 4), bound_cost_always_uut_s=round(cost_u, 4),
-                bound_term_s=round(bound, 4), bound_holds=bool(holds),
-                bound_holds_without_term=bool(holds_without_term),
-                bound_general_term_s=round(bound_general, 4), bound_general_holds=bool(holds_general))
+    r = dict(bound_always_uut_rescans_every_unit=always_every, bound_low_decisions=lows,
+             bound_mistaken_low=mistaken, bound_direct_over_uut=d_over,
+             bound_cost_break_even_s=round(cost_be, 4), bound_cost_always_uut_s=round(cost_u, 4),
+             bound_term_s=round(bound, 4), bound_holds=bool(holds),
+             bound_holds_without_term=bool(holds_without_term),
+             bound_general_term_s=round(bound_general, 4), bound_general_holds=bool(holds_general))
+    return {prefix + k[len("bound"):]: v for k, v in r.items()}
 
 
 def logged_ratios(rows):
@@ -497,6 +499,16 @@ def evaluate(stream, su, rl, be_window=5):
             row[f"nodes_w{W}_rescans"] = sum(x for x, _ in ops)
             row[f"nodes_w{W}_rescans_at_uut"] = sum(y for _, y in ops)
     row.update(bound_against_threshold(stream, su, rl, merged, units_of, break_even, run, cL, cU, cD_phase))
+    # The bound holds for any choice of the floor: the rule by explored nodes (the method) and the
+    # window rule at every window, on the same priced costs.
+    if len(n0) and n0.notna().all():
+        nodes_path = break_even(merged, dL=nL, dU=nU, init_low=float(n0.iloc[0]))
+        row.update(bound_against_threshold(stream, su, rl, merged, units_of, break_even, run, cL, cU, cD_phase,
+                                           path=nodes_path, prefix="bound_nodes"))
+    for W in (1, 2, 3, 5, 10):
+        wp = run(stream, su, rl, (lambda W: lambda u, path, r: r.over_low_run >= W)(W), merged)
+        row.update(bound_against_threshold(stream, su, rl, merged, units_of, break_even, run, cL, cU, cD_phase,
+                                           path=wp, prefix=f"bound_w{W}"))
     row.update(
                measured_fixed_s=round(total(mf.FIXED), 3), priced_fixed_s=round(price(fx, merged), 3),
                measured_remine_s=round(total("Remine-from-scratch"), 3),
