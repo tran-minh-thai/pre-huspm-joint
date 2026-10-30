@@ -2797,6 +2797,71 @@ SC6D_every_kind_pooled_Remine-HUSP-ULL_over_proposal_range_without_TAFENG,1.048 
 SC6D_every_kind_pooled_Remine-HUSP-ULL-or-SP_over_proposal_range_without_TAFENG,1.048 (C8T1S5I8N5K modification) to 3.481 (LEVIATHAN deletion),table_SC6_pooled.csv
 SC6D_every_kind_pooled_Remine-UUT_over_proposal_range_without_TAFENG,0.723 (C8T1S5I8N5K modification) to 2.484 (LEVIATHAN deletion),table_SC6_pooled.csv
 SC6D_every_kind_pooled_window5_over_proposal_range_without_TAFENG,0.027 (LEVIATHAN deletion) to 1.695 (SIGN modification),table_SC6_pooled.csv
+offline_optimum_nodes_streams,115,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_above_a_policy,0 of 460 stream and policy pairs,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_method_replay,4804/4804,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_enumeration_check,"115 of 115 streams agree on their longest prefix with at most 1024 choice sequences (99027 sequences replayed, prefixes of 10 to 22 units)",invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_choice_sequences_whole_streams,1120 to 1.27e+30,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC2_method_total,2413385,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC2_always_threshold_total,2609807,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC2_fixed_lower_threshold_total,3846737,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC2_window5_total,3588575,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC2_offline_optimum_total,2376005,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC2_method_over_optimum_total,1.016,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC2_method_over_optimum_range,1.000 (C8T1S5I8N5K) to 1.113 (TAFENG),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC2_method_equals_optimum,2 of 7,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC2_always_threshold_over_optimum_total,1.098,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC2_fixed_lower_threshold_over_optimum_total,1.619,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC5_method_total,16992937,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC5_always_threshold_total,17046806,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC5_fixed_lower_threshold_total,31460960,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC5_window5_total,23063720,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC5_offline_optimum_total,16372272,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC5_method_over_optimum_total,1.038,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC5_method_over_optimum_range,1.000 (SIGN SC5_K=67_strat=EVEN) to 1.210 (SIGN SC5_K=100_strat=BURST),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC5_method_equals_optimum,19 of 48,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC5_always_threshold_over_optimum_total,1.041,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC5_fixed_lower_threshold_over_optimum_total,1.922,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC6_method_total,2364230,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC6_always_threshold_total,2377106,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC6_fixed_lower_threshold_total,3609010,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC6_window5_total,3577563,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC6_offline_optimum_total,2223447,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC6_method_over_optimum_total,1.063,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC6_method_over_optimum_range,1.000 (SC6 C8T1S5I8N5K seed 42) to 1.390 (SC6 TAFENG seed 42),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC6_method_equals_optimum,3 of 20,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC6_always_threshold_over_optimum_total,1.069,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC6_fixed_lower_threshold_over_optimum_total,1.623,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC6B_method_total,2480367,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC6B_always_threshold_total,2482172,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC6B_fixed_lower_threshold_total,4339191,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC6B_window5_total,4198522,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC6B_offline_optimum_total,2415860,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC6B_method_over_optimum_total,1.027,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC6B_method_over_optimum_range,1.000 (SC6B C8T1S5I8N5K seed 42) to 1.439 (SC6B TAFENG seed 1337),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC6B_method_equals_optimum,6 of 20,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC6B_always_threshold_over_optimum_total,1.027,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC6B_fixed_lower_threshold_over_optimum_total,1.796,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC6D_method_total,2424935,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC6D_always_threshold_total,2374160,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC6D_fixed_lower_threshold_total,2372828,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC6D_window5_total,2372828,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC6D_offline_optimum_total,1861020,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC6D_method_over_optimum_total,1.303,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC6D_method_over_optimum_range,1.067 (SC6D C8T1S5I8N5K seed 2024) to 1.716 (SC6D C8T1S5I8N5K seed 42),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC6D_method_equals_optimum,0 of 20,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC6D_always_threshold_over_optimum_total,1.276,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC6D_fixed_lower_threshold_over_optimum_total,1.275,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_all_method_total,26675854,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_all_always_threshold_total,26890051,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_all_fixed_lower_threshold_total,45628726,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_all_window5_total,36801208,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_all_offline_optimum_total,25248604,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_all_method_over_optimum_total,1.057,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_all_method_over_optimum_range,1.000 (C8T1S5I8N5K) to 1.716 (SC6D C8T1S5I8N5K seed 42),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_all_method_equals_optimum,30 of 115,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_all_always_threshold_over_optimum_total,1.065,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_all_fixed_lower_threshold_over_optimum_total,1.807,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
 SC2_BIBLE_break_even_window_1_over_window5,0.987,table_break_even_window_sensitivity.csv
 SC2_BIBLE_break_even_window_2_over_window5,1.003,table_break_even_window_sensitivity.csv
 SC2_BIBLE_break_even_window_3_over_window5,1.006,table_break_even_window_sensitivity.csv
@@ -5795,6 +5860,38 @@ noise_SC2_state_after_last_increment_max_pct,8.0,table_noise.csv
 noise_SC2_state_after_last_increment_algorithms,"IncUSP-Miner+, Pre-HUSPM-Joint-fixed-threshold, Pre-HUSPM-SWUmax, Pre-HUSPM-TSU, Remine-from-scratch",table_noise.csv
 noise_SC2_state_after_last_increment_databases,"SIGN, TAFENG",table_noise.csv
 jit_tie_band,"0.921 to 1.086 (largest time ratio between two arms making the same search, 4 SC2 streams)",table_SC2_identical_search.csv
+SC1_cold_cells,32 of 32,static-warmup-effect/warmup_effect.csv
+SC1_cold_runs_per_cell,3,static-warmup-effect/warmup_effect.csv
+SC3_cold_cells,12 of 12,static-warmup-effect/warmup_effect.csv
+SC3_cold_runs_per_cell,3,static-warmup-effect/warmup_effect.csv
+classes_SC1_cold_method_vs_HUSP-SP,"wins 6, ties 9, losses 17 of 32",table_comparison_classes.csv
+classes_SC1_cold_method_vs_HUSP-SP_ties,BMS1 0.012821 1.049; C8T1S5I8N5K 0.0012 0.964; C8T1S5I8N5K 0.001236 1.006; KOSARAK 0.028117 1.000; LEVIATHAN 0.01553 0.930; LEVIATHAN 0.01647 1.036; LEVIATHAN 0.017987 0.966; SIGN 0.091052 0.967; TAFENG 0.004499 1.002,table_comparison_classes.csv
+classes_SC1_cold_method_vs_HUSP-SP_wins,BMS1 0.013597 1.192; BMS1 0.015293 1.940; BMS1 0.016218 1.817; TAFENG 0.002812 1.358; TAFENG 0.003557 1.129; TAFENG 0.005691 1.160,table_comparison_classes.csv
+classes_SC1_cold_method_vs_HUSP-SP_wins_range,1.129 to 1.940,table_comparison_classes.csv
+classes_SC1_cold_method_vs_HUSP-SP_wins_range_first_over_second,0.515 to 0.886,table_comparison_classes.csv
+classes_SC1_cold_method_vs_HUSP-SP_losses_range,0.595 to 0.895,table_comparison_classes.csv
+classes_SC1_cold_method_vs_HUSP-SP_losses_range_first_over_second,1.118 to 1.682,table_comparison_classes.csv
+classes_SC1_cold_method_vs_HUSP-ULL,"wins 3, ties 7, losses 22 of 32",table_comparison_classes.csv
+classes_SC1_cold_method_vs_HUSP-ULL_ties,BMS1 0.015293 0.985; FIFA 0.059637 0.928; FIFA 0.067073 0.954; FIFA 0.075436 0.974; KOSARAK 0.031623 1.070; LEVIATHAN 0.01647 1.038; LEVIATHAN 0.017987 1.007,table_comparison_classes.csv
+classes_SC1_cold_method_vs_HUSP-ULL_wins,KOSARAK 0.022228 1.096; KOSARAK 0.025 1.448; KOSARAK 0.028117 1.335,table_comparison_classes.csv
+classes_SC1_cold_method_vs_HUSP-ULL_wins_range,1.096 to 1.448,table_comparison_classes.csv
+classes_SC1_cold_method_vs_HUSP-ULL_wins_range_first_over_second,0.691 to 0.912,table_comparison_classes.csv
+classes_SC1_cold_method_vs_HUSP-ULL_losses_range,0.540 to 0.891,table_comparison_classes.csv
+classes_SC1_cold_method_vs_HUSP-ULL_losses_range_first_over_second,1.123 to 1.852,table_comparison_classes.csv
+classes_SC1_cold_miner_at_threshold_vs_HUSP-SP,"wins 20, ties 8, losses 4 of 32",table_comparison_classes.csv
+classes_SC1_cold_miner_at_threshold_vs_HUSP-SP_ties,BIBLE 0.022895 1.049; BIBLE 0.02896 0.982; BIBLE 0.03257 0.966; C8T1S5I8N5K 0.0012 1.042; KOSARAK 0.022228 1.021; KOSARAK 0.025 1.004; KOSARAK 0.031623 0.921; SIGN 0.083371 1.084,table_comparison_classes.csv
+classes_SC1_cold_miner_at_threshold_vs_HUSP-SP_wins_range,1.141 to 2.133,table_comparison_classes.csv
+classes_SC1_cold_miner_at_threshold_vs_HUSP-SP_wins_range_first_over_second,0.469 to 0.877,table_comparison_classes.csv
+classes_SC1_cold_miner_at_threshold_vs_HUSP-SP_losses,BIBLE 0.0181 0.854; C8T1S5I8N5K 0.001099 0.545; C8T1S5I8N5K 0.001132 0.479; LEVIATHAN 0.014644 0.736,table_comparison_classes.csv
+classes_SC1_cold_miner_at_threshold_vs_HUSP-SP_losses_range,0.479 to 0.854,table_comparison_classes.csv
+classes_SC1_cold_miner_at_threshold_vs_HUSP-SP_losses_range_first_over_second,1.171 to 2.086,table_comparison_classes.csv
+classes_SC1_cold_miner_at_threshold_vs_HUSP-ULL,"wins 15, ties 5, losses 12 of 32",table_comparison_classes.csv
+classes_SC1_cold_miner_at_threshold_vs_HUSP-ULL_ties,BIBLE 0.022895 1.028; BIBLE 0.02896 1.011; BIBLE 0.03257 0.977; BMS1 0.015293 1.023; SIGN 0.083371 1.030,table_comparison_classes.csv
+classes_SC1_cold_miner_at_threshold_vs_HUSP-ULL_wins_range,1.124 to 2.068,table_comparison_classes.csv
+classes_SC1_cold_miner_at_threshold_vs_HUSP-ULL_wins_range_first_over_second,0.484 to 0.890,table_comparison_classes.csv
+classes_SC1_cold_miner_at_threshold_vs_HUSP-ULL_losses,BIBLE 0.0181 0.827; BMS1 0.012821 0.843; BMS1 0.013597 0.693; BMS1 0.016218 0.878; C8T1S5I8N5K 0.001099 0.480; C8T1S5I8N5K 0.001132 0.429; C8T1S5I8N5K 0.0012 0.770; LEVIATHAN 0.014644 0.677; TAFENG 0.002812 0.855; TAFENG 0.003557 0.703; TAFENG 0.004499 0.817; TAFENG 0.005691 0.896,table_comparison_classes.csv
+classes_SC1_cold_miner_at_threshold_vs_HUSP-ULL_losses_range,0.429 to 0.896,table_comparison_classes.csv
+classes_SC1_cold_miner_at_threshold_vs_HUSP-ULL_losses_range_first_over_second,1.115 to 2.330,table_comparison_classes.csv
 classes_SC1_method_vs_HUSP-SP,"wins 8, ties 10, losses 14 of 32",table_comparison_classes.csv
 classes_SC1_method_vs_HUSP-SP_ties,SIGN 0.049134 1.019; SIGN 0.065911 0.924; SIGN 0.083371 0.957; SIGN 0.091052 0.941; LEVIATHAN 0.014644 0.984; LEVIATHAN 0.01553 0.995; LEVIATHAN 0.01647 1.060; LEVIATHAN 0.017987 0.966; KOSARAK 0.025 0.922; KOSARAK 0.028117 0.958,table_comparison_classes.csv
 classes_SC1_method_vs_HUSP-SP_wins,BMS1 0.012821 3.084; BMS1 0.013597 3.110; BMS1 0.015293 2.217; BMS1 0.016218 2.202; KOSARAK 0.022228 1.097; TAFENG 0.002812 2.258; TAFENG 0.003557 1.536; TAFENG 0.004499 1.111,table_comparison_classes.csv
@@ -5903,6 +6000,35 @@ classes_SC2_method_vs_closest_published_or_remine_below_ties,BIBLE 1.065,table_c
 classes_SC2_method_vs_closest_published_or_remine_below_wins,C8T1S5I8N5K 1.882; FIFA 2.603; KOSARAK 1.244; LEVIATHAN 1.339; SIGN 1.770; TAFENG 1.204,table_comparison_classes.csv
 classes_SC2_method_vs_closest_published_or_remine_below_wins_range,1.204 to 2.603,table_comparison_classes.csv
 classes_SC2_method_vs_closest_published_or_remine_below_wins_range_first_over_second,0.384 to 0.831,table_comparison_classes.csv
+classes_SC3_cold_method_vs_HUSP-SP,"wins 1, ties 4, losses 7 of 12",table_comparison_classes.csv
+classes_SC3_cold_method_vs_HUSP-SP_ties,LEVIATHAN 0.01647 0.969; SIGN 0.065911 0.939; SIGN 0.083371 0.975; SIGN 0.091052 1.064,table_comparison_classes.csv
+classes_SC3_cold_method_vs_HUSP-SP_wins,C8T1S5I8N5K 0.001236 1.417,table_comparison_classes.csv
+classes_SC3_cold_method_vs_HUSP-SP_wins_range,1.417 to 1.417,table_comparison_classes.csv
+classes_SC3_cold_method_vs_HUSP-SP_wins_range_first_over_second,0.706 to 0.706,table_comparison_classes.csv
+classes_SC3_cold_method_vs_HUSP-SP_losses,C8T1S5I8N5K 0.001099 0.358; C8T1S5I8N5K 0.001132 0.557; C8T1S5I8N5K 0.0012 0.676; LEVIATHAN 0.014644 0.738; LEVIATHAN 0.01553 0.889; LEVIATHAN 0.017987 0.851; SIGN 0.049134 0.835,table_comparison_classes.csv
+classes_SC3_cold_method_vs_HUSP-SP_losses_range,0.358 to 0.889,table_comparison_classes.csv
+classes_SC3_cold_method_vs_HUSP-SP_losses_range_first_over_second,1.125 to 2.797,table_comparison_classes.csv
+classes_SC3_cold_method_vs_HUSP-ULL,"wins 0, ties 4, losses 8 of 12",table_comparison_classes.csv
+classes_SC3_cold_method_vs_HUSP-ULL_ties,LEVIATHAN 0.01553 0.923; LEVIATHAN 0.01647 0.957; SIGN 0.083371 1.018; SIGN 0.091052 1.058,table_comparison_classes.csv
+classes_SC3_cold_method_vs_HUSP-ULL_losses,C8T1S5I8N5K 0.001099 0.308; C8T1S5I8N5K 0.001132 0.592; C8T1S5I8N5K 0.0012 0.481; C8T1S5I8N5K 0.001236 0.731; LEVIATHAN 0.014644 0.702; LEVIATHAN 0.017987 0.887; SIGN 0.049134 0.791; SIGN 0.065911 0.898,table_comparison_classes.csv
+classes_SC3_cold_method_vs_HUSP-ULL_losses_range,0.308 to 0.898,table_comparison_classes.csv
+classes_SC3_cold_method_vs_HUSP-ULL_losses_range_first_over_second,1.114 to 3.243,table_comparison_classes.csv
+classes_SC3_cold_miner_at_threshold_vs_HUSP-SP,"wins 8, ties 2, losses 2 of 12",table_comparison_classes.csv
+classes_SC3_cold_miner_at_threshold_vs_HUSP-SP_ties,LEVIATHAN 0.014644 0.971; SIGN 0.049134 1.023,table_comparison_classes.csv
+classes_SC3_cold_miner_at_threshold_vs_HUSP-SP_wins,C8T1S5I8N5K 0.0012 1.381; C8T1S5I8N5K 0.001236 2.030; LEVIATHAN 0.01553 1.235; LEVIATHAN 0.01647 1.307; LEVIATHAN 0.017987 1.215; SIGN 0.065911 1.351; SIGN 0.083371 1.532; SIGN 0.091052 1.744,table_comparison_classes.csv
+classes_SC3_cold_miner_at_threshold_vs_HUSP-SP_wins_range,1.215 to 2.030,table_comparison_classes.csv
+classes_SC3_cold_miner_at_threshold_vs_HUSP-SP_wins_range_first_over_second,0.493 to 0.823,table_comparison_classes.csv
+classes_SC3_cold_miner_at_threshold_vs_HUSP-SP_losses,C8T1S5I8N5K 0.001099 0.637; C8T1S5I8N5K 0.001132 0.856,table_comparison_classes.csv
+classes_SC3_cold_miner_at_threshold_vs_HUSP-SP_losses_range,0.637 to 0.856,table_comparison_classes.csv
+classes_SC3_cold_miner_at_threshold_vs_HUSP-SP_losses_range_first_over_second,1.169 to 1.571,table_comparison_classes.csv
+classes_SC3_cold_miner_at_threshold_vs_HUSP-ULL,"wins 6, ties 4, losses 2 of 12",table_comparison_classes.csv
+classes_SC3_cold_miner_at_threshold_vs_HUSP-ULL_ties,C8T1S5I8N5K 0.0012 0.982; C8T1S5I8N5K 0.001236 1.047; LEVIATHAN 0.014644 0.924; SIGN 0.049134 0.969,table_comparison_classes.csv
+classes_SC3_cold_miner_at_threshold_vs_HUSP-ULL_wins,LEVIATHAN 0.01553 1.282; LEVIATHAN 0.01647 1.291; LEVIATHAN 0.017987 1.266; SIGN 0.065911 1.292; SIGN 0.083371 1.599; SIGN 0.091052 1.735,table_comparison_classes.csv
+classes_SC3_cold_miner_at_threshold_vs_HUSP-ULL_wins_range,1.266 to 1.735,table_comparison_classes.csv
+classes_SC3_cold_miner_at_threshold_vs_HUSP-ULL_wins_range_first_over_second,0.576 to 0.790,table_comparison_classes.csv
+classes_SC3_cold_miner_at_threshold_vs_HUSP-ULL_losses,C8T1S5I8N5K 0.001099 0.549; C8T1S5I8N5K 0.001132 0.909,table_comparison_classes.csv
+classes_SC3_cold_miner_at_threshold_vs_HUSP-ULL_losses_range,0.549 to 0.909,table_comparison_classes.csv
+classes_SC3_cold_miner_at_threshold_vs_HUSP-ULL_losses_range_first_over_second,1.100 to 1.822,table_comparison_classes.csv
 classes_SC3_method_vs_HUSP-SP,"wins 1, ties 4, losses 7 of 12",table_comparison_classes.csv
 classes_SC3_method_vs_HUSP-SP_ties,SIGN 0.049134 1.042; SIGN 0.083371 1.040; SIGN 0.091052 0.994; LEVIATHAN 0.01647 0.962,table_comparison_classes.csv
 classes_SC3_method_vs_HUSP-SP_wins,SIGN 0.065911 1.158,table_comparison_classes.csv
