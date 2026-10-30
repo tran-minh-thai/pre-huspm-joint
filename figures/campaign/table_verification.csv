@@ -24,9 +24,11 @@ rescan rule acceptance (RescanRuleAcceptanceTest),finished,,49,,,,0,,,,,,,,
 "bound invariant B(X) >= u(X), prehuspm-tracking-fuzz",finished,8,7748983,,,,0,,,,,,,,
 "patterns against the proposal after every operation, husps-mixed",finished,1,8820,,,,0,,,,,,,,
 "patterns against the proposal after every operation, husps-mixed-break-even",finished,1,5040,,,,0,,,,,,,,
+"patterns against the proposal after every operation, husps-mixed-break-even-nodes",finished,1,5040,,,,0,,,,,,,,
 "patterns against the proposal after every operation, husps-mixed-remine",finished,1,2520,,,,0,,,,,,,,
 "patterns against the proposal after every operation, husps-sc2",finished,7,7070,,,,0,,,,,,,,
 "patterns against the proposal after every operation, husps-sc2-break-even",finished,7,1414,,,,0,,,,,,,,
+"patterns against the proposal after every operation, husps-sc2-break-even-nodes",finished,7,1414,,,,0,,,,,,,,
 "patterns against the proposal after every operation, husps-sc2-remine",finished,7,1414,,,,0,,,,,,,,
 item pruning against exhaustive enumeration (ItemRemovalCheck random),finished,2000,1444,,,,0,1951,,,,,,,
 "item pruning on and off on real databases, init (ItemRemovalCheck real)",finished,8,8,,,,0,,,,,,,,
@@ -41,7 +43,10 @@ fault injection into the rescan floor selection,finished,,2,,,,,,,,2,,,,
 "direct path on real databases, adversarial-tafeng operations",finished,1,16,4,8,4,0,0,,,,0,0,0,0
 "direct path on real databases, adversarial-tafeng-probe0.7 operations",finished,1,16,4,6,4,0,12,,,,0,0,0,0
 "direct path on real databases, break-even-adversarial operations",finished,8,128,25,46,25,0,108,,,,18,7,0,0
+"direct path on real databases, break-even-nodes-adversarial operations",finished,8,128,24,48,25,0,112,,,,16,7,0,0
 "direct path on real databases, break-even-nodes-random operations",finished,8,128,26,49,20,0,0,,,,24,4,0,0
+"direct path on real databases, break-even-nodes-switching-adversarial operations",finished,8,150,16,38,17,0,123,,,,42,18,0,3
+"direct path on real databases, break-even-nodes-switching-random operations",finished,8,181,29,56,25,0,0,,,,24,8,0,2
 "direct path on real databases, break-even-random operations",finished,8,128,24,46,20,0,0,,,,30,4,0,0
 "direct path on real databases, break-even-switching-adversarial operations",finished,8,150,21,40,14,0,123,,,,39,11,0,3
 "direct path on real databases, break-even-switching-random operations",finished,8,184,26,53,23,0,0,,,,38,8,0,1

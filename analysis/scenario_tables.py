@@ -3008,6 +3008,27 @@ def export_all(out_dir=None):
         parts = [r.get(c) for c in ("direct_delete", "direct_insert", "direct_modify")]
         if all(pd.notna(v) for v in parts):
             put(f"{key}_direct_total", int(sum(parts)), "table_verification.csv")
+    # The switching check is reported over its random and adversarial streams together: the sums
+    # of the two records of each rule, written only when both finished.
+    sw = re.compile(r"^direct path on real databases, (.+)-switching-(random|adversarial) operations$")
+    pairs = {}
+    for _, r in vs.iterrows():
+        m = sw.match(r["check"])
+        if m and r["status"] == "finished":
+            pairs.setdefault(m.group(1), {})[m.group(2)] = r
+    for rule, two in sorted(pairs.items()):
+        if len(two) != 2:
+            continue
+        key = "verify_switching_" + re.sub(r"[^a-z0-9]+", "_", rule.lower()).strip("_") + "_both_streams"
+        for col in ("runs", "operations", "mismatches", "rescans_at_uut", "rescans_back_to_low", "stopped_by_heap"):
+            vals = [two[k].get(col) for k in ("random", "adversarial")]
+            if all(pd.notna(v) for v in vals):
+                put(f"{key}_{col}", int(sum(vals)), "table_verification.csv")
+        # the operation at which each stopped run stops, over both records
+        stops = [s for k in ("random", "adversarial")
+                 for s in re.findall(r"at operation (\d+)", _heap_stops(_console(f"{rule}-switching-{k}"))[1] or "")]
+        if stops:
+            put(f"{key}_stopped_at_operations", ", ".join(sorted(set(stops), key=int)), "table_verification.csv")
 
     # SC7 over the incremental stream: the time of each variant summed over the 100 increments,
     # and what the block index saves
