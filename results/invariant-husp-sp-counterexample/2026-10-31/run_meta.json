@@ -1,0 +1,16 @@
+{
+  "command": "bash results/invariant-husp-sp-counterexample/tools/run.sh",
+  "path_substitutions": 0,
+  "build_dir": "build-cx",
+  "git_commit": "d66e2a4a1dc0edf6f89d70fcf20bc79549513ad4",
+  "tree": "clean",
+  "source_sha256": "4e7603bc90d9ce33422ae180ce372fe7da54e10abdf9e03814c88ba9ad1250fb",
+  "source_files": 42,
+  "java": "openjdk version \"25.0.4.1\" 2026-08-18 LTS",
+  "os": "Darwin 27.2.0 (macOS-27.2-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-10-31T16:09:03",
+  "end": "2026-10-31T16:09:05",
+  "exit_code": 0
+}

@@ -1,0 +1,22 @@
+github.com/DSI-Lab1/HUSPM commit 8b1f5f04c941fc2f7f4a0c14ae143d6bc67ffa4a
+java: openjdk version "25.0.4.1" 2026-08-18 LTS
+
+== threshold 52 (ratio 0.9455 of the total utility 55)
+HUSPs: 22
+Candidates: 28
+threshold 52: correct HUSPs 23, counted by the published code 22
+missed: <(1)(2)(3)> utility 52
+counted but not HUSPs: none
+S-extension prefix "[1, -1, 2]" item 1 bound 55 minUtility 52
+S-extension prefix "[1, -1, 2]" item 2 bound 4 minUtility 52
+S-extension prefix "[1, -1, 2]" item 3 bound 5 minUtility 52
+
+== threshold 50 (ratio 0.91 of the total utility 55)
+HUSPs: 27
+Candidates: 28
+threshold 50: correct HUSPs 28, counted by the published code 27
+missed: <(1)(2)(3)> utility 52
+counted but not HUSPs: none
+S-extension prefix "[1, -1, 2]" item 1 bound 55 minUtility 50
+S-extension prefix "[1, -1, 2]" item 2 bound 4 minUtility 50
+S-extension prefix "[1, -1, 2]" item 3 bound 5 minUtility 50
