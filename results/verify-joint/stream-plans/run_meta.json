@@ -1,0 +1,16 @@
+{
+  "command": "java -Xmx8g -cp build-plans verify.StreamPlansCheck",
+  "path_substitutions": 0,
+  "build_dir": "build-plans",
+  "git_commit": "1d020e38bc55a99bfa18c37aea0983173487e347",
+  "tree": "src clean, other files modified",
+  "source_sha256": "90b0a7a4609f6a6a40cb505165041ce48a04c972f4d0bb76f57c0114e6d502be",
+  "source_files": 44,
+  "java": "openjdk version \"25.0.4.1\" 2026-08-18 LTS",
+  "os": "Darwin 27.2.0 (macOS-27.2-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-10-31T16:42:55",
+  "end": "2026-10-31T16:43:13",
+  "exit_code": 0
+}

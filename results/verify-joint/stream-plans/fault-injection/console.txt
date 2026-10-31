@@ -1,0 +1,35 @@
+commit 1d020e38bc55a99bfa18c37aea0983173487e347
+== heavy-x9: line 102
+102c102
+<                     for (Sequence s : delta) heavy.add(scaled(s, 10.0, nextId++));
+---
+>                     for (Sequence s : delta) heavy.add(scaled(s, 9.0, nextId++));
+exit 1
+plans: 60, operations: 30000, new sequences checked: 32250, violations: 2100
+== no-alternation: line 58
+58c58
+<                 for (int i = 0; i < OPERATIONS / 2; i++) { kinds.add(MixedPlan.Kind.INS); kinds.add(MixedPlan.Kind.DEL); }
+---
+>                 for (int i = 0; i < OPERATIONS / 2; i++) { kinds.add(MixedPlan.Kind.INS); kinds.add(MixedPlan.Kind.INS); }
+exit 1
+plans: 60, operations: 30000, new sequences checked: 32250, violations: 6000
+== old-id: line 120
+120c120
+<                     for (Sequence s : oldSeqs) newSeqs.add(modify(s, nextId++, occurrences, rnd));
+---
+>                     for (Sequence s : oldSeqs) newSeqs.add(modify(s, s.id, occurrences, rnd));
+exit 1
+plans: 60, operations: 30000, new sequences checked: 27488, violations: 9675
+== factor-one: line 189
+189c189
+<                 if (rnd.nextBoolean()) { el.set(j, new QItem(el.get(j).id, el.get(j).utility * (0.5 + 1.5 * rnd.nextDouble()))); any = true; }
+---
+>                 if (rnd.nextBoolean()) { el.set(j, new QItem(el.get(j).id, el.get(j).utility * 1.0)); rnd.nextDouble(); any = true; }
+exit 1
+plans: 60, operations: 30000, new sequences checked: 32250, violations: 3506
+
+violations printed (the check prints the first 30) by scenario, per case:
+heavy-x9:   30 SC10H 
+no-alternation:   30 SC9 
+old-id:   30 SC10 
+factor-one:   30 SC10 

@@ -1,0 +1,61 @@
+SC8 SIGN         seed 42    opSize 1   500 operations (350 insert, 75 delete, 75 modify); new sequences 0
+SC8 SIGN         seed 1337  opSize 1   500 operations (350 insert, 75 delete, 75 modify); new sequences 0
+SC8 SIGN         seed 2024  opSize 1   500 operations (350 insert, 75 delete, 75 modify); new sequences 0
+SC8P SIGN         seed 42    opSize 1   500 operations (225 insert, 225 delete, 50 modify); new sequences 0
+SC8P SIGN         seed 1337  opSize 1   500 operations (225 insert, 225 delete, 50 modify); new sequences 0
+SC8P SIGN         seed 2024  opSize 1   500 operations (225 insert, 225 delete, 50 modify); new sequences 0
+SC9 SIGN         seed 42    opSize 1   500 operations (250 insert, 250 delete, 0 modify); new sequences 0
+SC9 SIGN         seed 1337  opSize 1   500 operations (250 insert, 250 delete, 0 modify); new sequences 0
+SC9 SIGN         seed 2024  opSize 1   500 operations (250 insert, 250 delete, 0 modify); new sequences 0
+SC10 SIGN         seed 42    opSize 1   500 operations (350 insert, 75 delete, 75 modify); new sequences 75; picked among recent: 77 of 150
+SC10 SIGN         seed 1337  opSize 1   500 operations (350 insert, 75 delete, 75 modify); new sequences 75; picked among recent: 79 of 150
+SC10 SIGN         seed 2024  opSize 1   500 operations (350 insert, 75 delete, 75 modify); new sequences 75; picked among recent: 75 of 150
+SC10H SIGN         seed 42    opSize 1   500 operations (350 insert, 75 delete, 75 modify); new sequences 175
+SC10H SIGN         seed 1337  opSize 1   500 operations (350 insert, 75 delete, 75 modify); new sequences 175
+SC10H SIGN         seed 2024  opSize 1   500 operations (350 insert, 75 delete, 75 modify); new sequences 175
+SC8 LEVIATHAN    seed 42    opSize 3   500 operations (350 insert, 75 delete, 75 modify); new sequences 0
+SC8 LEVIATHAN    seed 1337  opSize 3   500 operations (350 insert, 75 delete, 75 modify); new sequences 0
+SC8 LEVIATHAN    seed 2024  opSize 3   500 operations (350 insert, 75 delete, 75 modify); new sequences 0
+SC8P LEVIATHAN    seed 42    opSize 3   500 operations (225 insert, 225 delete, 50 modify); new sequences 0
+SC8P LEVIATHAN    seed 1337  opSize 3   500 operations (225 insert, 225 delete, 50 modify); new sequences 0
+SC8P LEVIATHAN    seed 2024  opSize 3   500 operations (225 insert, 225 delete, 50 modify); new sequences 0
+SC9 LEVIATHAN    seed 42    opSize 3   500 operations (250 insert, 250 delete, 0 modify); new sequences 0
+SC9 LEVIATHAN    seed 1337  opSize 3   500 operations (250 insert, 250 delete, 0 modify); new sequences 0
+SC9 LEVIATHAN    seed 2024  opSize 3   500 operations (250 insert, 250 delete, 0 modify); new sequences 0
+SC10 LEVIATHAN    seed 42    opSize 3   500 operations (350 insert, 75 delete, 75 modify); new sequences 225; picked among recent: 73 of 150
+SC10 LEVIATHAN    seed 1337  opSize 3   500 operations (350 insert, 75 delete, 75 modify); new sequences 225; picked among recent: 84 of 150
+SC10 LEVIATHAN    seed 2024  opSize 3   500 operations (350 insert, 75 delete, 75 modify); new sequences 225; picked among recent: 67 of 150
+SC10H LEVIATHAN    seed 42    opSize 3   500 operations (350 insert, 75 delete, 75 modify); new sequences 525
+SC10H LEVIATHAN    seed 1337  opSize 3   500 operations (350 insert, 75 delete, 75 modify); new sequences 525
+SC10H LEVIATHAN    seed 2024  opSize 3   500 operations (350 insert, 75 delete, 75 modify); new sequences 525
+SC8 C8T1S5I8N5K  seed 42    opSize 19  500 operations (350 insert, 75 delete, 75 modify); new sequences 0
+SC8 C8T1S5I8N5K  seed 1337  opSize 19  500 operations (350 insert, 75 delete, 75 modify); new sequences 0
+SC8 C8T1S5I8N5K  seed 2024  opSize 19  500 operations (350 insert, 75 delete, 75 modify); new sequences 0
+SC8P C8T1S5I8N5K  seed 42    opSize 19  500 operations (225 insert, 225 delete, 50 modify); new sequences 0
+SC8P C8T1S5I8N5K  seed 1337  opSize 19  500 operations (225 insert, 225 delete, 50 modify); new sequences 0
+SC8P C8T1S5I8N5K  seed 2024  opSize 19  500 operations (225 insert, 225 delete, 50 modify); new sequences 0
+SC9 C8T1S5I8N5K  seed 42    opSize 19  500 operations (250 insert, 250 delete, 0 modify); new sequences 0
+SC9 C8T1S5I8N5K  seed 1337  opSize 19  500 operations (250 insert, 250 delete, 0 modify); new sequences 0
+SC9 C8T1S5I8N5K  seed 2024  opSize 19  500 operations (250 insert, 250 delete, 0 modify); new sequences 0
+SC10 C8T1S5I8N5K  seed 42    opSize 19  500 operations (350 insert, 75 delete, 75 modify); new sequences 1425; picked among recent: 84 of 150
+SC10 C8T1S5I8N5K  seed 1337  opSize 19  500 operations (350 insert, 75 delete, 75 modify); new sequences 1425; picked among recent: 91 of 150
+SC10 C8T1S5I8N5K  seed 2024  opSize 19  500 operations (350 insert, 75 delete, 75 modify); new sequences 1425; picked among recent: 86 of 150
+SC10H C8T1S5I8N5K  seed 42    opSize 19  500 operations (350 insert, 75 delete, 75 modify); new sequences 3325
+SC10H C8T1S5I8N5K  seed 1337  opSize 19  500 operations (350 insert, 75 delete, 75 modify); new sequences 3325
+SC10H C8T1S5I8N5K  seed 2024  opSize 19  500 operations (350 insert, 75 delete, 75 modify); new sequences 3325
+SC8 TAFENG       seed 42    opSize 20  500 operations (350 insert, 75 delete, 75 modify); new sequences 0
+SC8 TAFENG       seed 1337  opSize 20  500 operations (350 insert, 75 delete, 75 modify); new sequences 0
+SC8 TAFENG       seed 2024  opSize 20  500 operations (350 insert, 75 delete, 75 modify); new sequences 0
+SC8P TAFENG       seed 42    opSize 20  500 operations (225 insert, 225 delete, 50 modify); new sequences 0
+SC8P TAFENG       seed 1337  opSize 20  500 operations (225 insert, 225 delete, 50 modify); new sequences 0
+SC8P TAFENG       seed 2024  opSize 20  500 operations (225 insert, 225 delete, 50 modify); new sequences 0
+SC9 TAFENG       seed 42    opSize 20  500 operations (250 insert, 250 delete, 0 modify); new sequences 0
+SC9 TAFENG       seed 1337  opSize 20  500 operations (250 insert, 250 delete, 0 modify); new sequences 0
+SC9 TAFENG       seed 2024  opSize 20  500 operations (250 insert, 250 delete, 0 modify); new sequences 0
+SC10 TAFENG       seed 42    opSize 20  500 operations (350 insert, 75 delete, 75 modify); new sequences 1500; picked among recent: 71 of 150
+SC10 TAFENG       seed 1337  opSize 20  500 operations (350 insert, 75 delete, 75 modify); new sequences 1500; picked among recent: 83 of 150
+SC10 TAFENG       seed 2024  opSize 20  500 operations (350 insert, 75 delete, 75 modify); new sequences 1500; picked among recent: 86 of 150
+SC10H TAFENG       seed 42    opSize 20  500 operations (350 insert, 75 delete, 75 modify); new sequences 3500
+SC10H TAFENG       seed 1337  opSize 20  500 operations (350 insert, 75 delete, 75 modify); new sequences 3500
+SC10H TAFENG       seed 2024  opSize 20  500 operations (350 insert, 75 delete, 75 modify); new sequences 3500
+plans: 60, operations: 30000, new sequences checked: 32250, violations: 0
