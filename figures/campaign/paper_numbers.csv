@@ -2811,7 +2811,10 @@ offline_optimum_nodes_SC2_method_over_optimum_total,1.016,invariant-offline-opti
 offline_optimum_nodes_SC2_method_over_optimum_range,1.000 (C8T1S5I8N5K) to 1.113 (TAFENG),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
 offline_optimum_nodes_SC2_method_equals_optimum,2 of 7,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
 offline_optimum_nodes_SC2_always_threshold_over_optimum_total,1.098,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC2_always_threshold_over_optimum_range,1.000 (C8T1S5I8N5K) to 1.613 (TAFENG),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
 offline_optimum_nodes_SC2_fixed_lower_threshold_over_optimum_total,1.619,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC2_fixed_lower_threshold_over_optimum_range,1.023 (FIFA) to 1.994 (C8T1S5I8N5K),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC2_method_above_always_threshold,0 of 7 (equal in 4),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
 offline_optimum_nodes_SC5_method_total,16992937,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
 offline_optimum_nodes_SC5_always_threshold_total,17046806,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
 offline_optimum_nodes_SC5_fixed_lower_threshold_total,31460960,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
@@ -2821,7 +2824,10 @@ offline_optimum_nodes_SC5_method_over_optimum_total,1.038,invariant-offline-opti
 offline_optimum_nodes_SC5_method_over_optimum_range,1.000 (SIGN SC5_K=67_strat=EVEN) to 1.210 (SIGN SC5_K=100_strat=BURST),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
 offline_optimum_nodes_SC5_method_equals_optimum,19 of 48,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
 offline_optimum_nodes_SC5_always_threshold_over_optimum_total,1.041,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC5_always_threshold_over_optimum_range,1.000 (SIGN SC5_K=67_strat=EVEN) to 1.253 (SIGN SC5_K=100_strat=DECREASING),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
 offline_optimum_nodes_SC5_fixed_lower_threshold_over_optimum_total,1.922,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC5_fixed_lower_threshold_over_optimum_range,1.174 (SIGN SC5_K=100_strat=BURST) to 2.586 (C8T1S5I8N5K SC5_K=25_strat=EVEN),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC5_method_above_always_threshold,11 of 48 (equal in 31),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
 offline_optimum_nodes_SC6_method_total,2364230,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
 offline_optimum_nodes_SC6_always_threshold_total,2377106,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
 offline_optimum_nodes_SC6_fixed_lower_threshold_total,3609010,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
@@ -2831,7 +2837,10 @@ offline_optimum_nodes_SC6_method_over_optimum_total,1.063,invariant-offline-opti
 offline_optimum_nodes_SC6_method_over_optimum_range,1.000 (SC6 C8T1S5I8N5K seed 42) to 1.390 (SC6 TAFENG seed 42),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
 offline_optimum_nodes_SC6_method_equals_optimum,3 of 20,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
 offline_optimum_nodes_SC6_always_threshold_over_optimum_total,1.069,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC6_always_threshold_over_optimum_range,1.000 (SC6 C8T1S5I8N5K seed 42) to 1.530 (SC6 TAFENG seed 42),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
 offline_optimum_nodes_SC6_fixed_lower_threshold_over_optimum_total,1.623,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC6_fixed_lower_threshold_over_optimum_range,1.111 (SC6 TAFENG seed 2024) to 1.956 (SC6 SIGN seed 31415),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC6_method_above_always_threshold,1 of 20 (equal in 14),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
 offline_optimum_nodes_SC6B_method_total,2480367,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
 offline_optimum_nodes_SC6B_always_threshold_total,2482172,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
 offline_optimum_nodes_SC6B_fixed_lower_threshold_total,4339191,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
@@ -2841,7 +2850,10 @@ offline_optimum_nodes_SC6B_method_over_optimum_total,1.027,invariant-offline-opt
 offline_optimum_nodes_SC6B_method_over_optimum_range,1.000 (SC6B C8T1S5I8N5K seed 42) to 1.439 (SC6B TAFENG seed 1337),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
 offline_optimum_nodes_SC6B_method_equals_optimum,6 of 20,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
 offline_optimum_nodes_SC6B_always_threshold_over_optimum_total,1.027,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC6B_always_threshold_over_optimum_range,1.000 (SC6B C8T1S5I8N5K seed 42) to 1.416 (SC6B TAFENG seed 42),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
 offline_optimum_nodes_SC6B_fixed_lower_threshold_over_optimum_total,1.796,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC6B_fixed_lower_threshold_over_optimum_range,1.149 (SC6B TAFENG seed 42) to 2.094 (SC6B SIGN seed 31415),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC6B_method_above_always_threshold,1 of 20 (equal in 15),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
 offline_optimum_nodes_SC6D_method_total,2424935,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
 offline_optimum_nodes_SC6D_always_threshold_total,2374160,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
 offline_optimum_nodes_SC6D_fixed_lower_threshold_total,2372828,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
@@ -2851,7 +2863,10 @@ offline_optimum_nodes_SC6D_method_over_optimum_total,1.303,invariant-offline-opt
 offline_optimum_nodes_SC6D_method_over_optimum_range,1.067 (SC6D C8T1S5I8N5K seed 2024) to 1.716 (SC6D C8T1S5I8N5K seed 42),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
 offline_optimum_nodes_SC6D_method_equals_optimum,0 of 20,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
 offline_optimum_nodes_SC6D_always_threshold_over_optimum_total,1.276,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC6D_always_threshold_over_optimum_range,1.058 (SC6D C8T1S5I8N5K seed 2024) to 2.253 (SC6D TAFENG seed 271828),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
 offline_optimum_nodes_SC6D_fixed_lower_threshold_over_optimum_total,1.275,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC6D_fixed_lower_threshold_over_optimum_range,1.069 (SC6D TAFENG seed 271828) to 1.450 (SC6D C8T1S5I8N5K seed 42),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_SC6D_method_above_always_threshold,10 of 20 (equal in 0),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
 offline_optimum_nodes_all_method_total,26675854,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
 offline_optimum_nodes_all_always_threshold_total,26890051,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
 offline_optimum_nodes_all_fixed_lower_threshold_total,45628726,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
@@ -2861,7 +2876,10 @@ offline_optimum_nodes_all_method_over_optimum_total,1.057,invariant-offline-opti
 offline_optimum_nodes_all_method_over_optimum_range,1.000 (C8T1S5I8N5K) to 1.716 (SC6D C8T1S5I8N5K seed 42),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
 offline_optimum_nodes_all_method_equals_optimum,30 of 115,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
 offline_optimum_nodes_all_always_threshold_over_optimum_total,1.065,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_all_always_threshold_over_optimum_range,1.000 (C8T1S5I8N5K) to 2.253 (SC6D TAFENG seed 271828),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
 offline_optimum_nodes_all_fixed_lower_threshold_over_optimum_total,1.807,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_all_fixed_lower_threshold_over_optimum_range,1.023 (FIFA) to 2.586 (C8T1S5I8N5K SC5_K=25_strat=EVEN),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_all_method_above_always_threshold,23 of 115 (equal in 64),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
 SC2_BIBLE_break_even_window_1_over_window5,0.987,table_break_even_window_sensitivity.csv
 SC2_BIBLE_break_even_window_2_over_window5,1.003,table_break_even_window_sensitivity.csv
 SC2_BIBLE_break_even_window_3_over_window5,1.006,table_break_even_window_sensitivity.csv
@@ -5864,6 +5882,146 @@ SC1_cold_cells,32 of 32,static-warmup-effect/warmup_effect.csv
 SC1_cold_runs_per_cell,3,static-warmup-effect/warmup_effect.csv
 SC3_cold_cells,12 of 12,static-warmup-effect/warmup_effect.csv
 SC3_cold_runs_per_cell,3,static-warmup-effect/warmup_effect.csv
+classes_SC1_cold_method_vs_HUSP-SP_band_1.05,"wins 6, ties 8, losses 18 of 32",table_comparison_classes.csv
+classes_SC1_cold_method_vs_HUSP-SP_band_1.10,"wins 6, ties 9, losses 17 of 32",table_comparison_classes.csv
+classes_SC1_cold_method_vs_HUSP-ULL_band_1.05,"wins 4, ties 5, losses 23 of 32",table_comparison_classes.csv
+classes_SC1_cold_method_vs_HUSP-ULL_band_1.10,"wins 2, ties 8, losses 22 of 32",table_comparison_classes.csv
+classes_SC1_cold_miner_at_threshold_vs_HUSP-SP_band_1.05,"wins 21, ties 6, losses 5 of 32",table_comparison_classes.csv
+classes_SC1_cold_miner_at_threshold_vs_HUSP-SP_band_1.10,"wins 20, ties 8, losses 4 of 32",table_comparison_classes.csv
+classes_SC1_cold_miner_at_threshold_vs_HUSP-ULL_band_1.05,"wins 15, ties 5, losses 12 of 32",table_comparison_classes.csv
+classes_SC1_cold_miner_at_threshold_vs_HUSP-ULL_band_1.10,"wins 15, ties 5, losses 12 of 32",table_comparison_classes.csv
+classes_SC1_method_vs_HUSP-SP_band_1.05,"wins 9, ties 6, losses 17 of 32",table_comparison_classes.csv
+classes_SC1_method_vs_HUSP-SP_band_1.10,"wins 7, ties 11, losses 14 of 32",table_comparison_classes.csv
+classes_SC1_method_vs_HUSP-ULL_band_1.05,"wins 6, ties 8, losses 18 of 32",table_comparison_classes.csv
+classes_SC1_method_vs_HUSP-ULL_band_1.10,"wins 5, ties 11, losses 16 of 32",table_comparison_classes.csv
+classes_SC1_miner_at_threshold_vs_HUSP-SP_band_1.05,"wins 26, ties 5, losses 1 of 32",table_comparison_classes.csv
+classes_SC1_miner_at_threshold_vs_HUSP-SP_band_1.10,"wins 24, ties 7, losses 1 of 32",table_comparison_classes.csv
+classes_SC1_miner_at_threshold_vs_HUSP-ULL_band_1.05,"wins 22, ties 9, losses 1 of 32",table_comparison_classes.csv
+classes_SC1_miner_at_threshold_vs_HUSP-ULL_band_1.10,"wins 21, ties 11, losses 0 of 32",table_comparison_classes.csv
+classes_SC2_method_vs_IncUSP-Miner+_band_1.05,"wins 6, ties 0, losses 0 of 6",table_comparison_classes.csv
+classes_SC2_method_vs_IncUSP-Miner+_band_1.10,"wins 5, ties 1, losses 0 of 6",table_comparison_classes.csv
+classes_SC2_method_vs_Joint-miner+SWUmax_band_1.05,"wins 4, ties 3, losses 0 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Joint-miner+SWUmax_band_1.10,"wins 3, ties 4, losses 0 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Joint-miner+SWUmax+PreHUSPM-tracking_band_1.05,"wins 6, ties 0, losses 1 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Joint-miner+SWUmax+PreHUSPM-tracking_band_1.10,"wins 5, ties 1, losses 1 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Joint-miner+TSU_band_1.05,"wins 6, ties 1, losses 0 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Joint-miner+TSU_band_1.10,"wins 6, ties 1, losses 0 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Joint-rule+PreHUSPM-tracking_band_1.05,"wins 6, ties 0, losses 1 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Joint-rule+PreHUSPM-tracking_band_1.10,"wins 5, ties 1, losses 1 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Joint-rule+min-floor_band_1.05,"wins 3, ties 4, losses 0 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Joint-rule+min-floor_band_1.10,"wins 3, ties 4, losses 0 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Joint-rule+plain-floor_band_1.05,"wins 3, ties 4, losses 0 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Joint-rule+plain-floor_band_1.10,"wins 3, ties 4, losses 0 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Pre-HUSPM-Joint-fixed-threshold_band_1.05,"wins 3, ties 4, losses 0 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Pre-HUSPM-Joint-fixed-threshold_band_1.10,"wins 3, ties 4, losses 0 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Pre-HUSPM-SWUmax_band_1.05,"wins 7, ties 0, losses 0 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Pre-HUSPM-SWUmax_band_1.10,"wins 7, ties 0, losses 0 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Pre-HUSPM-TSU_band_1.05,"wins 7, ties 0, losses 0 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Pre-HUSPM-TSU_band_1.10,"wins 7, ties 0, losses 0 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Remine-HUSP-SP_band_1.05,"wins 7, ties 0, losses 0 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Remine-HUSP-SP_band_1.10,"wins 7, ties 0, losses 0 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Remine-HUSP-ULL_band_1.05,"wins 7, ties 0, losses 0 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Remine-HUSP-ULL_band_1.10,"wins 7, ties 0, losses 0 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Remine-from-scratch_band_1.05,"wins 7, ties 0, losses 0 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Remine-from-scratch_band_1.10,"wins 7, ties 0, losses 0 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Remine-own-UUT_band_1.05,"wins 4, ties 3, losses 0 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Remine-own-UUT_band_1.10,"wins 3, ties 4, losses 0 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_best_window_band_1.05,"wins 1, ties 5, losses 1 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_best_window_band_1.10,"wins 1, ties 5, losses 1 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_closest_published_or_remine_below_band_1.05,"wins 7, ties 0, losses 0 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_closest_published_or_remine_below_band_1.10,"wins 6, ties 1, losses 0 of 7",table_comparison_classes.csv
+classes_SC3_cold_method_vs_HUSP-SP_band_1.05,"wins 2, ties 2, losses 8 of 12",table_comparison_classes.csv
+classes_SC3_cold_method_vs_HUSP-SP_band_1.10,"wins 1, ties 4, losses 7 of 12",table_comparison_classes.csv
+classes_SC3_cold_method_vs_HUSP-ULL_band_1.05,"wins 1, ties 2, losses 9 of 12",table_comparison_classes.csv
+classes_SC3_cold_method_vs_HUSP-ULL_band_1.10,"wins 0, ties 4, losses 8 of 12",table_comparison_classes.csv
+classes_SC3_cold_miner_at_threshold_vs_HUSP-SP_band_1.05,"wins 8, ties 2, losses 2 of 12",table_comparison_classes.csv
+classes_SC3_cold_miner_at_threshold_vs_HUSP-SP_band_1.10,"wins 8, ties 2, losses 2 of 12",table_comparison_classes.csv
+classes_SC3_cold_miner_at_threshold_vs_HUSP-ULL_band_1.05,"wins 6, ties 3, losses 3 of 12",table_comparison_classes.csv
+classes_SC3_cold_miner_at_threshold_vs_HUSP-ULL_band_1.10,"wins 6, ties 5, losses 1 of 12",table_comparison_classes.csv
+classes_SC3_method_vs_HUSP-SP_band_1.05,"wins 1, ties 4, losses 7 of 12",table_comparison_classes.csv
+classes_SC3_method_vs_HUSP-SP_band_1.10,"wins 1, ties 4, losses 7 of 12",table_comparison_classes.csv
+classes_SC3_method_vs_HUSP-ULL_band_1.05,"wins 1, ties 3, losses 8 of 12",table_comparison_classes.csv
+classes_SC3_method_vs_HUSP-ULL_band_1.10,"wins 0, ties 8, losses 4 of 12",table_comparison_classes.csv
+classes_SC3_miner_at_threshold_vs_HUSP-SP_band_1.05,"wins 12, ties 0, losses 0 of 12",table_comparison_classes.csv
+classes_SC3_miner_at_threshold_vs_HUSP-SP_band_1.10,"wins 9, ties 3, losses 0 of 12",table_comparison_classes.csv
+classes_SC3_miner_at_threshold_vs_HUSP-ULL_band_1.05,"wins 10, ties 2, losses 0 of 12",table_comparison_classes.csv
+classes_SC3_miner_at_threshold_vs_HUSP-ULL_band_1.10,"wins 10, ties 2, losses 0 of 12",table_comparison_classes.csv
+classes_SC5_method_vs_closest_band_1.05,"wins 18, ties 27, losses 3 of 48",table_comparison_classes.csv
+classes_SC5_method_vs_closest_band_1.10,"wins 5, ties 43, losses 0 of 48",table_comparison_classes.csv
+classes_SC7_full_vs_no_item_pruning_band_1.05,"wins 6, ties 1, losses 0 of 7",table_comparison_classes.csv
+classes_SC7_full_vs_no_item_pruning_band_1.10,"wins 6, ties 1, losses 0 of 7",table_comparison_classes.csv
+classes_SC7_full_vs_no_node_check_band_1.05,"wins 2, ties 5, losses 0 of 7",table_comparison_classes.csv
+classes_SC7_full_vs_no_node_check_band_1.10,"wins 0, ties 7, losses 0 of 7",table_comparison_classes.csv
+classes_mixed_method_vs_Remine-from-scratch_band_1.05,"wins 12, ties 0, losses 0 of 12",table_comparison_classes.csv
+classes_mixed_method_vs_Remine-from-scratch_band_1.10,"wins 12, ties 0, losses 0 of 12",table_comparison_classes.csv
+classes_mixed_method_vs_Remine-own-UUT_band_1.05,"wins 7, ties 4, losses 1 of 12",table_comparison_classes.csv
+classes_mixed_method_vs_Remine-own-UUT_band_1.10,"wins 4, ties 8, losses 0 of 12",table_comparison_classes.csv
+classes_mixed_method_vs_window5_band_1.05,"wins 7, ties 1, losses 1 of 9",table_comparison_classes.csv
+classes_mixed_method_vs_window5_band_1.10,"wins 7, ties 1, losses 1 of 9",table_comparison_classes.csv
+classes_mixed_modification_vs_Remine-from-scratch_band_1.05,"wins 12, ties 0, losses 0 of 12",table_comparison_classes.csv
+classes_mixed_modification_vs_Remine-from-scratch_band_1.10,"wins 10, ties 2, losses 0 of 12",table_comparison_classes.csv
+classes_mixed_modification_vs_Remine-own-UUT_band_1.05,"wins 5, ties 5, losses 2 of 12",table_comparison_classes.csv
+classes_mixed_modification_vs_Remine-own-UUT_band_1.10,"wins 2, ties 8, losses 2 of 12",table_comparison_classes.csv
+classes_mixed_pooled_deletion_beyond_the_budget_vs_FixedFloor_band_1.05,"wins 4, ties 0, losses 0 of 4",table_comparison_classes.csv
+classes_mixed_pooled_deletion_beyond_the_budget_vs_FixedFloor_band_1.10,"wins 3, ties 1, losses 0 of 4",table_comparison_classes.csv
+classes_mixed_pooled_deletion_beyond_the_budget_vs_Remine_band_1.05,"wins 3, ties 0, losses 1 of 4",table_comparison_classes.csv
+classes_mixed_pooled_deletion_beyond_the_budget_vs_Remine_band_1.10,"wins 3, ties 0, losses 1 of 4",table_comparison_classes.csv
+classes_mixed_pooled_deletion_beyond_the_budget_vs_Remine-HUSP-SP_band_1.05,"wins 4, ties 0, losses 0 of 4",table_comparison_classes.csv
+classes_mixed_pooled_deletion_beyond_the_budget_vs_Remine-HUSP-SP_band_1.10,"wins 4, ties 0, losses 0 of 4",table_comparison_classes.csv
+classes_mixed_pooled_deletion_beyond_the_budget_vs_Remine-HUSP-ULL_band_1.05,"wins 4, ties 0, losses 0 of 4",table_comparison_classes.csv
+classes_mixed_pooled_deletion_beyond_the_budget_vs_Remine-HUSP-ULL_band_1.10,"wins 4, ties 0, losses 0 of 4",table_comparison_classes.csv
+classes_mixed_pooled_deletion_beyond_the_budget_vs_Remine-UUT_band_1.05,"wins 2, ties 1, losses 1 of 4",table_comparison_classes.csv
+classes_mixed_pooled_deletion_beyond_the_budget_vs_Remine-UUT_band_1.10,"wins 1, ties 2, losses 1 of 4",table_comparison_classes.csv
+classes_mixed_pooled_deletion_beyond_the_budget_vs_window5_band_1.05,"wins 3, ties 0, losses 0 of 3",table_comparison_classes.csv
+classes_mixed_pooled_deletion_beyond_the_budget_vs_window5_band_1.10,"wins 3, ties 0, losses 0 of 3",table_comparison_classes.csv
+classes_mixed_pooled_deletion_vs_FixedFloor_band_1.05,"wins 1, ties 1, losses 10 of 12",table_comparison_classes.csv
+classes_mixed_pooled_deletion_vs_FixedFloor_band_1.10,"wins 1, ties 1, losses 10 of 12",table_comparison_classes.csv
+classes_mixed_pooled_deletion_vs_Remine_band_1.05,"wins 12, ties 0, losses 0 of 12",table_comparison_classes.csv
+classes_mixed_pooled_deletion_vs_Remine_band_1.10,"wins 12, ties 0, losses 0 of 12",table_comparison_classes.csv
+classes_mixed_pooled_deletion_vs_Remine-HUSP-SP_band_1.05,"wins 12, ties 0, losses 0 of 12",table_comparison_classes.csv
+classes_mixed_pooled_deletion_vs_Remine-HUSP-SP_band_1.10,"wins 12, ties 0, losses 0 of 12",table_comparison_classes.csv
+classes_mixed_pooled_deletion_vs_Remine-HUSP-ULL_band_1.05,"wins 12, ties 0, losses 0 of 12",table_comparison_classes.csv
+classes_mixed_pooled_deletion_vs_Remine-HUSP-ULL_band_1.10,"wins 12, ties 0, losses 0 of 12",table_comparison_classes.csv
+classes_mixed_pooled_deletion_vs_Remine-UUT_band_1.05,"wins 7, ties 4, losses 1 of 12",table_comparison_classes.csv
+classes_mixed_pooled_deletion_vs_Remine-UUT_band_1.10,"wins 7, ties 5, losses 0 of 12",table_comparison_classes.csv
+classes_mixed_pooled_deletion_vs_window5_band_1.05,"wins 1, ties 0, losses 8 of 9",table_comparison_classes.csv
+classes_mixed_pooled_deletion_vs_window5_band_1.10,"wins 1, ties 1, losses 7 of 9",table_comparison_classes.csv
+classes_mixed_pooled_insertion_vs_FixedFloor_band_1.05,"wins 9, ties 1, losses 2 of 12",table_comparison_classes.csv
+classes_mixed_pooled_insertion_vs_FixedFloor_band_1.10,"wins 9, ties 2, losses 1 of 12",table_comparison_classes.csv
+classes_mixed_pooled_insertion_vs_Remine_band_1.05,"wins 12, ties 0, losses 0 of 12",table_comparison_classes.csv
+classes_mixed_pooled_insertion_vs_Remine_band_1.10,"wins 12, ties 0, losses 0 of 12",table_comparison_classes.csv
+classes_mixed_pooled_insertion_vs_Remine-HUSP-SP_band_1.05,"wins 12, ties 0, losses 0 of 12",table_comparison_classes.csv
+classes_mixed_pooled_insertion_vs_Remine-HUSP-SP_band_1.10,"wins 12, ties 0, losses 0 of 12",table_comparison_classes.csv
+classes_mixed_pooled_insertion_vs_Remine-HUSP-ULL_band_1.05,"wins 12, ties 0, losses 0 of 12",table_comparison_classes.csv
+classes_mixed_pooled_insertion_vs_Remine-HUSP-ULL_band_1.10,"wins 12, ties 0, losses 0 of 12",table_comparison_classes.csv
+classes_mixed_pooled_insertion_vs_Remine-UUT_band_1.05,"wins 5, ties 5, losses 2 of 12",table_comparison_classes.csv
+classes_mixed_pooled_insertion_vs_Remine-UUT_band_1.10,"wins 3, ties 8, losses 1 of 12",table_comparison_classes.csv
+classes_mixed_pooled_insertion_vs_window5_band_1.05,"wins 9, ties 0, losses 0 of 9",table_comparison_classes.csv
+classes_mixed_pooled_insertion_vs_window5_band_1.10,"wins 9, ties 0, losses 0 of 9",table_comparison_classes.csv
+classes_mixed_pooled_modification_vs_FixedFloor_band_1.05,"wins 10, ties 1, losses 1 of 12",table_comparison_classes.csv
+classes_mixed_pooled_modification_vs_FixedFloor_band_1.10,"wins 10, ties 1, losses 1 of 12",table_comparison_classes.csv
+classes_mixed_pooled_modification_vs_Remine_band_1.05,"wins 12, ties 0, losses 0 of 12",table_comparison_classes.csv
+classes_mixed_pooled_modification_vs_Remine_band_1.10,"wins 10, ties 2, losses 0 of 12",table_comparison_classes.csv
+classes_mixed_pooled_modification_vs_Remine-HUSP-SP_band_1.05,"wins 12, ties 0, losses 0 of 12",table_comparison_classes.csv
+classes_mixed_pooled_modification_vs_Remine-HUSP-SP_band_1.10,"wins 12, ties 0, losses 0 of 12",table_comparison_classes.csv
+classes_mixed_pooled_modification_vs_Remine-HUSP-ULL_band_1.05,"wins 11, ties 1, losses 0 of 12",table_comparison_classes.csv
+classes_mixed_pooled_modification_vs_Remine-HUSP-ULL_band_1.10,"wins 11, ties 1, losses 0 of 12",table_comparison_classes.csv
+classes_mixed_pooled_modification_vs_Remine-UUT_band_1.05,"wins 5, ties 5, losses 2 of 12",table_comparison_classes.csv
+classes_mixed_pooled_modification_vs_Remine-UUT_band_1.10,"wins 2, ties 8, losses 2 of 12",table_comparison_classes.csv
+classes_mixed_pooled_modification_vs_window5_band_1.05,"wins 9, ties 0, losses 0 of 9",table_comparison_classes.csv
+classes_mixed_pooled_modification_vs_window5_band_1.10,"wins 9, ties 0, losses 0 of 9",table_comparison_classes.csv
+classes_mixed_pooled_stream_vs_FixedFloor_band_1.05,"wins 7, ties 1, losses 4 of 12",table_comparison_classes.csv
+classes_mixed_pooled_stream_vs_FixedFloor_band_1.10,"wins 7, ties 2, losses 3 of 12",table_comparison_classes.csv
+classes_mixed_pooled_stream_vs_Remine_band_1.05,"wins 12, ties 0, losses 0 of 12",table_comparison_classes.csv
+classes_mixed_pooled_stream_vs_Remine_band_1.10,"wins 12, ties 0, losses 0 of 12",table_comparison_classes.csv
+classes_mixed_pooled_stream_vs_Remine-HUSP-SP_band_1.05,"wins 12, ties 0, losses 0 of 12",table_comparison_classes.csv
+classes_mixed_pooled_stream_vs_Remine-HUSP-SP_band_1.10,"wins 12, ties 0, losses 0 of 12",table_comparison_classes.csv
+classes_mixed_pooled_stream_vs_Remine-HUSP-ULL_band_1.05,"wins 12, ties 0, losses 0 of 12",table_comparison_classes.csv
+classes_mixed_pooled_stream_vs_Remine-HUSP-ULL_band_1.10,"wins 12, ties 0, losses 0 of 12",table_comparison_classes.csv
+classes_mixed_pooled_stream_vs_Remine-UUT_band_1.05,"wins 7, ties 4, losses 1 of 12",table_comparison_classes.csv
+classes_mixed_pooled_stream_vs_Remine-UUT_band_1.10,"wins 4, ties 8, losses 0 of 12",table_comparison_classes.csv
+classes_mixed_pooled_stream_vs_window5_band_1.05,"wins 7, ties 1, losses 1 of 9",table_comparison_classes.csv
+classes_mixed_pooled_stream_vs_window5_band_1.10,"wins 7, ties 1, losses 1 of 9",table_comparison_classes.csv
 classes_SC1_cold_method_vs_HUSP-SP,"wins 6, ties 9, losses 17 of 32",table_comparison_classes.csv
 classes_SC1_cold_method_vs_HUSP-SP_ties,BMS1 0.012821 1.049; C8T1S5I8N5K 0.0012 0.964; C8T1S5I8N5K 0.001236 1.006; KOSARAK 0.028117 1.000; LEVIATHAN 0.01553 0.930; LEVIATHAN 0.01647 1.036; LEVIATHAN 0.017987 0.966; SIGN 0.091052 0.967; TAFENG 0.004499 1.002,table_comparison_classes.csv
 classes_SC1_cold_method_vs_HUSP-SP_wins,BMS1 0.013597 1.192; BMS1 0.015293 1.940; BMS1 0.016218 1.817; TAFENG 0.002812 1.358; TAFENG 0.003557 1.129; TAFENG 0.005691 1.160,table_comparison_classes.csv

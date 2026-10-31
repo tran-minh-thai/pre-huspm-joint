@@ -2203,6 +2203,13 @@ def offline_optimum_nodes(put):
         put(f"{b}_method_equals_optimum", f"{int((g['nodes_method'] == g['nodes_offline_optimum']).sum())} of {len(g)}", src)
         for p in ("always_threshold", "fixed_lower_threshold"):
             put(f"{b}_{p}_over_optimum_total", f"{g[f'nodes_{p}'].sum() / g['nodes_offline_optimum'].sum():.3f}", src)
+            rp = g[f"nodes_{p}"] / g["nodes_offline_optimum"]
+            lo_p, hi_p = g.loc[rp.idxmin()], g.loc[rp.idxmax()]
+            put(f"{b}_{p}_over_optimum_range", f"{rp.min():.3f} ({lo_p['stream']}) to {rp.max():.3f} ({hi_p['stream']})", src)
+        # streams where the method visits more nodes than mining every rescan at the threshold
+        put(f"{b}_method_above_always_threshold",
+            f"{int((g['nodes_method'] > g['nodes_always_threshold']).sum())} of {len(g)} "
+            f"(equal in {int((g['nodes_method'] == g['nodes_always_threshold']).sum())})", src)
 
 
 BE_SWEEP = (1, 2, 3, 10, 20)
@@ -2456,6 +2463,11 @@ def comparison_classes(put, out):
     c = pd.DataFrame(rows)
     mf.write_csv(c, os.path.join(out, "table_comparison_classes.csv"))
     src = "table_comparison_classes.csv"
+    # the same counts under two other tie bands, [1/1.05, 1.05] and [1/1.10, 1.10], on the same ratios
+    for fam, g in c.groupby("family"):
+        for band in (1.05, 1.10):
+            w = int((g["ratio"] > band).sum()); lo = int((g["ratio"] < 1 / band).sum())
+            put(f"classes_{fam}_band_{band:.2f}", f"wins {w}, ties {len(g) - w - lo}, losses {lo} of {len(g)}", src)
     for fam, g in c.groupby("family"):
         n = g["cls"].value_counts()
         put(f"classes_{fam}", f"wins {int(n.get('win', 0))}, ties {int(n.get('tie', 0))}, losses {int(n.get('loss', 0))} "
