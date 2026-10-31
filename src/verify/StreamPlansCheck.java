@@ -19,9 +19,10 @@ import java.util.*;
  *     every operation takes opSize sequences;
  *   - every new sequence is well formed: non-empty elements, items strictly increasing within an
  *     element, positive finite utilities, sequenceUtility the sum of its utilities;
+ *   - an insertion, and a modification outside SC10, takes the file's next sequences in order;
  *   - SC10: a changed sequence differs from the one it replaces, and some changes and deletions pick
- *     sequences of the recent operations; SC10H: every other insertion carries ten times the utility
- *     of the file's next sequences;
+ *     sequences of the recent operations; SC10H: every tenth insertion takes ten times opSize
+ *     sequences, the others opSize, and a database too small for it has no plan (StreamPlans.fits);
  *   - the same seed builds the same plan.
  *
  *   java -cp build verify.StreamPlansCheck [DATASET ...]
@@ -38,7 +39,7 @@ public final class StreamPlansCheck {
     public static void main(String[] args) throws Exception {
         List<String> dbs = args.length > 0 ? Arrays.asList(args) : Arrays.asList("SIGN", "LEVIATHAN", "C8T1S5I8N5K", "TAFENG");
         long[] seeds = {42L, 1337L, 2024L};
-        int plans = 0, ops = 0, newSeqs = 0;
+        int plans = 0, ops = 0, newSeqs = 0, skipped = 0;
         for (String db : dbs) {
             List<Sequence> full = DatasetLoader.loadDataset("datasets/" + db + "_seq.txt", "datasets/" + db + "_eui.txt");
             int nInit = Datasets.dInitCount(db, full.size());
@@ -46,6 +47,15 @@ public final class StreamPlansCheck {
             List<Sequence> rest = new ArrayList<>(full.subList(nInit, full.size()));
             int size = StreamPlans.opSize(rest);
             for (String sc : new String[]{"SC8", "SC8P", "SC9", "SC10", "SC10H"}) {
+                // sequences the stream draws, counted from the specification: SC10H 315 light and 35
+                // heavy insertions and 75 modifications, 740 * opSize; the others at most 425 * opSize
+                boolean expectFit = rest.size() >= (sc.equals("SC10H") ? 740 : 425) * size;
+                if (StreamPlans.fits(sc, rest) != expectFit) fail(sc + " " + db + ": fits says " + StreamPlans.fits(sc, rest) + " with " + rest.size() + " sequences");
+                if (!StreamPlans.fits(sc, rest)) {
+                    System.out.printf("%s %-12s no plan: %d sequences after D_init%n", sc, db, rest.size());
+                    skipped++;
+                    continue;
+                }
                 for (long seed : seeds) {
                     List<MixedPlan.Op> plan = StreamPlans.build(sc, dInit, rest, new Random(seed + db.hashCode()));
                     List<MixedPlan.Op> again = StreamPlans.build(sc, dInit, rest, new Random(seed + db.hashCode()));
@@ -57,7 +67,8 @@ public final class StreamPlansCheck {
                 }
             }
         }
-        System.out.printf("plans: %d, operations: %d, new sequences checked: %d, violations: %d%n", plans, ops, newSeqs, bad);
+        System.out.printf("plans: %d, operations: %d, new sequences checked: %d, (scenario, database) without a plan: %d, violations: %d%n",
+                plans, ops, newSeqs, skipped, bad);
         System.exit(bad == 0 ? 0 : 1);
     }
 
@@ -103,7 +114,10 @@ public final class StreamPlansCheck {
         Deque<Set<Integer>> recent = new ArrayDeque<>();
         int poolAt = 0;
         for (MixedPlan.Op o : plan) {
-            if (o.a.size() != size) fail(sc + " " + where + " op " + o.iter + ": takes " + o.a.size() + " sequences, opSize " + size);
+            // the specification, written here rather than read from StreamPlans: every tenth insertion
+            // of SC10H takes ten times opSize sequences
+            int want = sc.equals("SC10H") && o.kind == MixedPlan.Kind.INS && insertions % 10 == 9 ? size * 10 : size;
+            if (o.a.size() != want) fail(sc + " " + where + " op " + o.iter + ": takes " + o.a.size() + " sequences, expected " + want);
             Set<Integer> recentIds = new HashSet<>();
             for (Set<Integer> r : recent) recentIds.addAll(r);
             if (o.kind != MixedPlan.Kind.INS) {
@@ -127,14 +141,12 @@ public final class StreamPlansCheck {
                 if (sc.equals("SC10") && o.kind == MixedPlan.Kind.MOD && same(s, o.a.get(k)))
                     fail(sc + " " + where + " op " + o.iter + ": a changed sequence equals the one it replaces");
             }
-            if (o.kind == MixedPlan.Kind.INS && sc.equals("SC10H")) {
-                double u = 0, base = 0;
-                for (int k = 0; k < o.a.size(); k++) { u += o.a.get(k).sequenceUtility; base += rest.get(poolAt + k).sequenceUtility; }
-                double want = insertions % 2 == 1 ? 10.0 : 1.0;
-                if (Math.abs(u - want * base) > 1e-6 * Math.max(1, want * base))
-                    fail(sc + " " + where + " op " + o.iter + ": insertion utility " + u + ", expected " + want + " x " + base);
+            if (o.kind == MixedPlan.Kind.INS || (o.kind == MixedPlan.Kind.MOD && !sc.equals("SC10"))) {
+                for (int k = 0; k < added.size(); k++)
+                    if (poolAt + k >= rest.size() || added.get(k) != rest.get(poolAt + k))
+                        fail(sc + " " + where + " op " + o.iter + ": sequence " + added.get(k).id + " is not the file's next one");
+                poolAt += added.size();
             }
-            if (o.kind == MixedPlan.Kind.INS || (o.kind == MixedPlan.Kind.MOD && !sc.equals("SC10"))) poolAt += size;
             if (o.kind == MixedPlan.Kind.INS) insertions++;
             if (o.kind != MixedPlan.Kind.DEL) {
                 Set<Integer> ids = new HashSet<>();

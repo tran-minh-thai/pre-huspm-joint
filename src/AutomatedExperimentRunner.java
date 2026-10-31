@@ -1218,6 +1218,11 @@ public class AutomatedExperimentRunner {
                                                                 datasetDir + ds.name + "_eui.txt");
                 List<Sequence> dInit = dInitFor(ds, full);
                 List<Sequence> rest  = new ArrayList<>(tailFrom(full, dInit.size()));
+                if (!common.StreamPlans.fits(sc, rest)) {
+                    System.out.println(">> skipping " + ds.name + " for " + sc + ": " + rest.size()
+                            + " sequences after D_init, fewer than the stream draws.");
+                    continue;
+                }
                 double initTotalUtil = sumUtility(dInit);
                 long[] seeds = SEED_INDEX > 0 ? activeSeeds() : Arrays.copyOf(SEEDS, LONG_SEED_COUNT);
                 for (long seed : seeds) {

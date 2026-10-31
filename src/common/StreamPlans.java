@@ -25,8 +25,10 @@ import java.util.Random;
  *          modifications and half of the deletions pick among the sequences of the last 20
  *          insertions and modifications still in the database, so a sequence can be changed again
  *          or deleted soon after it arrived.
- *   SC10H  uneven batches: SC8's schedule, every other insertion of ten times the utility (its
- *          sequences' quantities multiplied by 10), the same number of sequences.
+ *   SC10H  uneven batches: SC8's schedule, every tenth insertion a heavy batch of ten times as
+ *          many sequences (10 * opSize, the next ones of the file), the others light (opSize).
+ *          The stream draws 740 * opSize sequences of the file, so a database with fewer after
+ *          D_init has no SC10H (see fits).
  *
  * The seed decides the order of the operations, the sequences each one picks and, in SC10, how
  * each modification changes them. A changed sequence is a new sequence with a new id.
@@ -36,12 +38,22 @@ public final class StreamPlans {
     private StreamPlans() {}
 
     public static final int OPERATIONS = 500;
+    /** SC10H: one insertion in HEAVY_EVERY is heavy, of HEAVY_FACTOR times opSize sequences. */
+    public static final int HEAVY_EVERY = 10, HEAVY_FACTOR = 10;
     /** Operations whose new sequences SC10 may pick again. */
     public static final int RECENT_WINDOW = 20;
 
     /** Sequences per operation: a thousandth of the stream, at least one. */
     public static int opSize(List<Sequence> rest) {
         return Math.max(1, rest.size() / 1000);
+    }
+
+    /** Whether the file holds enough sequences after D_init for the stream: SC10H draws
+     *  740 * opSize of them (315 light and 35 heavy insertions, 75 modifications), the others at most 425 * opSize. */
+    public static boolean fits(String scenario, List<Sequence> rest) {
+        int size = opSize(rest);
+        int need = "SC10H".equals(scenario) ? (350 - 350 / HEAVY_EVERY + 350 / HEAVY_EVERY * HEAVY_FACTOR + 75) * size : 425 * size;
+        return rest.size() >= need;
     }
 
     public static List<MixedPlan.Op> build(String scenario, List<Sequence> dInit, List<Sequence> rest, Random rnd) {
@@ -95,13 +107,11 @@ public final class StreamPlans {
                         + size + ", pool=" + pool.size() + ", current=" + cur.size());
             }
             if (kind == MixedPlan.Kind.INS) {
-                List<Sequence> delta = new ArrayList<>(pool.subList(0, size));
-                pool.subList(0, size).clear();
-                if (uneven && insertions % 2 == 1) {
-                    List<Sequence> heavy = new ArrayList<>();
-                    for (Sequence s : delta) heavy.add(scaled(s, 10.0, nextId++));
-                    delta = heavy;
-                }
+                int n = uneven && insertions % HEAVY_EVERY == HEAVY_EVERY - 1 ? size * HEAVY_FACTOR : size;
+                if (pool.size() < n) throw new IllegalStateException("cannot build operation " + iter + " (INS) with "
+                        + n + " sequences, pool=" + pool.size());
+                List<Sequence> delta = new ArrayList<>(pool.subList(0, n));
+                pool.subList(0, n).clear();
                 insertions++;
                 plan.add(new MixedPlan.Op(MixedPlan.Kind.INS, iter, delta, null, false));
                 cur.addAll(delta);
@@ -208,13 +218,6 @@ public final class StreamPlans {
             if (b >= a) b++;
             Collections.swap(els, a, b);
         }
-    }
-
-    /** s with every utility multiplied by factor, under a new id. */
-    static Sequence scaled(Sequence s, double factor, int newId) {
-        List<List<QItem>> els = copy(s);
-        for (List<QItem> el : els) for (int j = 0; j < el.size(); j++) el.set(j, new QItem(el.get(j).id, el.get(j).utility * factor));
-        return build(newId, els);
     }
 
     private static List<List<QItem>> copy(Sequence s) {
