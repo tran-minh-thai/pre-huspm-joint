@@ -128,7 +128,11 @@ $sc5     = @('Pre-HUSPM-Joint-fixed-threshold','Pre-HUSPM-SWUmax','Pre-HUSPM-TSU
 # The mixed streams (SC6, SC6D, SC6B): AutomatedExperimentRunner.MIXED_ARMS.
 $mixed   = @('Pre-HUSPM-Joint-fixed-threshold','Remine-from-scratch','Remine-HUSP-ULL','Remine-HUSP-SP','Pre-HUSPM-Joint',
              'Remine-own-UUT','Joint-rule+plain-floor','Joint-rule+min-floor')
-$scenarios = @('SC1','SC2','SC3','SC4','SC5','SC6','SC6D','SC6B','SC7','FIDELITY')
+# The long streams (SC8, SC8P, SC9, SC10, SC10H; common.StreamPlans): AutomatedExperimentRunner.LONG_ARMS,
+# and in SC9 also the method with its block index rebuilt at every rescan.
+$long    = @('Pre-HUSPM-Joint-fixed-threshold','Remine-from-scratch','Pre-HUSPM-Joint','Remine-own-UUT','Pre-HUSPM-Joint-w5')
+$long9   = $long + @('Pre-HUSPM-Joint-index-rebuild')
+$scenarios = @('SC1','SC2','SC3','SC4','SC5','SC6','SC6D','SC6B','SC7','FIDELITY','SC8','SC8P','SC9','SC10','SC10H')
 if ($scenarios -notcontains $Scenario) { throw "Unknown scenario '$Scenario'. Known: $($scenarios -join ', ')." }
 
 # Arms that exist on some databases only. SC7's incremental ablations (the block index and
@@ -161,6 +165,11 @@ if (-not $Algorithms) {
         'SC6'   { $mixed }
         'SC6D'  { $mixed }
         'SC6B'  { $mixed }
+        'SC8'   { $long }
+        'SC8P'  { $long }
+        'SC9'   { $long9 }
+        'SC10'  { $long }
+        'SC10H' { $long }
         'FIDELITY' { @('Pre-HUSPM-SWUmax','Pre-HUSPM-TSU') }
         'SC7'   { @('Pre-HUSPM-Joint','Pre-HUSPM-Joint-no-block-index','Pre-HUSPM-Joint-no-IUB','Pre-HUSPM-Joint-no-IPS',
                     'Pre-HUSPM-Joint-bsz-1','Pre-HUSPM-Joint-bsz-5','Pre-HUSPM-Joint-bsz-10','Pre-HUSPM-Joint-bsz-50','Pre-HUSPM-Joint-bsz-200',
@@ -179,6 +188,11 @@ if (-not $Datasets) {
         'SC6'   { $mixedSets }
         'SC6D'  { $mixedSets }
         'SC6B'  { $mixedSets }
+        'SC8'   { $mixedSets }
+        'SC8P'  { $mixedSets }
+        'SC9'   { $mixedSets }
+        'SC10'  { $mixedSets }
+        'SC10H' { $mixedSets }
         # SPMF's files with utilities, under the Pre-HUSPM paper's setting (.\fetch-spmf-husp.ps1)
         'FIDELITY' { @('SIGN','FIFA','BIBLE','KOSARAK10K','BMS') }
         default { $all7 }                          # SC2, SC7
@@ -196,7 +210,7 @@ $knownAlgos = @('Pre-HUSPM-Joint','Pre-HUSPM-Joint-fixed-threshold','Pre-HUSPM',
                 'USpan','HUSP-ULL','HUSP-SP',
                 'Pre-HUSPM-Joint-no-block-index','Pre-HUSPM-Joint-no-IUB','Pre-HUSPM-Joint-no-IPS',
                 'Pre-HUSPM-Joint-bsz-1','Pre-HUSPM-Joint-bsz-5','Pre-HUSPM-Joint-bsz-10','Pre-HUSPM-Joint-bsz-50','Pre-HUSPM-Joint-bsz-200',
-                'Pre-HUSPM-Joint-rescan-rule','Pre-HUSPM-Joint-rescan-every-batch')
+                'Pre-HUSPM-Joint-rescan-rule','Pre-HUSPM-Joint-rescan-every-batch','Pre-HUSPM-Joint-index-rebuild')
 $knownSets  = @('SIGN','LEVIATHAN','TAFENG','BIBLE','BMS1','C8T1S5I8N5K','KOSARAK','FIFA','KOSARAK10K','BMS')
 foreach ($a in $Algorithms) {
     if ($knownAlgos -notcontains $a) {

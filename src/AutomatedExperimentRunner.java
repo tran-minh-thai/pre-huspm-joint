@@ -658,6 +658,7 @@ public class AutomatedExperimentRunner {
         if (scenarios.contains("SC6")) runSC6_InsertDeleteModify();
         if (scenarios.contains("SC6D")) runSC6D_DeletionHeavy();
         if (scenarios.contains("SC6B")) runSC6B_DeletionBeyondBudget();
+        for (String sc : LONG_SCENARIOS) if (scenarios.contains(sc)) runLongScenario(sc);
         if (scenarios.contains("FIDELITY")) runFidelity();
         if (scenarios.contains("SC7")) runSC7_Ablation();
         System.out.printf("=== ALL SCENARIOS DONE (%.1fs) ===%n",
@@ -706,6 +707,8 @@ public class AutomatedExperimentRunner {
         // it reads the SPMF files of fetch-spmf-husp, which a full run does not need.
         Set<String> known = new LinkedHashSet<>(all);
         known.add("FIDELITY");
+        // The long streams run only when named: 500 operations, remining after each one.
+        known.addAll(Arrays.asList(LONG_SCENARIOS));
         if (args == null || args.length == 0) return all;
         Set<String> chosen = new LinkedHashSet<>();
         for (String a : args) {
@@ -1192,11 +1195,55 @@ public class AutomatedExperimentRunner {
         }
     }
 
+    // ==================================================================
+    // SC8, SC8P, SC9, SC10, SC10H - LONG STREAMS (common.StreamPlans)
+    // ==================================================================
+    static final String[] LONG_SCENARIOS = {"SC8", "SC8P", "SC9", "SC10", "SC10H"};
+    /** The method with its block index rebuilt from the current database at every rescan (SC9). */
+    static final String INDEX_REBUILD_ARM = METHOD + "-index-rebuild";
+    /** The arms of the long streams, FIXED_THRESHOLD first as the reference of -Dverify.husps. */
+    static final String[] LONG_ARMS = {FIXED_THRESHOLD, "Remine-from-scratch", METHOD, "Remine-own-UUT", METHOD + "-w5"};
+    /** The long streams use the first three seeds. */
+    static final int LONG_SEED_COUNT = 3;
+
+    private static void runLongScenario(String sc) throws IOException {
+        System.out.println("\n--- [" + sc + "] Long stream, " + common.StreamPlans.OPERATIONS + " operations ---");
+        try (ResultCollector col = new ResultCollector(RESULTS_DIR + sc + "_long.csv")) {
+            for (DatasetConfig ds : DATASETS) {
+                if (!datasetEnabled(ds.name)) continue;
+                if (!calibrationOk(ds)) continue;
+                if (!scopeOk(ds, sc)) continue;
+                if (!MIXED_SETS.contains(ds.name)) continue;
+                List<Sequence> full = DatasetLoader.loadDataset(datasetDir + ds.name + "_seq.txt",
+                                                                datasetDir + ds.name + "_eui.txt");
+                List<Sequence> dInit = dInitFor(ds, full);
+                List<Sequence> rest  = new ArrayList<>(tailFrom(full, dInit.size()));
+                double initTotalUtil = sumUtility(dInit);
+                long[] seeds = SEED_INDEX > 0 ? activeSeeds() : Arrays.copyOf(SEEDS, LONG_SEED_COUNT);
+                for (long seed : seeds) {
+                    Random rnd = new Random(seed + ds.name.hashCode());
+                    List<MixedPlan.Op> plan = common.StreamPlans.build(sc, dInit, rest, rnd);
+                    System.out.println(">> [" + sc + "] " + ds.name + " seed=" + seed + " opSize="
+                            + common.StreamPlans.opSize(rest) + " plan=" + common.StreamPlans.summary(plan));
+                    for (int r = 0; r < REPEATS; r++) {
+                        setRunContext(seed, r);
+                        beginVerify(sc, ds.name);
+                        for (String arm : LONG_ARMS)
+                            if (algoEnabled(arm)) runMixedArm(ds, dInit, initTotalUtil, plan, col, arm);
+                        if ("SC9".equals(sc) && algoEnabled(INDEX_REBUILD_ARM))
+                            runMixedArm(ds, dInit, initTotalUtil, plan, col, INDEX_REBUILD_ARM);
+                    }
+                    forceFullGC();
+                }
+            }
+        }
+    }
+
     /** Replays the plan for one arm. */
     private static void runMixedArm(DatasetConfig ds, List<Sequence> dInit, double initTotalUtil,
                                     List<MixedPlan.Op> plan, ResultCollector col, String arm) throws IOException {
         final boolean incremental = FIXED_THRESHOLD.equals(arm) || METHOD.equals(arm) || floorWindowOf(arm) > 0 || PLAIN_FLOOR_ARM.equals(arm)
-                || MIN_FLOOR_ARM.equals(arm) || isBreakEvenArm(arm);
+                || MIN_FLOOR_ARM.equals(arm) || isBreakEvenArm(arm) || INDEX_REBUILD_ARM.equals(arm);
 
         beginMemArm();
         // The initial mine on D_init: the proposal's for the proposal and for remining with the
@@ -1205,7 +1252,8 @@ public class AutomatedExperimentRunner {
         final PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo adp = !ownMiner ? null
                 : isOwnRemine(arm) ? newAdaptive(ds.defaultSu, ownRemineRatio(arm, ds.name))
                 : newAdaptive(ds.name, ds.defaultSu);
-        if (incremental) setFloorRule(adp, arm);
+        if (incremental) setFloorRule(adp, INDEX_REBUILD_ARM.equals(arm) ? METHOD : arm);
+        if (INDEX_REBUILD_ARM.equals(arm)) adp.rebuildIndexOnRescan = true;
         if (adp != null) adp.floor = floorOf(arm);
         ExperimentMetrics mInit;
         if (ownMiner) {
@@ -2013,6 +2061,10 @@ public class AutomatedExperimentRunner {
         m.floorAbsorption = adp.floorAbsorption;
         m.mineMs          = adp.mineMs;
         m.blockSize     = adp.blockSize;            // the instance's own value, not the default
+        m.indexBlocks        = adp.indexBlocks();      // read after the timed call
+        m.indexSetBits       = adp.indexSetBits();
+        m.indexAllocatedBits = adp.indexAllocatedBits();
+        m.liveSequences      = adp.liveSequences();
         // The work counters are not: a run that broke off leaves partial counts, and a
         // partial count in the record is worse than none.
         if (m.runtimeMs == -1) return;

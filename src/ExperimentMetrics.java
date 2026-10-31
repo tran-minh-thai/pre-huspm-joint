@@ -114,6 +114,11 @@ public class ExperimentMetrics {
     /** BREAK_EVEN floor rule (PreHUSPMAdaptiveAlgo.floorRule): the ratios its last decision used, and
      *  the time of the mine this row made, in ms; NaN when they do not apply. */
     public double floorRho = Double.NaN, floorDelta = Double.NaN, floorAbsorption = Double.NaN, mineMs = Double.NaN;
+    /** The block index of an incremental arm of the method after the operation: its blocks, the bits
+     *  set in its item bitmaps, the bits those bitmaps hold in memory; and the sequences of its
+     *  current database. -1 for the arms of other classes; for the remining arms, which build a new
+     *  instance at every operation, they describe that instance and carry no meaning. */
+    public long indexBlocks = -1, indexSetBits = -1, indexAllocatedBits = -1, liveSequences = -1;
     /** Bytes allocated by the mining thread, in MB. Deterministic, independent of GC scheduling. */
     public long allocatedMb;
 
@@ -180,6 +185,8 @@ public class ExperimentMetrics {
         sj.add(String.valueOf(rescansAtUut));
         sj.add(String.valueOf(floorRho)).add(String.valueOf(floorDelta)).add(String.valueOf(floorAbsorption))
                 .add(String.valueOf(mineMs));
+        sj.add(String.valueOf(indexBlocks)).add(String.valueOf(indexSetBits))
+                .add(String.valueOf(indexAllocatedBits)).add(String.valueOf(liveSequences));
         return sj.toString();
     }
 
@@ -195,6 +202,7 @@ public class ExperimentMetrics {
                 "mem_mode,mem_live_mb,mem_retained_mb,gc_forced,wall_ms_perturbed,allocated_mb," +
                 "seed,repeat,block_size,kappa,delta0,trigger_rule,iau_max,iau_tightness," +
                 "repetition,sl_min_eff,rescan_retries,live_repeats,rescans_at_uut," +
-                "floor_rho,floor_delta,floor_absorption,mine_ms";
+                "floor_rho,floor_delta,floor_absorption,mine_ms," +
+                "index_blocks,index_set_bits,index_allocated_bits,live_sequences";
     }
 }

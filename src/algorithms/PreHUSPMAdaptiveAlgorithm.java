@@ -328,6 +328,13 @@ public class PreHUSPMAdaptiveAlgorithm {
         public int maxDepth = Integer.MAX_VALUE;
         /** Block index ablation: if false, the direct update reads every sequence of the batch. */
         public boolean useBlockIndex = true;
+        /**
+         * Rebuild the block index from the current database at every rescan (off by default). The
+         * index is otherwise only appended to: a deleted sequence keeps its bits until the end of the
+         * stream. A comparison arm only (Pre-HUSPM-Joint-index-rebuild); the rebuild is timed with
+         * the rescan it belongs to.
+         */
+        public boolean rebuildIndexOnRescan = false;
 
         /**
          * Candidate budget for one mining pass. Off by default (Long.MAX_VALUE).
@@ -746,6 +753,11 @@ public class PreHUSPMAdaptiveAlgorithm {
         /** mineWithBudget, timed: the time goes to the floor the mine ran at. */
         private void timedMine(List<Sequence> db, double uut, double tsuRef) {
             long t0 = System.nanoTime(), n0 = exploredNodes;
+            if (rebuildIndexOnRescan) {
+                globalBlockIndex = new BlockIndex();
+                globalBlockIndex.blockSize = blockSize;
+                globalBlockIndex.buildFromBatch(db);
+            }
             mineWithBudget(db, uut, tsuRef);
             long dt = System.nanoTime() - t0, dn = exploredNodes - n0;
             if (Sl_min >= Su) { lastHighMineNs = dt; lastHighMineNodes = dn; }
@@ -932,6 +944,30 @@ public class PreHUSPMAdaptiveAlgorithm {
                         new double[]{e.getValue(), b == null ? Double.NaN : b});
             }
             return out;
+        }
+
+        /** Blocks of the block index. */
+        public int indexBlocks() { return globalBlockIndex.blocks.size(); }
+
+        /** Bits set in the block index: one per (item, block) pair where the item occurs. */
+        public long indexSetBits() {
+            long n = 0;
+            for (BitSet bs : globalBlockIndex.itemBlockBitmap) if (bs != null) n += bs.cardinality();
+            return n;
+        }
+
+        /** Bits the block index's bitmaps hold in memory (BitSet.size(), a multiple of 64 per item). */
+        public long indexAllocatedBits() {
+            long n = 0;
+            for (BitSet bs : globalBlockIndex.itemBlockBitmap) if (bs != null) n += bs.size();
+            return n;
+        }
+
+        /** Sequences of the current database. */
+        public int liveSequences() {
+            int n = 0;
+            for (Sequence s : dbLookupArr) if (s != null) n++;
+            return n;
         }
 
         /** Snapshot of the pre-large set, for diagnosis when large sets disagree. */
