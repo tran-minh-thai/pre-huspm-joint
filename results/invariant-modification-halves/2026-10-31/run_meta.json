@@ -1,0 +1,16 @@
+{
+  "command": "~/.venvs/pre-huspm-adaptive/bin/python analysis/modification_halves.py --out results/invariant-modification-halves/2026-10-31",
+  "path_substitutions": 1,
+  "build_dir": "build-mh",
+  "git_commit": "1ded296b91595fffc6ba0237c00237a8f16e006c",
+  "tree": "clean",
+  "source_sha256": "4e7603bc90d9ce33422ae180ce372fe7da54e10abdf9e03814c88ba9ad1250fb",
+  "source_files": 42,
+  "java": "openjdk version \"25.0.4.1\" 2026-08-18 LTS",
+  "os": "Darwin 27.2.0 (macOS-27.2-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-10-31T16:04:51",
+  "end": "2026-10-31T16:04:54",
+  "exit_code": 0
+}
