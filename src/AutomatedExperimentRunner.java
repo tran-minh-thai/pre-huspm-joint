@@ -2364,6 +2364,7 @@ public class AutomatedExperimentRunner {
         rt.gc();
         long heapBefore = rt.totalMemory() - rt.freeMemory();
         long start = System.currentTimeMillis();
+        long startNs = System.nanoTime();
 
         // === MEMORY SAMPLER ===
         //
@@ -2510,6 +2511,7 @@ public class AutomatedExperimentRunner {
         }
 
         long runtime = System.currentTimeMillis() - start;
+        long runtimeUs = (System.nanoTime() - startNs) / 1000L;
 
         // Classify thrown[0] (OOM vs other exceptions).
         // IMPORTANT: on timeout the worker catches the CancellationSignal that the cancelHook
@@ -2574,6 +2576,7 @@ public class AutomatedExperimentRunner {
             // Forced GC invalidates timing. Write -3 so nobody plots it as a performance
             // figure; the wall time is kept in wall_ms_perturbed.
             m.runtimeMs = (realRuntime < 0) ? realRuntime : -3;
+            m.runtimeUs = m.runtimeMs;
             m.wallMsPerturbed = runtime;
             // Final reading after the worker has stopped: the live set that actually remains.
             System.gc();
@@ -2587,6 +2590,7 @@ public class AutomatedExperimentRunner {
             m.liveRepeats   = lastLiveRepeats;
         } else {
             m.runtimeMs = realRuntime;
+            m.runtimeUs = (realRuntime < 0) ? realRuntime : runtimeUs;
         }
         // Peak: max(sampled peak, heapAfter) minus the baseline.
         // NOTE: in "used" mode this includes uncollected garbage - see ExperimentMetrics.

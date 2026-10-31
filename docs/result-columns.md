@@ -142,6 +142,12 @@ stated, by Pre-HUSPM. Their reading under each rescan rule is given in the next 
 | `sl_min_eff` | floor ratio `r_l` the call ran with, after any raise. Pre-HUSPM: its `r_l` |
 | `rescan_retries` | proposal: times the floor ratio was raised by 0.05 (up to 0.98, at most six times) after a mine exceeded the candidate or time budget. 0 unless such a budget is set |
 | `live_repeats` | live memory mode, static mines: the mines the live-set reading rests on. A mine that ends before the sampler has taken `mem.minSamples` (5) readings while it runs is run again as a fresh instance until it has, or until `mem.repeatMaxMs` (120 s) has passed; 1 otherwise, and 1 on every timing and incremental row. Absent from rows written before the column existed |
+| `rescans_at_uut` | proposal with a floor selection: rescans since the initial mine that mined at `UUT` instead of `LUT_min`, cumulative like `rescan_count`; 0 otherwise. A rescan mines at one of the two, so the rescans at `LUT_min` are `rescan_count - rescans_at_uut` |
+| `floor_rho`, `floor_delta`, `floor_absorption` | break-even floor rule: the ratios its last decision used; `NaN` when the rule does not apply |
+| `mine_ms` | break-even floor rule: time of the mine this row made, in ms; `NaN` on a row without a mine |
+| `index_blocks`, `index_set_bits`, `index_allocated_bits` | incremental arms of the proposal: the block index after the call, its blocks, the bits set in its item bitmaps, and the bits those bitmaps hold in memory. `-1` for other algorithms; on the remining arms, which build a new instance at every call, they describe that instance and carry no meaning |
+| `live_sequences` | incremental arms of the proposal: sequences of the current database after the call; `-1` for other algorithms |
+| `runtime_us` | the measurement of `runtime_ms`, read from `System.nanoTime` and written in microseconds, for calls shorter than a few milliseconds; the same negative statuses. Absent from rows written before the column existed |
 
 The rescan rule has no effect on a call that makes no rescan decision: an initial or static
 mine, and every `Remine-from-scratch` row. In `results/campaign` and `results/campaign-mem`

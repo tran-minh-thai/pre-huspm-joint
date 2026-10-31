@@ -119,6 +119,9 @@ public class ExperimentMetrics {
      *  current database. -1 for the arms of other classes; for the remining arms, which build a new
      *  instance at every operation, they describe that instance and carry no meaning. */
     public long indexBlocks = -1, indexSetBits = -1, indexAllocatedBits = -1, liveSequences = -1;
+    /** The same measurement as runtimeMs, read from System.nanoTime and written in microseconds,
+     *  for operations shorter than a few milliseconds; the same sentinels (-1, -2, -3). */
+    public long runtimeUs = -1;
     /** Bytes allocated by the mining thread, in MB. Deterministic, independent of GC scheduling. */
     public long allocatedMb;
 
@@ -187,6 +190,7 @@ public class ExperimentMetrics {
                 .add(String.valueOf(mineMs));
         sj.add(String.valueOf(indexBlocks)).add(String.valueOf(indexSetBits))
                 .add(String.valueOf(indexAllocatedBits)).add(String.valueOf(liveSequences));
+        sj.add(String.valueOf(runtimeUs));
         return sj.toString();
     }
 
@@ -203,6 +207,6 @@ public class ExperimentMetrics {
                 "seed,repeat,block_size,kappa,delta0,trigger_rule,iau_max,iau_tightness," +
                 "repetition,sl_min_eff,rescan_retries,live_repeats,rescans_at_uut," +
                 "floor_rho,floor_delta,floor_absorption,mine_ms," +
-                "index_blocks,index_set_bits,index_allocated_bits,live_sequences";
+                "index_blocks,index_set_bits,index_allocated_bits,live_sequences,runtime_us";
     }
 }
