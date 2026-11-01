@@ -1,0 +1,16 @@
+{
+  "command": "java -Xmx8g -Xss64m -cp build-h-leviathan -Dverify.husps=true -Drepeats=1 -Ddataset.only=LEVIATHAN -Dalgo.only=Pre-HUSPM-Joint-fixed-threshold,Remine-from-scratch,Pre-HUSPM-Joint,Remine-own-UUT,Pre-HUSPM-Joint-w5 -Dresults.dir=results/verify-joint/husps-long-sc10h-sequences-leviathan/ AutomatedExperimentRunner SC10H",
+  "path_substitutions": 0,
+  "build_dir": "build-h-leviathan",
+  "git_commit": "5a2d99ce199e9ce7f888ed1f31d78f3ead51c211",
+  "tree": "src clean, other files modified",
+  "source_sha256": "e855f1530b83fec872a29793cbb777bc7680fd8a24b24bf3468b565d1d524e4e",
+  "source_files": 44,
+  "java": "openjdk version \"25.0.4.1\" 2026-08-18 LTS",
+  "os": "Darwin 27.2.0 (macOS-27.2-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-10-31T22:05:39",
+  "end": "2026-10-31T23:44:53",
+  "exit_code": 0
+}

@@ -1,0 +1,16 @@
+{
+  "command": "java -Xmx5g -Xss64m -cp build-long-sc8 -Dverify.husps=true -Drepeats=1 -Ddataset.only=SIGN,LEVIATHAN,C8T1S5I8N5K,TAFENG -Dalgo.only=Pre-HUSPM-Joint-fixed-threshold,Remine-from-scratch,Pre-HUSPM-Joint,Remine-own-UUT,Pre-HUSPM-Joint-w5 -Dresults.dir=results/verify-joint/husps-long-sc8/ AutomatedExperimentRunner SC8",
+  "path_substitutions": 0,
+  "build_dir": "build-long-sc8",
+  "git_commit": "2ecbd83becf8c4f435598b3c50d0ea8797ae1464",
+  "tree": "src clean, other files modified",
+  "source_sha256": "01cbc7760859f08d0f97c73724d64be7c6e0833560c7451af180419125634593",
+  "source_files": 44,
+  "java": "openjdk version \"25.0.4.1\" 2026-08-18 LTS",
+  "os": "Darwin 27.2.0 (macOS-27.2-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-10-31T16:37:51",
+  "end": "2026-10-31T23:09:14",
+  "exit_code": 0
+}
