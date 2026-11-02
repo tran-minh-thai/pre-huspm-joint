@@ -1,0 +1,16 @@
+{
+  "command": "java -Xmx20g -Xss64m -cp build-reg -Dverify.husps=true -Drepeats=1 -Ddataset.only=DUNNHUMBY -Dresults.dir=results/verify-joint/husps-long-sc9-dunnhumby/ AutomatedExperimentRunner SC9",
+  "path_substitutions": 0,
+  "build_dir": "build-reg",
+  "git_commit": "4aa1ce88c62898ffae93d3ee9077e7fdf19a0106",
+  "tree": "src clean, other files modified",
+  "source_sha256": "39bbc7526efd8cb6c656186d8789ac332da1488d1928fc44d0aeec169989814f",
+  "source_files": 45,
+  "java": "openjdk version \"25.0.4.1\" 2026-08-18 LTS",
+  "os": "Darwin 27.2.0 (macOS-27.2-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-11-02T16:57:23",
+  "end": "2026-11-02T20:26:24",
+  "exit_code": 0
+}
