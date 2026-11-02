@@ -37,7 +37,7 @@ public final class StreamPlansCheck {
     }
 
     public static void main(String[] args) throws Exception {
-        List<String> dbs = args.length > 0 ? Arrays.asList(args) : Arrays.asList("SIGN", "LEVIATHAN", "C8T1S5I8N5K", "TAFENG");
+        List<String> dbs = args.length > 0 ? Arrays.asList(args) : Arrays.asList("SIGN", "LEVIATHAN", "C8T1S5I8N5K", "TAFENG", "DUNNHUMBY");
         long[] seeds = {42L, 1337L, 2024L};
         int plans = 0, ops = 0, newSeqs = 0, skipped = 0;
         for (String db : dbs) {

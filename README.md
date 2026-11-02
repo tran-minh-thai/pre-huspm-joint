@@ -63,12 +63,12 @@ JDK (the zip and SHA-256 of the lock file) into `..\jdk\` and sets `JAVA_HOME` f
 
 | Scenario | What runs | Databases |
 |---|---|---|
-| SC1 | static mining of `D_init` at four thresholds, six algorithms | all eight |
+| SC1 | static mining of `D_init` at four thresholds, six algorithms | all nine |
 | SC2 | `D_init`, then 100 equal insertion batches | all but BMS1 |
 | SC3 | static mining of the whole database at four thresholds | SIGN, LEVIATHAN, C8T1S5I8N5K |
 | SC4 | `r_l` in {0.3, 0.5, 0.7, 0.9} | same three |
 | SC5 | 25 to 100 batches cut in four shapes | same three |
-| SC6, SC6D, SC6B | 20 mixed insertions, deletions and modifications; SC6D mostly deletions; SC6B with one deletion that exceeds the budget alone; five seeds | same three and TAFENG |
+| SC6, SC6D, SC6B | 20 mixed insertions, deletions and modifications; SC6D mostly deletions; SC6B with one deletion that exceeds the budget alone; five seeds | same three, TAFENG and DUNNHUMBY |
 | SC7 | ablations of the miner and of the maintenance | all but BMS1 |
 | FIDELITY | the Pre-HUSPM implementation under its paper's setting, on SPMF's files (`./fetch-spmf-husp.sh` or `.\fetch-spmf-husp.ps1` first) | SIGN, FIFA, BIBLE, Kosarak10k, BMS |
 
@@ -169,6 +169,7 @@ with `DIR`.
 | KOSARAK | 990,002 | 90,002 | 0.025000 | generated |
 | C8T1S5I8N5K | 47,132 | 27,133 | 0.001132 | generated |
 | TAFENG | 60,665 | 40,665 | 0.003557 | measured |
+| DUNNHUMBY | 38,790 | 18,790 | 0.001464 | measured |
 
 The first `D_init` sequences are mined first; the rest form the update stream. The four
 threshold levels of SC1 and SC3, and the remaining settings, are listed in

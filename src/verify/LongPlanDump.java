@@ -39,7 +39,7 @@ public final class LongPlanDump {
     public static void main(String[] args) throws IOException {
         String out = null, dir = "datasets/";
         String[] scenarios = {"SC8", "SC8P", "SC9", "SC10", "SC10H"};
-        String[] databases = {"SIGN", "LEVIATHAN", "C8T1S5I8N5K", "TAFENG"};
+        String[] databases = {"SIGN", "LEVIATHAN", "C8T1S5I8N5K", "TAFENG", "DUNNHUMBY"};
         for (int i = 0; i < args.length; i++) {
             if (args[i].equals("--out")) out = args[++i];
             else if (args[i].equals("--datasets")) dir = args[++i];

@@ -1,0 +1,15 @@
+dataset,scope,level,target_patterns,uut,patterns,probes,mine_ms,status
+DUNNHUMBY,D_init,low,45,0.000971,48,4,7485,ok
+DUNNHUMBY,D_init,default,20,0.001381,18,5,4650,ok
+DUNNHUMBY,D_init,high,10,0.002083,9,4,3115,ok
+DUNNHUMBY,D_init,highest,5,0.002343,4,10,5282,ok
+DUNNHUMBY,D_init,gate-cost,,0.000776,-1,1,39027,gate-failed:patternbudgetexceeded
+DUNNHUMBY,full,gate-cost,,0.000776,88,1,4108,ok
+DUNNHUMBY,full,gate-trajectory,1,0.002343,3,1,1757,ok
+DUNNHUMBY,D_init,low,30,0.001158,33,3,4445,ok
+DUNNHUMBY,D_init,default,18,0.001464,17,4,3545,ok
+DUNNHUMBY,D_init,high,10,0.002083,9,4,3127,ok
+DUNNHUMBY,D_init,highest,5,0.002343,4,10,5276,ok
+DUNNHUMBY,D_init,gate-cost,,0.000926,54,1,2223,ok
+DUNNHUMBY,full,gate-cost,,0.000926,61,1,3060,ok
+DUNNHUMBY,full,gate-trajectory,1,0.002343,3,1,1522,ok

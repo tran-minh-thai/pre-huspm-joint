@@ -188,7 +188,16 @@ public final class Datasets {
         new Entry("TAFENG",               40665, 0.003557,
                 new double[]{0.002812, 0.003557, 0.004499, 0.005691},
                 true,  "10 6 5 3; the D_init cost gate passes here - 17 patterns in "
-                     + "309 ms")
+                     + "309 ms"),
+
+        // dunnhumby The Complete Journey, built by dunnhumby/build_dunnhumby.py: one household in
+        // one block of four weeks, one basket per element. Measured utilities like TAFENG
+        // (quantities, and profits from SALES_VALUE / QUANTITY), and the only measured database
+        // whose elements hold several items. A round incremental stream of 20000, as TAFENG.
+        new Entry("DUNNHUMBY",            18790, 0.001464,
+                new double[]{0.001158, 0.001464, 0.002083, 0.002343},
+                true,  "33 17 9 4 on D_init; the floor 0.8 * UUT of the lowest level mines 54 "
+                     + "patterns on D_init and 61 on the whole database")
 
         // ONLINE_RETAIL_II_ALL and ONLINE_RETAIL_II_QTY are measured and excluded. QTY gives
         // each invoice line its own event, so its sequences average 139.66 events against

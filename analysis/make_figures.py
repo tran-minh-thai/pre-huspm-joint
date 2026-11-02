@@ -229,7 +229,7 @@ def bar_style(hatch, label, color="black"):
 SUBSET_3 = ["SIGN", "LEVIATHAN", "C8T1S5I8N5K"]
 FIG_DATASETS = SUBSET_3
 # Display order of all eight: smallest to largest, as in the README table.
-ALL_DATASETS = ["SIGN", "LEVIATHAN", "FIFA", "BIBLE", "BMS1", "KOSARAK", "C8T1S5I8N5K", "TAFENG"]
+ALL_DATASETS = ["SIGN", "LEVIATHAN", "FIFA", "BIBLE", "BMS1", "KOSARAK", "C8T1S5I8N5K", "TAFENG", "DUNNHUMBY"]
 SC2_DATASETS = [d for d in ALL_DATASETS if d != "BMS1"]   # BMS1 is SC1 only
 
 KS     = [25, 50, 67, 100]

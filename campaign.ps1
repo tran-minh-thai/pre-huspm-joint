@@ -113,11 +113,11 @@ if (-not $host_) { $host_ = 'unknown' }
 # SUBSET_3 below repeats AutomatedExperimentRunner.SUBSET_3. If the two drift apart, an arm
 # that should not exist produces no rows; it is recorded as EMPTY and reported by -List
 # rather than marked DONE.
-$all7    = @('SIGN','LEVIATHAN','TAFENG','BIBLE','C8T1S5I8N5K','KOSARAK','FIFA')
-$all8    = @('SIGN','LEVIATHAN','TAFENG','BIBLE','BMS1','C8T1S5I8N5K','KOSARAK','FIFA')
+$all7    = @('SIGN','LEVIATHAN','TAFENG','DUNNHUMBY','BIBLE','C8T1S5I8N5K','KOSARAK','FIFA')
+$all8    = @('SIGN','LEVIATHAN','TAFENG','DUNNHUMBY','BIBLE','BMS1','C8T1S5I8N5K','KOSARAK','FIFA')
 $subset3 = @('SIGN','LEVIATHAN','C8T1S5I8N5K')
-# The mixed streams also run on TAFENG, the database with measured utilities (AutomatedExperimentRunner.MIXED_SETS).
-$mixedSets = @('SIGN','LEVIATHAN','C8T1S5I8N5K','TAFENG')
+# The mixed streams also run on TAFENG and DUNNHUMBY, the databases with measured utilities (AutomatedExperimentRunner.MIXED_SETS).
+$mixedSets = @('SIGN','LEVIATHAN','C8T1S5I8N5K','TAFENG','DUNNHUMBY')
 $static  = @('USpan','HUSP-ULL','HUSP-SP','IncUSP-Miner+','Pre-HUSPM','Pre-HUSPM-Joint','Joint-miner@UUT')
 $incr    = @('Pre-HUSPM-Joint-fixed-threshold','Pre-HUSPM-SWUmax','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+',
              'Remine-HUSP-ULL','Remine-HUSP-SP','Joint-miner+SWUmax','Joint-miner+TSU','Joint-rule+PreHUSPM-tracking','Joint-miner+SWUmax+PreHUSPM-tracking',
@@ -211,7 +211,7 @@ $knownAlgos = @('Pre-HUSPM-Joint','Pre-HUSPM-Joint-fixed-threshold','Pre-HUSPM',
                 'Pre-HUSPM-Joint-no-block-index','Pre-HUSPM-Joint-no-IUB','Pre-HUSPM-Joint-no-IPS',
                 'Pre-HUSPM-Joint-bsz-1','Pre-HUSPM-Joint-bsz-5','Pre-HUSPM-Joint-bsz-10','Pre-HUSPM-Joint-bsz-50','Pre-HUSPM-Joint-bsz-200',
                 'Pre-HUSPM-Joint-rescan-rule','Pre-HUSPM-Joint-rescan-every-batch','Pre-HUSPM-Joint-index-rebuild')
-$knownSets  = @('SIGN','LEVIATHAN','TAFENG','BIBLE','BMS1','C8T1S5I8N5K','KOSARAK','FIFA','KOSARAK10K','BMS')
+$knownSets  = @('SIGN','LEVIATHAN','TAFENG','DUNNHUMBY','BIBLE','BMS1','C8T1S5I8N5K','KOSARAK','FIFA','KOSARAK10K','BMS')
 foreach ($a in $Algorithms) {
     if ($knownAlgos -notcontains $a) {
         throw ("Unknown algorithm '$a'. Known: " + ($knownAlgos -join ', ') +

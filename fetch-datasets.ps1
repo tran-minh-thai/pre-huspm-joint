@@ -70,6 +70,20 @@ function Test-Tafeng {
     return $false
 }
 
+# DUNNHUMBY is built locally too (dunnhumby "The Complete Journey" is not redistributed).
+function Test-Dunnhumby {
+    $s = Test-Files (Read-Sums (Join-Path $PSScriptRoot 'dunnhumby/DUNNHUMBY.sha256'))
+    if ($s.missing -eq 0 -and $s.wrong -eq 0) { Write-Host '==> DUNNHUMBY present and verified'; return $true }
+    Write-Host "==> DUNNHUMBY not ready: $($s.missing) missing, $($s.wrong) not matching dunnhumby\DUNNHUMBY.sha256"
+    Write-Host '    dunnhumby "The Complete Journey" is not redistributed here. Get transaction_data.csv and'
+    Write-Host '    product.csv (dunnhumby.com/source-files; dunnhumby\SOURCE.sha256 pins them), then build it:'
+    Write-Host "        python dunnhumby/build_dunnhumby.py --dir <folder> --out-dir $Dir --name DUNNHUMBY"
+    Write-Host '    The build is deterministic; dunnhumby/DUNNHUMBY.sha256 pins the result.'
+    return $false
+}
+# Both locally built databases; each reports itself.
+function Test-Local { $t = Test-Tafeng; $d = Test-Dunnhumby; return ($t -and $d) }
+
 $expected = Read-Sums $pinned
 if ($expected.Count -eq 0) { throw "No checksum listed in $pinned" }
 $state = Test-Files $expected
@@ -77,13 +91,13 @@ $state = Test-Files $expected
 if ($VerifyOnly) {
     Write-Host ("==> {0} files: {1} verified, {2} missing, {3} not matching datasets.sha256" -f
                 $state.total, ($state.total - $state.missing - $state.wrong), $state.missing, $state.wrong)
-    $tafengOk = Test-Tafeng
+    $tafengOk = Test-Local
     if ($state.missing -gt 0 -or $state.wrong -gt 0 -or -not $tafengOk) { exit 1 }
     exit 0
 }
 if (-not $Force -and $state.missing -eq 0 -and $state.wrong -eq 0) {
     Write-Host "==> $($state.total) files already present and verified; nothing to do"
-    if (-not (Test-Tafeng)) { exit 1 }
+    if (-not (Test-Local)) { exit 1 }
     exit 0
 }
 
@@ -113,4 +127,4 @@ if ($state.missing -gt 0 -or $state.wrong -gt 0) {
            $state.missing, $state.wrong, $state.total) + "Do not measure on these files."
 }
 Write-Host ("==> {0} files verified against datasets.sha256" -f $state.total)
-Test-Tafeng | Out-Null
+Test-Local | Out-Null

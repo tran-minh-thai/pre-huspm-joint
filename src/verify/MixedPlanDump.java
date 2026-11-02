@@ -34,7 +34,7 @@ import java.util.StringJoiner;
 public final class MixedPlanDump {
 
     static final long[] SEEDS = {42L, 1337L, 2024L, 31415L, 271828L};
-    static final String[] DATABASES = {"SIGN", "LEVIATHAN", "C8T1S5I8N5K", "TAFENG"};
+    static final String[] DATABASES = {"SIGN", "LEVIATHAN", "C8T1S5I8N5K", "TAFENG", "DUNNHUMBY"};
 
     public static void main(String[] args) throws IOException {
         String out = null, dir = "datasets/";

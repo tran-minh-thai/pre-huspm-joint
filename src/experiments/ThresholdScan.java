@@ -92,6 +92,12 @@ public final class ThresholdScan {
             // quantities from AMOUNT, profits from SALES_PRICE / AMOUNT. Ten is the ceiling,
             // 0.0029 yields ten patterns in under a second and 0.0028 exceeds the budget.
             {"TAFENG",               new int[]{10, 6, 5, 4}},
+
+            // dunnhumby The Complete Journey: measured utilities like Ta-Feng, and elements of
+            // several items (a basket). A target of 45 puts the lowest level at 0.00097, whose
+            // floor 0.8 * UUT = 0.000776 exceeds the pattern budget on D_init (the cost gate
+            // fails), so the lowest level asks for 30 patterns.
+            {"DUNNHUMBY",            new int[]{30, 18, 10, 5}},
     };
 
     /**

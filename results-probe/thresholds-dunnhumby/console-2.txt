@@ -1,0 +1,16 @@
+budgets: 3,000,000,000 candidates, 180 s per probe, 900 s per level
+
+=== DUNNHUMBY | D_init | |D|=18,790 | TSU=3,317,680 ===
+   level     target         uut     patterns  probes        ms  status
+ highest          5     0.00234            4      10      5276  ok
+    high         10     0.00208            9       4      3127  ok
+ default         18     0.00146           17       4      3545  ok
+     low         30     0.00116           33       3      4445  ok
+
+--- band check --- D_init |D|=18,790  |  whole |D|=38,790
+  cost  r_l x UUT=0.000926 (low) on D_init ->  54 patterns in 2223 ms             PASS
+  cost  r_l x UUT=0.000926 (low) on full   ->  61 patterns in 3060 ms             PASS
+  trajectory  UUT=0.002343 (highest)  4 patterns on D_init -> 3 patterns, need >= 1  PASS
+  (FAIL means the band is right on D_init but wrong at a scope the scenarios measure: SC1 on D_init, SC2/SC5/SC6 growing, SC3 the whole database)
+
+-> results-probe/thresholds-dunnhumby/thresholds-thaitms-macbook-pro.local.csv

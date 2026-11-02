@@ -66,19 +66,33 @@ check_tafeng() {
   return 1
 }
 
+# DUNNHUMBY is built locally too (dunnhumby "The Complete Journey" is not redistributed).
+check_dunnhumby() {
+  read -r m w t <<< "$(verify dunnhumby/DUNNHUMBY.sha256)"
+  if [ "$m" -eq 0 ] && [ "$w" -eq 0 ]; then echo '==> DUNNHUMBY present and verified'; return 0; fi
+  echo "==> DUNNHUMBY not ready: ${m} missing, ${w} not matching dunnhumby/DUNNHUMBY.sha256"
+  echo '    dunnhumby "The Complete Journey" is not redistributed here. Get transaction_data.csv and'
+  echo '    product.csv (dunnhumby.com/source-files; dunnhumby/SOURCE.sha256 pins them), then build it:'
+  echo "        python dunnhumby/build_dunnhumby.py --dir <folder> --out-dir ${DIR} --name DUNNHUMBY"
+  echo '    The build is deterministic; dunnhumby/DUNNHUMBY.sha256 pins the result.'
+  return 1
+}
+# Both locally built databases; each reports itself.
+check_local() { local r=0; check_tafeng || r=1; check_dunnhumby || r=1; return $r; }
+
 read -r MISSING WRONG TOTAL <<< "$(verify "$PINNED")"
 [ "$TOTAL" -gt 0 ] || { echo "No checksum listed in ${PINNED}" >&2; exit 1; }
 
 if [ "$VERIFY_ONLY" = "1" ]; then
   echo "==> ${TOTAL} files: $((TOTAL - MISSING - WRONG)) verified, ${MISSING} missing, ${WRONG} not matching ${PINNED}"
-  TAFENG_OK=0; check_tafeng || TAFENG_OK=1
+  TAFENG_OK=0; check_local || TAFENG_OK=1
   [ "$MISSING" -eq 0 ] && [ "$WRONG" -eq 0 ] && [ "$TAFENG_OK" -eq 0 ]
   exit $?
 fi
 
 if [ "$FORCE" != "1" ] && [ "$MISSING" -eq 0 ] && [ "$WRONG" -eq 0 ]; then
   echo "==> ${TOTAL} files already present and verified; nothing to do"
-  check_tafeng
+  check_local
   exit $?
 fi
 
@@ -105,4 +119,4 @@ if [ "$MISSING" -ne 0 ] || [ "$WRONG" -ne 0 ]; then
   exit 1
 fi
 echo "==> ${TOTAL} files verified against ${PINNED}"
-check_tafeng || true
+check_local || true

@@ -448,7 +448,7 @@ public class AutomatedExperimentRunner {
             "LEVIATHAN", "SIGN", "BMS1", "KOSARAK", "BIBLE",
             // TAFENG's place comes from its calibration probes, which finish in under a
             // second at every threshold of its sweep. Move it once a run has measured it.
-            "TAFENG", "C8T1S5I8N5K", "FIFA");
+            "TAFENG", "DUNNHUMBY", "C8T1S5I8N5K", "FIFA");
 
     private static List<DatasetConfig> inCostOrder(List<DatasetConfig> in) {
         List<DatasetConfig> out = new ArrayList<>(in);
@@ -543,9 +543,9 @@ public class AutomatedExperimentRunner {
      *
      * KOSARAK runs in SC1, SC2 and SC7.
      */
-    /** The mixed streams (SC6, SC6D, SC6B): SUBSET_3 and TAFENG, the database with measured utilities. */
+    /** The mixed and long streams: SUBSET_3, and TAFENG and DUNNHUMBY, the databases with measured utilities. */
     private static final Set<String> MIXED_SETS = new HashSet<>(Arrays.asList(
-            "SIGN", "LEVIATHAN", "C8T1S5I8N5K", "TAFENG"));
+            "SIGN", "LEVIATHAN", "C8T1S5I8N5K", "TAFENG", "DUNNHUMBY"));
 
     private static final Set<String> SUBSET_3 = new HashSet<>(Arrays.asList(
             "SIGN", "LEVIATHAN", "C8T1S5I8N5K"));
