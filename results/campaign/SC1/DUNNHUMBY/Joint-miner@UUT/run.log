@@ -1,0 +1,25 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 9 | Scenarios: [SC1]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC1] Static baseline on D_init ---
+>> WARM-UP (not measured) Joint-miner@UUT/DUNNHUMBY/SC1
+>> RUNNING Joint-miner@UUT/DUNNHUMBY/SC1_su=0.001158#0  (heap free=559MB / total=768MB / max=49152MB)
+[Joint-miner@UUT/DUNNHUMBY/SC1_su=0.001158#0] OK t=1830ms cand=225949 pat=33 heapDelta=294MB
+>> RUNNING Joint-miner@UUT/DUNNHUMBY/SC1_su=0.001158#0  (heap free=268MB / total=768MB / max=49152MB)
+[Joint-miner@UUT/DUNNHUMBY/SC1_su=0.001158#0] OK t=1230ms cand=225949 pat=33 heapDelta=284MB
+>> RUNNING Joint-miner@UUT/DUNNHUMBY/SC1_su=0.001158#0  (heap free=252MB / total=768MB / max=49152MB)
+[Joint-miner@UUT/DUNNHUMBY/SC1_su=0.001158#0] OK t=1097ms cand=225949 pat=33 heapDelta=273MB
+>> RUNNING Joint-miner@UUT/DUNNHUMBY/SC1_su=0.001158#0  (heap free=264MB / total=768MB / max=49152MB)
+[Joint-miner@UUT/DUNNHUMBY/SC1_su=0.001158#0] OK t=1091ms cand=225949 pat=33 heapDelta=275MB
+   warm-up mines (ms, not measured): [1830, 1230, 1097, 1091]
+>> RUNNING Joint-miner@UUT/DUNNHUMBY/SC1_su=0.001158#0  (heap free=537MB / total=768MB / max=49152MB)
+[Joint-miner@UUT/DUNNHUMBY/SC1_su=0.001158#0] OK t=1111ms cand=225949 pat=33 heapDelta=275MB
+>> RUNNING Joint-miner@UUT/DUNNHUMBY/SC1_su=0.001464#0  (heap free=538MB / total=768MB / max=49152MB)
+[Joint-miner@UUT/DUNNHUMBY/SC1_su=0.001464#0] OK t=897ms cand=118800 pat=17 heapDelta=262MB
+>> RUNNING Joint-miner@UUT/DUNNHUMBY/SC1_su=0.002083#0  (heap free=538MB / total=768MB / max=49152MB)
+[Joint-miner@UUT/DUNNHUMBY/SC1_su=0.002083#0] OK t=701ms cand=50505 pat=9 heapDelta=249MB
+>> RUNNING Joint-miner@UUT/DUNNHUMBY/SC1_su=0.002343#0  (heap free=538MB / total=768MB / max=49152MB)
+[Joint-miner@UUT/DUNNHUMBY/SC1_su=0.002343#0] OK t=649ms cand=38475 pat=4 heapDelta=236MB
+=== ALL SCENARIOS DONE (27.2s) ===
