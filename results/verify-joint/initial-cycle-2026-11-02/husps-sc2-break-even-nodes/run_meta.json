@@ -1,0 +1,16 @@
+{
+  "command": "bash -c rc=0; for d in DUNNHUMBY SIGN TAFENG C8T1S5I8N5K LEVIATHAN BIBLE KOSARAK FIFA; do java -Xmx20g -Xss64m -cp build-reg -Dverify.husps=true -Drepeats=1 -Ddataset.only=$d -Dalgo.only=Pre-HUSPM-Joint-fixed-threshold,Pre-HUSPM-Joint -Dresults.dir=results/verify-joint/initial-cycle-2026-11-02/husps-sc2-break-even-nodes/ AutomatedExperimentRunner SC2 || rc=1; done; exit $rc",
+  "path_substitutions": 0,
+  "build_dir": "build-reg",
+  "git_commit": "b54bfc310ef32200c5325a30720ac3ee536e143a",
+  "tree": "src clean, other files modified",
+  "source_sha256": "39bbc7526efd8cb6c656186d8789ac332da1488d1928fc44d0aeec169989814f",
+  "source_files": 45,
+  "java": "openjdk version \"25.0.4.1\" 2026-08-18 LTS",
+  "os": "Darwin 27.2.0 (macOS-27.2-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-11-02T10:44:49",
+  "end": "2026-11-02T11:27:13",
+  "exit_code": 0
+}
