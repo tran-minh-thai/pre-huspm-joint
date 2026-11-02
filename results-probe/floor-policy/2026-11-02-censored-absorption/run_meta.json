@@ -1,0 +1,16 @@
+{
+  "command": "~/.venvs/pre-huspm-adaptive/bin/python analysis/floor_policy_probe.py --out results-probe/floor-policy/2026-11-02-censored-absorption --sc5 --sc6 --long --nodes",
+  "path_substitutions": 1,
+  "build_dir": "build",
+  "git_commit": "7022b0dd7f0c19db4c1ffc06d0f1e81beb1df683",
+  "tree": "src clean, other files modified",
+  "source_sha256": "7cc5e024d755bf2b4def47d3d85ae4bc6c25f370269b347da9d70a20c8965b3d",
+  "source_files": 45,
+  "java": "openjdk version \"25.0.4.1\" 2026-08-18 LTS",
+  "os": "Darwin 27.2.0 (macOS-27.2-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-11-02T07:31:25",
+  "end": "2026-11-02T08:11:39",
+  "exit_code": 0
+}

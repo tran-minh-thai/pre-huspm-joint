@@ -1,0 +1,25 @@
+SC10 C8T1S5I8N5K seed 42: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC10 C8T1S5I8N5K seed 1337: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC10 C8T1S5I8N5K seed 2024: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC8 C8T1S5I8N5K seed 42: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC8 C8T1S5I8N5K seed 1337: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC8 C8T1S5I8N5K seed 2024: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC8P C8T1S5I8N5K seed 42: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC8P C8T1S5I8N5K seed 1337: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC8P C8T1S5I8N5K seed 2024: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC9 C8T1S5I8N5K seed 42: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC9 C8T1S5I8N5K seed 1337: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC9 C8T1S5I8N5K seed 2024: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+streams: 12; replayed and priced: 12; not replayed: []
