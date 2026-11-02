@@ -327,8 +327,13 @@ def evaluate(stream, su, rl, be_window=5):
         return sum(sum(cD_phase(p) for p in unit) if x == "D" else (cU if x == "U" else cL)[stream.op_of[unit[0]]]
                    for unit, x in zip(units, path))
 
-    def break_even(merge, window=5, dL=None, dU=None, logged=None, del_low=False, init_low=None):
-        """logged: per operation, the (rho, delta) the measured run used, in place of the priced
+    def break_even(merge, window=5, dL=None, dU=None, logged=None, del_low=False, init_low=None,
+                   initial_cycle=False, open_shadow=False):
+        """initial_cycle: the units the initial mine (at the lower threshold) absorbed before the first
+        rescan count as an absorption. open_shadow: while the shadow cycle is open, the units it has
+        absorbed so far count as an absorption of at least that many (a censored observation, a lower
+        bound: the decisions depend on the data alone, so the cycle absorbs at least these).
+        logged: per operation, the (rho, delta) the measured run used, in place of the priced
         ones, to replay the measured decisions. del_low: a rescan made by a deletion mines at the
         lower threshold; insertions and modifications decide by the rule. init_low: the time of the
         mine at the lower threshold known before the first decision, in place of remining's at the first
@@ -360,6 +365,8 @@ def evaluate(stream, su, rl, be_window=5):
                 k -= 1
             if k >= 0 and path[k] == "L":
                 absorbed.append(len(path) - 1 - k)
+            elif k < 0 and initial_cycle:
+                absorbed.append(len(path))
             o = stream.op_of[unit[0]]
             if del_low and stream.kind_of[unit[0]] == "DEL":
                 up = False
@@ -370,7 +377,8 @@ def evaluate(stream, su, rl, be_window=5):
                 rho, delta = last_L / last_U, d / last_U
                 if logged is not None:
                     rho, delta = logged[o]
-                a_hat = statistics.mean(absorbed[-window:]) if absorbed else 1.0
+                seen = absorbed + [shadow_n] if open_shadow and shadow is not None else absorbed
+                a_hat = statistics.mean(seen[-window:]) if seen else 1.0
                 up = a_hat < (rho - 1) / max(1e-9, 1 - delta)
             r.rescan(up)
             if up:
@@ -526,6 +534,9 @@ def evaluate(stream, su, rl, be_window=5):
         pols = dict(method=path, always_threshold=run(stream, su, rl, lambda u, pth, r: True, merged),
                     fixed_lower_threshold=run(stream, su, rl, fixed, merged),
                     window5=run(stream, su, rl, window5, merged))
+        for name, kw in (("initial_cycle", dict(initial_cycle=True)), ("open_shadow", dict(open_shadow=True)),
+                         ("initial_cycle_open_shadow", dict(initial_cycle=True, open_shadow=True))):
+            pols[f"method_{name}"] = break_even(merged, window=be_window, dL=nL, dU=nU, init_low=float(n0.iloc[0]), **kw)
         for name, pth in pols.items():
             row[f"nodes_{name}"] = int(round(node_cost(pth)))
             row[f"nodes_{name}_rescans"] = sum(x != "D" for x in pth)
