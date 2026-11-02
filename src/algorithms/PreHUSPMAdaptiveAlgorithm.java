@@ -647,8 +647,12 @@ public class PreHUSPMAdaptiveAlgorithm {
          * a >= (rho - 1) / (1 - delta). rho and delta are the ratios of the last observed times: of a
          * mine at r_l, of a mine at UUT, and of a unit taken directly. a is the mean of the last
          * breakEvenWindow absorptions, each the number of units taken directly between a rescan at
-         * r_l and the next rescan. While the stream runs at UUT no rescan at r_l is made, so the
-         * absorption it would have had is measured by a shadow: the JOINT counters at floor r_l,
+         * r_l and the next rescan; the initial mine is a mine at r_l, so the units taken directly
+         * before the first rescan are the first absorption (countInitialCycle, on by default;
+         * -Dadapt.countInitialCycle=false leaves it out, as the rule did before). Without it the
+         * rule decides on a = 1 until a cycle at r_l has closed, and where rho > 2 that keeps every
+         * rescan at UUT while the shadow is still counting. While the stream runs at UUT no rescan
+         * at r_l is made, so the absorption it would have had is measured by a shadow: the JOINT counters at floor r_l,
          * started after a rescan at UUT and fed every unit until they would trigger. The JOINT
          * decision depends on the data and the floor alone, never on what a mine returns, so the
          * shadow's count is exactly what a rescan at r_l would have absorbed. The first rescan after
@@ -677,6 +681,8 @@ public class PreHUSPMAdaptiveAlgorithm {
         private final java.util.ArrayList<Integer> absorptions = new java.util.ArrayList<>();
         /** Units taken directly since the last rescan at r_l; -1 when the last rescan was at UUT. */
         private int directSinceLow = -1;
+        /** BREAK_EVEN: count the initial mine's cycle as an absorption (see FloorRule). */
+        public boolean countInitialCycle = !"false".equals(System.getProperty("adapt.countInitialCycle"));
         private ShadowJoint shadow = null;
         private int shadowUnits = 0;
         private boolean shadowTriggeredInUnit = false;
@@ -1215,7 +1221,9 @@ public class PreHUSPMAdaptiveAlgorithm {
             if (selectsFloor()) { Sl_min = slMinRatioEff * Su; overLowRun = 0; rescansAtUut = 0; }
             lastLowMineNs = lastHighMineNs = lastDirectNs = -1;
             lastLowMineNodes = lastHighMineNodes = -1;
-            absorptions.clear(); directSinceLow = -1; shadow = null; shadowUnits = 0; shadowTriggeredInUnit = false;
+            absorptions.clear(); shadow = null; shadowUnits = 0; shadowTriggeredInUnit = false;
+            // the initial mine is at r_l: with countInitialCycle its cycle is counted like any other
+            directSinceLow = selectsFloor() && floorRule == FloorRule.BREAK_EVEN && countInitialCycle ? 0 : -1;
             floorRho = floorDelta = floorAbsorption = Double.NaN;
             unitDepth = 0; forceRescan = false; inModification = false;
             largeMap.clear(); prelargeMap.clear();

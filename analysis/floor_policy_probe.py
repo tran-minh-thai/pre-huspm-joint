@@ -166,6 +166,9 @@ def units_of(stream, merge):
 
 
 NODES_ONLY = False
+# The method counts the initial mine's cycle as an absorption since 2026-11-02
+# (-Dadapt.countInitialCycle); --rule-before-initial-cycle replays records measured before.
+METHOD_INITIAL_CYCLE = True
 BRUTE_LEAVES = 1024
 
 
@@ -483,7 +486,8 @@ def evaluate(stream, su, rl, be_window=5):
     # ratios it logged. The times behind those ratios are measured, so this checks the replay of
     # the absorptions and the shadow, not the prices.
     m_be = measured_per_op(rows_of(mf.PROPOSED))
-    be_logged = break_even(merged, window=be_window, logged=logged_ratios(rows_of(mf.PROPOSED)))
+    be_logged = break_even(merged, window=be_window, logged=logged_ratios(rows_of(mf.PROPOSED)),
+                           initial_cycle=METHOD_INITIAL_CYCLE)
     agree_be = sum(a == b for a, b in zip(per_op(be_logged, stream, merged), m_be))
     print(f"  break-even replayed with the logged ratios: {agree_be}/{len(m_be)} operations agree")
     row.update(replay_break_even_logged=f"{agree_be}/{len(m_be)}",
@@ -516,12 +520,14 @@ def evaluate(stream, su, rl, be_window=5):
     n0 = (ir[(ir["algorithm"] == mf.PROPOSED) & (ir["replicate"] == rep)]["explored_nodes"] if ir is not None
           else pd.Series(dtype=float))
     if len(n0) and n0.notna().all():
-        path = break_even(merged, window=be_window, dL=nL, dU=nU, init_low=float(n0.iloc[0]))
+        path = break_even(merged, window=be_window, dL=nL, dU=nU, init_low=float(n0.iloc[0]),
+                          initial_cycle=METHOD_INITIAL_CYCLE)
         row["priced_break_even_by_nodes_s"] = round(price(path, merged), 3)
         agree = sum(a == b for a, b in zip(per_op(path, stream, merged), m_be))
         row["nodes_rule_agrees_with_measured"] = f"{agree}/{len(m_be)}"
         for W in (1, 2, 3, 5, 10, 20):
-            pw = break_even(merged, window=W, dL=nL, dU=nU, init_low=float(n0.iloc[0]))
+            pw = break_even(merged, window=W, dL=nL, dU=nU, init_low=float(n0.iloc[0]),
+                            initial_cycle=METHOD_INITIAL_CYCLE)
             row[f"priced_break_even_by_nodes_w{W}_s"] = round(price(pw, merged), 3)
             ops = per_op(pw, stream, merged)
             row[f"nodes_w{W}_rescans"] = sum(x for x, _ in ops)
@@ -534,7 +540,8 @@ def evaluate(stream, su, rl, be_window=5):
         pols = dict(method=path, always_threshold=run(stream, su, rl, lambda u, pth, r: True, merged),
                     fixed_lower_threshold=run(stream, su, rl, fixed, merged),
                     window5=run(stream, su, rl, window5, merged))
-        for name, kw in (("initial_cycle", dict(initial_cycle=True)), ("open_shadow", dict(open_shadow=True)),
+        for name, kw in (("without_initial_cycle", dict(initial_cycle=False)), ("initial_cycle", dict(initial_cycle=True)),
+                         ("open_shadow", dict(open_shadow=True)),
                          ("initial_cycle_open_shadow", dict(initial_cycle=True, open_shadow=True))):
             pols[f"method_{name}"] = break_even(merged, window=be_window, dL=nL, dU=nU, init_low=float(n0.iloc[0]), **kw)
         for name, pth in pols.items():
@@ -582,7 +589,7 @@ def evaluate(stream, su, rl, be_window=5):
     # The bound holds for any choice of the floor: the rule by explored nodes (the method) and the
     # window rule at every window, on the same priced costs.
     if len(n0) and n0.notna().all():
-        nodes_path = break_even(merged, dL=nL, dU=nU, init_low=float(n0.iloc[0]))
+        nodes_path = break_even(merged, dL=nL, dU=nU, init_low=float(n0.iloc[0]), initial_cycle=METHOD_INITIAL_CYCLE)
         row.update(bound_against_threshold(stream, su, rl, merged, units_of, break_even, run, cL, cU, cD_phase,
                                            path=nodes_path, prefix="bound_nodes"))
     for W in (1, 2, 3, 5, 10):
@@ -733,11 +740,15 @@ def main():
                     help="plans written by verify.LongPlanDump, relative to the repository")
     ap.add_argument("--scenarios", nargs="*", help="with --long: only these long streams (SC8 SC8P SC9 SC10 SC10H)")
     ap.add_argument("--no-sc2", action="store_true", help="leave out the seven SC2 streams")
+    ap.add_argument("--rule-before-initial-cycle", action="store_true",
+                    help="replay the method as measured before 2026-11-02, without the initial mine's cycle")
     ap.add_argument("--nodes", action="store_true",
                     help="write and print only the counts in explored nodes and the replay checks, no time")
     a = ap.parse_args()
     global NODES_ONLY
     NODES_ONLY = a.nodes
+    global METHOD_INITIAL_CYCLE
+    METHOD_INITIAL_CYCLE = not a.rule_before_initial_cycle
     out = ROOT / a.out
     out.mkdir(parents=True, exist_ok=True)
     summary = [evaluate(s, mf.DATASETS[s.db]["default_uut"], 0.8) for s in streams(a)]
