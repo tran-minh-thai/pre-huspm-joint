@@ -247,11 +247,20 @@ public final class ThresholdScan {
         try (PrintWriter w = new PrintWriter(Files.newBufferedWriter(csv, StandardCharsets.UTF_8,
                 java.nio.file.StandardOpenOption.CREATE, java.nio.file.StandardOpenOption.APPEND))) {
             if (fresh) w.println("dataset,scope,level,target_patterns,uut,patterns,probes,mine_ms,status");
+            boolean known = false;
             for (Object[] row : TARGETS) {
                 String name = (String) row[0];
                 if (!"ALL".equalsIgnoreCase(target) && !name.equalsIgnoreCase(target)) continue;
+                known = true;
                 int[] counts = (single != null) ? new int[]{single} : (int[]) row[1];
                 run(name, full, grid, counts, w);
+            }
+            // A database not in the study yet (a candidate being assessed): a grid needs no
+            // targets, and D_init falls back to half of it (common.Datasets.dInitCount).
+            if (!known && !"ALL".equalsIgnoreCase(target)) {
+                if (grid == null && single == null)
+                    throw new IllegalArgumentException(target + " has no targets; pass --grid or --target");
+                run(target, full, grid, single == null ? new int[0] : new int[]{single}, w);
             }
         }
         System.out.println("\n-> " + csv.toAbsolutePath());
