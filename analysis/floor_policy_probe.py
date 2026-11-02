@@ -11,7 +11,9 @@ decision, as PreHUSPMAdaptiveAlgo.runModification makes them).
 
 Streams: the seven SC2 streams; with --sc5 the 48 SC5 cells, whose increment sizes are read from the
 runner's log; with --sc6 the 60 streams of SC6, SC6D and SC6B (four databases, five seeds), whose
-operations are read from a plan written by verify.MixedPlanDump (--plans).
+operations are read from a plan written by verify.MixedPlanDump (--plans); with --long the long
+streams SC8, SC8P, SC9, SC10 and SC10H (four databases, three seeds, 500 operations), whose operations
+are read from a plan written by verify.LongPlanDump (--long-plans) and whose rows are the campaign's.
 
 Before pricing a stream the replay must reproduce what was measured: for the proposal (rescan floor
 selection, window 5) and for the fixed lower threshold, the rescans of every operation and how many of
@@ -613,7 +615,7 @@ def streams(a):
         return Stream(label, db, init, [(+1, b) for b in batches], list(range(1, len(batches) + 1)),
                       ["INS"] * len(batches), rows, len(batches), init_rows)
 
-    for db in a.db:
+    for db in ([] if a.no_sc2 else a.db):
         seqs, n_init = seqs_of(db), mf.DATASETS[db]["d_init"]
         rows = sc2[(sc2["dataset"] == db) & (sc2["iteration"] > 0)]
         yield insert_stream(db, db, rows, seqs[:n_init], even_batches(seqs[n_init:], K),
@@ -662,6 +664,48 @@ def streams(a):
                 init_rows = df[(df["dataset"] == db) & (df["iteration"] == 0) & (df["seed"] == seed)]
                 yield Stream(f"{sc} {db} seed {seed}", db, seqs[:n_init], phases, op_of, kind_of, rows, len(ops),
                              init_rows)
+    if a.long:
+        # The long streams: operations from a plan written by verify.LongPlanDump (sequences by
+        # content, since SC10 changes them in place), rows from the campaign tree, one run per seed.
+        plans = defaultdict(list)
+        for r in csv.DictReader(open(ROOT / a.long_plans), delimiter="\t"):
+            plans[(r["scenario"], r["dataset"], int(r["seed"]))].append(r)
+
+        def content(s):
+            out = []
+            for tok in s.split(";") if s.strip() else []:
+                u, items = tok.split("|")
+                out.append((float(u), {int(x) for x in items.split(",") if x}))
+            return out
+        frames = {}
+        for (sc, db, seed), ops in sorted(plans.items()):
+            if db not in a.db or (a.scenarios and sc not in a.scenarios):
+                continue
+            if (sc, db) not in frames:
+                parts = []
+                for p in sorted((ROOT / "results" / "campaign" / sc / db).glob(f"*/{sc}_long.csv")):
+                    if (p.parent / "DONE").exists():
+                        parts.append(pd.read_csv(p, low_memory=False))
+                frames[(sc, db)] = pd.concat(parts, ignore_index=True).assign(replicate="r0") if parts else None
+            df = frames[(sc, db)]
+            if df is None:
+                print(f"{sc} {db}: no finished arm under results/campaign")
+                continue
+            phases, op_of, kind_of = [], [], []
+            for o in ops:
+                it = int(o["iter"])
+                if o["kind"] == "INS":
+                    phases.append((+1, content(o["a"]))); op_of.append(it); kind_of.append("INS")
+                elif o["kind"] == "DEL":
+                    phases.append((-1, content(o["a"]))); op_of.append(it); kind_of.append("DEL")
+                else:
+                    phases.append((-1, content(o["a"]))); op_of.append(it); kind_of.append("MOD")
+                    phases.append((+1, content(o["b"]))); op_of.append(it); kind_of.append("MOD")
+            n_init = int(ops[0]["d_init"])
+            rows = df[(df["iteration"] > 0) & (df["seed"] == seed)]
+            init_rows = df[(df["iteration"] == 0) & (df["seed"] == seed)]
+            yield Stream(f"{sc} {db} seed {seed}", db, seqs_of(db)[:n_init], phases, op_of, kind_of, rows, len(ops),
+                         init_rows)
 
 
 def main():
@@ -672,6 +716,12 @@ def main():
     ap.add_argument("--sc6", action="store_true", help="also SC6, SC6D and SC6B (needs --plans)")
     ap.add_argument("--plans", default="results-probe/floor-policy/mixed-plans/mixed_plans.tsv",
                     help="plans written by verify.MixedPlanDump, relative to the repository")
+    ap.add_argument("--long", action="store_true",
+                    help="also the long streams under results/campaign (needs --long-plans)")
+    ap.add_argument("--long-plans", default="results-probe/floor-policy/long-plans/long_plans.tsv",
+                    help="plans written by verify.LongPlanDump, relative to the repository")
+    ap.add_argument("--scenarios", nargs="*", help="with --long: only these long streams (SC8 SC8P SC9 SC10 SC10H)")
+    ap.add_argument("--no-sc2", action="store_true", help="leave out the seven SC2 streams")
     ap.add_argument("--nodes", action="store_true",
                     help="write and print only the counts in explored nodes and the replay checks, no time")
     a = ap.parse_args()
