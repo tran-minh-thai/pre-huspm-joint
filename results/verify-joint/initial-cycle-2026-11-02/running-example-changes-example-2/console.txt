@@ -1,0 +1,6 @@
+MISMATCH Example 2, d2: rescans at UUT: 2.0, expected 1.0
+MISMATCH Example 2, d2: absorption a: 0.0, expected 1.0
+MISMATCH Example 2, d2: rescan at LUT_min, cutoff: 20.0, expected 16.0
+MISMATCH Example 2, d3: budget beta of the decision: 0.0, expected 4.0
+MISMATCH Example 2, d3: direct branch (no rescan): 3.0, expected 2.0
+Running example: 40 values compared, 5 mismatching

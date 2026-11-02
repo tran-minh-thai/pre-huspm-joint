@@ -1,0 +1,1 @@
+rule=joint trials=5000 seed=11 ops=50000 per-kind={delete=16736, insert=16698, modify=16566} direct-update={delete=8705, insert=3484, modify=3136} mismatching-ops=0 {} trials-with-mismatch=0

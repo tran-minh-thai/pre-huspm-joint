@@ -1,0 +1,16 @@
+{
+  "command": "java -Dadapt.floorRule=breakEven -Dadapt.breakEvenCost=nodes -Xmx16g -Xss64m -cp build verify.DirectPathVerifier ALL --ops 16 --out results/verify-joint/initial-cycle-2026-11-02/break-even-nodes-random",
+  "path_substitutions": 0,
+  "build_dir": "build",
+  "git_commit": "d6197a7edef947d1a026964b5240efdca72d8635",
+  "tree": "src clean, other files modified",
+  "source_sha256": "4f75fbf51149d1000cf36e8acde39228e19cc15f7768682d1e0999145bf51e7a",
+  "source_files": 45,
+  "java": "openjdk version \"25.0.4.1\" 2026-08-18 LTS",
+  "os": "Darwin 27.2.0 (macOS-27.2-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-11-02T08:17:53",
+  "end": "2026-11-02T08:21:07",
+  "exit_code": 0
+}
