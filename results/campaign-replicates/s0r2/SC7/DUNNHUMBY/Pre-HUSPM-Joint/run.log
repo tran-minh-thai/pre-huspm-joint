@@ -1,0 +1,15 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 9 | Scenarios: [SC7]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=2 | seed.index=0
+
+--- [SC7] Ablation: IUB pruning / block index / adaptive rescan ---
+>> WARM-UP (not measured) Pre-HUSPM-Joint/DUNNHUMBY/SC7
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC7#0  (heap free=659MB / total=1024MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC7#0] OK t=3009ms cand=175113 pat=17 heapDelta=519MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC7#0  (heap free=1292MB / total=2016MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC7#0] OK t=2719ms cand=175113 pat=17 heapDelta=503MB
+   warm-up mines (ms, not measured): [3009, 2719]
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC7#0  (heap free=702MB / total=960MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC7#0] OK t=2617ms cand=175113 pat=17 heapDelta=404MB
+=== ALL SCENARIOS DONE (12.2s) ===
