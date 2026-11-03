@@ -1,0 +1,50 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 9 | Scenarios: [SC6]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=4
+
+--- [SC6] Mixed stream, exactly 14:3:3 ---
+>> [SC6] DUNNHUMBY seed=271828 opSize=200 plan=20 operations (14 insert, 3 delete, 3 modify)
+>> RUNNING Pre-HUSPM-Joint-be3/DUNNHUMBY/SC6_INIT#0  (heap free=657MB / total=1024MB / max=49152MB)
+[Pre-HUSPM-Joint-be3/DUNNHUMBY/SC6_INIT#0] OK t=1830ms cand=218555 pat=17 heapDelta=300MB
+>> RUNNING Pre-HUSPM-Joint-be3/DUNNHUMBY/SC6_INS#1  (heap free=500MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint-be3/DUNNHUMBY/SC6_INS#1] OK t=934ms cand=117416 pat=17 heapDelta=148MB
+>> RUNNING Pre-HUSPM-Joint-be3/DUNNHUMBY/SC6_DEL#2  (heap free=493MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint-be3/DUNNHUMBY/SC6_DEL#2] OK t=924ms cand=234751 pat=17 heapDelta=138MB
+>> RUNNING Pre-HUSPM-Joint-be3/DUNNHUMBY/SC6_INS#3  (heap free=489MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint-be3/DUNNHUMBY/SC6_INS#3] OK t=1136ms cand=213747 pat=16 heapDelta=148MB
+>> RUNNING Pre-HUSPM-Joint-be3/DUNNHUMBY/SC6_MOD#4  (heap free=486MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint-be3/DUNNHUMBY/SC6_MOD#4] OK t=1164ms cand=214152 pat=16 heapDelta=143MB
+>> RUNNING Pre-HUSPM-Joint-be3/DUNNHUMBY/SC6_INS#5  (heap free=483MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint-be3/DUNNHUMBY/SC6_INS#5] OK t=940ms cand=115829 pat=16 heapDelta=133MB
+>> RUNNING Pre-HUSPM-Joint-be3/DUNNHUMBY/SC6_DEL#6  (heap free=481MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint-be3/DUNNHUMBY/SC6_DEL#6] OK t=929ms cand=231725 pat=17 heapDelta=133MB
+>> RUNNING Pre-HUSPM-Joint-be3/DUNNHUMBY/SC6_MOD#7  (heap free=480MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint-be3/DUNNHUMBY/SC6_MOD#7] OK t=924ms cand=115414 pat=16 heapDelta=133MB
+>> RUNNING Pre-HUSPM-Joint-be3/DUNNHUMBY/SC6_INS#8  (heap free=477MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint-be3/DUNNHUMBY/SC6_INS#8] OK t=928ms cand=114314 pat=16 heapDelta=133MB
+>> RUNNING Pre-HUSPM-Joint-be3/DUNNHUMBY/SC6_INS#9  (heap free=474MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint-be3/DUNNHUMBY/SC6_INS#9] OK t=933ms cand=113203 pat=16 heapDelta=138MB
+>> RUNNING Pre-HUSPM-Joint-be3/DUNNHUMBY/SC6_DEL#10  (heap free=472MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint-be3/DUNNHUMBY/SC6_DEL#10] OK t=927ms cand=227493 pat=16 heapDelta=128MB
+>> RUNNING Pre-HUSPM-Joint-be3/DUNNHUMBY/SC6_INS#11  (heap free=472MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint-be3/DUNNHUMBY/SC6_INS#11] OK t=938ms cand=113153 pat=16 heapDelta=133MB
+>> RUNNING Pre-HUSPM-Joint-be3/DUNNHUMBY/SC6_INS#12  (heap free=472MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint-be3/DUNNHUMBY/SC6_INS#12] OK t=943ms cand=111829 pat=16 heapDelta=138MB
+>> RUNNING Pre-HUSPM-Joint-be3/DUNNHUMBY/SC6_INS#13  (heap free=470MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint-be3/DUNNHUMBY/SC6_INS#13] OK t=940ms cand=111465 pat=16 heapDelta=138MB
+>> RUNNING Pre-HUSPM-Joint-be3/DUNNHUMBY/SC6_INS#14  (heap free=468MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint-be3/DUNNHUMBY/SC6_INS#14] OK t=957ms cand=111706 pat=16 heapDelta=138MB
+>> RUNNING Pre-HUSPM-Joint-be3/DUNNHUMBY/SC6_INS#15  (heap free=466MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint-be3/DUNNHUMBY/SC6_INS#15] OK t=967ms cand=110700 pat=16 heapDelta=138MB
+>> RUNNING Pre-HUSPM-Joint-be3/DUNNHUMBY/SC6_INS#16  (heap free=466MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint-be3/DUNNHUMBY/SC6_INS#16] OK t=965ms cand=110108 pat=16 heapDelta=138MB
+>> RUNNING Pre-HUSPM-Joint-be3/DUNNHUMBY/SC6_INS#17  (heap free=466MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint-be3/DUNNHUMBY/SC6_INS#17] OK t=981ms cand=110927 pat=16 heapDelta=143MB
+>> RUNNING Pre-HUSPM-Joint-be3/DUNNHUMBY/SC6_MOD#18  (heap free=465MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint-be3/DUNNHUMBY/SC6_MOD#18] OK t=987ms cand=109647 pat=17 heapDelta=143MB
+>> RUNNING Pre-HUSPM-Joint-be3/DUNNHUMBY/SC6_INS#19  (heap free=462MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint-be3/DUNNHUMBY/SC6_INS#19] OK t=982ms cand=108602 pat=16 heapDelta=143MB
+>> RUNNING Pre-HUSPM-Joint-be3/DUNNHUMBY/SC6_INS#20  (heap free=463MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint-be3/DUNNHUMBY/SC6_INS#20] OK t=981ms cand=107859 pat=16 heapDelta=143MB
+=== ALL SCENARIOS DONE (37.6s) ===
