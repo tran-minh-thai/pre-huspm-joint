@@ -1,0 +1,27 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 9 | Scenarios: [SC1]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=2 | seed.index=0
+
+--- [SC1] Static baseline on D_init ---
+>> WARM-UP (not measured) HUSP-SP/DUNNHUMBY/SC1
+>> RUNNING HUSP-SP/DUNNHUMBY/SC1_su=0.001158#0  (heap free=557MB / total=768MB / max=49152MB)
+[HUSP-SP/DUNNHUMBY/SC1_su=0.001158#0] OK t=7596ms cand=24554583 pat=33 heapDelta=320MB
+>> RUNNING HUSP-SP/DUNNHUMBY/SC1_su=0.001158#0  (heap free=401MB / total=768MB / max=49152MB)
+[HUSP-SP/DUNNHUMBY/SC1_su=0.001158#0] OK t=9352ms cand=24554583 pat=33 heapDelta=351MB
+>> RUNNING HUSP-SP/DUNNHUMBY/SC1_su=0.001158#0  (heap free=1383MB / total=1696MB / max=49152MB)
+[HUSP-SP/DUNNHUMBY/SC1_su=0.001158#0] OK t=5493ms cand=24554583 pat=33 heapDelta=392MB
+>> RUNNING HUSP-SP/DUNNHUMBY/SC1_su=0.001158#0  (heap free=362MB / total=960MB / max=49152MB)
+[HUSP-SP/DUNNHUMBY/SC1_su=0.001158#0] OK t=8545ms cand=24554583 pat=33 heapDelta=352MB
+>> RUNNING HUSP-SP/DUNNHUMBY/SC1_su=0.001158#0  (heap free=460MB / total=768MB / max=49152MB)
+[HUSP-SP/DUNNHUMBY/SC1_su=0.001158#0] OK t=9215ms cand=24554583 pat=33 heapDelta=351MB
+   warm-up mines (ms, not measured): [7596, 9352, 5493, 8545, 9215]
+>> RUNNING HUSP-SP/DUNNHUMBY/SC1_su=0.001158#0  (heap free=562MB / total=768MB / max=49152MB)
+[HUSP-SP/DUNNHUMBY/SC1_su=0.001158#0] OK t=8611ms cand=24554583 pat=33 heapDelta=352MB
+>> RUNNING HUSP-SP/DUNNHUMBY/SC1_su=0.001464#0  (heap free=562MB / total=768MB / max=49152MB)
+[HUSP-SP/DUNNHUMBY/SC1_su=0.001464#0] OK t=6590ms cand=18640324 pat=17 heapDelta=327MB
+>> RUNNING HUSP-SP/DUNNHUMBY/SC1_su=0.002083#0  (heap free=562MB / total=768MB / max=49152MB)
+[HUSP-SP/DUNNHUMBY/SC1_su=0.002083#0] OK t=4284ms cand=12096636 pat=9 heapDelta=270MB
+>> RUNNING HUSP-SP/DUNNHUMBY/SC1_su=0.002343#0  (heap free=562MB / total=768MB / max=49152MB)
+[HUSP-SP/DUNNHUMBY/SC1_su=0.002343#0] OK t=3841ms cand=10274677 pat=4 heapDelta=252MB
+=== ALL SCENARIOS DONE (82.1s) ===
