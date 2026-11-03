@@ -1,0 +1,211 @@
+### LIVE HEAP: forced collection, interval >= 20 ms | arm = Pre-HUSPM-Joint
+### runtime_ms is written as -3 (perturbed by forced GC); the wall time is in wall_ms_perturbed. NOT a performance figure.
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 9 | Scenarios: [SC2]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC2] Incremental sequence (100 batches, EVEN; D_init per Yan et al. Table 16) ---
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INIT#0  (heap free=557MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INIT#0] OK t=2108ms cand=218555 pat=17 heapDelta=73MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#1  (heap free=499MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#1] OK t=1178ms cand=117416 pat=17 heapDelta=97MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#2  (heap free=491MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#2] OK t=1175ms cand=116874 pat=16 heapDelta=90MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#3  (heap free=487MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#3] OK t=1211ms cand=116632 pat=16 heapDelta=78MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#4  (heap free=483MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#4] OK t=1210ms cand=115399 pat=16 heapDelta=74MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#5  (heap free=483MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#5] OK t=1174ms cand=113816 pat=16 heapDelta=92MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#6  (heap free=480MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#6] OK t=1194ms cand=112933 pat=16 heapDelta=93MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#7  (heap free=477MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#7] OK t=1217ms cand=112040 pat=16 heapDelta=92MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#8  (heap free=476MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#8] OK t=1195ms cand=111200 pat=16 heapDelta=78MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#9  (heap free=474MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#9] OK t=1186ms cand=109963 pat=16 heapDelta=95MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#10  (heap free=472MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#10] OK t=1256ms cand=109737 pat=16 heapDelta=77MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#11  (heap free=470MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#11] OK t=1232ms cand=109863 pat=16 heapDelta=78MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#12  (heap free=472MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#12] OK t=1218ms cand=108918 pat=16 heapDelta=83MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#13  (heap free=470MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#13] OK t=1259ms cand=108418 pat=16 heapDelta=97MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#14  (heap free=470MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#14] OK t=1271ms cand=109192 pat=16 heapDelta=101MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#15  (heap free=468MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#15] OK t=1244ms cand=108448 pat=16 heapDelta=99MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#16  (heap free=467MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#16] OK t=1244ms cand=107533 pat=16 heapDelta=102MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#17  (heap free=465MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#17] OK t=1259ms cand=107044 pat=16 heapDelta=101MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#18  (heap free=466MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#18] OK t=1293ms cand=107935 pat=16 heapDelta=91MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#19  (heap free=464MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#19] OK t=1279ms cand=108750 pat=16 heapDelta=107MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#20  (heap free=462MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#20] OK t=1363ms cand=107862 pat=16 heapDelta=92MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#21  (heap free=461MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#21] OK t=1323ms cand=107893 pat=17 heapDelta=111MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#22  (heap free=459MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#22] OK t=1371ms cand=109924 pat=17 heapDelta=94MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#23  (heap free=457MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#23] OK t=1347ms cand=109099 pat=17 heapDelta=107MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#24  (heap free=457MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#24] OK t=1355ms cand=108147 pat=17 heapDelta=117MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#25  (heap free=455MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#25] OK t=1428ms cand=108521 pat=17 heapDelta=118MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#26  (heap free=455MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#26] OK t=1424ms cand=108259 pat=17 heapDelta=118MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#27  (heap free=455MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#27] OK t=1407ms cand=107542 pat=17 heapDelta=105MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#28  (heap free=455MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#28] OK t=1449ms cand=106909 pat=17 heapDelta=109MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#29  (heap free=453MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#29] OK t=1433ms cand=106077 pat=17 heapDelta=110MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#30  (heap free=451MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#30] OK t=1413ms cand=107698 pat=17 heapDelta=123MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#31  (heap free=451MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#31] OK t=1489ms cand=113234 pat=17 heapDelta=107MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#32  (heap free=449MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#32] OK t=1517ms cand=112614 pat=16 heapDelta=127MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#33  (heap free=481MB / total=800MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#33] OK t=1487ms cand=114184 pat=17 heapDelta=134MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#34  (heap free=478MB / total=800MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#34] OK t=1531ms cand=115467 pat=17 heapDelta=127MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#35  (heap free=477MB / total=800MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#35] OK t=1532ms cand=114747 pat=16 heapDelta=135MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#36  (heap free=476MB / total=800MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#36] OK t=1515ms cand=114077 pat=17 heapDelta=138MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#37  (heap free=537MB / total=864MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#37] OK t=1573ms cand=113445 pat=16 heapDelta=137MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#38  (heap free=538MB / total=864MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#38] OK t=1531ms cand=112500 pat=16 heapDelta=142MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#39  (heap free=535MB / total=864MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#39] OK t=1572ms cand=111528 pat=16 heapDelta=141MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#40  (heap free=535MB / total=864MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#40] OK t=1544ms cand=110861 pat=16 heapDelta=135MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#41  (heap free=534MB / total=864MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#41] OK t=1543ms cand=110881 pat=16 heapDelta=144MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#42  (heap free=532MB / total=864MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#42] OK t=1578ms cand=111140 pat=16 heapDelta=141MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#43  (heap free=530MB / total=864MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#43] OK t=1638ms cand=111598 pat=17 heapDelta=144MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#44  (heap free=531MB / total=864MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#44] OK t=1585ms cand=110869 pat=17 heapDelta=147MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#45  (heap free=529MB / total=864MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#45] OK t=1641ms cand=109953 pat=16 heapDelta=150MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#46  (heap free=526MB / total=864MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#46] OK t=1631ms cand=109324 pat=16 heapDelta=130MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#47  (heap free=526MB / total=864MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#47] OK t=1672ms cand=108815 pat=16 heapDelta=151MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#48  (heap free=527MB / total=864MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#48] OK t=1659ms cand=108019 pat=17 heapDelta=151MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#49  (heap free=527MB / total=864MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#49] OK t=1660ms cand=108167 pat=17 heapDelta=153MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#50  (heap free=527MB / total=864MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#50] OK t=1652ms cand=107504 pat=17 heapDelta=151MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#51  (heap free=525MB / total=864MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#51] OK t=1693ms cand=107224 pat=16 heapDelta=157MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#52  (heap free=522MB / total=864MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#52] OK t=1646ms cand=106863 pat=16 heapDelta=158MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#53  (heap free=521MB / total=864MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#53] OK t=1714ms cand=107432 pat=16 heapDelta=159MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#54  (heap free=583MB / total=928MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#54] OK t=1712ms cand=106576 pat=16 heapDelta=161MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#55  (heap free=585MB / total=928MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#55] OK t=1726ms cand=106037 pat=16 heapDelta=162MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#56  (heap free=583MB / total=928MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#56] OK t=1689ms cand=105243 pat=16 heapDelta=160MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#57  (heap free=580MB / total=928MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#57] OK t=1688ms cand=104823 pat=16 heapDelta=161MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#58  (heap free=581MB / total=928MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#58] OK t=1675ms cand=104012 pat=16 heapDelta=165MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#59  (heap free=579MB / total=928MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#59] OK t=1705ms cand=103827 pat=16 heapDelta=166MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#60  (heap free=576MB / total=928MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#60] OK t=1725ms cand=103357 pat=16 heapDelta=161MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#61  (heap free=579MB / total=928MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#61] OK t=1727ms cand=103476 pat=16 heapDelta=167MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#62  (heap free=578MB / total=928MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#62] OK t=1834ms cand=103225 pat=16 heapDelta=171MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#63  (heap free=577MB / total=928MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#63] OK t=1795ms cand=104290 pat=16 heapDelta=170MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#64  (heap free=575MB / total=928MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#64] OK t=1778ms cand=103622 pat=16 heapDelta=169MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#65  (heap free=575MB / total=928MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#65] OK t=1764ms cand=102961 pat=16 heapDelta=167MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#66  (heap free=575MB / total=928MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#66] OK t=1792ms cand=102459 pat=16 heapDelta=173MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#67  (heap free=573MB / total=928MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#67] OK t=1920ms cand=102998 pat=16 heapDelta=10MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#68  (heap free=571MB / total=928MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#68] OK t=1958ms cand=103397 pat=16 heapDelta=10MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#69  (heap free=571MB / total=928MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#69] OK t=1985ms cand=102949 pat=16 heapDelta=18MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#70  (heap free=568MB / total=928MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#70] OK t=1833ms cand=102445 pat=16 heapDelta=177MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#71  (heap free=568MB / total=928MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#71] OK t=1815ms cand=102312 pat=16 heapDelta=172MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#72  (heap free=572MB / total=928MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#72] OK t=1856ms cand=101862 pat=16 heapDelta=181MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#73  (heap free=570MB / total=928MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#73] OK t=2041ms cand=101518 pat=16 heapDelta=27MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#74  (heap free=568MB / total=928MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#74] OK t=2099ms cand=100922 pat=16 heapDelta=26MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#75  (heap free=567MB / total=928MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#75] OK t=2128ms cand=100726 pat=16 heapDelta=38MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#76  (heap free=595MB / total=960MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#76] OK t=1990ms cand=100235 pat=16 heapDelta=183MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#77  (heap free=595MB / total=960MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#77] OK t=2142ms cand=100083 pat=16 heapDelta=38MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#78  (heap free=594MB / total=960MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#78] OK t=2155ms cand=100417 pat=16 heapDelta=31MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#79  (heap free=593MB / total=960MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#79] OK t=1989ms cand=99904 pat=16 heapDelta=185MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#80  (heap free=595MB / total=960MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#80] OK t=2126ms cand=99230 pat=16 heapDelta=22MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#81  (heap free=595MB / total=960MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#81] OK t=2159ms cand=99207 pat=16 heapDelta=41MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#82  (heap free=593MB / total=960MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#82] OK t=2163ms cand=100077 pat=16 heapDelta=15MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#83  (heap free=593MB / total=960MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#83] OK t=2079ms cand=99776 pat=16 heapDelta=193MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#84  (heap free=593MB / total=960MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#84] OK t=2239ms cand=100071 pat=16 heapDelta=53MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#85  (heap free=592MB / total=960MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#85] OK t=2095ms cand=102133 pat=16 heapDelta=201MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#86  (heap free=590MB / total=960MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#86] OK t=2279ms cand=103571 pat=16 heapDelta=58MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#87  (heap free=586MB / total=960MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#87] OK t=2318ms cand=104051 pat=16 heapDelta=20MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#88  (heap free=591MB / total=960MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#88] OK t=2311ms cand=105778 pat=16 heapDelta=29MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#89  (heap free=654MB / total=1024MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#89] OK t=2302ms cand=105890 pat=16 heapDelta=53MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#90  (heap free=651MB / total=1024MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#90] OK t=2171ms cand=105476 pat=16 heapDelta=208MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#91  (heap free=653MB / total=1024MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#91] OK t=2355ms cand=105337 pat=17 heapDelta=56MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#92  (heap free=650MB / total=1024MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#92] OK t=2308ms cand=105194 pat=17 heapDelta=31MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#93  (heap free=649MB / total=1024MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#93] OK t=2349ms cand=106728 pat=17 heapDelta=45MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#94  (heap free=651MB / total=1024MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#94] OK t=2364ms cand=106541 pat=17 heapDelta=48MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#95  (heap free=650MB / total=1024MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#95] OK t=2339ms cand=106438 pat=17 heapDelta=55MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#96  (heap free=649MB / total=1024MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#96] OK t=2361ms cand=106058 pat=17 heapDelta=48MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#97  (heap free=652MB / total=1024MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#97] OK t=2231ms cand=107586 pat=17 heapDelta=210MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#98  (heap free=650MB / total=1024MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#98] OK t=2404ms cand=107348 pat=17 heapDelta=64MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#99  (heap free=649MB / total=1024MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#99] OK t=2456ms cand=107581 pat=17 heapDelta=71MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#100  (heap free=647MB / total=1024MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC2_INC#100] OK t=2455ms cand=107370 pat=17 heapDelta=43MB
+=== ALL SCENARIOS DONE (267.9s) ===
