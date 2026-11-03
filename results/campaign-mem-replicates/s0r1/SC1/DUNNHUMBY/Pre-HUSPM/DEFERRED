@@ -1,16 +1,16 @@
-Pre-HUSPM on DUNNHUMBY (campaign-mem-replicates/s0r1, SC1) - deferred during the combined campaign of 2026-11-02. Set aside 2026-11-02.
+Pre-HUSPM on DUNNHUMBY (campaign-mem-replicates/s0r1, SC1) - not replicated on DUNNHUMBY. Set aside 2026-11-02, decided 2026-11-03.
 
 WHY
-  The combined campaign measures two things: the 673 cells of the arms that run the break-even rule,
-  now with the initial mine's cycle counted, and 407 new cells on DUNNHUMBY. On DUNNHUMBY the
-  baselines are far slower than on TAFENG, whose times the plan was estimated from: in SC1,
-  IncUSP-Miner+ took 1859 s and ran out of the 48 GB heap at the lowest threshold (21 s on TAFENG),
-  and Pre-HUSPM was still running after 40 minutes (19 s on TAFENG). Every DUNNHUMBY cell not started
-  is set aside so the 673 re-measured cells run first; the DUNNHUMBY cells are planned again from the
-  SC1 times measured so far.
+  On DUNNHUMBY the slow baselines cost two orders of magnitude more than on TAFENG. In SC1, Pre-HUSPM
+  took 7131 s and IncUSP-Miner+ 1859 s (19 s and 21 s on TAFENG), and both ran out of the 48 GB heap
+  at the lowest threshold. A replicate of this cell can take up to the 8-hour cap of an arm. The
+  baseline is therefore measured once on DUNNHUMBY, in the tree without replicates; the method and the
+  arms close to it are replicated.
 
 WHAT TO REPORT
-  Nothing yet: not measured.
+  The single run of this arm on DUNNHUMBY (same scenario, the tree without "replicates"), with no
+  run-to-run spread. If that run lies within three times the measured run-to-run variation of the
+  arm closest to it, this cell must be replicated before any ranking is stated.
 
 TO RETRY
   Delete this file and run the campaign block again; campaign.ps1 skips the cells with a DONE file.
