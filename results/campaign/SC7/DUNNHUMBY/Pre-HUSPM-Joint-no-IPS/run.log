@@ -1,0 +1,27 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 9 | Scenarios: [SC7]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC7] Ablation: IUB pruning / block index / adaptive rescan ---
+>> WARM-UP (not measured) Pre-HUSPM-Joint-no-IPS/DUNNHUMBY/SC7
+>> RUNNING Pre-HUSPM-Joint-no-IPS/DUNNHUMBY/SC7#0  (heap free=559MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint-no-IPS/DUNNHUMBY/SC7#0] OK t=7140ms cand=298452019 pat=17 heapDelta=683MB
+>> RUNNING Pre-HUSPM-Joint-no-IPS/DUNNHUMBY/SC7#0  (heap free=936MB / total=1824MB / max=49152MB)
+[Pre-HUSPM-Joint-no-IPS/DUNNHUMBY/SC7#0] OK t=5995ms cand=298452019 pat=17 heapDelta=587MB
+>> RUNNING Pre-HUSPM-Joint-no-IPS/DUNNHUMBY/SC7#0  (heap free=381MB / total=1184MB / max=49152MB)
+[Pre-HUSPM-Joint-no-IPS/DUNNHUMBY/SC7#0] OK t=5369ms cand=298452019 pat=17 heapDelta=680MB
+>> RUNNING Pre-HUSPM-Joint-no-IPS/DUNNHUMBY/SC7#0  (heap free=1687MB / total=2624MB / max=49152MB)
+[Pre-HUSPM-Joint-no-IPS/DUNNHUMBY/SC7#0] OK t=6407ms cand=298452019 pat=17 heapDelta=581MB
+>> RUNNING Pre-HUSPM-Joint-no-IPS/DUNNHUMBY/SC7#0  (heap free=546MB / total=1280MB / max=49152MB)
+[Pre-HUSPM-Joint-no-IPS/DUNNHUMBY/SC7#0] OK t=5605ms cand=298452019 pat=17 heapDelta=676MB
+>> RUNNING Pre-HUSPM-Joint-no-IPS/DUNNHUMBY/SC7#0  (heap free=2235MB / total=3168MB / max=49152MB)
+[Pre-HUSPM-Joint-no-IPS/DUNNHUMBY/SC7#0] OK t=6917ms cand=298452019 pat=17 heapDelta=522MB
+>> RUNNING Pre-HUSPM-Joint-no-IPS/DUNNHUMBY/SC7#0  (heap free=628MB / total=1408MB / max=49152MB)
+[Pre-HUSPM-Joint-no-IPS/DUNNHUMBY/SC7#0] OK t=5769ms cand=298452019 pat=17 heapDelta=583MB
+>> RUNNING Pre-HUSPM-Joint-no-IPS/DUNNHUMBY/SC7#0  (heap free=2210MB / total=2976MB / max=49152MB)
+[Pre-HUSPM-Joint-no-IPS/DUNNHUMBY/SC7#0] OK t=5633ms cand=298452019 pat=17 heapDelta=553MB
+   warm-up mines (ms, not measured): [7140, 5995, 5369, 6407, 5605, 6917, 5769, 5633]
+>> RUNNING Pre-HUSPM-Joint-no-IPS/DUNNHUMBY/SC7#0  (heap free=704MB / total=960MB / max=49152MB)
+[Pre-HUSPM-Joint-no-IPS/DUNNHUMBY/SC7#0] OK t=5396ms cand=298452019 pat=17 heapDelta=583MB
+=== ALL SCENARIOS DONE (58.5s) ===
