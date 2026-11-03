@@ -1,0 +1,21 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 9 | Scenarios: [SC1]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=1 | seed.index=0
+
+--- [SC1] Static baseline on D_init ---
+>> WARM-UP (not measured) HUSP-ULL/DUNNHUMBY/SC1
+>> RUNNING HUSP-ULL/DUNNHUMBY/SC1_su=0.001158#0  (heap free=557MB / total=768MB / max=49152MB)
+[HUSP-ULL/DUNNHUMBY/SC1_su=0.001158#0] OK t=3096ms cand=36615357 pat=33 heapDelta=992MB
+>> RUNNING HUSP-ULL/DUNNHUMBY/SC1_su=0.001158#0  (heap free=1086MB / total=1728MB / max=49152MB)
+[HUSP-ULL/DUNNHUMBY/SC1_su=0.001158#0] OK t=2918ms cand=36615357 pat=33 heapDelta=475MB
+   warm-up mines (ms, not measured): [3096, 2918]
+>> RUNNING HUSP-ULL/DUNNHUMBY/SC1_su=0.001158#0  (heap free=559MB / total=768MB / max=49152MB)
+[HUSP-ULL/DUNNHUMBY/SC1_su=0.001158#0] OK t=3282ms cand=36615357 pat=33 heapDelta=1094MB
+>> RUNNING HUSP-ULL/DUNNHUMBY/SC1_su=0.001464#0  (heap free=561MB / total=768MB / max=49152MB)
+[HUSP-ULL/DUNNHUMBY/SC1_su=0.001464#0] OK t=2004ms cand=31943308 pat=17 heapDelta=442MB
+>> RUNNING HUSP-ULL/DUNNHUMBY/SC1_su=0.002083#0  (heap free=561MB / total=768MB / max=49152MB)
+[HUSP-ULL/DUNNHUMBY/SC1_su=0.002083#0] OK t=1282ms cand=27179621 pat=9 heapDelta=424MB
+>> RUNNING HUSP-ULL/DUNNHUMBY/SC1_su=0.002343#0  (heap free=562MB / total=768MB / max=49152MB)
+[HUSP-ULL/DUNNHUMBY/SC1_su=0.002343#0] OK t=1173ms cand=25863791 pat=4 heapDelta=798MB
+=== ALL SCENARIOS DONE (31.9s) ===
