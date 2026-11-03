@@ -1,0 +1,50 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 9 | Scenarios: [SC6]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=2
+
+--- [SC6] Mixed stream, exactly 14:3:3 ---
+>> [SC6] DUNNHUMBY seed=2024 opSize=200 plan=20 operations (14 insert, 3 delete, 3 modify)
+>> RUNNING Remine-HUSP-SP/DUNNHUMBY/SC6_INIT#0  (heap free=657MB / total=1024MB / max=49152MB)
+[Remine-HUSP-SP/DUNNHUMBY/SC6_INIT#0] OK t=5404ms cand=18640324 pat=17 heapDelta=320MB
+>> RUNNING Remine-HUSP-SP/DUNNHUMBY/SC6_INS#1  (heap free=559MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/DUNNHUMBY/SC6_INS#1] OK t=4690ms cand=18688716 pat=17 heapDelta=348MB
+>> RUNNING Remine-HUSP-SP/DUNNHUMBY/SC6_DEL#2  (heap free=560MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/DUNNHUMBY/SC6_DEL#2] OK t=4616ms cand=18641112 pat=17 heapDelta=341MB
+>> RUNNING Remine-HUSP-SP/DUNNHUMBY/SC6_MOD#3  (heap free=561MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/DUNNHUMBY/SC6_MOD#3] OK t=4822ms cand=18664031 pat=16 heapDelta=334MB
+>> RUNNING Remine-HUSP-SP/DUNNHUMBY/SC6_INS#4  (heap free=562MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/DUNNHUMBY/SC6_INS#4] OK t=4596ms cand=18855356 pat=17 heapDelta=334MB
+>> RUNNING Remine-HUSP-SP/DUNNHUMBY/SC6_INS#5  (heap free=562MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/DUNNHUMBY/SC6_INS#5] OK t=4770ms cand=18903630 pat=16 heapDelta=334MB
+>> RUNNING Remine-HUSP-SP/DUNNHUMBY/SC6_MOD#6  (heap free=563MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/DUNNHUMBY/SC6_MOD#6] OK t=4676ms cand=18690621 pat=16 heapDelta=341MB
+>> RUNNING Remine-HUSP-SP/DUNNHUMBY/SC6_INS#7  (heap free=563MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/DUNNHUMBY/SC6_INS#7] OK t=4696ms cand=18873454 pat=16 heapDelta=341MB
+>> RUNNING Remine-HUSP-SP/DUNNHUMBY/SC6_INS#8  (heap free=563MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/DUNNHUMBY/SC6_INS#8] OK t=4726ms cand=18914440 pat=16 heapDelta=341MB
+>> RUNNING Remine-HUSP-SP/DUNNHUMBY/SC6_INS#9  (heap free=562MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/DUNNHUMBY/SC6_INS#9] OK t=4918ms cand=18958756 pat=16 heapDelta=341MB
+>> RUNNING Remine-HUSP-SP/DUNNHUMBY/SC6_INS#10  (heap free=563MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/DUNNHUMBY/SC6_INS#10] OK t=4845ms cand=19033226 pat=16 heapDelta=341MB
+>> RUNNING Remine-HUSP-SP/DUNNHUMBY/SC6_DEL#11  (heap free=563MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/DUNNHUMBY/SC6_DEL#11] OK t=4915ms cand=18899243 pat=16 heapDelta=341MB
+>> RUNNING Remine-HUSP-SP/DUNNHUMBY/SC6_INS#12  (heap free=563MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/DUNNHUMBY/SC6_INS#12] OK t=4825ms cand=19037897 pat=16 heapDelta=341MB
+>> RUNNING Remine-HUSP-SP/DUNNHUMBY/SC6_DEL#13  (heap free=563MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/DUNNHUMBY/SC6_DEL#13] OK t=4920ms cand=18929735 pat=16 heapDelta=341MB
+>> RUNNING Remine-HUSP-SP/DUNNHUMBY/SC6_INS#14  (heap free=563MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/DUNNHUMBY/SC6_INS#14] OK t=4857ms cand=19118154 pat=16 heapDelta=348MB
+>> RUNNING Remine-HUSP-SP/DUNNHUMBY/SC6_INS#15  (heap free=563MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/DUNNHUMBY/SC6_INS#15] OK t=4983ms cand=19097768 pat=16 heapDelta=348MB
+>> RUNNING Remine-HUSP-SP/DUNNHUMBY/SC6_INS#16  (heap free=563MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/DUNNHUMBY/SC6_INS#16] OK t=5114ms cand=19285833 pat=16 heapDelta=348MB
+>> RUNNING Remine-HUSP-SP/DUNNHUMBY/SC6_MOD#17  (heap free=563MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/DUNNHUMBY/SC6_MOD#17] OK t=4940ms cand=19361071 pat=16 heapDelta=348MB
+>> RUNNING Remine-HUSP-SP/DUNNHUMBY/SC6_INS#18  (heap free=563MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/DUNNHUMBY/SC6_INS#18] OK t=5122ms cand=19499765 pat=16 heapDelta=352MB
+>> RUNNING Remine-HUSP-SP/DUNNHUMBY/SC6_INS#19  (heap free=563MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/DUNNHUMBY/SC6_INS#19] OK t=5052ms cand=19498049 pat=16 heapDelta=352MB
+>> RUNNING Remine-HUSP-SP/DUNNHUMBY/SC6_INS#20  (heap free=563MB / total=768MB / max=49152MB)
+[Remine-HUSP-SP/DUNNHUMBY/SC6_INS#20] OK t=5069ms cand=19552345 pat=16 heapDelta=352MB
+=== ALL SCENARIOS DONE (117.3s) ===
