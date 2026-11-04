@@ -1,0 +1,109 @@
+== paired method/fixed DUNNHUMBY
+SC8   seed    42: both mined  350, same nodes  219; mine-time ratio median 1.0049 [q10 0.9854, q90 1.0199]; method 2026-11-04T02:07:27.781090300 .. 2026-11-04T02:21:19.873151800; fixed 2026-11-04T02:50:10.185592300 .. 2026-11-04T03:03:29.362133300
+SC8   seed  1337: both mined  350, same nodes  201; mine-time ratio median 1.0112 [q10 0.9951, q90 1.0255]; method 2026-11-04T02:21:22.706506600 .. 2026-11-04T02:35:46.584983400; fixed 2026-11-04T03:03:32.193307100 .. 2026-11-04T03:16:58.885007300
+SC8   seed  2024: both mined  350, same nodes  210; mine-time ratio median 0.9870 [q10 0.9771, q90 0.9971]; method 2026-11-04T02:35:49.539660400 .. 2026-11-04T02:50:01.507602600; fixed 2026-11-04T03:17:01.731432500 .. 2026-11-04T03:30:40.727592700
+SC8P  seed    42: both mined  241, same nodes  129; mine-time ratio median 1.0579 [q10 1.0422, q90 1.0735]; method 2026-11-04T05:44:26.236698900 .. 2026-11-04T05:55:34.011843400; fixed 2026-11-04T06:17:39.921473200 .. 2026-11-04T06:28:04.284396200
+SC8P  seed  1337: both mined  241, same nodes  114; mine-time ratio median 1.0876 [q10 1.0777, q90 1.1045]; method 2026-11-04T05:55:35.412250500 .. 2026-11-04T06:06:29.994576900; fixed 2026-11-04T06:28:05.705971 .. 2026-11-04T06:38:30.475990400
+SC8P  seed  2024: both mined  241, same nodes  131; mine-time ratio median 1.1058 [q10 1.0836, q90 1.1265]; method 2026-11-04T06:06:31.425900700 .. 2026-11-04T06:17:32.476120400; fixed 2026-11-04T06:38:31.915228200 .. 2026-11-04T06:48:51.121848800
+SC9   seed    42: both mined  221, same nodes  220; mine-time ratio median 1.0540 [q10 1.0430, q90 1.0653]; method 2026-11-04T12:28:41.247692 .. 2026-11-04T12:38:43.035120400; fixed 2026-11-04T12:58:56.657524800 .. 2026-11-04T13:08:45.427547400
+SC9   seed  1337: both mined  221, same nodes  220; mine-time ratio median 1.1030 [q10 1.0920, q90 1.1131]; method 2026-11-04T12:38:44.442715100 .. 2026-11-04T12:48:47.702286600; fixed 2026-11-04T13:08:46.828450800 .. 2026-11-04T13:18:26.738201900
+SC9   seed  2024: both mined  221, same nodes  220; mine-time ratio median 1.1041 [q10 1.0929, q90 1.1112]; method 2026-11-04T12:48:49.111401800 .. 2026-11-04T12:58:49.141280; fixed 2026-11-04T13:18:28.130341500 .. 2026-11-04T13:28:04.339491200
+SC10  seed    42: both mined  362, same nodes  205; mine-time ratio median 0.9738 [q10 0.9634, q90 0.9884]; method 2026-11-04T08:51:39.505045500 .. 2026-11-04T09:05:56.806958; fixed 2026-11-04T09:35:20.509097800 .. 2026-11-04T09:49:16.732039400
+SC10  seed  1337: both mined  360, same nodes  188; mine-time ratio median 1.0245 [q10 1.0130, q90 1.0355]; method 2026-11-04T09:05:59.737798200 .. 2026-11-04T09:20:33.603339600; fixed 2026-11-04T09:49:19.675247100 .. 2026-11-04T10:03:04.790590900
+SC10  seed  2024: both mined  360, same nodes  197; mine-time ratio median 1.0212 [q10 1.0054, q90 1.0365]; method 2026-11-04T09:20:36.580125600 .. 2026-11-04T09:35:11.768340100; fixed 2026-11-04T10:03:07.671854500 .. 2026-11-04T10:16:59.746320800
+SC10H seed    42: both mined  339, same nodes  212; mine-time ratio median 1.0791 [q10 1.0666, q90 1.0967]; method 2026-11-04T17:07:53.799612 .. 2026-11-04T17:22:04.951037600; fixed 2026-11-04T17:51:36.542386200 .. 2026-11-04T18:05:00.886018600
+SC10H seed  1337: both mined  336, same nodes  206; mine-time ratio median 1.1035 [q10 1.0873, q90 1.1174]; method 2026-11-04T17:22:07.863300800 .. 2026-11-04T17:36:47.620333600; fixed 2026-11-04T18:05:03.845465700 .. 2026-11-04T18:18:12.714523300
+SC10H seed  2024: both mined  338, same nodes  201; mine-time ratio median 1.1110 [q10 1.0896, q90 1.1230]; method 2026-11-04T17:36:50.727041500 .. 2026-11-04T17:51:13.197752600; fixed 2026-11-04T18:18:15.461851200 .. 2026-11-04T18:31:26.946996800
+== paired method/fixed TAFENG
+SC8   seed    42: both mined   35, same nodes   34; mine-time ratio median 1.0031 [q10 0.9845, q90 1.0165]; method 2026-11-03T07:19:21.101819500 .. 2026-11-03T07:25:10.204963; fixed 2026-11-01T15:49:00.252328600 .. 2026-11-01T15:54:52.751625800
+SC8   seed  1337: both mined   35, same nodes   34; mine-time ratio median 1.0079 [q10 0.9884, q90 1.0666]; method 2026-11-03T07:25:11.567650300 .. 2026-11-03T07:30:54.781711300; fixed 2026-11-01T15:54:54.150299300 .. 2026-11-01T16:00:46.031556
+SC8   seed  2024: both mined   36, same nodes   35; mine-time ratio median 0.9940 [q10 0.9779, q90 1.0123]; method 2026-11-03T07:30:56.179320600 .. 2026-11-03T07:36:41.512945100; fixed 2026-11-01T16:00:47.442797400 .. 2026-11-01T16:06:39.725499100
+SC8P  seed    42: both mined   26, same nodes   25; mine-time ratio median 1.0087 [q10 0.9849, q90 1.0602]; method 2026-11-03T08:15:13.484785400 .. 2026-11-03T08:20:57.101389800; fixed 2026-11-01T20:46:50.518480100 .. 2026-11-01T20:52:35.615444700
+SC8P  seed  1337: both mined   26, same nodes   25; mine-time ratio median 1.0099 [q10 0.9947, q90 1.0211]; method 2026-11-03T08:20:58.549622900 .. 2026-11-03T08:26:40.218592; fixed 2026-11-01T20:52:37.016461500 .. 2026-11-01T20:58:22.955120700
+SC8P  seed  2024: both mined   26, same nodes   25; mine-time ratio median 1.0165 [q10 0.9989, q90 1.0352]; method 2026-11-03T08:26:41.642138800 .. 2026-11-03T08:32:24.466370800; fixed 2026-11-01T20:58:24.380601 .. 2026-11-01T21:04:13.016217300
+SC9   seed    42: both mined   25, same nodes   24; mine-time ratio median 1.0103 [q10 0.9902, q90 1.0376]; method 2026-11-03T10:46:38.688434900 .. 2026-11-03T10:52:24.102215700; fixed 2026-11-01T10:28:58.219921500 .. 2026-11-01T10:34:43.197499200
+SC9   seed  1337: both mined   25, same nodes   24; mine-time ratio median 1.0120 [q10 0.9931, q90 1.0290]; method 2026-11-03T10:52:25.496565400 .. 2026-11-03T10:58:09.418941100; fixed 2026-11-01T10:34:44.629692800 .. 2026-11-01T10:40:28.275200900
+SC9   seed  2024: both mined   25, same nodes   24; mine-time ratio median 1.0119 [q10 0.9979, q90 1.0251]; method 2026-11-03T10:58:10.865140 .. 2026-11-03T11:03:56.819722300; fixed 2026-11-01T10:40:29.718606 .. 2026-11-01T10:46:14.559803700
+SC10  seed    42: both mined   37, same nodes   36; mine-time ratio median 1.0342 [q10 1.0082, q90 1.0580]; method 2026-11-03T09:12:29.618839 .. 2026-11-03T09:18:27.559871600; fixed 2026-11-02T01:52:10.014347200 .. 2026-11-02T01:58:02.228840800
+SC10  seed  1337: both mined   31, same nodes   30; mine-time ratio median 1.0255 [q10 1.0003, q90 1.0451]; method 2026-11-03T09:18:29.036048100 .. 2026-11-03T09:24:23.698221700; fixed 2026-11-02T01:58:03.736164800 .. 2026-11-02T02:03:52.472694100
+SC10  seed  2024: both mined   38, same nodes   37; mine-time ratio median 1.0280 [q10 1.0084, q90 1.0454]; method 2026-11-03T09:24:25.073667100 .. 2026-11-03T09:30:23.262998400; fixed 2026-11-02T02:03:53.877924100 .. 2026-11-02T02:09:45.410447600
+SC10H seed    42: both mined   46, same nodes   45; mine-time ratio median 1.0228 [q10 0.9981, q90 1.0451]; method 2026-11-03T14:14:55.563924900 .. 2026-11-03T14:20:46.250940900; fixed 2026-11-02T09:58:17.035236300 .. 2026-11-02T10:04:28.315830600
+SC10H seed  1337: both mined   45, same nodes   44; mine-time ratio median 1.0163 [q10 0.9923, q90 1.0366]; method 2026-11-03T14:20:47.785571800 .. 2026-11-03T14:26:42.716598600; fixed 2026-11-02T10:04:29.900008900 .. 2026-11-02T10:10:35.952345700
+SC10H seed  2024: both mined   45, same nodes   44; mine-time ratio median 1.0089 [q10 0.9792, q90 1.0286]; method 2026-11-03T14:26:44.237078800 .. 2026-11-03T14:32:39.947525400; fixed 2026-11-02T10:10:37.494663700 .. 2026-11-02T10:16:48.630944700
+== paired method/fixed LEVIATHAN
+SC8   seed    42: both mined  109, same nodes  108; mine-time ratio median 0.9933 [q10 0.9800, q90 1.0066]; method 2026-11-03T06:57:28.718983600 .. 2026-11-03T07:01:52.325667600; fixed 2026-11-01T14:30:40.378522800 .. 2026-11-01T14:35:03.642799200
+SC8   seed  1337: both mined  109, same nodes  108; mine-time ratio median 0.9940 [q10 0.9817, q90 1.0065]; method 2026-11-03T07:01:53.193800200 .. 2026-11-03T07:06:16.365303300; fixed 2026-11-01T14:35:04.514223 .. 2026-11-01T14:39:27.142268800
+SC8   seed  2024: both mined  109, same nodes  108; mine-time ratio median 0.9925 [q10 0.9796, q90 1.0076]; method 2026-11-03T07:06:17.229473300 .. 2026-11-03T07:10:41.055716800; fixed 2026-11-01T14:39:28.015295900 .. 2026-11-01T14:43:51.249072100
+SC8P  seed    42: both mined   76, same nodes   75; mine-time ratio median 0.9958 [q10 0.9783, q90 1.0123]; method 2026-11-03T07:53:58.086002100 .. 2026-11-03T07:58:11.862940200; fixed 2026-11-01T19:29:40.044914200 .. 2026-11-01T19:33:53.171711500
+SC8P  seed  1337: both mined   76, same nodes   75; mine-time ratio median 0.9950 [q10 0.9814, q90 1.0147]; method 2026-11-03T07:58:12.724060800 .. 2026-11-03T08:02:26.888337900; fixed 2026-11-01T19:33:54.033216700 .. 2026-11-01T19:38:07.309621900
+SC8P  seed  2024: both mined   76, same nodes   75; mine-time ratio median 0.9940 [q10 0.9754, q90 1.0058]; method 2026-11-03T08:02:27.757007500 .. 2026-11-03T08:06:41.915488500; fixed 2026-11-01T19:38:08.175399600 .. 2026-11-01T19:42:22.020092200
+SC9   seed    42: both mined   72, same nodes   71; mine-time ratio median 0.9970 [q10 0.9870, q90 1.0108]; method 2026-11-03T10:04:43.432935400 .. 2026-11-03T10:08:54.335044300; fixed 2026-11-01T09:01:08.998507800 .. 2026-11-01T09:05:18.876246900
+SC9   seed  1337: both mined   72, same nodes   71; mine-time ratio median 1.0055 [q10 0.9893, q90 1.0197]; method 2026-11-03T10:08:55.202342500 .. 2026-11-03T10:13:05.843608400; fixed 2026-11-01T09:05:19.740743800 .. 2026-11-01T09:09:29.908187200
+SC9   seed  2024: both mined   72, same nodes   71; mine-time ratio median 1.0061 [q10 0.9930, q90 1.0162]; method 2026-11-03T10:13:06.713312100 .. 2026-11-03T10:17:18.367404600; fixed 2026-11-01T09:09:30.778439400 .. 2026-11-01T09:13:41.984386500
+SC10  seed    42: both mined   96, same nodes   95; mine-time ratio median 1.0271 [q10 1.0140, q90 1.0379]; method 2026-11-03T08:50:15.507306400 .. 2026-11-03T08:54:42.588441900; fixed 2026-11-02T00:32:29.980158900 .. 2026-11-02T00:36:55.215915800
+SC10  seed  1337: both mined  112, same nodes  111; mine-time ratio median 1.0278 [q10 1.0128, q90 1.0398]; method 2026-11-03T08:54:43.475866500 .. 2026-11-03T08:59:11.952990600; fixed 2026-11-02T00:36:56.097532300 .. 2026-11-02T00:41:22.684392300
+SC10  seed  2024: both mined  110, same nodes  109; mine-time ratio median 1.0291 [q10 1.0180, q90 1.0411]; method 2026-11-03T08:59:12.825658500 .. 2026-11-03T09:03:40.743722100; fixed 2026-11-02T00:41:23.566062400 .. 2026-11-02T00:45:49.656792200
+SC10H seed    42: both mined  111, same nodes  110; mine-time ratio median 1.0071 [q10 0.9936, q90 1.0207]; method 2026-11-03T14:01:19.906470200 .. 2026-11-03T14:05:48.455495500; fixed 2026-11-02T08:36:05.518548900 .. 2026-11-02T08:40:34.000067900
+SC10H seed  1337: both mined  110, same nodes  109; mine-time ratio median 1.0115 [q10 0.9999, q90 1.0249]; method 2026-11-03T14:05:49.734735 .. 2026-11-03T14:10:18.270356700; fixed 2026-11-02T08:40:35.275339600 .. 2026-11-02T08:45:04.258829
+SC10H seed  2024: both mined  110, same nodes  109; mine-time ratio median 1.0111 [q10 0.9983, q90 1.0232]; method 2026-11-03T14:10:19.557783200 .. 2026-11-03T14:14:47.947636200; fixed 2026-11-02T08:45:05.538792100 .. 2026-11-02T08:49:34.686319800
+== paired method/fixed C8T1S5I8N5K
+SC8   seed    42: both mined   57, same nodes   56; mine-time ratio median 0.9937 [q10 0.9767, q90 1.0023]; method 2026-11-03T06:40:18.058009300 .. 2026-11-03T06:45:57.711494; fixed 2026-11-01T13:06:27.000325200 .. 2026-11-01T13:12:07.115791900
+SC8   seed  1337: both mined   57, same nodes   56; mine-time ratio median 0.9919 [q10 0.9774, q90 1.0055]; method 2026-11-03T06:45:58.958167900 .. 2026-11-03T06:51:39.011187100; fixed 2026-11-01T13:12:08.393660 .. 2026-11-01T13:17:48.432439700
+SC8   seed  2024: both mined   57, same nodes   56; mine-time ratio median 0.9935 [q10 0.9778, q90 1.0068]; method 2026-11-03T06:51:40.251215500 .. 2026-11-03T06:57:21.825575200; fixed 2026-11-01T13:17:49.704802900 .. 2026-11-01T13:23:31.839504500
+SC8P  seed    42: both mined   38, same nodes   37; mine-time ratio median 1.0032 [q10 0.9792, q90 1.0159]; method 2026-11-03T07:37:00.052582 .. 2026-11-03T07:42:37.195410600; fixed 2026-11-01T18:06:35.216553200 .. 2026-11-01T18:12:12.332559800
+SC8P  seed  1337: both mined   37, same nodes   36; mine-time ratio median 1.0023 [q10 0.9911, q90 1.0102]; method 2026-11-03T07:42:38.471229800 .. 2026-11-03T07:48:13.647479700; fixed 2026-11-01T18:12:13.614518700 .. 2026-11-01T18:17:49.140181900
+SC8P  seed  2024: both mined   37, same nodes   36; mine-time ratio median 1.0072 [q10 0.9947, q90 1.0239]; method 2026-11-03T07:48:14.916254400 .. 2026-11-03T07:53:50.840443; fixed 2026-11-01T18:17:50.403215 .. 2026-11-01T18:23:26.827934800
+SC9   seed    42: both mined   34, same nodes   33; mine-time ratio median 1.0033 [q10 0.9591, q90 1.0264]; method 2026-11-03T09:30:46.611153900 .. 2026-11-03T09:36:22.159262300; fixed 2026-11-01T07:21:39.884669600 .. 2026-11-01T07:27:14.433508400
+SC9   seed  1337: both mined   34, same nodes   33; mine-time ratio median 1.0117 [q10 0.9963, q90 1.0242]; method 2026-11-03T09:36:23.428905100 .. 2026-11-03T09:41:57.910101200; fixed 2026-11-01T07:27:15.691198500 .. 2026-11-01T07:32:50.010597400
+SC9   seed  2024: both mined   34, same nodes   33; mine-time ratio median 1.0061 [q10 0.9868, q90 1.0157]; method 2026-11-03T09:41:59.158653100 .. 2026-11-03T09:47:34.533524600; fixed 2026-11-01T07:32:51.258279700 .. 2026-11-01T07:38:25.687404600
+SC10  seed    42: both mined   57, same nodes   56; mine-time ratio median 1.0005 [q10 0.9845, q90 1.0133]; method 2026-11-03T08:32:43.678084500 .. 2026-11-03T08:38:31.160597700; fixed 2026-11-01T23:06:56.011925 .. 2026-11-01T23:12:41.639088500
+SC10  seed  1337: both mined   57, same nodes   56; mine-time ratio median 0.9970 [q10 0.9823, q90 1.0132]; method 2026-11-03T08:38:32.449845200 .. 2026-11-03T08:44:19.588096700; fixed 2026-11-01T23:12:42.920591 .. 2026-11-01T23:18:28.326555400
+SC10  seed  2024: both mined   57, same nodes   56; mine-time ratio median 0.9992 [q10 0.9817, q90 1.0141]; method 2026-11-03T08:44:20.864844600 .. 2026-11-03T08:50:08.745194800; fixed 2026-11-01T23:18:29.592590800 .. 2026-11-01T23:24:16.036213400
+SC10H seed    42: both mined   66, same nodes   65; mine-time ratio median 1.0085 [q10 0.9893, q90 1.0232]; method 2026-11-03T13:43:42.752733100 .. 2026-11-03T13:49:30.358184500; fixed 2026-11-02T07:10:30.539283 .. 2026-11-02T07:16:15.251843300
+SC10H seed  1337: both mined   67, same nodes   66; mine-time ratio median 1.0014 [q10 0.9799, q90 1.0193]; method 2026-11-03T13:49:31.667298700 .. 2026-11-03T13:55:21.202824100; fixed 2026-11-02T07:16:16.572630900 .. 2026-11-02T07:22:04.229213600
+SC10H seed  2024: both mined   69, same nodes   68; mine-time ratio median 1.0068 [q10 0.9873, q90 1.0229]; method 2026-11-03T13:55:22.496702500 .. 2026-11-03T14:01:13.048009100; fixed 2026-11-02T07:22:05.553490500 .. 2026-11-02T07:27:53.443319100
+== paired method/fixed SIGN
+SC8   seed    42: both mined   69, same nodes   68; mine-time ratio median 1.0137 [q10 1.0048, q90 1.0213]; method 2026-11-03T07:10:47.546639700 .. 2026-11-03T07:13:36.713633800; fixed 2026-11-01T12:11:10.611889100 .. 2026-11-01T12:13:58.762864900
+SC8   seed  1337: both mined   54, same nodes   53; mine-time ratio median 1.0098 [q10 1.0037, q90 1.0179]; method 2026-11-03T07:13:37.315236100 .. 2026-11-03T07:16:25.725674800; fixed 2026-11-01T12:13:59.362015500 .. 2026-11-01T12:16:47.574205800
+SC8   seed  2024: both mined   54, same nodes   53; mine-time ratio median 1.0104 [q10 1.0065, q90 1.0187]; method 2026-11-03T07:16:26.484082 .. 2026-11-03T07:19:14.475512500; fixed 2026-11-01T12:16:48.331301900 .. 2026-11-01T12:19:36.148081
+SC8P  seed    42: both mined   29, same nodes   28; mine-time ratio median 1.0044 [q10 0.9998, q90 1.0096]; method 2026-11-03T08:06:49.349462100 .. 2026-11-03T08:09:35.198305700; fixed 2026-11-01T17:11:47.137643600 .. 2026-11-01T17:14:33.235618400
+SC8P  seed  1337: both mined   51, same nodes   50; mine-time ratio median 1.0034 [q10 0.9944, q90 1.0108]; method 2026-11-03T08:09:35.798251500 .. 2026-11-03T08:12:21.075607900; fixed 2026-11-01T17:14:33.834103600 .. 2026-11-01T17:17:20.036435200
+SC8P  seed  2024: both mined   51, same nodes   50; mine-time ratio median 1.0047 [q10 0.9960, q90 1.0127]; method 2026-11-03T08:12:21.672845100 .. 2026-11-03T08:15:06.742472200; fixed 2026-11-01T17:17:20.633007800 .. 2026-11-01T17:20:06.340964400
+SC9   seed    42: both mined   67, same nodes   66; mine-time ratio median 0.9734 [q10 0.9631, q90 0.9813]; method 2026-11-03T10:30:07.646092700 .. 2026-11-03T10:32:49.958433700; fixed 2026-11-01T06:20:35.078132300 .. 2026-11-01T06:23:16.826786200
+SC9   seed  1337: both mined   69, same nodes   68; mine-time ratio median 0.9720 [q10 0.9634, q90 0.9805]; method 2026-11-03T10:32:50.551026 .. 2026-11-03T10:35:32.357423; fixed 2026-11-01T06:23:17.415674200 .. 2026-11-01T06:25:58.321863900
+SC9   seed  2024: both mined   68, same nodes   67; mine-time ratio median 0.9728 [q10 0.9608, q90 0.9829]; method 2026-11-03T10:35:32.948518800 .. 2026-11-03T10:38:15.443710300; fixed 2026-11-01T06:25:58.909123900 .. 2026-11-01T06:28:40.369518
+SC10  seed    42: both mined   72, same nodes   71; mine-time ratio median 0.9790 [q10 0.9350, q90 0.9942]; method 2026-11-03T09:03:47.901108900 .. 2026-11-03T09:06:39.732479700; fixed 2026-11-01T22:10:20.867839900 .. 2026-11-01T22:13:13.838183100
+SC10  seed  1337: both mined   75, same nodes   74; mine-time ratio median 0.9391 [q10 0.9315, q90 0.9469]; method 2026-11-03T09:06:40.341084100 .. 2026-11-03T09:09:30.553836400; fixed 2026-11-01T22:13:14.447988600 .. 2026-11-01T22:16:06.534127300
+SC10  seed  2024: both mined   53, same nodes   52; mine-time ratio median 0.9398 [q10 0.9296, q90 0.9469]; method 2026-11-03T09:09:31.159723600 .. 2026-11-03T09:12:22.209476900; fixed 2026-11-01T22:16:07.146103200 .. 2026-11-01T22:18:59.917554500
+SC10H SIGN: not measured for Pre-HUSPM-Joint, Pre-HUSPM-Joint-fixed-threshold
+== against remining, DUNNHUMBY
+SC8
+    M         vs remine-low n= 630 0.9755, vs remine-UUT n= 526 1.0239, heap 121 MB, 11-04T02:07
+    M-w5      vs remine-low n= 961 0.9002, vs remine-UUT n= 105 0.9460, heap 108 MB, 11-04T03:30
+    M-fixed-threshold vs remine-low n=1050 0.9825, vs remine-UUT n=   0 nan, heap 105 MB, 11-04T02:50
+    Remine-from-scratch  heap 200 MB, 11-04T04:10
+    Remine-own-UUT       heap 188 MB, 11-04T05:00
+SC8P
+    M         vs remine-low n= 374 0.9645, vs remine-UUT n= 411 0.9780, heap 80 MB, 11-04T05:44
+    M-w5      vs remine-low n= 625 0.9646, vs remine-UUT n= 122 0.9726, heap 73 MB, 11-04T06:48
+    M-fixed-threshold vs remine-low n= 723 0.8845, vs remine-UUT n=   0 nan, heap 71 MB, 11-04T06:17
+    Remine-from-scratch  heap 191 MB, 11-04T07:21
+    Remine-own-UUT       heap 179 MB, 11-04T08:09
+SC9
+    M         vs remine-low n= 660 1.0124, vs remine-UUT n=   3 0.9902, heap 61 MB, 11-04T12:28
+    M-w5      vs remine-low n= 663 0.9792, vs remine-UUT n=   0 nan, heap 61 MB, 11-04T13:58
+    M-fixed-threshold vs remine-low n= 663 0.9233, vs remine-UUT n=   0 nan, heap 61 MB, 11-04T12:58
+    Remine-from-scratch  heap 176 MB, 11-04T14:28
+    Remine-own-UUT       heap 166 MB, 11-04T15:11
+SC10
+    M         vs remine-low n= 590 1.0471, vs remine-UUT n= 593 1.1182, heap 126 MB, 11-04T08:51
+    M-w5      vs remine-low n= 995 0.9388, vs remine-UUT n= 106 1.0123, heap 112 MB, 11-04T10:17
+    M-fixed-threshold vs remine-low n=1082 1.0338, vs remine-UUT n=   0 nan, heap 109 MB, 11-04T09:35
+    Remine-from-scratch  heap 202 MB, 11-04T10:57
+    Remine-own-UUT       heap 190 MB, 11-04T11:46
+SC10H
+    M         vs remine-low n= 619 1.1234, vs remine-UUT n= 478 1.0135, heap 130 MB, 11-04T17:07
+    M-w5      vs remine-low n= 937 1.0228, vs remine-UUT n=  88 0.9266, heap 120 MB, 11-04T18:31
+    M-fixed-threshold vs remine-low n=1013 1.0164, vs remine-UUT n=   0 nan, heap 116 MB, 11-04T17:51
+    Remine-from-scratch  heap 227 MB, 11-04T19:11
+    Remine-own-UUT       heap 214 MB, 11-04T20:01

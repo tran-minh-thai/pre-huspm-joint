@@ -1,0 +1,31 @@
+SC10 DUNNHUMBY seed 42: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC10 DUNNHUMBY seed 1337: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC10 DUNNHUMBY seed 2024: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC10H DUNNHUMBY seed 42: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC10H DUNNHUMBY seed 1337: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC10H DUNNHUMBY seed 2024: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC8 DUNNHUMBY seed 42: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC8 DUNNHUMBY seed 1337: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC8 DUNNHUMBY seed 2024: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC8P DUNNHUMBY seed 42: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC8P DUNNHUMBY seed 1337: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC8P DUNNHUMBY seed 2024: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC9 DUNNHUMBY seed 42: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC9 DUNNHUMBY seed 1337: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC9 DUNNHUMBY seed 2024: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+streams: 15; replayed and priced: 15; not replayed: []

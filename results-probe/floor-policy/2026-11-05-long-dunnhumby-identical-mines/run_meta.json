@@ -1,0 +1,16 @@
+{
+  "command": "sh results-probe/floor-policy/2026-11-05-long-dunnhumby-identical-mines/run_all.sh",
+  "path_substitutions": 0,
+  "build_dir": "build-plans",
+  "git_commit": "a80818290fae3ed97113f8e9deb1854e1333fda5",
+  "tree": "src clean, other files modified",
+  "source_sha256": "39bbc7526efd8cb6c656186d8789ac332da1488d1928fc44d0aeec169989814f",
+  "source_files": 45,
+  "java": "openjdk version \"25.0.4.1\" 2026-08-18 LTS",
+  "os": "Darwin 27.2.0 (macOS-27.2-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-11-05T06:31:06",
+  "end": "2026-11-05T06:31:08",
+  "exit_code": 0
+}
