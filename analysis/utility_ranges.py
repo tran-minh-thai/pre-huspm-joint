@@ -19,7 +19,13 @@ import pathlib
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-DEFAULT_DBS = ["SIGN", "LEVIATHAN", "FIFA", "BIBLE", "BMS1", "KOSARAK", "C8T1S5I8N5K", "TAFENG"]
+
+
+def default_dbs():
+    """Every database of common.Datasets, in the display order of make_figures."""
+    sys.path.insert(0, str(ROOT / "analysis"))
+    import make_figures as mf
+    return list(mf.ALL_DATASETS)
 FIELDS = ["dataset", "profit_items", "profit_min", "profit_max", "profit_le0",
           "occurrences", "quantity_min", "quantity_max", "quantity_le0", "quantity_non_integer",
           "occurrences_without_profit", "items_without_profit", "unparsable_tokens"]
@@ -77,8 +83,9 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--datasets", default=str(ROOT / "datasets"))
     ap.add_argument("--out", default=str(ROOT / "results" / "invariant-utility-ranges"))
-    ap.add_argument("dbs", nargs="*", default=DEFAULT_DBS)
+    ap.add_argument("dbs", nargs="*", help="default: every database of common.Datasets")
     a = ap.parse_args(argv)
+    a.dbs = a.dbs or default_dbs()
     rows = [scan(n, pathlib.Path(a.datasets)) for n in a.dbs]
     out = pathlib.Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
