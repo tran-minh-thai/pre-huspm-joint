@@ -10,12 +10,12 @@ only when it passes their bound, so the proposal's count under their convention 
 `explored_nodes - root_stopped`. `analysis/scenario_tables.py` (`table_explored_nodes.csv`), the
 SC3 explored-node figure and the SC7 ablation table use that value.
 
-One row per static configuration of the campaign: SC1 (`D_init`, four thresholds, eight
+One row per static configuration of the campaign: SC1 (`D_init`, four thresholds, nine
 databases), SC3 (whole database, four thresholds, SIGN, LEVIATHAN, C8T1S5I8N5K) and SC7 (whole
 database, default threshold, with the pruning as in `Pre-HUSPM-Joint` and without it as in
-`Pre-HUSPM-Joint-no-IPS`); 58 rows with `arm` = `Pre-HUSPM-Joint`, cutoff r_l * UUT * TU. Then
-44 rows with `arm` = `Joint-miner@UUT`, the same miner with its cutoff at UUT * TU, for the SC1
-and SC3 configurations; 102 rows. The 58 first rows are those of the record before the column
+`Pre-HUSPM-Joint-no-IPS`); 64 rows with `arm` = `Pre-HUSPM-Joint`, cutoff r_l * UUT * TU. Then
+48 rows with `arm` = `Joint-miner@UUT`, the same miner with its cutoff at UUT * TU, for the SC1
+and SC3 configurations; 112 rows. The 58 first rows are those of the record before the column
 `arm` was added, unchanged.
 
 Checked against the miner: a counter of the root lists and of those stopped at once was added
@@ -31,3 +31,10 @@ lists and stopped items agree on 44 of 44, and the copy's `explored_nodes` equal
 44 of 44. The comparison catches a stopped count changed by one in one row (1 of 1). Independently,
 HUSP-SP's `explored_nodes`, which counts a node below the root only when its PEU passes, equal
 `explored_nodes - root_stopped` of `Joint-miner@UUT` on 44 of 44 configurations.
+
+DUNNHUMBY was added on 2026-11-04 (10 rows: SC1 at the four thresholds for both arms, SC7 with
+and without the pruning). The 102 rows of the eight other databases were recomputed in the same
+run and are byte-identical to the previous record. On DUNNHUMBY, HUSP-SP's `explored_nodes` equal
+`explored_nodes - root_stopped` of `Joint-miner@UUT` on 4 of 4 SC1 configurations. The copy of the
+miner with a root counter was not run on DUNNHUMBY, so the six `Pre-HUSPM-Joint` rows of DUNNHUMBY
+are not checked against the miner.

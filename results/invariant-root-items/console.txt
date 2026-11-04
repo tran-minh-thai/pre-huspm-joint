@@ -100,4 +100,14 @@ SC1 TAFENG       D_init su=0.002812 ips=once Joint-miner@UUT  items=22779 remove
 SC1 TAFENG       D_init su=0.003557 ips=once Joint-miner@UUT  items=22779 removed=21167 lists=1612 stopped=1394
 SC1 TAFENG       D_init su=0.004499 ips=once Joint-miner@UUT  items=22779 removed=21605 lists=1174 stopped=1059
 SC1 TAFENG       D_init su=0.005691 ips=once Joint-miner@UUT  items=22779 removed=21936 lists=843 stopped=791
-102 configurations -> results/invariant-root-items/root_items.csv
+SC1 DUNNHUMBY    D_init su=0.001158 ips=once Pre-HUSPM-Joint  items=64954 removed=48503 lists=16451 stopped=7392
+SC1 DUNNHUMBY    D_init su=0.001464 ips=once Pre-HUSPM-Joint  items=64954 removed=50797 lists=14157 stopped=6963
+SC1 DUNNHUMBY    D_init su=0.002083 ips=once Pre-HUSPM-Joint  items=64954 removed=53815 lists=11139 stopped=6408
+SC1 DUNNHUMBY    D_init su=0.002343 ips=once Pre-HUSPM-Joint  items=64954 removed=54750 lists=10204 stopped=6199
+SC7 DUNNHUMBY    whole  su=0.001464 ips=once Pre-HUSPM-Joint  items=89038 removed=74297 lists=14741 stopped=7382
+SC7 DUNNHUMBY    whole  su=0.001464 ips=off  Pre-HUSPM-Joint  items=89038 removed=0 lists=89038 stopped=79957
+SC1 DUNNHUMBY    D_init su=0.001158 ips=once Joint-miner@UUT  items=64954 removed=50690 lists=14264 stopped=6974
+SC1 DUNNHUMBY    D_init su=0.001464 ips=once Joint-miner@UUT  items=64954 removed=52794 lists=12160 stopped=6627
+SC1 DUNNHUMBY    D_init su=0.002083 ips=once Joint-miner@UUT  items=64954 removed=55596 lists=9358 stopped=5939
+SC1 DUNNHUMBY    D_init su=0.002343 ips=once Joint-miner@UUT  items=64954 removed=56451 lists=8503 stopped=5685
+112 configurations -> results/invariant-root-items/root_items.csv

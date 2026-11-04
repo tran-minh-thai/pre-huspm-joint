@@ -7,3 +7,4 @@ BMS1: 59601 sequences, 497 items occur (largest id 60977), 2.5107 elements per s
 KOSARAK: 990002 sequences, 41270 items occur (largest id 41270), 8.1000 elements per sequence, 1.0000 items per element, 8.1000 per sequence, TU 385921994
 C8T1S5I8N5K: 47132 sequences, 68240 items occur (largest id 4999999), 2.3620 elements per sequence, 7.9707 items per element, 18.8265 per sequence, TU 47416411
 TAFENG: 60665 sequences, 23789 items occur (largest id 23812), 13.3967 elements per sequence, 1.0000 items per element, 13.3967 per sequence, TU 106639001
+DUNNHUMBY: 38790 sequences, 89038 items occur (largest id 91778), 6.2773 elements per sequence, 9.9837 items per element, 62.6709 per sequence, TU 7062219
