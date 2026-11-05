@@ -322,6 +322,9 @@ public class PreHUSPMAlgorithm {
             rescanCount = 0; patternCount = 0; prelargeCount = 0; buf = 0.0; bufValue = 0.0;
             resetCounters();
             largeMap.clear(); prelargeMap.clear();
+            // u(s) of every sequence, computed here rather than read from the value the loader
+            // cached, so that the scan which yields it is inside the timed call.
+            for (Sequence s : dInit) s.sequenceUtility = s.utilityFromItems();
             executeRescanAndRebuild(dInit, currentTotalUtility, true);
         }
 
@@ -332,6 +335,8 @@ public class PreHUSPMAlgorithm {
             // Counters describe this batch only: the rescan or the safe update it performed.
             resetCounters();
 
+            // u(s) of each inserted sequence, computed here (see runInitialMining).
+            for (Sequence seq : deltaD) seq.sequenceUtility = seq.utilityFromItems();
             double tsuD = 0;
             for (Sequence seq : deltaD) tsuD += seq.sequenceUtility;
             double trigger = (variant == Variant.TSU) ? tsuD : maxItemSwu(deltaD);

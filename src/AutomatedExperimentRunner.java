@@ -431,6 +431,31 @@ public class AutomatedExperimentRunner {
     /** Back to measuring each call on its own, as a static mine is measured. */
     private static void endMemArm() { memArmBaseline = -1; }
 
+    /**
+     * The arms whose algorithm reads data derived from each sequence and cached on the sequence
+     * object (remaining utilities, flat arrays) and builds it only when it is missing. The loader,
+     * a warm-up, an earlier threshold or an earlier stream in the same JVM may have built it, outside
+     * the timed call. Every other arm builds what it reads inside its own call (the proposal, HUSP-ULL,
+     * HUSP-SP) or keeps it as the state of its maintenance.
+     */
+    static final java.util.Set<String> BUILDS_ONLY_WHEN_MISSING =
+            java.util.Set.of("USpan", "IncUSP-Miner+", "Pre-HUSPM", "Pre-HUSPM-SWUmax", "Pre-HUSPM-TSU");
+
+    /**
+     * Drops the cached derived data of every sequence, outside any timed call, so that the next
+     * static mine or stream of an arm in BUILDS_ONLY_WHEN_MISSING builds it inside its own call.
+     * Called before the memory baseline is taken, so the rebuilt data counts towards the arm.
+     */
+    static void freshSequences(List<Sequence> db) {
+        for (Sequence s : db) s.clearDerived();
+    }
+
+    /** freshSequences on D_init and on every batch of a stream, before the arm's first call. */
+    static void freshStream(List<Sequence> dInit, List<List<Sequence>> batches) {
+        freshSequences(dInit);
+        for (List<Sequence> b : batches) freshSequences(b);
+    }
+
     /** Record what the call turned out to be, so later repeats can be skipped. */
     private static void noteOutcome(ExperimentMetrics m) {
         if (m == null) return;
@@ -878,6 +903,7 @@ public class AutomatedExperimentRunner {
                     if (!ADAPTIVE_ONLY && algoEnabled("Pre-HUSPM")) {
                         String tag = "Pre-HUSPM[sl=" + slRatio + "]";
                         try {
+                            freshSequences(full);   // Pre-HUSPM is in BUILDS_ONLY_WHEN_MISSING
                             PreHUSPMAlgorithm.PreHUSPMAlgo pre = new PreHUSPMAlgorithm.PreHUSPMAlgo(
                                     ds.defaultSu, slRatio, ENABLE_PATTERN_EXPORT);
                             announce(tag, ds.name, "SC4", 0);
@@ -1579,6 +1605,7 @@ public class AutomatedExperimentRunner {
 
     /** SC7's Pre-HUSPM reference: one static mine of the whole database, measured. */
     private static ExperimentMetrics prehuspmReference(DatasetConfig ds, List<Sequence> full, double totalUtil) {
+        freshSequences(full);   // Pre-HUSPM is in BUILDS_ONLY_WHEN_MISSING
         endMemArm();
         announce("Pre-HUSPM", ds.name, "SC7_ref", 0);
         PreHUSPMAlgorithm.PreHUSPMAlgo pre = new PreHUSPMAlgorithm.PreHUSPMAlgo(
@@ -1723,6 +1750,7 @@ public class AutomatedExperimentRunner {
 
         // -------- Arm: IncUSP-Miner+ (isolated scope) --------
         if (!ADAPTIVE_ONLY && algoEnabled("IncUSP-Miner+")) {
+            freshStream(dInit, batches);   // IncUSP-Miner+ is in BUILDS_ONLY_WHEN_MISSING
             beginMemArm();
             IncUSPMinerPlusAlgorithm inc = new IncUSPMinerPlusAlgorithm(Su);
             boolean poisoned = false;
@@ -1784,6 +1812,7 @@ public class AutomatedExperimentRunner {
                 final String label = (variant == PreHUSPMAlgorithm.PreHUSPMAlgo.Variant.TSU)
                         ? "Pre-HUSPM-TSU" : "Pre-HUSPM-SWUmax";
                 if (!algoEnabled(label)) continue;
+                freshStream(dInit, batches);   // both Pre-HUSPM arms are in BUILDS_ONLY_WHEN_MISSING
                 beginMemArm();
                 final PreHUSPMAlgorithm.PreHUSPMAlgo preh = new PreHUSPMAlgorithm.PreHUSPMAlgo(
                         Su, slRatioFor(dsName), ENABLE_PATTERN_EXPORT, variant);
@@ -2168,6 +2197,7 @@ public class AutomatedExperimentRunner {
                 () -> runSingle(algo, dsName, db, totalUtil, su, iter, tag));
         if (failedWarmUp != null) return logged(failedWarmUp);
 
+        if (BUILDS_ONLY_WHEN_MISSING.contains(algo)) freshSequences(db);
         endMemArm();   // a static mine is measured against the heap at the start of the call
 
         // Built before anything is measured, while there is memory to build it. If anything

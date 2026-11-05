@@ -65,6 +65,34 @@ public class Sequence {
     }
 
     /**
+     * The sequence utility summed from the items in the order calculateRemainingUtilities sums
+     * them (itemsets and items right to left), so the result is bit for bit the value it stores.
+     * For an algorithm that must compute u(s) itself inside its timed call.
+     */
+    public double utilityFromItems() {
+        double sum = 0;
+        for (int i = itemsets.size() - 1; i >= 0; i--) {
+            List<QItem> items = itemsets.get(i).items;
+            for (int j = items.size() - 1; j >= 0; j--) sum += items.get(j).utility;
+        }
+        return sum;
+    }
+
+    /**
+     * Drops what is derived from the items and cached on this object: the remaining utilities
+     * and the flat arrays. The next algorithm that needs them builds them again. The sequence
+     * utility is kept, because the harness reads it to set the thresholds.
+     */
+    public void clearDerived() {
+        remainingUtilities.clear();
+        flatItems = null;
+        flatUtilities = null;
+        isItemsetEnd = null;
+        flatRemainingUtility = null;
+        flatLen = 0;
+    }
+
+    /**
      * Builds the flat primitive representation. Idempotent: calling it again rebuilds it.
      * The adaptive algorithm calls it once per sequence when adding it to dbLookup.
      */
