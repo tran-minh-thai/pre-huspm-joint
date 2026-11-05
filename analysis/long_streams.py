@@ -8,13 +8,22 @@
 Reads every <SC>_long.csv under results/campaign/<SC>/<database>/<arm>/ (an arm counts only with
 its DONE file) and, for the index columns and the live set, under results/campaign-mem/SC9/.
 The arm of a row is its `algorithm` column and its seed its `seed` column, so a verification run
-holding all arms in one file is read the same way. Writes:
+holding all arms in one file is read the same way.
+
+Replicates: with the default root, the trees results/campaign-replicates/s0r<n>/<SC>/ are read too
+(run s0r0 is the main tree). Their counters (rescans, rescans at UUT, patterns, explored nodes,
+pre-large set) must equal the main run's on every row, or the script stops. A run of an (arm, seed)
+is used when every one of its rows finished; the time of an operation is then the mean over the
+used runs, the counters are the main run's, and `runs` gives the number of runs averaged. With one
+run per (arm, seed) the tables are those of a single run. Writes:
 
     table_long_streams.csv   one row per (scenario, database, arm): seeds, operations per seed,
                              time of the stream (operations after the initial mine, summed) per
                              seed as mean, minimum and maximum, the pooled time of the method over
                              the arm's (sum over the seeds of the method's stream time divided by
-                             the same sum for the arm, on the seeds both finished), per-operation
+                             the same sum for the arm, on the seeds both finished), the runs averaged
+                             per seed and, when there is more than one, the stream time summed
+                             over the seeds in each run (smallest and largest run), per-operation
                              latency over all operations of all seeds (median, 95th and 99th
                              percentiles by linear interpolation, maximum; from runtime_us, in
                              ms, or from runtime_ms on rows without that column), and per kind of
@@ -52,26 +61,71 @@ TAG = {METHOD: "Method", FIXED: "FixedFloor", METHOD + "-w5": "Window5", "Remine
        "Remine-own-UUT": "RemineUUT", REBUILD: "IndexRebuild"}
 KINDS = {"INS": "insertion", "DEL": "deletion", "MOD": "modification"}
 INDEX_STEP = 50
+REPLICATE_RUN = "s0r"          # replicates of the long streams: seed index 0, repeat n
+COUNTERS = ["rescan_count", "rescans_at_uut", "total_patterns_found", "explored_nodes", "prelarge_count"]
+KEY = ["algorithm", "dataset", "seed", "iteration"]
 
 
-def load(root, sc, need_done=True):
-    """Rows of one scenario under root, from every <sc>_long.csv below it."""
+def load(root, sc, need_done=True, replicate_roots=()):
+    """Rows of one scenario under root, from every <sc>_long.csv below it, tagged with the run
+    (`replicate`): s0r0 for root, the tree's name for each (name, directory) of replicate_roots."""
     frames = []
-    for p in sorted(glob.glob(os.path.join(root, "**", f"{sc}_long.csv"), recursive=True)):
-        if need_done and not os.path.exists(os.path.join(os.path.dirname(p), "DONE")):
-            print(f"[{sc}] left out, no DONE: {os.path.relpath(p, root)}")
-            continue
-        frames.append(pd.read_csv(p))
+    for tag, base in [("s0r0", root)] + list(replicate_roots):
+        for p in sorted(glob.glob(os.path.join(base, "**", f"{sc}_long.csv"), recursive=True)):
+            if need_done and not os.path.exists(os.path.join(os.path.dirname(p), "DONE")):
+                print(f"[{sc}] left out, no DONE: {os.path.relpath(p, base)} ({tag})")
+                continue
+            frames.append(pd.read_csv(p).assign(replicate=tag))
     if not frames:
         return None
     df = pd.concat(frames, ignore_index=True)
     df.columns = [c.strip() for c in df.columns]
     df["status"] = [mf.classify_status(o, r) for o, r in zip(df["op_type"], df["runtime_ms"])]
     df["kind"] = df["op_type"].astype(str).str.extract(r"SC6_(INS|DEL|MOD|INIT)")[0]
-    dup = df.duplicated(["algorithm", "dataset", "seed", "iteration"], keep=False)
+    dup = df.duplicated(KEY + ["replicate"], keep=False)
     if dup.any():
-        sys.exit(f"[{sc}] {int(dup.sum())} rows repeat an (arm, database, seed, operation)")
+        sys.exit(f"[{sc}] {int(dup.sum())} rows repeat an (arm, database, seed, operation, run)")
     return df
+
+
+def mean_over_runs(sc, df):
+    """One row per (arm, database, seed, operation): the main run's row, with runtime_ms and
+    runtime_us the mean over the runs of that (arm, seed) whose rows all finished. Returns the rows
+    and, per (arm, database, seed), the stream time (operations after the initial mine) of each run
+    used. Stops when a replicate has no main run, other operations, or other counters."""
+    main = df[df["replicate"] == "s0r0"].set_index(KEY).sort_index()
+    have = set(main.index.droplevel(3))
+    for (tag, alg, d, seed), x in df[df["replicate"] != "s0r0"].groupby(["replicate", "algorithm", "dataset", "seed"]):
+        if (alg, d, seed) not in have:
+            sys.exit(f"[{sc}] {tag}: {alg} {d} seed {seed} has no main run")
+        m = main.loc[(alg, d, seed)]
+        x = x.set_index("iteration").sort_index()
+        if not x.index.equals(m.index):
+            sys.exit(f"[{sc}] {tag}: {alg} {d} seed {seed}: the operations differ from the main run's")
+        for c in COUNTERS:
+            if c in x and not np.array_equal(x[c].fillna(-1).to_numpy(float), m[c].fillna(-1).to_numpy(float)):
+                sys.exit(f"[{sc}] {tag}: {alg} {d} seed {seed}: {c} differs from the main run's")
+    run = ["algorithm", "dataset", "seed", "replicate"]
+    used = df.groupby(run)["status"].transform(lambda s: bool((s == "OK").all())).astype(bool)
+    ok = df[used]
+    streams = {k: list(g[g["kind"] != "INIT"].groupby("replicate")["runtime_ms"].sum() / 1000.0)
+               for k, g in ok.groupby(["algorithm", "dataset", "seed"])}
+    out = main.copy()
+    agg = ok.groupby(KEY).agg(mean_ms=("runtime_ms", "mean"), runs=("replicate", "nunique"))
+    idx = out.index.intersection(agg.index)
+    out["runs"] = 0
+    out.loc[idx, "runs"] = agg.loc[idx, "runs"].astype(int)
+    # Only rows averaged over more than one run, or whose main run did not finish, change, so a
+    # single run reads exactly as before.
+    multi = idx[(agg.loc[idx, "runs"].to_numpy() > 1) | (out.loc[idx, "status"].to_numpy() != "OK")]
+    out.loc[multi, "status"] = "OK"
+    if len(multi):
+        out["runtime_ms"] = out["runtime_ms"].astype(float)
+        out.loc[multi, "runtime_ms"] = agg.loc[multi, "mean_ms"]
+        if "runtime_us" in ok:
+            out["runtime_us"] = out["runtime_us"].astype(float)
+            out.loc[multi, "runtime_us"] = ok.groupby(KEY)["runtime_us"].mean().loc[multi]
+    return out.reset_index(), streams
 
 
 def latency_ms(x):
@@ -81,7 +135,8 @@ def latency_ms(x):
     return x["runtime_ms"].to_numpy(float)
 
 
-def stream_rows(sc, df):
+def stream_rows(sc, df, runs_of=None):
+    """runs_of: per (arm, database, seed), the stream time of each run averaged (mean_over_runs)."""
     rows = []
     for d in [x for x in mf.ALL_DATASETS if x in set(df["dataset"])]:
         g = df[df["dataset"] == d]
@@ -98,6 +153,11 @@ def stream_rows(sc, df):
             t = list(per_seed[arm].values())
             r.update(stream_s_mean=np.mean(t) if t else np.nan, stream_s_min=min(t) if t else np.nan,
                      stream_s_max=max(t) if t else np.nan)
+            runs = [len(runs_of[(arm, d, s)]) if runs_of and (arm, d, s) in runs_of else 1 for s in done]
+            r["runs"] = min(runs) if runs else 0
+            if runs and min(runs) > 1:
+                per_run = np.sum([runs_of[(arm, d, s)][:min(runs)] for s in sorted(done)], axis=0)
+                r.update(run_total_s_min=float(per_run.min()), run_total_s_max=float(per_run.max()))
             if len(lat):
                 r["latency_source"] = "runtime_us" if "runtime_us" in a and a["runtime_us"].notna().all() else "runtime_ms"
                 r.update(latency_ms_median=np.percentile(lat, 50), latency_ms_p95=np.percentile(lat, 95),
@@ -167,15 +227,22 @@ def main(argv=None):
 
     for sc in SCENARIOS:
         root = args.root if args.no_done or os.path.basename(args.root.rstrip("/")) == sc else os.path.join(args.root, sc)
-        df = load(root, sc, need_done=not args.no_done)
-        if df is None:
+        default_root = os.path.abspath(args.root) == os.path.abspath(os.path.join(mf.DATA_DIR, mf.TIMING_TREE))
+        reps = [(os.path.basename(p), os.path.join(p, sc))
+                for p in sorted(glob.glob(os.path.join(mf.DATA_DIR, mf.REPLICATE_TREE, REPLICATE_RUN + "*")))
+                if default_root and os.path.isdir(os.path.join(p, sc))]
+        raw = load(root, sc, need_done=not args.no_done, replicate_roots=reps)
+        if raw is None:
             print(f"[{sc}] no rows under {root}")
             continue
+        df, runs_of = mean_over_runs(sc, raw)
+        if reps:
+            print(f"[{sc}] runs read: s0r0 and {', '.join(t for t, _ in reps)}")
         mem = None
         mroot = os.path.join(args.mem_root, sc)
         if os.path.isdir(mroot):
             mem = load(mroot, sc, need_done=not args.no_done)
-        streams += stream_rows(sc, df)
+        streams += stream_rows(sc, df, runs_of)
         index += index_rows(sc, df, mem)
     os.makedirs(args.out, exist_ok=True)
     st, ix = pd.DataFrame(streams), pd.DataFrame(index)
@@ -185,6 +252,9 @@ def main(argv=None):
     for r in st.to_dict("records"):
         b = f"LONG_{r['scenario']}_{r['dataset']}_{TAG[r['arm']]}"
         put(f"{b}_seeds", r["seeds"], src)
+        if r.get("runs", 1) > 1:
+            put(f"{b}_runs", r["runs"], src)
+            put(f"{b}_stream_s_runs", f"{r['run_total_s_min']:.2f} to {r['run_total_s_max']:.2f}", src)
         if pd.notna(r.get("stream_s_mean")):
             put(f"{b}_stream_s", f"{r['stream_s_mean']:.2f} ({r['stream_s_min']:.2f} to {r['stream_s_max']:.2f})", src)
         for q in ("median", "p95", "p99", "max"):
