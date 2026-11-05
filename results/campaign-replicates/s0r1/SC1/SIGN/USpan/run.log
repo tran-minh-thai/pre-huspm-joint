@@ -1,0 +1,21 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 9 | Scenarios: [SC1]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=1 | seed.index=0
+
+--- [SC1] Static baseline on D_init ---
+>> WARM-UP (not measured) USpan/SIGN/SC1
+>> RUNNING USpan/SIGN/SC1_su=0.049134#0  (heap free=1007MB / total=1024MB / max=49152MB)
+[USpan/SIGN/SC1_su=0.049134#0] OK t=5172ms cand=11582204 pat=2814 heapDelta=311MB
+>> RUNNING USpan/SIGN/SC1_su=0.049134#0  (heap free=433MB / total=608MB / max=49152MB)
+[USpan/SIGN/SC1_su=0.049134#0] OK t=4853ms cand=11582204 pat=2814 heapDelta=292MB
+   warm-up mines (ms, not measured): [5172, 4853]
+>> RUNNING USpan/SIGN/SC1_su=0.049134#0  (heap free=114MB / total=128MB / max=49152MB)
+[USpan/SIGN/SC1_su=0.049134#0] OK t=4874ms cand=11582204 pat=2814 heapDelta=282MB
+>> RUNNING USpan/SIGN/SC1_su=0.065911#0  (heap free=115MB / total=128MB / max=49152MB)
+[USpan/SIGN/SC1_su=0.065911#0] OK t=2456ms cand=4811015 pat=583 heapDelta=291MB
+>> RUNNING USpan/SIGN/SC1_su=0.083371#0  (heap free=115MB / total=128MB / max=49152MB)
+[USpan/SIGN/SC1_su=0.083371#0] OK t=1419ms cand=2316235 pat=140 heapDelta=287MB
+>> RUNNING USpan/SIGN/SC1_su=0.091052#0  (heap free=115MB / total=128MB / max=49152MB)
+[USpan/SIGN/SC1_su=0.091052#0] OK t=1144ms cand=1736803 pat=79 heapDelta=276MB
+=== ALL SCENARIOS DONE (28.2s) ===
