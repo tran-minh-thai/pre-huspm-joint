@@ -1,0 +1,16 @@
+{
+  "command": "java -Xmx16g -Xss64m -cp build-ab -Ddataset.only=DUNNHUMBY -Dalgo.only=Pre-HUSPM-Joint -Drepeats=1 -Dresults.dir=results-probe/floor-policy/2026-11-05-sc9-ab-dunnhumby/run6-Pre-HUSPM-Joint/ -Drepeat.index=0 -Dseed.index=1 AutomatedExperimentRunner SC9",
+  "path_substitutions": 0,
+  "build_dir": "build-ab",
+  "git_commit": "1987702037f46a8007641f89531cedef947c970f",
+  "tree": "src clean, other files modified",
+  "source_sha256": "39bbc7526efd8cb6c656186d8789ac332da1488d1928fc44d0aeec169989814f",
+  "source_files": 45,
+  "java": "openjdk version \"25.0.4.1\" 2026-08-18 LTS",
+  "os": "Darwin 27.2.0 (macOS-27.2-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-11-05T07:07:49",
+  "end": "2026-11-05T07:14:40",
+  "exit_code": 0
+}

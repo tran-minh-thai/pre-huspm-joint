@@ -1,0 +1,16 @@
+{
+  "command": "~/.venvs/pre-huspm-adaptive/bin/python results-probe/floor-policy/2026-11-05-sc9-ab-dunnhumby/analyse.py",
+  "path_substitutions": 1,
+  "build_dir": "build-ab",
+  "git_commit": "1987702037f46a8007641f89531cedef947c970f",
+  "tree": "src clean, other files modified",
+  "source_sha256": "39bbc7526efd8cb6c656186d8789ac332da1488d1928fc44d0aeec169989814f",
+  "source_files": 45,
+  "java": "openjdk version \"25.0.4.1\" 2026-08-18 LTS",
+  "os": "Darwin 27.2.0 (macOS-27.2-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-11-05T07:14:46",
+  "end": "2026-11-05T07:14:46",
+  "exit_code": 0
+}
