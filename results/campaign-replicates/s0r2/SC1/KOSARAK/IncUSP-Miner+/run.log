@@ -1,0 +1,19 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 9 | Scenarios: [SC1]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=2 | seed.index=0
+
+--- [SC1] Static baseline on D_init ---
+>> WARM-UP (not measured) IncUSP-Miner+/KOSARAK/SC1
+>> RUNNING IncUSP-Miner+/KOSARAK/SC1_su=0.022228#0  (heap free=4344MB / total=6720MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC1_su=0.022228#0] OK t=11936ms cand=26252433 pat=11 heapDelta=4837MB
+   warm-up mines (ms, not measured): [11936]
+>> RUNNING IncUSP-Miner+/KOSARAK/SC1_su=0.022228#0  (heap free=5665MB / total=8064MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC1_su=0.022228#0] OK t=11963ms cand=26252433 pat=11 heapDelta=8248MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC1_su=0.025#0  (heap free=7425MB / total=9824MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC1_su=0.025#0] OK t=8075ms cand=16201634 pat=10 heapDelta=5696MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC1_su=0.028117#0  (heap free=7105MB / total=9504MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC1_su=0.028117#0] OK t=5648ms cand=9713530 pat=7 heapDelta=5616MB
+>> RUNNING IncUSP-Miner+/KOSARAK/SC1_su=0.031623#0  (heap free=7108MB / total=9504MB / max=49152MB)
+[IncUSP-Miner+/KOSARAK/SC1_su=0.031623#0] OK t=4142ms cand=5960953 pat=5 heapDelta=5696MB
+=== ALL SCENARIOS DONE (69.5s) ===
