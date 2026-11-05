@@ -85,6 +85,11 @@ public class Sequence {
      */
     public void clearDerived() {
         remainingUtilities.clear();
+        clearFlat();
+    }
+
+    /** Drops the flat arrays only; the remaining utilities and the sequence utility are kept. */
+    public void clearFlat() {
         flatItems = null;
         flatUtilities = null;
         isItemsetEnd = null;

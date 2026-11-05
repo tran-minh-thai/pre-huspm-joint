@@ -443,11 +443,19 @@ public class AutomatedExperimentRunner {
 
     /**
      * Drops the cached derived data of every sequence, outside any timed call, so that the next
-     * static mine or stream of an arm in BUILDS_ONLY_WHEN_MISSING builds it inside its own call.
-     * Called before the memory baseline is taken, so the rebuilt data counts towards the arm.
+     * static mine or stream builds it inside its own call. Called before the memory baseline is taken.
+     *
+     * In a timing run (not MEM_LIVE) it drops the remaining utilities and the flat arrays, for the arms
+     * in BUILDS_ONLY_WHEN_MISSING: their time then includes building what they read, as the other arms'
+     * does. In a memory run it drops the flat arrays only, for every arm of a static mine (runSingle):
+     * the remaining utilities the loader computed count as part of the loaded database for every arm,
+     * as they always did, and the flat arrays an arm builds count towards that arm, as the arrays
+     * HUSP-ULL and HUSP-SP build for themselves always did. Without it, after the warm-up the flat
+     * arrays were already in the heap before the measured call, for the proposal as well.
      */
     static void freshSequences(List<Sequence> db) {
-        for (Sequence s : db) s.clearDerived();
+        if (MEM_LIVE) for (Sequence s : db) s.clearFlat();
+        else for (Sequence s : db) s.clearDerived();
     }
 
     /** freshSequences on D_init and on every batch of a stream, before the arm's first call. */
@@ -2197,7 +2205,7 @@ public class AutomatedExperimentRunner {
                 () -> runSingle(algo, dsName, db, totalUtil, su, iter, tag));
         if (failedWarmUp != null) return logged(failedWarmUp);
 
-        if (BUILDS_ONLY_WHEN_MISSING.contains(algo)) freshSequences(db);
+        if (MEM_LIVE || BUILDS_ONLY_WHEN_MISSING.contains(algo)) freshSequences(db);
         endMemArm();   // a static mine is measured against the heap at the start of the call
 
         // Built before anything is measured, while there is memory to build it. If anything
