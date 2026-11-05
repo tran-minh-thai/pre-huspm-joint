@@ -121,16 +121,20 @@ $mixedSets = @('SIGN','LEVIATHAN','C8T1S5I8N5K','TAFENG','DUNNHUMBY')
 $static  = @('USpan','HUSP-ULL','HUSP-SP','IncUSP-Miner+','Pre-HUSPM','Pre-HUSPM-Joint','Joint-miner@UUT')
 $incr    = @('Pre-HUSPM-Joint-fixed-threshold','Pre-HUSPM-SWUmax','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+',
              'Remine-HUSP-ULL','Remine-HUSP-SP','Joint-miner+SWUmax','Joint-miner+TSU','Joint-rule+PreHUSPM-tracking','Joint-miner+SWUmax+PreHUSPM-tracking',
-             'Pre-HUSPM-Joint','Remine-own-UUT','Joint-rule+plain-floor','Joint-rule+min-floor')
+             'Pre-HUSPM-Joint','Remine-own-UUT','Joint-rule+plain-floor','Joint-rule+min-floor',
+             'Remine-from-scratch-rebuild','Remine-own-UUT-rebuild')
 # SC5 runs the method, its fixed-floor row, the four arms SC2 started with and the remining arms.
 $sc5     = @('Pre-HUSPM-Joint-fixed-threshold','Pre-HUSPM-SWUmax','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+',
-             'Pre-HUSPM-Joint','Remine-HUSP-ULL','Remine-HUSP-SP','Remine-own-UUT')
+             'Pre-HUSPM-Joint','Remine-HUSP-ULL','Remine-HUSP-SP','Remine-own-UUT',
+             'Remine-from-scratch-rebuild','Remine-own-UUT-rebuild')
 # The mixed streams (SC6, SC6D, SC6B): AutomatedExperimentRunner.MIXED_ARMS.
 $mixed   = @('Pre-HUSPM-Joint-fixed-threshold','Remine-from-scratch','Remine-HUSP-ULL','Remine-HUSP-SP','Pre-HUSPM-Joint',
-             'Remine-own-UUT','Joint-rule+plain-floor','Joint-rule+min-floor')
+             'Remine-own-UUT','Joint-rule+plain-floor','Joint-rule+min-floor',
+             'Remine-from-scratch-rebuild','Remine-own-UUT-rebuild')
 # The long streams (SC8, SC8P, SC9, SC10, SC10H; common.StreamPlans): AutomatedExperimentRunner.LONG_ARMS,
 # and in SC9 also the method with its block index rebuilt at every rescan.
-$long    = @('Pre-HUSPM-Joint-fixed-threshold','Remine-from-scratch','Pre-HUSPM-Joint','Remine-own-UUT','Pre-HUSPM-Joint-w5')
+$long    = @('Pre-HUSPM-Joint-fixed-threshold','Remine-from-scratch','Pre-HUSPM-Joint','Remine-own-UUT','Pre-HUSPM-Joint-w5',
+             'Remine-from-scratch-rebuild','Remine-own-UUT-rebuild')
 $long9   = $long + @('Pre-HUSPM-Joint-index-rebuild')
 $scenarios = @('SC1','SC2','SC3','SC4','SC5','SC6','SC6D','SC6B','SC7','FIDELITY','SC8','SC8P','SC9','SC10','SC10H')
 if ($scenarios -notcontains $Scenario) { throw "Unknown scenario '$Scenario'. Known: $($scenarios -join ', ')." }
@@ -205,6 +209,7 @@ if (-not $Datasets) {
 $knownAlgos = @('Pre-HUSPM-Joint','Pre-HUSPM-Joint-fixed-threshold','Pre-HUSPM','Pre-HUSPM-SWUmax','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+',
                 'Remine-HUSP-ULL','Remine-HUSP-SP','Joint-miner+SWUmax','Joint-miner+TSU','Joint-rule+PreHUSPM-tracking','Joint-miner+SWUmax+PreHUSPM-tracking',
                 'Remine-own-UUT','Joint-rule+plain-floor','Joint-rule+min-floor','Joint-miner@UUT',
+                'Remine-from-scratch-rebuild','Remine-own-UUT-rebuild',
                 'Pre-HUSPM-Joint-w1','Pre-HUSPM-Joint-w2','Pre-HUSPM-Joint-w3','Pre-HUSPM-Joint-w5','Pre-HUSPM-Joint-w10',
                 'Pre-HUSPM-Joint-be1','Pre-HUSPM-Joint-be2','Pre-HUSPM-Joint-be3','Pre-HUSPM-Joint-be10','Pre-HUSPM-Joint-be20','Pre-HUSPM-Joint-time',
                 'USpan','HUSP-ULL','HUSP-SP',
