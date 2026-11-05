@@ -1,0 +1,16 @@
+{
+  "command": "java -Xmx16g -cp build-probe2 verify.DerivedDataCheck",
+  "path_substitutions": 0,
+  "build_dir": "build-probe2",
+  "git_commit": "000d929777d4d0f9439021abc11347d6f7117d54",
+  "tree": "src clean, other files modified",
+  "source_sha256": "4fe09ec3d8b8f8de272989b55ddd7cb7098c6a4ce6aed643f9212daf59f71d4a",
+  "source_files": 46,
+  "java": "openjdk version \"25.0.4.1\" 2026-08-18 LTS",
+  "os": "Darwin 27.2.0 (macOS-27.2-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-11-05T10:45:43",
+  "end": "2026-11-05T10:45:52",
+  "exit_code": 0
+}

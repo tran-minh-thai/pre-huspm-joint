@@ -1,0 +1,16 @@
+{
+  "command": "java -Xmx16g -Xss64m -cp build-probe -Ddataset.only=SIGN,TAFENG -Dalgo.only=Pre-HUSPM-Joint-fixed-threshold,Remine-from-scratch,Remine-from-scratch-rebuild,Remine-own-UUT,Remine-own-UUT-rebuild -Drepeats=1 -Dverify.husps=true -Dresults.dir=results-probe/remine-rebuild/2026-11-05-verify/ AutomatedExperimentRunner SC2",
+  "path_substitutions": 0,
+  "build_dir": "build-probe",
+  "git_commit": "750b1809721b81b00bbad08ac6bd6473f03d12f1",
+  "tree": "clean",
+  "source_sha256": "3c7a0778bb808aa887cb8b2c7e0829bf0cc4c0960c0ede370cee7898059484ab",
+  "source_files": 45,
+  "java": "openjdk version \"25.0.4.1\" 2026-08-18 LTS",
+  "os": "Darwin 27.2.0 (macOS-27.2-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-11-05T10:31:37",
+  "end": "2026-11-05T10:47:08",
+  "exit_code": 0
+}

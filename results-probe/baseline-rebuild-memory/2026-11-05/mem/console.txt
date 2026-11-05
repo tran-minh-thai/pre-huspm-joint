@@ -1,0 +1,8 @@
+SC1 SIGN Pre-HUSPM-Joint exit 0
+SC1 SIGN Pre-HUSPM exit 0
+SC1 SIGN IncUSP-Miner+ exit 0
+SC1 SIGN HUSP-SP exit 0
+SC1 TAFENG Pre-HUSPM-Joint exit 0
+SC1 TAFENG Pre-HUSPM exit 0
+SC1 TAFENG IncUSP-Miner+ exit 0
+SC1 TAFENG HUSP-SP exit 0

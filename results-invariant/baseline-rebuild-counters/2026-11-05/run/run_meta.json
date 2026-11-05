@@ -1,0 +1,16 @@
+{
+  "command": "bash results-invariant/baseline-rebuild-counters/2026-11-05/run_all.sh build-probe2 results-invariant/baseline-rebuild-counters/2026-11-05/run",
+  "path_substitutions": 0,
+  "build_dir": "build-probe2",
+  "git_commit": "e26f6c33b1c29033f85868711941a4923f07ef73",
+  "tree": "src clean, other files modified",
+  "source_sha256": "4fe09ec3d8b8f8de272989b55ddd7cb7098c6a4ce6aed643f9212daf59f71d4a",
+  "source_files": 46,
+  "java": "openjdk version \"25.0.4.1\" 2026-08-18 LTS",
+  "os": "Darwin 27.2.0 (macOS-27.2-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-11-05T10:46:37",
+  "end": "2026-11-05T11:18:13",
+  "exit_code": 0
+}

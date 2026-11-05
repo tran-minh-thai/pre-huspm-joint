@@ -1,0 +1,16 @@
+{
+  "command": "bash results-invariant/baseline-rebuild-counters/2026-11-05/run_mem.sh build-probe3 results-invariant/baseline-rebuild-counters/2026-11-05/mem",
+  "path_substitutions": 0,
+  "build_dir": "build-probe3",
+  "git_commit": "b5242d9445103ad9dd12b1c4ab8fb3e4b44f1580",
+  "tree": "src clean, other files modified",
+  "source_sha256": "16349bc6c082034e60771378b3314e3a338e1304990f989b348699a08b4809cd",
+  "source_files": 46,
+  "java": "openjdk version \"25.0.4.1\" 2026-08-18 LTS",
+  "os": "Darwin 27.2.0 (macOS-27.2-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-11-05T10:53:50",
+  "end": "2026-11-05T10:56:05",
+  "exit_code": 0
+}

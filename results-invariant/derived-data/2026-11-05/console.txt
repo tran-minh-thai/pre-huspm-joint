@@ -1,0 +1,10 @@
+SIGN                     sequences      730 | utilityFromItems differs 0 | clearDerived wrong 0 | rebuild differs 0 | control: left-to-right sum differs on 0
+LEVIATHAN                sequences     5834 | utilityFromItems differs 0 | clearDerived wrong 0 | rebuild differs 0 | control: left-to-right sum differs on 0
+BIBLE                    sequences    36369 | utilityFromItems differs 0 | clearDerived wrong 0 | rebuild differs 0 | control: left-to-right sum differs on 0
+BMS1                     sequences    59601 | utilityFromItems differs 0 | clearDerived wrong 0 | rebuild differs 0 | control: left-to-right sum differs on 0
+FIFA                     sequences    20450 | utilityFromItems differs 0 | clearDerived wrong 0 | rebuild differs 0 | control: left-to-right sum differs on 0
+KOSARAK                  sequences   990002 | utilityFromItems differs 0 | clearDerived wrong 0 | rebuild differs 0 | control: left-to-right sum differs on 0
+C8T1S5I8N5K              sequences    47132 | utilityFromItems differs 0 | clearDerived wrong 0 | rebuild differs 0 | control: left-to-right sum differs on 0
+TAFENG                   sequences    60665 | utilityFromItems differs 0 | clearDerived wrong 0 | rebuild differs 0 | control: left-to-right sum differs on 70
+DUNNHUMBY                sequences    38790 | utilityFromItems differs 0 | clearDerived wrong 0 | rebuild differs 0 | control: left-to-right sum differs on 27094
+total: 9 databases, 1259573 sequences, 0 failures; the control order differs on 27164 sequences

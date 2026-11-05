@@ -1,0 +1,27 @@
+SC1/BIBLE/IncUSP-Miner+: 4 of 4 rows matched to the campaign, 5 counters, 0 differing values
+SC1/BIBLE/Pre-HUSPM: 4 of 4 rows matched to the campaign, 5 counters, 0 differing values
+SC1/BIBLE/USpan: 4 of 4 rows matched to the campaign, 5 counters, 0 differing values
+SC1/C8T1S5I8N5K/IncUSP-Miner+: 4 of 4 rows matched to the campaign, 5 counters, 0 differing values
+SC1/C8T1S5I8N5K/Pre-HUSPM: 4 of 4 rows matched to the campaign, 5 counters, 0 differing values
+SC1/C8T1S5I8N5K/USpan: 4 of 4 rows matched to the campaign, 5 counters, 0 differing values
+SC1/LEVIATHAN/IncUSP-Miner+: 4 of 4 rows matched to the campaign, 5 counters, 0 differing values
+SC1/LEVIATHAN/Pre-HUSPM: 4 of 4 rows matched to the campaign, 5 counters, 0 differing values
+SC1/LEVIATHAN/USpan: 4 of 4 rows matched to the campaign, 5 counters, 0 differing values
+SC1/SIGN/IncUSP-Miner+: 4 of 4 rows matched to the campaign, 5 counters, 0 differing values
+SC1/SIGN/Pre-HUSPM: 4 of 4 rows matched to the campaign, 5 counters, 0 differing values
+SC1/SIGN/USpan: 4 of 4 rows matched to the campaign, 5 counters, 0 differing values
+SC1/TAFENG/IncUSP-Miner+: 4 of 4 rows matched to the campaign, 5 counters, 0 differing values
+SC1/TAFENG/Pre-HUSPM: 4 of 4 rows matched to the campaign, 5 counters, 0 differing values
+SC1/TAFENG/USpan: 4 of 4 rows matched to the campaign, 5 counters, 0 differing values
+SC2/LEVIATHAN/IncUSP-Miner+: 101 of 101 rows matched to the campaign, 5 counters, 0 differing values
+SC2/LEVIATHAN/Pre-HUSPM-SWUmax: 101 of 101 rows matched to the campaign, 5 counters, 0 differing values
+SC2/LEVIATHAN/Pre-HUSPM-TSU: 101 of 101 rows matched to the campaign, 5 counters, 0 differing values
+SC2/SIGN/IncUSP-Miner+: 101 of 101 rows matched to the campaign, 5 counters, 0 differing values
+SC2/SIGN/Pre-HUSPM-SWUmax: 101 of 101 rows matched to the campaign, 5 counters, 0 differing values
+SC2/SIGN/Pre-HUSPM-TSU: 101 of 101 rows matched to the campaign, 5 counters, 0 differing values
+SC2/TAFENG/IncUSP-Miner+: 101 of 101 rows matched to the campaign, 5 counters, 0 differing values
+SC2/TAFENG/Pre-HUSPM-SWUmax: 101 of 101 rows matched to the campaign, 5 counters, 0 differing values
+SC2/TAFENG/Pre-HUSPM-TSU: 101 of 101 rows matched to the campaign, 5 counters, 0 differing values
+SC4/SIGN/Pre-HUSPM: 4 of 4 rows matched to the campaign, 5 counters, 0 differing values
+SC7/SIGN/Pre-HUSPM: 1 of 1 rows matched to the campaign, 5 counters, 0 differing values
+26 files, 974 rows compared, 0 failing files
