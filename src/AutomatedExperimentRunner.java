@@ -1003,7 +1003,8 @@ public class AutomatedExperimentRunner {
      * with -Dverify.husps=true, every other arm is compared with its patterns.
      */
     static final String[] MIXED_ARMS = {FIXED_THRESHOLD, "Remine-from-scratch", "Remine-HUSP-ULL", "Remine-HUSP-SP",
-            METHOD, "Remine-own-UUT", "Joint-rule+plain-floor", "Joint-rule+min-floor"};
+            METHOD, "Remine-own-UUT", "Joint-rule+plain-floor", "Joint-rule+min-floor", "Remine-from-scratch-rebuild",
+            "Remine-own-UUT-rebuild"};
 
 
     /**
@@ -1012,7 +1013,18 @@ public class AutomatedExperimentRunner {
      * threshold do; Remine-own-UUT mines at UUT (lower threshold ratio 1, no pre-large patterns),
      * as the proposal's rescans at lambda = UUT do.
      */
-    static final String[] OWN_REMINE_ARMS = {"Remine-from-scratch", "Remine-own-UUT"};
+    static final String[] OWN_REMINE_ARMS = {"Remine-from-scratch", "Remine-own-UUT", "Remine-from-scratch-rebuild",
+            "Remine-own-UUT-rebuild"};
+
+    /**
+     * The remining arms that rebuild, at every operation and inside the timed call, what the mine
+     * reads from each sequence (PreHUSPMAdaptiveAlgo.runRemineRebuild), as the static miners of
+     * Remine-HUSP-ULL and Remine-HUSP-SP do. Remine-from-scratch and Remine-own-UUT reuse what an
+     * earlier operation built on the sequence objects (runRemine), so they measure the mine alone.
+     */
+    static boolean rebuildsSequences(String arm) {
+        return "Remine-from-scratch-rebuild".equals(arm) || "Remine-own-UUT-rebuild".equals(arm);
+    }
 
     /**
      * The proposal at the fixed lower threshold with another discard floor
@@ -1031,11 +1043,11 @@ public class AutomatedExperimentRunner {
     }
 
     static boolean isOwnRemine(String arm) {
-        return "Remine-from-scratch".equals(arm) || "Remine-own-UUT".equals(arm);
+        return "Remine-from-scratch".equals(arm) || "Remine-own-UUT".equals(arm) || rebuildsSequences(arm);
     }
 
     static double ownRemineRatio(String arm, String dsName) {
-        return "Remine-own-UUT".equals(arm) ? 1.0 : slRatioFor(dsName);
+        return "Remine-own-UUT".equals(arm) || "Remine-own-UUT-rebuild".equals(arm) ? 1.0 : slRatioFor(dsName);
     }
 
     /**
@@ -1202,7 +1214,8 @@ public class AutomatedExperimentRunner {
     /** The method with its block index rebuilt from the current database at every rescan (SC9). */
     static final String INDEX_REBUILD_ARM = METHOD + "-index-rebuild";
     /** The arms of the long streams, FIXED_THRESHOLD first as the reference of -Dverify.husps. */
-    static final String[] LONG_ARMS = {FIXED_THRESHOLD, "Remine-from-scratch", METHOD, "Remine-own-UUT", METHOD + "-w5"};
+    static final String[] LONG_ARMS = {FIXED_THRESHOLD, "Remine-from-scratch", METHOD, "Remine-own-UUT", METHOD + "-w5",
+            "Remine-from-scratch-rebuild", "Remine-own-UUT-rebuild"};
     /** The long streams use the first three seeds. */
     static final int LONG_SEED_COUNT = 3;
 
@@ -1298,8 +1311,10 @@ public class AutomatedExperimentRunner {
                 // Remine from scratch: a NEW instance that keeps no state.
                 PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo rm = newAdaptive(ds.defaultSu, ownRemineRatio(arm, ds.name));
                 announce(arm, ds.name, op.tag(), op.iter);
-                m = measureAdaptive(rm, arm, ds.name, op.iter, op.tag(),
-                        () -> rm.runRemine(snapshot, newTotal));
+                final boolean rebuild = rebuildsSequences(arm);
+                m = measureAdaptive(rm, arm, ds.name, op.iter, op.tag(), () -> {
+                    if (rebuild) rm.runRemineRebuild(snapshot, newTotal); else rm.runRemine(snapshot, newTotal);
+                });
                 m.rescanCount = 0;   // no incremental rescan in this reference
                 if (!failedRun(m)) verifyHusps(arm, op.iter, op.tag(), rm::exportLargeAsStrings);
             } else if (!incremental) {
@@ -1830,6 +1845,7 @@ public class AutomatedExperimentRunner {
         for (String rarm : OWN_REMINE_ARMS) {
             if (!algoEnabled(rarm)) continue;
             final double rRatio = ownRemineRatio(rarm, dsName);
+            final boolean rebuild = rebuildsSequences(rarm);
             beginMemArm();
             boolean poisoned = false;
             double rolling = initTotal;
@@ -1869,7 +1885,8 @@ public class AutomatedExperimentRunner {
                 // A new instance per batch: mining from scratch keeps NO pattern from the
                 // previous batch. runRemine does not rebuild what depends on the sequences
                 // alone (block index, flat arrays of sequences already seen, density measure),
-                // as a rescan of the proposal does not.
+                // as a rescan of the proposal does not; the -rebuild arms rebuild the remaining
+                // utilities and flat arrays of every sequence (runRemineRebuild), as a static miner does.
                 final List<Sequence> snapshot = new ArrayList<>(dSoFar);
                 final double finalTotal = newTotal;
                 PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo rm =
@@ -1879,7 +1896,7 @@ public class AutomatedExperimentRunner {
                                 ENABLE_PATTERN_EXPORT);
                 announce(rarm, dsName, tag + "_INC", batchIdx);
                 ExperimentMetrics mb = measure(rarm, dsName, batchIdx, tag + "_INC",
-                        () -> rm.runRemine(snapshot, finalTotal),
+                        () -> { if (rebuild) rm.runRemineRebuild(snapshot, finalTotal); else rm.runRemine(snapshot, finalTotal); },
                         () -> rm.candidateCount, () -> rm.patternCount,
                         () -> rm.lutDynValue, () -> rm.cubValue, () -> rm.cubTriggeredRescan,
                         null, () -> rm.prunedValueBound,

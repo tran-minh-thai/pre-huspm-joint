@@ -1316,6 +1316,23 @@ public class PreHUSPMAdaptiveAlgorithm {
             this.tsuAtLastRescan = currentTotalUtility;
         }
 
+        /**
+         * Remining as a static miner does it: every sequence of db is first turned again from its
+         * items into what the mine reads (sequence utility, remaining utilities, flat arrays), as
+         * HUSP-ULL and HUSP-SP do inside their own run, and then runRemine mines it. Unlike
+         * runRemine alone, nothing derived from the sequences is carried over from an earlier
+         * operation, so a remining arm that calls this keeps no state between operations. The
+         * block index and the density measure are still left out, for the reasons given at
+         * runRemine.
+         */
+        public void runRemineRebuild(List<Sequence> db, double currentTotalUtility) {
+            for (Sequence s : db) {
+                s.calculateRemainingUtilities();
+                s.buildFlatRepresentation();
+            }
+            runRemine(db, currentTotalUtility);
+        }
+
         // ================= PHASE 2: INSERTION =================
         public void runIncrementalMining(List<Sequence> deltaD, List<Sequence> dSoFar, double newTotalUtility) {
             beginUnit();
