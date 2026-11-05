@@ -1,0 +1,537 @@
+tree	replicate	scenario	database	arm	kind
+campaign		SC1	BIBLE	IncUSP-Miner+	again
+campaign		SC1	BIBLE	Pre-HUSPM	again
+campaign		SC1	BIBLE	USpan	again
+campaign		SC1	BMS1	IncUSP-Miner+	again
+campaign		SC1	BMS1	Pre-HUSPM	again
+campaign		SC1	BMS1	USpan	again
+campaign		SC1	C8T1S5I8N5K	IncUSP-Miner+	again
+campaign		SC1	C8T1S5I8N5K	Pre-HUSPM	again
+campaign		SC1	C8T1S5I8N5K	USpan	again
+campaign		SC1	DUNNHUMBY	IncUSP-Miner+	again
+campaign		SC1	DUNNHUMBY	Pre-HUSPM	again
+campaign		SC1	DUNNHUMBY	USpan	again
+campaign		SC1	FIFA	IncUSP-Miner+	again
+campaign		SC1	FIFA	Pre-HUSPM	again
+campaign		SC1	FIFA	USpan	again
+campaign		SC1	KOSARAK	IncUSP-Miner+	again
+campaign		SC1	KOSARAK	Pre-HUSPM	again
+campaign		SC1	KOSARAK	USpan	again
+campaign		SC1	LEVIATHAN	IncUSP-Miner+	again
+campaign		SC1	LEVIATHAN	Pre-HUSPM	again
+campaign		SC1	LEVIATHAN	USpan	again
+campaign		SC1	SIGN	IncUSP-Miner+	again
+campaign		SC1	SIGN	Pre-HUSPM	again
+campaign		SC1	SIGN	USpan	again
+campaign		SC1	TAFENG	IncUSP-Miner+	again
+campaign		SC1	TAFENG	Pre-HUSPM	again
+campaign		SC1	TAFENG	USpan	again
+campaign		SC3	C8T1S5I8N5K	IncUSP-Miner+	again
+campaign		SC3	C8T1S5I8N5K	Pre-HUSPM	again
+campaign		SC3	C8T1S5I8N5K	USpan	again
+campaign		SC3	LEVIATHAN	IncUSP-Miner+	again
+campaign		SC3	LEVIATHAN	Pre-HUSPM	again
+campaign		SC3	LEVIATHAN	USpan	again
+campaign		SC3	SIGN	IncUSP-Miner+	again
+campaign		SC3	SIGN	Pre-HUSPM	again
+campaign		SC3	SIGN	USpan	again
+campaign		SC4	C8T1S5I8N5K	Pre-HUSPM	again
+campaign		SC4	LEVIATHAN	Pre-HUSPM	again
+campaign		SC4	SIGN	Pre-HUSPM	again
+campaign		SC5	C8T1S5I8N5K	IncUSP-Miner+	again
+campaign		SC5	C8T1S5I8N5K	Pre-HUSPM-SWUmax	again
+campaign		SC5	C8T1S5I8N5K	Pre-HUSPM-TSU	again
+campaign		SC5	LEVIATHAN	IncUSP-Miner+	again
+campaign		SC5	LEVIATHAN	Pre-HUSPM-SWUmax	again
+campaign		SC5	LEVIATHAN	Pre-HUSPM-TSU	again
+campaign		SC5	SIGN	IncUSP-Miner+	again
+campaign		SC5	SIGN	Pre-HUSPM-SWUmax	again
+campaign		SC5	SIGN	Pre-HUSPM-TSU	again
+campaign		SC7	BIBLE	Pre-HUSPM	again
+campaign		SC7	C8T1S5I8N5K	Pre-HUSPM	again
+campaign		SC7	DUNNHUMBY	Pre-HUSPM	again
+campaign		SC7	FIFA	Pre-HUSPM	again
+campaign		SC7	KOSARAK	Pre-HUSPM	again
+campaign		SC7	LEVIATHAN	Pre-HUSPM	again
+campaign		SC7	SIGN	Pre-HUSPM	again
+campaign		SC7	TAFENG	Pre-HUSPM	again
+campaign-replicates	s0r2	SC1	BIBLE	IncUSP-Miner+	again
+campaign-replicates	s0r2	SC1	BIBLE	Pre-HUSPM	again
+campaign-replicates	s0r2	SC1	BIBLE	USpan	again
+campaign-replicates	s0r2	SC1	BMS1	IncUSP-Miner+	again
+campaign-replicates	s0r2	SC1	BMS1	Pre-HUSPM	again
+campaign-replicates	s0r2	SC1	BMS1	USpan	again
+campaign-replicates	s0r2	SC1	C8T1S5I8N5K	IncUSP-Miner+	again
+campaign-replicates	s0r2	SC1	C8T1S5I8N5K	Pre-HUSPM	again
+campaign-replicates	s0r2	SC1	C8T1S5I8N5K	USpan	again
+campaign-replicates	s0r2	SC1	FIFA	IncUSP-Miner+	again
+campaign-replicates	s0r2	SC1	FIFA	Pre-HUSPM	again
+campaign-replicates	s0r2	SC1	FIFA	USpan	again
+campaign-replicates	s0r2	SC1	KOSARAK	IncUSP-Miner+	again
+campaign-replicates	s0r2	SC1	KOSARAK	Pre-HUSPM	again
+campaign-replicates	s0r2	SC1	KOSARAK	USpan	again
+campaign-replicates	s0r2	SC1	LEVIATHAN	IncUSP-Miner+	again
+campaign-replicates	s0r2	SC1	LEVIATHAN	Pre-HUSPM	again
+campaign-replicates	s0r2	SC1	LEVIATHAN	USpan	again
+campaign-replicates	s0r2	SC1	SIGN	IncUSP-Miner+	again
+campaign-replicates	s0r2	SC1	SIGN	Pre-HUSPM	again
+campaign-replicates	s0r2	SC1	SIGN	USpan	again
+campaign-replicates	s0r2	SC1	TAFENG	IncUSP-Miner+	again
+campaign-replicates	s0r2	SC1	TAFENG	Pre-HUSPM	again
+campaign-replicates	s0r2	SC1	TAFENG	USpan	again
+campaign-replicates	s0r2	SC3	C8T1S5I8N5K	IncUSP-Miner+	again
+campaign-replicates	s0r2	SC3	C8T1S5I8N5K	Pre-HUSPM	again
+campaign-replicates	s0r2	SC3	C8T1S5I8N5K	USpan	again
+campaign-replicates	s0r2	SC3	LEVIATHAN	IncUSP-Miner+	again
+campaign-replicates	s0r2	SC3	LEVIATHAN	Pre-HUSPM	again
+campaign-replicates	s0r2	SC3	LEVIATHAN	USpan	again
+campaign-replicates	s0r2	SC3	SIGN	IncUSP-Miner+	again
+campaign-replicates	s0r2	SC3	SIGN	Pre-HUSPM	again
+campaign-replicates	s0r2	SC3	SIGN	USpan	again
+campaign-replicates	s0r2	SC7	BIBLE	Pre-HUSPM	again
+campaign-replicates	s0r2	SC7	C8T1S5I8N5K	Pre-HUSPM	again
+campaign-replicates	s0r2	SC7	FIFA	Pre-HUSPM	again
+campaign-replicates	s0r2	SC7	KOSARAK	Pre-HUSPM	again
+campaign-replicates	s0r2	SC7	LEVIATHAN	Pre-HUSPM	again
+campaign-replicates	s0r2	SC7	SIGN	Pre-HUSPM	again
+campaign-replicates	s0r2	SC7	TAFENG	Pre-HUSPM	again
+campaign-replicates	s0r1	SC1	BIBLE	IncUSP-Miner+	again
+campaign-replicates	s0r1	SC1	BIBLE	Pre-HUSPM	again
+campaign-replicates	s0r1	SC1	BIBLE	USpan	again
+campaign-replicates	s0r1	SC1	BMS1	IncUSP-Miner+	again
+campaign-replicates	s0r1	SC1	BMS1	Pre-HUSPM	again
+campaign-replicates	s0r1	SC1	BMS1	USpan	again
+campaign-replicates	s0r1	SC1	C8T1S5I8N5K	IncUSP-Miner+	again
+campaign-replicates	s0r1	SC1	C8T1S5I8N5K	Pre-HUSPM	again
+campaign-replicates	s0r1	SC1	C8T1S5I8N5K	USpan	again
+campaign-replicates	s0r1	SC1	FIFA	IncUSP-Miner+	again
+campaign-replicates	s0r1	SC1	FIFA	Pre-HUSPM	again
+campaign-replicates	s0r1	SC1	FIFA	USpan	again
+campaign-replicates	s0r1	SC1	KOSARAK	IncUSP-Miner+	again
+campaign-replicates	s0r1	SC1	KOSARAK	Pre-HUSPM	again
+campaign-replicates	s0r1	SC1	KOSARAK	USpan	again
+campaign-replicates	s0r1	SC1	LEVIATHAN	IncUSP-Miner+	again
+campaign-replicates	s0r1	SC1	LEVIATHAN	Pre-HUSPM	again
+campaign-replicates	s0r1	SC1	LEVIATHAN	USpan	again
+campaign-replicates	s0r1	SC1	SIGN	IncUSP-Miner+	again
+campaign-replicates	s0r1	SC1	SIGN	Pre-HUSPM	again
+campaign-replicates	s0r1	SC1	SIGN	USpan	again
+campaign-replicates	s0r1	SC1	TAFENG	IncUSP-Miner+	again
+campaign-replicates	s0r1	SC1	TAFENG	Pre-HUSPM	again
+campaign-replicates	s0r1	SC1	TAFENG	USpan	again
+campaign-replicates	s0r1	SC3	C8T1S5I8N5K	IncUSP-Miner+	again
+campaign-replicates	s0r1	SC3	C8T1S5I8N5K	Pre-HUSPM	again
+campaign-replicates	s0r1	SC3	C8T1S5I8N5K	USpan	again
+campaign-replicates	s0r1	SC3	LEVIATHAN	IncUSP-Miner+	again
+campaign-replicates	s0r1	SC3	LEVIATHAN	Pre-HUSPM	again
+campaign-replicates	s0r1	SC3	LEVIATHAN	USpan	again
+campaign-replicates	s0r1	SC3	SIGN	IncUSP-Miner+	again
+campaign-replicates	s0r1	SC3	SIGN	Pre-HUSPM	again
+campaign-replicates	s0r1	SC3	SIGN	USpan	again
+campaign-replicates	s0r1	SC7	BIBLE	Pre-HUSPM	again
+campaign-replicates	s0r1	SC7	C8T1S5I8N5K	Pre-HUSPM	again
+campaign-replicates	s0r1	SC7	FIFA	Pre-HUSPM	again
+campaign-replicates	s0r1	SC7	KOSARAK	Pre-HUSPM	again
+campaign-replicates	s0r1	SC7	LEVIATHAN	Pre-HUSPM	again
+campaign-replicates	s0r1	SC7	SIGN	Pre-HUSPM	again
+campaign-replicates	s0r1	SC7	TAFENG	Pre-HUSPM	again
+campaign-mem-sampled		SC1	BIBLE	IncUSP-Miner+	again
+campaign-mem-sampled		SC1	BIBLE	Joint-miner@UUT	again
+campaign-mem-sampled		SC1	BIBLE	Pre-HUSPM	again
+campaign-mem-sampled		SC1	BIBLE	Pre-HUSPM-Joint	again
+campaign-mem-sampled		SC1	BMS1	IncUSP-Miner+	again
+campaign-mem-sampled		SC1	BMS1	Joint-miner@UUT	again
+campaign-mem-sampled		SC1	BMS1	Pre-HUSPM	again
+campaign-mem-sampled		SC1	BMS1	Pre-HUSPM-Joint	again
+campaign-mem-sampled		SC1	C8T1S5I8N5K	IncUSP-Miner+	again
+campaign-mem-sampled		SC1	C8T1S5I8N5K	Joint-miner@UUT	again
+campaign-mem-sampled		SC1	C8T1S5I8N5K	Pre-HUSPM	again
+campaign-mem-sampled		SC1	C8T1S5I8N5K	Pre-HUSPM-Joint	again
+campaign-mem-sampled		SC1	DUNNHUMBY	IncUSP-Miner+	again
+campaign-mem-sampled		SC1	DUNNHUMBY	Joint-miner@UUT	again
+campaign-mem-sampled		SC1	DUNNHUMBY	Pre-HUSPM	again
+campaign-mem-sampled		SC1	DUNNHUMBY	Pre-HUSPM-Joint	again
+campaign-mem-sampled		SC1	FIFA	IncUSP-Miner+	again
+campaign-mem-sampled		SC1	FIFA	Joint-miner@UUT	again
+campaign-mem-sampled		SC1	FIFA	Pre-HUSPM	again
+campaign-mem-sampled		SC1	FIFA	Pre-HUSPM-Joint	again
+campaign-mem-sampled		SC1	KOSARAK	IncUSP-Miner+	again
+campaign-mem-sampled		SC1	KOSARAK	Joint-miner@UUT	again
+campaign-mem-sampled		SC1	KOSARAK	Pre-HUSPM	again
+campaign-mem-sampled		SC1	KOSARAK	Pre-HUSPM-Joint	again
+campaign-mem-sampled		SC1	LEVIATHAN	IncUSP-Miner+	again
+campaign-mem-sampled		SC1	LEVIATHAN	Joint-miner@UUT	again
+campaign-mem-sampled		SC1	LEVIATHAN	Pre-HUSPM	again
+campaign-mem-sampled		SC1	LEVIATHAN	Pre-HUSPM-Joint	again
+campaign-mem-sampled		SC1	SIGN	IncUSP-Miner+	again
+campaign-mem-sampled		SC1	SIGN	Joint-miner@UUT	again
+campaign-mem-sampled		SC1	SIGN	Pre-HUSPM	again
+campaign-mem-sampled		SC1	SIGN	Pre-HUSPM-Joint	again
+campaign-mem-sampled		SC1	TAFENG	IncUSP-Miner+	again
+campaign-mem-sampled		SC1	TAFENG	Joint-miner@UUT	again
+campaign-mem-sampled		SC1	TAFENG	Pre-HUSPM	again
+campaign-mem-sampled		SC1	TAFENG	Pre-HUSPM-Joint	again
+campaign-mem-sampled-replicates	s0r1	SC1	BIBLE	IncUSP-Miner+	again
+campaign-mem-sampled-replicates	s0r1	SC1	BIBLE	Joint-miner@UUT	again
+campaign-mem-sampled-replicates	s0r1	SC1	BIBLE	Pre-HUSPM	again
+campaign-mem-sampled-replicates	s0r1	SC1	BIBLE	Pre-HUSPM-Joint	again
+campaign-mem-sampled-replicates	s0r1	SC1	BMS1	IncUSP-Miner+	again
+campaign-mem-sampled-replicates	s0r1	SC1	BMS1	Joint-miner@UUT	again
+campaign-mem-sampled-replicates	s0r1	SC1	BMS1	Pre-HUSPM	again
+campaign-mem-sampled-replicates	s0r1	SC1	BMS1	Pre-HUSPM-Joint	again
+campaign-mem-sampled-replicates	s0r1	SC1	C8T1S5I8N5K	IncUSP-Miner+	again
+campaign-mem-sampled-replicates	s0r1	SC1	C8T1S5I8N5K	Joint-miner@UUT	again
+campaign-mem-sampled-replicates	s0r1	SC1	C8T1S5I8N5K	Pre-HUSPM	again
+campaign-mem-sampled-replicates	s0r1	SC1	C8T1S5I8N5K	Pre-HUSPM-Joint	again
+campaign-mem-sampled-replicates	s0r1	SC1	DUNNHUMBY	Joint-miner@UUT	again
+campaign-mem-sampled-replicates	s0r1	SC1	DUNNHUMBY	Pre-HUSPM-Joint	again
+campaign-mem-sampled-replicates	s0r1	SC1	FIFA	IncUSP-Miner+	again
+campaign-mem-sampled-replicates	s0r1	SC1	FIFA	Joint-miner@UUT	again
+campaign-mem-sampled-replicates	s0r1	SC1	FIFA	Pre-HUSPM	again
+campaign-mem-sampled-replicates	s0r1	SC1	FIFA	Pre-HUSPM-Joint	again
+campaign-mem-sampled-replicates	s0r1	SC1	KOSARAK	IncUSP-Miner+	again
+campaign-mem-sampled-replicates	s0r1	SC1	KOSARAK	Joint-miner@UUT	again
+campaign-mem-sampled-replicates	s0r1	SC1	KOSARAK	Pre-HUSPM	again
+campaign-mem-sampled-replicates	s0r1	SC1	KOSARAK	Pre-HUSPM-Joint	again
+campaign-mem-sampled-replicates	s0r1	SC1	LEVIATHAN	IncUSP-Miner+	again
+campaign-mem-sampled-replicates	s0r1	SC1	LEVIATHAN	Joint-miner@UUT	again
+campaign-mem-sampled-replicates	s0r1	SC1	LEVIATHAN	Pre-HUSPM	again
+campaign-mem-sampled-replicates	s0r1	SC1	LEVIATHAN	Pre-HUSPM-Joint	again
+campaign-mem-sampled-replicates	s0r1	SC1	SIGN	IncUSP-Miner+	again
+campaign-mem-sampled-replicates	s0r1	SC1	SIGN	Joint-miner@UUT	again
+campaign-mem-sampled-replicates	s0r1	SC1	SIGN	Pre-HUSPM	again
+campaign-mem-sampled-replicates	s0r1	SC1	SIGN	Pre-HUSPM-Joint	again
+campaign-mem-sampled-replicates	s0r1	SC1	TAFENG	IncUSP-Miner+	again
+campaign-mem-sampled-replicates	s0r1	SC1	TAFENG	Joint-miner@UUT	again
+campaign-mem-sampled-replicates	s0r1	SC1	TAFENG	Pre-HUSPM	again
+campaign-mem-sampled-replicates	s0r1	SC1	TAFENG	Pre-HUSPM-Joint	again
+campaign		SC10	C8T1S5I8N5K	Remine-from-scratch-rebuild	new
+campaign		SC10	DUNNHUMBY	Remine-from-scratch-rebuild	new
+campaign		SC10	LEVIATHAN	Remine-from-scratch-rebuild	new
+campaign		SC10	SIGN	Remine-from-scratch-rebuild	new
+campaign		SC10	TAFENG	Remine-from-scratch-rebuild	new
+campaign		SC10H	C8T1S5I8N5K	Remine-from-scratch-rebuild	new
+campaign		SC10H	DUNNHUMBY	Remine-from-scratch-rebuild	new
+campaign		SC10H	LEVIATHAN	Remine-from-scratch-rebuild	new
+campaign		SC10H	TAFENG	Remine-from-scratch-rebuild	new
+campaign		SC2	BIBLE	Remine-from-scratch-rebuild	new
+campaign		SC2	C8T1S5I8N5K	Remine-from-scratch-rebuild	new
+campaign		SC2	DUNNHUMBY	Remine-from-scratch-rebuild	new
+campaign		SC2	FIFA	Remine-from-scratch-rebuild	new
+campaign		SC2	KOSARAK	Remine-from-scratch-rebuild	new
+campaign		SC2	LEVIATHAN	Remine-from-scratch-rebuild	new
+campaign		SC2	SIGN	Remine-from-scratch-rebuild	new
+campaign		SC2	TAFENG	Remine-from-scratch-rebuild	new
+campaign		SC5	C8T1S5I8N5K	Remine-from-scratch-rebuild	new
+campaign		SC5	LEVIATHAN	Remine-from-scratch-rebuild	new
+campaign		SC5	SIGN	Remine-from-scratch-rebuild	new
+campaign		SC6	C8T1S5I8N5K	Remine-from-scratch-rebuild	new
+campaign		SC6	DUNNHUMBY	Remine-from-scratch-rebuild	new
+campaign		SC6	LEVIATHAN	Remine-from-scratch-rebuild	new
+campaign		SC6	SIGN	Remine-from-scratch-rebuild	new
+campaign		SC6	TAFENG	Remine-from-scratch-rebuild	new
+campaign		SC6B	C8T1S5I8N5K	Remine-from-scratch-rebuild	new
+campaign		SC6B	DUNNHUMBY	Remine-from-scratch-rebuild	new
+campaign		SC6B	LEVIATHAN	Remine-from-scratch-rebuild	new
+campaign		SC6B	SIGN	Remine-from-scratch-rebuild	new
+campaign		SC6B	TAFENG	Remine-from-scratch-rebuild	new
+campaign		SC6D	C8T1S5I8N5K	Remine-from-scratch-rebuild	new
+campaign		SC6D	DUNNHUMBY	Remine-from-scratch-rebuild	new
+campaign		SC6D	LEVIATHAN	Remine-from-scratch-rebuild	new
+campaign		SC6D	SIGN	Remine-from-scratch-rebuild	new
+campaign		SC6D	TAFENG	Remine-from-scratch-rebuild	new
+campaign		SC8	C8T1S5I8N5K	Remine-from-scratch-rebuild	new
+campaign		SC8	DUNNHUMBY	Remine-from-scratch-rebuild	new
+campaign		SC8	LEVIATHAN	Remine-from-scratch-rebuild	new
+campaign		SC8	SIGN	Remine-from-scratch-rebuild	new
+campaign		SC8	TAFENG	Remine-from-scratch-rebuild	new
+campaign		SC8P	C8T1S5I8N5K	Remine-from-scratch-rebuild	new
+campaign		SC8P	DUNNHUMBY	Remine-from-scratch-rebuild	new
+campaign		SC8P	LEVIATHAN	Remine-from-scratch-rebuild	new
+campaign		SC8P	SIGN	Remine-from-scratch-rebuild	new
+campaign		SC8P	TAFENG	Remine-from-scratch-rebuild	new
+campaign		SC9	C8T1S5I8N5K	Remine-from-scratch-rebuild	new
+campaign		SC9	DUNNHUMBY	Remine-from-scratch-rebuild	new
+campaign		SC9	LEVIATHAN	Remine-from-scratch-rebuild	new
+campaign		SC9	SIGN	Remine-from-scratch-rebuild	new
+campaign		SC9	TAFENG	Remine-from-scratch-rebuild	new
+campaign-replicates	s1r0	SC6	C8T1S5I8N5K	Remine-from-scratch-rebuild	new
+campaign-replicates	s1r0	SC6	DUNNHUMBY	Remine-from-scratch-rebuild	new
+campaign-replicates	s1r0	SC6	LEVIATHAN	Remine-from-scratch-rebuild	new
+campaign-replicates	s1r0	SC6	SIGN	Remine-from-scratch-rebuild	new
+campaign-replicates	s1r0	SC6	TAFENG	Remine-from-scratch-rebuild	new
+campaign-replicates	s1r0	SC6B	C8T1S5I8N5K	Remine-from-scratch-rebuild	new
+campaign-replicates	s1r0	SC6B	DUNNHUMBY	Remine-from-scratch-rebuild	new
+campaign-replicates	s1r0	SC6B	LEVIATHAN	Remine-from-scratch-rebuild	new
+campaign-replicates	s1r0	SC6B	SIGN	Remine-from-scratch-rebuild	new
+campaign-replicates	s1r0	SC6B	TAFENG	Remine-from-scratch-rebuild	new
+campaign-replicates	s1r0	SC6D	C8T1S5I8N5K	Remine-from-scratch-rebuild	new
+campaign-replicates	s1r0	SC6D	DUNNHUMBY	Remine-from-scratch-rebuild	new
+campaign-replicates	s1r0	SC6D	LEVIATHAN	Remine-from-scratch-rebuild	new
+campaign-replicates	s1r0	SC6D	SIGN	Remine-from-scratch-rebuild	new
+campaign-replicates	s1r0	SC6D	TAFENG	Remine-from-scratch-rebuild	new
+campaign-replicates	s0r4	SC2	BIBLE	Remine-from-scratch-rebuild	new
+campaign-replicates	s0r4	SC2	C8T1S5I8N5K	Remine-from-scratch-rebuild	new
+campaign-replicates	s0r4	SC2	DUNNHUMBY	Remine-from-scratch-rebuild	new
+campaign-replicates	s0r4	SC2	FIFA	Remine-from-scratch-rebuild	new
+campaign-replicates	s0r4	SC2	KOSARAK	Remine-from-scratch-rebuild	new
+campaign-replicates	s0r4	SC2	LEVIATHAN	Remine-from-scratch-rebuild	new
+campaign-replicates	s0r4	SC2	SIGN	Remine-from-scratch-rebuild	new
+campaign-replicates	s0r4	SC2	TAFENG	Remine-from-scratch-rebuild	new
+campaign-replicates	s0r3	SC2	BIBLE	Remine-from-scratch-rebuild	new
+campaign-replicates	s0r3	SC2	C8T1S5I8N5K	Remine-from-scratch-rebuild	new
+campaign-replicates	s0r3	SC2	DUNNHUMBY	Remine-from-scratch-rebuild	new
+campaign-replicates	s0r3	SC2	FIFA	Remine-from-scratch-rebuild	new
+campaign-replicates	s0r3	SC2	KOSARAK	Remine-from-scratch-rebuild	new
+campaign-replicates	s0r3	SC2	LEVIATHAN	Remine-from-scratch-rebuild	new
+campaign-replicates	s0r3	SC2	SIGN	Remine-from-scratch-rebuild	new
+campaign-replicates	s0r3	SC2	TAFENG	Remine-from-scratch-rebuild	new
+campaign-replicates	s2r0	SC6	C8T1S5I8N5K	Remine-from-scratch-rebuild	new
+campaign-replicates	s2r0	SC6	DUNNHUMBY	Remine-from-scratch-rebuild	new
+campaign-replicates	s2r0	SC6	LEVIATHAN	Remine-from-scratch-rebuild	new
+campaign-replicates	s2r0	SC6	SIGN	Remine-from-scratch-rebuild	new
+campaign-replicates	s2r0	SC6	TAFENG	Remine-from-scratch-rebuild	new
+campaign-replicates	s2r0	SC6B	C8T1S5I8N5K	Remine-from-scratch-rebuild	new
+campaign-replicates	s2r0	SC6B	DUNNHUMBY	Remine-from-scratch-rebuild	new
+campaign-replicates	s2r0	SC6B	LEVIATHAN	Remine-from-scratch-rebuild	new
+campaign-replicates	s2r0	SC6B	SIGN	Remine-from-scratch-rebuild	new
+campaign-replicates	s2r0	SC6B	TAFENG	Remine-from-scratch-rebuild	new
+campaign-replicates	s2r0	SC6D	C8T1S5I8N5K	Remine-from-scratch-rebuild	new
+campaign-replicates	s2r0	SC6D	DUNNHUMBY	Remine-from-scratch-rebuild	new
+campaign-replicates	s2r0	SC6D	LEVIATHAN	Remine-from-scratch-rebuild	new
+campaign-replicates	s2r0	SC6D	SIGN	Remine-from-scratch-rebuild	new
+campaign-replicates	s2r0	SC6D	TAFENG	Remine-from-scratch-rebuild	new
+campaign-replicates	s0r2	SC2	BIBLE	Remine-from-scratch-rebuild	new
+campaign-replicates	s0r2	SC2	C8T1S5I8N5K	Remine-from-scratch-rebuild	new
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Remine-from-scratch-rebuild	new
+campaign-replicates	s0r2	SC2	FIFA	Remine-from-scratch-rebuild	new
+campaign-replicates	s0r2	SC2	KOSARAK	Remine-from-scratch-rebuild	new
+campaign-replicates	s0r2	SC2	LEVIATHAN	Remine-from-scratch-rebuild	new
+campaign-replicates	s0r2	SC2	SIGN	Remine-from-scratch-rebuild	new
+campaign-replicates	s0r2	SC2	TAFENG	Remine-from-scratch-rebuild	new
+campaign-replicates	s0r2	SC5	C8T1S5I8N5K	Remine-from-scratch-rebuild	new
+campaign-replicates	s0r2	SC5	LEVIATHAN	Remine-from-scratch-rebuild	new
+campaign-replicates	s0r2	SC5	SIGN	Remine-from-scratch-rebuild	new
+campaign-replicates	s3r0	SC6	C8T1S5I8N5K	Remine-from-scratch-rebuild	new
+campaign-replicates	s3r0	SC6	DUNNHUMBY	Remine-from-scratch-rebuild	new
+campaign-replicates	s3r0	SC6	LEVIATHAN	Remine-from-scratch-rebuild	new
+campaign-replicates	s3r0	SC6	SIGN	Remine-from-scratch-rebuild	new
+campaign-replicates	s3r0	SC6	TAFENG	Remine-from-scratch-rebuild	new
+campaign-replicates	s3r0	SC6B	C8T1S5I8N5K	Remine-from-scratch-rebuild	new
+campaign-replicates	s3r0	SC6B	DUNNHUMBY	Remine-from-scratch-rebuild	new
+campaign-replicates	s3r0	SC6B	LEVIATHAN	Remine-from-scratch-rebuild	new
+campaign-replicates	s3r0	SC6B	SIGN	Remine-from-scratch-rebuild	new
+campaign-replicates	s3r0	SC6B	TAFENG	Remine-from-scratch-rebuild	new
+campaign-replicates	s3r0	SC6D	C8T1S5I8N5K	Remine-from-scratch-rebuild	new
+campaign-replicates	s3r0	SC6D	DUNNHUMBY	Remine-from-scratch-rebuild	new
+campaign-replicates	s3r0	SC6D	LEVIATHAN	Remine-from-scratch-rebuild	new
+campaign-replicates	s3r0	SC6D	SIGN	Remine-from-scratch-rebuild	new
+campaign-replicates	s3r0	SC6D	TAFENG	Remine-from-scratch-rebuild	new
+campaign-replicates	s0r1	SC2	BIBLE	Remine-from-scratch-rebuild	new
+campaign-replicates	s0r1	SC2	C8T1S5I8N5K	Remine-from-scratch-rebuild	new
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Remine-from-scratch-rebuild	new
+campaign-replicates	s0r1	SC2	FIFA	Remine-from-scratch-rebuild	new
+campaign-replicates	s0r1	SC2	KOSARAK	Remine-from-scratch-rebuild	new
+campaign-replicates	s0r1	SC2	LEVIATHAN	Remine-from-scratch-rebuild	new
+campaign-replicates	s0r1	SC2	SIGN	Remine-from-scratch-rebuild	new
+campaign-replicates	s0r1	SC2	TAFENG	Remine-from-scratch-rebuild	new
+campaign-replicates	s0r1	SC5	C8T1S5I8N5K	Remine-from-scratch-rebuild	new
+campaign-replicates	s0r1	SC5	LEVIATHAN	Remine-from-scratch-rebuild	new
+campaign-replicates	s0r1	SC5	SIGN	Remine-from-scratch-rebuild	new
+campaign-replicates	s4r0	SC6	C8T1S5I8N5K	Remine-from-scratch-rebuild	new
+campaign-replicates	s4r0	SC6	DUNNHUMBY	Remine-from-scratch-rebuild	new
+campaign-replicates	s4r0	SC6	LEVIATHAN	Remine-from-scratch-rebuild	new
+campaign-replicates	s4r0	SC6	SIGN	Remine-from-scratch-rebuild	new
+campaign-replicates	s4r0	SC6	TAFENG	Remine-from-scratch-rebuild	new
+campaign-replicates	s4r0	SC6B	C8T1S5I8N5K	Remine-from-scratch-rebuild	new
+campaign-replicates	s4r0	SC6B	DUNNHUMBY	Remine-from-scratch-rebuild	new
+campaign-replicates	s4r0	SC6B	LEVIATHAN	Remine-from-scratch-rebuild	new
+campaign-replicates	s4r0	SC6B	SIGN	Remine-from-scratch-rebuild	new
+campaign-replicates	s4r0	SC6B	TAFENG	Remine-from-scratch-rebuild	new
+campaign-replicates	s4r0	SC6D	C8T1S5I8N5K	Remine-from-scratch-rebuild	new
+campaign-replicates	s4r0	SC6D	DUNNHUMBY	Remine-from-scratch-rebuild	new
+campaign-replicates	s4r0	SC6D	LEVIATHAN	Remine-from-scratch-rebuild	new
+campaign-replicates	s4r0	SC6D	SIGN	Remine-from-scratch-rebuild	new
+campaign-replicates	s4r0	SC6D	TAFENG	Remine-from-scratch-rebuild	new
+campaign-mem		SC2	BIBLE	Remine-from-scratch-rebuild	new
+campaign-mem		SC2	C8T1S5I8N5K	Remine-from-scratch-rebuild	new
+campaign-mem		SC2	DUNNHUMBY	Remine-from-scratch-rebuild	new
+campaign-mem		SC2	FIFA	Remine-from-scratch-rebuild	new
+campaign-mem		SC2	KOSARAK	Remine-from-scratch-rebuild	new
+campaign-mem		SC2	LEVIATHAN	Remine-from-scratch-rebuild	new
+campaign-mem		SC2	SIGN	Remine-from-scratch-rebuild	new
+campaign-mem		SC2	TAFENG	Remine-from-scratch-rebuild	new
+campaign-mem-replicates	s0r1	SC2	DUNNHUMBY	Remine-from-scratch-rebuild	new
+campaign-mem-replicates	s0r1	SC2	SIGN	Remine-from-scratch-rebuild	new
+campaign-mem-replicates	s0r1	SC2	TAFENG	Remine-from-scratch-rebuild	new
+campaign		SC10	C8T1S5I8N5K	Remine-own-UUT-rebuild	new
+campaign		SC10	DUNNHUMBY	Remine-own-UUT-rebuild	new
+campaign		SC10	LEVIATHAN	Remine-own-UUT-rebuild	new
+campaign		SC10	SIGN	Remine-own-UUT-rebuild	new
+campaign		SC10	TAFENG	Remine-own-UUT-rebuild	new
+campaign		SC10H	C8T1S5I8N5K	Remine-own-UUT-rebuild	new
+campaign		SC10H	DUNNHUMBY	Remine-own-UUT-rebuild	new
+campaign		SC10H	LEVIATHAN	Remine-own-UUT-rebuild	new
+campaign		SC10H	TAFENG	Remine-own-UUT-rebuild	new
+campaign		SC2	BIBLE	Remine-own-UUT-rebuild	new
+campaign		SC2	C8T1S5I8N5K	Remine-own-UUT-rebuild	new
+campaign		SC2	DUNNHUMBY	Remine-own-UUT-rebuild	new
+campaign		SC2	FIFA	Remine-own-UUT-rebuild	new
+campaign		SC2	KOSARAK	Remine-own-UUT-rebuild	new
+campaign		SC2	LEVIATHAN	Remine-own-UUT-rebuild	new
+campaign		SC2	SIGN	Remine-own-UUT-rebuild	new
+campaign		SC2	TAFENG	Remine-own-UUT-rebuild	new
+campaign		SC5	C8T1S5I8N5K	Remine-own-UUT-rebuild	new
+campaign		SC5	LEVIATHAN	Remine-own-UUT-rebuild	new
+campaign		SC5	SIGN	Remine-own-UUT-rebuild	new
+campaign		SC6	C8T1S5I8N5K	Remine-own-UUT-rebuild	new
+campaign		SC6	DUNNHUMBY	Remine-own-UUT-rebuild	new
+campaign		SC6	LEVIATHAN	Remine-own-UUT-rebuild	new
+campaign		SC6	SIGN	Remine-own-UUT-rebuild	new
+campaign		SC6	TAFENG	Remine-own-UUT-rebuild	new
+campaign		SC6B	C8T1S5I8N5K	Remine-own-UUT-rebuild	new
+campaign		SC6B	DUNNHUMBY	Remine-own-UUT-rebuild	new
+campaign		SC6B	LEVIATHAN	Remine-own-UUT-rebuild	new
+campaign		SC6B	SIGN	Remine-own-UUT-rebuild	new
+campaign		SC6B	TAFENG	Remine-own-UUT-rebuild	new
+campaign		SC6D	C8T1S5I8N5K	Remine-own-UUT-rebuild	new
+campaign		SC6D	DUNNHUMBY	Remine-own-UUT-rebuild	new
+campaign		SC6D	LEVIATHAN	Remine-own-UUT-rebuild	new
+campaign		SC6D	SIGN	Remine-own-UUT-rebuild	new
+campaign		SC6D	TAFENG	Remine-own-UUT-rebuild	new
+campaign		SC8	C8T1S5I8N5K	Remine-own-UUT-rebuild	new
+campaign		SC8	DUNNHUMBY	Remine-own-UUT-rebuild	new
+campaign		SC8	LEVIATHAN	Remine-own-UUT-rebuild	new
+campaign		SC8	SIGN	Remine-own-UUT-rebuild	new
+campaign		SC8	TAFENG	Remine-own-UUT-rebuild	new
+campaign		SC8P	C8T1S5I8N5K	Remine-own-UUT-rebuild	new
+campaign		SC8P	DUNNHUMBY	Remine-own-UUT-rebuild	new
+campaign		SC8P	LEVIATHAN	Remine-own-UUT-rebuild	new
+campaign		SC8P	SIGN	Remine-own-UUT-rebuild	new
+campaign		SC8P	TAFENG	Remine-own-UUT-rebuild	new
+campaign		SC9	C8T1S5I8N5K	Remine-own-UUT-rebuild	new
+campaign		SC9	DUNNHUMBY	Remine-own-UUT-rebuild	new
+campaign		SC9	LEVIATHAN	Remine-own-UUT-rebuild	new
+campaign		SC9	SIGN	Remine-own-UUT-rebuild	new
+campaign		SC9	TAFENG	Remine-own-UUT-rebuild	new
+campaign-replicates	s1r0	SC6	C8T1S5I8N5K	Remine-own-UUT-rebuild	new
+campaign-replicates	s1r0	SC6	DUNNHUMBY	Remine-own-UUT-rebuild	new
+campaign-replicates	s1r0	SC6	LEVIATHAN	Remine-own-UUT-rebuild	new
+campaign-replicates	s1r0	SC6	SIGN	Remine-own-UUT-rebuild	new
+campaign-replicates	s1r0	SC6	TAFENG	Remine-own-UUT-rebuild	new
+campaign-replicates	s1r0	SC6B	C8T1S5I8N5K	Remine-own-UUT-rebuild	new
+campaign-replicates	s1r0	SC6B	DUNNHUMBY	Remine-own-UUT-rebuild	new
+campaign-replicates	s1r0	SC6B	LEVIATHAN	Remine-own-UUT-rebuild	new
+campaign-replicates	s1r0	SC6B	SIGN	Remine-own-UUT-rebuild	new
+campaign-replicates	s1r0	SC6B	TAFENG	Remine-own-UUT-rebuild	new
+campaign-replicates	s1r0	SC6D	C8T1S5I8N5K	Remine-own-UUT-rebuild	new
+campaign-replicates	s1r0	SC6D	DUNNHUMBY	Remine-own-UUT-rebuild	new
+campaign-replicates	s1r0	SC6D	LEVIATHAN	Remine-own-UUT-rebuild	new
+campaign-replicates	s1r0	SC6D	SIGN	Remine-own-UUT-rebuild	new
+campaign-replicates	s1r0	SC6D	TAFENG	Remine-own-UUT-rebuild	new
+campaign-replicates	s0r4	SC2	BIBLE	Remine-own-UUT-rebuild	new
+campaign-replicates	s0r4	SC2	C8T1S5I8N5K	Remine-own-UUT-rebuild	new
+campaign-replicates	s0r4	SC2	DUNNHUMBY	Remine-own-UUT-rebuild	new
+campaign-replicates	s0r4	SC2	FIFA	Remine-own-UUT-rebuild	new
+campaign-replicates	s0r4	SC2	KOSARAK	Remine-own-UUT-rebuild	new
+campaign-replicates	s0r4	SC2	LEVIATHAN	Remine-own-UUT-rebuild	new
+campaign-replicates	s0r4	SC2	SIGN	Remine-own-UUT-rebuild	new
+campaign-replicates	s0r4	SC2	TAFENG	Remine-own-UUT-rebuild	new
+campaign-replicates	s0r3	SC2	BIBLE	Remine-own-UUT-rebuild	new
+campaign-replicates	s0r3	SC2	C8T1S5I8N5K	Remine-own-UUT-rebuild	new
+campaign-replicates	s0r3	SC2	DUNNHUMBY	Remine-own-UUT-rebuild	new
+campaign-replicates	s0r3	SC2	FIFA	Remine-own-UUT-rebuild	new
+campaign-replicates	s0r3	SC2	KOSARAK	Remine-own-UUT-rebuild	new
+campaign-replicates	s0r3	SC2	LEVIATHAN	Remine-own-UUT-rebuild	new
+campaign-replicates	s0r3	SC2	SIGN	Remine-own-UUT-rebuild	new
+campaign-replicates	s0r3	SC2	TAFENG	Remine-own-UUT-rebuild	new
+campaign-replicates	s2r0	SC6	C8T1S5I8N5K	Remine-own-UUT-rebuild	new
+campaign-replicates	s2r0	SC6	DUNNHUMBY	Remine-own-UUT-rebuild	new
+campaign-replicates	s2r0	SC6	LEVIATHAN	Remine-own-UUT-rebuild	new
+campaign-replicates	s2r0	SC6	SIGN	Remine-own-UUT-rebuild	new
+campaign-replicates	s2r0	SC6	TAFENG	Remine-own-UUT-rebuild	new
+campaign-replicates	s2r0	SC6B	C8T1S5I8N5K	Remine-own-UUT-rebuild	new
+campaign-replicates	s2r0	SC6B	DUNNHUMBY	Remine-own-UUT-rebuild	new
+campaign-replicates	s2r0	SC6B	LEVIATHAN	Remine-own-UUT-rebuild	new
+campaign-replicates	s2r0	SC6B	SIGN	Remine-own-UUT-rebuild	new
+campaign-replicates	s2r0	SC6B	TAFENG	Remine-own-UUT-rebuild	new
+campaign-replicates	s2r0	SC6D	C8T1S5I8N5K	Remine-own-UUT-rebuild	new
+campaign-replicates	s2r0	SC6D	DUNNHUMBY	Remine-own-UUT-rebuild	new
+campaign-replicates	s2r0	SC6D	LEVIATHAN	Remine-own-UUT-rebuild	new
+campaign-replicates	s2r0	SC6D	SIGN	Remine-own-UUT-rebuild	new
+campaign-replicates	s2r0	SC6D	TAFENG	Remine-own-UUT-rebuild	new
+campaign-replicates	s0r2	SC2	BIBLE	Remine-own-UUT-rebuild	new
+campaign-replicates	s0r2	SC2	C8T1S5I8N5K	Remine-own-UUT-rebuild	new
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Remine-own-UUT-rebuild	new
+campaign-replicates	s0r2	SC2	FIFA	Remine-own-UUT-rebuild	new
+campaign-replicates	s0r2	SC2	KOSARAK	Remine-own-UUT-rebuild	new
+campaign-replicates	s0r2	SC2	LEVIATHAN	Remine-own-UUT-rebuild	new
+campaign-replicates	s0r2	SC2	SIGN	Remine-own-UUT-rebuild	new
+campaign-replicates	s0r2	SC2	TAFENG	Remine-own-UUT-rebuild	new
+campaign-replicates	s0r2	SC5	C8T1S5I8N5K	Remine-own-UUT-rebuild	new
+campaign-replicates	s0r2	SC5	LEVIATHAN	Remine-own-UUT-rebuild	new
+campaign-replicates	s0r2	SC5	SIGN	Remine-own-UUT-rebuild	new
+campaign-replicates	s3r0	SC6	C8T1S5I8N5K	Remine-own-UUT-rebuild	new
+campaign-replicates	s3r0	SC6	DUNNHUMBY	Remine-own-UUT-rebuild	new
+campaign-replicates	s3r0	SC6	LEVIATHAN	Remine-own-UUT-rebuild	new
+campaign-replicates	s3r0	SC6	SIGN	Remine-own-UUT-rebuild	new
+campaign-replicates	s3r0	SC6	TAFENG	Remine-own-UUT-rebuild	new
+campaign-replicates	s3r0	SC6B	C8T1S5I8N5K	Remine-own-UUT-rebuild	new
+campaign-replicates	s3r0	SC6B	DUNNHUMBY	Remine-own-UUT-rebuild	new
+campaign-replicates	s3r0	SC6B	LEVIATHAN	Remine-own-UUT-rebuild	new
+campaign-replicates	s3r0	SC6B	SIGN	Remine-own-UUT-rebuild	new
+campaign-replicates	s3r0	SC6B	TAFENG	Remine-own-UUT-rebuild	new
+campaign-replicates	s3r0	SC6D	C8T1S5I8N5K	Remine-own-UUT-rebuild	new
+campaign-replicates	s3r0	SC6D	DUNNHUMBY	Remine-own-UUT-rebuild	new
+campaign-replicates	s3r0	SC6D	LEVIATHAN	Remine-own-UUT-rebuild	new
+campaign-replicates	s3r0	SC6D	SIGN	Remine-own-UUT-rebuild	new
+campaign-replicates	s3r0	SC6D	TAFENG	Remine-own-UUT-rebuild	new
+campaign-replicates	s0r1	SC2	BIBLE	Remine-own-UUT-rebuild	new
+campaign-replicates	s0r1	SC2	C8T1S5I8N5K	Remine-own-UUT-rebuild	new
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Remine-own-UUT-rebuild	new
+campaign-replicates	s0r1	SC2	FIFA	Remine-own-UUT-rebuild	new
+campaign-replicates	s0r1	SC2	KOSARAK	Remine-own-UUT-rebuild	new
+campaign-replicates	s0r1	SC2	LEVIATHAN	Remine-own-UUT-rebuild	new
+campaign-replicates	s0r1	SC2	SIGN	Remine-own-UUT-rebuild	new
+campaign-replicates	s0r1	SC2	TAFENG	Remine-own-UUT-rebuild	new
+campaign-replicates	s0r1	SC5	C8T1S5I8N5K	Remine-own-UUT-rebuild	new
+campaign-replicates	s0r1	SC5	LEVIATHAN	Remine-own-UUT-rebuild	new
+campaign-replicates	s0r1	SC5	SIGN	Remine-own-UUT-rebuild	new
+campaign-replicates	s4r0	SC6	C8T1S5I8N5K	Remine-own-UUT-rebuild	new
+campaign-replicates	s4r0	SC6	DUNNHUMBY	Remine-own-UUT-rebuild	new
+campaign-replicates	s4r0	SC6	LEVIATHAN	Remine-own-UUT-rebuild	new
+campaign-replicates	s4r0	SC6	SIGN	Remine-own-UUT-rebuild	new
+campaign-replicates	s4r0	SC6	TAFENG	Remine-own-UUT-rebuild	new
+campaign-replicates	s4r0	SC6B	C8T1S5I8N5K	Remine-own-UUT-rebuild	new
+campaign-replicates	s4r0	SC6B	DUNNHUMBY	Remine-own-UUT-rebuild	new
+campaign-replicates	s4r0	SC6B	LEVIATHAN	Remine-own-UUT-rebuild	new
+campaign-replicates	s4r0	SC6B	SIGN	Remine-own-UUT-rebuild	new
+campaign-replicates	s4r0	SC6B	TAFENG	Remine-own-UUT-rebuild	new
+campaign-replicates	s4r0	SC6D	C8T1S5I8N5K	Remine-own-UUT-rebuild	new
+campaign-replicates	s4r0	SC6D	DUNNHUMBY	Remine-own-UUT-rebuild	new
+campaign-replicates	s4r0	SC6D	LEVIATHAN	Remine-own-UUT-rebuild	new
+campaign-replicates	s4r0	SC6D	SIGN	Remine-own-UUT-rebuild	new
+campaign-replicates	s4r0	SC6D	TAFENG	Remine-own-UUT-rebuild	new
+campaign-mem		SC2	BIBLE	Remine-own-UUT-rebuild	new
+campaign-mem		SC2	C8T1S5I8N5K	Remine-own-UUT-rebuild	new
+campaign-mem		SC2	DUNNHUMBY	Remine-own-UUT-rebuild	new
+campaign-mem		SC2	FIFA	Remine-own-UUT-rebuild	new
+campaign-mem		SC2	KOSARAK	Remine-own-UUT-rebuild	new
+campaign-mem		SC2	LEVIATHAN	Remine-own-UUT-rebuild	new
+campaign-mem		SC2	SIGN	Remine-own-UUT-rebuild	new
+campaign-mem		SC2	TAFENG	Remine-own-UUT-rebuild	new
+campaign-replicates	s0r4	SC2	DUNNHUMBY	Joint-miner+SWUmax+PreHUSPM-tracking	undeferred
+campaign-replicates	s0r4	SC2	DUNNHUMBY	Joint-rule+PreHUSPM-tracking	undeferred
+campaign-replicates	s0r4	SC2	DUNNHUMBY	Pre-HUSPM-SWUmax	undeferred
+campaign-replicates	s0r3	SC2	DUNNHUMBY	Joint-miner+SWUmax+PreHUSPM-tracking	undeferred
+campaign-replicates	s0r3	SC2	DUNNHUMBY	Joint-rule+PreHUSPM-tracking	undeferred
+campaign-replicates	s0r3	SC2	DUNNHUMBY	Pre-HUSPM-SWUmax	undeferred
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Joint-miner+SWUmax+PreHUSPM-tracking	undeferred
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Joint-rule+PreHUSPM-tracking	undeferred
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Pre-HUSPM-SWUmax	undeferred
+campaign-replicates	s0r2	SC7	DUNNHUMBY	Pre-HUSPM	undeferred
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Joint-miner+SWUmax+PreHUSPM-tracking	undeferred
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Joint-rule+PreHUSPM-tracking	undeferred
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Pre-HUSPM-SWUmax	undeferred
+campaign-replicates	s0r1	SC7	DUNNHUMBY	Pre-HUSPM	undeferred
+campaign-mem-sampled-replicates	s0r1	SC1	DUNNHUMBY	USpan	undeferred
