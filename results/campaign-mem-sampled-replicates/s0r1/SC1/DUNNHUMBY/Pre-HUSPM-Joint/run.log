@@ -1,0 +1,17 @@
+### LIVE HEAP: forced collection, interval >= 20 ms | arm = Pre-HUSPM-Joint
+### runtime_ms is written as -3 (perturbed by forced GC); the wall time is in wall_ms_perturbed. NOT a performance figure.
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 9 | Scenarios: [SC1]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=1 | seed.index=0
+
+--- [SC1] Static baseline on D_init ---
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC1_su=0.001158#0  (heap free=559MB / total=768MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC1_su=0.001158#0] OK t=4377ms cand=514309 pat=33 heapDelta=88MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC1_su=0.001464#0  (heap free=566MB / total=800MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC1_su=0.001464#0] OK t=2863ms cand=218555 pat=17 heapDelta=97MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC1_su=0.002083#0  (heap free=631MB / total=864MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC1_su=0.002083#0] OK t=3132ms cand=86444 pat=9 heapDelta=167MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC1_su=0.002343#0  (heap free=631MB / total=864MB / max=49152MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC1_su=0.002343#0] OK t=3888ms cand=65031 pat=4 heapDelta=168MB
+=== ALL SCENARIOS DONE (31.3s) ===
