@@ -1,0 +1,211 @@
+### LIVE HEAP: forced collection, interval >= 20 ms | arm = Joint-rule+PreHUSPM-tracking
+### runtime_ms is written as -3 (perturbed by forced GC); the wall time is in wall_ms_perturbed. NOT a performance figure.
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 9 | Scenarios: [SC2]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC2] Incremental sequence (100 batches, EVEN; D_init per Yan et al. Table 16) ---
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INIT#0  (heap free=557MB / total=768MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INIT#0] OK t=131284ms cand=9908332339 pat=17 heapDelta=5908MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#1  (heap free=8256MB / total=12480MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#1] OK t=107792ms cand=8140190671 pat=17 heapDelta=201MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#2  (heap free=9529MB / total=13120MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#2] OK t=90699ms cand=6961208916 pat=16 heapDelta=862MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#3  (heap free=7856MB / total=11008MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#3] OK t=70082ms cand=5292003459 pat=16 heapDelta=2075MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#4  (heap free=6615MB / total=9184MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#4] OK t=58737ms cand=4327917462 pat=16 heapDelta=109MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#5  (heap free=5760MB / total=8000MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#5] OK t=48955ms cand=3604733726 pat=16 heapDelta=78MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#6  (heap free=5490MB / total=7488MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#6] OK t=39756ms cand=2905110291 pat=16 heapDelta=32MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#7  (heap free=5090MB / total=6848MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#7] OK t=35090ms cand=2551563216 pat=16 heapDelta=1057MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#8  (heap free=4759MB / total=6400MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#8] OK t=30996ms cand=2228021651 pat=16 heapDelta=939MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#9  (heap free=4226MB / total=5760MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#9] OK t=26771ms cand=1919904809 pat=16 heapDelta=770MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#10  (heap free=4327MB / total=5760MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#10] OK t=22727ms cand=1607439028 pat=16 heapDelta=661MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#11  (heap free=3912MB / total=5248MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#11] OK t=20609ms cand=1444973146 pat=16 heapDelta=621MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#12  (heap free=3643MB / total=4928MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#12] OK t=19043ms cand=1313994643 pat=16 heapDelta=289MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#13  (heap free=3365MB / total=4608MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#13] OK t=16530ms cand=1127355017 pat=16 heapDelta=507MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#14  (heap free=3421MB / total=4608MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#14] OK t=14404ms cand=982149545 pat=16 heapDelta=400MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#15  (heap free=3466MB / total=4608MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#15] OK t=12685ms cand=847960448 pat=16 heapDelta=356MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#16  (heap free=3377MB / total=4480MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#16] OK t=11824ms cand=783507588 pat=16 heapDelta=183MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#17  (heap free=3395MB / total=4480MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#17] OK t=10922ms cand=722021961 pat=16 heapDelta=323MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#18  (heap free=3317MB / total=4384MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#18] OK t=10281ms cand=675491522 pat=16 heapDelta=306MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#19  (heap free=3107MB / total=4160MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#19] OK t=9034ms cand=588165751 pat=16 heapDelta=231MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#20  (heap free=3035MB / total=4064MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#20] OK t=8572ms cand=545524395 pat=16 heapDelta=27MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#21  (heap free=2951MB / total=3968MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#21] OK t=7788ms cand=490726614 pat=17 heapDelta=198MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#22  (heap free=2967MB / total=3968MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#22] OK t=7309ms cand=458705439 pat=17 heapDelta=191MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#23  (heap free=2977MB / total=3968MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#23] OK t=6950ms cand=430847315 pat=17 heapDelta=189MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#24  (heap free=2984MB / total=3968MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#24] OK t=6659ms cand=404799516 pat=17 heapDelta=25MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#25  (heap free=2990MB / total=3968MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#25] OK t=6069ms cand=363047412 pat=17 heapDelta=13MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#26  (heap free=3001MB / total=3968MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#26] OK t=5754ms cand=343868250 pat=17 heapDelta=154MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#27  (heap free=3004MB / total=3968MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#27] OK t=5651ms cand=337323209 pat=17 heapDelta=151MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#28  (heap free=3004MB / total=3968MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#28] OK t=5373ms cand=317762180 pat=17 heapDelta=146MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#29  (heap free=3009MB / total=3968MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#29] OK t=5174ms cand=298833441 pat=17 heapDelta=136MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#30  (heap free=3012MB / total=3968MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#30] OK t=4880ms cand=282600285 pat=17 heapDelta=132MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#31  (heap free=2890MB / total=3840MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#31] OK t=5776ms cand=318291087 pat=17 heapDelta=149MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#32  (heap free=3009MB / total=3968MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#32] OK t=5535ms cand=302278776 pat=16 heapDelta=141MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#33  (heap free=2885MB / total=3840MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#33] OK t=5308ms cand=287008641 pat=17 heapDelta=133MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#34  (heap free=2889MB / total=3840MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#34] OK t=5180ms cand=276669725 pat=17 heapDelta=133MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#35  (heap free=2893MB / total=3840MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#35] OK t=5047ms cand=269055545 pat=16 heapDelta=133MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#36  (heap free=2893MB / total=3840MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#36] OK t=4943ms cand=259267563 pat=17 heapDelta=131MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#37  (heap free=2895MB / total=3840MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#37] OK t=4798ms cand=251729272 pat=16 heapDelta=132MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#38  (heap free=2896MB / total=3840MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#38] OK t=4702ms cand=243397982 pat=16 heapDelta=88MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#39  (heap free=2896MB / total=3840MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#39] OK t=4534ms cand=235189008 pat=16 heapDelta=134MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#40  (heap free=2898MB / total=3840MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#40] OK t=4414ms cand=228673821 pat=16 heapDelta=136MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#41  (heap free=2898MB / total=3840MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#41] OK t=4371ms cand=223851584 pat=16 heapDelta=118MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#42  (heap free=2898MB / total=3840MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#42] OK t=4296ms cand=218795407 pat=16 heapDelta=118MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#43  (heap free=2899MB / total=3840MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#43] OK t=4254ms cand=215126294 pat=17 heapDelta=117MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#44  (heap free=2899MB / total=3840MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#44] OK t=4214ms cand=211215449 pat=17 heapDelta=117MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#45  (heap free=2899MB / total=3840MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#45] OK t=4158ms cand=206612100 pat=16 heapDelta=79MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#46  (heap free=2899MB / total=3840MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#46] OK t=4038ms cand=202073762 pat=16 heapDelta=133MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#47  (heap free=2899MB / total=3840MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#47] OK t=3982ms cand=197896972 pat=16 heapDelta=128MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#48  (heap free=2899MB / total=3840MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#48] OK t=3909ms cand=193844018 pat=17 heapDelta=129MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#49  (heap free=2899MB / total=3840MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#49] OK t=3895ms cand=191262883 pat=17 heapDelta=129MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#50  (heap free=2899MB / total=3840MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#50] OK t=3852ms cand=188176329 pat=17 heapDelta=127MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#51  (heap free=2900MB / total=3840MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#51] OK t=3809ms cand=185864478 pat=16 heapDelta=129MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#52  (heap free=2900MB / total=3840MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#52] OK t=3832ms cand=184151947 pat=16 heapDelta=110MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#53  (heap free=2900MB / total=3840MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#53] OK t=3806ms cand=181835826 pat=16 heapDelta=119MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#54  (heap free=2899MB / total=3840MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#54] OK t=3757ms cand=179484464 pat=16 heapDelta=110MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#55  (heap free=2898MB / total=3840MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#55] OK t=3726ms cand=177322643 pat=16 heapDelta=107MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#56  (heap free=2899MB / total=3840MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#56] OK t=3688ms cand=174948170 pat=16 heapDelta=107MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#57  (heap free=2899MB / total=3840MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#57] OK t=3658ms cand=172652566 pat=16 heapDelta=89MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#58  (heap free=2901MB / total=3840MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#58] OK t=3574ms cand=170485291 pat=16 heapDelta=169MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#59  (heap free=2900MB / total=3840MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#59] OK t=3564ms cand=168989610 pat=16 heapDelta=157MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#60  (heap free=2899MB / total=3840MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#60] OK t=3620ms cand=167428911 pat=16 heapDelta=97MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#61  (heap free=2899MB / total=3840MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#61] OK t=3572ms cand=168139572 pat=16 heapDelta=168MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#62  (heap free=2899MB / total=3840MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#62] OK t=3591ms cand=167397310 pat=16 heapDelta=159MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#63  (heap free=2897MB / total=3840MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#63] OK t=3639ms cand=168233022 pat=16 heapDelta=94MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#64  (heap free=2898MB / total=3840MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#64] OK t=3555ms cand=166880798 pat=16 heapDelta=182MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#65  (heap free=2705MB / total=3648MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#65] OK t=3614ms cand=165699702 pat=16 heapDelta=116MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#66  (heap free=2705MB / total=3648MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#66] OK t=3612ms cand=164664359 pat=16 heapDelta=130MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#67  (heap free=2704MB / total=3648MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#67] OK t=3551ms cand=164950764 pat=16 heapDelta=157MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#68  (heap free=2702MB / total=3648MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#68] OK t=3636ms cand=165153591 pat=16 heapDelta=134MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#69  (heap free=2702MB / total=3648MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#69] OK t=3628ms cand=164024456 pat=16 heapDelta=127MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#70  (heap free=2700MB / total=3648MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#70] OK t=3606ms cand=162950035 pat=16 heapDelta=116MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#71  (heap free=2700MB / total=3648MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#71] OK t=3633ms cand=162900132 pat=16 heapDelta=117MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#72  (heap free=2700MB / total=3648MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#72] OK t=3627ms cand=162113301 pat=16 heapDelta=17MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#73  (heap free=2697MB / total=3648MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#73] OK t=3632ms cand=161763631 pat=16 heapDelta=113MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#74  (heap free=2698MB / total=3648MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#74] OK t=3636ms cand=160993900 pat=16 heapDelta=117MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#75  (heap free=2695MB / total=3648MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#75] OK t=3628ms cand=160502705 pat=16 heapDelta=137MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#76  (heap free=2695MB / total=3648MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#76] OK t=3616ms cand=159990394 pat=16 heapDelta=112MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#77  (heap free=2694MB / total=3648MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#77] OK t=3628ms cand=160449462 pat=16 heapDelta=136MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#78  (heap free=2694MB / total=3648MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#78] OK t=3647ms cand=160710947 pat=16 heapDelta=143MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#79  (heap free=2693MB / total=3648MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#79] OK t=3643ms cand=160566025 pat=16 heapDelta=117MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#80  (heap free=2693MB / total=3648MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#80] OK t=3641ms cand=159970363 pat=16 heapDelta=97MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#81  (heap free=2693MB / total=3648MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#81] OK t=3661ms cand=159904893 pat=16 heapDelta=120MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#82  (heap free=2692MB / total=3648MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#82] OK t=3721ms cand=162638724 pat=16 heapDelta=133MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#83  (heap free=2692MB / total=3648MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#83] OK t=3723ms cand=162388454 pat=16 heapDelta=126MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#84  (heap free=2690MB / total=3648MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#84] OK t=3748ms cand=163325269 pat=16 heapDelta=139MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#85  (heap free=2689MB / total=3648MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#85] OK t=3800ms cand=166922208 pat=16 heapDelta=164MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#86  (heap free=2689MB / total=3648MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#86] OK t=3888ms cand=171340722 pat=16 heapDelta=169MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#87  (heap free=2688MB / total=3648MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#87] OK t=3917ms cand=173738968 pat=16 heapDelta=179MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#88  (heap free=2688MB / total=3648MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#88] OK t=3982ms cand=177064479 pat=16 heapDelta=199MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#89  (heap free=2686MB / total=3648MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#89] OK t=3989ms cand=177138237 pat=16 heapDelta=199MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#90  (heap free=2686MB / total=3648MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#90] OK t=3989ms cand=176874106 pat=16 heapDelta=202MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#91  (heap free=2684MB / total=3648MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#91] OK t=4011ms cand=177558526 pat=17 heapDelta=203MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#92  (heap free=2684MB / total=3648MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#92] OK t=4390ms cand=177813803 pat=17 heapDelta=142MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#93  (heap free=2684MB / total=3648MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#93] OK t=4004ms cand=179978174 pat=17 heapDelta=206MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#94  (heap free=2680MB / total=3648MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#94] OK t=4047ms cand=180335450 pat=17 heapDelta=188MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#95  (heap free=2678MB / total=3648MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#95] OK t=4047ms cand=180317011 pat=17 heapDelta=176MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#96  (heap free=2681MB / total=3648MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#96] OK t=4083ms cand=180390093 pat=17 heapDelta=197MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#97  (heap free=2681MB / total=3648MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#97] OK t=4132ms cand=183912195 pat=17 heapDelta=199MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#98  (heap free=2679MB / total=3648MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#98] OK t=4148ms cand=183882491 pat=17 heapDelta=209MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#99  (heap free=2677MB / total=3648MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#99] OK t=4167ms cand=185454450 pat=17 heapDelta=209MB
+>> RUNNING Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#100  (heap free=2676MB / total=3648MB / max=49152MB)
+[Joint-rule+PreHUSPM-tracking/DUNNHUMBY/SC2_INC#100] OK t=4172ms cand=185610628 pat=17 heapDelta=204MB
+=== ALL SCENARIOS DONE (1214.0s) ===
