@@ -97,7 +97,16 @@ param(
     # -Datasets in this one session, swapping their order from one database to the next so that a
     # drift over the session favours neither. Writes results-probe/same-session/<Scenario>-<host>-<date>
     # (each arm's CSV and log, and run_meta.json) and pushes it; the result trees are not touched.
-    [switch]   $SameSession
+    [switch]   $SameSession,
+    # Probe, not campaign: time the one arm of -Algorithms on the one database of -Datasets in
+    # three placements, interleaved over -Rounds rounds in this one session: not pinned, pinned to
+    # the logical processors of the first L3 cache, pinned to those of the second. The L3 masks are
+    # read from the processor topology, not assumed. Asks whether the run-to-run spread of a
+    # database follows the core cluster a JVM lands on. Writes results-probe/core-placement/
+    # <Scenario>-<database>-<host>-<date> (each run's CSV and log, and run_meta.json with the masks
+    # set and read back) and pushes it; the result trees are not touched.
+    [switch]   $CorePlacement,
+    [int]      $Rounds = 6
 )
 # 'Continue', not 'Stop'. Native tools write progress to stderr - java -version does, git
 # does - and under 'Stop' PowerShell turns every such line into a terminating error. The
@@ -444,6 +453,147 @@ if ($SameSession) {
         if ($LASTEXITCODE -ne 0) { throw "probe committed but not pushed; run git push" }
     }
     if ($bad.Count) { throw "$($bad.Count) of $($cells.Count) cells did not exit 0; see $out" }
+    return
+}
+
+if ($CorePlacement) {
+    if ((git status --porcelain -- src 2>$null | Out-String).Trim()) { throw "src/ has uncommitted changes; probe from a commit." }
+    if (@($Algorithms).Count -ne 1 -or @($Datasets).Count -ne 1) {
+        throw "-CorePlacement times one arm on one database. Found $(@($Algorithms).Count) arm(s) ($($Algorithms -join ', ')) and $(@($Datasets).Count) database(s) ($($Datasets -join ', '))."
+    }
+    if ($Rounds -lt 2) { throw "-Rounds must be at least 2 to measure a spread. Found $Rounds." }
+    # Another JVM on the machine would share the cores this probe is about.
+    $others = @(Get-Process -Name java, javaw -ErrorAction SilentlyContinue)
+    if ($others.Count) { throw "$($others.Count) java process(es) already running (ids $(($others | ForEach-Object { $_.Id }) -join ', ')); the probe needs an idle machine." }
+    if (-not ('ProbeTopology.L3' -as [type])) {
+        Add-Type -TypeDefinition @'
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+namespace ProbeTopology {
+    public static class L3 {
+        [StructLayout(LayoutKind.Sequential)]
+        struct CacheDescriptor { public byte Level; public byte Associativity; public ushort LineSize; public uint Size; public int Type; }
+        // SYSTEM_LOGICAL_PROCESSOR_INFORMATION on x64: mask at 0, relationship at 8, union at 16, 32 bytes.
+        [StructLayout(LayoutKind.Explicit, Size = 32)]
+        struct Info {
+            [FieldOffset(0)]  public ulong ProcessorMask;
+            [FieldOffset(8)]  public int Relationship;
+            [FieldOffset(16)] public CacheDescriptor Cache;
+        }
+        [DllImport("kernel32.dll", SetLastError = true)]
+        static extern bool GetLogicalProcessorInformation(IntPtr buffer, ref uint length);
+        // Processor masks of the level-3 caches, ascending; one mask per cache.
+        public static ulong[] Masks() {
+            if (IntPtr.Size != 8) { throw new InvalidOperationException("a 64-bit process is required"); }
+            uint length = 0;
+            GetLogicalProcessorInformation(IntPtr.Zero, ref length);
+            if (length == 0) { throw new InvalidOperationException("GetLogicalProcessorInformation gave no length, error " + Marshal.GetLastWin32Error()); }
+            IntPtr buffer = Marshal.AllocHGlobal((int)length);
+            try {
+                if (!GetLogicalProcessorInformation(buffer, ref length)) {
+                    throw new InvalidOperationException("GetLogicalProcessorInformation failed, error " + Marshal.GetLastWin32Error());
+                }
+                int size = Marshal.SizeOf(typeof(Info));
+                List<ulong> masks = new List<ulong>();
+                for (int offset = 0; offset + size <= (int)length; offset += size) {
+                    Info info = (Info)Marshal.PtrToStructure(new IntPtr(buffer.ToInt64() + offset), typeof(Info));
+                    if (info.Relationship == 2 && info.Cache.Level == 3 && !masks.Contains(info.ProcessorMask)) { masks.Add(info.ProcessorMask); }
+                }
+                masks.Sort();
+                return masks.ToArray();
+            } finally { Marshal.FreeHGlobal(buffer); }
+        }
+    }
+}
+'@
+    }
+    $l3 = @([ProbeTopology.L3]::Masks())
+    $hex = ($l3 | ForEach-Object { '0x{0:X}' -f $_ }) -join ', '
+    if ($l3.Count -ne 2) { throw "-CorePlacement compares two core clusters; this machine reports $($l3.Count) L3 cache(s): $hex." }
+    $logical = [Environment]::ProcessorCount
+    $union = $l3[0] -bor $l3[1]
+    $all = if ($logical -ge 64) { [uint64]::MaxValue } else { ([uint64]1 -shl $logical) - 1 }
+    if (($l3[0] -band $l3[1]) -ne 0 -or $union -ne $all) {
+        throw "The two L3 masks ($hex) do not split the $logical logical processors into two disjoint halves."
+    }
+    $d = @($Datasets)[0]; $a = @($Algorithms)[0]
+    $out = "results-probe/core-placement/$Scenario-$d-$host_-$(Get-Date -Format 'yyyy-MM-dd')"
+    if (Test-Path $out) { throw "$out exists. Delete it to run again." }
+    New-Item -ItemType Directory -Force $out | Out-Null
+    $settings = @(
+        [ordered]@{ name = 'unpinned'; mask = [uint64]0 },
+        [ordered]@{ name = 'l3-0';     mask = [uint64]$l3[0] },
+        [ordered]@{ name = 'l3-1';     mask = [uint64]$l3[1] })
+    Write-Host "host=$host_ java=$ver logical=$logical L3 masks: $hex"
+    $start = Get-Date -Format 's'
+    $cells = @()
+    for ($r = 1; $r -le $Rounds; $r++) {
+        # Each round starts with the next setting, so no setting always runs first or last. The
+        # first run of all is pinned, so a machine that cannot pin fails in seconds, not minutes.
+        for ($j = 0; $j -lt $settings.Count; $j++) {
+            $s = $settings[($r + $j) % $settings.Count]
+            $dir = "$out/r$r/$($s.name)"
+            New-Item -ItemType Directory -Force $dir | Out-Null
+            $vargs = @("-Xmx${HeapGb}g", '-Xss64m', '-cp', 'build', "-Ddataset.only=$d", "-Dalgo.only=$a",
+                       '-Drepeats=1', "-Dresults.dir=$dir/") + $memArgs + @('AutomatedExperimentRunner', $Scenario)
+            $t0 = Get-Date
+            Write-Host "#### core placement: round $r $($s.name) start $(Get-Date -f HH:mm:ss)"
+            $p = Start-Process -FilePath $java -PassThru -NoNewWindow `
+                 -RedirectStandardOutput "$dir/run.log" -RedirectStandardError "$dir/run.err" -ArgumentList $vargs
+            $null = $p.Handle
+            # SetProcessAffinityMask moves every thread of the process, the ones the JVM has
+            # already started included. The mask read back is what the run is recorded under.
+            $setError = ''
+            if ($s.mask -ne 0) {
+                try { $p.ProcessorAffinity = [IntPtr][int64]$s.mask } catch { $setError = $_.Exception.Message }
+            }
+            $readBack = try { '0x{0:X}' -f $p.ProcessorAffinity.ToInt64() } catch { "unreadable: $($_.Exception.Message)" }
+            if ($setError) {
+                # A run that could not be pinned answers nothing; stop now rather than after the run.
+                try { $p.Kill() } catch { }
+                $p.WaitForExit()
+                Remove-Item -Recurse -Force $out
+                throw "could not pin round $r $($s.name) to $('0x{0:X}' -f $s.mask): $setError; $out removed"
+            }
+            $p.WaitForExit()
+            $cells += [ordered]@{ round = $r; setting = $s.name; position = $j;
+                                  mask_set = if ($s.mask -ne 0) { '0x{0:X}' -f $s.mask } else { '' };
+                                  mask_read = $readBack; set_error = $setError;
+                                  exit_code = $p.ExitCode; seconds = [int]((Get-Date) - $t0).TotalSeconds }
+            if ((Get-Item "$dir/run.err").Length -eq 0) { Remove-Item "$dir/run.err" }
+        }
+    }
+    $meta = [ordered]@{
+        command     = "java -Xmx${HeapGb}g -Xss64m -cp build -Ddataset.only=$d -Dalgo.only=$a -Drepeats=1 " +
+                      "-Dresults.dir=<dir>/ $($memArgs -join ' ') AutomatedExperimentRunner $Scenario; " +
+                      "process affinity set right after start for the pinned settings"
+        arm         = $a
+        dataset     = $d
+        rounds      = $Rounds
+        logical_processors = $logical
+        l3_masks    = @($l3 | ForEach-Object { '0x{0:X}' -f $_ })
+        build_dir   = 'build'
+        git_commit  = (git rev-parse HEAD 2>$null | Out-String).Trim()
+        tree        = if ((git status --porcelain 2>$null | Out-String).Trim()) { 'src clean, other files modified' } else { 'clean' }
+        java        = $ver
+        os          = [Environment]::OSVersion.VersionString
+        machine     = $host_
+        role        = 'probe: one arm timed under three core placements, interleaved in one session'
+        start       = $start
+        end         = Get-Date -Format 's'
+        cells       = $cells
+    }
+    [IO.File]::WriteAllText((Join-Path $PWD "$out/run_meta.json"), ($meta | ConvertTo-Json -Depth 4) + "`n")
+    $bad = @($cells | Where-Object { $_.exit_code -ne 0 })
+    if (-not $NoGit) {
+        git add $out 2>&1 | Out-Null
+        git commit -q -m "Core placement probe $Scenario $d $a on $host_ ($($cells.Count) runs, $($bad.Count) failed)" 2>&1 | Out-Null
+        git pull -q --rebase 2>&1 | Out-Null
+        git push -q 2>&1 | Out-Null
+        if ($LASTEXITCODE -ne 0) { throw "probe committed but not pushed; run git push" }
+    }
+    if ($bad.Count) { throw "$($bad.Count) of $($cells.Count) runs did not exit 0; see $out" }
     return
 }
 
