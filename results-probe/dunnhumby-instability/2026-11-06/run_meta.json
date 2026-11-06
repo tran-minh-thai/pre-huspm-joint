@@ -1,0 +1,16 @@
+{
+  "command": "bash results-probe/dunnhumby-instability/2026-11-06/run_probe.sh <build> results-probe/dunnhumby-instability/2026-11-06/run 6",
+  "path_substitutions": 1,
+  "build_dir": "<build>",
+  "git_commit": "edd7b11cdd17d8c94b87bac22526f1719f08f8e2",
+  "tree": "clean",
+  "source_sha256": "16349bc6c082034e60771378b3314e3a338e1304990f989b348699a08b4809cd",
+  "source_files": 46,
+  "java": "openjdk version \"25.0.4.1\" 2026-08-18 LTS",
+  "os": "Darwin 27.2.0 (macOS-27.2-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-11-06T15:01:50",
+  "end": "2026-11-06T16:25:22",
+  "exit_code": 0
+}
