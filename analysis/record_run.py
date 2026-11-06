@@ -63,16 +63,26 @@ def main():
     out.mkdir(parents=True, exist_ok=True)
     digest, nfiles = source_digest()
     java = subprocess.run(["java", "-version"], capture_output=True, text=True).stderr.splitlines()
-    # The recorded command names no directory of this machine: the repository root becomes
-    # "." and the home directory "~" (counted in path_substitutions).
-    command, subs = " ".join(cmd), 0
-    for real, alias in ((str(ROOT), "."), (str(pathlib.Path.home()), "~")):
-        subs += command.count(real)
-        command = command.replace(real, alias)
+    # The record names no directory of this machine: a build directory outside the repository
+    # becomes "<build>", the repository root ".", the home directory "~" (counted in
+    # path_substitutions), in the command and in console.txt alike.
+    aliases = [(str(build.resolve()), "<build>")] if not build.resolve().is_relative_to(ROOT.resolve()) else []
+    if str(build) != str(build.resolve()) and aliases:
+        aliases.append((str(build), "<build>"))
+    aliases += [(str(ROOT), "."), (str(pathlib.Path.home()), "~")]
+
+    def scrub(text):
+        n = 0
+        for real, alias in aliases:
+            n += text.count(real)
+            text = text.replace(real, alias)
+        return text, n
+
+    command, subs = scrub(" ".join(cmd))
     meta = {
         "command": command,
         "path_substitutions": subs,
-        "build_dir": a.build,
+        "build_dir": a.build if not aliases or aliases[0][1] != "<build>" else "<build>",
         "git_commit": git("rev-parse", "HEAD"),
         "tree": "clean" if not git("status", "--porcelain") else "src clean, other files modified",
         "source_sha256": digest,
@@ -85,6 +95,10 @@ def main():
     }
     with open(out / "console.txt", "w", encoding="utf-8", newline="\n") as f:
         p = subprocess.run(cmd, cwd=ROOT, stdout=f, stderr=subprocess.STDOUT)
+    console = out / "console.txt"
+    text, n = scrub(console.read_text(encoding="utf-8", errors="replace"))
+    console.write_text(text, encoding="utf-8", newline="\n")
+    meta["path_substitutions"] += n
     meta["end"] = datetime.datetime.now().isoformat(timespec="seconds")
     meta["exit_code"] = p.returncode
     with open(out / "run_meta.json", "w", encoding="utf-8", newline="\n") as f:
