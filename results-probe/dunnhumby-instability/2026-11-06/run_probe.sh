@@ -17,7 +17,7 @@ for r in $(seq 1 "$rounds"); do
       C) extra=(-Xms$heap -XX:+AlwaysPreTouch) ;;
     esac
     d="$out/r$r/$cfg"; mkdir -p "$d"
-    java -Xmx$heap "${extra[@]}" -Xss64m -cp "$build" -Ddataset.only=DUNNHUMBY -Dalgo.only=Pre-HUSPM-Joint \
+    java -Xmx$heap ${extra[@]+"${extra[@]}"} -Xss64m -cp "$build" -Ddataset.only=DUNNHUMBY -Dalgo.only=Pre-HUSPM-Joint \
       -Drepeats=1 -Dresults.dir="$d/" AutomatedExperimentRunner SC2 > "$d/run.log" 2>&1
     echo "round $r config $cfg done $(date +%H:%M:%S)"
   done
