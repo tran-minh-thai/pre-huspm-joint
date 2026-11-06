@@ -1,3 +1,0 @@
-SUPERSEDED 2026-11-06, not started. The timing comparisons of the paper are measured again in the paired
-generation (results/campaign-paired), where every arm of one comparison runs adjacently on one database in
-one call, so that no ratio crosses two measurement sessions. Delete this file to queue the cell again.
