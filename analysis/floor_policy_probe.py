@@ -24,6 +24,8 @@ the runs of the stream, per operation):
 
     a rescan at the lower threshold   the time of Remine-from-scratch at that operation
     a rescan at the threshold         the time of Remine-own-UUT at that operation
+    (the two arms that reuse the per-sequence state, as the method's own rescans do, not the
+    remining rivals read from their rebuild arms: make_figures.load_scenario, rivals=False)
     a direct phase                    the median time of the fixed-threshold arm's operations of that
                                       kind that made no rescan
 
@@ -621,7 +623,7 @@ def evaluate(stream, su, rl, be_window=5):
 
 
 def streams(a):
-    sc2 = mf.load_scenario("SC2", replicates=True, windows=True)
+    sc2 = mf.load_scenario("SC2", replicates=True, windows=True, rivals=False)
     cache = {}
     def seqs_of(db):
         if db not in cache:
@@ -639,7 +641,7 @@ def streams(a):
         yield insert_stream(db, db, rows, seqs[:n_init], even_batches(seqs[n_init:], K),
                             sc2[(sc2["dataset"] == db) & (sc2["iteration"] == 0)])
     if a.sc5:
-        sc5 = mf.load_scenario("SC5", replicates=True, windows=True)
+        sc5 = mf.load_scenario("SC5", replicates=True, windows=True, rivals=False)
         for db in [d for d in a.db if d in set(sc5["dataset"])]:
             seqs, n_init = seqs_of(db), mf.DATASETS[db]["d_init"]
             rest = seqs[n_init:]
@@ -661,7 +663,7 @@ def streams(a):
         for r in csv.DictReader(open(ROOT / a.plans), delimiter="\t"):
             plans[(r["scenario"], r["dataset"], int(r["seed"]))].append(r)
         for sc in ("SC6", "SC6D", "SC6B"):
-            df = mf.load_scenario(sc, replicates=True, windows=True)
+            df = mf.load_scenario(sc, replicates=True, windows=True, rivals=False)
             for (scn, db, seed), ops in sorted(plans.items()):
                 if scn != sc or db not in a.db:
                     continue

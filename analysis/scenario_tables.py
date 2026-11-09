@@ -1969,10 +1969,11 @@ def break_even_floor_estimate():
     never mined at the lower threshold after the initial mine, the rho of its first decision (the
     initial mine at the lower threshold over the first mine at UUT, as the rule computes it), and,
     for comparison, the rho remining measures warm at the same operations (Remine-from-scratch over
-    Remine-own-UUT, the median over operations)."""
+    Remine-own-UUT, the median over operations; the arms that reuse the per-sequence state, as the
+    method's own rescans do, so rivals=False)."""
     rows = []
     for sc in ("SC2", "SC5", "SC6", "SC6D", "SC6B"):
-        df = mf.load_scenario(sc, replicates=True)
+        df = mf.load_scenario(sc, replicates=True, rivals=False)
         if df is None:
             continue
         cell = (df["op_type"].astype(str).str.extract(r"^(SC5_K=\d+_strat=\w+)_")[0] if sc == "SC5"
@@ -2294,8 +2295,11 @@ def identical_search_keys(put, out):
     same nodes at every increment, so make the same search, and the ratio of their times there and on
     the other streams (mean over the runs). Then two probes on the measurement machine, keys named
     probe_: the same two arms timed in one session, and on SIGN remining on a fresh or a reused
-    instance against the method in one JVM, which separates the search from the way each JVM compiles it."""
-    d = mf.load_scenario("SC2", replicates=True)
+    instance against the method in one JVM, which separates the search from the way each JVM compiles it.
+    Remine-own-UUT here is the arm that reuses the per-sequence state, not the rival read from its
+    rebuild arm: it is the control that makes the method's search, so the time ratio measures how
+    differently two JVMs compile that search (make_figures.load_scenario, rivals=False)."""
+    d = mf.load_scenario("SC2", replicates=True, rivals=False)
     d = d[d["iteration"] > 0]
     rows = []
     for db, g in d.groupby("dataset"):

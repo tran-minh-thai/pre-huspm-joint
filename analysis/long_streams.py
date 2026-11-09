@@ -80,6 +80,7 @@ def load(root, sc, need_done=True, replicate_roots=()):
         return None
     df = pd.concat(frames, ignore_index=True)
     df.columns = [c.strip() for c in df.columns]
+    df = mf.apply_rivals(df, sc, "algorithm")
     df["status"] = [mf.classify_status(o, r) for o, r in zip(df["op_type"], df["runtime_ms"])]
     df["kind"] = df["op_type"].astype(str).str.extract(r"SC6_(INS|DEL|MOD|INIT)")[0]
     dup = df.duplicated(KEY + ["replicate"], keep=False)

@@ -18,6 +18,10 @@ The environment variables `HUSP_DATA_DIR` and `HUSP_OUT_DIR` override the input 
   The script has no table of its own, so a threshold changed there is picked up here.
 - `results/machine/<host>.json` and `environment.lock.json` for the platform sentence.
 
+The remining rivals `Remine-from-scratch` and `Remine-own-UUT` are read from the arms that rebuild their
+per-sequence data inside the clock, `Remine-from-scratch-rebuild` and `Remine-own-UUT-rebuild`
+(`RIVAL_SOURCE`; `docs/experiments.md` gives the two analyses that keep the arms without the suffix).
+
 An arm is read only when its directory holds `DONE`. A `DEFERRED` arm keeps a partial CSV and
 is left out; the figures name it under the panels instead.
 

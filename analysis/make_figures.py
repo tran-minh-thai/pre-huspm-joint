@@ -135,6 +135,41 @@ AT_UUT_ORDER = ["HUSP-ULL", "HUSP-SP", "Joint-miner@UUT"]
 INC_ORDER    = ["IncUSP-Miner+", "Pre-HUSPM-SWUmax", "Pre-HUSPM-TSU", "Remine-from-scratch", PROPOSED]
 # the SC2 cumulative-runtime and state figures also draw remining with the proposal's own miner at UUT
 INC_FIG_ORDER = INC_ORDER[:-1] + ["Remine-own-UUT", PROPOSED]
+# The two remining rivals are static arms: each operation rebuilds from the raw sequences
+# everything their miner reads, inside the clock (AutomatedExperimentRunner.freshSequences). Their
+# rows come from the arm on the right, under the rival's name on the left; the arm directories
+# named on the left kept the incremental algorithm's per-sequence state between operations, outside
+# the clock, and are left out of every table and figure. analysis/check_rival_rebuild.py shows the
+# two arms of a pair do the same search, row by row; only the timed region differs.
+RIVAL_SOURCE = {"Remine-from-scratch": "Remine-from-scratch-rebuild",
+                "Remine-own-UUT": "Remine-own-UUT-rebuild"}
+
+
+def apply_rivals(df, where, name_col=None):
+    """Rows of the rival arms read from their rebuild arms (RIVAL_SOURCE): the superseded arms'
+    rows are dropped and the rebuild arms' rows renamed, in `algorithm` and in `arm`. Stops when a
+    superseded arm has rows in a (run, database) where its rebuild arm has none, since that rival
+    would otherwise vanish from a table without a word."""
+    if df is None or not len(df):
+        return df
+    name_col = name_col or ("arm" if "arm" in df.columns else "algorithm")
+    cell = [c for c in ("replicate", "dataset") if c in df.columns]
+    present = set(map(tuple, df[cell + [name_col]].drop_duplicates().values.tolist()))
+    missing = sorted(k for k in present
+                     if k[-1] in RIVAL_SOURCE and k[:-1] + (RIVAL_SOURCE[k[-1]],) not in present)
+    if missing:
+        sys.exit(f"[{where}] rival without its rebuild arm ({', '.join(cell + [name_col])}): {missing}")
+    old = df[name_col].isin(list(RIVAL_SOURCE))
+    new = df[name_col].isin(list(RIVAL_SOURCE.values()))
+    out = df[~old].copy()
+    back = {v: k for k, v in RIVAL_SOURCE.items()}
+    for c in ("algorithm", "arm"):
+        if c in out.columns:
+            out[c] = out[c].replace(back)
+    if old.any() or new.any():
+        print(f"[{where}] rivals read from {', '.join(RIVAL_SOURCE.values())}: {int(new.sum())} rows; "
+              f"superseded arms left out: {int(old.sum())} rows")
+    return out
 # PROPOSED is the method: in the incremental scenarios its maintenance with the rescan threshold
 # selection (PreHUSPMAdaptiveAlgo.floorWindow = 5), in the static ones its static mine. FIXED is the
 # method at the fixed lower threshold r_l, an ablation row of the incremental scenarios. The arms
@@ -285,13 +320,18 @@ def classify_status(op_type, runtime_ms):
 REPLICATE_TREE = "campaign-replicates"
 
 
-def load_scenario(sc, tree=TIMING_TREE, finished_only=True, replicates=False, windows=False):
+def load_scenario(sc, tree=TIMING_TREE, finished_only=True, replicates=False, windows=False, rivals=True):
     """All rows of one scenario: every <DB>/<ARM>/*.csv under results/<tree>/<sc>,
     with `arm`, `replicate` and `status`/`finished` columns. Arms without DONE are
     skipped. With replicates=True the timing tree is read together with every replicate
     tree under results/campaign-replicates/s<k>r<n>; the main tree is replicate s0r0.
     Without it only the main tree is read, so a figure drawn from one run per cell is
-    never handed several rows per cell. The window arms are left out unless windows=True."""
+    never handed several rows per cell. The window arms are left out unless windows=True.
+    With rivals=True (every table and figure that compares the method with remining) the two
+    remining rivals are read from their rebuild arms (RIVAL_SOURCE, apply_rivals); rivals=False
+    keeps every arm under its own name, for the analyses where an arm of RIVAL_SOURCE plays another
+    part: the control that makes the method's search (the tie band) and the price of the
+    method's own rescans, which reuse its per-sequence state as those arms do."""
     bases = [(os.path.join(DATA_DIR, tree, sc), "s0r0")]
     if replicates and tree == TIMING_TREE:
         for rd in sorted(glob.glob(os.path.join(DATA_DIR, REPLICATE_TREE, "s*r*"))):
@@ -316,6 +356,8 @@ def load_scenario(sc, tree=TIMING_TREE, finished_only=True, replicates=False, wi
         print(f"[skip] no finished arms under {base}")
         return None
     df = pd.concat(frames, ignore_index=True)
+    if rivals:
+        df = apply_rivals(df, f"{tree}/{sc}")
     for c in df.columns:
         if c not in ("algorithm", "dataset", "op_type", "run_id", "timestamp",
                      "cub_triggered", "arm", "mem_mode", "trigger_rule", "replicate"):

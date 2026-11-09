@@ -14,15 +14,18 @@ import argparse
 import collections
 import csv
 import glob
+import sys
 import os
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(REPO, "analysis"))
+from make_figures import RIVAL_SOURCE  # noqa: E402  (a rival is read from its rebuild arm)
 OTHERS = ["Remine-from-scratch", "Pre-HUSPM-SWUmax", "Pre-HUSPM-TSU", "IncUSP-Miner+"]
 
 
 def rows(sc, alg):
     out = {}
-    for f in glob.glob(os.path.join(REPO, "results", "campaign", sc, "*", alg, "*.csv")):
+    for f in glob.glob(os.path.join(REPO, "results", "campaign", sc, "*", RIVAL_SOURCE.get(alg, alg), "*.csv")):
         with open(f, newline="", encoding="utf-8") as fh:
             for r in csv.DictReader(fh):
                 r = {k.strip(): (v or "").strip() for k, v in r.items() if k}
