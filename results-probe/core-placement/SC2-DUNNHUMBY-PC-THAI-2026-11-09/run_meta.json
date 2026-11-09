@@ -1,0 +1,202 @@
+{
+    "command":  "java -Xmx48g -Xss64m -cp build -Ddataset.only=DUNNHUMBY -Dalgo.only=Pre-HUSPM-Joint -Drepeats=1 -Dresults.dir=\u003cdir\u003e/ -Drepeat.index=0 -Dseed.index=0 AutomatedExperimentRunner SC2; process affinity set right after start for the pinned settings",
+    "arm":  "Pre-HUSPM-Joint",
+    "dataset":  "DUNNHUMBY",
+    "rounds":  6,
+    "logical_processors":  32,
+    "l3_masks":  [
+                     "0xFFFF",
+                     "0xFFFF0000"
+                 ],
+    "build_dir":  "build",
+    "git_commit":  "2037b649a9feac64887d45d3827fc10355cc2d0f",
+    "tree":  "src clean, other files modified",
+    "java":  "25.0.4.1+1-LTS (Eclipse Adoptium)",
+    "os":  "Microsoft Windows NT 10.0.26300.0",
+    "machine":  "PC-THAI",
+    "role":  "probe: one arm timed under three core placements, interleaved in one session",
+    "start":  "2026-11-09T19:34:02",
+    "end":  "2026-11-09T20:35:47",
+    "cells":  [
+                  {
+                      "round":  1,
+                      "setting":  "l3-0",
+                      "position":  0,
+                      "mask_set":  "0xFFFF",
+                      "mask_read":  "0xFFFF",
+                      "set_error":  "",
+                      "exit_code":  0,
+                      "seconds":  213
+                  },
+                  {
+                      "round":  1,
+                      "setting":  "l3-1",
+                      "position":  1,
+                      "mask_set":  "0xFFFF0000",
+                      "mask_read":  "0xFFFF0000",
+                      "set_error":  "",
+                      "exit_code":  0,
+                      "seconds":  207
+                  },
+                  {
+                      "round":  1,
+                      "setting":  "unpinned",
+                      "position":  2,
+                      "mask_set":  "",
+                      "mask_read":  "0xFFFFFFFF",
+                      "set_error":  "",
+                      "exit_code":  0,
+                      "seconds":  204
+                  },
+                  {
+                      "round":  2,
+                      "setting":  "l3-1",
+                      "position":  0,
+                      "mask_set":  "0xFFFF0000",
+                      "mask_read":  "0xFFFF0000",
+                      "set_error":  "",
+                      "exit_code":  0,
+                      "seconds":  209
+                  },
+                  {
+                      "round":  2,
+                      "setting":  "unpinned",
+                      "position":  1,
+                      "mask_set":  "",
+                      "mask_read":  "0xFFFFFFFF",
+                      "set_error":  "",
+                      "exit_code":  0,
+                      "seconds":  202
+                  },
+                  {
+                      "round":  2,
+                      "setting":  "l3-0",
+                      "position":  2,
+                      "mask_set":  "0xFFFF",
+                      "mask_read":  "0xFFFF",
+                      "set_error":  "",
+                      "exit_code":  0,
+                      "seconds":  203
+                  },
+                  {
+                      "round":  3,
+                      "setting":  "unpinned",
+                      "position":  0,
+                      "mask_set":  "",
+                      "mask_read":  "0xFFFFFFFF",
+                      "set_error":  "",
+                      "exit_code":  0,
+                      "seconds":  213
+                  },
+                  {
+                      "round":  3,
+                      "setting":  "l3-0",
+                      "position":  1,
+                      "mask_set":  "0xFFFF",
+                      "mask_read":  "0xFFFF",
+                      "set_error":  "",
+                      "exit_code":  0,
+                      "seconds":  200
+                  },
+                  {
+                      "round":  3,
+                      "setting":  "l3-1",
+                      "position":  2,
+                      "mask_set":  "0xFFFF0000",
+                      "mask_read":  "0xFFFF0000",
+                      "set_error":  "",
+                      "exit_code":  0,
+                      "seconds":  209
+                  },
+                  {
+                      "round":  4,
+                      "setting":  "l3-0",
+                      "position":  0,
+                      "mask_set":  "0xFFFF",
+                      "mask_read":  "0xFFFF",
+                      "set_error":  "",
+                      "exit_code":  0,
+                      "seconds":  201
+                  },
+                  {
+                      "round":  4,
+                      "setting":  "l3-1",
+                      "position":  1,
+                      "mask_set":  "0xFFFF0000",
+                      "mask_read":  "0xFFFF0000",
+                      "set_error":  "",
+                      "exit_code":  0,
+                      "seconds":  210
+                  },
+                  {
+                      "round":  4,
+                      "setting":  "unpinned",
+                      "position":  2,
+                      "mask_set":  "",
+                      "mask_read":  "0xFFFFFFFF",
+                      "set_error":  "",
+                      "exit_code":  0,
+                      "seconds":  201
+                  },
+                  {
+                      "round":  5,
+                      "setting":  "l3-1",
+                      "position":  0,
+                      "mask_set":  "0xFFFF0000",
+                      "mask_read":  "0xFFFF0000",
+                      "set_error":  "",
+                      "exit_code":  0,
+                      "seconds":  209
+                  },
+                  {
+                      "round":  5,
+                      "setting":  "unpinned",
+                      "position":  1,
+                      "mask_set":  "",
+                      "mask_read":  "0xFFFFFFFF",
+                      "set_error":  "",
+                      "exit_code":  0,
+                      "seconds":  201
+                  },
+                  {
+                      "round":  5,
+                      "setting":  "l3-0",
+                      "position":  2,
+                      "mask_set":  "0xFFFF",
+                      "mask_read":  "0xFFFF",
+                      "set_error":  "",
+                      "exit_code":  0,
+                      "seconds":  201
+                  },
+                  {
+                      "round":  6,
+                      "setting":  "unpinned",
+                      "position":  0,
+                      "mask_set":  "",
+                      "mask_read":  "0xFFFFFFFF",
+                      "set_error":  "",
+                      "exit_code":  0,
+                      "seconds":  200
+                  },
+                  {
+                      "round":  6,
+                      "setting":  "l3-0",
+                      "position":  1,
+                      "mask_set":  "0xFFFF",
+                      "mask_read":  "0xFFFF",
+                      "set_error":  "",
+                      "exit_code":  0,
+                      "seconds":  202
+                  },
+                  {
+                      "round":  6,
+                      "setting":  "l3-1",
+                      "position":  2,
+                      "mask_set":  "0xFFFF0000",
+                      "mask_read":  "0xFFFF0000",
+                      "set_error":  "",
+                      "exit_code":  0,
+                      "seconds":  220
+                  }
+              ]
+}
