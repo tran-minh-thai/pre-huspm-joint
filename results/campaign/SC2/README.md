@@ -19,6 +19,7 @@ total utility of the inserted sequences. Both accumulate since the last rescan a
 | KOSARAK | 100/100 | 100/100 | 100/100 | 100/100 | 100/100 |
 | C8T1S5I8N5K | 100/100 | 100/100 | 100/100 | 100/100 | 100/100 |
 | TAFENG | 100/100 | 100/100 | 100/100 | 100/100 | 100/100 |
+| DUNNHUMBY | 100/100 | 100/100 | 100/100 | 100/100 | 100/100 |
 
 ## Runtime, summed over the increments that completed
 
@@ -27,18 +28,19 @@ partial run is in parentheses: it is not comparable with a total over the whole 
 fastest of the arms in this table that completed the whole stream is in bold. Each cell is the
 mean of the arm's runs (`make_figures.load_mean`); the spread of the runs is in the next table.
 Remine-HUSP-ULL, Remine-HUSP-SP and Remine-own-UUT (remining with the proposal's own miner at
-UUT) are not columns here: with them the proposal is the fastest on 6 of 7 (not on LEVIATHAN) streams
+UUT) are not columns here: with them the proposal is the fastest on 7 of 8 (not on DUNNHUMBY) streams
 (`SC2_proposal_fastest` in `figures/campaign/paper_numbers.csv`, from `table_SC2_totals.csv`).
 
 | database | Pre-HUSPM-Joint | rescans | Pre-HUSPM-SWUmax | Pre-HUSPM-TSU | Remine | IncUSP-Miner+ |
 |---|---:|---:|---:|---:|---:|---:|
-| SIGN | **9.4** | 60 | 50.5 | 50.2 | 17.9 | 23.7 |
-| LEVIATHAN | **28.0** | 100 | 112 | 115 | 37.1 | 71.4 |
-| FIFA | **176** | 27 | 5,017 | 6,979 | 674 | (598, 25 increments) |
-| BIBLE | **52.5** | 64 | 92.0 | 112 | 93.9 | 57.6 |
-| KOSARAK | **278** | 100 | 728 | 725 | 683 | 1,589 |
-| C8T1S5I8N5K | **8.9** | 80 | 51.4 | 62.9 | 15.6 | 18.4 |
-| TAFENG | **5.9** | 52 | 7.4 | 13.1 | 18.9 | 15.6 |
+| SIGN | **9.9** | 100 | 50.5 | 50.2 | 18.1 | 23.7 |
+| LEVIATHAN | **26.6** | 100 | 112 | 115 | 36.6 | 71.4 |
+| FIFA | **182** | 33 | 5,017 | 6,979 | 679 | (598, 25 increments) |
+| BIBLE | **54.4** | 75 | 92.0 | 112 | 90.8 | 57.6 |
+| KOSARAK | **278** | 100 | 728 | 725 | 659 | 1,589 |
+| C8T1S5I8N5K | **6.1** | 100 | 51.4 | 62.9 | 12.6 | 18.4 |
+| TAFENG | **6.2** | 55 | 7.4 | 13.1 | 15.2 | 15.6 |
+| DUNNHUMBY | **134** | 100 | 5,636 | 5,596 | 159 | 576 |
 
 ### Every run
 
@@ -48,20 +50,22 @@ deviation.
 
 | database | arm | runs | mean ± sd | min | max |
 |---|---|---:|---:|---:|---:|
-| SIGN | Pre-HUSPM-Joint | 5 | 9.43 ± 0.08 | 9.37 | 9.57 |
-| SIGN | Remine | 5 | 17.86 ± 0.45 | 17.17 | 18.31 |
-| LEVIATHAN | Pre-HUSPM-Joint | 5 | 28.03 ± 0.29 | 27.74 | 28.40 |
-| LEVIATHAN | Remine | 5 | 37.05 ± 0.24 | 36.74 | 37.39 |
-| FIFA | Pre-HUSPM-Joint | 5 | 176.14 ± 0.79 | 175.50 | 177.51 |
-| FIFA | Remine | 5 | 673.89 ± 8.26 | 663.23 | 681.14 |
-| BIBLE | Pre-HUSPM-Joint | 5 | 52.52 ± 0.46 | 52.05 | 53.28 |
-| BIBLE | Remine | 5 | 93.86 ± 0.48 | 93.14 | 94.29 |
-| KOSARAK | Pre-HUSPM-Joint | 5 | 278.41 ± 0.95 | 276.72 | 278.97 |
-| KOSARAK | Remine | 5 | 682.97 ± 3.90 | 676.06 | 685.45 |
-| C8T1S5I8N5K | Pre-HUSPM-Joint | 5 | 8.94 ± 0.07 | 8.87 | 9.05 |
-| C8T1S5I8N5K | Remine | 5 | 15.60 ± 0.17 | 15.34 | 15.74 |
-| TAFENG | Pre-HUSPM-Joint | 5 | 5.92 ± 0.04 | 5.88 | 5.99 |
-| TAFENG | Remine | 5 | 18.92 ± 0.10 | 18.82 | 19.07 |
+| SIGN | Pre-HUSPM-Joint | 5 | 9.90 ± 0.05 | 9.82 | 9.94 |
+| SIGN | Remine | 5 | 18.06 ± 0.29 | 17.79 | 18.45 |
+| LEVIATHAN | Pre-HUSPM-Joint | 5 | 26.59 ± 0.26 | 26.17 | 26.83 |
+| LEVIATHAN | Remine | 5 | 36.63 ± 0.38 | 36.17 | 37.03 |
+| FIFA | Pre-HUSPM-Joint | 5 | 182.17 ± 1.07 | 181.01 | 183.90 |
+| FIFA | Remine | 5 | 678.57 ± 7.12 | 669.12 | 688.77 |
+| BIBLE | Pre-HUSPM-Joint | 5 | 54.37 ± 0.40 | 53.67 | 54.65 |
+| BIBLE | Remine | 5 | 90.76 ± 0.68 | 89.90 | 91.76 |
+| KOSARAK | Pre-HUSPM-Joint | 5 | 277.98 ± 2.40 | 275.86 | 281.38 |
+| KOSARAK | Remine | 5 | 658.60 ± 6.53 | 649.79 | 665.82 |
+| C8T1S5I8N5K | Pre-HUSPM-Joint | 5 | 6.10 ± 0.02 | 6.07 | 6.13 |
+| C8T1S5I8N5K | Remine | 5 | 12.61 ± 0.11 | 12.46 | 12.74 |
+| TAFENG | Pre-HUSPM-Joint | 5 | 6.18 ± 0.05 | 6.11 | 6.25 |
+| TAFENG | Remine | 5 | 15.17 ± 0.04 | 15.12 | 15.20 |
+| DUNNHUMBY | Pre-HUSPM-Joint | 5 | 134.03 ± 5.69 | 128.06 | 140.26 |
+| DUNNHUMBY | Remine | 5 | 159.38 ± 7.33 | 151.35 | 165.52 |
 
 ## The operating region
 
@@ -79,6 +83,7 @@ that the increments above one, the triggered flags and the rescan counter agree.
 | C8T1S5I8N5K | 1.44 | 0.38 | 5.05 | 23/100 | 77 | ok |
 | LEVIATHAN | 2.08 | 0.94 | 4.04 | 2/100 | 98 | ok |
 | KOSARAK | 2.83 | 1.44 | 16.04 | 0/100 | 100 | ok |
+| DUNNHUMBY | 13.72 | 4.81 | 29.23 | 0/100 | 100 | ok |
 
 The share alpha = max_i A_i / U+ of the inserted utility that one item reaches, at each decision
 (U+ inserted since the last rescan): an insertion-only stream is never rescanned while
@@ -95,6 +100,7 @@ decisions with `analysis/insertion_alpha.py`, which computes both from the data 
 | C8T1S5I8N5K | 0.001132 | 0.0529 | 0.0212 | 0.1329 | 0/100 | 0.0588 | 0 of 100 differ |
 | LEVIATHAN | 0.015530 | 0.9024 | 0.7267 | 1.0000 | 0/100 | 0.8861 | 0 of 100 differ |
 | KOSARAK | 0.025000 | 0.8690 | 0.8363 | 0.8873 | 0/100 | 0.8694 | 0 of 100 differ |
+| DUNNHUMBY | 0.001464 | 0.5640 | 0.3359 | 0.8246 | 0/100 | not computed | 0 compared |
 
 ## The prediction registered before the campaign
 
@@ -114,23 +120,24 @@ completed the 100 increments.
 | KOSARAK | 0.8694 | 1.15 | 100 | 100 | 100 | 0 |
 | LEVIATHAN | 0.8861 | 1.13 | 98 | 100 | 98 | 2 |
 | SIGN | 0.9175 | 1.10 | 59 | 59 | 59 | 0 |
+| DUNNHUMBY | not computed | not computed | 100 | 100 | 100 | 0 |
 
-Verdict: **holds** (largest-gap part holds, smallest-gap part holds).
+Verdict: **refuted** (largest-gap part holds, smallest-gap part fails).
 
 The joint rule never rescans more often than the SWUmax test on an insertion-only stream with the
 same UUT and floor ratio (a proved property, checked here): the proposal rescans no more than
-Pre-HUSPM-SWUmax on 7 of 7 databases where both completed.
+Pre-HUSPM-SWUmax on 8 of 8 databases where both completed.
 
-**Inside the budget** (median ratio at most one): FIFA, 3.83 times faster than remining.
+**Inside the budget** (median ratio at most one): FIFA, 3.72 times faster than remining.
 
-**At the boundary**: SIGN (1.89x), BIBLE (1.79x), C8T1S5I8N5K (1.74x), TAFENG (3.20x). They rescan on
+**At the boundary**: SIGN (1.82x), BIBLE (1.67x), C8T1S5I8N5K (2.07x), TAFENG (2.45x). They rescan on
 52 to 77
 of 100 increments and still finish faster than remining.
 
-**Beyond it**: LEVIATHAN, 2 of 100 within budget, KOSARAK, 0 of 100 within budget.
-Maintenance degenerates into remining: LEVIATHAN 28.0 s against remining's 37.1 s (-24.4 %); KOSARAK 278 s against remining's 683 s (-59.2 %),
+**Beyond it**: LEVIATHAN, 2 of 100 within budget, KOSARAK, 0 of 100 within budget, DUNNHUMBY, 0 of 100 within budget.
+Maintenance degenerates into remining: LEVIATHAN 26.6 s against remining's 36.6 s (-27.4 %); KOSARAK 278 s against remining's 659 s (-57.8 %); DUNNHUMBY 134 s against remining's 159 s (-15.9 %),
 one run each. Two runs of one SC1 configuration on the same JDK differ by a factor between
-0.89 and 1.10 (67 configurations of at least one second), so differences
+0.70 and 1.14 (78 configurations of at least one second), so differences
 of a few percent between single runs are not resolved here.
 
 ## KOSARAK cannot be moved by tuning

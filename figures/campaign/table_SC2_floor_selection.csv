@@ -1,8 +1,9 @@
 dataset,fixed_floor_s,fixed_floor_runs,selection_s,selection_s_std,selection_runs,rescans,rescans_at_uut,selection_over_fixed_floor,vs_fixed_floor,best_competitor,best_competitor_s,selection_over_best,vs_best
-SIGN,9.694,5,9.915,0.042,5,100,100,1.023,"separated, slower",Remine-own-UUT,10.763,0.921,"separated, faster"
-LEVIATHAN,35.228,5,26.627,0.372,5,100,100,0.756,"separated, faster",Remine-own-UUT,26.331,1.011,overlapping
-FIFA,178.011,5,178.614,0.957,5,29,3,1.003,overlapping,Remine-own-UUT,320.772,0.557,"separated, faster"
-BIBLE,54.499,5,54.023,0.506,5,75,49,0.991,overlapping,IncUSP-Miner+,57.558,0.939,"separated, faster"
-KOSARAK,626.116,5,276.768,1.776,5,100,100,0.442,"separated, faster",Remine-own-UUT,281.017,0.985,overlapping
-C8T1S5I8N5K,9.029,5,6.048,0.037,5,100,100,0.67,"separated, faster",Remine-own-UUT,5.895,1.026,"separated, slower"
-TAFENG,5.929,5,6.129,0.032,5,55,8,1.034,"separated, slower",Pre-HUSPM-SWUmax,7.38,0.83,"separated, faster"
+SIGN,9.694,5,9.9,0.048,5,100,100,1.021,"separated, slower",Remine-own-UUT,10.789,0.918,"separated, faster"
+LEVIATHAN,35.228,5,26.592,0.26,5,100,100,0.755,"separated, faster",Remine-own-UUT,26.979,0.986,overlapping
+FIFA,178.011,5,182.171,1.074,5,33,9,1.023,"separated, slower",Remine-own-UUT,316.326,0.576,"separated, faster"
+BIBLE,54.499,5,54.369,0.403,5,75,49,0.998,overlapping,IncUSP-Miner+,57.558,0.945,"separated, faster"
+KOSARAK,626.116,5,277.984,2.398,5,100,100,0.444,"separated, faster",Remine-own-UUT,308.252,0.902,"separated, faster"
+C8T1S5I8N5K,9.029,5,6.097,0.023,5,100,100,0.675,"separated, faster",Remine-own-UUT,7.156,0.852,"separated, faster"
+TAFENG,5.929,5,6.181,0.049,5,55,8,1.043,"separated, slower",Pre-HUSPM-SWUmax,7.38,0.838,"separated, faster"
+DUNNHUMBY,158.908,5,134.032,5.694,5,100,100,0.843,"separated, faster",Remine-own-UUT,129.234,1.037,overlapping

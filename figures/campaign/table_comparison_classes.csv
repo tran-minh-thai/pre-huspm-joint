@@ -1,512 +1,589 @@
 family,group,first,second,ratio,cls
-SC2_method_vs_Pre-HUSPM-SWUmax,SIGN,Pre-HUSPM-Joint,Pre-HUSPM-SWUmax,5.089,win
-SC2_method_vs_Pre-HUSPM-TSU,SIGN,Pre-HUSPM-Joint,Pre-HUSPM-TSU,5.066,win
-SC2_method_vs_Remine-from-scratch,SIGN,Pre-HUSPM-Joint,Remine-from-scratch,1.79,win
-SC2_method_vs_IncUSP-Miner+,SIGN,Pre-HUSPM-Joint,IncUSP-Miner+,2.393,win
-SC2_method_vs_Remine-HUSP-ULL,SIGN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.77,win
-SC2_method_vs_Remine-HUSP-SP,SIGN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.786,win
-SC2_method_vs_Remine-own-UUT,SIGN,Pre-HUSPM-Joint,Remine-own-UUT,1.086,tie
-SC2_method_vs_Joint-miner+SWUmax,SIGN,Pre-HUSPM-Joint,Joint-miner+SWUmax,0.982,tie
-SC2_method_vs_Joint-miner+TSU,SIGN,Pre-HUSPM-Joint,Joint-miner+TSU,0.981,tie
-SC2_method_vs_Joint-rule+PreHUSPM-tracking,SIGN,Pre-HUSPM-Joint,Joint-rule+PreHUSPM-tracking,1.557,win
-SC2_method_vs_Joint-miner+SWUmax+PreHUSPM-tracking,SIGN,Pre-HUSPM-Joint,Joint-miner+SWUmax+PreHUSPM-tracking,1.553,win
-SC2_method_vs_Joint-rule+min-floor,SIGN,Pre-HUSPM-Joint,Joint-rule+min-floor,0.983,tie
-SC2_method_vs_Joint-rule+plain-floor,SIGN,Pre-HUSPM-Joint,Joint-rule+plain-floor,0.983,tie
-SC2_method_vs_Pre-HUSPM-Joint-fixed-threshold,SIGN,Pre-HUSPM-Joint,Pre-HUSPM-Joint-fixed-threshold,0.978,tie
-SC2_method_vs_Pre-HUSPM-SWUmax,TAFENG,Pre-HUSPM-Joint,Pre-HUSPM-SWUmax,1.204,win
-SC2_method_vs_Pre-HUSPM-TSU,TAFENG,Pre-HUSPM-Joint,Pre-HUSPM-TSU,2.142,win
-SC2_method_vs_Remine-from-scratch,TAFENG,Pre-HUSPM-Joint,Remine-from-scratch,1.882,win
-SC2_method_vs_IncUSP-Miner+,TAFENG,Pre-HUSPM-Joint,IncUSP-Miner+,2.543,win
-SC2_method_vs_Remine-HUSP-ULL,TAFENG,Pre-HUSPM-Joint,Remine-HUSP-ULL,2.847,win
-SC2_method_vs_Remine-HUSP-SP,TAFENG,Pre-HUSPM-Joint,Remine-HUSP-SP,4.977,win
-SC2_method_vs_Remine-own-UUT,TAFENG,Pre-HUSPM-Joint,Remine-own-UUT,1.692,win
-SC2_method_vs_Joint-miner+SWUmax,TAFENG,Pre-HUSPM-Joint,Joint-miner+SWUmax,1.049,tie
-SC2_method_vs_Joint-miner+TSU,TAFENG,Pre-HUSPM-Joint,Joint-miner+TSU,1.843,win
-SC2_method_vs_Joint-rule+PreHUSPM-tracking,TAFENG,Pre-HUSPM-Joint,Joint-rule+PreHUSPM-tracking,0.75,loss
-SC2_method_vs_Joint-miner+SWUmax+PreHUSPM-tracking,TAFENG,Pre-HUSPM-Joint,Joint-miner+SWUmax+PreHUSPM-tracking,0.812,loss
-SC2_method_vs_Joint-rule+min-floor,TAFENG,Pre-HUSPM-Joint,Joint-rule+min-floor,0.969,tie
-SC2_method_vs_Joint-rule+plain-floor,TAFENG,Pre-HUSPM-Joint,Joint-rule+plain-floor,0.96,tie
-SC2_method_vs_Pre-HUSPM-Joint-fixed-threshold,TAFENG,Pre-HUSPM-Joint,Pre-HUSPM-Joint-fixed-threshold,0.967,tie
-SC2_method_vs_Pre-HUSPM-SWUmax,C8T1S5I8N5K,Pre-HUSPM-Joint,Pre-HUSPM-SWUmax,8.499,win
-SC2_method_vs_Pre-HUSPM-TSU,C8T1S5I8N5K,Pre-HUSPM-Joint,Pre-HUSPM-TSU,10.399,win
-SC2_method_vs_Remine-from-scratch,C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-from-scratch,1.882,win
-SC2_method_vs_IncUSP-Miner+,C8T1S5I8N5K,Pre-HUSPM-Joint,IncUSP-Miner+,3.049,win
-SC2_method_vs_Remine-HUSP-ULL,C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.938,win
-SC2_method_vs_Remine-HUSP-SP,C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-SP,2.128,win
-SC2_method_vs_Remine-own-UUT,C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-own-UUT,0.975,tie
-SC2_method_vs_Joint-miner+SWUmax,C8T1S5I8N5K,Pre-HUSPM-Joint,Joint-miner+SWUmax,1.552,win
-SC2_method_vs_Joint-miner+TSU,C8T1S5I8N5K,Pre-HUSPM-Joint,Joint-miner+TSU,1.879,win
-SC2_method_vs_Joint-rule+PreHUSPM-tracking,C8T1S5I8N5K,Pre-HUSPM-Joint,Joint-rule+PreHUSPM-tracking,3.547,win
-SC2_method_vs_Joint-miner+SWUmax+PreHUSPM-tracking,C8T1S5I8N5K,Pre-HUSPM-Joint,Joint-miner+SWUmax+PreHUSPM-tracking,3.664,win
-SC2_method_vs_Joint-rule+min-floor,C8T1S5I8N5K,Pre-HUSPM-Joint,Joint-rule+min-floor,1.491,win
-SC2_method_vs_Joint-rule+plain-floor,C8T1S5I8N5K,Pre-HUSPM-Joint,Joint-rule+plain-floor,1.498,win
-SC2_method_vs_Pre-HUSPM-Joint-fixed-threshold,C8T1S5I8N5K,Pre-HUSPM-Joint,Pre-HUSPM-Joint-fixed-threshold,1.493,win
-SC2_method_vs_Pre-HUSPM-SWUmax,BIBLE,Pre-HUSPM-Joint,Pre-HUSPM-SWUmax,1.702,win
-SC2_method_vs_Pre-HUSPM-TSU,BIBLE,Pre-HUSPM-Joint,Pre-HUSPM-TSU,2.071,win
-SC2_method_vs_Remine-from-scratch,BIBLE,Pre-HUSPM-Joint,Remine-from-scratch,1.656,win
-SC2_method_vs_IncUSP-Miner+,BIBLE,Pre-HUSPM-Joint,IncUSP-Miner+,1.065,tie
-SC2_method_vs_Remine-HUSP-ULL,BIBLE,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.467,win
-SC2_method_vs_Remine-HUSP-SP,BIBLE,Pre-HUSPM-Joint,Remine-HUSP-SP,1.419,win
-SC2_method_vs_Remine-own-UUT,BIBLE,Pre-HUSPM-Joint,Remine-own-UUT,1.256,win
-SC2_method_vs_Joint-miner+SWUmax,BIBLE,Pre-HUSPM-Joint,Joint-miner+SWUmax,1.008,tie
-SC2_method_vs_Joint-miner+TSU,BIBLE,Pre-HUSPM-Joint,Joint-miner+TSU,1.227,win
-SC2_method_vs_Joint-rule+PreHUSPM-tracking,BIBLE,Pre-HUSPM-Joint,Joint-rule+PreHUSPM-tracking,1.085,tie
-SC2_method_vs_Joint-miner+SWUmax+PreHUSPM-tracking,BIBLE,Pre-HUSPM-Joint,Joint-miner+SWUmax+PreHUSPM-tracking,1.092,win
-SC2_method_vs_Joint-rule+min-floor,BIBLE,Pre-HUSPM-Joint,Joint-rule+min-floor,1.002,tie
-SC2_method_vs_Joint-rule+plain-floor,BIBLE,Pre-HUSPM-Joint,Joint-rule+plain-floor,1.002,tie
-SC2_method_vs_Pre-HUSPM-Joint-fixed-threshold,BIBLE,Pre-HUSPM-Joint,Pre-HUSPM-Joint-fixed-threshold,1.009,tie
-SC2_method_vs_Pre-HUSPM-SWUmax,LEVIATHAN,Pre-HUSPM-Joint,Pre-HUSPM-SWUmax,4.206,win
-SC2_method_vs_Pre-HUSPM-TSU,LEVIATHAN,Pre-HUSPM-Joint,Pre-HUSPM-TSU,4.318,win
-SC2_method_vs_Remine-from-scratch,LEVIATHAN,Pre-HUSPM-Joint,Remine-from-scratch,1.361,win
-SC2_method_vs_IncUSP-Miner+,LEVIATHAN,Pre-HUSPM-Joint,IncUSP-Miner+,2.682,win
-SC2_method_vs_Remine-HUSP-ULL,LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.4,win
-SC2_method_vs_Remine-HUSP-SP,LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.339,win
-SC2_method_vs_Remine-own-UUT,LEVIATHAN,Pre-HUSPM-Joint,Remine-own-UUT,0.989,tie
-SC2_method_vs_Joint-miner+SWUmax,LEVIATHAN,Pre-HUSPM-Joint,Joint-miner+SWUmax,1.319,win
-SC2_method_vs_Joint-miner+TSU,LEVIATHAN,Pre-HUSPM-Joint,Joint-miner+TSU,1.367,win
-SC2_method_vs_Joint-rule+PreHUSPM-tracking,LEVIATHAN,Pre-HUSPM-Joint,Joint-rule+PreHUSPM-tracking,1.936,win
-SC2_method_vs_Joint-miner+SWUmax+PreHUSPM-tracking,LEVIATHAN,Pre-HUSPM-Joint,Joint-miner+SWUmax+PreHUSPM-tracking,1.933,win
-SC2_method_vs_Joint-rule+min-floor,LEVIATHAN,Pre-HUSPM-Joint,Joint-rule+min-floor,1.345,win
-SC2_method_vs_Joint-rule+plain-floor,LEVIATHAN,Pre-HUSPM-Joint,Joint-rule+plain-floor,1.325,win
-SC2_method_vs_Pre-HUSPM-Joint-fixed-threshold,LEVIATHAN,Pre-HUSPM-Joint,Pre-HUSPM-Joint-fixed-threshold,1.323,win
-SC2_method_vs_Pre-HUSPM-SWUmax,FIFA,Pre-HUSPM-Joint,Pre-HUSPM-SWUmax,28.086,win
-SC2_method_vs_Pre-HUSPM-TSU,FIFA,Pre-HUSPM-Joint,Pre-HUSPM-TSU,39.07,win
-SC2_method_vs_Remine-from-scratch,FIFA,Pre-HUSPM-Joint,Remine-from-scratch,3.872,win
-SC2_method_vs_Remine-HUSP-ULL,FIFA,Pre-HUSPM-Joint,Remine-HUSP-ULL,3.312,win
-SC2_method_vs_Remine-HUSP-SP,FIFA,Pre-HUSPM-Joint,Remine-HUSP-SP,2.603,win
-SC2_method_vs_Remine-own-UUT,FIFA,Pre-HUSPM-Joint,Remine-own-UUT,1.796,win
-SC2_method_vs_Joint-miner+SWUmax,FIFA,Pre-HUSPM-Joint,Joint-miner+SWUmax,1.058,tie
-SC2_method_vs_Joint-miner+TSU,FIFA,Pre-HUSPM-Joint,Joint-miner+TSU,1.495,win
-SC2_method_vs_Joint-rule+PreHUSPM-tracking,FIFA,Pre-HUSPM-Joint,Joint-rule+PreHUSPM-tracking,6.545,win
-SC2_method_vs_Joint-miner+SWUmax+PreHUSPM-tracking,FIFA,Pre-HUSPM-Joint,Joint-miner+SWUmax+PreHUSPM-tracking,7.026,win
-SC2_method_vs_Joint-rule+min-floor,FIFA,Pre-HUSPM-Joint,Joint-rule+min-floor,0.984,tie
-SC2_method_vs_Joint-rule+plain-floor,FIFA,Pre-HUSPM-Joint,Joint-rule+plain-floor,0.984,tie
-SC2_method_vs_Pre-HUSPM-Joint-fixed-threshold,FIFA,Pre-HUSPM-Joint,Pre-HUSPM-Joint-fixed-threshold,0.997,tie
-SC2_method_vs_Pre-HUSPM-SWUmax,KOSARAK,Pre-HUSPM-Joint,Pre-HUSPM-SWUmax,2.63,win
-SC2_method_vs_Pre-HUSPM-TSU,KOSARAK,Pre-HUSPM-Joint,Pre-HUSPM-TSU,2.62,win
-SC2_method_vs_Remine-from-scratch,KOSARAK,Pre-HUSPM-Joint,Remine-from-scratch,2.271,win
-SC2_method_vs_IncUSP-Miner+,KOSARAK,Pre-HUSPM-Joint,IncUSP-Miner+,5.742,win
-SC2_method_vs_Remine-HUSP-ULL,KOSARAK,Pre-HUSPM-Joint,Remine-HUSP-ULL,2.323,win
-SC2_method_vs_Remine-HUSP-SP,KOSARAK,Pre-HUSPM-Joint,Remine-HUSP-SP,1.244,win
-SC2_method_vs_Remine-own-UUT,KOSARAK,Pre-HUSPM-Joint,Remine-own-UUT,1.015,tie
-SC2_method_vs_Joint-miner+SWUmax,KOSARAK,Pre-HUSPM-Joint,Joint-miner+SWUmax,2.255,win
-SC2_method_vs_Joint-miner+TSU,KOSARAK,Pre-HUSPM-Joint,Joint-miner+TSU,2.27,win
-SC2_method_vs_Joint-rule+PreHUSPM-tracking,KOSARAK,Pre-HUSPM-Joint,Joint-rule+PreHUSPM-tracking,4.9,win
-SC2_method_vs_Joint-miner+SWUmax+PreHUSPM-tracking,KOSARAK,Pre-HUSPM-Joint,Joint-miner+SWUmax+PreHUSPM-tracking,4.965,win
-SC2_method_vs_Joint-rule+min-floor,KOSARAK,Pre-HUSPM-Joint,Joint-rule+min-floor,2.262,win
-SC2_method_vs_Joint-rule+plain-floor,KOSARAK,Pre-HUSPM-Joint,Joint-rule+plain-floor,2.259,win
-SC2_method_vs_Pre-HUSPM-Joint-fixed-threshold,KOSARAK,Pre-HUSPM-Joint,Pre-HUSPM-Joint-fixed-threshold,2.262,win
-SC2_method_vs_closest_published_or_remine_below,BIBLE,Pre-HUSPM-Joint,IncUSP-Miner+,1.065,tie
-SC2_method_vs_closest_published_or_remine_below,C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-from-scratch,1.882,win
-SC2_method_vs_closest_published_or_remine_below,FIFA,Pre-HUSPM-Joint,Remine-HUSP-SP,2.603,win
-SC2_method_vs_closest_published_or_remine_below,KOSARAK,Pre-HUSPM-Joint,Remine-HUSP-SP,1.244,win
-SC2_method_vs_closest_published_or_remine_below,LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.339,win
-SC2_method_vs_closest_published_or_remine_below,SIGN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.77,win
-SC2_method_vs_closest_published_or_remine_below,TAFENG,Pre-HUSPM-Joint,Pre-HUSPM-SWUmax,1.204,win
-SC5_method_vs_closest,C8T1S5I8N5K K=25 BURST,Pre-HUSPM-Joint,Remine-own-UUT,0.948,tie
-SC5_method_vs_closest,C8T1S5I8N5K K=25 DECREASING,Pre-HUSPM-Joint,Remine-own-UUT,0.958,tie
-SC5_method_vs_closest,C8T1S5I8N5K K=25 EVEN,Pre-HUSPM-Joint,Remine-own-UUT,0.946,tie
-SC5_method_vs_closest,C8T1S5I8N5K K=25 INCREASING,Pre-HUSPM-Joint,Remine-own-UUT,0.975,tie
-SC5_method_vs_closest,C8T1S5I8N5K K=50 BURST,Pre-HUSPM-Joint,Remine-own-UUT,0.958,tie
-SC5_method_vs_closest,C8T1S5I8N5K K=50 DECREASING,Pre-HUSPM-Joint,Remine-own-UUT,0.969,tie
-SC5_method_vs_closest,C8T1S5I8N5K K=50 EVEN,Pre-HUSPM-Joint,Remine-own-UUT,0.96,tie
-SC5_method_vs_closest,C8T1S5I8N5K K=50 INCREASING,Pre-HUSPM-Joint,Remine-own-UUT,0.997,tie
-SC5_method_vs_closest,C8T1S5I8N5K K=67 BURST,Pre-HUSPM-Joint,Remine-own-UUT,0.968,tie
-SC5_method_vs_closest,C8T1S5I8N5K K=67 DECREASING,Pre-HUSPM-Joint,Remine-own-UUT,0.98,tie
-SC5_method_vs_closest,C8T1S5I8N5K K=67 EVEN,Pre-HUSPM-Joint,Remine-own-UUT,0.969,tie
-SC5_method_vs_closest,C8T1S5I8N5K K=67 INCREASING,Pre-HUSPM-Joint,Remine-own-UUT,1.014,tie
-SC5_method_vs_closest,C8T1S5I8N5K K=100 BURST,Pre-HUSPM-Joint,Remine-own-UUT,0.952,tie
-SC5_method_vs_closest,C8T1S5I8N5K K=100 DECREASING,Pre-HUSPM-Joint,Remine-own-UUT,1.009,tie
-SC5_method_vs_closest,C8T1S5I8N5K K=100 EVEN,Pre-HUSPM-Joint,Remine-own-UUT,0.97,tie
-SC5_method_vs_closest,C8T1S5I8N5K K=100 INCREASING,Pre-HUSPM-Joint,Remine-own-UUT,1.028,tie
-SC5_method_vs_closest,LEVIATHAN K=25 BURST,Pre-HUSPM-Joint,Remine-own-UUT,0.986,tie
-SC5_method_vs_closest,LEVIATHAN K=25 DECREASING,Pre-HUSPM-Joint,Remine-own-UUT,0.99,tie
-SC5_method_vs_closest,LEVIATHAN K=25 EVEN,Pre-HUSPM-Joint,Remine-own-UUT,0.988,tie
-SC5_method_vs_closest,LEVIATHAN K=25 INCREASING,Pre-HUSPM-Joint,Remine-own-UUT,0.984,tie
-SC5_method_vs_closest,LEVIATHAN K=50 BURST,Pre-HUSPM-Joint,Remine-own-UUT,0.988,tie
-SC5_method_vs_closest,LEVIATHAN K=50 DECREASING,Pre-HUSPM-Joint,Remine-own-UUT,0.982,tie
-SC5_method_vs_closest,LEVIATHAN K=50 EVEN,Pre-HUSPM-Joint,Remine-own-UUT,0.989,tie
-SC5_method_vs_closest,LEVIATHAN K=50 INCREASING,Pre-HUSPM-Joint,Remine-own-UUT,0.997,tie
-SC5_method_vs_closest,LEVIATHAN K=67 BURST,Pre-HUSPM-Joint,Remine-own-UUT,0.992,tie
-SC5_method_vs_closest,LEVIATHAN K=67 DECREASING,Pre-HUSPM-Joint,Remine-own-UUT,1.056,tie
-SC5_method_vs_closest,LEVIATHAN K=67 EVEN,Pre-HUSPM-Joint,Remine-own-UUT,0.996,tie
-SC5_method_vs_closest,LEVIATHAN K=67 INCREASING,Pre-HUSPM-Joint,Remine-own-UUT,1.016,tie
-SC5_method_vs_closest,LEVIATHAN K=100 BURST,Pre-HUSPM-Joint,Remine-own-UUT,1.036,tie
-SC5_method_vs_closest,LEVIATHAN K=100 DECREASING,Pre-HUSPM-Joint,Remine-own-UUT,1.208,win
-SC5_method_vs_closest,LEVIATHAN K=100 EVEN,Pre-HUSPM-Joint,Remine-own-UUT,0.99,tie
-SC5_method_vs_closest,LEVIATHAN K=100 INCREASING,Pre-HUSPM-Joint,Remine-own-UUT,1.032,tie
-SC5_method_vs_closest,SIGN K=25 BURST,Pre-HUSPM-Joint,Remine-own-UUT,1.074,tie
-SC5_method_vs_closest,SIGN K=25 DECREASING,Pre-HUSPM-Joint,Remine-own-UUT,1.07,tie
-SC5_method_vs_closest,SIGN K=25 EVEN,Pre-HUSPM-Joint,Remine-own-UUT,1.072,tie
-SC5_method_vs_closest,SIGN K=25 INCREASING,Pre-HUSPM-Joint,Remine-own-UUT,1.103,win
-SC5_method_vs_closest,SIGN K=50 BURST,Pre-HUSPM-Joint,Remine-own-UUT,1.074,tie
-SC5_method_vs_closest,SIGN K=50 DECREASING,Pre-HUSPM-Joint,Remine-own-UUT,1.07,tie
-SC5_method_vs_closest,SIGN K=50 EVEN,Pre-HUSPM-Joint,Remine-own-UUT,1.075,tie
-SC5_method_vs_closest,SIGN K=50 INCREASING,Pre-HUSPM-Joint,Remine-own-UUT,1.107,win
-SC5_method_vs_closest,SIGN K=67 BURST,Pre-HUSPM-Joint,Remine-own-UUT,1.075,tie
-SC5_method_vs_closest,SIGN K=67 DECREASING,Pre-HUSPM-Joint,Remine-own-UUT,1.057,tie
-SC5_method_vs_closest,SIGN K=67 EVEN,Pre-HUSPM-Joint,Remine-own-UUT,1.059,tie
-SC5_method_vs_closest,SIGN K=67 INCREASING,Pre-HUSPM-Joint,Remine-own-UUT,1.1,win
-SC5_method_vs_closest,SIGN K=100 BURST,Pre-HUSPM-Joint,Remine-own-UUT,1.066,tie
-SC5_method_vs_closest,SIGN K=100 DECREASING,Pre-HUSPM-Joint,Remine-own-UUT,1.257,win
-SC5_method_vs_closest,SIGN K=100 EVEN,Pre-HUSPM-Joint,Remine-own-UUT,1.075,tie
-SC5_method_vs_closest,SIGN K=100 INCREASING,Pre-HUSPM-Joint,Remine-own-UUT,1.11,win
-mixed_method_vs_Remine-from-scratch,SC6 SIGN,Pre-HUSPM-Joint,Remine-from-scratch,1.829,win
-mixed_modification_vs_Remine-from-scratch,SC6 SIGN,Pre-HUSPM-Joint,Remine-from-scratch,1.799,win
-mixed_method_vs_Remine-own-UUT,SC6 SIGN,Pre-HUSPM-Joint,Remine-own-UUT,1.044,tie
-mixed_modification_vs_Remine-own-UUT,SC6 SIGN,Pre-HUSPM-Joint,Remine-own-UUT,1.045,tie
-mixed_method_vs_Remine-from-scratch,SC6 LEVIATHAN,Pre-HUSPM-Joint,Remine-from-scratch,1.364,win
-mixed_modification_vs_Remine-from-scratch,SC6 LEVIATHAN,Pre-HUSPM-Joint,Remine-from-scratch,1.378,win
-mixed_method_vs_Remine-own-UUT,SC6 LEVIATHAN,Pre-HUSPM-Joint,Remine-own-UUT,0.984,tie
-mixed_modification_vs_Remine-own-UUT,SC6 LEVIATHAN,Pre-HUSPM-Joint,Remine-own-UUT,0.993,tie
-mixed_method_vs_Remine-from-scratch,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-from-scratch,1.522,win
-mixed_modification_vs_Remine-from-scratch,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-from-scratch,1.399,win
-mixed_method_vs_Remine-own-UUT,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-own-UUT,0.963,tie
-mixed_modification_vs_Remine-own-UUT,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-own-UUT,0.989,tie
-mixed_method_vs_Remine-from-scratch,SC6 TAFENG,Pre-HUSPM-Joint,Remine-from-scratch,1.471,win
-mixed_modification_vs_Remine-from-scratch,SC6 TAFENG,Pre-HUSPM-Joint,Remine-from-scratch,1.097,win
-mixed_method_vs_Remine-own-UUT,SC6 TAFENG,Pre-HUSPM-Joint,Remine-own-UUT,1.362,win
-mixed_modification_vs_Remine-own-UUT,SC6 TAFENG,Pre-HUSPM-Joint,Remine-own-UUT,1.051,tie
-mixed_method_vs_Remine-from-scratch,SC6D SIGN,Pre-HUSPM-Joint,Remine-from-scratch,1.857,win
-mixed_modification_vs_Remine-from-scratch,SC6D SIGN,Pre-HUSPM-Joint,Remine-from-scratch,1.628,win
-mixed_method_vs_Remine-own-UUT,SC6D SIGN,Pre-HUSPM-Joint,Remine-own-UUT,1.082,tie
-mixed_modification_vs_Remine-own-UUT,SC6D SIGN,Pre-HUSPM-Joint,Remine-own-UUT,0.962,tie
-mixed_method_vs_Remine-from-scratch,SC6D LEVIATHAN,Pre-HUSPM-Joint,Remine-from-scratch,1.686,win
-mixed_modification_vs_Remine-from-scratch,SC6D LEVIATHAN,Pre-HUSPM-Joint,Remine-from-scratch,1.129,win
-mixed_method_vs_Remine-own-UUT,SC6D LEVIATHAN,Pre-HUSPM-Joint,Remine-own-UUT,1.231,win
-mixed_modification_vs_Remine-own-UUT,SC6D LEVIATHAN,Pre-HUSPM-Joint,Remine-own-UUT,0.834,loss
-mixed_method_vs_Remine-from-scratch,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-from-scratch,1.398,win
-mixed_modification_vs_Remine-from-scratch,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-from-scratch,1.064,tie
-mixed_method_vs_Remine-own-UUT,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-own-UUT,0.938,tie
-mixed_modification_vs_Remine-own-UUT,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-own-UUT,0.723,loss
-mixed_method_vs_Remine-from-scratch,SC6D TAFENG,Pre-HUSPM-Joint,Remine-from-scratch,2.29,win
-mixed_modification_vs_Remine-from-scratch,SC6D TAFENG,Pre-HUSPM-Joint,Remine-from-scratch,1.204,win
-mixed_method_vs_Remine-own-UUT,SC6D TAFENG,Pre-HUSPM-Joint,Remine-own-UUT,2.041,win
-mixed_modification_vs_Remine-own-UUT,SC6D TAFENG,Pre-HUSPM-Joint,Remine-own-UUT,1.105,win
-mixed_method_vs_Remine-from-scratch,SC6B SIGN,Pre-HUSPM-Joint,Remine-from-scratch,1.825,win
-mixed_modification_vs_Remine-from-scratch,SC6B SIGN,Pre-HUSPM-Joint,Remine-from-scratch,1.819,win
-mixed_method_vs_Remine-own-UUT,SC6B SIGN,Pre-HUSPM-Joint,Remine-own-UUT,1.094,win
-mixed_modification_vs_Remine-own-UUT,SC6B SIGN,Pre-HUSPM-Joint,Remine-own-UUT,1.086,tie
-mixed_method_vs_Remine-from-scratch,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine-from-scratch,1.399,win
-mixed_modification_vs_Remine-from-scratch,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine-from-scratch,1.42,win
-mixed_method_vs_Remine-own-UUT,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine-own-UUT,0.99,tie
-mixed_modification_vs_Remine-own-UUT,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine-own-UUT,0.987,tie
-mixed_method_vs_Remine-from-scratch,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-from-scratch,1.637,win
-mixed_modification_vs_Remine-from-scratch,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-from-scratch,1.455,win
-mixed_method_vs_Remine-own-UUT,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-own-UUT,1.096,win
-mixed_modification_vs_Remine-own-UUT,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-own-UUT,1.089,win
-mixed_method_vs_Remine-from-scratch,SC6B TAFENG,Pre-HUSPM-Joint,Remine-from-scratch,1.292,win
-mixed_modification_vs_Remine-from-scratch,SC6B TAFENG,Pre-HUSPM-Joint,Remine-from-scratch,1.408,win
-mixed_method_vs_Remine-own-UUT,SC6B TAFENG,Pre-HUSPM-Joint,Remine-own-UUT,1.134,win
-mixed_modification_vs_Remine-own-UUT,SC6B TAFENG,Pre-HUSPM-Joint,Remine-own-UUT,1.258,win
-mixed_pooled_stream_vs_Remine,SC6 SIGN,Pre-HUSPM-Joint,Remine,1.829,win
-mixed_pooled_stream_vs_Remine-HUSP-ULL,SC6 SIGN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.607,win
-mixed_pooled_stream_vs_Remine-HUSP-SP,SC6 SIGN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.688,win
-mixed_pooled_stream_vs_Remine-UUT,SC6 SIGN,Pre-HUSPM-Joint,Remine-UUT,1.044,tie
-mixed_pooled_stream_vs_FixedFloor,SC6 SIGN,Pre-HUSPM-Joint,FixedFloor,1.378,win
-mixed_method_vs_window5,SC6 SIGN,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w5,1.36,win
-mixed_pooled_stream_vs_window5,SC6 SIGN,Pre-HUSPM-Joint,window5,1.36,win
-mixed_pooled_insertion_vs_Remine,SC6 SIGN,Pre-HUSPM-Joint,Remine,1.826,win
-mixed_pooled_insertion_vs_Remine-HUSP-ULL,SC6 SIGN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.592,win
-mixed_pooled_insertion_vs_Remine-HUSP-SP,SC6 SIGN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.675,win
-mixed_pooled_insertion_vs_Remine-UUT,SC6 SIGN,Pre-HUSPM-Joint,Remine-UUT,1.032,tie
-mixed_pooled_insertion_vs_FixedFloor,SC6 SIGN,Pre-HUSPM-Joint,FixedFloor,1.566,win
-mixed_pooled_insertion_vs_window5,SC6 SIGN,Pre-HUSPM-Joint,window5,1.485,win
-mixed_pooled_deletion_vs_Remine,SC6 SIGN,Pre-HUSPM-Joint,Remine,1.873,win
-mixed_pooled_deletion_vs_Remine-HUSP-ULL,SC6 SIGN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.698,win
-mixed_pooled_deletion_vs_Remine-HUSP-SP,SC6 SIGN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.778,win
-mixed_pooled_deletion_vs_Remine-UUT,SC6 SIGN,Pre-HUSPM-Joint,Remine-UUT,1.108,win
-mixed_pooled_deletion_vs_FixedFloor,SC6 SIGN,Pre-HUSPM-Joint,FixedFloor,0.042,loss
-mixed_pooled_deletion_vs_window5,SC6 SIGN,Pre-HUSPM-Joint,window5,0.281,loss
-mixed_pooled_modification_vs_Remine,SC6 SIGN,Pre-HUSPM-Joint,Remine,1.799,win
-mixed_pooled_modification_vs_Remine-HUSP-ULL,SC6 SIGN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.593,win
-mixed_pooled_modification_vs_Remine-HUSP-SP,SC6 SIGN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.668,win
-mixed_pooled_modification_vs_Remine-UUT,SC6 SIGN,Pre-HUSPM-Joint,Remine-UUT,1.045,tie
-mixed_pooled_modification_vs_FixedFloor,SC6 SIGN,Pre-HUSPM-Joint,FixedFloor,1.735,win
-mixed_pooled_modification_vs_window5,SC6 SIGN,Pre-HUSPM-Joint,window5,1.777,win
-mixed_pooled_stream_vs_Remine,SC6 LEVIATHAN,Pre-HUSPM-Joint,Remine,1.364,win
-mixed_pooled_stream_vs_Remine-HUSP-ULL,SC6 LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.365,win
-mixed_pooled_stream_vs_Remine-HUSP-SP,SC6 LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.336,win
-mixed_pooled_stream_vs_Remine-UUT,SC6 LEVIATHAN,Pre-HUSPM-Joint,Remine-UUT,0.984,tie
-mixed_pooled_stream_vs_FixedFloor,SC6 LEVIATHAN,Pre-HUSPM-Joint,FixedFloor,1.161,win
-mixed_method_vs_window5,SC6 LEVIATHAN,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w5,1.2,win
-mixed_pooled_stream_vs_window5,SC6 LEVIATHAN,Pre-HUSPM-Joint,window5,1.2,win
-mixed_pooled_insertion_vs_Remine,SC6 LEVIATHAN,Pre-HUSPM-Joint,Remine,1.359,win
-mixed_pooled_insertion_vs_Remine-HUSP-ULL,SC6 LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.36,win
-mixed_pooled_insertion_vs_Remine-HUSP-SP,SC6 LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.334,win
-mixed_pooled_insertion_vs_Remine-UUT,SC6 LEVIATHAN,Pre-HUSPM-Joint,Remine-UUT,0.981,tie
-mixed_pooled_insertion_vs_FixedFloor,SC6 LEVIATHAN,Pre-HUSPM-Joint,FixedFloor,1.356,win
-mixed_pooled_insertion_vs_window5,SC6 LEVIATHAN,Pre-HUSPM-Joint,window5,1.349,win
-mixed_pooled_deletion_vs_Remine,SC6 LEVIATHAN,Pre-HUSPM-Joint,Remine,1.372,win
-mixed_pooled_deletion_vs_Remine-HUSP-ULL,SC6 LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.383,win
-mixed_pooled_deletion_vs_Remine-HUSP-SP,SC6 LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.34,win
-mixed_pooled_deletion_vs_Remine-UUT,SC6 LEVIATHAN,Pre-HUSPM-Joint,Remine-UUT,0.985,tie
+SC2_method_vs_Pre-HUSPM-SWUmax,SIGN,Pre-HUSPM-Joint,Pre-HUSPM-SWUmax,5.097,win
+SC2_method_vs_Pre-HUSPM-TSU,SIGN,Pre-HUSPM-Joint,Pre-HUSPM-TSU,5.074,win
+SC2_method_vs_Remine-from-scratch,SIGN,Pre-HUSPM-Joint,Remine-from-scratch,1.824,win
+SC2_method_vs_IncUSP-Miner+,SIGN,Pre-HUSPM-Joint,IncUSP-Miner+,2.396,win
+SC2_method_vs_Remine-HUSP-ULL,SIGN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.773,win
+SC2_method_vs_Remine-HUSP-SP,SIGN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.789,win
+SC2_method_vs_Remine-own-UUT,SIGN,Pre-HUSPM-Joint,Remine-own-UUT,1.09,win
+SC2_method_vs_Joint-miner+SWUmax,SIGN,Pre-HUSPM-Joint,Joint-miner+SWUmax,0.984,tie
+SC2_method_vs_Joint-miner+TSU,SIGN,Pre-HUSPM-Joint,Joint-miner+TSU,0.982,tie
+SC2_method_vs_Joint-rule+PreHUSPM-tracking,SIGN,Pre-HUSPM-Joint,Joint-rule+PreHUSPM-tracking,1.56,win
+SC2_method_vs_Joint-miner+SWUmax+PreHUSPM-tracking,SIGN,Pre-HUSPM-Joint,Joint-miner+SWUmax+PreHUSPM-tracking,1.556,win
+SC2_method_vs_Joint-rule+min-floor,SIGN,Pre-HUSPM-Joint,Joint-rule+min-floor,0.984,tie
+SC2_method_vs_Joint-rule+plain-floor,SIGN,Pre-HUSPM-Joint,Joint-rule+plain-floor,0.985,tie
+SC2_method_vs_Pre-HUSPM-Joint-fixed-threshold,SIGN,Pre-HUSPM-Joint,Pre-HUSPM-Joint-fixed-threshold,0.979,tie
+SC2_method_vs_Pre-HUSPM-SWUmax,TAFENG,Pre-HUSPM-Joint,Pre-HUSPM-SWUmax,1.194,win
+SC2_method_vs_Pre-HUSPM-TSU,TAFENG,Pre-HUSPM-Joint,Pre-HUSPM-TSU,2.124,win
+SC2_method_vs_Remine-from-scratch,TAFENG,Pre-HUSPM-Joint,Remine-from-scratch,2.454,win
+SC2_method_vs_IncUSP-Miner+,TAFENG,Pre-HUSPM-Joint,IncUSP-Miner+,2.521,win
+SC2_method_vs_Remine-HUSP-ULL,TAFENG,Pre-HUSPM-Joint,Remine-HUSP-ULL,2.823,win
+SC2_method_vs_Remine-HUSP-SP,TAFENG,Pre-HUSPM-Joint,Remine-HUSP-SP,4.935,win
+SC2_method_vs_Remine-own-UUT,TAFENG,Pre-HUSPM-Joint,Remine-own-UUT,2.264,win
+SC2_method_vs_Joint-miner+SWUmax,TAFENG,Pre-HUSPM-Joint,Joint-miner+SWUmax,1.04,tie
+SC2_method_vs_Joint-miner+TSU,TAFENG,Pre-HUSPM-Joint,Joint-miner+TSU,1.828,win
+SC2_method_vs_Joint-rule+PreHUSPM-tracking,TAFENG,Pre-HUSPM-Joint,Joint-rule+PreHUSPM-tracking,0.743,loss
+SC2_method_vs_Joint-miner+SWUmax+PreHUSPM-tracking,TAFENG,Pre-HUSPM-Joint,Joint-miner+SWUmax+PreHUSPM-tracking,0.806,loss
+SC2_method_vs_Joint-rule+min-floor,TAFENG,Pre-HUSPM-Joint,Joint-rule+min-floor,0.961,tie
+SC2_method_vs_Joint-rule+plain-floor,TAFENG,Pre-HUSPM-Joint,Joint-rule+plain-floor,0.952,tie
+SC2_method_vs_Pre-HUSPM-Joint-fixed-threshold,TAFENG,Pre-HUSPM-Joint,Pre-HUSPM-Joint-fixed-threshold,0.959,tie
+SC2_method_vs_Pre-HUSPM-SWUmax,C8T1S5I8N5K,Pre-HUSPM-Joint,Pre-HUSPM-SWUmax,8.431,win
+SC2_method_vs_Pre-HUSPM-TSU,C8T1S5I8N5K,Pre-HUSPM-Joint,Pre-HUSPM-TSU,10.316,win
+SC2_method_vs_Remine-from-scratch,C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-from-scratch,2.068,win
+SC2_method_vs_IncUSP-Miner+,C8T1S5I8N5K,Pre-HUSPM-Joint,IncUSP-Miner+,3.025,win
+SC2_method_vs_Remine-HUSP-ULL,C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.922,win
+SC2_method_vs_Remine-HUSP-SP,C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-SP,2.111,win
+SC2_method_vs_Remine-own-UUT,C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-own-UUT,1.174,win
+SC2_method_vs_Joint-miner+SWUmax,C8T1S5I8N5K,Pre-HUSPM-Joint,Joint-miner+SWUmax,1.539,win
+SC2_method_vs_Joint-miner+TSU,C8T1S5I8N5K,Pre-HUSPM-Joint,Joint-miner+TSU,1.864,win
+SC2_method_vs_Joint-rule+PreHUSPM-tracking,C8T1S5I8N5K,Pre-HUSPM-Joint,Joint-rule+PreHUSPM-tracking,3.518,win
+SC2_method_vs_Joint-miner+SWUmax+PreHUSPM-tracking,C8T1S5I8N5K,Pre-HUSPM-Joint,Joint-miner+SWUmax+PreHUSPM-tracking,3.634,win
+SC2_method_vs_Joint-rule+min-floor,C8T1S5I8N5K,Pre-HUSPM-Joint,Joint-rule+min-floor,1.479,win
+SC2_method_vs_Joint-rule+plain-floor,C8T1S5I8N5K,Pre-HUSPM-Joint,Joint-rule+plain-floor,1.486,win
+SC2_method_vs_Pre-HUSPM-Joint-fixed-threshold,C8T1S5I8N5K,Pre-HUSPM-Joint,Pre-HUSPM-Joint-fixed-threshold,1.481,win
+SC2_method_vs_Pre-HUSPM-SWUmax,BIBLE,Pre-HUSPM-Joint,Pre-HUSPM-SWUmax,1.692,win
+SC2_method_vs_Pre-HUSPM-TSU,BIBLE,Pre-HUSPM-Joint,Pre-HUSPM-TSU,2.058,win
+SC2_method_vs_Remine-from-scratch,BIBLE,Pre-HUSPM-Joint,Remine-from-scratch,1.669,win
+SC2_method_vs_IncUSP-Miner+,BIBLE,Pre-HUSPM-Joint,IncUSP-Miner+,1.059,tie
+SC2_method_vs_Remine-HUSP-ULL,BIBLE,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.458,win
+SC2_method_vs_Remine-HUSP-SP,BIBLE,Pre-HUSPM-Joint,Remine-HUSP-SP,1.41,win
+SC2_method_vs_Remine-own-UUT,BIBLE,Pre-HUSPM-Joint,Remine-own-UUT,1.268,win
+SC2_method_vs_Joint-miner+SWUmax,BIBLE,Pre-HUSPM-Joint,Joint-miner+SWUmax,1.001,tie
+SC2_method_vs_Joint-miner+TSU,BIBLE,Pre-HUSPM-Joint,Joint-miner+TSU,1.219,win
+SC2_method_vs_Joint-rule+PreHUSPM-tracking,BIBLE,Pre-HUSPM-Joint,Joint-rule+PreHUSPM-tracking,1.078,tie
+SC2_method_vs_Joint-miner+SWUmax+PreHUSPM-tracking,BIBLE,Pre-HUSPM-Joint,Joint-miner+SWUmax+PreHUSPM-tracking,1.085,tie
+SC2_method_vs_Joint-rule+min-floor,BIBLE,Pre-HUSPM-Joint,Joint-rule+min-floor,0.996,tie
+SC2_method_vs_Joint-rule+plain-floor,BIBLE,Pre-HUSPM-Joint,Joint-rule+plain-floor,0.995,tie
+SC2_method_vs_Pre-HUSPM-Joint-fixed-threshold,BIBLE,Pre-HUSPM-Joint,Pre-HUSPM-Joint-fixed-threshold,1.002,tie
+SC2_method_vs_Pre-HUSPM-SWUmax,LEVIATHAN,Pre-HUSPM-Joint,Pre-HUSPM-SWUmax,4.212,win
+SC2_method_vs_Pre-HUSPM-TSU,LEVIATHAN,Pre-HUSPM-Joint,Pre-HUSPM-TSU,4.323,win
+SC2_method_vs_Remine-from-scratch,LEVIATHAN,Pre-HUSPM-Joint,Remine-from-scratch,1.378,win
+SC2_method_vs_IncUSP-Miner+,LEVIATHAN,Pre-HUSPM-Joint,IncUSP-Miner+,2.686,win
+SC2_method_vs_Remine-HUSP-ULL,LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.402,win
+SC2_method_vs_Remine-HUSP-SP,LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.341,win
+SC2_method_vs_Remine-own-UUT,LEVIATHAN,Pre-HUSPM-Joint,Remine-own-UUT,1.015,tie
+SC2_method_vs_Joint-miner+SWUmax,LEVIATHAN,Pre-HUSPM-Joint,Joint-miner+SWUmax,1.321,win
+SC2_method_vs_Joint-miner+TSU,LEVIATHAN,Pre-HUSPM-Joint,Joint-miner+TSU,1.369,win
+SC2_method_vs_Joint-rule+PreHUSPM-tracking,LEVIATHAN,Pre-HUSPM-Joint,Joint-rule+PreHUSPM-tracking,1.939,win
+SC2_method_vs_Joint-miner+SWUmax+PreHUSPM-tracking,LEVIATHAN,Pre-HUSPM-Joint,Joint-miner+SWUmax+PreHUSPM-tracking,1.935,win
+SC2_method_vs_Joint-rule+min-floor,LEVIATHAN,Pre-HUSPM-Joint,Joint-rule+min-floor,1.347,win
+SC2_method_vs_Joint-rule+plain-floor,LEVIATHAN,Pre-HUSPM-Joint,Joint-rule+plain-floor,1.327,win
+SC2_method_vs_Pre-HUSPM-Joint-fixed-threshold,LEVIATHAN,Pre-HUSPM-Joint,Pre-HUSPM-Joint-fixed-threshold,1.325,win
+SC2_method_vs_Pre-HUSPM-SWUmax,FIFA,Pre-HUSPM-Joint,Pre-HUSPM-SWUmax,27.538,win
+SC2_method_vs_Pre-HUSPM-TSU,FIFA,Pre-HUSPM-Joint,Pre-HUSPM-TSU,38.308,win
+SC2_method_vs_Remine-from-scratch,FIFA,Pre-HUSPM-Joint,Remine-from-scratch,3.725,win
+SC2_method_vs_Remine-HUSP-ULL,FIFA,Pre-HUSPM-Joint,Remine-HUSP-ULL,3.248,win
+SC2_method_vs_Remine-HUSP-SP,FIFA,Pre-HUSPM-Joint,Remine-HUSP-SP,2.552,win
+SC2_method_vs_Remine-own-UUT,FIFA,Pre-HUSPM-Joint,Remine-own-UUT,1.736,win
+SC2_method_vs_Joint-miner+SWUmax,FIFA,Pre-HUSPM-Joint,Joint-miner+SWUmax,1.038,tie
+SC2_method_vs_Joint-miner+TSU,FIFA,Pre-HUSPM-Joint,Joint-miner+TSU,1.466,win
+SC2_method_vs_Joint-rule+PreHUSPM-tracking,FIFA,Pre-HUSPM-Joint,Joint-rule+PreHUSPM-tracking,6.417,win
+SC2_method_vs_Joint-miner+SWUmax+PreHUSPM-tracking,FIFA,Pre-HUSPM-Joint,Joint-miner+SWUmax+PreHUSPM-tracking,6.889,win
+SC2_method_vs_Joint-rule+min-floor,FIFA,Pre-HUSPM-Joint,Joint-rule+min-floor,0.965,tie
+SC2_method_vs_Joint-rule+plain-floor,FIFA,Pre-HUSPM-Joint,Joint-rule+plain-floor,0.965,tie
+SC2_method_vs_Pre-HUSPM-Joint-fixed-threshold,FIFA,Pre-HUSPM-Joint,Pre-HUSPM-Joint-fixed-threshold,0.977,tie
+SC2_method_vs_Pre-HUSPM-SWUmax,KOSARAK,Pre-HUSPM-Joint,Pre-HUSPM-SWUmax,2.619,win
+SC2_method_vs_Pre-HUSPM-TSU,KOSARAK,Pre-HUSPM-Joint,Pre-HUSPM-TSU,2.608,win
+SC2_method_vs_Remine-from-scratch,KOSARAK,Pre-HUSPM-Joint,Remine-from-scratch,2.369,win
+SC2_method_vs_IncUSP-Miner+,KOSARAK,Pre-HUSPM-Joint,IncUSP-Miner+,5.717,win
+SC2_method_vs_Remine-HUSP-ULL,KOSARAK,Pre-HUSPM-Joint,Remine-HUSP-ULL,2.313,win
+SC2_method_vs_Remine-HUSP-SP,KOSARAK,Pre-HUSPM-Joint,Remine-HUSP-SP,1.238,win
+SC2_method_vs_Remine-own-UUT,KOSARAK,Pre-HUSPM-Joint,Remine-own-UUT,1.109,win
+SC2_method_vs_Joint-miner+SWUmax,KOSARAK,Pre-HUSPM-Joint,Joint-miner+SWUmax,2.245,win
+SC2_method_vs_Joint-miner+TSU,KOSARAK,Pre-HUSPM-Joint,Joint-miner+TSU,2.26,win
+SC2_method_vs_Joint-rule+PreHUSPM-tracking,KOSARAK,Pre-HUSPM-Joint,Joint-rule+PreHUSPM-tracking,4.879,win
+SC2_method_vs_Joint-miner+SWUmax+PreHUSPM-tracking,KOSARAK,Pre-HUSPM-Joint,Joint-miner+SWUmax+PreHUSPM-tracking,4.943,win
+SC2_method_vs_Joint-rule+min-floor,KOSARAK,Pre-HUSPM-Joint,Joint-rule+min-floor,2.253,win
+SC2_method_vs_Joint-rule+plain-floor,KOSARAK,Pre-HUSPM-Joint,Joint-rule+plain-floor,2.249,win
+SC2_method_vs_Pre-HUSPM-Joint-fixed-threshold,KOSARAK,Pre-HUSPM-Joint,Pre-HUSPM-Joint-fixed-threshold,2.252,win
+SC2_method_vs_closest_published_or_remine_below,BIBLE,Pre-HUSPM-Joint,IncUSP-Miner+,1.059,tie
+SC2_method_vs_closest_published_or_remine_below,C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.922,win
+SC2_method_vs_closest_published_or_remine_below,FIFA,Pre-HUSPM-Joint,Remine-HUSP-SP,2.552,win
+SC2_method_vs_closest_published_or_remine_below,KOSARAK,Pre-HUSPM-Joint,Remine-HUSP-SP,1.238,win
+SC2_method_vs_closest_published_or_remine_below,LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.341,win
+SC2_method_vs_closest_published_or_remine_below,SIGN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.773,win
+SC2_method_vs_closest_published_or_remine_below,TAFENG,Pre-HUSPM-Joint,Pre-HUSPM-SWUmax,1.194,win
+SC5_method_vs_closest,C8T1S5I8N5K K=25 BURST,Pre-HUSPM-Joint,Remine-own-UUT,1.163,win
+SC5_method_vs_closest,C8T1S5I8N5K K=25 DECREASING,Pre-HUSPM-Joint,Remine-own-UUT,1.158,win
+SC5_method_vs_closest,C8T1S5I8N5K K=25 EVEN,Pre-HUSPM-Joint,Remine-own-UUT,1.154,win
+SC5_method_vs_closest,C8T1S5I8N5K K=25 INCREASING,Pre-HUSPM-Joint,Remine-own-UUT,1.182,win
+SC5_method_vs_closest,C8T1S5I8N5K K=50 BURST,Pre-HUSPM-Joint,Remine-own-UUT,1.159,win
+SC5_method_vs_closest,C8T1S5I8N5K K=50 DECREASING,Pre-HUSPM-Joint,Remine-own-UUT,1.169,win
+SC5_method_vs_closest,C8T1S5I8N5K K=50 EVEN,Pre-HUSPM-Joint,Remine-own-UUT,1.163,win
+SC5_method_vs_closest,C8T1S5I8N5K K=50 INCREASING,Pre-HUSPM-Joint,Remine-own-UUT,1.194,win
+SC5_method_vs_closest,C8T1S5I8N5K K=67 BURST,Pre-HUSPM-Joint,Remine-own-UUT,1.17,win
+SC5_method_vs_closest,C8T1S5I8N5K K=67 DECREASING,Pre-HUSPM-Joint,Remine-own-UUT,1.178,win
+SC5_method_vs_closest,C8T1S5I8N5K K=67 EVEN,Pre-HUSPM-Joint,Remine-own-UUT,1.175,win
+SC5_method_vs_closest,C8T1S5I8N5K K=67 INCREASING,Pre-HUSPM-Joint,Remine-own-UUT,1.224,win
+SC5_method_vs_closest,C8T1S5I8N5K K=100 BURST,Pre-HUSPM-Joint,Remine-own-UUT,1.164,win
+SC5_method_vs_closest,C8T1S5I8N5K K=100 DECREASING,Pre-HUSPM-Joint,Remine-own-UUT,1.21,win
+SC5_method_vs_closest,C8T1S5I8N5K K=100 EVEN,Pre-HUSPM-Joint,Remine-own-UUT,1.204,win
+SC5_method_vs_closest,C8T1S5I8N5K K=100 INCREASING,Pre-HUSPM-Joint,Remine-own-UUT,1.261,win
+SC5_method_vs_closest,LEVIATHAN K=25 BURST,Pre-HUSPM-Joint,Remine-own-UUT,1.029,tie
+SC5_method_vs_closest,LEVIATHAN K=25 DECREASING,Pre-HUSPM-Joint,Remine-own-UUT,1.034,tie
+SC5_method_vs_closest,LEVIATHAN K=25 EVEN,Pre-HUSPM-Joint,Remine-own-UUT,1.032,tie
+SC5_method_vs_closest,LEVIATHAN K=25 INCREASING,Pre-HUSPM-Joint,Remine-own-UUT,1.029,tie
+SC5_method_vs_closest,LEVIATHAN K=50 BURST,Pre-HUSPM-Joint,Remine-own-UUT,1.029,tie
+SC5_method_vs_closest,LEVIATHAN K=50 DECREASING,Pre-HUSPM-Joint,Remine-own-UUT,1.022,tie
+SC5_method_vs_closest,LEVIATHAN K=50 EVEN,Pre-HUSPM-Joint,Remine-own-UUT,1.031,tie
+SC5_method_vs_closest,LEVIATHAN K=50 INCREASING,Pre-HUSPM-Joint,Remine-own-UUT,1.05,tie
+SC5_method_vs_closest,LEVIATHAN K=67 BURST,Pre-HUSPM-Joint,Remine-own-UUT,1.028,tie
+SC5_method_vs_closest,LEVIATHAN K=67 DECREASING,Pre-HUSPM-Joint,Remine-own-UUT,1.092,win
+SC5_method_vs_closest,LEVIATHAN K=67 EVEN,Pre-HUSPM-Joint,Remine-own-UUT,1.029,tie
+SC5_method_vs_closest,LEVIATHAN K=67 INCREASING,Pre-HUSPM-Joint,Remine-own-UUT,1.059,tie
+SC5_method_vs_closest,LEVIATHAN K=100 BURST,Pre-HUSPM-Joint,Remine-own-UUT,1.071,tie
+SC5_method_vs_closest,LEVIATHAN K=100 DECREASING,Pre-HUSPM-Joint,Remine-own-UUT,1.252,win
+SC5_method_vs_closest,LEVIATHAN K=100 EVEN,Pre-HUSPM-Joint,Remine-own-UUT,1.028,tie
+SC5_method_vs_closest,LEVIATHAN K=100 INCREASING,Pre-HUSPM-Joint,Remine-own-UUT,1.071,tie
+SC5_method_vs_closest,SIGN K=25 BURST,Pre-HUSPM-Joint,Remine-own-UUT,1.091,win
+SC5_method_vs_closest,SIGN K=25 DECREASING,Pre-HUSPM-Joint,Remine-own-UUT,1.086,tie
+SC5_method_vs_closest,SIGN K=25 EVEN,Pre-HUSPM-Joint,Remine-own-UUT,1.09,win
+SC5_method_vs_closest,SIGN K=25 INCREASING,Pre-HUSPM-Joint,Remine-own-UUT,1.121,win
+SC5_method_vs_closest,SIGN K=50 BURST,Pre-HUSPM-Joint,Remine-own-UUT,1.091,win
+SC5_method_vs_closest,SIGN K=50 DECREASING,Pre-HUSPM-Joint,Remine-own-UUT,1.088,win
+SC5_method_vs_closest,SIGN K=50 EVEN,Pre-HUSPM-Joint,Remine-own-UUT,1.091,win
+SC5_method_vs_closest,SIGN K=50 INCREASING,Pre-HUSPM-Joint,Remine-own-UUT,1.109,win
+SC5_method_vs_closest,SIGN K=67 BURST,Pre-HUSPM-Joint,Remine-own-UUT,1.094,win
+SC5_method_vs_closest,SIGN K=67 DECREASING,Pre-HUSPM-Joint,Remine-own-UUT,1.076,tie
+SC5_method_vs_closest,SIGN K=67 EVEN,Pre-HUSPM-Joint,Remine-own-UUT,1.091,win
+SC5_method_vs_closest,SIGN K=67 INCREASING,Pre-HUSPM-Joint,Remine-own-UUT,1.121,win
+SC5_method_vs_closest,SIGN K=100 BURST,Pre-HUSPM-Joint,Remine-own-UUT,1.09,win
+SC5_method_vs_closest,SIGN K=100 DECREASING,Pre-HUSPM-Joint,Remine-own-UUT,1.282,win
+SC5_method_vs_closest,SIGN K=100 EVEN,Pre-HUSPM-Joint,Remine-own-UUT,1.089,win
+SC5_method_vs_closest,SIGN K=100 INCREASING,Pre-HUSPM-Joint,Remine-own-UUT,1.134,win
+mixed_method_vs_Remine-from-scratch,SC6 SIGN,Pre-HUSPM-Joint,Remine-from-scratch,1.914,win
+mixed_modification_vs_Remine-from-scratch,SC6 SIGN,Pre-HUSPM-Joint,Remine-from-scratch,1.818,win
+mixed_method_vs_Remine-own-UUT,SC6 SIGN,Pre-HUSPM-Joint,Remine-own-UUT,1.106,win
+mixed_modification_vs_Remine-own-UUT,SC6 SIGN,Pre-HUSPM-Joint,Remine-own-UUT,1.052,tie
+mixed_method_vs_Remine-from-scratch,SC6 LEVIATHAN,Pre-HUSPM-Joint,Remine-from-scratch,1.404,win
+mixed_modification_vs_Remine-from-scratch,SC6 LEVIATHAN,Pre-HUSPM-Joint,Remine-from-scratch,1.384,win
+mixed_method_vs_Remine-own-UUT,SC6 LEVIATHAN,Pre-HUSPM-Joint,Remine-own-UUT,1.023,tie
+mixed_modification_vs_Remine-own-UUT,SC6 LEVIATHAN,Pre-HUSPM-Joint,Remine-own-UUT,1.011,tie
+mixed_method_vs_Remine-from-scratch,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-from-scratch,1.71,win
+mixed_modification_vs_Remine-from-scratch,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-from-scratch,1.44,win
+mixed_method_vs_Remine-own-UUT,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-own-UUT,1.173,win
+mixed_modification_vs_Remine-own-UUT,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-own-UUT,1.064,tie
+mixed_method_vs_Remine-from-scratch,SC6 TAFENG,Pre-HUSPM-Joint,Remine-from-scratch,1.907,win
+mixed_modification_vs_Remine-from-scratch,SC6 TAFENG,Pre-HUSPM-Joint,Remine-from-scratch,1.478,win
+mixed_method_vs_Remine-own-UUT,SC6 TAFENG,Pre-HUSPM-Joint,Remine-own-UUT,1.739,win
+mixed_modification_vs_Remine-own-UUT,SC6 TAFENG,Pre-HUSPM-Joint,Remine-own-UUT,1.372,win
+mixed_method_vs_Remine-from-scratch,SC6 DUNNHUMBY,Pre-HUSPM-Joint,Remine-from-scratch,1.153,win
+mixed_modification_vs_Remine-from-scratch,SC6 DUNNHUMBY,Pre-HUSPM-Joint,Remine-from-scratch,1.084,tie
+mixed_method_vs_Remine-own-UUT,SC6 DUNNHUMBY,Pre-HUSPM-Joint,Remine-own-UUT,0.979,tie
+mixed_modification_vs_Remine-own-UUT,SC6 DUNNHUMBY,Pre-HUSPM-Joint,Remine-own-UUT,0.921,tie
+mixed_method_vs_Remine-from-scratch,SC6D SIGN,Pre-HUSPM-Joint,Remine-from-scratch,1.839,win
+mixed_modification_vs_Remine-from-scratch,SC6D SIGN,Pre-HUSPM-Joint,Remine-from-scratch,1.646,win
+mixed_method_vs_Remine-own-UUT,SC6D SIGN,Pre-HUSPM-Joint,Remine-own-UUT,1.103,win
+mixed_modification_vs_Remine-own-UUT,SC6D SIGN,Pre-HUSPM-Joint,Remine-own-UUT,0.981,tie
+mixed_method_vs_Remine-from-scratch,SC6D LEVIATHAN,Pre-HUSPM-Joint,Remine-from-scratch,1.636,win
+mixed_modification_vs_Remine-from-scratch,SC6D LEVIATHAN,Pre-HUSPM-Joint,Remine-from-scratch,1.135,win
+mixed_method_vs_Remine-own-UUT,SC6D LEVIATHAN,Pre-HUSPM-Joint,Remine-own-UUT,1.191,win
+mixed_modification_vs_Remine-own-UUT,SC6D LEVIATHAN,Pre-HUSPM-Joint,Remine-own-UUT,0.838,loss
+mixed_method_vs_Remine-from-scratch,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-from-scratch,1.562,win
+mixed_modification_vs_Remine-from-scratch,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-from-scratch,1.137,win
+mixed_method_vs_Remine-own-UUT,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-own-UUT,1.134,win
+mixed_modification_vs_Remine-own-UUT,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-own-UUT,0.772,loss
+mixed_method_vs_Remine-from-scratch,SC6D TAFENG,Pre-HUSPM-Joint,Remine-from-scratch,3.063,win
+mixed_modification_vs_Remine-from-scratch,SC6D TAFENG,Pre-HUSPM-Joint,Remine-from-scratch,1.711,win
+mixed_method_vs_Remine-own-UUT,SC6D TAFENG,Pre-HUSPM-Joint,Remine-own-UUT,2.77,win
+mixed_modification_vs_Remine-own-UUT,SC6D TAFENG,Pre-HUSPM-Joint,Remine-own-UUT,1.539,win
+mixed_method_vs_Remine-from-scratch,SC6D DUNNHUMBY,Pre-HUSPM-Joint,Remine-from-scratch,1.653,win
+mixed_modification_vs_Remine-from-scratch,SC6D DUNNHUMBY,Pre-HUSPM-Joint,Remine-from-scratch,1.019,tie
+mixed_method_vs_Remine-own-UUT,SC6D DUNNHUMBY,Pre-HUSPM-Joint,Remine-own-UUT,1.419,win
+mixed_modification_vs_Remine-own-UUT,SC6D DUNNHUMBY,Pre-HUSPM-Joint,Remine-own-UUT,0.875,loss
+mixed_method_vs_Remine-from-scratch,SC6B SIGN,Pre-HUSPM-Joint,Remine-from-scratch,1.867,win
+mixed_modification_vs_Remine-from-scratch,SC6B SIGN,Pre-HUSPM-Joint,Remine-from-scratch,1.849,win
+mixed_method_vs_Remine-own-UUT,SC6B SIGN,Pre-HUSPM-Joint,Remine-own-UUT,1.077,tie
+mixed_modification_vs_Remine-own-UUT,SC6B SIGN,Pre-HUSPM-Joint,Remine-own-UUT,1.059,tie
+mixed_method_vs_Remine-from-scratch,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine-from-scratch,1.403,win
+mixed_modification_vs_Remine-from-scratch,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine-from-scratch,1.404,win
+mixed_method_vs_Remine-own-UUT,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine-own-UUT,1.008,tie
+mixed_modification_vs_Remine-own-UUT,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine-own-UUT,1.004,tie
+mixed_method_vs_Remine-from-scratch,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-from-scratch,1.659,win
+mixed_modification_vs_Remine-from-scratch,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-from-scratch,1.53,win
+mixed_method_vs_Remine-own-UUT,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-own-UUT,1.183,win
+mixed_modification_vs_Remine-own-UUT,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-own-UUT,1.078,tie
+mixed_method_vs_Remine-from-scratch,SC6B TAFENG,Pre-HUSPM-Joint,Remine-from-scratch,1.729,win
+mixed_modification_vs_Remine-from-scratch,SC6B TAFENG,Pre-HUSPM-Joint,Remine-from-scratch,1.867,win
+mixed_method_vs_Remine-own-UUT,SC6B TAFENG,Pre-HUSPM-Joint,Remine-own-UUT,1.579,win
+mixed_modification_vs_Remine-own-UUT,SC6B TAFENG,Pre-HUSPM-Joint,Remine-own-UUT,1.734,win
+mixed_method_vs_Remine-from-scratch,SC6B DUNNHUMBY,Pre-HUSPM-Joint,Remine-from-scratch,1.197,win
+mixed_modification_vs_Remine-from-scratch,SC6B DUNNHUMBY,Pre-HUSPM-Joint,Remine-from-scratch,1.129,win
+mixed_method_vs_Remine-own-UUT,SC6B DUNNHUMBY,Pre-HUSPM-Joint,Remine-own-UUT,1.006,tie
+mixed_modification_vs_Remine-own-UUT,SC6B DUNNHUMBY,Pre-HUSPM-Joint,Remine-own-UUT,0.947,tie
+mixed_pooled_stream_vs_Remine,SC6 SIGN,Pre-HUSPM-Joint,Remine,1.914,win
+mixed_pooled_stream_vs_Remine-HUSP-ULL,SC6 SIGN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.662,win
+mixed_pooled_stream_vs_Remine-HUSP-SP,SC6 SIGN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.746,win
+mixed_pooled_stream_vs_Remine-UUT,SC6 SIGN,Pre-HUSPM-Joint,Remine-UUT,1.106,win
+mixed_pooled_stream_vs_FixedFloor,SC6 SIGN,Pre-HUSPM-Joint,FixedFloor,1.425,win
+mixed_method_vs_window5,SC6 SIGN,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w5,1.406,win
+mixed_pooled_stream_vs_window5,SC6 SIGN,Pre-HUSPM-Joint,window5,1.406,win
+mixed_pooled_insertion_vs_Remine,SC6 SIGN,Pre-HUSPM-Joint,Remine,1.948,win
+mixed_pooled_insertion_vs_Remine-HUSP-ULL,SC6 SIGN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.67,win
+mixed_pooled_insertion_vs_Remine-HUSP-SP,SC6 SIGN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.757,win
+mixed_pooled_insertion_vs_Remine-UUT,SC6 SIGN,Pre-HUSPM-Joint,Remine-UUT,1.128,win
+mixed_pooled_insertion_vs_FixedFloor,SC6 SIGN,Pre-HUSPM-Joint,FixedFloor,1.643,win
+mixed_pooled_insertion_vs_window5,SC6 SIGN,Pre-HUSPM-Joint,window5,1.557,win
+mixed_pooled_deletion_vs_Remine,SC6 SIGN,Pre-HUSPM-Joint,Remine,1.849,win
+mixed_pooled_deletion_vs_Remine-HUSP-ULL,SC6 SIGN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.662,win
+mixed_pooled_deletion_vs_Remine-HUSP-SP,SC6 SIGN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.741,win
+mixed_pooled_deletion_vs_Remine-UUT,SC6 SIGN,Pre-HUSPM-Joint,Remine-UUT,1.058,tie
+mixed_pooled_deletion_vs_FixedFloor,SC6 SIGN,Pre-HUSPM-Joint,FixedFloor,0.041,loss
+mixed_pooled_deletion_vs_window5,SC6 SIGN,Pre-HUSPM-Joint,window5,0.275,loss
+mixed_pooled_modification_vs_Remine,SC6 SIGN,Pre-HUSPM-Joint,Remine,1.818,win
+mixed_pooled_modification_vs_Remine-HUSP-ULL,SC6 SIGN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.623,win
+mixed_pooled_modification_vs_Remine-HUSP-SP,SC6 SIGN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.698,win
+mixed_pooled_modification_vs_Remine-UUT,SC6 SIGN,Pre-HUSPM-Joint,Remine-UUT,1.052,tie
+mixed_pooled_modification_vs_FixedFloor,SC6 SIGN,Pre-HUSPM-Joint,FixedFloor,1.767,win
+mixed_pooled_modification_vs_window5,SC6 SIGN,Pre-HUSPM-Joint,window5,1.81,win
+mixed_pooled_stream_vs_Remine,SC6 LEVIATHAN,Pre-HUSPM-Joint,Remine,1.404,win
+mixed_pooled_stream_vs_Remine-HUSP-ULL,SC6 LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.373,win
+mixed_pooled_stream_vs_Remine-HUSP-SP,SC6 LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.343,win
+mixed_pooled_stream_vs_Remine-UUT,SC6 LEVIATHAN,Pre-HUSPM-Joint,Remine-UUT,1.023,tie
+mixed_pooled_stream_vs_FixedFloor,SC6 LEVIATHAN,Pre-HUSPM-Joint,FixedFloor,1.168,win
+mixed_method_vs_window5,SC6 LEVIATHAN,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w5,1.207,win
+mixed_pooled_stream_vs_window5,SC6 LEVIATHAN,Pre-HUSPM-Joint,window5,1.207,win
+mixed_pooled_insertion_vs_Remine,SC6 LEVIATHAN,Pre-HUSPM-Joint,Remine,1.409,win
+mixed_pooled_insertion_vs_Remine-HUSP-ULL,SC6 LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.371,win
+mixed_pooled_insertion_vs_Remine-HUSP-SP,SC6 LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.345,win
+mixed_pooled_insertion_vs_Remine-UUT,SC6 LEVIATHAN,Pre-HUSPM-Joint,Remine-UUT,1.026,tie
+mixed_pooled_insertion_vs_FixedFloor,SC6 LEVIATHAN,Pre-HUSPM-Joint,FixedFloor,1.367,win
+mixed_pooled_insertion_vs_window5,SC6 LEVIATHAN,Pre-HUSPM-Joint,window5,1.36,win
+mixed_pooled_deletion_vs_Remine,SC6 LEVIATHAN,Pre-HUSPM-Joint,Remine,1.4,win
+mixed_pooled_deletion_vs_Remine-HUSP-ULL,SC6 LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.387,win
+mixed_pooled_deletion_vs_Remine-HUSP-SP,SC6 LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.344,win
+mixed_pooled_deletion_vs_Remine-UUT,SC6 LEVIATHAN,Pre-HUSPM-Joint,Remine-UUT,1.022,tie
 mixed_pooled_deletion_vs_FixedFloor,SC6 LEVIATHAN,Pre-HUSPM-Joint,FixedFloor,0.011,loss
-mixed_pooled_deletion_vs_window5,SC6 LEVIATHAN,Pre-HUSPM-Joint,window5,0.289,loss
-mixed_pooled_modification_vs_Remine,SC6 LEVIATHAN,Pre-HUSPM-Joint,Remine,1.378,win
-mixed_pooled_modification_vs_Remine-HUSP-ULL,SC6 LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.372,win
-mixed_pooled_modification_vs_Remine-HUSP-SP,SC6 LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.338,win
-mixed_pooled_modification_vs_Remine-UUT,SC6 LEVIATHAN,Pre-HUSPM-Joint,Remine-UUT,0.993,tie
-mixed_pooled_modification_vs_FixedFloor,SC6 LEVIATHAN,Pre-HUSPM-Joint,FixedFloor,1.388,win
-mixed_pooled_modification_vs_window5,SC6 LEVIATHAN,Pre-HUSPM-Joint,window5,1.41,win
-mixed_pooled_stream_vs_Remine,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,Remine,1.522,win
-mixed_pooled_stream_vs_Remine-HUSP-ULL,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.543,win
-mixed_pooled_stream_vs_Remine-HUSP-SP,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-SP,1.812,win
-mixed_pooled_stream_vs_Remine-UUT,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-UUT,0.963,tie
-mixed_pooled_stream_vs_FixedFloor,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,FixedFloor,1.418,win
-mixed_method_vs_window5,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w5,1.419,win
-mixed_pooled_stream_vs_window5,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,window5,1.419,win
-mixed_pooled_insertion_vs_Remine,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,Remine,1.54,win
-mixed_pooled_insertion_vs_Remine-HUSP-ULL,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.561,win
-mixed_pooled_insertion_vs_Remine-HUSP-SP,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-SP,1.842,win
-mixed_pooled_insertion_vs_Remine-UUT,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-UUT,0.963,tie
-mixed_pooled_insertion_vs_FixedFloor,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,FixedFloor,1.372,win
-mixed_pooled_insertion_vs_window5,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,window5,1.393,win
-mixed_pooled_deletion_vs_Remine,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,Remine,1.577,win
-mixed_pooled_deletion_vs_Remine-HUSP-ULL,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.597,win
-mixed_pooled_deletion_vs_Remine-HUSP-SP,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-SP,1.815,win
-mixed_pooled_deletion_vs_Remine-UUT,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-UUT,0.934,tie
-mixed_pooled_deletion_vs_FixedFloor,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,FixedFloor,0.971,tie
-mixed_pooled_deletion_vs_window5,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,window5,0.916,loss
-mixed_pooled_modification_vs_Remine,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,Remine,1.399,win
-mixed_pooled_modification_vs_Remine-HUSP-ULL,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.422,win
-mixed_pooled_modification_vs_Remine-HUSP-SP,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-SP,1.688,win
-mixed_pooled_modification_vs_Remine-UUT,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-UUT,0.989,tie
-mixed_pooled_modification_vs_FixedFloor,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,FixedFloor,1.998,win
-mixed_pooled_modification_vs_window5,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,window5,1.966,win
-mixed_pooled_stream_vs_Remine,SC6 TAFENG,Pre-HUSPM-Joint,Remine,1.471,win
-mixed_pooled_stream_vs_Remine-HUSP-ULL,SC6 TAFENG,Pre-HUSPM-Joint,Remine-HUSP-ULL,2.141,win
-mixed_pooled_stream_vs_Remine-HUSP-SP,SC6 TAFENG,Pre-HUSPM-Joint,Remine-HUSP-SP,3.868,win
-mixed_pooled_stream_vs_Remine-UUT,SC6 TAFENG,Pre-HUSPM-Joint,Remine-UUT,1.362,win
-mixed_pooled_stream_vs_FixedFloor,SC6 TAFENG,Pre-HUSPM-Joint,FixedFloor,0.875,loss
-mixed_pooled_insertion_vs_Remine,SC6 TAFENG,Pre-HUSPM-Joint,Remine,1.404,win
-mixed_pooled_insertion_vs_Remine-HUSP-ULL,SC6 TAFENG,Pre-HUSPM-Joint,Remine-HUSP-ULL,2.002,win
-mixed_pooled_insertion_vs_Remine-HUSP-SP,SC6 TAFENG,Pre-HUSPM-Joint,Remine-HUSP-SP,3.592,win
-mixed_pooled_insertion_vs_Remine-UUT,SC6 TAFENG,Pre-HUSPM-Joint,Remine-UUT,1.289,win
-mixed_pooled_insertion_vs_FixedFloor,SC6 TAFENG,Pre-HUSPM-Joint,FixedFloor,0.933,tie
-mixed_pooled_deletion_vs_Remine,SC6 TAFENG,Pre-HUSPM-Joint,Remine,3.509,win
-mixed_pooled_deletion_vs_Remine-HUSP-ULL,SC6 TAFENG,Pre-HUSPM-Joint,Remine-HUSP-ULL,5.359,win
-mixed_pooled_deletion_vs_Remine-HUSP-SP,SC6 TAFENG,Pre-HUSPM-Joint,Remine-HUSP-SP,9.958,win
-mixed_pooled_deletion_vs_Remine-UUT,SC6 TAFENG,Pre-HUSPM-Joint,Remine-UUT,3.265,win
-mixed_pooled_deletion_vs_FixedFloor,SC6 TAFENG,Pre-HUSPM-Joint,FixedFloor,0.034,loss
-mixed_pooled_modification_vs_Remine,SC6 TAFENG,Pre-HUSPM-Joint,Remine,1.097,win
-mixed_pooled_modification_vs_Remine-HUSP-ULL,SC6 TAFENG,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.68,win
-mixed_pooled_modification_vs_Remine-HUSP-SP,SC6 TAFENG,Pre-HUSPM-Joint,Remine-HUSP-SP,3.053,win
-mixed_pooled_modification_vs_Remine-UUT,SC6 TAFENG,Pre-HUSPM-Joint,Remine-UUT,1.051,tie
-mixed_pooled_modification_vs_FixedFloor,SC6 TAFENG,Pre-HUSPM-Joint,FixedFloor,0.906,loss
-mixed_pooled_stream_vs_Remine,SC6D SIGN,Pre-HUSPM-Joint,Remine,1.857,win
-mixed_pooled_stream_vs_Remine-HUSP-ULL,SC6D SIGN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.636,win
-mixed_pooled_stream_vs_Remine-HUSP-SP,SC6D SIGN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.717,win
-mixed_pooled_stream_vs_Remine-UUT,SC6D SIGN,Pre-HUSPM-Joint,Remine-UUT,1.082,tie
-mixed_pooled_stream_vs_FixedFloor,SC6D SIGN,Pre-HUSPM-Joint,FixedFloor,0.956,tie
-mixed_method_vs_window5,SC6D SIGN,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w5,0.991,tie
-mixed_pooled_stream_vs_window5,SC6D SIGN,Pre-HUSPM-Joint,window5,0.991,tie
-mixed_pooled_insertion_vs_Remine,SC6D SIGN,Pre-HUSPM-Joint,Remine,1.543,win
-mixed_pooled_insertion_vs_Remine-HUSP-ULL,SC6D SIGN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.346,win
-mixed_pooled_insertion_vs_Remine-HUSP-SP,SC6D SIGN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.406,win
-mixed_pooled_insertion_vs_Remine-UUT,SC6D SIGN,Pre-HUSPM-Joint,Remine-UUT,0.911,loss
-mixed_pooled_insertion_vs_FixedFloor,SC6D SIGN,Pre-HUSPM-Joint,FixedFloor,1.52,win
-mixed_pooled_insertion_vs_window5,SC6D SIGN,Pre-HUSPM-Joint,window5,1.571,win
-mixed_pooled_deletion_vs_Remine,SC6D SIGN,Pre-HUSPM-Joint,Remine,2.282,win
-mixed_pooled_deletion_vs_Remine-HUSP-ULL,SC6D SIGN,Pre-HUSPM-Joint,Remine-HUSP-ULL,2.022,win
-mixed_pooled_deletion_vs_Remine-HUSP-SP,SC6D SIGN,Pre-HUSPM-Joint,Remine-HUSP-SP,2.123,win
-mixed_pooled_deletion_vs_Remine-UUT,SC6D SIGN,Pre-HUSPM-Joint,Remine-UUT,1.311,win
-mixed_pooled_deletion_vs_FixedFloor,SC6D SIGN,Pre-HUSPM-Joint,FixedFloor,0.045,loss
-mixed_pooled_deletion_vs_window5,SC6D SIGN,Pre-HUSPM-Joint,window5,0.043,loss
-mixed_pooled_modification_vs_Remine,SC6D SIGN,Pre-HUSPM-Joint,Remine,1.628,win
-mixed_pooled_modification_vs_Remine-HUSP-ULL,SC6D SIGN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.435,win
-mixed_pooled_modification_vs_Remine-HUSP-SP,SC6D SIGN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.515,win
-mixed_pooled_modification_vs_Remine-UUT,SC6D SIGN,Pre-HUSPM-Joint,Remine-UUT,0.962,tie
-mixed_pooled_modification_vs_FixedFloor,SC6D SIGN,Pre-HUSPM-Joint,FixedFloor,1.626,win
-mixed_pooled_modification_vs_window5,SC6D SIGN,Pre-HUSPM-Joint,window5,1.695,win
-mixed_pooled_stream_vs_Remine,SC6D LEVIATHAN,Pre-HUSPM-Joint,Remine,1.686,win
-mixed_pooled_stream_vs_Remine-HUSP-ULL,SC6D LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.72,win
-mixed_pooled_stream_vs_Remine-HUSP-SP,SC6D LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.69,win
-mixed_pooled_stream_vs_Remine-UUT,SC6D LEVIATHAN,Pre-HUSPM-Joint,Remine-UUT,1.231,win
-mixed_pooled_stream_vs_FixedFloor,SC6D LEVIATHAN,Pre-HUSPM-Joint,FixedFloor,0.884,loss
-mixed_method_vs_window5,SC6D LEVIATHAN,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w5,0.897,loss
-mixed_pooled_stream_vs_window5,SC6D LEVIATHAN,Pre-HUSPM-Joint,window5,0.897,loss
-mixed_pooled_insertion_vs_Remine,SC6D LEVIATHAN,Pre-HUSPM-Joint,Remine,1.114,win
-mixed_pooled_insertion_vs_Remine-HUSP-ULL,SC6D LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.129,win
-mixed_pooled_insertion_vs_Remine-HUSP-SP,SC6D LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.111,win
-mixed_pooled_insertion_vs_Remine-UUT,SC6D LEVIATHAN,Pre-HUSPM-Joint,Remine-UUT,0.808,loss
-mixed_pooled_insertion_vs_FixedFloor,SC6D LEVIATHAN,Pre-HUSPM-Joint,FixedFloor,1.147,win
-mixed_pooled_insertion_vs_window5,SC6D LEVIATHAN,Pre-HUSPM-Joint,window5,1.176,win
-mixed_pooled_deletion_vs_Remine,SC6D LEVIATHAN,Pre-HUSPM-Joint,Remine,3.402,win
-mixed_pooled_deletion_vs_Remine-HUSP-ULL,SC6D LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-ULL,3.481,win
-mixed_pooled_deletion_vs_Remine-HUSP-SP,SC6D LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-SP,3.419,win
-mixed_pooled_deletion_vs_Remine-UUT,SC6D LEVIATHAN,Pre-HUSPM-Joint,Remine-UUT,2.484,win
-mixed_pooled_deletion_vs_FixedFloor,SC6D LEVIATHAN,Pre-HUSPM-Joint,FixedFloor,0.025,loss
-mixed_pooled_deletion_vs_window5,SC6D LEVIATHAN,Pre-HUSPM-Joint,window5,0.027,loss
-mixed_pooled_modification_vs_Remine,SC6D LEVIATHAN,Pre-HUSPM-Joint,Remine,1.129,win
-mixed_pooled_modification_vs_Remine-HUSP-ULL,SC6D LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.156,win
-mixed_pooled_modification_vs_Remine-HUSP-SP,SC6D LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.133,win
-mixed_pooled_modification_vs_Remine-UUT,SC6D LEVIATHAN,Pre-HUSPM-Joint,Remine-UUT,0.834,loss
-mixed_pooled_modification_vs_FixedFloor,SC6D LEVIATHAN,Pre-HUSPM-Joint,FixedFloor,1.199,win
-mixed_pooled_modification_vs_window5,SC6D LEVIATHAN,Pre-HUSPM-Joint,window5,1.197,win
-mixed_pooled_stream_vs_Remine,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,Remine,1.398,win
-mixed_pooled_stream_vs_Remine-HUSP-ULL,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.407,win
-mixed_pooled_stream_vs_Remine-HUSP-SP,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-SP,1.684,win
-mixed_pooled_stream_vs_Remine-UUT,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-UUT,0.938,tie
-mixed_pooled_stream_vs_FixedFloor,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,FixedFloor,1.165,win
-mixed_method_vs_window5,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w5,1.169,win
-mixed_pooled_stream_vs_window5,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,window5,1.169,win
-mixed_pooled_insertion_vs_Remine,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,Remine,1.404,win
-mixed_pooled_insertion_vs_Remine-HUSP-ULL,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.393,win
-mixed_pooled_insertion_vs_Remine-HUSP-SP,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-SP,1.723,win
-mixed_pooled_insertion_vs_Remine-UUT,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-UUT,1.049,tie
-mixed_pooled_insertion_vs_FixedFloor,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,FixedFloor,1.407,win
-mixed_pooled_insertion_vs_window5,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,window5,1.46,win
-mixed_pooled_deletion_vs_Remine,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,Remine,1.602,win
-mixed_pooled_deletion_vs_Remine-HUSP-ULL,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.642,win
-mixed_pooled_deletion_vs_Remine-HUSP-SP,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-SP,1.927,win
-mixed_pooled_deletion_vs_Remine-UUT,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-UUT,0.991,tie
-mixed_pooled_deletion_vs_FixedFloor,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,FixedFloor,0.751,loss
-mixed_pooled_deletion_vs_window5,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,window5,0.749,loss
-mixed_pooled_modification_vs_Remine,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,Remine,1.064,tie
-mixed_pooled_modification_vs_Remine-HUSP-ULL,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.048,tie
-mixed_pooled_modification_vs_Remine-HUSP-SP,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-SP,1.252,win
-mixed_pooled_modification_vs_Remine-UUT,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-UUT,0.723,loss
-mixed_pooled_modification_vs_FixedFloor,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,FixedFloor,1.542,win
-mixed_pooled_modification_vs_window5,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,window5,1.498,win
-mixed_pooled_stream_vs_Remine,SC6D TAFENG,Pre-HUSPM-Joint,Remine,2.29,win
-mixed_pooled_stream_vs_Remine-HUSP-ULL,SC6D TAFENG,Pre-HUSPM-Joint,Remine-HUSP-ULL,3.312,win
-mixed_pooled_stream_vs_Remine-HUSP-SP,SC6D TAFENG,Pre-HUSPM-Joint,Remine-HUSP-SP,5.85,win
-mixed_pooled_stream_vs_Remine-UUT,SC6D TAFENG,Pre-HUSPM-Joint,Remine-UUT,2.041,win
-mixed_pooled_stream_vs_FixedFloor,SC6D TAFENG,Pre-HUSPM-Joint,FixedFloor,0.95,tie
-mixed_pooled_insertion_vs_Remine,SC6D TAFENG,Pre-HUSPM-Joint,Remine,1.219,win
-mixed_pooled_insertion_vs_Remine-HUSP-ULL,SC6D TAFENG,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.785,win
-mixed_pooled_insertion_vs_Remine-HUSP-SP,SC6D TAFENG,Pre-HUSPM-Joint,Remine-HUSP-SP,3.151,win
-mixed_pooled_insertion_vs_Remine-UUT,SC6D TAFENG,Pre-HUSPM-Joint,Remine-UUT,1.095,win
-mixed_pooled_insertion_vs_FixedFloor,SC6D TAFENG,Pre-HUSPM-Joint,FixedFloor,1.036,tie
-mixed_pooled_deletion_vs_Remine,SC6D TAFENG,Pre-HUSPM-Joint,Remine,13.463,win
-mixed_pooled_deletion_vs_Remine-HUSP-ULL,SC6D TAFENG,Pre-HUSPM-Joint,Remine-HUSP-ULL,19.098,win
-mixed_pooled_deletion_vs_Remine-HUSP-SP,SC6D TAFENG,Pre-HUSPM-Joint,Remine-HUSP-SP,33.325,win
-mixed_pooled_deletion_vs_Remine-UUT,SC6D TAFENG,Pre-HUSPM-Joint,Remine-UUT,11.816,win
-mixed_pooled_deletion_vs_FixedFloor,SC6D TAFENG,Pre-HUSPM-Joint,FixedFloor,0.127,loss
-mixed_pooled_modification_vs_Remine,SC6D TAFENG,Pre-HUSPM-Joint,Remine,1.204,win
-mixed_pooled_modification_vs_Remine-HUSP-ULL,SC6D TAFENG,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.8,win
-mixed_pooled_modification_vs_Remine-HUSP-SP,SC6D TAFENG,Pre-HUSPM-Joint,Remine-HUSP-SP,3.284,win
-mixed_pooled_modification_vs_Remine-UUT,SC6D TAFENG,Pre-HUSPM-Joint,Remine-UUT,1.105,win
-mixed_pooled_modification_vs_FixedFloor,SC6D TAFENG,Pre-HUSPM-Joint,FixedFloor,1.019,tie
-mixed_pooled_stream_vs_Remine,SC6B SIGN,Pre-HUSPM-Joint,Remine,1.825,win
-mixed_pooled_stream_vs_Remine-HUSP-ULL,SC6B SIGN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.664,win
-mixed_pooled_stream_vs_Remine-HUSP-SP,SC6B SIGN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.731,win
-mixed_pooled_stream_vs_Remine-UUT,SC6B SIGN,Pre-HUSPM-Joint,Remine-UUT,1.094,win
-mixed_pooled_stream_vs_FixedFloor,SC6B SIGN,Pre-HUSPM-Joint,FixedFloor,1.581,win
-mixed_method_vs_window5,SC6B SIGN,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w5,1.513,win
-mixed_pooled_stream_vs_window5,SC6B SIGN,Pre-HUSPM-Joint,window5,1.513,win
-mixed_pooled_insertion_vs_Remine,SC6B SIGN,Pre-HUSPM-Joint,Remine,1.823,win
-mixed_pooled_insertion_vs_Remine-HUSP-ULL,SC6B SIGN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.66,win
-mixed_pooled_insertion_vs_Remine-HUSP-SP,SC6B SIGN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.727,win
-mixed_pooled_insertion_vs_Remine-UUT,SC6B SIGN,Pre-HUSPM-Joint,Remine-UUT,1.086,tie
-mixed_pooled_insertion_vs_FixedFloor,SC6B SIGN,Pre-HUSPM-Joint,FixedFloor,1.733,win
-mixed_pooled_insertion_vs_window5,SC6B SIGN,Pre-HUSPM-Joint,window5,1.586,win
-mixed_pooled_deletion_vs_Remine,SC6B SIGN,Pre-HUSPM-Joint,Remine,1.842,win
-mixed_pooled_deletion_vs_Remine-HUSP-ULL,SC6B SIGN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.7,win
-mixed_pooled_deletion_vs_Remine-HUSP-SP,SC6B SIGN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.759,win
-mixed_pooled_deletion_vs_Remine-UUT,SC6B SIGN,Pre-HUSPM-Joint,Remine-UUT,1.146,win
-mixed_pooled_deletion_vs_FixedFloor,SC6B SIGN,Pre-HUSPM-Joint,FixedFloor,0.05,loss
-mixed_pooled_deletion_vs_window5,SC6B SIGN,Pre-HUSPM-Joint,window5,0.403,loss
-mixed_pooled_modification_vs_Remine,SC6B SIGN,Pre-HUSPM-Joint,Remine,1.819,win
-mixed_pooled_modification_vs_Remine-HUSP-ULL,SC6B SIGN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.652,win
-mixed_pooled_modification_vs_Remine-HUSP-SP,SC6B SIGN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.718,win
-mixed_pooled_modification_vs_Remine-UUT,SC6B SIGN,Pre-HUSPM-Joint,Remine-UUT,1.086,tie
-mixed_pooled_modification_vs_FixedFloor,SC6B SIGN,Pre-HUSPM-Joint,FixedFloor,1.795,win
-mixed_pooled_modification_vs_window5,SC6B SIGN,Pre-HUSPM-Joint,window5,1.805,win
-mixed_pooled_deletion_beyond_the_budget_vs_Remine,SC6B SIGN,Pre-HUSPM-Joint,Remine,1.844,win
-mixed_pooled_deletion_beyond_the_budget_vs_Remine-HUSP-ULL,SC6B SIGN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.688,win
-mixed_pooled_deletion_beyond_the_budget_vs_Remine-HUSP-SP,SC6B SIGN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.783,win
-mixed_pooled_deletion_beyond_the_budget_vs_Remine-UUT,SC6B SIGN,Pre-HUSPM-Joint,Remine-UUT,1.142,win
-mixed_pooled_deletion_beyond_the_budget_vs_FixedFloor,SC6B SIGN,Pre-HUSPM-Joint,FixedFloor,1.8,win
-mixed_pooled_deletion_beyond_the_budget_vs_window5,SC6B SIGN,Pre-HUSPM-Joint,window5,1.817,win
-mixed_pooled_stream_vs_Remine,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine,1.399,win
-mixed_pooled_stream_vs_Remine-HUSP-ULL,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.382,win
+mixed_pooled_deletion_vs_window5,SC6 LEVIATHAN,Pre-HUSPM-Joint,window5,0.29,loss
+mixed_pooled_modification_vs_Remine,SC6 LEVIATHAN,Pre-HUSPM-Joint,Remine,1.384,win
+mixed_pooled_modification_vs_Remine-HUSP-ULL,SC6 LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.369,win
+mixed_pooled_modification_vs_Remine-HUSP-SP,SC6 LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.334,win
+mixed_pooled_modification_vs_Remine-UUT,SC6 LEVIATHAN,Pre-HUSPM-Joint,Remine-UUT,1.011,tie
+mixed_pooled_modification_vs_FixedFloor,SC6 LEVIATHAN,Pre-HUSPM-Joint,FixedFloor,1.384,win
+mixed_pooled_modification_vs_window5,SC6 LEVIATHAN,Pre-HUSPM-Joint,window5,1.406,win
+mixed_pooled_stream_vs_Remine,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,Remine,1.71,win
+mixed_pooled_stream_vs_Remine-HUSP-ULL,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.575,win
+mixed_pooled_stream_vs_Remine-HUSP-SP,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-SP,1.85,win
+mixed_pooled_stream_vs_Remine-UUT,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-UUT,1.173,win
+mixed_pooled_stream_vs_FixedFloor,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,FixedFloor,1.448,win
+mixed_method_vs_window5,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w5,1.448,win
+mixed_pooled_stream_vs_window5,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,window5,1.448,win
+mixed_pooled_insertion_vs_Remine,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,Remine,1.776,win
+mixed_pooled_insertion_vs_Remine-HUSP-ULL,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.603,win
+mixed_pooled_insertion_vs_Remine-HUSP-SP,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-SP,1.892,win
+mixed_pooled_insertion_vs_Remine-UUT,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-UUT,1.218,win
+mixed_pooled_insertion_vs_FixedFloor,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,FixedFloor,1.409,win
+mixed_pooled_insertion_vs_window5,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,window5,1.43,win
+mixed_pooled_deletion_vs_Remine,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,Remine,1.718,win
+mixed_pooled_deletion_vs_Remine-HUSP-ULL,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.672,win
+mixed_pooled_deletion_vs_Remine-HUSP-SP,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-SP,1.9,win
+mixed_pooled_deletion_vs_Remine-UUT,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-UUT,1.088,win
+mixed_pooled_deletion_vs_FixedFloor,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,FixedFloor,1.016,tie
+mixed_pooled_deletion_vs_window5,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,window5,0.959,tie
+mixed_pooled_modification_vs_Remine,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,Remine,1.44,win
+mixed_pooled_modification_vs_Remine-HUSP-ULL,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.384,win
+mixed_pooled_modification_vs_Remine-HUSP-SP,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-SP,1.643,win
+mixed_pooled_modification_vs_Remine-UUT,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-UUT,1.064,tie
+mixed_pooled_modification_vs_FixedFloor,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,FixedFloor,1.945,win
+mixed_pooled_modification_vs_window5,SC6 C8T1S5I8N5K,Pre-HUSPM-Joint,window5,1.914,win
+mixed_pooled_stream_vs_Remine,SC6 TAFENG,Pre-HUSPM-Joint,Remine,1.907,win
+mixed_pooled_stream_vs_Remine-HUSP-ULL,SC6 TAFENG,Pre-HUSPM-Joint,Remine-HUSP-ULL,2.118,win
+mixed_pooled_stream_vs_Remine-HUSP-SP,SC6 TAFENG,Pre-HUSPM-Joint,Remine-HUSP-SP,3.827,win
+mixed_pooled_stream_vs_Remine-UUT,SC6 TAFENG,Pre-HUSPM-Joint,Remine-UUT,1.739,win
+mixed_pooled_stream_vs_FixedFloor,SC6 TAFENG,Pre-HUSPM-Joint,FixedFloor,0.866,loss
+mixed_pooled_insertion_vs_Remine,SC6 TAFENG,Pre-HUSPM-Joint,Remine,1.783,win
+mixed_pooled_insertion_vs_Remine-HUSP-ULL,SC6 TAFENG,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.958,win
+mixed_pooled_insertion_vs_Remine-HUSP-SP,SC6 TAFENG,Pre-HUSPM-Joint,Remine-HUSP-SP,3.513,win
+mixed_pooled_insertion_vs_Remine-UUT,SC6 TAFENG,Pre-HUSPM-Joint,Remine-UUT,1.617,win
+mixed_pooled_insertion_vs_FixedFloor,SC6 TAFENG,Pre-HUSPM-Joint,FixedFloor,0.913,loss
+mixed_pooled_deletion_vs_Remine,SC6 TAFENG,Pre-HUSPM-Joint,Remine,5.098,win
+mixed_pooled_deletion_vs_Remine-HUSP-ULL,SC6 TAFENG,Pre-HUSPM-Joint,Remine-HUSP-ULL,5.785,win
+mixed_pooled_deletion_vs_Remine-HUSP-SP,SC6 TAFENG,Pre-HUSPM-Joint,Remine-HUSP-SP,10.751,win
+mixed_pooled_deletion_vs_Remine-UUT,SC6 TAFENG,Pre-HUSPM-Joint,Remine-UUT,4.687,win
+mixed_pooled_deletion_vs_FixedFloor,SC6 TAFENG,Pre-HUSPM-Joint,FixedFloor,0.037,loss
+mixed_pooled_modification_vs_Remine,SC6 TAFENG,Pre-HUSPM-Joint,Remine,1.478,win
+mixed_pooled_modification_vs_Remine-HUSP-ULL,SC6 TAFENG,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.697,win
+mixed_pooled_modification_vs_Remine-HUSP-SP,SC6 TAFENG,Pre-HUSPM-Joint,Remine-HUSP-SP,3.084,win
+mixed_pooled_modification_vs_Remine-UUT,SC6 TAFENG,Pre-HUSPM-Joint,Remine-UUT,1.372,win
+mixed_pooled_modification_vs_FixedFloor,SC6 TAFENG,Pre-HUSPM-Joint,FixedFloor,0.915,loss
+mixed_pooled_stream_vs_Remine,SC6 DUNNHUMBY,Pre-HUSPM-Joint,Remine,1.153,win
+mixed_pooled_stream_vs_Remine-HUSP-ULL,SC6 DUNNHUMBY,Pre-HUSPM-Joint,Remine-HUSP-ULL,2.368,win
+mixed_pooled_stream_vs_Remine-HUSP-SP,SC6 DUNNHUMBY,Pre-HUSPM-Joint,Remine-HUSP-SP,5.842,win
+mixed_pooled_stream_vs_Remine-UUT,SC6 DUNNHUMBY,Pre-HUSPM-Joint,Remine-UUT,0.979,tie
+mixed_pooled_stream_vs_FixedFloor,SC6 DUNNHUMBY,Pre-HUSPM-Joint,FixedFloor,1.014,tie
+mixed_pooled_insertion_vs_Remine,SC6 DUNNHUMBY,Pre-HUSPM-Joint,Remine,1.157,win
+mixed_pooled_insertion_vs_Remine-HUSP-ULL,SC6 DUNNHUMBY,Pre-HUSPM-Joint,Remine-HUSP-ULL,2.377,win
+mixed_pooled_insertion_vs_Remine-HUSP-SP,SC6 DUNNHUMBY,Pre-HUSPM-Joint,Remine-HUSP-SP,5.85,win
+mixed_pooled_insertion_vs_Remine-UUT,SC6 DUNNHUMBY,Pre-HUSPM-Joint,Remine-UUT,0.985,tie
+mixed_pooled_insertion_vs_FixedFloor,SC6 DUNNHUMBY,Pre-HUSPM-Joint,FixedFloor,1.194,win
+mixed_pooled_deletion_vs_Remine,SC6 DUNNHUMBY,Pre-HUSPM-Joint,Remine,1.206,win
+mixed_pooled_deletion_vs_Remine-HUSP-ULL,SC6 DUNNHUMBY,Pre-HUSPM-Joint,Remine-HUSP-ULL,2.474,win
+mixed_pooled_deletion_vs_Remine-HUSP-SP,SC6 DUNNHUMBY,Pre-HUSPM-Joint,Remine-HUSP-SP,6.126,win
+mixed_pooled_deletion_vs_Remine-UUT,SC6 DUNNHUMBY,Pre-HUSPM-Joint,Remine-UUT,1.017,tie
+mixed_pooled_deletion_vs_FixedFloor,SC6 DUNNHUMBY,Pre-HUSPM-Joint,FixedFloor,0.002,loss
+mixed_pooled_modification_vs_Remine,SC6 DUNNHUMBY,Pre-HUSPM-Joint,Remine,1.084,tie
+mixed_pooled_modification_vs_Remine-HUSP-ULL,SC6 DUNNHUMBY,Pre-HUSPM-Joint,Remine-HUSP-ULL,2.234,win
+mixed_pooled_modification_vs_Remine-HUSP-SP,SC6 DUNNHUMBY,Pre-HUSPM-Joint,Remine-HUSP-SP,5.551,win
+mixed_pooled_modification_vs_Remine-UUT,SC6 DUNNHUMBY,Pre-HUSPM-Joint,Remine-UUT,0.921,tie
+mixed_pooled_modification_vs_FixedFloor,SC6 DUNNHUMBY,Pre-HUSPM-Joint,FixedFloor,1.128,win
+mixed_pooled_stream_vs_Remine,SC6D SIGN,Pre-HUSPM-Joint,Remine,1.839,win
+mixed_pooled_stream_vs_Remine-HUSP-ULL,SC6D SIGN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.646,win
+mixed_pooled_stream_vs_Remine-HUSP-SP,SC6D SIGN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.728,win
+mixed_pooled_stream_vs_Remine-UUT,SC6D SIGN,Pre-HUSPM-Joint,Remine-UUT,1.103,win
+mixed_pooled_stream_vs_FixedFloor,SC6D SIGN,Pre-HUSPM-Joint,FixedFloor,0.962,tie
+mixed_method_vs_window5,SC6D SIGN,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w5,0.997,tie
+mixed_pooled_stream_vs_window5,SC6D SIGN,Pre-HUSPM-Joint,window5,0.997,tie
+mixed_pooled_insertion_vs_Remine,SC6D SIGN,Pre-HUSPM-Joint,Remine,1.589,win
+mixed_pooled_insertion_vs_Remine-HUSP-ULL,SC6D SIGN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.4,win
+mixed_pooled_insertion_vs_Remine-HUSP-SP,SC6D SIGN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.463,win
+mixed_pooled_insertion_vs_Remine-UUT,SC6D SIGN,Pre-HUSPM-Joint,Remine-UUT,0.92,tie
+mixed_pooled_insertion_vs_FixedFloor,SC6D SIGN,Pre-HUSPM-Joint,FixedFloor,1.581,win
+mixed_pooled_insertion_vs_window5,SC6D SIGN,Pre-HUSPM-Joint,window5,1.635,win
+mixed_pooled_deletion_vs_Remine,SC6D SIGN,Pre-HUSPM-Joint,Remine,2.156,win
+mixed_pooled_deletion_vs_Remine-HUSP-ULL,SC6D SIGN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.939,win
+mixed_pooled_deletion_vs_Remine-HUSP-SP,SC6D SIGN,Pre-HUSPM-Joint,Remine-HUSP-SP,2.036,win
+mixed_pooled_deletion_vs_Remine-UUT,SC6D SIGN,Pre-HUSPM-Joint,Remine-UUT,1.323,win
+mixed_pooled_deletion_vs_FixedFloor,SC6D SIGN,Pre-HUSPM-Joint,FixedFloor,0.043,loss
+mixed_pooled_deletion_vs_window5,SC6D SIGN,Pre-HUSPM-Joint,window5,0.042,loss
+mixed_pooled_modification_vs_Remine,SC6D SIGN,Pre-HUSPM-Joint,Remine,1.646,win
+mixed_pooled_modification_vs_Remine-HUSP-ULL,SC6D SIGN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.493,win
+mixed_pooled_modification_vs_Remine-HUSP-SP,SC6D SIGN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.576,win
+mixed_pooled_modification_vs_Remine-UUT,SC6D SIGN,Pre-HUSPM-Joint,Remine-UUT,0.981,tie
+mixed_pooled_modification_vs_FixedFloor,SC6D SIGN,Pre-HUSPM-Joint,FixedFloor,1.692,win
+mixed_pooled_modification_vs_window5,SC6D SIGN,Pre-HUSPM-Joint,window5,1.763,win
+mixed_pooled_stream_vs_Remine,SC6D LEVIATHAN,Pre-HUSPM-Joint,Remine,1.636,win
+mixed_pooled_stream_vs_Remine-HUSP-ULL,SC6D LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.623,win
+mixed_pooled_stream_vs_Remine-HUSP-SP,SC6D LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.594,win
+mixed_pooled_stream_vs_Remine-UUT,SC6D LEVIATHAN,Pre-HUSPM-Joint,Remine-UUT,1.191,win
+mixed_pooled_stream_vs_FixedFloor,SC6D LEVIATHAN,Pre-HUSPM-Joint,FixedFloor,0.834,loss
+mixed_method_vs_window5,SC6D LEVIATHAN,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w5,0.847,loss
+mixed_pooled_stream_vs_window5,SC6D LEVIATHAN,Pre-HUSPM-Joint,window5,0.847,loss
+mixed_pooled_insertion_vs_Remine,SC6D LEVIATHAN,Pre-HUSPM-Joint,Remine,1.127,win
+mixed_pooled_insertion_vs_Remine-HUSP-ULL,SC6D LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.109,win
+mixed_pooled_insertion_vs_Remine-HUSP-SP,SC6D LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.092,win
+mixed_pooled_insertion_vs_Remine-UUT,SC6D LEVIATHAN,Pre-HUSPM-Joint,Remine-UUT,0.812,loss
+mixed_pooled_insertion_vs_FixedFloor,SC6D LEVIATHAN,Pre-HUSPM-Joint,FixedFloor,1.127,win
+mixed_pooled_insertion_vs_window5,SC6D LEVIATHAN,Pre-HUSPM-Joint,window5,1.155,win
+mixed_pooled_deletion_vs_Remine,SC6D LEVIATHAN,Pre-HUSPM-Joint,Remine,2.956,win
+mixed_pooled_deletion_vs_Remine-HUSP-ULL,SC6D LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-ULL,2.936,win
+mixed_pooled_deletion_vs_Remine-HUSP-SP,SC6D LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-SP,2.884,win
+mixed_pooled_deletion_vs_Remine-UUT,SC6D LEVIATHAN,Pre-HUSPM-Joint,Remine-UUT,2.153,win
+mixed_pooled_deletion_vs_FixedFloor,SC6D LEVIATHAN,Pre-HUSPM-Joint,FixedFloor,0.021,loss
+mixed_pooled_deletion_vs_window5,SC6D LEVIATHAN,Pre-HUSPM-Joint,window5,0.023,loss
+mixed_pooled_modification_vs_Remine,SC6D LEVIATHAN,Pre-HUSPM-Joint,Remine,1.135,win
+mixed_pooled_modification_vs_Remine-HUSP-ULL,SC6D LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.134,win
+mixed_pooled_modification_vs_Remine-HUSP-SP,SC6D LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.112,win
+mixed_pooled_modification_vs_Remine-UUT,SC6D LEVIATHAN,Pre-HUSPM-Joint,Remine-UUT,0.838,loss
+mixed_pooled_modification_vs_FixedFloor,SC6D LEVIATHAN,Pre-HUSPM-Joint,FixedFloor,1.176,win
+mixed_pooled_modification_vs_window5,SC6D LEVIATHAN,Pre-HUSPM-Joint,window5,1.175,win
+mixed_pooled_stream_vs_Remine,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,Remine,1.562,win
+mixed_pooled_stream_vs_Remine-HUSP-ULL,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.367,win
+mixed_pooled_stream_vs_Remine-HUSP-SP,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-SP,1.636,win
+mixed_pooled_stream_vs_Remine-UUT,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-UUT,1.134,win
+mixed_pooled_stream_vs_FixedFloor,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,FixedFloor,1.132,win
+mixed_method_vs_window5,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w5,1.136,win
+mixed_pooled_stream_vs_window5,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,window5,1.136,win
+mixed_pooled_insertion_vs_Remine,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,Remine,1.719,win
+mixed_pooled_insertion_vs_Remine-HUSP-ULL,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.355,win
+mixed_pooled_insertion_vs_Remine-HUSP-SP,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-SP,1.675,win
+mixed_pooled_insertion_vs_Remine-UUT,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-UUT,1.416,win
+mixed_pooled_insertion_vs_FixedFloor,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,FixedFloor,1.368,win
+mixed_pooled_insertion_vs_window5,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,window5,1.42,win
+mixed_pooled_deletion_vs_Remine,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,Remine,1.704,win
+mixed_pooled_deletion_vs_Remine-HUSP-ULL,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.568,win
+mixed_pooled_deletion_vs_Remine-HUSP-SP,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-SP,1.84,win
+mixed_pooled_deletion_vs_Remine-UUT,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-UUT,1.148,win
+mixed_pooled_deletion_vs_FixedFloor,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,FixedFloor,0.717,loss
+mixed_pooled_deletion_vs_window5,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,window5,0.715,loss
+mixed_pooled_modification_vs_Remine,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,Remine,1.137,win
+mixed_pooled_modification_vs_Remine-HUSP-ULL,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.047,tie
+mixed_pooled_modification_vs_Remine-HUSP-SP,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-SP,1.25,win
+mixed_pooled_modification_vs_Remine-UUT,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-UUT,0.772,loss
+mixed_pooled_modification_vs_FixedFloor,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,FixedFloor,1.539,win
+mixed_pooled_modification_vs_window5,SC6D C8T1S5I8N5K,Pre-HUSPM-Joint,window5,1.495,win
+mixed_pooled_stream_vs_Remine,SC6D TAFENG,Pre-HUSPM-Joint,Remine,3.063,win
+mixed_pooled_stream_vs_Remine-HUSP-ULL,SC6D TAFENG,Pre-HUSPM-Joint,Remine-HUSP-ULL,3.357,win
+mixed_pooled_stream_vs_Remine-HUSP-SP,SC6D TAFENG,Pre-HUSPM-Joint,Remine-HUSP-SP,5.93,win
+mixed_pooled_stream_vs_Remine-UUT,SC6D TAFENG,Pre-HUSPM-Joint,Remine-UUT,2.77,win
+mixed_pooled_stream_vs_FixedFloor,SC6D TAFENG,Pre-HUSPM-Joint,FixedFloor,0.963,tie
+mixed_pooled_insertion_vs_Remine,SC6D TAFENG,Pre-HUSPM-Joint,Remine,1.633,win
+mixed_pooled_insertion_vs_Remine-HUSP-ULL,SC6D TAFENG,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.797,win
+mixed_pooled_insertion_vs_Remine-HUSP-SP,SC6D TAFENG,Pre-HUSPM-Joint,Remine-HUSP-SP,3.171,win
+mixed_pooled_insertion_vs_Remine-UUT,SC6D TAFENG,Pre-HUSPM-Joint,Remine-UUT,1.48,win
+mixed_pooled_insertion_vs_FixedFloor,SC6D TAFENG,Pre-HUSPM-Joint,FixedFloor,1.043,tie
+mixed_pooled_deletion_vs_Remine,SC6D TAFENG,Pre-HUSPM-Joint,Remine,16.84,win
+mixed_pooled_deletion_vs_Remine-HUSP-ULL,SC6D TAFENG,Pre-HUSPM-Joint,Remine-HUSP-ULL,18.448,win
+mixed_pooled_deletion_vs_Remine-HUSP-SP,SC6D TAFENG,Pre-HUSPM-Joint,Remine-HUSP-SP,32.191,win
+mixed_pooled_deletion_vs_Remine-UUT,SC6D TAFENG,Pre-HUSPM-Joint,Remine-UUT,15.241,win
+mixed_pooled_deletion_vs_FixedFloor,SC6D TAFENG,Pre-HUSPM-Joint,FixedFloor,0.123,loss
+mixed_pooled_modification_vs_Remine,SC6D TAFENG,Pre-HUSPM-Joint,Remine,1.711,win
+mixed_pooled_modification_vs_Remine-HUSP-ULL,SC6D TAFENG,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.867,win
+mixed_pooled_modification_vs_Remine-HUSP-SP,SC6D TAFENG,Pre-HUSPM-Joint,Remine-HUSP-SP,3.405,win
+mixed_pooled_modification_vs_Remine-UUT,SC6D TAFENG,Pre-HUSPM-Joint,Remine-UUT,1.539,win
+mixed_pooled_modification_vs_FixedFloor,SC6D TAFENG,Pre-HUSPM-Joint,FixedFloor,1.057,tie
+mixed_pooled_stream_vs_Remine,SC6D DUNNHUMBY,Pre-HUSPM-Joint,Remine,1.653,win
+mixed_pooled_stream_vs_Remine-HUSP-ULL,SC6D DUNNHUMBY,Pre-HUSPM-Joint,Remine-HUSP-ULL,3.443,win
+mixed_pooled_stream_vs_Remine-HUSP-SP,SC6D DUNNHUMBY,Pre-HUSPM-Joint,Remine-HUSP-SP,8.765,win
+mixed_pooled_stream_vs_Remine-UUT,SC6D DUNNHUMBY,Pre-HUSPM-Joint,Remine-UUT,1.419,win
+mixed_pooled_stream_vs_FixedFloor,SC6D DUNNHUMBY,Pre-HUSPM-Joint,FixedFloor,0.857,loss
+mixed_pooled_insertion_vs_Remine,SC6D DUNNHUMBY,Pre-HUSPM-Joint,Remine,1.012,tie
+mixed_pooled_insertion_vs_Remine-HUSP-ULL,SC6D DUNNHUMBY,Pre-HUSPM-Joint,Remine-HUSP-ULL,2.104,win
+mixed_pooled_insertion_vs_Remine-HUSP-SP,SC6D DUNNHUMBY,Pre-HUSPM-Joint,Remine-HUSP-SP,5.341,win
+mixed_pooled_insertion_vs_Remine-UUT,SC6D DUNNHUMBY,Pre-HUSPM-Joint,Remine-UUT,0.867,loss
+mixed_pooled_insertion_vs_FixedFloor,SC6D DUNNHUMBY,Pre-HUSPM-Joint,FixedFloor,1.045,tie
+mixed_pooled_deletion_vs_Remine,SC6D DUNNHUMBY,Pre-HUSPM-Joint,Remine,4.504,win
+mixed_pooled_deletion_vs_Remine-HUSP-ULL,SC6D DUNNHUMBY,Pre-HUSPM-Joint,Remine-HUSP-ULL,9.391,win
+mixed_pooled_deletion_vs_Remine-HUSP-SP,SC6D DUNNHUMBY,Pre-HUSPM-Joint,Remine-HUSP-SP,24.067,win
+mixed_pooled_deletion_vs_Remine-UUT,SC6D DUNNHUMBY,Pre-HUSPM-Joint,Remine-UUT,3.87,win
+mixed_pooled_deletion_vs_FixedFloor,SC6D DUNNHUMBY,Pre-HUSPM-Joint,FixedFloor,0.006,loss
+mixed_pooled_modification_vs_Remine,SC6D DUNNHUMBY,Pre-HUSPM-Joint,Remine,1.019,tie
+mixed_pooled_modification_vs_Remine-HUSP-ULL,SC6D DUNNHUMBY,Pre-HUSPM-Joint,Remine-HUSP-ULL,2.124,win
+mixed_pooled_modification_vs_Remine-HUSP-SP,SC6D DUNNHUMBY,Pre-HUSPM-Joint,Remine-HUSP-SP,5.342,win
+mixed_pooled_modification_vs_Remine-UUT,SC6D DUNNHUMBY,Pre-HUSPM-Joint,Remine-UUT,0.875,loss
+mixed_pooled_modification_vs_FixedFloor,SC6D DUNNHUMBY,Pre-HUSPM-Joint,FixedFloor,1.051,tie
+mixed_pooled_stream_vs_Remine,SC6B SIGN,Pre-HUSPM-Joint,Remine,1.867,win
+mixed_pooled_stream_vs_Remine-HUSP-ULL,SC6B SIGN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.644,win
+mixed_pooled_stream_vs_Remine-HUSP-SP,SC6B SIGN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.71,win
+mixed_pooled_stream_vs_Remine-UUT,SC6B SIGN,Pre-HUSPM-Joint,Remine-UUT,1.077,tie
+mixed_pooled_stream_vs_FixedFloor,SC6B SIGN,Pre-HUSPM-Joint,FixedFloor,1.562,win
+mixed_method_vs_window5,SC6B SIGN,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w5,1.495,win
+mixed_pooled_stream_vs_window5,SC6B SIGN,Pre-HUSPM-Joint,window5,1.495,win
+mixed_pooled_insertion_vs_Remine,SC6B SIGN,Pre-HUSPM-Joint,Remine,1.853,win
+mixed_pooled_insertion_vs_Remine-HUSP-ULL,SC6B SIGN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.633,win
+mixed_pooled_insertion_vs_Remine-HUSP-SP,SC6B SIGN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.699,win
+mixed_pooled_insertion_vs_Remine-UUT,SC6B SIGN,Pre-HUSPM-Joint,Remine-UUT,1.065,tie
+mixed_pooled_insertion_vs_FixedFloor,SC6B SIGN,Pre-HUSPM-Joint,FixedFloor,1.705,win
+mixed_pooled_insertion_vs_window5,SC6B SIGN,Pre-HUSPM-Joint,window5,1.561,win
+mixed_pooled_deletion_vs_Remine,SC6B SIGN,Pre-HUSPM-Joint,Remine,1.936,win
+mixed_pooled_deletion_vs_Remine-HUSP-ULL,SC6B SIGN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.69,win
+mixed_pooled_deletion_vs_Remine-HUSP-SP,SC6B SIGN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.748,win
+mixed_pooled_deletion_vs_Remine-UUT,SC6B SIGN,Pre-HUSPM-Joint,Remine-UUT,1.069,tie
+mixed_pooled_deletion_vs_FixedFloor,SC6B SIGN,Pre-HUSPM-Joint,FixedFloor,0.049,loss
+mixed_pooled_deletion_vs_window5,SC6B SIGN,Pre-HUSPM-Joint,window5,0.4,loss
+mixed_pooled_modification_vs_Remine,SC6B SIGN,Pre-HUSPM-Joint,Remine,1.849,win
+mixed_pooled_modification_vs_Remine-HUSP-ULL,SC6B SIGN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.658,win
+mixed_pooled_modification_vs_Remine-HUSP-SP,SC6B SIGN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.724,win
+mixed_pooled_modification_vs_Remine-UUT,SC6B SIGN,Pre-HUSPM-Joint,Remine-UUT,1.059,tie
+mixed_pooled_modification_vs_FixedFloor,SC6B SIGN,Pre-HUSPM-Joint,FixedFloor,1.803,win
+mixed_pooled_modification_vs_window5,SC6B SIGN,Pre-HUSPM-Joint,window5,1.813,win
+mixed_pooled_deletion_beyond_the_budget_vs_Remine,SC6B SIGN,Pre-HUSPM-Joint,Remine,2.007,win
+mixed_pooled_deletion_beyond_the_budget_vs_Remine-HUSP-ULL,SC6B SIGN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.666,win
+mixed_pooled_deletion_beyond_the_budget_vs_Remine-HUSP-SP,SC6B SIGN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.759,win
+mixed_pooled_deletion_beyond_the_budget_vs_Remine-UUT,SC6B SIGN,Pre-HUSPM-Joint,Remine-UUT,1.365,win
+mixed_pooled_deletion_beyond_the_budget_vs_FixedFloor,SC6B SIGN,Pre-HUSPM-Joint,FixedFloor,1.776,win
+mixed_pooled_deletion_beyond_the_budget_vs_window5,SC6B SIGN,Pre-HUSPM-Joint,window5,1.793,win
+mixed_pooled_stream_vs_Remine,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine,1.403,win
+mixed_pooled_stream_vs_Remine-HUSP-ULL,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.381,win
 mixed_pooled_stream_vs_Remine-HUSP-SP,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.346,win
-mixed_pooled_stream_vs_Remine-UUT,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine-UUT,0.99,tie
-mixed_pooled_stream_vs_FixedFloor,SC6B LEVIATHAN,Pre-HUSPM-Joint,FixedFloor,1.256,win
-mixed_method_vs_window5,SC6B LEVIATHAN,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w5,1.242,win
-mixed_pooled_stream_vs_window5,SC6B LEVIATHAN,Pre-HUSPM-Joint,window5,1.242,win
-mixed_pooled_insertion_vs_Remine,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine,1.396,win
-mixed_pooled_insertion_vs_Remine-HUSP-ULL,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.38,win
+mixed_pooled_stream_vs_Remine-UUT,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine-UUT,1.008,tie
+mixed_pooled_stream_vs_FixedFloor,SC6B LEVIATHAN,Pre-HUSPM-Joint,FixedFloor,1.255,win
+mixed_method_vs_window5,SC6B LEVIATHAN,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w5,1.241,win
+mixed_pooled_stream_vs_window5,SC6B LEVIATHAN,Pre-HUSPM-Joint,window5,1.241,win
+mixed_pooled_insertion_vs_Remine,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine,1.405,win
+mixed_pooled_insertion_vs_Remine-HUSP-ULL,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.381,win
 mixed_pooled_insertion_vs_Remine-HUSP-SP,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.346,win
-mixed_pooled_insertion_vs_Remine-UUT,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine-UUT,0.991,tie
-mixed_pooled_insertion_vs_FixedFloor,SC6B LEVIATHAN,Pre-HUSPM-Joint,FixedFloor,1.386,win
-mixed_pooled_insertion_vs_window5,SC6B LEVIATHAN,Pre-HUSPM-Joint,window5,1.335,win
-mixed_pooled_deletion_vs_Remine,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine,1.391,win
-mixed_pooled_deletion_vs_Remine-HUSP-ULL,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.396,win
-mixed_pooled_deletion_vs_Remine-HUSP-SP,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.357,win
-mixed_pooled_deletion_vs_Remine-UUT,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine-UUT,0.991,tie
+mixed_pooled_insertion_vs_Remine-UUT,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine-UUT,1.009,tie
+mixed_pooled_insertion_vs_FixedFloor,SC6B LEVIATHAN,Pre-HUSPM-Joint,FixedFloor,1.387,win
+mixed_pooled_insertion_vs_window5,SC6B LEVIATHAN,Pre-HUSPM-Joint,window5,1.336,win
+mixed_pooled_deletion_vs_Remine,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine,1.393,win
+mixed_pooled_deletion_vs_Remine-HUSP-ULL,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.393,win
+mixed_pooled_deletion_vs_Remine-HUSP-SP,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.353,win
+mixed_pooled_deletion_vs_Remine-UUT,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine-UUT,1.009,tie
 mixed_pooled_deletion_vs_FixedFloor,SC6B LEVIATHAN,Pre-HUSPM-Joint,FixedFloor,0.013,loss
-mixed_pooled_deletion_vs_window5,SC6B LEVIATHAN,Pre-HUSPM-Joint,window5,0.29,loss
-mixed_pooled_modification_vs_Remine,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine,1.42,win
-mixed_pooled_modification_vs_Remine-HUSP-ULL,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.381,win
-mixed_pooled_modification_vs_Remine-HUSP-SP,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.344,win
-mixed_pooled_modification_vs_Remine-UUT,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine-UUT,0.987,tie
-mixed_pooled_modification_vs_FixedFloor,SC6B LEVIATHAN,Pre-HUSPM-Joint,FixedFloor,1.409,win
-mixed_pooled_modification_vs_window5,SC6B LEVIATHAN,Pre-HUSPM-Joint,window5,1.42,win
-mixed_pooled_deletion_beyond_the_budget_vs_Remine,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine,1.388,win
-mixed_pooled_deletion_beyond_the_budget_vs_Remine-HUSP-ULL,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.381,win
-mixed_pooled_deletion_beyond_the_budget_vs_Remine-HUSP-SP,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.343,win
-mixed_pooled_deletion_beyond_the_budget_vs_Remine-UUT,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine-UUT,0.979,tie
-mixed_pooled_deletion_beyond_the_budget_vs_FixedFloor,SC6B LEVIATHAN,Pre-HUSPM-Joint,FixedFloor,1.39,win
-mixed_pooled_deletion_beyond_the_budget_vs_window5,SC6B LEVIATHAN,Pre-HUSPM-Joint,window5,1.235,win
-mixed_pooled_stream_vs_Remine,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine,1.637,win
-mixed_pooled_stream_vs_Remine-HUSP-ULL,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.539,win
-mixed_pooled_stream_vs_Remine-HUSP-SP,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-SP,1.802,win
-mixed_pooled_stream_vs_Remine-UUT,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-UUT,1.096,win
-mixed_pooled_stream_vs_FixedFloor,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,FixedFloor,1.658,win
-mixed_method_vs_window5,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w5,1.57,win
-mixed_pooled_stream_vs_window5,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,window5,1.57,win
-mixed_pooled_insertion_vs_Remine,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine,1.612,win
-mixed_pooled_insertion_vs_Remine-HUSP-ULL,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.547,win
-mixed_pooled_insertion_vs_Remine-HUSP-SP,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-SP,1.837,win
-mixed_pooled_insertion_vs_Remine-UUT,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-UUT,1.111,win
-mixed_pooled_insertion_vs_FixedFloor,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,FixedFloor,1.549,win
-mixed_pooled_insertion_vs_window5,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,window5,1.419,win
-mixed_pooled_deletion_vs_Remine,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine,1.654,win
-mixed_pooled_deletion_vs_Remine-HUSP-ULL,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.74,win
-mixed_pooled_deletion_vs_Remine-HUSP-SP,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-SP,1.945,win
-mixed_pooled_deletion_vs_Remine-UUT,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-UUT,1.007,tie
-mixed_pooled_deletion_vs_FixedFloor,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,FixedFloor,1.182,win
-mixed_pooled_deletion_vs_window5,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,window5,1.148,win
-mixed_pooled_modification_vs_Remine,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine,1.455,win
-mixed_pooled_modification_vs_Remine-HUSP-ULL,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.374,win
-mixed_pooled_modification_vs_Remine-HUSP-SP,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-SP,1.56,win
-mixed_pooled_modification_vs_Remine-UUT,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-UUT,1.089,win
-mixed_pooled_modification_vs_FixedFloor,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,FixedFloor,2.305,win
-mixed_pooled_modification_vs_window5,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,window5,2.199,win
-mixed_pooled_deletion_beyond_the_budget_vs_Remine,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine,2.751,win
-mixed_pooled_deletion_beyond_the_budget_vs_Remine-HUSP-ULL,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.643,win
-mixed_pooled_deletion_beyond_the_budget_vs_Remine-HUSP-SP,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-SP,1.888,win
-mixed_pooled_deletion_beyond_the_budget_vs_Remine-UUT,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-UUT,1.052,tie
-mixed_pooled_deletion_beyond_the_budget_vs_FixedFloor,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,FixedFloor,1.862,win
-mixed_pooled_deletion_beyond_the_budget_vs_window5,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,window5,2.435,win
-mixed_pooled_stream_vs_Remine,SC6B TAFENG,Pre-HUSPM-Joint,Remine,1.292,win
-mixed_pooled_stream_vs_Remine-HUSP-ULL,SC6B TAFENG,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.839,win
-mixed_pooled_stream_vs_Remine-HUSP-SP,SC6B TAFENG,Pre-HUSPM-Joint,Remine-HUSP-SP,3.357,win
-mixed_pooled_stream_vs_Remine-UUT,SC6B TAFENG,Pre-HUSPM-Joint,Remine-UUT,1.134,win
-mixed_pooled_stream_vs_FixedFloor,SC6B TAFENG,Pre-HUSPM-Joint,FixedFloor,0.841,loss
-mixed_pooled_insertion_vs_Remine,SC6B TAFENG,Pre-HUSPM-Joint,Remine,1.28,win
-mixed_pooled_insertion_vs_Remine-HUSP-ULL,SC6B TAFENG,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.785,win
-mixed_pooled_insertion_vs_Remine-HUSP-SP,SC6B TAFENG,Pre-HUSPM-Joint,Remine-HUSP-SP,3.239,win
-mixed_pooled_insertion_vs_Remine-UUT,SC6B TAFENG,Pre-HUSPM-Joint,Remine-UUT,1.109,win
-mixed_pooled_insertion_vs_FixedFloor,SC6B TAFENG,Pre-HUSPM-Joint,FixedFloor,0.852,loss
-mixed_pooled_deletion_vs_Remine,SC6B TAFENG,Pre-HUSPM-Joint,Remine,1.525,win
-mixed_pooled_deletion_vs_Remine-HUSP-ULL,SC6B TAFENG,Pre-HUSPM-Joint,Remine-HUSP-ULL,2.278,win
-mixed_pooled_deletion_vs_Remine-HUSP-SP,SC6B TAFENG,Pre-HUSPM-Joint,Remine-HUSP-SP,4.168,win
-mixed_pooled_deletion_vs_Remine-UUT,SC6B TAFENG,Pre-HUSPM-Joint,Remine-UUT,1.363,win
+mixed_pooled_deletion_vs_window5,SC6B LEVIATHAN,Pre-HUSPM-Joint,window5,0.289,loss
+mixed_pooled_modification_vs_Remine,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine,1.404,win
+mixed_pooled_modification_vs_Remine-HUSP-ULL,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.376,win
+mixed_pooled_modification_vs_Remine-HUSP-SP,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.339,win
+mixed_pooled_modification_vs_Remine-UUT,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine-UUT,1.004,tie
+mixed_pooled_modification_vs_FixedFloor,SC6B LEVIATHAN,Pre-HUSPM-Joint,FixedFloor,1.404,win
+mixed_pooled_modification_vs_window5,SC6B LEVIATHAN,Pre-HUSPM-Joint,window5,1.415,win
+mixed_pooled_deletion_beyond_the_budget_vs_Remine,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine,1.395,win
+mixed_pooled_deletion_beyond_the_budget_vs_Remine-HUSP-ULL,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.385,win
+mixed_pooled_deletion_beyond_the_budget_vs_Remine-HUSP-SP,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine-HUSP-SP,1.347,win
+mixed_pooled_deletion_beyond_the_budget_vs_Remine-UUT,SC6B LEVIATHAN,Pre-HUSPM-Joint,Remine-UUT,1.004,tie
+mixed_pooled_deletion_beyond_the_budget_vs_FixedFloor,SC6B LEVIATHAN,Pre-HUSPM-Joint,FixedFloor,1.394,win
+mixed_pooled_deletion_beyond_the_budget_vs_window5,SC6B LEVIATHAN,Pre-HUSPM-Joint,window5,1.238,win
+mixed_pooled_stream_vs_Remine,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine,1.659,win
+mixed_pooled_stream_vs_Remine-HUSP-ULL,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.546,win
+mixed_pooled_stream_vs_Remine-HUSP-SP,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-SP,1.81,win
+mixed_pooled_stream_vs_Remine-UUT,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-UUT,1.183,win
+mixed_pooled_stream_vs_FixedFloor,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,FixedFloor,1.666,win
+mixed_method_vs_window5,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w5,1.578,win
+mixed_pooled_stream_vs_window5,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,window5,1.578,win
+mixed_pooled_insertion_vs_Remine,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine,1.662,win
+mixed_pooled_insertion_vs_Remine-HUSP-ULL,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.549,win
+mixed_pooled_insertion_vs_Remine-HUSP-SP,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-SP,1.839,win
+mixed_pooled_insertion_vs_Remine-UUT,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-UUT,1.217,win
+mixed_pooled_insertion_vs_FixedFloor,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,FixedFloor,1.551,win
+mixed_pooled_insertion_vs_window5,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,window5,1.421,win
+mixed_pooled_deletion_vs_Remine,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine,1.825,win
+mixed_pooled_deletion_vs_Remine-HUSP-ULL,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.728,win
+mixed_pooled_deletion_vs_Remine-HUSP-SP,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-SP,1.932,win
+mixed_pooled_deletion_vs_Remine-UUT,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-UUT,1.114,win
+mixed_pooled_deletion_vs_FixedFloor,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,FixedFloor,1.174,win
+mixed_pooled_deletion_vs_window5,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,window5,1.14,win
+mixed_pooled_modification_vs_Remine,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine,1.53,win
+mixed_pooled_modification_vs_Remine-HUSP-ULL,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.407,win
+mixed_pooled_modification_vs_Remine-HUSP-SP,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-SP,1.598,win
+mixed_pooled_modification_vs_Remine-UUT,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-UUT,1.078,tie
+mixed_pooled_modification_vs_FixedFloor,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,FixedFloor,2.361,win
+mixed_pooled_modification_vs_window5,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,window5,2.253,win
+mixed_pooled_deletion_beyond_the_budget_vs_Remine,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine,1.782,win
+mixed_pooled_deletion_beyond_the_budget_vs_Remine-HUSP-ULL,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.662,win
+mixed_pooled_deletion_beyond_the_budget_vs_Remine-HUSP-SP,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-HUSP-SP,1.91,win
+mixed_pooled_deletion_beyond_the_budget_vs_Remine-UUT,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,Remine-UUT,1.188,win
+mixed_pooled_deletion_beyond_the_budget_vs_FixedFloor,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,FixedFloor,1.883,win
+mixed_pooled_deletion_beyond_the_budget_vs_window5,SC6B C8T1S5I8N5K,Pre-HUSPM-Joint,window5,2.462,win
+mixed_pooled_stream_vs_Remine,SC6B TAFENG,Pre-HUSPM-Joint,Remine,1.729,win
+mixed_pooled_stream_vs_Remine-HUSP-ULL,SC6B TAFENG,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.869,win
+mixed_pooled_stream_vs_Remine-HUSP-SP,SC6B TAFENG,Pre-HUSPM-Joint,Remine-HUSP-SP,3.412,win
+mixed_pooled_stream_vs_Remine-UUT,SC6B TAFENG,Pre-HUSPM-Joint,Remine-UUT,1.579,win
+mixed_pooled_stream_vs_FixedFloor,SC6B TAFENG,Pre-HUSPM-Joint,FixedFloor,0.855,loss
+mixed_pooled_insertion_vs_Remine,SC6B TAFENG,Pre-HUSPM-Joint,Remine,1.718,win
+mixed_pooled_insertion_vs_Remine-HUSP-ULL,SC6B TAFENG,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.835,win
+mixed_pooled_insertion_vs_Remine-HUSP-SP,SC6B TAFENG,Pre-HUSPM-Joint,Remine-HUSP-SP,3.331,win
+mixed_pooled_insertion_vs_Remine-UUT,SC6B TAFENG,Pre-HUSPM-Joint,Remine-UUT,1.554,win
+mixed_pooled_insertion_vs_FixedFloor,SC6B TAFENG,Pre-HUSPM-Joint,FixedFloor,0.876,loss
+mixed_pooled_deletion_vs_Remine,SC6B TAFENG,Pre-HUSPM-Joint,Remine,2.059,win
+mixed_pooled_deletion_vs_Remine-HUSP-ULL,SC6B TAFENG,Pre-HUSPM-Joint,Remine-HUSP-ULL,2.295,win
+mixed_pooled_deletion_vs_Remine-HUSP-SP,SC6B TAFENG,Pre-HUSPM-Joint,Remine-HUSP-SP,4.199,win
+mixed_pooled_deletion_vs_Remine-UUT,SC6B TAFENG,Pre-HUSPM-Joint,Remine-UUT,1.907,win
 mixed_pooled_deletion_vs_FixedFloor,SC6B TAFENG,Pre-HUSPM-Joint,FixedFloor,0.017,loss
-mixed_pooled_modification_vs_Remine,SC6B TAFENG,Pre-HUSPM-Joint,Remine,1.408,win
-mixed_pooled_modification_vs_Remine-HUSP-ULL,SC6B TAFENG,Pre-HUSPM-Joint,Remine-HUSP-ULL,2.121,win
-mixed_pooled_modification_vs_Remine-HUSP-SP,SC6B TAFENG,Pre-HUSPM-Joint,Remine-HUSP-SP,3.863,win
-mixed_pooled_modification_vs_Remine-UUT,SC6B TAFENG,Pre-HUSPM-Joint,Remine-UUT,1.258,win
-mixed_pooled_modification_vs_FixedFloor,SC6B TAFENG,Pre-HUSPM-Joint,FixedFloor,1.197,win
-mixed_pooled_deletion_beyond_the_budget_vs_Remine,SC6B TAFENG,Pre-HUSPM-Joint,Remine,0.893,loss
-mixed_pooled_deletion_beyond_the_budget_vs_Remine-HUSP-ULL,SC6B TAFENG,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.341,win
-mixed_pooled_deletion_beyond_the_budget_vs_Remine-HUSP-SP,SC6B TAFENG,Pre-HUSPM-Joint,Remine-HUSP-SP,2.669,win
-mixed_pooled_deletion_beyond_the_budget_vs_Remine-UUT,SC6B TAFENG,Pre-HUSPM-Joint,Remine-UUT,0.878,loss
-mixed_pooled_deletion_beyond_the_budget_vs_FixedFloor,SC6B TAFENG,Pre-HUSPM-Joint,FixedFloor,1.078,tie
+mixed_pooled_modification_vs_Remine,SC6B TAFENG,Pre-HUSPM-Joint,Remine,1.867,win
+mixed_pooled_modification_vs_Remine-HUSP-ULL,SC6B TAFENG,Pre-HUSPM-Joint,Remine-HUSP-ULL,2.101,win
+mixed_pooled_modification_vs_Remine-HUSP-SP,SC6B TAFENG,Pre-HUSPM-Joint,Remine-HUSP-SP,3.827,win
+mixed_pooled_modification_vs_Remine-UUT,SC6B TAFENG,Pre-HUSPM-Joint,Remine-UUT,1.734,win
+mixed_pooled_modification_vs_FixedFloor,SC6B TAFENG,Pre-HUSPM-Joint,FixedFloor,1.185,win
+mixed_pooled_deletion_beyond_the_budget_vs_Remine,SC6B TAFENG,Pre-HUSPM-Joint,Remine,1.175,win
+mixed_pooled_deletion_beyond_the_budget_vs_Remine-HUSP-ULL,SC6B TAFENG,Pre-HUSPM-Joint,Remine-HUSP-ULL,1.267,win
+mixed_pooled_deletion_beyond_the_budget_vs_Remine-HUSP-SP,SC6B TAFENG,Pre-HUSPM-Joint,Remine-HUSP-SP,2.522,win
+mixed_pooled_deletion_beyond_the_budget_vs_Remine-UUT,SC6B TAFENG,Pre-HUSPM-Joint,Remine-UUT,1.152,win
+mixed_pooled_deletion_beyond_the_budget_vs_FixedFloor,SC6B TAFENG,Pre-HUSPM-Joint,FixedFloor,1.018,tie
+mixed_pooled_stream_vs_Remine,SC6B DUNNHUMBY,Pre-HUSPM-Joint,Remine,1.197,win
+mixed_pooled_stream_vs_Remine-HUSP-ULL,SC6B DUNNHUMBY,Pre-HUSPM-Joint,Remine-HUSP-ULL,2.361,win
+mixed_pooled_stream_vs_Remine-HUSP-SP,SC6B DUNNHUMBY,Pre-HUSPM-Joint,Remine-HUSP-SP,5.501,win
+mixed_pooled_stream_vs_Remine-UUT,SC6B DUNNHUMBY,Pre-HUSPM-Joint,Remine-UUT,1.006,tie
+mixed_pooled_stream_vs_FixedFloor,SC6B DUNNHUMBY,Pre-HUSPM-Joint,FixedFloor,1.097,win
+mixed_pooled_insertion_vs_Remine,SC6B DUNNHUMBY,Pre-HUSPM-Joint,Remine,1.206,win
+mixed_pooled_insertion_vs_Remine-HUSP-ULL,SC6B DUNNHUMBY,Pre-HUSPM-Joint,Remine-HUSP-ULL,2.38,win
+mixed_pooled_insertion_vs_Remine-HUSP-SP,SC6B DUNNHUMBY,Pre-HUSPM-Joint,Remine-HUSP-SP,5.543,win
+mixed_pooled_insertion_vs_Remine-UUT,SC6B DUNNHUMBY,Pre-HUSPM-Joint,Remine-UUT,1.015,tie
+mixed_pooled_insertion_vs_FixedFloor,SC6B DUNNHUMBY,Pre-HUSPM-Joint,FixedFloor,1.226,win
+mixed_pooled_deletion_vs_Remine,SC6B DUNNHUMBY,Pre-HUSPM-Joint,Remine,1.229,win
+mixed_pooled_deletion_vs_Remine-HUSP-ULL,SC6B DUNNHUMBY,Pre-HUSPM-Joint,Remine-HUSP-ULL,2.405,win
+mixed_pooled_deletion_vs_Remine-HUSP-SP,SC6B DUNNHUMBY,Pre-HUSPM-Joint,Remine-HUSP-SP,5.65,win
+mixed_pooled_deletion_vs_Remine-UUT,SC6B DUNNHUMBY,Pre-HUSPM-Joint,Remine-UUT,1.03,tie
+mixed_pooled_deletion_vs_FixedFloor,SC6B DUNNHUMBY,Pre-HUSPM-Joint,FixedFloor,0.003,loss
+mixed_pooled_modification_vs_Remine,SC6B DUNNHUMBY,Pre-HUSPM-Joint,Remine,1.129,win
+mixed_pooled_modification_vs_Remine-HUSP-ULL,SC6B DUNNHUMBY,Pre-HUSPM-Joint,Remine-HUSP-ULL,2.233,win
+mixed_pooled_modification_vs_Remine-HUSP-SP,SC6B DUNNHUMBY,Pre-HUSPM-Joint,Remine-HUSP-SP,5.179,win
+mixed_pooled_modification_vs_Remine-UUT,SC6B DUNNHUMBY,Pre-HUSPM-Joint,Remine-UUT,0.947,tie
+mixed_pooled_modification_vs_FixedFloor,SC6B DUNNHUMBY,Pre-HUSPM-Joint,FixedFloor,1.152,win
+mixed_pooled_deletion_beyond_the_budget_vs_Remine,SC6B DUNNHUMBY,Pre-HUSPM-Joint,Remine,1.245,win
+mixed_pooled_deletion_beyond_the_budget_vs_Remine-HUSP-ULL,SC6B DUNNHUMBY,Pre-HUSPM-Joint,Remine-HUSP-ULL,2.451,win
+mixed_pooled_deletion_beyond_the_budget_vs_Remine-HUSP-SP,SC6B DUNNHUMBY,Pre-HUSPM-Joint,Remine-HUSP-SP,5.731,win
+mixed_pooled_deletion_beyond_the_budget_vs_Remine-UUT,SC6B DUNNHUMBY,Pre-HUSPM-Joint,Remine-UUT,1.04,tie
+mixed_pooled_deletion_beyond_the_budget_vs_FixedFloor,SC6B DUNNHUMBY,Pre-HUSPM-Joint,FixedFloor,1.256,win
 SC1_miner_at_threshold_vs_HUSP-ULL,SIGN 0.049134,Joint-miner@UUT,HUSP-ULL,1.577,win
 SC1_method_vs_HUSP-ULL,SIGN 0.049134,Pre-HUSPM-Joint,HUSP-ULL,0.973,tie
 SC1_miner_at_threshold_vs_HUSP-SP,SIGN 0.049134,Joint-miner@UUT,HUSP-SP,1.652,win
@@ -576,7 +653,7 @@ SC1_method_vs_HUSP-ULL,BMS1 0.012821,Pre-HUSPM-Joint,HUSP-ULL,1.104,win
 SC1_miner_at_threshold_vs_HUSP-SP,BMS1 0.012821,Joint-miner@UUT,HUSP-SP,2.902,win
 SC1_method_vs_HUSP-SP,BMS1 0.012821,Pre-HUSPM-Joint,HUSP-SP,3.084,win
 SC1_miner_at_threshold_vs_HUSP-ULL,BMS1 0.013597,Joint-miner@UUT,HUSP-ULL,1.19,win
-SC1_method_vs_HUSP-ULL,BMS1 0.013597,Pre-HUSPM-Joint,HUSP-ULL,1.087,win
+SC1_method_vs_HUSP-ULL,BMS1 0.013597,Pre-HUSPM-Joint,HUSP-ULL,1.087,tie
 SC1_miner_at_threshold_vs_HUSP-SP,BMS1 0.013597,Joint-miner@UUT,HUSP-SP,3.405,win
 SC1_method_vs_HUSP-SP,BMS1 0.013597,Pre-HUSPM-Joint,HUSP-SP,3.11,win
 SC1_miner_at_threshold_vs_HUSP-ULL,BMS1 0.015293,Joint-miner@UUT,HUSP-ULL,1.211,win
@@ -635,6 +712,22 @@ SC1_miner_at_threshold_vs_HUSP-ULL,TAFENG 0.005691,Joint-miner@UUT,HUSP-ULL,0.93
 SC1_method_vs_HUSP-ULL,TAFENG 0.005691,Pre-HUSPM-Joint,HUSP-ULL,0.87,loss
 SC1_miner_at_threshold_vs_HUSP-SP,TAFENG 0.005691,Joint-miner@UUT,HUSP-SP,0.909,loss
 SC1_method_vs_HUSP-SP,TAFENG 0.005691,Pre-HUSPM-Joint,HUSP-SP,0.843,loss
+SC1_miner_at_threshold_vs_HUSP-ULL,DUNNHUMBY 0.001158,Joint-miner@UUT,HUSP-ULL,2.514,win
+SC1_method_vs_HUSP-ULL,DUNNHUMBY 0.001158,Pre-HUSPM-Joint,HUSP-ULL,2.024,win
+SC1_miner_at_threshold_vs_HUSP-SP,DUNNHUMBY 0.001158,Joint-miner@UUT,HUSP-SP,6.382,win
+SC1_method_vs_HUSP-SP,DUNNHUMBY 0.001158,Pre-HUSPM-Joint,HUSP-SP,5.138,win
+SC1_miner_at_threshold_vs_HUSP-ULL,DUNNHUMBY 0.001464,Joint-miner@UUT,HUSP-ULL,2.139,win
+SC1_method_vs_HUSP-ULL,DUNNHUMBY 0.001464,Pre-HUSPM-Joint,HUSP-ULL,1.793,win
+SC1_miner_at_threshold_vs_HUSP-SP,DUNNHUMBY 0.001464,Joint-miner@UUT,HUSP-SP,6.236,win
+SC1_method_vs_HUSP-SP,DUNNHUMBY 0.001464,Pre-HUSPM-Joint,HUSP-SP,5.227,win
+SC1_miner_at_threshold_vs_HUSP-ULL,DUNNHUMBY 0.002083,Joint-miner@UUT,HUSP-ULL,1.741,win
+SC1_method_vs_HUSP-ULL,DUNNHUMBY 0.002083,Pre-HUSPM-Joint,HUSP-ULL,1.506,win
+SC1_miner_at_threshold_vs_HUSP-SP,DUNNHUMBY 0.002083,Joint-miner@UUT,HUSP-SP,4.953,win
+SC1_method_vs_HUSP-SP,DUNNHUMBY 0.002083,Pre-HUSPM-Joint,HUSP-SP,4.285,win
+SC1_miner_at_threshold_vs_HUSP-ULL,DUNNHUMBY 0.002343,Joint-miner@UUT,HUSP-ULL,1.678,win
+SC1_method_vs_HUSP-ULL,DUNNHUMBY 0.002343,Pre-HUSPM-Joint,HUSP-ULL,1.442,win
+SC1_miner_at_threshold_vs_HUSP-SP,DUNNHUMBY 0.002343,Joint-miner@UUT,HUSP-SP,4.711,win
+SC1_method_vs_HUSP-SP,DUNNHUMBY 0.002343,Pre-HUSPM-Joint,HUSP-SP,4.047,win
 SC3_miner_at_threshold_vs_HUSP-ULL,SIGN 0.049134,Joint-miner@UUT,HUSP-ULL,1.607,win
 SC3_method_vs_HUSP-ULL,SIGN 0.049134,Pre-HUSPM-Joint,HUSP-ULL,0.998,tie
 SC3_miner_at_threshold_vs_HUSP-SP,SIGN 0.049134,Joint-miner@UUT,HUSP-SP,1.677,win
@@ -863,6 +956,8 @@ SC7_full_vs_no_node_check,BIBLE,Pre-HUSPM-Joint,Pre-HUSPM-Joint-no-IUB,0.995,tie
 SC7_full_vs_no_item_pruning,BIBLE,Pre-HUSPM-Joint,Pre-HUSPM-Joint-no-IPS,1.771,win
 SC7_full_vs_no_node_check,C8T1S5I8N5K,Pre-HUSPM-Joint,Pre-HUSPM-Joint-no-IUB,1.06,tie
 SC7_full_vs_no_item_pruning,C8T1S5I8N5K,Pre-HUSPM-Joint,Pre-HUSPM-Joint-no-IPS,5.313,win
+SC7_full_vs_no_node_check,DUNNHUMBY,Pre-HUSPM-Joint,Pre-HUSPM-Joint-no-IUB,0.962,tie
+SC7_full_vs_no_item_pruning,DUNNHUMBY,Pre-HUSPM-Joint,Pre-HUSPM-Joint-no-IPS,2.223,win
 SC7_full_vs_no_node_check,FIFA,Pre-HUSPM-Joint,Pre-HUSPM-Joint-no-IUB,0.999,tie
 SC7_full_vs_no_item_pruning,FIFA,Pre-HUSPM-Joint,Pre-HUSPM-Joint-no-IPS,11.112,win
 SC7_full_vs_no_node_check,KOSARAK,Pre-HUSPM-Joint,Pre-HUSPM-Joint-no-IUB,1.034,tie
@@ -873,10 +968,10 @@ SC7_full_vs_no_node_check,SIGN,Pre-HUSPM-Joint,Pre-HUSPM-Joint-no-IUB,0.972,tie
 SC7_full_vs_no_item_pruning,SIGN,Pre-HUSPM-Joint,Pre-HUSPM-Joint-no-IPS,1.544,win
 SC7_full_vs_no_node_check,TAFENG,Pre-HUSPM-Joint,Pre-HUSPM-Joint-no-IUB,1.078,tie
 SC7_full_vs_no_item_pruning,TAFENG,Pre-HUSPM-Joint,Pre-HUSPM-Joint-no-IPS,1.039,tie
-SC2_method_vs_best_window,BIBLE,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w3,0.957,tie
-SC2_method_vs_best_window,C8T1S5I8N5K,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w1,1.147,win
-SC2_method_vs_best_window,FIFA,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w2,0.982,tie
-SC2_method_vs_best_window,KOSARAK,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w3,1.003,tie
-SC2_method_vs_best_window,LEVIATHAN,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w1,1.014,tie
-SC2_method_vs_best_window,SIGN,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w1,0.896,loss
-SC2_method_vs_best_window,TAFENG,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w5,0.966,tie
+SC2_method_vs_best_window,BIBLE,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w3,0.951,tie
+SC2_method_vs_best_window,C8T1S5I8N5K,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w1,1.138,win
+SC2_method_vs_best_window,FIFA,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w2,0.963,tie
+SC2_method_vs_best_window,KOSARAK,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w3,0.998,tie
+SC2_method_vs_best_window,LEVIATHAN,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w1,1.015,tie
+SC2_method_vs_best_window,SIGN,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w1,0.898,loss
+SC2_method_vs_best_window,TAFENG,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w5,0.958,tie

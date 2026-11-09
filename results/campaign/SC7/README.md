@@ -11,17 +11,18 @@ the adaptive decision or the block index off as with both on (yes).
 ## The IUB bound and the irrelevant item pruning
 
 Every finished arm of a database reports the same HUSP count: yes, over
-21 comparisons.
+24 comparisons.
 
 | database | HUSPs | full | IUB off | IPS off | Pre-HUSPM | explored, full | explored, IUB off | explored, IPS off |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
-| SIGN | 141 | 0.25 s | 0.24 s | 0.38 s | 1.21 s | 8,071 | 8,071 | 38,372 |
-| LEVIATHAN | 135 | 0.54 s | 0.54 s | 1.39 s | 1.76 s | 3,796 | 3,796 | 39,313 |
-| FIFA | 17 | 9.12 s | 9.11 s | 101.36 s | 230.30 s | 13,738 | 13,738 | 473,004 |
-| BIBLE | 129 | 1.10 s | 1.10 s | 1.96 s | 1.75 s | 1,025 | 1,025 | 18,939 |
-| KOSARAK | 9 | 12.12 s | 12.54 s | 108.66 s | 15.82 s | 1,077 | 1,077 | 124,081 |
-| C8T1S5I8N5K | 3,438 | 0.20 s | 0.21 s | 1.07 s | 0.80 s | 26,813 | 26,813 | 383,747 |
-| TAFENG | 9 | 0.23 s | 0.25 s | 0.24 s | 0.15 s | 1,984 | 1,984 | 23,847 |
+| SIGN | 141 | 0.25 s | 0.24 s | 0.38 s | 1.20 s | 8,071 | 8,071 | 38,372 |
+| LEVIATHAN | 135 | 0.54 s | 0.54 s | 1.39 s | 1.73 s | 3,796 | 3,796 | 39,313 |
+| FIFA | 17 | 9.12 s | 9.11 s | 101.36 s | 378.20 s | 13,738 | 13,738 | 473,004 |
+| BIBLE | 129 | 1.10 s | 1.10 s | 1.96 s | 2.04 s | 1,025 | 1,025 | 18,939 |
+| KOSARAK | 9 | 12.12 s | 12.54 s | 108.66 s | 15.57 s | 1,077 | 1,077 | 124,081 |
+| C8T1S5I8N5K | 3,438 | 0.20 s | 0.21 s | 1.07 s | 0.86 s | 26,813 | 26,813 | 383,747 |
+| TAFENG | 9 | 0.23 s | 0.25 s | 0.24 s | 0.19 s | 1,984 | 1,984 | 23,847 |
+| DUNNHUMBY | 17 | 2.60 s | 2.50 s | 5.79 s | 19.81 s | 19,173 | 19,173 | 167,793 |
 
 ## The adaptive rescan decision
 

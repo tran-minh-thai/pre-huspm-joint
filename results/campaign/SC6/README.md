@@ -8,7 +8,7 @@ stream - replayed by the proposal and by remining. SIGN, LEVIATHAN and C8T1S5I8N
 
 ## Every operation agrees
 
-At every one of the 400 operations the two arms report the same HUSP count:
+At every one of the 500 operations the two arms report the same HUSP count:
 yes.
 
 ## Per database, over the five seeds
@@ -18,24 +18,28 @@ replay the same plan at a seed, so the ratio is paired by seed.
 
 | database | seeds | ratio, mean ± sd | min | max |
 |---|---:|---:|---:|---:|
-| C8T1S5I8N5K | 5 | 0.659 ± 0.014 | 0.640 | 0.677 |
-| LEVIATHAN | 5 | 0.846 ± 0.026 | 0.808 | 0.881 |
-| SIGN | 5 | 0.752 ± 0.032 | 0.704 | 0.785 |
-| TAFENG | 5 | 0.362 ± 0.012 | 0.352 | 0.382 |
+| C8T1S5I8N5K | 5 | 0.584 ± 0.023 | 0.546 | 0.605 |
+| DUNNHUMBY | 5 | 0.870 ± 0.065 | 0.797 | 0.973 |
+| LEVIATHAN | 5 | 0.714 ± 0.029 | 0.664 | 0.742 |
+| SIGN | 5 | 0.523 ± 0.012 | 0.502 | 0.530 |
+| TAFENG | 5 | 0.524 ± 0.022 | 0.504 | 0.562 |
 
 ## By kind of operation, all seeds together
 
 | database | kind | rescans | proposal | remine | remine / proposal |
 |---|---|---:|---:|---:|---:|
-| C8T1S5I8N5K | insertion | 57 / 70 | 6.23 s | 9.55 s | 1.5 |
-| C8T1S5I8N5K | deletion | 1 / 15 | 0.73 s | 2.05 s | 2.8 |
-| C8T1S5I8N5K | modification | 12 / 15 | 1.99 s | 1.98 s | 1.0 |
-| LEVIATHAN | insertion | 70 / 70 | 16.48 s | 17.31 s | 1.1 |
-| LEVIATHAN | deletion | 3 / 15 | 0.75 s | 3.68 s | 4.9 |
-| LEVIATHAN | modification | 15 / 15 | 3.62 s | 3.66 s | 1.0 |
-| SIGN | insertion | 62 / 70 | 7.47 s | 9.45 s | 1.3 |
-| SIGN | deletion | 2 / 15 | 0.29 s | 1.95 s | 6.8 |
-| SIGN | modification | 15 / 15 | 2.29 s | 1.99 s | 0.9 |
-| TAFENG | insertion | 46 / 70 | 4.87 s | 11.84 s | 2.4 |
-| TAFENG | deletion | 0 / 15 | 0.01 s | 2.44 s | 187.9 |
-| TAFENG | modification | 10 / 15 | 1.14 s | 2.38 s | 2.1 |
+| C8T1S5I8N5K | insertion | 70 / 70 | 4.50 s | 8.00 s | 1.8 |
+| C8T1S5I8N5K | deletion | 15 / 15 | 0.91 s | 1.57 s | 1.7 |
+| C8T1S5I8N5K | modification | 15 / 15 | 1.14 s | 1.63 s | 1.4 |
+| DUNNHUMBY | insertion | 70 / 70 | 63.32 s | 73.27 s | 1.2 |
+| DUNNHUMBY | deletion | 15 / 15 | 12.83 s | 15.47 s | 1.2 |
+| DUNNHUMBY | modification | 15 / 15 | 14.35 s | 15.55 s | 1.1 |
+| LEVIATHAN | insertion | 70 / 70 | 12.42 s | 17.50 s | 1.4 |
+| LEVIATHAN | deletion | 15 / 15 | 2.64 s | 3.70 s | 1.4 |
+| LEVIATHAN | modification | 15 / 15 | 2.65 s | 3.67 s | 1.4 |
+| SIGN | insertion | 70 / 70 | 5.01 s | 9.76 s | 1.9 |
+| SIGN | deletion | 15 / 15 | 1.05 s | 1.95 s | 1.8 |
+| SIGN | modification | 15 / 15 | 1.08 s | 1.97 s | 1.8 |
+| TAFENG | insertion | 53 / 70 | 5.30 s | 9.44 s | 1.8 |
+| TAFENG | deletion | 4 / 15 | 0.38 s | 1.92 s | 5.1 |
+| TAFENG | modification | 13 / 15 | 1.27 s | 1.88 s | 1.5 |
