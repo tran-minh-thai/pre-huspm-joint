@@ -1,0 +1,50 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 9 | Scenarios: [SC6D]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC6D] Mixed stream, exactly 6:10:4 ---
+>> [SC6D] DUNNHUMBY seed=42 opSize=200 plan=20 operations (6 insert, 10 delete, 4 modify)
+>> RUNNING Remine-own-UUT-rebuild/DUNNHUMBY/SC6_INIT#0  (heap free=658MB / total=1024MB / max=49152MB)
+[Remine-own-UUT-rebuild/DUNNHUMBY/SC6_INIT#0] OK t=1257ms cand=118800 pat=17 heapDelta=284MB
+>> RUNNING Remine-own-UUT-rebuild/DUNNHUMBY/SC6_DEL#1  (heap free=596MB / total=864MB / max=49152MB)
+[Remine-own-UUT-rebuild/DUNNHUMBY/SC6_DEL#1] OK t=891ms cand=118951 pat=17 heapDelta=249MB
+>> RUNNING Remine-own-UUT-rebuild/DUNNHUMBY/SC6_MOD#2  (heap free=597MB / total=864MB / max=49152MB)
+[Remine-own-UUT-rebuild/DUNNHUMBY/SC6_MOD#2] OK t=838ms cand=118461 pat=17 heapDelta=252MB
+>> RUNNING Remine-own-UUT-rebuild/DUNNHUMBY/SC6_INS#3  (heap free=597MB / total=864MB / max=49152MB)
+[Remine-own-UUT-rebuild/DUNNHUMBY/SC6_INS#3] OK t=845ms cand=117468 pat=16 heapDelta=252MB
+>> RUNNING Remine-own-UUT-rebuild/DUNNHUMBY/SC6_INS#4  (heap free=596MB / total=864MB / max=49152MB)
+[Remine-own-UUT-rebuild/DUNNHUMBY/SC6_INS#4] OK t=845ms cand=117227 pat=17 heapDelta=252MB
+>> RUNNING Remine-own-UUT-rebuild/DUNNHUMBY/SC6_INS#5  (heap free=595MB / total=864MB / max=49152MB)
+[Remine-own-UUT-rebuild/DUNNHUMBY/SC6_INS#5] OK t=857ms cand=115872 pat=16 heapDelta=256MB
+>> RUNNING Remine-own-UUT-rebuild/DUNNHUMBY/SC6_DEL#6  (heap free=595MB / total=864MB / max=49152MB)
+[Remine-own-UUT-rebuild/DUNNHUMBY/SC6_DEL#6] OK t=843ms cand=112601 pat=16 heapDelta=252MB
+>> RUNNING Remine-own-UUT-rebuild/DUNNHUMBY/SC6_DEL#7  (heap free=595MB / total=864MB / max=49152MB)
+[Remine-own-UUT-rebuild/DUNNHUMBY/SC6_DEL#7] OK t=834ms cand=112589 pat=16 heapDelta=252MB
+>> RUNNING Remine-own-UUT-rebuild/DUNNHUMBY/SC6_INS#8  (heap free=595MB / total=864MB / max=49152MB)
+[Remine-own-UUT-rebuild/DUNNHUMBY/SC6_INS#8] OK t=829ms cand=110995 pat=16 heapDelta=252MB
+>> RUNNING Remine-own-UUT-rebuild/DUNNHUMBY/SC6_DEL#9  (heap free=596MB / total=864MB / max=49152MB)
+[Remine-own-UUT-rebuild/DUNNHUMBY/SC6_DEL#9] OK t=825ms cand=111903 pat=16 heapDelta=252MB
+>> RUNNING Remine-own-UUT-rebuild/DUNNHUMBY/SC6_DEL#10  (heap free=596MB / total=864MB / max=49152MB)
+[Remine-own-UUT-rebuild/DUNNHUMBY/SC6_DEL#10] OK t=821ms cand=112367 pat=16 heapDelta=245MB
+>> RUNNING Remine-own-UUT-rebuild/DUNNHUMBY/SC6_DEL#11  (heap free=596MB / total=864MB / max=49152MB)
+[Remine-own-UUT-rebuild/DUNNHUMBY/SC6_DEL#11] OK t=813ms cand=113143 pat=16 heapDelta=245MB
+>> RUNNING Remine-own-UUT-rebuild/DUNNHUMBY/SC6_INS#12  (heap free=596MB / total=864MB / max=49152MB)
+[Remine-own-UUT-rebuild/DUNNHUMBY/SC6_INS#12] OK t=822ms cand=112094 pat=16 heapDelta=252MB
+>> RUNNING Remine-own-UUT-rebuild/DUNNHUMBY/SC6_DEL#13  (heap free=595MB / total=864MB / max=49152MB)
+[Remine-own-UUT-rebuild/DUNNHUMBY/SC6_DEL#13] OK t=809ms cand=113240 pat=16 heapDelta=245MB
+>> RUNNING Remine-own-UUT-rebuild/DUNNHUMBY/SC6_MOD#14  (heap free=596MB / total=864MB / max=49152MB)
+[Remine-own-UUT-rebuild/DUNNHUMBY/SC6_MOD#14] OK t=815ms cand=113288 pat=16 heapDelta=245MB
+>> RUNNING Remine-own-UUT-rebuild/DUNNHUMBY/SC6_MOD#15  (heap free=595MB / total=864MB / max=49152MB)
+[Remine-own-UUT-rebuild/DUNNHUMBY/SC6_MOD#15] OK t=796ms cand=112456 pat=16 heapDelta=245MB
+>> RUNNING Remine-own-UUT-rebuild/DUNNHUMBY/SC6_DEL#16  (heap free=594MB / total=864MB / max=49152MB)
+[Remine-own-UUT-rebuild/DUNNHUMBY/SC6_DEL#16] OK t=820ms cand=112789 pat=16 heapDelta=245MB
+>> RUNNING Remine-own-UUT-rebuild/DUNNHUMBY/SC6_DEL#17  (heap free=594MB / total=864MB / max=49152MB)
+[Remine-own-UUT-rebuild/DUNNHUMBY/SC6_DEL#17] OK t=780ms cand=113384 pat=16 heapDelta=238MB
+>> RUNNING Remine-own-UUT-rebuild/DUNNHUMBY/SC6_DEL#18  (heap free=594MB / total=864MB / max=49152MB)
+[Remine-own-UUT-rebuild/DUNNHUMBY/SC6_DEL#18] OK t=777ms cand=114273 pat=16 heapDelta=238MB
+>> RUNNING Remine-own-UUT-rebuild/DUNNHUMBY/SC6_MOD#19  (heap free=594MB / total=864MB / max=49152MB)
+[Remine-own-UUT-rebuild/DUNNHUMBY/SC6_MOD#19] OK t=776ms cand=113576 pat=16 heapDelta=238MB
+>> RUNNING Remine-own-UUT-rebuild/DUNNHUMBY/SC6_INS#20  (heap free=593MB / total=864MB / max=49152MB)
+[Remine-own-UUT-rebuild/DUNNHUMBY/SC6_INS#20] OK t=782ms cand=113453 pat=16 heapDelta=238MB
+=== ALL SCENARIOS DONE (34.3s) ===
