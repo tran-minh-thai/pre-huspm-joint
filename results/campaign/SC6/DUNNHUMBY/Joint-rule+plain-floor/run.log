@@ -1,0 +1,50 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 9 | Scenarios: [SC6]
+Heap max: 49152 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC6] Mixed stream, exactly 14:3:3 ---
+>> [SC6] DUNNHUMBY seed=42 opSize=200 plan=20 operations (14 insert, 3 delete, 3 modify)
+>> RUNNING Joint-rule+plain-floor/DUNNHUMBY/SC6_INIT#0  (heap free=657MB / total=1024MB / max=49152MB)
+[Joint-rule+plain-floor/DUNNHUMBY/SC6_INIT#0] OK t=1483ms cand=218555 pat=17 heapDelta=300MB
+>> RUNNING Joint-rule+plain-floor/DUNNHUMBY/SC6_INS#1  (heap free=500MB / total=768MB / max=49152MB)
+[Joint-rule+plain-floor/DUNNHUMBY/SC6_INS#1] OK t=1042ms cand=215206 pat=17 heapDelta=158MB
+>> RUNNING Joint-rule+plain-floor/DUNNHUMBY/SC6_MOD#2  (heap free=493MB / total=768MB / max=49152MB)
+[Joint-rule+plain-floor/DUNNHUMBY/SC6_MOD#2] OK t=1031ms cand=214753 pat=16 heapDelta=148MB
+>> RUNNING Joint-rule+plain-floor/DUNNHUMBY/SC6_INS#3  (heap free=489MB / total=768MB / max=49152MB)
+[Joint-rule+plain-floor/DUNNHUMBY/SC6_INS#3] OK t=1038ms cand=212465 pat=17 heapDelta=148MB
+>> RUNNING Joint-rule+plain-floor/DUNNHUMBY/SC6_INS#4  (heap free=485MB / total=768MB / max=49152MB)
+[Joint-rule+plain-floor/DUNNHUMBY/SC6_INS#4] OK t=1032ms cand=208924 pat=16 heapDelta=143MB
+>> RUNNING Joint-rule+plain-floor/DUNNHUMBY/SC6_INS#5  (heap free=484MB / total=768MB / max=49152MB)
+[Joint-rule+plain-floor/DUNNHUMBY/SC6_INS#5] OK t=1039ms cand=205284 pat=16 heapDelta=143MB
+>> RUNNING Joint-rule+plain-floor/DUNNHUMBY/SC6_INS#6  (heap free=482MB / total=768MB / max=49152MB)
+[Joint-rule+plain-floor/DUNNHUMBY/SC6_INS#6] OK t=1043ms cand=202162 pat=16 heapDelta=148MB
+>> RUNNING Joint-rule+plain-floor/DUNNHUMBY/SC6_DEL#7  (heap free=478MB / total=768MB / max=49152MB)
+[Joint-rule+plain-floor/DUNNHUMBY/SC6_DEL#7] OK t=2ms cand=202162 pat=16 heapDelta=10MB
+>> RUNNING Joint-rule+plain-floor/DUNNHUMBY/SC6_INS#8  (heap free=478MB / total=768MB / max=49152MB)
+[Joint-rule+plain-floor/DUNNHUMBY/SC6_INS#8] OK t=1041ms cand=201595 pat=16 heapDelta=143MB
+>> RUNNING Joint-rule+plain-floor/DUNNHUMBY/SC6_INS#9  (heap free=475MB / total=768MB / max=49152MB)
+[Joint-rule+plain-floor/DUNNHUMBY/SC6_INS#9] OK t=1049ms cand=199338 pat=16 heapDelta=143MB
+>> RUNNING Joint-rule+plain-floor/DUNNHUMBY/SC6_INS#10  (heap free=474MB / total=768MB / max=49152MB)
+[Joint-rule+plain-floor/DUNNHUMBY/SC6_INS#10] OK t=1059ms cand=196329 pat=16 heapDelta=148MB
+>> RUNNING Joint-rule+plain-floor/DUNNHUMBY/SC6_INS#11  (heap free=475MB / total=768MB / max=49152MB)
+[Joint-rule+plain-floor/DUNNHUMBY/SC6_INS#11] OK t=1058ms cand=194645 pat=16 heapDelta=148MB
+>> RUNNING Joint-rule+plain-floor/DUNNHUMBY/SC6_INS#12  (heap free=472MB / total=768MB / max=49152MB)
+[Joint-rule+plain-floor/DUNNHUMBY/SC6_INS#12] OK t=1073ms cand=194075 pat=16 heapDelta=148MB
+>> RUNNING Joint-rule+plain-floor/DUNNHUMBY/SC6_INS#13  (heap free=470MB / total=768MB / max=49152MB)
+[Joint-rule+plain-floor/DUNNHUMBY/SC6_INS#13] OK t=1082ms cand=191956 pat=16 heapDelta=148MB
+>> RUNNING Joint-rule+plain-floor/DUNNHUMBY/SC6_MOD#14  (heap free=469MB / total=768MB / max=49152MB)
+[Joint-rule+plain-floor/DUNNHUMBY/SC6_MOD#14] OK t=1096ms cand=191433 pat=16 heapDelta=148MB
+>> RUNNING Joint-rule+plain-floor/DUNNHUMBY/SC6_DEL#15  (heap free=467MB / total=768MB / max=49152MB)
+[Joint-rule+plain-floor/DUNNHUMBY/SC6_DEL#15] OK t=1ms cand=191433 pat=16 heapDelta=10MB
+>> RUNNING Joint-rule+plain-floor/DUNNHUMBY/SC6_INS#16  (heap free=467MB / total=768MB / max=49152MB)
+[Joint-rule+plain-floor/DUNNHUMBY/SC6_INS#16] OK t=1091ms cand=193721 pat=16 heapDelta=148MB
+>> RUNNING Joint-rule+plain-floor/DUNNHUMBY/SC6_DEL#17  (heap free=467MB / total=768MB / max=49152MB)
+[Joint-rule+plain-floor/DUNNHUMBY/SC6_DEL#17] OK t=1ms cand=193721 pat=16 heapDelta=10MB
+>> RUNNING Joint-rule+plain-floor/DUNNHUMBY/SC6_INS#18  (heap free=467MB / total=768MB / max=49152MB)
+[Joint-rule+plain-floor/DUNNHUMBY/SC6_INS#18] OK t=1097ms cand=193244 pat=16 heapDelta=148MB
+>> RUNNING Joint-rule+plain-floor/DUNNHUMBY/SC6_MOD#19  (heap free=464MB / total=768MB / max=49152MB)
+[Joint-rule+plain-floor/DUNNHUMBY/SC6_MOD#19] OK t=1101ms cand=191410 pat=16 heapDelta=148MB
+>> RUNNING Joint-rule+plain-floor/DUNNHUMBY/SC6_INS#20  (heap free=462MB / total=768MB / max=49152MB)
+[Joint-rule+plain-floor/DUNNHUMBY/SC6_INS#20] OK t=1105ms cand=189356 pat=16 heapDelta=148MB
+=== ALL SCENARIOS DONE (36.8s) ===
