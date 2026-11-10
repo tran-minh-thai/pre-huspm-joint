@@ -1,0 +1,321 @@
+tree	replicate	scenario	database	arm	kind	seconds
+campaign		SC1	DUNNHUMBY	Pre-HUSPM-Joint	method	29
+campaign		SC1	DUNNHUMBY	HUSP-ULL	near	30
+campaign		SC1	DUNNHUMBY	Joint-miner@UUT	near	27
+campaign		SC2	DUNNHUMBY	Pre-HUSPM-Joint	method	223
+campaign		SC2	DUNNHUMBY	Joint-miner+SWUmax	near	246
+campaign		SC2	DUNNHUMBY	Joint-miner+TSU	near	239
+campaign		SC2	DUNNHUMBY	Joint-rule+min-floor	same	252
+campaign		SC2	DUNNHUMBY	Joint-rule+plain-floor	same	236
+campaign		SC2	DUNNHUMBY	Pre-HUSPM-Joint-be1	same	211
+campaign		SC2	DUNNHUMBY	Pre-HUSPM-Joint-be10	same	226
+campaign		SC2	DUNNHUMBY	Pre-HUSPM-Joint-be2	same	225
+campaign		SC2	DUNNHUMBY	Pre-HUSPM-Joint-be20	same	224
+campaign		SC2	DUNNHUMBY	Pre-HUSPM-Joint-be3	same	223
+campaign		SC2	DUNNHUMBY	Pre-HUSPM-Joint-fixed-threshold	same	252
+campaign		SC2	DUNNHUMBY	Pre-HUSPM-Joint-time	same	214
+campaign		SC2	DUNNHUMBY	Pre-HUSPM-Joint-w1	same	215
+campaign		SC2	DUNNHUMBY	Pre-HUSPM-Joint-w10	same	209
+campaign		SC2	DUNNHUMBY	Pre-HUSPM-Joint-w2	same	221
+campaign		SC2	DUNNHUMBY	Pre-HUSPM-Joint-w3	same	224
+campaign		SC2	DUNNHUMBY	Pre-HUSPM-Joint-w5	same	211
+campaign		SC2	DUNNHUMBY	Remine-HUSP-SP	same	1037
+campaign		SC2	DUNNHUMBY	Remine-HUSP-ULL	same	480
+campaign		SC2	DUNNHUMBY	Remine-from-scratch	same	300
+campaign		SC2	DUNNHUMBY	Remine-from-scratch-rebuild	near	298
+campaign		SC2	DUNNHUMBY	Remine-own-UUT	same	294
+campaign		SC2	DUNNHUMBY	Remine-own-UUT-rebuild	near	261
+campaign		SC6	DUNNHUMBY	Pre-HUSPM-Joint	method	36
+campaign		SC6	DUNNHUMBY	Joint-rule+min-floor	same	36
+campaign		SC6	DUNNHUMBY	Joint-rule+plain-floor	same	36
+campaign		SC6	DUNNHUMBY	Pre-HUSPM-Joint-be1	same	35
+campaign		SC6	DUNNHUMBY	Pre-HUSPM-Joint-be10	same	37
+campaign		SC6	DUNNHUMBY	Pre-HUSPM-Joint-be2	same	35
+campaign		SC6	DUNNHUMBY	Pre-HUSPM-Joint-be20	same	37
+campaign		SC6	DUNNHUMBY	Pre-HUSPM-Joint-be3	same	36
+campaign		SC6	DUNNHUMBY	Pre-HUSPM-Joint-fixed-threshold	same	36
+campaign		SC6	DUNNHUMBY	Pre-HUSPM-Joint-time	same	35
+campaign		SC6	DUNNHUMBY	Remine-HUSP-SP	same	135
+campaign		SC6	DUNNHUMBY	Remine-HUSP-ULL	same	60
+campaign		SC6	DUNNHUMBY	Remine-from-scratch	same	39
+campaign		SC6	DUNNHUMBY	Remine-from-scratch-rebuild	near	40
+campaign		SC6	DUNNHUMBY	Remine-own-UUT	same	36
+campaign		SC6	DUNNHUMBY	Remine-own-UUT-rebuild	near	36
+campaign		SC6B	DUNNHUMBY	Pre-HUSPM-Joint	method	33
+campaign		SC6B	DUNNHUMBY	Pre-HUSPM-Joint-be1	same	32
+campaign		SC6B	DUNNHUMBY	Pre-HUSPM-Joint-be10	same	34
+campaign		SC6B	DUNNHUMBY	Pre-HUSPM-Joint-be2	same	34
+campaign		SC6B	DUNNHUMBY	Pre-HUSPM-Joint-be20	same	33
+campaign		SC6B	DUNNHUMBY	Pre-HUSPM-Joint-be3	same	33
+campaign		SC6B	DUNNHUMBY	Pre-HUSPM-Joint-fixed-threshold	same	36
+campaign		SC6B	DUNNHUMBY	Pre-HUSPM-Joint-time	same	34
+campaign		SC6B	DUNNHUMBY	Remine-HUSP-SP	same	112
+campaign		SC6B	DUNNHUMBY	Remine-HUSP-ULL	same	51
+campaign		SC6B	DUNNHUMBY	Remine-from-scratch	same	37
+campaign		SC6B	DUNNHUMBY	Remine-from-scratch-rebuild	near	37
+campaign		SC6B	DUNNHUMBY	Remine-own-UUT	same	34
+campaign		SC6B	DUNNHUMBY	Remine-own-UUT-rebuild	near	33
+campaign		SC6D	DUNNHUMBY	Pre-HUSPM-Joint	method	30
+campaign		SC6D	DUNNHUMBY	Pre-HUSPM-Joint-be1	same	31
+campaign		SC6D	DUNNHUMBY	Pre-HUSPM-Joint-be10	same	29
+campaign		SC6D	DUNNHUMBY	Pre-HUSPM-Joint-be2	same	30
+campaign		SC6D	DUNNHUMBY	Pre-HUSPM-Joint-be20	same	28
+campaign		SC6D	DUNNHUMBY	Pre-HUSPM-Joint-be3	same	29
+campaign		SC6D	DUNNHUMBY	Pre-HUSPM-Joint-fixed-threshold	same	28
+campaign		SC6D	DUNNHUMBY	Pre-HUSPM-Joint-time	same	32
+campaign		SC6D	DUNNHUMBY	Remine-HUSP-SP	same	124
+campaign		SC6D	DUNNHUMBY	Remine-HUSP-ULL	same	55
+campaign		SC6D	DUNNHUMBY	Remine-from-scratch	same	37
+campaign		SC6D	DUNNHUMBY	Remine-from-scratch-rebuild	near	36
+campaign		SC6D	DUNNHUMBY	Remine-own-UUT	same	33
+campaign		SC6D	DUNNHUMBY	Remine-own-UUT-rebuild	near	34
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Pre-HUSPM-Joint	method	216
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Joint-miner+SWUmax	near	234
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Joint-miner+TSU	near	223
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Joint-rule+min-floor	same	255
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Joint-rule+plain-floor	same	248
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Pre-HUSPM-Joint-be1	same	211
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Pre-HUSPM-Joint-be10	same	209
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Pre-HUSPM-Joint-be2	same	218
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Pre-HUSPM-Joint-be20	same	208
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Pre-HUSPM-Joint-be3	same	220
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Pre-HUSPM-Joint-fixed-threshold	same	251
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Pre-HUSPM-Joint-time	same	204
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Pre-HUSPM-Joint-w1	same	214
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Pre-HUSPM-Joint-w10	same	212
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Pre-HUSPM-Joint-w2	same	212
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Pre-HUSPM-Joint-w3	same	200
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Pre-HUSPM-Joint-w5	same	216
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Remine-HUSP-SP	same	1004
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Remine-HUSP-ULL	same	472
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Remine-from-scratch	same	309
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Remine-from-scratch-rebuild	near	299
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Remine-own-UUT	same	288
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Remine-own-UUT-rebuild	near	272
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Pre-HUSPM-Joint	method	219
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Joint-miner+SWUmax	near	237
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Joint-miner+TSU	near	228
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Joint-rule+min-floor	same	241
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Joint-rule+plain-floor	same	252
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Pre-HUSPM-Joint-be1	same	206
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Pre-HUSPM-Joint-be10	same	216
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Pre-HUSPM-Joint-be2	same	205
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Pre-HUSPM-Joint-be20	same	206
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Pre-HUSPM-Joint-be3	same	204
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Pre-HUSPM-Joint-fixed-threshold	same	229
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Pre-HUSPM-Joint-time	same	206
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Pre-HUSPM-Joint-w1	same	202
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Pre-HUSPM-Joint-w10	same	217
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Pre-HUSPM-Joint-w2	same	202
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Pre-HUSPM-Joint-w3	same	199
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Pre-HUSPM-Joint-w5	same	216
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Remine-HUSP-SP	same	998
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Remine-HUSP-ULL	same	469
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Remine-from-scratch	same	301
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Remine-from-scratch-rebuild	near	284
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Remine-own-UUT	same	276
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Remine-own-UUT-rebuild	near	262
+campaign-replicates	s0r3	SC2	DUNNHUMBY	Pre-HUSPM-Joint	method	206
+campaign-replicates	s0r3	SC2	DUNNHUMBY	Joint-miner+SWUmax	near	235
+campaign-replicates	s0r3	SC2	DUNNHUMBY	Joint-miner+TSU	near	241
+campaign-replicates	s0r3	SC2	DUNNHUMBY	Joint-rule+min-floor	same	242
+campaign-replicates	s0r3	SC2	DUNNHUMBY	Joint-rule+plain-floor	same	232
+campaign-replicates	s0r3	SC2	DUNNHUMBY	Pre-HUSPM-Joint-fixed-threshold	same	233
+campaign-replicates	s0r3	SC2	DUNNHUMBY	Pre-HUSPM-Joint-time	same	223
+campaign-replicates	s0r3	SC2	DUNNHUMBY	Pre-HUSPM-Joint-w5	same	203
+campaign-replicates	s0r3	SC2	DUNNHUMBY	Remine-HUSP-SP	same	1016
+campaign-replicates	s0r3	SC2	DUNNHUMBY	Remine-HUSP-ULL	same	473
+campaign-replicates	s0r3	SC2	DUNNHUMBY	Remine-from-scratch	same	303
+campaign-replicates	s0r3	SC2	DUNNHUMBY	Remine-from-scratch-rebuild	near	284
+campaign-replicates	s0r3	SC2	DUNNHUMBY	Remine-own-UUT	same	286
+campaign-replicates	s0r3	SC2	DUNNHUMBY	Remine-own-UUT-rebuild	near	262
+campaign-replicates	s0r4	SC2	DUNNHUMBY	Pre-HUSPM-Joint	method	207
+campaign-replicates	s0r4	SC2	DUNNHUMBY	Joint-miner+SWUmax	near	242
+campaign-replicates	s0r4	SC2	DUNNHUMBY	Joint-miner+TSU	near	241
+campaign-replicates	s0r4	SC2	DUNNHUMBY	Joint-rule+min-floor	same	246
+campaign-replicates	s0r4	SC2	DUNNHUMBY	Joint-rule+plain-floor	same	232
+campaign-replicates	s0r4	SC2	DUNNHUMBY	Pre-HUSPM-Joint-fixed-threshold	same	230
+campaign-replicates	s0r4	SC2	DUNNHUMBY	Pre-HUSPM-Joint-time	same	210
+campaign-replicates	s0r4	SC2	DUNNHUMBY	Pre-HUSPM-Joint-w5	same	216
+campaign-replicates	s0r4	SC2	DUNNHUMBY	Remine-HUSP-SP	same	954
+campaign-replicates	s0r4	SC2	DUNNHUMBY	Remine-HUSP-ULL	same	473
+campaign-replicates	s0r4	SC2	DUNNHUMBY	Remine-from-scratch	same	299
+campaign-replicates	s0r4	SC2	DUNNHUMBY	Remine-from-scratch-rebuild	near	293
+campaign-replicates	s0r4	SC2	DUNNHUMBY	Remine-own-UUT	same	274
+campaign-replicates	s0r4	SC2	DUNNHUMBY	Remine-own-UUT-rebuild	near	261
+campaign-replicates	s1r0	SC6	DUNNHUMBY	Pre-HUSPM-Joint	method	35
+campaign-replicates	s1r0	SC6	DUNNHUMBY	Joint-rule+min-floor	same	37
+campaign-replicates	s1r0	SC6	DUNNHUMBY	Joint-rule+plain-floor	same	37
+campaign-replicates	s1r0	SC6	DUNNHUMBY	Pre-HUSPM-Joint-be1	same	37
+campaign-replicates	s1r0	SC6	DUNNHUMBY	Pre-HUSPM-Joint-be10	same	36
+campaign-replicates	s1r0	SC6	DUNNHUMBY	Pre-HUSPM-Joint-be2	same	35
+campaign-replicates	s1r0	SC6	DUNNHUMBY	Pre-HUSPM-Joint-be20	same	36
+campaign-replicates	s1r0	SC6	DUNNHUMBY	Pre-HUSPM-Joint-be3	same	36
+campaign-replicates	s1r0	SC6	DUNNHUMBY	Pre-HUSPM-Joint-fixed-threshold	same	35
+campaign-replicates	s1r0	SC6	DUNNHUMBY	Pre-HUSPM-Joint-time	same	35
+campaign-replicates	s1r0	SC6	DUNNHUMBY	Remine-HUSP-SP	same	128
+campaign-replicates	s1r0	SC6	DUNNHUMBY	Remine-HUSP-ULL	same	60
+campaign-replicates	s1r0	SC6	DUNNHUMBY	Remine-from-scratch	same	38
+campaign-replicates	s1r0	SC6	DUNNHUMBY	Remine-from-scratch-rebuild	near	38
+campaign-replicates	s1r0	SC6	DUNNHUMBY	Remine-own-UUT	same	36
+campaign-replicates	s1r0	SC6	DUNNHUMBY	Remine-own-UUT-rebuild	near	36
+campaign-replicates	s1r0	SC6B	DUNNHUMBY	Pre-HUSPM-Joint	method	32
+campaign-replicates	s1r0	SC6B	DUNNHUMBY	Pre-HUSPM-Joint-be1	same	34
+campaign-replicates	s1r0	SC6B	DUNNHUMBY	Pre-HUSPM-Joint-be10	same	34
+campaign-replicates	s1r0	SC6B	DUNNHUMBY	Pre-HUSPM-Joint-be2	same	32
+campaign-replicates	s1r0	SC6B	DUNNHUMBY	Pre-HUSPM-Joint-be20	same	32
+campaign-replicates	s1r0	SC6B	DUNNHUMBY	Pre-HUSPM-Joint-be3	same	35
+campaign-replicates	s1r0	SC6B	DUNNHUMBY	Pre-HUSPM-Joint-fixed-threshold	same	35
+campaign-replicates	s1r0	SC6B	DUNNHUMBY	Pre-HUSPM-Joint-time	same	32
+campaign-replicates	s1r0	SC6B	DUNNHUMBY	Remine-HUSP-SP	same	95
+campaign-replicates	s1r0	SC6B	DUNNHUMBY	Remine-HUSP-ULL	same	52
+campaign-replicates	s1r0	SC6B	DUNNHUMBY	Remine-from-scratch	same	35
+campaign-replicates	s1r0	SC6B	DUNNHUMBY	Remine-from-scratch-rebuild	near	35
+campaign-replicates	s1r0	SC6B	DUNNHUMBY	Remine-own-UUT	same	33
+campaign-replicates	s1r0	SC6B	DUNNHUMBY	Remine-own-UUT-rebuild	near	33
+campaign-replicates	s1r0	SC6D	DUNNHUMBY	Pre-HUSPM-Joint	method	32
+campaign-replicates	s1r0	SC6D	DUNNHUMBY	Pre-HUSPM-Joint-be1	same	34
+campaign-replicates	s1r0	SC6D	DUNNHUMBY	Pre-HUSPM-Joint-be10	same	30
+campaign-replicates	s1r0	SC6D	DUNNHUMBY	Pre-HUSPM-Joint-be2	same	33
+campaign-replicates	s1r0	SC6D	DUNNHUMBY	Pre-HUSPM-Joint-be20	same	31
+campaign-replicates	s1r0	SC6D	DUNNHUMBY	Pre-HUSPM-Joint-be3	same	33
+campaign-replicates	s1r0	SC6D	DUNNHUMBY	Pre-HUSPM-Joint-fixed-threshold	same	28
+campaign-replicates	s1r0	SC6D	DUNNHUMBY	Pre-HUSPM-Joint-time	same	31
+campaign-replicates	s1r0	SC6D	DUNNHUMBY	Remine-HUSP-SP	same	117
+campaign-replicates	s1r0	SC6D	DUNNHUMBY	Remine-HUSP-ULL	same	55
+campaign-replicates	s1r0	SC6D	DUNNHUMBY	Remine-from-scratch	same	37
+campaign-replicates	s1r0	SC6D	DUNNHUMBY	Remine-from-scratch-rebuild	near	37
+campaign-replicates	s1r0	SC6D	DUNNHUMBY	Remine-own-UUT	same	33
+campaign-replicates	s1r0	SC6D	DUNNHUMBY	Remine-own-UUT-rebuild	near	35
+campaign-replicates	s2r0	SC6	DUNNHUMBY	Pre-HUSPM-Joint	method	38
+campaign-replicates	s2r0	SC6	DUNNHUMBY	Joint-rule+min-floor	same	35
+campaign-replicates	s2r0	SC6	DUNNHUMBY	Joint-rule+plain-floor	same	35
+campaign-replicates	s2r0	SC6	DUNNHUMBY	Pre-HUSPM-Joint-be1	same	36
+campaign-replicates	s2r0	SC6	DUNNHUMBY	Pre-HUSPM-Joint-be10	same	37
+campaign-replicates	s2r0	SC6	DUNNHUMBY	Pre-HUSPM-Joint-be2	same	35
+campaign-replicates	s2r0	SC6	DUNNHUMBY	Pre-HUSPM-Joint-be20	same	35
+campaign-replicates	s2r0	SC6	DUNNHUMBY	Pre-HUSPM-Joint-be3	same	36
+campaign-replicates	s2r0	SC6	DUNNHUMBY	Pre-HUSPM-Joint-fixed-threshold	same	35
+campaign-replicates	s2r0	SC6	DUNNHUMBY	Pre-HUSPM-Joint-time	same	35
+campaign-replicates	s2r0	SC6	DUNNHUMBY	Remine-HUSP-SP	same	117
+campaign-replicates	s2r0	SC6	DUNNHUMBY	Remine-HUSP-ULL	same	60
+campaign-replicates	s2r0	SC6	DUNNHUMBY	Remine-from-scratch	same	38
+campaign-replicates	s2r0	SC6	DUNNHUMBY	Remine-from-scratch-rebuild	near	38
+campaign-replicates	s2r0	SC6	DUNNHUMBY	Remine-own-UUT	same	36
+campaign-replicates	s2r0	SC6	DUNNHUMBY	Remine-own-UUT-rebuild	near	36
+campaign-replicates	s2r0	SC6B	DUNNHUMBY	Pre-HUSPM-Joint	method	33
+campaign-replicates	s2r0	SC6B	DUNNHUMBY	Pre-HUSPM-Joint-be1	same	34
+campaign-replicates	s2r0	SC6B	DUNNHUMBY	Pre-HUSPM-Joint-be10	same	34
+campaign-replicates	s2r0	SC6B	DUNNHUMBY	Pre-HUSPM-Joint-be2	same	33
+campaign-replicates	s2r0	SC6B	DUNNHUMBY	Pre-HUSPM-Joint-be20	same	33
+campaign-replicates	s2r0	SC6B	DUNNHUMBY	Pre-HUSPM-Joint-be3	same	35
+campaign-replicates	s2r0	SC6B	DUNNHUMBY	Pre-HUSPM-Joint-fixed-threshold	same	35
+campaign-replicates	s2r0	SC6B	DUNNHUMBY	Pre-HUSPM-Joint-time	same	35
+campaign-replicates	s2r0	SC6B	DUNNHUMBY	Remine-HUSP-SP	same	109
+campaign-replicates	s2r0	SC6B	DUNNHUMBY	Remine-HUSP-ULL	same	54
+campaign-replicates	s2r0	SC6B	DUNNHUMBY	Remine-from-scratch	same	36
+campaign-replicates	s2r0	SC6B	DUNNHUMBY	Remine-from-scratch-rebuild	near	35
+campaign-replicates	s2r0	SC6B	DUNNHUMBY	Remine-own-UUT	same	34
+campaign-replicates	s2r0	SC6B	DUNNHUMBY	Remine-own-UUT-rebuild	near	33
+campaign-replicates	s2r0	SC6D	DUNNHUMBY	Pre-HUSPM-Joint	method	30
+campaign-replicates	s2r0	SC6D	DUNNHUMBY	Pre-HUSPM-Joint-be1	same	29
+campaign-replicates	s2r0	SC6D	DUNNHUMBY	Pre-HUSPM-Joint-be10	same	30
+campaign-replicates	s2r0	SC6D	DUNNHUMBY	Pre-HUSPM-Joint-be2	same	28
+campaign-replicates	s2r0	SC6D	DUNNHUMBY	Pre-HUSPM-Joint-be20	same	30
+campaign-replicates	s2r0	SC6D	DUNNHUMBY	Pre-HUSPM-Joint-be3	same	31
+campaign-replicates	s2r0	SC6D	DUNNHUMBY	Pre-HUSPM-Joint-fixed-threshold	same	27
+campaign-replicates	s2r0	SC6D	DUNNHUMBY	Pre-HUSPM-Joint-time	same	30
+campaign-replicates	s2r0	SC6D	DUNNHUMBY	Remine-HUSP-SP	same	117
+campaign-replicates	s2r0	SC6D	DUNNHUMBY	Remine-HUSP-ULL	same	57
+campaign-replicates	s2r0	SC6D	DUNNHUMBY	Remine-from-scratch	same	38
+campaign-replicates	s2r0	SC6D	DUNNHUMBY	Remine-from-scratch-rebuild	near	37
+campaign-replicates	s2r0	SC6D	DUNNHUMBY	Remine-own-UUT	same	33
+campaign-replicates	s2r0	SC6D	DUNNHUMBY	Remine-own-UUT-rebuild	near	33
+campaign-replicates	s3r0	SC6	DUNNHUMBY	Pre-HUSPM-Joint	method	36
+campaign-replicates	s3r0	SC6	DUNNHUMBY	Joint-rule+min-floor	same	35
+campaign-replicates	s3r0	SC6	DUNNHUMBY	Joint-rule+plain-floor	same	38
+campaign-replicates	s3r0	SC6	DUNNHUMBY	Pre-HUSPM-Joint-be1	same	36
+campaign-replicates	s3r0	SC6	DUNNHUMBY	Pre-HUSPM-Joint-be10	same	37
+campaign-replicates	s3r0	SC6	DUNNHUMBY	Pre-HUSPM-Joint-be2	same	36
+campaign-replicates	s3r0	SC6	DUNNHUMBY	Pre-HUSPM-Joint-be20	same	37
+campaign-replicates	s3r0	SC6	DUNNHUMBY	Pre-HUSPM-Joint-be3	same	36
+campaign-replicates	s3r0	SC6	DUNNHUMBY	Pre-HUSPM-Joint-fixed-threshold	same	38
+campaign-replicates	s3r0	SC6	DUNNHUMBY	Pre-HUSPM-Joint-time	same	37
+campaign-replicates	s3r0	SC6	DUNNHUMBY	Remine-HUSP-SP	same	124
+campaign-replicates	s3r0	SC6	DUNNHUMBY	Remine-HUSP-ULL	same	61
+campaign-replicates	s3r0	SC6	DUNNHUMBY	Remine-from-scratch	same	38
+campaign-replicates	s3r0	SC6	DUNNHUMBY	Remine-from-scratch-rebuild	near	38
+campaign-replicates	s3r0	SC6	DUNNHUMBY	Remine-own-UUT	same	35
+campaign-replicates	s3r0	SC6	DUNNHUMBY	Remine-own-UUT-rebuild	near	34
+campaign-replicates	s3r0	SC6B	DUNNHUMBY	Pre-HUSPM-Joint	method	35
+campaign-replicates	s3r0	SC6B	DUNNHUMBY	Pre-HUSPM-Joint-be1	same	35
+campaign-replicates	s3r0	SC6B	DUNNHUMBY	Pre-HUSPM-Joint-be10	same	36
+campaign-replicates	s3r0	SC6B	DUNNHUMBY	Pre-HUSPM-Joint-be2	same	35
+campaign-replicates	s3r0	SC6B	DUNNHUMBY	Pre-HUSPM-Joint-be20	same	36
+campaign-replicates	s3r0	SC6B	DUNNHUMBY	Pre-HUSPM-Joint-be3	same	35
+campaign-replicates	s3r0	SC6B	DUNNHUMBY	Pre-HUSPM-Joint-fixed-threshold	same	35
+campaign-replicates	s3r0	SC6B	DUNNHUMBY	Pre-HUSPM-Joint-time	same	35
+campaign-replicates	s3r0	SC6B	DUNNHUMBY	Remine-HUSP-SP	same	110
+campaign-replicates	s3r0	SC6B	DUNNHUMBY	Remine-HUSP-ULL	same	58
+campaign-replicates	s3r0	SC6B	DUNNHUMBY	Remine-from-scratch	same	40
+campaign-replicates	s3r0	SC6B	DUNNHUMBY	Remine-from-scratch-rebuild	near	39
+campaign-replicates	s3r0	SC6B	DUNNHUMBY	Remine-own-UUT	same	36
+campaign-replicates	s3r0	SC6B	DUNNHUMBY	Remine-own-UUT-rebuild	near	34
+campaign-replicates	s3r0	SC6D	DUNNHUMBY	Pre-HUSPM-Joint	method	27
+campaign-replicates	s3r0	SC6D	DUNNHUMBY	Pre-HUSPM-Joint-be1	same	27
+campaign-replicates	s3r0	SC6D	DUNNHUMBY	Pre-HUSPM-Joint-be10	same	27
+campaign-replicates	s3r0	SC6D	DUNNHUMBY	Pre-HUSPM-Joint-be2	same	28
+campaign-replicates	s3r0	SC6D	DUNNHUMBY	Pre-HUSPM-Joint-be20	same	27
+campaign-replicates	s3r0	SC6D	DUNNHUMBY	Pre-HUSPM-Joint-be3	same	27
+campaign-replicates	s3r0	SC6D	DUNNHUMBY	Pre-HUSPM-Joint-fixed-threshold	same	27
+campaign-replicates	s3r0	SC6D	DUNNHUMBY	Pre-HUSPM-Joint-time	same	27
+campaign-replicates	s3r0	SC6D	DUNNHUMBY	Remine-HUSP-SP	same	108
+campaign-replicates	s3r0	SC6D	DUNNHUMBY	Remine-HUSP-ULL	same	55
+campaign-replicates	s3r0	SC6D	DUNNHUMBY	Remine-from-scratch	same	36
+campaign-replicates	s3r0	SC6D	DUNNHUMBY	Remine-from-scratch-rebuild	near	36
+campaign-replicates	s3r0	SC6D	DUNNHUMBY	Remine-own-UUT	same	32
+campaign-replicates	s3r0	SC6D	DUNNHUMBY	Remine-own-UUT-rebuild	near	34
+campaign-replicates	s4r0	SC6	DUNNHUMBY	Pre-HUSPM-Joint	method	36
+campaign-replicates	s4r0	SC6	DUNNHUMBY	Joint-rule+min-floor	same	38
+campaign-replicates	s4r0	SC6	DUNNHUMBY	Joint-rule+plain-floor	same	37
+campaign-replicates	s4r0	SC6	DUNNHUMBY	Pre-HUSPM-Joint-be1	same	36
+campaign-replicates	s4r0	SC6	DUNNHUMBY	Pre-HUSPM-Joint-be10	same	38
+campaign-replicates	s4r0	SC6	DUNNHUMBY	Pre-HUSPM-Joint-be2	same	38
+campaign-replicates	s4r0	SC6	DUNNHUMBY	Pre-HUSPM-Joint-be20	same	36
+campaign-replicates	s4r0	SC6	DUNNHUMBY	Pre-HUSPM-Joint-be3	same	38
+campaign-replicates	s4r0	SC6	DUNNHUMBY	Pre-HUSPM-Joint-fixed-threshold	same	37
+campaign-replicates	s4r0	SC6	DUNNHUMBY	Pre-HUSPM-Joint-time	same	35
+campaign-replicates	s4r0	SC6	DUNNHUMBY	Remine-HUSP-SP	same	124
+campaign-replicates	s4r0	SC6	DUNNHUMBY	Remine-HUSP-ULL	same	57
+campaign-replicates	s4r0	SC6	DUNNHUMBY	Remine-from-scratch	same	39
+campaign-replicates	s4r0	SC6	DUNNHUMBY	Remine-from-scratch-rebuild	near	40
+campaign-replicates	s4r0	SC6	DUNNHUMBY	Remine-own-UUT	same	36
+campaign-replicates	s4r0	SC6	DUNNHUMBY	Remine-own-UUT-rebuild	near	34
+campaign-replicates	s4r0	SC6B	DUNNHUMBY	Pre-HUSPM-Joint	method	34
+campaign-replicates	s4r0	SC6B	DUNNHUMBY	Pre-HUSPM-Joint-be1	same	33
+campaign-replicates	s4r0	SC6B	DUNNHUMBY	Pre-HUSPM-Joint-be10	same	33
+campaign-replicates	s4r0	SC6B	DUNNHUMBY	Pre-HUSPM-Joint-be2	same	34
+campaign-replicates	s4r0	SC6B	DUNNHUMBY	Pre-HUSPM-Joint-be20	same	34
+campaign-replicates	s4r0	SC6B	DUNNHUMBY	Pre-HUSPM-Joint-be3	same	35
+campaign-replicates	s4r0	SC6B	DUNNHUMBY	Pre-HUSPM-Joint-fixed-threshold	same	34
+campaign-replicates	s4r0	SC6B	DUNNHUMBY	Pre-HUSPM-Joint-time	same	33
+campaign-replicates	s4r0	SC6B	DUNNHUMBY	Remine-HUSP-SP	same	104
+campaign-replicates	s4r0	SC6B	DUNNHUMBY	Remine-HUSP-ULL	same	54
+campaign-replicates	s4r0	SC6B	DUNNHUMBY	Remine-from-scratch	same	36
+campaign-replicates	s4r0	SC6B	DUNNHUMBY	Remine-from-scratch-rebuild	near	35
+campaign-replicates	s4r0	SC6B	DUNNHUMBY	Remine-own-UUT	same	34
+campaign-replicates	s4r0	SC6B	DUNNHUMBY	Remine-own-UUT-rebuild	near	34
+campaign-replicates	s4r0	SC6D	DUNNHUMBY	Pre-HUSPM-Joint	method	27
+campaign-replicates	s4r0	SC6D	DUNNHUMBY	Pre-HUSPM-Joint-be1	same	32
+campaign-replicates	s4r0	SC6D	DUNNHUMBY	Pre-HUSPM-Joint-be10	same	28
+campaign-replicates	s4r0	SC6D	DUNNHUMBY	Pre-HUSPM-Joint-be2	same	28
+campaign-replicates	s4r0	SC6D	DUNNHUMBY	Pre-HUSPM-Joint-be20	same	27
+campaign-replicates	s4r0	SC6D	DUNNHUMBY	Pre-HUSPM-Joint-be3	same	31
+campaign-replicates	s4r0	SC6D	DUNNHUMBY	Pre-HUSPM-Joint-fixed-threshold	same	27
+campaign-replicates	s4r0	SC6D	DUNNHUMBY	Pre-HUSPM-Joint-time	same	28
+campaign-replicates	s4r0	SC6D	DUNNHUMBY	Remine-HUSP-SP	same	126
+campaign-replicates	s4r0	SC6D	DUNNHUMBY	Remine-HUSP-ULL	same	55
+campaign-replicates	s4r0	SC6D	DUNNHUMBY	Remine-from-scratch	same	37
+campaign-replicates	s4r0	SC6D	DUNNHUMBY	Remine-from-scratch-rebuild	near	36
+campaign-replicates	s4r0	SC6D	DUNNHUMBY	Remine-own-UUT	same	35
+campaign-replicates	s4r0	SC6D	DUNNHUMBY	Remine-own-UUT-rebuild	near	33

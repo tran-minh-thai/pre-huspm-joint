@@ -1,0 +1,16 @@
+{
+  "command": "~/.venvs/pre-huspm-adaptive/bin/python analysis/session_cells.py --db DUNNHUMBY --drift 1.664 --plan-out results-invariant/session-plan/2026-11-10/plan.tsv",
+  "path_substitutions": 1,
+  "build_dir": "build",
+  "git_commit": "77307ed7ff4c78cd791a69c7960d668acf87a06b",
+  "tree": "clean",
+  "source_sha256": "16349bc6c082034e60771378b3314e3a338e1304990f989b348699a08b4809cd",
+  "source_files": 46,
+  "java": "openjdk version \"25.0.4.1\" 2026-08-18 LTS",
+  "os": "Darwin 27.2.0 (macOS-27.2-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-11-10T11:04:17",
+  "end": "2026-11-10T11:04:18",
+  "exit_code": 0
+}
