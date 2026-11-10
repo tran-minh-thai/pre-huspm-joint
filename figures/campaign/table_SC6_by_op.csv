@@ -2,9 +2,9 @@ dataset,kind,operations,rescans,proposal_s,remine_s,remine_over_proposal
 C8T1S5I8N5K,insertion,70,70,4.504,8.001,1.776
 C8T1S5I8N5K,deletion,15,15,0.912,1.567,1.718
 C8T1S5I8N5K,modification,15,15,1.135,1.634,1.44
-DUNNHUMBY,insertion,70,70,63.322,73.275,1.157
-DUNNHUMBY,deletion,15,15,12.827,15.473,1.206
-DUNNHUMBY,modification,15,15,14.348,15.552,1.084
+DUNNHUMBY,insertion,70,70,58.981,70.431,1.194
+DUNNHUMBY,deletion,15,15,11.901,14.858,1.248
+DUNNHUMBY,modification,15,15,13.364,15.018,1.124
 LEVIATHAN,insertion,70,70,12.424,17.501,1.409
 LEVIATHAN,deletion,15,15,2.639,3.695,1.4
 LEVIATHAN,modification,15,15,2.651,3.669,1.384

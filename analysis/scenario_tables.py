@@ -2478,7 +2478,7 @@ def comparison_classes(put, out):
             f"of {len(g)}", src)
         for c_, word in (("tie", "ties"), ("win", "wins"), ("loss", "losses")):
             h = g[g["cls"] == c_]
-            if len(h) and len(h) <= 12:
+            if len(h):
                 put(f"classes_{fam}_{word}", "; ".join(f"{x.group} {x.ratio:.3f}" for x in h.itertuples()), src)
             if len(h) and c_ != "tie":
                 # the ratio (second arm over first) and its inverse (first over second) over these groups

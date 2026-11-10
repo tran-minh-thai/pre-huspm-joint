@@ -1,6 +1,6 @@
 dataset,seeds,counts_agree_all,seeds_with_ratio,ratio_mean,ratio_std,ratio_min,ratio_max
 C8T1S5I8N5K,5,True,5,0.584,0.023,0.546,0.605
-DUNNHUMBY,5,True,5,0.87,0.065,0.797,0.973
+DUNNHUMBY,5,True,5,0.841,0.053,0.785,0.918
 LEVIATHAN,5,True,5,0.714,0.029,0.664,0.742
 SIGN,5,True,5,0.523,0.012,0.502,0.53
 TAFENG,5,True,5,0.524,0.022,0.504,0.562

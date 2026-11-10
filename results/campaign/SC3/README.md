@@ -35,8 +35,8 @@ Geometric mean of the baseline's runtime over the proposal's, on the cells where
 
 | baseline | SC3, whole database | cells | SC1, `D_init` | cells |
 |---|---:|---:|---:|---:|
-| USpan | 17.02 | 12 | 21.13 | 35 |
-| IncUSP-Miner+ | 14.31 | 12 | 14.43 | 35 |
-| Pre-HUSPM | 3.77 | 12 | 4.61 | 35 |
+| USpan | 17.02 | 12 | 21.15 | 35 |
+| IncUSP-Miner+ | 14.31 | 12 | 14.45 | 35 |
+| Pre-HUSPM | 3.77 | 12 | 4.62 | 35 |
 | HUSP-SP | 0.89 | 12 | 1.20 | 36 |
-| HUSP-ULL | 0.86 | 12 | 0.98 | 36 |
+| HUSP-ULL | 0.86 | 12 | 0.99 | 36 |

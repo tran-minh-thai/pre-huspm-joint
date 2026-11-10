@@ -6,7 +6,7 @@ Eight databases, six algorithms (USpan, HUSP-ULL, HUSP-SP, IncUSP-Miner+, Pre-HU
 
 For 36 of the 36 (database, threshold) pairs, every algorithm that completed reports the same HUSP count. Counts alone do not prove the sets equal; `verify.BaselineAgreement` compares the sets (`results/calibration/agreement.log`).
 
-The proposal is the fastest in 9 of 36 cells on the mean of the runs; every run of it beats every run of the fastest baseline in 7, and in 7 its runs overlap those of the fastest baseline (BMS1 at 0.015293 (HUSP-ULL); BMS1 at 0.016218 (HUSP-ULL); C8T1S5I8N5K at 0.001132 (HUSP-ULL); LEVIATHAN at 0.014644 (HUSP-SP); LEVIATHAN at 0.01553 (HUSP-ULL); LEVIATHAN at 0.01647 (HUSP-ULL); TAFENG at 0.002812 (HUSP-ULL)). The fastest baseline's runtime over the proposal's, per cell: median 0.90, largest 2.02, smallest 0.38; above one, the proposal is faster.
+The proposal is the fastest in 9 of 36 cells on the mean of the runs; every run of it beats every run of the fastest baseline in 7, and in 7 its runs overlap those of the fastest baseline (BMS1 at 0.015293 (HUSP-ULL); BMS1 at 0.016218 (HUSP-ULL); C8T1S5I8N5K at 0.001132 (HUSP-ULL); LEVIATHAN at 0.014644 (HUSP-SP); LEVIATHAN at 0.01553 (HUSP-ULL); LEVIATHAN at 0.01647 (HUSP-ULL); TAFENG at 0.002812 (HUSP-ULL)). The fastest baseline's runtime over the proposal's, per cell: median 0.90, largest 2.01, smallest 0.38; above one, the proposal is faster.
 
 Runs that did not complete:
 
@@ -30,7 +30,7 @@ Seconds; the fastest in bold.
 | KOSARAK | 0.025 | 10 | 34.7 | 0.58 | **0.36** | 8.12 | 0.95 | 0.39 |
 | C8T1S5I8N5K | 0.001132 | 5067 | 1.20 | **0.10** | 0.11 | 2.58 | 0.71 | 0.19 |
 | TAFENG | 0.003557 | 6 | 0.39 | 0.15 | 0.24 | 0.58 | **0.12** | 0.16 |
-| DUNNHUMBY | 0.001464 | 17 | 205 | 2.00 | 5.82 | 220 | 805 | **1.11** |
+| DUNNHUMBY | 0.001464 | 17 | 205 | 1.99 | 5.82 | 220 | 805 | **1.10** |
 
 ## Against each baseline, all cells
 
@@ -38,11 +38,11 @@ Geometric mean of the baseline's runtime over the proposal's, on the cells where
 
 | baseline | baseline / proposal | cells |
 |---|---:|---:|
-| USpan | 21.13 | 35 |
-| IncUSP-Miner+ | 14.43 | 35 |
-| Pre-HUSPM | 4.61 | 35 |
+| USpan | 21.15 | 35 |
+| IncUSP-Miner+ | 14.45 | 35 |
+| Pre-HUSPM | 4.62 | 35 |
 | HUSP-SP | 1.20 | 36 |
-| HUSP-ULL | 0.98 | 36 |
+| HUSP-ULL | 0.99 | 36 |
 
 `peak_heap_mb` in these rows is used heap, garbage included, and is not the memory result; the
 live set is in `results/campaign-mem-sampled/SC1`.

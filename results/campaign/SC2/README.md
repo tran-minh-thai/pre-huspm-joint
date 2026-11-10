@@ -28,7 +28,7 @@ partial run is in parentheses: it is not comparable with a total over the whole 
 fastest of the arms in this table that completed the whole stream is in bold. Each cell is the
 mean of the arm's runs (`make_figures.load_mean`); the spread of the runs is in the next table.
 Remine-HUSP-ULL, Remine-HUSP-SP and Remine-own-UUT (remining with the proposal's own miner at
-UUT) are not columns here: with them the proposal is the fastest on 7 of 8 (not on DUNNHUMBY) streams
+UUT) are not columns here: with them the proposal is the fastest on 8 of 8 streams
 (`SC2_proposal_fastest` in `figures/campaign/paper_numbers.csv`, from `table_SC2_totals.csv`).
 
 | database | Pre-HUSPM-Joint | rescans | Pre-HUSPM-SWUmax | Pre-HUSPM-TSU | Remine | IncUSP-Miner+ |
@@ -40,7 +40,7 @@ UUT) are not columns here: with them the proposal is the fastest on 7 of 8 (not 
 | KOSARAK | **278** | 100 | 728 | 725 | 659 | 1,589 |
 | C8T1S5I8N5K | **6.1** | 100 | 51.4 | 62.9 | 12.6 | 18.4 |
 | TAFENG | **6.2** | 55 | 7.4 | 13.1 | 15.2 | 15.6 |
-| DUNNHUMBY | **134** | 100 | 5,636 | 5,596 | 159 | 576 |
+| DUNNHUMBY | **125** | 100 | 5,636 | 5,596 | 157 | 576 |
 
 ### Every run
 
@@ -64,8 +64,8 @@ deviation.
 | C8T1S5I8N5K | Remine | 5 | 12.61 ± 0.11 | 12.46 | 12.74 |
 | TAFENG | Pre-HUSPM-Joint | 5 | 6.18 ± 0.05 | 6.11 | 6.25 |
 | TAFENG | Remine | 5 | 15.17 ± 0.04 | 15.12 | 15.20 |
-| DUNNHUMBY | Pre-HUSPM-Joint | 5 | 134.03 ± 5.69 | 128.06 | 140.26 |
-| DUNNHUMBY | Remine | 5 | 159.38 ± 7.33 | 151.35 | 165.52 |
+| DUNNHUMBY | Pre-HUSPM-Joint | 5 | 125.01 ± 5.13 | 121.75 | 134.08 |
+| DUNNHUMBY | Remine | 5 | 157.33 ± 6.59 | 150.88 | 165.62 |
 
 ## The operating region
 
@@ -135,7 +135,7 @@ Pre-HUSPM-SWUmax on 8 of 8 databases where both completed.
 of 100 increments and still finish faster than remining.
 
 **Beyond it**: LEVIATHAN, 2 of 100 within budget, KOSARAK, 0 of 100 within budget, DUNNHUMBY, 0 of 100 within budget.
-Maintenance degenerates into remining: LEVIATHAN 26.6 s against remining's 36.6 s (-27.4 %); KOSARAK 278 s against remining's 659 s (-57.8 %); DUNNHUMBY 134 s against remining's 159 s (-15.9 %),
+Maintenance degenerates into remining: LEVIATHAN 26.6 s against remining's 36.6 s (-27.4 %); KOSARAK 278 s against remining's 659 s (-57.8 %); DUNNHUMBY 125 s against remining's 157 s (-20.5 %),
 one run each. Two runs of one SC1 configuration on the same JDK differ by a factor between
 0.70 and 1.14 (78 configurations of at least one second), so differences
 of a few percent between single runs are not resolved here.

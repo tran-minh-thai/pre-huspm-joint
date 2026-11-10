@@ -19,7 +19,7 @@ replay the same plan at a seed, so the ratio is paired by seed.
 | database | seeds | ratio, mean ± sd | min | max |
 |---|---:|---:|---:|---:|
 | C8T1S5I8N5K | 5 | 0.584 ± 0.023 | 0.546 | 0.605 |
-| DUNNHUMBY | 5 | 0.870 ± 0.065 | 0.797 | 0.973 |
+| DUNNHUMBY | 5 | 0.841 ± 0.053 | 0.785 | 0.918 |
 | LEVIATHAN | 5 | 0.714 ± 0.029 | 0.664 | 0.742 |
 | SIGN | 5 | 0.523 ± 0.012 | 0.502 | 0.530 |
 | TAFENG | 5 | 0.524 ± 0.022 | 0.504 | 0.562 |
@@ -31,9 +31,9 @@ replay the same plan at a seed, so the ratio is paired by seed.
 | C8T1S5I8N5K | insertion | 70 / 70 | 4.50 s | 8.00 s | 1.8 |
 | C8T1S5I8N5K | deletion | 15 / 15 | 0.91 s | 1.57 s | 1.7 |
 | C8T1S5I8N5K | modification | 15 / 15 | 1.14 s | 1.63 s | 1.4 |
-| DUNNHUMBY | insertion | 70 / 70 | 63.32 s | 73.27 s | 1.2 |
-| DUNNHUMBY | deletion | 15 / 15 | 12.83 s | 15.47 s | 1.2 |
-| DUNNHUMBY | modification | 15 / 15 | 14.35 s | 15.55 s | 1.1 |
+| DUNNHUMBY | insertion | 70 / 70 | 58.98 s | 70.43 s | 1.2 |
+| DUNNHUMBY | deletion | 15 / 15 | 11.90 s | 14.86 s | 1.2 |
+| DUNNHUMBY | modification | 15 / 15 | 13.36 s | 15.02 s | 1.1 |
 | LEVIATHAN | insertion | 70 / 70 | 12.42 s | 17.50 s | 1.4 |
 | LEVIATHAN | deletion | 15 / 15 | 2.64 s | 3.70 s | 1.4 |
 | LEVIATHAN | modification | 15 / 15 | 2.65 s | 3.67 s | 1.4 |
