@@ -98,5 +98,55 @@ with tempfile.TemporaryDirectory() as t:
     x = pd.read_csv(t / "o_unf/table_long_streams.csv"); x = x[x.dataset == "DUNNHUMBY"].set_index("arm")
     check("main run unfinished, replicates finished: 3 seeds, 2 runs", r.returncode == 0 and x.loc[ARMS[0], "seeds"] == 3
           and x.loc[ARMS[0], "runs"] == 2, f"seeds {x.loc[ARMS[0], 'seeds']}, runs {x.loc[ARMS[0], 'runs']}")
+    # --- the method over an arm, inside the runs measured in one session -------------------------
+    def arm_dir(data, n, arm):
+        return data / (f"campaign-replicates/s0r{n}/SC9/DUNNHUMBY/{arm}" if n else f"campaign/SC9/DUNNHUMBY/{arm}")
+    def stamp(data, n, arm, when):
+        (arm_dir(data, n, arm) / "DONE").write_text(f"host=X finished={when} seconds=1 rc=0 rows=1503\n")
+    def scale(data, n, arm, f):
+        q = arm_dir(data, n, arm) / "SC9_long.csv"; x = pd.read_csv(q, low_memory=False)
+        x["runtime_ms"] = (x["runtime_ms"] * f).round().astype(int)
+        if "runtime_us" in x: x["runtime_us"] = (x["runtime_us"] * f).round()
+        x.to_csv(q, index=False)
+    def sessions(times, slow=None):
+        """times: per run (main first) the finish time of the method and of the arm; slow: (run, factor) on the arm."""
+        def m(data):
+            for n, (tm, ta) in enumerate(times):
+                stamp(data, n, ARMS[0], tm); stamp(data, n, ARMS[1], ta)
+            if slow: scale(data, slow[0], ARMS[1], slow[1])
+        return m
+    def row(out):
+        x = pd.read_csv(out / "table_long_streams.csv"); return x[x.dataset == "DUNNHUMBY"].set_index("arm").loc[ARMS[1]]
+    base_ratio = a.loc[ARMS[1], "method_over_arm_pooled"]
+    one = [("2026-01-01 10:00:00", "2026-01-01 11:00:00"), ("2026-01-02 10:00:00", "2026-01-02 11:00:00")]
+    # run 2: the arm measured three days after the method and twice as slow; it must take no part
+    apart = one + [("2026-01-03 10:00:00", "2026-01-06 10:00:00")]
+    r = run(build(t / "pair", [1.0, 1.0], sessions(apart, slow=(2, 2.0))), t / "o_pair"); x = row(t / "o_pair")
+    check("run measured in another session left out of the ratio",
+          r.returncode == 0 and x["ratio_basis"] == "paired" and x["paired_runs"] == 2 and x["paired_run_names"] == "s0r0 s0r1"
+          and abs(x["method_over_arm_pooled"] / base_ratio - 1) < 2e-3,
+          f"basis {x['ratio_basis']}, runs {x.get('paired_runs')}, ratio/base {x['method_over_arm_pooled'] / base_ratio:.4f}")
+    # the same rows without finish times: the ratio of the mean times, which the slow run does move
+    r = run(build(t / "nopair", [1.0, 1.0], lambda d: scale(d, 2, ARMS[1], 2.0)), t / "o_nopair"); y = row(t / "o_nopair")
+    check("without finish times the slow run moves the ratio (the check above is not vacuous)",
+          r.returncode == 0 and y["ratio_basis"] == "pooled" and abs(y["method_over_arm_pooled"] / base_ratio - 0.75) < 2e-3,
+          f"basis {y['ratio_basis']}, ratio/base {y['method_over_arm_pooled'] / base_ratio:.4f}")
+    # three runs in one session each, the arm 1.25 times slower in run 1: geometric mean, range, count
+    three = one + [("2026-01-03 10:00:00", "2026-01-03 12:30:00")]
+    r = run(build(t / "pair3", [1.0, 1.0], sessions(three, slow=(1, 1.25))), t / "o_pair3"); z = row(t / "o_pair3")
+    want = base_ratio * (1 / 1.25) ** (1 / 3)
+    check("three paired runs: geometric mean, smallest and largest",
+          r.returncode == 0 and z["paired_runs"] == 3 and abs(z["method_over_arm_pooled"] / want - 1) < 2e-3
+          and abs(z["paired_min"] / (base_ratio / 1.25) - 1) < 2e-3 and abs(z["paired_max"] / base_ratio - 1) < 2e-3,
+          f"runs {z['paired_runs']}, ratio/want {z['method_over_arm_pooled'] / want:.4f}")
+    k = pd.read_csv(t / "o_pair3/paper_numbers_long.csv").set_index("key")["value"]
+    check("keys _basis, _paired_range, _paired_runs written",
+          k.get("LONG_SC9_DUNNHUMBY_FixedFloor_method_over_arm_basis") == "paired"
+          and "LONG_SC9_DUNNHUMBY_FixedFloor_method_over_arm_paired_range" in k
+          and str(k.get("LONG_SC9_DUNNHUMBY_FixedFloor_method_over_arm_paired_runs")) == "3")
+    # twelve hours apart is neither one session nor two
+    r = run(build(t / "undecided", [1.0, 1.0], sessions(one + [("2026-01-03 10:00:00", "2026-01-03 22:00:00")])), t / "o_und")
+    check("a gap of twelve hours stops the script", r.returncode != 0 and "undecided" in (r.stdout + r.stderr),
+          (r.stdout + r.stderr).strip().splitlines()[-1] if (r.stdout + r.stderr).strip() else "no output")
 print(f"failed: {fails}")
 sys.exit(1 if fails else 0)

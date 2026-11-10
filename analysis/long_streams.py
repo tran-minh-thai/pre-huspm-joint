@@ -15,13 +15,24 @@ Replicates: with the default root, the trees results/campaign-replicates/s0r<n>/
 pre-large set) must equal the main run's on every row, or the script stops. A run of an (arm, seed)
 is used when every one of its rows finished; the time of an operation is then the mean over the
 used runs, the counters are the main run's, and `runs` gives the number of runs averaged. With one
-run per (arm, seed) the tables are those of a single run. Writes:
+run per (arm, seed) the tables are those of a single run.
+
+The method over an arm: two arms of a run were measured in one session when their DONE files were
+written at most SESSION_HOURS apart (the arms of one campaign step run back to back). Where a
+(database, arm) has such runs, the ratio is taken inside each of them (the method's stream time
+over the arm's, summed over the seeds both finished) and `method_over_arm_pooled` is the geometric
+mean of those ratios, with their smallest and largest, the number of runs and in how many the
+method was the faster; `ratio_basis` is then `paired`. Runs measured in different sessions take no
+part in it: on a database whose times move between sessions, a ratio across sessions measures the
+sessions. Without such a run the ratio is that of the mean times, as before (`ratio_basis` is
+`pooled`). A gap between SESSION_HOURS and OTHER_SESSION_HOURS is neither and stops the script. Writes:
 
     table_long_streams.csv   one row per (scenario, database, arm): seeds, operations per seed,
                              time of the stream (operations after the initial mine, summed) per
                              seed as mean, minimum and maximum, the pooled time of the method over
                              the arm's (sum over the seeds of the method's stream time divided by
-                             the same sum for the arm, on the seeds both finished), the runs averaged
+                             the same sum for the arm, on the seeds both finished; paired or pooled
+                             over the runs as described above), the runs averaged
                              per seed and, when there is more than one, the stream time summed
                              over the seeds in each run (smallest and largest run), per-operation
                              latency over all operations of all seeds (median, 95th and 99th
@@ -43,6 +54,7 @@ rescans_at_uut are cumulative within a stream; an operation rescanned when resca
 import argparse
 import glob
 import os
+import re
 import sys
 
 import numpy as np
@@ -62,8 +74,21 @@ TAG = {METHOD: "Method", FIXED: "FixedFloor", METHOD + "-w5": "Window5", "Remine
 KINDS = {"INS": "insertion", "DEL": "deletion", "MOD": "modification"}
 INDEX_STEP = 50
 REPLICATE_RUN = "s0r"          # replicates of the long streams: seed index 0, repeat n
+SESSION_HOURS = 6.0            # DONE files at most this far apart: the two arms ran in one session
+OTHER_SESSION_HOURS = 24.0     # at least this far apart: different sessions; in between, undecided
+FINISHED = re.compile(r"finished=(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})")
 COUNTERS = ["rescan_count", "rescans_at_uut", "total_patterns_found", "explored_nodes", "prelarge_count"]
 KEY = ["algorithm", "dataset", "seed", "iteration"]
+
+
+def finished_at(arm_dir):
+    """When the arm's DONE file says the run finished, or NaT without a DONE file or a time in it."""
+    try:
+        with open(os.path.join(arm_dir, "DONE"), encoding="utf-8") as fh:
+            m = FINISHED.search(fh.read())
+    except OSError:
+        return pd.NaT
+    return pd.Timestamp(m.group(1)) if m else pd.NaT
 
 
 def load(root, sc, need_done=True, replicate_roots=()):
@@ -75,7 +100,7 @@ def load(root, sc, need_done=True, replicate_roots=()):
             if need_done and not os.path.exists(os.path.join(os.path.dirname(p), "DONE")):
                 print(f"[{sc}] left out, no DONE: {os.path.relpath(p, base)} ({tag})")
                 continue
-            frames.append(pd.read_csv(p).assign(replicate=tag))
+            frames.append(pd.read_csv(p).assign(replicate=tag, finished=finished_at(os.path.dirname(p))))
     if not frames:
         return None
     df = pd.concat(frames, ignore_index=True)
@@ -129,6 +154,39 @@ def mean_over_runs(sc, df):
     return out.reset_index(), streams
 
 
+def paired_ratios(sc, df):
+    """Per (database, arm other than the method): for every run in which the method and the arm were
+    measured in one session, (run, the method's stream time over the arm's on the seeds both
+    finished, hours between their DONE files). Runs without a finish time take no part."""
+    if "finished" not in df or df["finished"].isna().all():
+        return {}
+    ops = df[df["kind"] != "INIT"]
+    run = ["replicate", "dataset", "algorithm", "seed"]
+    ok = ops[ops.groupby(run)["status"].transform(lambda s: bool((s == "OK").all())).astype(bool)]
+    t = ok.groupby(run)["runtime_ms"].sum() / 1000.0
+    fin = df.groupby(["replicate", "dataset", "algorithm"])["finished"].first()
+    out = {}
+    for (tag, d), g in t.groupby(level=["replicate", "dataset"]):
+        g = g.droplevel(["replicate", "dataset"])
+        arms = set(g.index.get_level_values("algorithm"))
+        if METHOD not in arms or pd.isna(fin.get((tag, d, METHOD), pd.NaT)):
+            continue
+        m = g.loc[METHOD]
+        for arm in sorted(arms - {METHOD}):
+            a = g.loc[arm]
+            common = m.index.intersection(a.index)
+            fa = fin.get((tag, d, arm), pd.NaT)
+            if not len(common) or pd.isna(fa) or a[common].sum() <= 0:
+                continue
+            gap = abs((fin[(tag, d, METHOD)] - fa).total_seconds()) / 3600.0
+            if SESSION_HOURS < gap < OTHER_SESSION_HOURS:
+                sys.exit(f"[{sc}] {tag}: {METHOD} and {arm} on {d} finished {gap:.1f} h apart, between "
+                         f"{SESSION_HOURS:g} h (one session) and {OTHER_SESSION_HOURS:g} h (two): undecided")
+            if gap <= SESSION_HOURS:
+                out.setdefault((d, arm), []).append((tag, float(m[common].sum() / a[common].sum()), gap))
+    return out
+
+
 def latency_ms(x):
     """Per-operation times in ms, from the microsecond column when every row has it."""
     if "runtime_us" in x and x["runtime_us"].notna().all():
@@ -136,8 +194,9 @@ def latency_ms(x):
     return x["runtime_ms"].to_numpy(float)
 
 
-def stream_rows(sc, df, runs_of=None):
-    """runs_of: per (arm, database, seed), the stream time of each run averaged (mean_over_runs)."""
+def stream_rows(sc, df, runs_of=None, paired=None):
+    """runs_of: per (arm, database, seed), the stream time of each run averaged (mean_over_runs).
+    paired: per (database, arm), the same-session ratios of paired_ratios."""
     rows = []
     for d in [x for x in mf.ALL_DATASETS if x in set(df["dataset"])]:
         g = df[df["dataset"] == d]
@@ -189,6 +248,14 @@ def stream_rows(sc, df, runs_of=None):
             r["pooled_seeds"] = len(common)
             den = sum(o[s] for s in common)
             r["method_over_arm_pooled"] = sum(m[s] for s in common) / den if common and den > 0 else np.nan
+            r["ratio_basis"] = "pooled"
+            p = (paired or {}).get((d, r["arm"]))
+            if p:
+                q = np.array([x[1] for x in p])
+                r.update(method_over_arm_pooled=float(np.exp(np.log(q).mean())), ratio_basis="paired",
+                         paired_runs=len(q), paired_min=float(q.min()), paired_max=float(q.max()),
+                         paired_method_faster=int((q < 1).sum()), paired_gap_h_max=max(x[2] for x in p),
+                         paired_run_names=" ".join(x[0] for x in p))
     return rows
 
 
@@ -243,7 +310,7 @@ def main(argv=None):
         mroot = os.path.join(args.mem_root, sc)
         if os.path.isdir(mroot):
             mem = load(mroot, sc, need_done=not args.no_done)
-        streams += stream_rows(sc, df, runs_of)
+        streams += stream_rows(sc, df, runs_of, paired_ratios(sc, raw))
         index += index_rows(sc, df, mem)
     os.makedirs(args.out, exist_ok=True)
     st, ix = pd.DataFrame(streams), pd.DataFrame(index)
@@ -263,6 +330,12 @@ def main(argv=None):
                 put(f"{b}_latency_ms_{q}", f"{r[f'latency_ms_{q}']:.3f}", src)
         if r["arm"] != METHOD and pd.notna(r.get("method_over_arm_pooled")):
             put(f"{b}_method_over_arm_pooled", f"{r['method_over_arm_pooled']:.3f}", src)
+            put(f"{b}_method_over_arm_basis", r["ratio_basis"], src)
+            if r["ratio_basis"] == "paired":
+                put(f"{b}_method_over_arm_paired_range", f"{r['paired_min']:.3f} to {r['paired_max']:.3f}", src)
+                put(f"{b}_method_over_arm_paired_runs", int(r["paired_runs"]), src)
+                put(f"{b}_method_over_arm_paired_method_faster",
+                    f"{int(r['paired_method_faster'])} of {int(r['paired_runs'])}", src)
         for name in KINDS.values():
             put(f"{b}_{name}_s_per_seed", f"{r[f'{name}_s_per_seed']:.2f}", src)
             if r["arm"] in INCREMENTAL:

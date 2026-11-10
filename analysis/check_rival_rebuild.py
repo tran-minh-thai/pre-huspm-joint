@@ -13,13 +13,19 @@ tree results/campaign* (timing, memory, replicates), pairs each finished arm dir
 rebuild directory in the same parent, joins the rows on (database, operation, iteration, seed,
 repeat, repetition) and compares the counters exactly.
 
+A rebuild arm measured without the superseded arm beside it (a replicate that times the rival
+alone) is compared, in a replicate tree of seed index 0 (s0r<n>), with the superseded arm of the
+main tree, the same stream, on the same key without `repeat`. In any other tree it is counted as
+not compared and named; it is not a failure, since the rival is read from the rebuild arm.
+
 Prints, per tree, the pairs compared and the rows compared, then every mismatch. Exit 0 when every
-pair agrees on every row, 1 on a mismatch, a row in one arm only, or an arm without its rebuild
-partner (that rival would vanish from a table), 2 when nothing could be compared.
+pair agrees on every row, 1 on a mismatch, a row in one arm only, or a superseded arm without its
+rebuild partner (that rival would vanish from a table), 2 when nothing could be compared.
 """
 import argparse
 import collections
 import pathlib
+import re
 import shutil
 import sys
 import tempfile
@@ -44,12 +50,12 @@ def read_arm(d):
     return x
 
 
-def compare(old_dir, new_dir):
-    """(rows compared, list of problems) for one pair of arm directories."""
+def compare(old_dir, new_dir, skip=()):
+    """(rows compared, list of problems) for one pair of arm directories; skip: key columns left out."""
     a, b = read_arm(old_dir), read_arm(new_dir)
     if a is None or b is None:
         return 0, [f"no csv in {(old_dir if a is None else new_dir).as_posix()}"]
-    key = [k for k in KEY if k in a.columns and k in b.columns]
+    key = [k for k in KEY if k in a.columns and k in b.columns and k not in skip]
     work = [c for c in WORK if c in a.columns and c in b.columns]
     for name, x in (("old", a), ("rebuild", b)):
         dup = x.duplicated(key, keep=False)
@@ -84,7 +90,7 @@ def trees(results):
 
 def check(results):
     pairs = rows = 0
-    failures = []
+    failures, alone = [], []
     per_tree = collections.Counter()
     for tree in trees(results):
         for old, new in PAIRS.items():
@@ -102,11 +108,24 @@ def check(results):
                 per_tree[tree.relative_to(results).as_posix()] += 1
                 failures += [f"{where}: {p}" for p in problems]
             for n in sorted(tree.glob(f"*/*/{new}")):
-                if (n / "DONE").exists() and not (n.with_name(old) / "DONE").exists():
-                    failures.append(f"{n.relative_to(results).as_posix()}: no finished {old} beside it")
+                if not (n / "DONE").exists() or (n.with_name(old) / "DONE").exists():
+                    continue
+                where = n.relative_to(results).as_posix()
+                main = results / "campaign" / n.parts[-3] / n.parts[-2] / old
+                if re.fullmatch(r"s0r\d+", tree.name) and (main / "DONE").exists():
+                    k, problems = compare(main, n, skip=("repeat",))
+                    pairs += 1
+                    rows += k
+                    per_tree[tree.relative_to(results).as_posix() + " (against the main tree)"] += 1
+                    failures += [f"{where}: {p}" for p in problems]
+                else:
+                    alone.append(where)
     for t, c in sorted(per_tree.items()):
         print(f"  {t}: {c} pairs")
-    print(f"pairs compared: {pairs}, rows compared: {rows}, problems: {len(failures)}")
+    print(f"pairs compared: {pairs}, rows compared: {rows}, problems: {len(failures)}, "
+          f"rebuild arms not compared (no superseded arm for that stream): {len(alone)}")
+    for w in alone:
+        print("  not compared: " + w)
     for f in failures:
         print("  " + f)
     if pairs == 0:
@@ -137,6 +156,18 @@ def self_test():
     def no_old(t):
         (t / "campaign/SC8/DUNNHUMBY/Remine-from-scratch/DONE").unlink()
 
+    def replicate_alone(col):
+        def f(t):
+            d = t / "campaign-replicates/s0r3/SC8/DUNNHUMBY/Remine-from-scratch-rebuild"
+            shutil.copytree(src / "Remine-from-scratch-rebuild", d)
+            q = next(d.glob("*.csv"))
+            x = pd.read_csv(q, low_memory=False)
+            x["repeat"] = 3
+            if col:
+                x.loc[x.index[10], col] += 1
+            x.to_csv(q, index=False)
+        return f
+
     def empty(t):
         shutil.rmtree(t / "campaign")
         (t / "campaign").mkdir()
@@ -144,7 +175,10 @@ def self_test():
     cases += [("explored nodes changed", change("explored_nodes"), 1),
               ("patterns changed", change("total_patterns_found"), 1),
               ("row missing", drop_row, 1), ("rebuild arm unfinished", no_partner, 1),
-              ("old arm unfinished", no_old, 1), ("nothing to compare", empty, 2)]
+              ("superseded arm unfinished: not compared, no failure", no_old, 0),
+              ("replicate with the rebuild arm alone, against the main tree", replicate_alone(None), 0),
+              ("replicate with the rebuild arm alone, nodes changed", replicate_alone("explored_nodes"), 1),
+              ("nothing to compare", empty, 2)]
     fails = 0
     for name, fault, expect in cases:
         with tempfile.TemporaryDirectory() as tmp:
