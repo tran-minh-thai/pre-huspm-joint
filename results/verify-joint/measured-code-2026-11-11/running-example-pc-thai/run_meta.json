@@ -1,0 +1,16 @@
+{
+  "command": "java -cp build-pc-running-example-pc-thai verify.RunningExampleCheck",
+  "path_substitutions": 0,
+  "build_dir": "build-pc-running-example-pc-thai",
+  "git_commit": "73487f9f8f548fcbaaac4afbb60f206d10089edc",
+  "tree": "clean",
+  "source_sha256": "704e4a86c8f0809851f205b7d30016bf07a84597331e70b94b06364b848e7ba1",
+  "source_files": 46,
+  "java": "openjdk version \"25.0.5\" 2026-10-20 LTS",
+  "os": "Windows 11 (Windows-11-10.0.26300-SP0)",
+  "machine": "PC-THAI",
+  "role": "correctness check: counters only, no timings",
+  "start": "2026-11-11T16:13:56",
+  "end": "2026-11-11T16:13:56",
+  "exit_code": 0
+}

@@ -1,0 +1,16 @@
+{
+  "command": "java -Xmx6g -Xss64m -cp build-pc-husps-long-sc10h-dunnhumby -Dverify.husps=true -Drepeats=1 -Ddataset.only=DUNNHUMBY -Dalgo.only=Pre-HUSPM-Joint-fixed-threshold,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w5,Remine-from-scratch,Remine-own-UUT -Dresults.dir=results/verify-joint/measured-code-2026-11-11/husps-long-sc10h-dunnhumby/ AutomatedExperimentRunner SC10H",
+  "path_substitutions": 0,
+  "build_dir": "build-pc-husps-long-sc10h-dunnhumby",
+  "git_commit": "73487f9f8f548fcbaaac4afbb60f206d10089edc",
+  "tree": "src clean, other files modified",
+  "source_sha256": "704e4a86c8f0809851f205b7d30016bf07a84597331e70b94b06364b848e7ba1",
+  "source_files": 46,
+  "java": "openjdk version \"25.0.5\" 2026-10-20 LTS",
+  "os": "Windows 11 (Windows-11-10.0.26300-SP0)",
+  "machine": "PC-THAI",
+  "role": "correctness check: counters only, no timings",
+  "start": "2026-11-11T16:14:02",
+  "end": "2026-11-11T20:05:24",
+  "exit_code": 0
+}
