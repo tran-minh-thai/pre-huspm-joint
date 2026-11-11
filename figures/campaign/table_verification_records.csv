@@ -8,8 +8,8 @@ break-even-fuzz,measured-code-2026-11-11/break-even-fuzz,f30fe6b41,2026-11-11,0
 break-even-nodes-adversarial,initial-cycle-2026-11-02/break-even-nodes-adversarial,d6197a7ed,2026-11-02,0
 break-even-nodes-fuzz,initial-cycle-2026-11-02/break-even-nodes-fuzz,d6197a7ed,2026-11-02,0
 break-even-nodes-random,initial-cycle-2026-11-02/break-even-nodes-random,d6197a7ed,2026-11-02,0
-break-even-nodes-switching-adversarial,break-even-nodes-switching-adversarial,9a3843be4,2026-10-30,0
-break-even-nodes-switching-random,break-even-nodes-switching-random,9a3843be4,2026-10-30,0
+break-even-nodes-switching-adversarial,measured-code-2026-11-11/break-even-nodes-switching-adversarial,73487f9f8,2026-11-11,0
+break-even-nodes-switching-random,measured-code-2026-11-11/break-even-nodes-switching-random,73487f9f8,2026-11-11,0
 break-even-random,break-even-random,c0180ac5c,2026-10-27,0
 break-even-switching-adversarial,break-even-switching-adversarial,8e44d99da,2026-10-27,0
 break-even-switching-random,break-even-switching-random,7f226af39,2026-10-27,0
@@ -31,8 +31,10 @@ floor-selection-switching-random,floor-selection-switching-random,e84b5a89a,2026
 fuzz,measured-code-2026-11-11/fuzz-modification-twice,f30fe6b41,2026-11-11,0
 husps-dunnhumby-mixed-all-arms,husps-dunnhumby-mixed-all-arms,b54bfc310,2026-11-02,0
 husps-long-sc10,husps-long-sc10,2ecbd83be,2026-10-31,0
+husps-long-sc10-dunnhumby,measured-code-2026-11-11/husps-long-sc10-dunnhumby,73487f9f8,2026-11-11,0
 husps-long-sc10-method,measured-code-2026-11-11/husps-long-sc10-method,84e0bbbe5,2026-11-11,0
 husps-long-sc10h,husps-long-sc10h,2ecbd83be,2026-10-31,1
+husps-long-sc10h-dunnhumby,measured-code-2026-11-11/husps-long-sc10h-dunnhumby,73487f9f8,2026-11-11,0
 husps-long-sc10h-method,measured-code-2026-11-11/husps-long-sc10h-method,84e0bbbe5,2026-11-11,0
 husps-long-sc10h-sequences-c8t1s5i8n5k,husps-long-sc10h-sequences-c8t1s5i8n5k,5a2d99ce1,2026-10-31,0
 husps-long-sc10h-sequences-leviathan,husps-long-sc10h-sequences-leviathan,5a2d99ce1,2026-10-31,0
@@ -41,6 +43,7 @@ husps-long-sc8,husps-long-sc8,2ecbd83be,2026-10-31,0
 husps-long-sc8-dunnhumby,husps-long-sc8-dunnhumby,d3358b01b,2026-11-02,0
 husps-long-sc8-method,measured-code-2026-11-11/husps-long-sc8-method,84e0bbbe5,2026-11-11,0
 husps-long-sc8p,husps-long-sc8p,2ecbd83be,2026-10-31,0
+husps-long-sc8p-dunnhumby,measured-code-2026-11-11/husps-long-sc8p-dunnhumby,73487f9f8,2026-11-11,0
 husps-long-sc8p-method,measured-code-2026-11-11/husps-long-sc8p-method,84e0bbbe5,2026-11-11,0
 husps-long-sc9,husps-long-sc9,2ecbd83be,2026-10-31,0
 husps-long-sc9-dunnhumby,husps-long-sc9-dunnhumby,4aa1ce88c,2026-11-02,0

@@ -24,8 +24,10 @@ rescan rule acceptance (RescanRuleAcceptanceTest),finished,,49,,,,0,,,,,,,,
 "bound invariant B(X) >= u(X), prehuspm-tracking-fuzz",finished,8,7748983,,,,0,,,,,,,,
 "patterns against the proposal after every operation, husps-dunnhumby-mixed-all-arms",finished,1,2205,,,,0,,,,,,,,
 "patterns against the proposal after every operation, husps-long-sc10",finished,1,24048,,,,0,,,,,,,,
+"patterns against the proposal after every operation, husps-long-sc10-dunnhumby",finished,1,6012,,,,0,,,,,,,,
 "patterns against the proposal after every operation, husps-long-sc10-method",finished,1,6012,,,,0,,,,,,,,
 "patterns against the proposal after every operation, husps-long-sc10h",exit 1,1,15920,,,,571,,,,,,,,
+"patterns against the proposal after every operation, husps-long-sc10h-dunnhumby",finished,1,6012,,,,0,,,,,,,,
 "patterns against the proposal after every operation, husps-long-sc10h-method",finished,1,4509,,,,0,,,,,,,,
 "patterns against the proposal after every operation, husps-long-sc10h-sequences-c8t1s5i8n5k",finished,1,6012,,,,0,,,,,,,,
 "patterns against the proposal after every operation, husps-long-sc10h-sequences-leviathan",finished,1,6012,,,,0,,,,,,,,
@@ -34,6 +36,7 @@ rescan rule acceptance (RescanRuleAcceptanceTest),finished,,49,,,,0,,,,,,,,
 "patterns against the proposal after every operation, husps-long-sc8-dunnhumby",finished,1,6012,,,,0,,,,,,,,
 "patterns against the proposal after every operation, husps-long-sc8-method",finished,1,6012,,,,0,,,,,,,,
 "patterns against the proposal after every operation, husps-long-sc8p",finished,1,24048,,,,0,,,,,,,,
+"patterns against the proposal after every operation, husps-long-sc8p-dunnhumby",finished,1,6012,,,,0,,,,,,,,
 "patterns against the proposal after every operation, husps-long-sc8p-method",finished,1,6012,,,,0,,,,,,,,
 "patterns against the proposal after every operation, husps-long-sc9",finished,1,30060,,,,0,,,,,,,,
 "patterns against the proposal after every operation, husps-long-sc9-dunnhumby",finished,1,7515,,,,0,,,,,,,,
@@ -62,8 +65,8 @@ fault injection into the rescan floor selection,finished,,2,,,,,,,,2,,,,
 "direct path on real databases, break-even-adversarial operations",finished,8,128,25,46,25,0,108,,,,18,7,0,0
 "direct path on real databases, break-even-nodes-adversarial operations",finished,8,128,25,49,26,0,102,,,,12,7,0,0
 "direct path on real databases, break-even-nodes-random operations",finished,8,128,29,57,24,0,0,,,,6,6,0,0
-"direct path on real databases, break-even-nodes-switching-adversarial operations",finished,8,150,16,38,17,0,123,,,,42,18,0,3
-"direct path on real databases, break-even-nodes-switching-random operations",finished,8,181,29,56,25,0,0,,,,24,8,0,2
+"direct path on real databases, break-even-nodes-switching-adversarial operations",finished,9,166,19,42,19,0,128,,,,43,19,0,4
+"direct path on real databases, break-even-nodes-switching-random operations",finished,9,192,31,60,27,0,0,,,,24,9,0,3
 "direct path on real databases, break-even-random operations",finished,8,128,24,46,20,0,0,,,,30,4,0,0
 "direct path on real databases, break-even-switching-adversarial operations",finished,8,150,21,40,14,0,123,,,,39,11,0,3
 "direct path on real databases, break-even-switching-random operations",finished,8,184,26,53,23,0,0,,,,38,8,0,1
