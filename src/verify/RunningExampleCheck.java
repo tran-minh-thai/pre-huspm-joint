@@ -27,12 +27,14 @@ import java.util.Map;
  *   2. the mine of D with the proposal's settings: <(a)> 20, <(c)> 14, <(a)(g)> 16, budget 3.4;
  *   3. Example 1: inserting S5 gives Phi = 3 and no rescan, <(a)(g)> discarded, <(a)> and <(c)>
  *      unchanged; inserting S5 again gives Phi = 6 and a rescan;
- *   4. Example 2, the break-even rule by explored nodes (the method's rule): the mine of D at 13.6
- *      visits 65 nodes; a batch of S5 twice (Phi = 6 > 3.4) rescans, at lambda = UUT since it is the
- *      first rescan, with cutoff 19, visiting 57 nodes; a batch of S5 once (Phi = 3 > 0) rescans, and
- *      with no absorption yet (a = 1; the second counter, Phi = 3 <= 3.8, has not triggered) and
- *      rho = 65/57, a >= rho - 1, so lambda = LUT_min with cutoff 16; one more S5 (Phi = 3 <= 4 = beta)
- *      takes the direct branch.
+ *   4. Example 2, the break-even rule by explored nodes (the method's rule), which counts the
+ *      initial mine's cycle as an absorption: the mine of D at 13.6 visits 65 nodes, 3 of them root
+ *      items stopped at once; a unit of S5 twice (Phi = 6 > 3.4) rescans, so the initial mine absorbed
+ *      no unit, at lambda = UUT since it is the first rescan, with cutoff 19, visiting 57 nodes; a unit
+ *      of S5 once (Phi = 3 > 0) rescans with a = 0 and rho = 65/57, a < rho - 1, so again at UUT, with
+ *      cutoff 20, visiting 52 nodes; the next S5 rescans with a = (0 + 1)/2, the second counters having
+ *      recorded an absorption of 1, and rho = 65/52, a >= rho - 1, so lambda = LUT_min with cutoff
+ *      16.8; one more S5 (Phi = 3 <= 4.2 = beta) takes the direct branch.
  * Exits 1 on any mismatch and prints the number of values compared.
  */
 public final class RunningExampleCheck {
@@ -139,6 +141,7 @@ public final class RunningExampleCheck {
         s.breakEvenCost = PreHUSPMAdaptiveAlgo.BreakEvenCost.NODES;
         s.runInitialMining(new ArrayList<>(d), 68);
         check("Example 2, mine of D: nodes visited", s.exploredNodes, 65);
+        check("Example 2, mine of D: root items stopped at once", s.prunedIub, 3);
         List<Sequence> c2 = new ArrayList<>(d);
         List<Sequence> d1 = List.of(s5(), s5());
         c2.addAll(d1);
@@ -153,18 +156,29 @@ public final class RunningExampleCheck {
         c2.addAll(d2);
         s.runIncrementalMining(new ArrayList<>(d2), new ArrayList<>(c2), tu(c2));
         check("Example 2, d2 = S5 once: Phi", s.iauMaxAtDecision, 3);
+        check("Example 2, d2: budget beta of the decision", s.sftValue, 0);
         check("Example 2, d2: rescans", s.rescanCount, 2);
-        check("Example 2, d2: rescans at UUT", s.rescansAtUut, 1);
-        check("Example 2, d2: absorption a", s.floorAbsorption, 1);
+        check("Example 2, d2: rescans at UUT", s.rescansAtUut, 2);
+        check("Example 2, d2: absorption a (the initial mine's cycle)", s.floorAbsorption, 0);
         check("Example 2, d2: rho = 65/57", s.floorRho, 65.0 / 57.0);
         check("Example 2, d2: delta", s.floorDelta, 0);
-        check("Example 2, d2: rescan at LUT_min, cutoff", s.lutDynValue, 16);
+        check("Example 2, d2: rescan at lambda = UUT, cutoff", s.lutDynValue, 20);
+        check("Example 2, d2: nodes visited", s.exploredNodes, 52);
         List<Sequence> d3 = List.of(s5());
         c2.addAll(d3);
         s.runIncrementalMining(new ArrayList<>(d3), new ArrayList<>(c2), tu(c2));
         check("Example 2, d3 = S5 once: Phi", s.iauMaxAtDecision, 3);
-        check("Example 2, d3: budget beta of the decision", s.sftValue, 4);
-        check("Example 2, d3: direct branch (no rescan)", s.rescanCount, 2);
+        check("Example 2, d3: rescans", s.rescanCount, 3);
+        check("Example 2, d3: rescans at UUT", s.rescansAtUut, 2);
+        check("Example 2, d3: absorption a = (0 + 1) / 2", s.floorAbsorption, 0.5);
+        check("Example 2, d3: rho = 65/52", s.floorRho, 65.0 / 52.0);
+        check("Example 2, d3: rescan at LUT_min, cutoff", s.lutDynValue, 16.8);
+        List<Sequence> d4 = List.of(s5());
+        c2.addAll(d4);
+        s.runIncrementalMining(new ArrayList<>(d4), new ArrayList<>(c2), tu(c2));
+        check("Example 2, d4 = S5 once: Phi", s.iauMaxAtDecision, 3);
+        check("Example 2, d4: budget beta of the decision", s.sftValue, 4.2);
+        check("Example 2, d4: direct branch (no rescan)", s.rescanCount, 3);
 
         System.out.printf("Running example: %d values compared, %d mismatching%n", compared, failed);
         System.exit(failed == 0 && compared > 0 ? 0 : 1);
