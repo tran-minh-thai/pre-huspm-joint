@@ -106,6 +106,13 @@ series keeps its own dash pattern and marker, so a black-and-white print still r
 | `table_status_summary.csv` | rows per outcome for every tree, scenario and database |
 | `platform.tex` | one sentence describing the measurement platform, generated from the machine record and `environment.lock.json`; not written when the `DONE` files name more than one host or the host has no record |
 
+Two scripts outside `main_all()` write into the same directory:
+
+| Script | Files | Content |
+|---|---|---|
+| `analysis/long_streams.py` | `table_long_streams.csv`, `table_long_index.csv`, `paper_numbers_long.csv` | the long streams SC8, SC8P, SC9, SC10 and SC10H: time per arm summed over the seeds, the ratio of the method to every other arm (on DUNNHUMBY inside each repeat the two arms share a session in), the block index along the stream |
+| `analysis/floor_gap.py` | `table_floor_gap.csv`, `table_floor_absorption.csv`, `paper_numbers_floor_gap.csv` | the method against its fixed-threshold version, operation by operation: the time difference of every stream split by what the two arms did at each operation (the same mine, the method's mine at the threshold, the method mining where the fixed version updates directly), and, from the counters, how many operations a rescan at the lower threshold absorbs next to the break-even of the rule |
+
 The scenario READMEs under `results/campaign/<SC>/` and `results/campaign-mem/<SC>/` explain
 each result. `analysis/scenario_readmes.py` regenerates the READMEs of SC2, SC5, SC6,
 SC7 and the SC2 memory campaign from the result files.

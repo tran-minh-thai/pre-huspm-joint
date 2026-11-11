@@ -1,0 +1,16 @@
+{
+  "command": "~/.venvs/pre-huspm-adaptive/bin/python analysis/floor_policy_probe.py --out results-probe/floor-policy/2026-11-11-memory-dunnhumby-long --long --no-sc2 --db DUNNHUMBY --nodes --long-plans results-probe/floor-policy/long-plans-dunnhumby/long_plans.tsv",
+  "path_substitutions": 1,
+  "build_dir": "build-plans",
+  "git_commit": "1acdefa2db754bb2ee443f788bab9f3186fcea9f",
+  "tree": "src clean, other files modified",
+  "source_sha256": "16349bc6c082034e60771378b3314e3a338e1304990f989b348699a08b4809cd",
+  "source_files": 46,
+  "java": "openjdk version \"25.0.4.1\" 2026-08-18 LTS",
+  "os": "Darwin 27.2.0 (macOS-27.2-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-11-11T10:10:50",
+  "end": "2026-11-11T10:12:53",
+  "exit_code": 0
+}

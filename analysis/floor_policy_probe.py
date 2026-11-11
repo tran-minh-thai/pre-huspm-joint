@@ -48,6 +48,7 @@ import argparse
 import csv
 import pathlib
 import re
+import math
 import statistics
 import sys
 from collections import defaultdict
@@ -333,7 +334,7 @@ def evaluate(stream, su, rl, be_window=5):
                    for unit, x in zip(units, path))
 
     def break_even(merge, window=5, dL=None, dU=None, logged=None, del_low=False, init_low=None,
-                   initial_cycle=False, open_shadow=False):
+                   initial_cycle=False, open_shadow=False, confidence=None):
         """initial_cycle: the units the initial mine (at the lower threshold) absorbed before the first
         rescan count as an absorption. open_shadow: while the shadow cycle is open, the units it has
         absorbed so far count as an absorption of at least that many (a censored observation, a lower
@@ -342,7 +343,11 @@ def evaluate(stream, su, rl, be_window=5):
         ones, to replay the measured decisions. del_low: a rescan made by a deletion mines at the
         lower threshold; insertions and modifications decide by the rule. init_low: the time of the
         mine at the lower threshold known before the first decision, in place of remining's at the first
-        operation (the measured run knows its initial mine, made in a cold virtual machine)."""
+        operation (the measured run knows its initial mine, made in a cold virtual machine).
+        confidence: z. The threshold is taken only when the absorptions seen reject the lower
+        threshold: mean + z * standard error < break-even, over the cycles of `window` (the standard
+        error is 0 with fewer than two cycles or when they are all equal). Otherwise the lower
+        threshold, whose loss per rescan is bounded by rho - 1."""
         units = units_of(stream, merge)
         r = Replay(su, rl, sum(u for u, _ in stream.init))
         shadow, shadow_n = None, 0
@@ -383,7 +388,11 @@ def evaluate(stream, su, rl, be_window=5):
                 if logged is not None:
                     rho, delta = logged[o]
                 seen = absorbed + [shadow_n] if open_shadow and shadow is not None else absorbed
-                a_hat = statistics.mean(seen[-window:]) if seen else 1.0
+                # window None: every cycle seen so far
+                used = seen if window is None else seen[-window:]
+                a_hat = statistics.mean(used) if used else 1.0
+                if confidence is not None and len(used) >= 2:
+                    a_hat += confidence * statistics.stdev(used) / math.sqrt(len(used))
                 up = a_hat < (rho - 1) / max(1e-9, 1 - delta)
             r.rescan(up)
             if up:
@@ -546,6 +555,15 @@ def evaluate(stream, su, rl, be_window=5):
                          ("open_shadow", dict(open_shadow=True)),
                          ("initial_cycle_open_shadow", dict(initial_cycle=True, open_shadow=True))):
             pols[f"method_{name}"] = break_even(merged, window=be_window, dL=nL, dU=nU, init_low=float(n0.iloc[0]), **kw)
+        # the method's rule with a longer memory of the absorptions: the last W cycles, or all of them
+        for W in (10, 20, 50, 100, None):
+            pols["method_memory_" + ("all" if W is None else str(W))] = break_even(
+                merged, window=W, dL=nL, dU=nU, init_low=float(n0.iloc[0]), initial_cycle=METHOD_INITIAL_CYCLE)
+        # the threshold only when the absorptions reject the lower threshold at z standard errors
+        for W, z in ((None, 1), (None, 2), (50, 1), (50, 2), (20, 1), (20, 2)):
+            pols[f"method_confident_{'all' if W is None else W}_z{z}"] = break_even(
+                merged, window=W, dL=nL, dU=nU, init_low=float(n0.iloc[0]), initial_cycle=METHOD_INITIAL_CYCLE,
+                confidence=z)
         for name, pth in pols.items():
             row[f"nodes_{name}"] = int(round(node_cost(pth)))
             row[f"nodes_{name}_rescans"] = sum(x != "D" for x in pth)
