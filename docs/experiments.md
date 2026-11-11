@@ -250,6 +250,40 @@ the arm, when less than 10 percent of the heap is free.
   The SC1 rows of `results/campaign-mem` predate this and are not read; SC2 is read from
   `results/campaign-mem`, since an incremental stream is not repeated.
 
+**What the clock covers.** `runtime_ms` is `System.nanoTime` around one call of the algorithm
+(`AutomatedExperimentRunner.measure`); the call of each arm is named in the table. Outside the
+clock for every arm: reading and parsing the two data files into sequences, the untimed warm-up
+mines, and what the harness does between calls (the forced collection, building the list of
+sequences an arm is handed, creating the algorithm object, the pattern check).
+
+The data derived from a sequence's items and cached on the sequence object, its remaining
+utilities and flat arrays ("derived data" below), follows one rule. A static mine builds,
+inside its timed call, everything it reads from the loaded sequences, and keeps nothing for a
+later call. Only an incremental algorithm carries state from one operation to the next, and it
+builds that state inside its own earlier timed calls. The sequence utility, which the harness
+reads to set the thresholds, stays on the sequence.
+
+| Arms | Timed call | Derived data | Carried to the next call |
+|---|---|---|---|
+| `Pre-HUSPM-Joint`, `Joint-miner@UUT` in a static mine | `runInitialMining` | built for every sequence inside the call | nothing |
+| `HUSP-ULL`, `HUSP-SP`; `Remine-HUSP-ULL`, `Remine-HUSP-SP` after every operation | `run` on a new instance | not read: each builds its own structures from the items inside the call | nothing |
+| `USpan`, `IncUSP-Miner+`, `Pre-HUSPM` in a static mine | `run`, `runInitialMining` | built only when missing, so the harness drops it before the timed call and after the warm-up (`freshSequences`); it is then built inside the call | nothing |
+| the method and its versions in a stream (`Pre-HUSPM-Joint`, `-fixed-threshold`, `-w<n>`, `-be<n>`, `-time`, the `Joint-rule+...` and `Joint-miner+...` arms) | `runInitialMining`, then one call per operation (`runIncrementalMining`, the deletion call, `runModification`) | the sequences of `D_init` inside the initial mine; an inserted sequence inside the call that inserts it | the derived data of the sequences already seen, the pattern sets and the block index: the state the maintenance keeps |
+| `IncUSP-Miner+`, `Pre-HUSPM-SWUmax`, `Pre-HUSPM-TSU` in a stream | `runInitialMining`, then `runIncrementalMining` per operation | dropped for `D_init` and every batch before the arm's first call (`freshStream`), then built at first use inside the timed calls | their trees and pattern sets, and the derived data of the sequences already seen |
+| `Remine-from-scratch-rebuild`, `Remine-own-UUT-rebuild`: the remining rivals of every table and figure | `runRemineRebuild` on a new instance after every operation | rebuilt for every sequence of the current database inside each call | nothing |
+| `Remine-from-scratch`, `Remine-own-UUT` | `runRemine` on a new instance after every operation | built only for the sequences not seen before | the derived data of the sequences already seen, as a rescan of the method reuses it |
+
+The last row is why those two arms are not the remining rivals: they reuse per-sequence data
+built in earlier calls, which a static miner run after every operation would have to build
+again. They are read in two other roles only, the control that measures the tie band and the
+price of one rescan of the method (`make_figures.RIVAL_SOURCE`, `load_scenario(rivals=False)`).
+`analysis/check_rival_rebuild.py` checks that each of them and its `-rebuild` arm make the same
+search, counter by counter, and with `--direction` that no `-rebuild` arm is faster than the arm it
+replaces by more than the tie band. In a memory run (`-Dmem.mode=live`) the harness drops the flat
+arrays before every static mine of every arm, so that an arm's arrays count towards that arm,
+and leaves the remaining utilities the loader computed, which count as part of the loaded
+database for every arm.
+
 **Static warm-up.** A static scenario (SC1, SC3, and the mines of SC7's static arms and of its
 Pre-HUSPM reference) runs one arm on one database in a JVM, its thresholds in ascending order.
 Without a warm-up the first cells of the JVM also pay for compiling the miner: on

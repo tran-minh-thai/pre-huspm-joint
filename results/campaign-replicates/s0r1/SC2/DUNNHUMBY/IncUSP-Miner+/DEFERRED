@@ -15,9 +15,11 @@ WHAT TO REPORT
 TO RETRY
   Delete this file and run the campaign block again; campaign.ps1 skips the cells with a DONE file.
 
-EVALUATED 2026-11-05
-  Not replicated: the paper compares this arm with the method only, and its single run takes 5.63
+EVALUATED 2026-11-11
+  Not replicated: the paper compares this arm with the method only, and its single run takes 6.35
   times the method's time or more (1 comparisons, campaign/SC2), outside the run-to-run
   spread of either arm.
-  Both were measured before the fair timed region, which adds only to this arm's time (the method
-  already rebuilt what it reads inside its clock), so the ratio can only grow.
+  Code of the two runs (commit of their DONE files): this arm e07d37c4a, the method 335fd3554.
+  The two runs finished 2026-11-05 09:25:33 and 2026-11-10 20:02:11. On DUNNHUMBY the same arm measured in two sessions differs by up
+  to a factor 1.664 (results-invariant/session-drift/2026-11-06); the ratio is above it, so the
+  direction holds, and the value is good to that factor only.

@@ -15,6 +15,6 @@ WHAT TO REPORT
 TO RETRY
   Delete this file and run the campaign block again; campaign.ps1 skips the cells with a DONE file.
 
-EVALUATED 2026-11-05
+EVALUATED 2026-11-11
   Not replicated: results/campaign-mem/SC1 is the first SC1 memory measurement, which the
   paper does not use (results/campaign-mem/SC1/README.md).

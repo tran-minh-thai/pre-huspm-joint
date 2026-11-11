@@ -3,6 +3,7 @@
 they replace?
 
     python3 analysis/check_rival_rebuild.py              # every pair under results/campaign*
+    python3 analysis/check_rival_rebuild.py --direction  # is a rebuild arm ever faster than the arm it replaces?
     python3 analysis/check_rival_rebuild.py --self-test  # injected faults must be caught
 
 The rivals Remine-from-scratch and Remine-own-UUT are read, in every table and figure, from the
@@ -18,12 +19,26 @@ alone) is compared, in a replicate tree of seed index 0 (s0r<n>), with the super
 main tree, the same stream, on the same key without `repeat`. In any other tree it is counted as
 not compared and named; it is not a failure, since the rival is read from the rebuild arm.
 
+--direction checks the one thing the code decides about the two arms' times: a rebuild arm does
+the work of the arm it replaces plus the rebuilding, so it cannot be the faster one. Per pair of
+timing arm directories it takes the time of the rebuild arm over that of the superseded arm, summed
+over the operations both completed (the initial mine, the same call in both, is left out), and per
+(scenario, database, arm) the geometric mean over the pairs. A group fails when that mean is below
+the lower end of the tie band (key jit_tie_band of figures/campaign/paper_numbers.csv, the largest
+time ratio measured between two arms that make the same search). Two arms are in one session when
+their DONE files are at most SESSION_HOURS apart; pairs measured in two sessions are judged too,
+except on a database of UNSTABLE, where times drift between sessions by more than the band and such
+pairs are counted and left out. Exit 0 when no group fails, 1 when one does, 2 when no pair could
+be judged.
+
 Prints, per tree, the pairs compared and the rows compared, then every mismatch. Exit 0 when every
 pair agrees on every row, 1 on a mismatch, a row in one arm only, or a superseded arm without its
 rebuild partner (that rival would vanish from a table), 2 when nothing could be compared.
 """
 import argparse
 import collections
+import csv
+import math
 import pathlib
 import re
 import shutil
@@ -39,6 +54,11 @@ WORK = ["candidate_count", "explored_nodes", "total_patterns_found", "pruned_swu
         "pruned_lar", "pruned_iip", "pruned_tsu", "pruned_peu", "pruned_value", "pruned_iub",
         "prelarge_count", "rescan_count", "rescans_at_uut"]
 KEY = ["dataset", "op_type", "iteration", "seed", "repeat", "repetition"]
+SESSION_HOURS = 6.0
+# Databases whose times drift between sessions by more than the tie band: the same arm, seed and
+# commit on two days differ by up to this factor (results-invariant/session-drift/2026-11-06).
+UNSTABLE = {"DUNNHUMBY": 1.664}
+FINISHED = re.compile(r"finished=(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})")
 
 
 def read_arm(d):
@@ -133,6 +153,147 @@ def check(results):
     return 1 if failures else 0
 
 
+def band_low(keys_path):
+    """The lower end of the tie band, from key jit_tie_band ("0.920 to 1.087 (...)")."""
+    with open(keys_path, newline="", encoding="utf-8") as fh:
+        for r in csv.DictReader(fh):
+            if r["key"] == "jit_tie_band":
+                return float(r["value"].split(" to ")[0])
+    raise SystemExit(f"{keys_path}: no key jit_tie_band")
+
+
+def finished(d):
+    m = FINISHED.search((d / "DONE").read_text(encoding="utf-8"))
+    return pd.Timestamp(m.group(1)) if m else None
+
+
+def pair_ratio(old_dir, new_dir):
+    """(time of the rebuild arm over the superseded arm on the operations both completed, rows)."""
+    a, b = read_arm(old_dir), read_arm(new_dir)
+    if a is None or b is None:
+        return None, 0
+    key = [k for k in KEY if k in a.columns and k in b.columns]
+    m = a[key + ["runtime_ms"]].merge(b[key + ["runtime_ms"]], on=key, suffixes=("_old", "_new"))
+    m = m[(m["iteration"] > 0) & (m["runtime_ms_old"] > 0) & (m["runtime_ms_new"] > 0)]
+    if not len(m):
+        return None, 0
+    return float(m["runtime_ms_new"].sum()) / float(m["runtime_ms_old"].sum()), len(m)
+
+
+def direction(results, low):
+    groups = collections.defaultdict(list)
+    left_out = collections.Counter()
+    undated = 0
+    for tree in trees(results):
+        if "-mem" in tree.relative_to(results).as_posix():
+            continue   # the memory runs' times are void
+        for old, new in PAIRS.items():
+            for d in sorted(tree.glob(f"*/*/{old}")):
+                n = d.with_name(new)
+                if not (d / "DONE").exists() or not (n / "DONE").exists():
+                    continue
+                r, rows = pair_ratio(d, n)
+                if r is None:
+                    continue
+                ta, tb = finished(d), finished(n)
+                if ta is None or tb is None:
+                    undated += 1
+                    continue
+                db = d.parts[-2]
+                same = abs((ta - tb).total_seconds()) <= SESSION_HOURS * 3600
+                if not same and db in UNSTABLE:
+                    left_out[db] += 1
+                    continue
+                groups[(d.parts[-3], db, old)].append((r, same))
+    fails = []
+    pairs = sum(len(v) for v in groups.values())
+    for k in sorted(groups):
+        v = [r for r, _ in groups[k]]
+        g = math.exp(sum(math.log(x) for x in v) / len(v))
+        if g < low:
+            fails.append(f"{k[0]} {k[1]} {k[2]}: rebuild over superseded {g:.3f} over {len(v)} pair(s) "
+                         f"({min(v):.3f} to {max(v):.3f}), below {low:.3f}")
+    one = sum(s for v in groups.values() for _, s in v)
+    print(f"direction: {len(groups)} groups, {pairs} pairs judged ({one} in one session, {pairs - one} in two), "
+          f"lower end of the tie band {low:.3f}; groups below it: {len(fails)}")
+    if groups:
+        means = sorted((math.exp(sum(math.log(r) for r, _ in v) / len(v)), k) for k, v in groups.items())
+        g, k = means[0]
+        print(f"  smallest group mean: {g:.3f} ({k[0]} {k[1]} {k[2]}); largest: {means[-1][0]:.3f} "
+              f"({means[-1][1][0]} {means[-1][1][1]} {means[-1][1][2]})")
+    for db, c in sorted(left_out.items()):
+        print(f"  not judged: {c} pair(s) on {db} measured in two sessions (drift factor {UNSTABLE[db]})")
+    if undated:
+        print(f"  not judged: {undated} pair(s) whose DONE file has no finish time")
+    for f in fails:
+        print("  " + f)
+    if not pairs:
+        return 2
+    return 1 if fails else 0
+
+
+def direction_self_test():
+    src = ROOT / "results" / "campaign" / "SC6" / "DUNNHUMBY"
+    arms = ("Remine-from-scratch", "Remine-from-scratch-rebuild")
+
+    def set_ratio(f):
+        """Every operation of the rebuild arm takes f times the superseded arm's time."""
+        def go(t):
+            o = pd.read_csv(next((t / "campaign/SC6/DUNNHUMBY" / arms[0]).glob("*.csv")), low_memory=False)
+            p = next((t / "campaign/SC6/DUNNHUMBY" / arms[1]).glob("*.csv"))
+            x = pd.read_csv(p, low_memory=False)
+            assert list(o["iteration"]) == list(x["iteration"])
+            x["runtime_ms"] = (o["runtime_ms"] * f).round().astype(int).values
+            x.to_csv(p, index=False)
+        return go
+
+    def other_session(t):
+        p = t / "campaign/SC6/DUNNHUMBY/Remine-from-scratch-rebuild/DONE"
+        p.write_text(FINISHED.sub("finished=2026-01-01 00:00:00", p.read_text(encoding="utf-8")), encoding="utf-8")
+
+    def stable_other_session(t):
+        (t / "campaign/SC6/DUNNHUMBY").rename(t / "campaign/SC6/SIGN")
+        p = t / "campaign/SC6/SIGN/Remine-from-scratch-rebuild/DONE"
+        p.write_text(FINISHED.sub("finished=2026-01-01 00:00:00", p.read_text(encoding="utf-8")), encoding="utf-8")
+        for arm in arms:
+            q = next((t / "campaign/SC6/SIGN" / arm).glob("*.csv"))
+            x = pd.read_csv(q, low_memory=False)
+            x["dataset"] = "SIGN"
+            if arm.endswith("-rebuild"):
+                x["runtime_ms"] = (base * 0.5).round().astype(int).values
+            else:
+                base = x["runtime_ms"]
+            x.to_csv(q, index=False)
+
+    def no_time(t):
+        p = t / "campaign/SC6/DUNNHUMBY/Remine-from-scratch/DONE"
+        p.write_text("host=X rc=0 rows=1\n", encoding="utf-8")
+
+    cases = [("clean pair of one session", None, 0),
+             ("the rebuild arm twice as fast", set_ratio(0.5), 1),
+             ("the rebuild arm 5 percent faster: inside the band", set_ratio(0.95), 0),
+             ("the rebuild arm 10 percent faster: below the band", set_ratio(0.90), 1),
+             ("the rebuild arm slower", set_ratio(1.5), 0),
+             ("two sessions on an unstable database: not judged", other_session, 2),
+             ("two sessions on a stable database, the rebuild arm twice as fast", stable_other_session, 1),
+             ("no finish time: not judged", no_time, 2)]
+    fails = 0
+    for name, fault, expect in cases:
+        with tempfile.TemporaryDirectory() as tmp:
+            t = pathlib.Path(tmp)
+            for arm in arms:
+                shutil.copytree(src / arm, t / "campaign/SC6/DUNNHUMBY" / arm)
+            if fault:
+                fault(t)
+            print(f"--- {name}")
+            got = direction(t, 0.920)
+            ok = got == expect
+            fails += not ok
+            print(f"SELF-TEST {name}: exit {got}, expected {expect} -> {'ok' if ok else 'FAILED'}")
+    print(f"direction self-test: {len(cases) - fails}/{len(cases)} cases as expected")
+    return 1 if fails else 0
+
+
 def self_test():
     src = ROOT / "results" / "campaign" / "SC8" / "DUNNHUMBY"
     cases = [("clean", None, 0)]
@@ -199,9 +360,15 @@ def self_test():
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--self-test", action="store_true")
+    ap.add_argument("--direction", action="store_true")
     ap.add_argument("--results", default=str(ROOT / "results"))
+    ap.add_argument("--keys", default=str(ROOT / "figures" / "campaign" / "paper_numbers.csv"))
     a = ap.parse_args()
-    sys.exit(self_test() if a.self_test else check(pathlib.Path(a.results)))
+    if a.self_test:
+        sys.exit(max(self_test(), direction_self_test()))
+    if a.direction:
+        sys.exit(direction(pathlib.Path(a.results), band_low(a.keys)))
+    sys.exit(check(pathlib.Path(a.results)))
 
 
 if __name__ == "__main__":

@@ -15,10 +15,8 @@ WHAT TO REPORT
 TO RETRY
   Delete this file and run the campaign block again; campaign.ps1 skips the cells with a DONE file.
 
-EVALUATED 2026-11-05
-  Not replicated: the paper compares this arm with the method only, and its single run takes 3.12
+EVALUATED 2026-11-11
+  Not replicated: the paper compares this arm with the method only, and its single run takes 2.96
   times the method's live set or more (4 comparisons, campaign-mem-sampled/SC1), outside the run-to-run
   spread of either arm.
-  The ratio is from the measurement before the fair timed region. The re-measurement also counts the
-  flat arrays in the method's live set, which can raise it: recompute this note when the new live sets
-  are in (affected_runs.py --fair-clock --annotate-deferred rewrites it).
+  Code of the two runs (commit of their DONE files): this arm 335fd3554, the method 335fd3554.

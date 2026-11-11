@@ -142,7 +142,7 @@ def deferred_note(r):
     baseline's single run to the method's over the thresholds (SC1) or the stream."""
     tree, sub, sc, ds, arm, _ = r
     main = tree.replace("-replicates", "")
-    head = "\nEVALUATED 2026-11-05\n"
+    head = "\nEVALUATED 2026-11-11\n"
     if main == "campaign-mem" and sc == "SC1":
         return head + ("  Not replicated: results/campaign-mem/SC1 is the first SC1 memory measurement, which the\n"
                        "  paper does not use (results/campaign-mem/SC1/README.md).\n")
@@ -157,14 +157,30 @@ def deferred_note(r):
     text = (f"  Not replicated: the paper compares this arm with the method only, and its single run takes {lo:.2f}\n"
             f"  times the method's {what} or more ({len(ratios)} comparisons, {main}/{sc}), outside the run-to-run\n"
             "  spread of either arm.\n")
-    if metric == "runtime_ms":
-        text += ("  Both were measured before the fair timed region, which adds only to this arm's time (the method\n"
-                 "  already rebuilt what it reads inside its clock), so the ratio can only grow.\n")
-    else:
-        text += ("  The ratio is from the measurement before the fair timed region. The re-measurement also counts the\n"
-                 "  flat arrays in the method's live set, which can raise it: recompute this note when the new live sets\n"
-                 "  are in (affected_runs.py --fair-clock --annotate-deferred rewrites it).\n")
+    text += (f"  Code of the two runs (commit of their DONE files): this arm {_done_field(main, sc, ds, arm, 'commit')}, "
+             f"the method {_done_field(main, sc, ds, 'Pre-HUSPM-Joint', 'commit')}.\n")
+    if metric == "runtime_ms" and ds in SESSION_DRIFT:
+        f = SESSION_DRIFT[ds]
+        a, b = _done_field(main, sc, ds, arm, "finished"), _done_field(main, sc, ds, "Pre-HUSPM-Joint", "finished")
+        text += (f"  The two runs finished {a} and {b}. On {ds} the same arm measured in two sessions differs by up\n"
+                 f"  to a factor {f} (results-invariant/session-drift/2026-11-06); the ratio is "
+                 + ("above it, so the\n  direction holds, and the value is good to that factor only.\n" if lo > f else
+                    "NOT above it: measure this\n  cell in the method's session before any ranking is stated.\n"))
     return head + text
+
+
+# The largest ratio between two sessions of the same arm, seed and commit, per database measured as
+# unstable between sessions (results-invariant/session-drift/2026-11-06).
+SESSION_DRIFT = {"DUNNHUMBY": 1.664}
+
+
+def _done_field(tree, sc, ds, arm, field):
+    """A field of an arm's DONE file (commit, or the finish time), or "unknown"."""
+    f = RESULTS / tree / sc / ds / arm / "DONE"
+    if not f.is_file():
+        return "unknown"
+    m = re.search(field + r"=(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}|\S+)", f.read_text(encoding="utf-8"))
+    return m.group(1) if m else "unknown"
 
 
 def has_direct_update(path):
@@ -213,7 +229,7 @@ def main():
             for r in kept:
                 note = deferred_note(r)
                 f = r[5] / "DEFERRED"
-                body = f.read_text(encoding="utf-8").split("\nEVALUATED 2026-11-05\n")[0]
+                body = re.split(r"\nEVALUATED \d{4}-\d{2}-\d{2}\n", f.read_text(encoding="utf-8"))[0]
                 with open(f, "w", encoding="utf-8", newline="\n") as fh:
                     fh.write(body + note)
             print(f"annotated {len(kept)} DEFERRED files")
