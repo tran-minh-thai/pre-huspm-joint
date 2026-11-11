@@ -3393,7 +3393,9 @@ def export_all(out_dir=None):
         rp = os.path.join(out, "table_SC2_replicates.csv")
         ref = pd.read_csv(rp) if os.path.exists(rp) else None
         for d, g in bs.groupby("dataset"):
-            put(f"SC7_block_size_{d}_total_s_range", f"{half_up(g['total_s'].min())} to {half_up(g['total_s'].max())}",
+            # total_s is a sum of whole milliseconds divided by 1000: round off the binary residue of the
+            # sum (9.204999999999998 for 9205 ms) before rounding half up
+            put(f"SC7_block_size_{d}_total_s_range", f"{half_up(round(g['total_s'].min(), 6))} to {half_up(round(g['total_s'].max(), 6))}",
                 "table_SC7_block_size.csv")
             r2 = ref[(ref["dataset"] == d) & (ref["algorithm"] == FIXED)] if ref is not None else []
             if len(r2):
@@ -3402,7 +3404,7 @@ def export_all(out_dir=None):
                 put(f"SC7_block_size_{d}_fixed_floor_SC2_std_s", half_up(sd), "table_SC2_replicates.csv")
                 put(f"SC7_block_size_{d}_fixed_floor_SC2_runs", int(r2["n"].iloc[0]), "table_SC2_replicates.csv")
                 put(f"SC7_block_size_{d}_above_fixed_floor_s_range",
-                    f"{half_up(round(g['total_s'].min() - m, 9))} to {half_up(round(g['total_s'].max() - m, 9))}",
+                    f"{half_up(round(g['total_s'].min() - m, 6))} to {half_up(round(g['total_s'].max() - m, 6))}",
                     "table_SC7_block_size.csv")
         for _, r in bs.iterrows():
             put(f"SC7_block_size_{r['dataset']}_{r['block_size']}_sequences_read", r["sequences_read"],
