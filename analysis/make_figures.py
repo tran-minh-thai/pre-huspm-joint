@@ -131,7 +131,9 @@ PROPOSED = "Pre-HUSPM-Joint"
 STATIC_ORDER = ["USpan", "HUSP-ULL", "HUSP-SP", "IncUSP-Miner+", "Pre-HUSPM", PROPOSED]
 # the miners with their cutoff at UUT: HUSP-ULL, HUSP-SP and the proposal's miner at UUT, a control
 # that mines no pre-large patterns (not a competitor)
-AT_UUT_ORDER = ["HUSP-ULL", "HUSP-SP", "Joint-miner@UUT"]
+# The SC1 runtime table: the six algorithms, then the proposal's miner with its cutoff at UUT, which
+# makes the same search as HUSP-ULL and HUSP-SP (one table since 2026-11-11; there were two).
+SC1_TABLE_ORDER = STATIC_ORDER + ["Joint-miner@UUT"]
 INC_ORDER    = ["IncUSP-Miner+", "Pre-HUSPM-SWUmax", "Pre-HUSPM-TSU", "Remine-from-scratch", PROPOSED]
 # the SC2 cumulative-runtime and state figures also draw remining with the proposal's own miner at UUT
 INC_FIG_ORDER = INC_ORDER[:-1] + ["Remine-own-UUT", PROPOSED]
@@ -1529,12 +1531,14 @@ def stacked_header(label):
     return f"\\begin{{tabular}}[b]{{@{{}}r@{{}}}}{head}-\\\\{tail}\\end{{tabular}}"
 
 
-def write_sc1_runtime_tex(tab, cols, fname, caption, label):
+def write_sc1_runtime_tex(tab, cols, fname, caption, label, tabcolsep=None):
     """One SC1 runtime table at the default threshold over the columns cols of the replicate
-    table: mean and deviation of the runs per cell, the lowest mean of each row in bold."""
+    table: mean and deviation of the runs per cell, the lowest mean of each row in bold, over
+    every column of the row (the rule the manuscript states for its tables). tabcolsep (pt), when
+    given, narrows the column gaps so that the columns fit the text width."""
     lines = ["\\begin{table}[!htbp]", "\\centering",
              f"\\caption{{{caption}}}",
-             f"\\label{{{label}}}",
+             f"\\label{{{label}}}"] + ([f"\\setlength{{\\tabcolsep}}{{{tabcolsep}pt}}"] if tabcolsep else []) + [
              "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}l" + "r" * len(cols) + "}", "\\toprule",
              "Database & " + " & ".join(stacked_header(ALGO_LABEL[c]) for c in cols) + " \\\\",
              "\\midrule"]
@@ -1599,18 +1603,13 @@ def export_replicate_tables():
         tab = pd.DataFrame(rows)
         write_csv(tab, os.path.join(OUT_DIR, "table_SC1_runtime_replicates.csv"))
         out.append("table_SC1_runtime_replicates.csv")
-        # the SC1 table, and beside it the three miners at the one cutoff UUT: HUSP-ULL, HUSP-SP and
-        # the proposal's miner with its cutoff at UUT (a seventh column does not fit the text width)
-        for fname, order, caption, label in (
-                ("table_SC1_runtime.tex", STATIC_ORDER, "Runtime (s) of SC1 at the default threshold",
-                 "tab:sc1_runtime"),
-                ("table_SC1_runtime_at_uut.tex", AT_UUT_ORDER,
-                 "Runtime (s) of SC1 at the default threshold, every miner with its cutoff at UUT",
-                 "tab:sc1_runtime_at_uut")):
-            cols = [a for a in order if a in set(tab["algorithm"])]
-            if cols:
-                write_sc1_runtime_tex(tab, cols, fname, caption, label)
-                out.append(fname)
+        # the SC1 table: the six algorithms and, in the last column, the proposal's miner with its
+        # cutoff at UUT; seven columns fit the text width with 4 pt column gaps
+        cols = [a for a in SC1_TABLE_ORDER if a in set(tab["algorithm"])]
+        if cols:
+            write_sc1_runtime_tex(tab, cols, "table_SC1_runtime.tex", "Runtime (s) of SC1 at the default threshold",
+                                  "tab:sc1_runtime", tabcolsep=4)
+            out.append("table_SC1_runtime.tex")
 
     df = load_scenario("SC2", replicates=True)
     if df is not None:
