@@ -767,6 +767,10 @@ def figset_scalability(sc="SC3", tag="fig_scalability", datasets=None,
 
 # %% ------------------------------------------------------------------ Cell 4
 #    INCREMENTAL (SC2): cumulative runtime along the stream, one panel per database
+INC_FIG_COLS = 4         # the eight SC2 streams in two rows: three columns made the figure nearly a page tall
+INC_FIG_PANEL_H = 1.75   # inches per row; the fonts stay at FONT_PT
+
+
 def figset_incremental(tag="fig_incremental_cumulative", datasets=None):
     """Cumulative runtime over the 100 increments, the initial mine excluded, from the mean of
     the replicates where an arm has them. A curve that stops early is an arm that did not
@@ -775,7 +779,7 @@ def figset_incremental(tag="fig_incremental_cumulative", datasets=None):
     if df is None:
         return
     datasets = [d for d in (datasets or SC2_DATASETS) if d in set(df["dataset"])]
-    fig, axes = panel_grid(len(datasets))
+    fig, axes = panel_grid(len(datasets), ncols=INC_FIG_COLS, h=INC_FIG_PANEL_H)
     absent = []
     for i, (ax, ds) in enumerate(zip(axes, datasets)):
         sub = df[(df["dataset"] == ds) & is_inc(df)]
@@ -798,9 +802,9 @@ def figset_incremental(tag="fig_incremental_cumulative", datasets=None):
         ax.set_xticks([0, 50, 100])
         panel_xlabel(ax, i, ds, "Increment")
         safe_log(ax)
-        if i % PANEL_COLS == 0:
+        if i % INC_FIG_COLS == 0:
             ax.set_ylabel("Cumulative runtime (s)")
-    fig.tight_layout(w_pad=0.6)
+    fig.tight_layout(w_pad=0.4)
     place_legend(fig, axes, tag, spare=[a for a in fig.axes if not a.get_visible()], ncol=2)
     absent_footnote(fig, absent)
     save(fig, f"{tag}.pdf")
