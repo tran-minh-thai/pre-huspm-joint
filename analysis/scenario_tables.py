@@ -1412,7 +1412,7 @@ def long_pattern_checks(put, skip=(), rule_change=RULE_CHANGE):
         print("[not written] verify_long_all_*: " + ("no long stream measured" if not measured else "no finished record"))
         return
     rows = pd.concat(frames)
-    rows["arm"] = [rename_arms.new_name(sc, a) or a for sc, a in zip(rows["scenario"], rows["arm"])]
+    rows["arm"] = [verify_arm(sc, a) for sc, a in zip(rows["scenario"], rows["arm"])]
     ref = rows[rows["status"] == "reference"]
     cmp_rows = rows[(rows["status"] != "reference") & rows["arm"].isin(LONG_CHECKED_ARMS)]
     cmp_rows = cmp_rows[[k in measured for k in zip(cmp_rows["scenario"], cmp_rows["dataset"])]]
@@ -1440,6 +1440,16 @@ def long_pattern_checks(put, skip=(), rule_change=RULE_CHANGE):
         put(f"verify_long_all_{a}_comparisons", len(g), src)
         put(f"verify_long_all_{a}_mismatches", int((g["status"] != "match").sum()), src)
         put(f"verify_long_all_{a}_records", "; ".join(sorted(set(g["record"]))), src)
+
+
+def verify_arm(sc, arm):
+    """The present name of an arm written in a correctness record. The records keep the names of the
+    code that ran: up to 88f3017c the method was Adaptive-FloorSelect, the window rule at w = 5
+    (FLOOR_WINDOW of AutomatedExperimentRunner at that time), which is now Pre-HUSPM-Joint-w5, not
+    the present method; rename_arms.py maps the campaign trees, whose arms were renamed later."""
+    if sc in rename_arms.INCREMENTAL and arm == "Adaptive-FloorSelect":
+        return P + "-w5"
+    return rename_arms.new_name(sc, arm) or arm
 
 
 # ------------------------------------------------------------------------------ agreement
@@ -1824,6 +1834,13 @@ def sc2_tex(totals, region, reps=None):
         rests on the same number. The full account is the key, for the text that cites the table."""
         phrase = runs_phrase(arms)
         CAPTION_RUNS.append((key, phrase))
+        ns = {(d, a): S[(d, a)]["n"] for d in order for a in arms if S.get((d, a))}
+        if ns:
+            common = max(set(ns.values()), key=list(ns.values()).count)
+            CAPTION_RUNS.append((key + "_common", common))
+            for (d, a), n in ns.items():
+                if n != common:
+                    CAPTION_RUNS.append((f"{key}_{a}_{d}", n))
         return title if ", except " in phrase else f"{title}, {phrase}"
 
     head = ("Database & \\begin{tabular}[b]{@{}r@{}}Pre-HUSPM-\\\\Joint\\end{tabular} & "
@@ -3354,6 +3371,8 @@ def export_all(out_dir=None):
     for _, r in b7.iterrows():
         put(f"SC7_block_index_{r['dataset']}_ms", f"{r['with_index_ms']:.0f}/{r['without_index_ms']:.0f}",
             "table_SC7_block_index.csv")
+        put(f"SC7_block_index_{r['dataset']}_direct_saves_s",
+            half_up(round((r["without_index_ms"] - r["with_index_ms"]) / 1000, 9)), "table_SC7_block_index.csv")
         put(f"SC7_block_index_{r['dataset']}_sequences_read",
             f"{r['sequences_read_with']}/{r['sequences_read_without']}", "table_SC7_block_index.csv")
 
@@ -3369,6 +3388,22 @@ def export_all(out_dir=None):
             "table_SC7_block_size.csv")
         eq = bs["counts_equal"].str.split("/", expand=True).astype(int)
         put("SC7_block_size_counts_equal", f"{int((eq[0] == eq[1]).sum())}/{len(bs)}", "table_SC7_block_size.csv")
+        # the time of the whole stream at each size (one run each), and how far those single runs lie
+        # above the mean of the five runs of the fixed lower threshold in SC2, the same arm and stream
+        rp = os.path.join(out, "table_SC2_replicates.csv")
+        ref = pd.read_csv(rp) if os.path.exists(rp) else None
+        for d, g in bs.groupby("dataset"):
+            put(f"SC7_block_size_{d}_total_s_range", f"{half_up(g['total_s'].min())} to {half_up(g['total_s'].max())}",
+                "table_SC7_block_size.csv")
+            r2 = ref[(ref["dataset"] == d) & (ref["algorithm"] == FIXED)] if ref is not None else []
+            if len(r2):
+                m, sd = float(r2["total_s_mean"].iloc[0]), float(r2["total_s_std"].iloc[0])
+                put(f"SC7_block_size_{d}_fixed_floor_SC2_mean_s", half_up(m), "table_SC2_replicates.csv")
+                put(f"SC7_block_size_{d}_fixed_floor_SC2_std_s", half_up(sd), "table_SC2_replicates.csv")
+                put(f"SC7_block_size_{d}_fixed_floor_SC2_runs", int(r2["n"].iloc[0]), "table_SC2_replicates.csv")
+                put(f"SC7_block_size_{d}_above_fixed_floor_s_range",
+                    f"{half_up(round(g['total_s'].min() - m, 9))} to {half_up(round(g['total_s'].max() - m, 9))}",
+                    "table_SC7_block_size.csv")
         for _, r in bs.iterrows():
             put(f"SC7_block_size_{r['dataset']}_{r['block_size']}_sequences_read", r["sequences_read"],
                 "table_SC7_block_size.csv")
@@ -3400,7 +3435,7 @@ def export_all(out_dir=None):
                 # the arm every other arm is compared with (it runs first on each stream)
                 ref = cmp_rows[cmp_rows["status"] == "reference"]
                 for sc, g in ref.groupby("scenario"):
-                    put(f"{key}_{sc}_reference_arm", "; ".join(sorted({rename_arms.new_name(sc, a) or a for a in g["arm"]})),
+                    put(f"{key}_{sc}_reference_arm", "; ".join(sorted({verify_arm(sc, a) for a in g["arm"]})),
                         "table_verification.csv")
                 cmp_rows = cmp_rows[cmp_rows["status"] != "reference"]
                 for sc, n in cmp_rows.groupby("scenario").size().items():
@@ -3410,9 +3445,16 @@ def export_all(out_dir=None):
                     put(f"{key}_{sc}_{db}_comparisons", len(g), "table_verification.csv")
                     put(f"{key}_{sc}_{db}_mismatches", int((g["status"] != "match").sum()), "table_verification.csv")
                 # records written before the arms were renamed carry the old names
-                cmp_rows["arm"] = [rename_arms.new_name(sc, a) or a for sc, a in zip(cmp_rows["scenario"], cmp_rows["arm"])]
+                cmp_rows["arm"] = [verify_arm(sc, a) for sc, a in zip(cmp_rows["scenario"], cmp_rows["arm"])]
                 for (sc, arm), n in cmp_rows.groupby(["scenario", "arm"]).size().items():
                     put(f"{key}_{sc}_{arm}_comparisons", int(n), "table_verification.csv")
+        cmd_name = r["check"].split(", ")[-1].removesuffix(" operations")
+        meta_path = os.path.join(_record(cmd_name), "run_meta.json")
+        if os.path.exists(meta_path):
+            heap = re.search(r"-Xmx(\d+)([gGmM])", json.load(open(meta_path, encoding="utf-8")).get("command", ""))
+            if heap:
+                put(f"{key}_heap_gb", int(heap.group(1)) if heap.group(2) in "gG" else round(int(heap.group(1)) / 1024, 1),
+                    "table_verification_records.csv")
         for col in ("runs", "operations", "with_target", "direct_delete", "direct_insert", "direct_modify",
                     "mismatches", "caught", "rescans_at_uut", "rescans_back_to_low", "direct_at_uut", "stopped_by_heap",
                     "patterns_initial", "patterns_increments"):
@@ -3479,6 +3521,20 @@ def export_all(out_dir=None):
             if "full" in v and "no_block_index" in v:
                 put(f"SC7_stream_{ds}_block_index_saves_s", half_up(round(v["no_block_index"] - v["full"], 9)),
                     "table_SC7_incremental.csv")
+                put(f"SC7_stream_{ds}_block_index_saves_pct", half_up(round(100 * (v["no_block_index"] - v["full"]) / v["full"], 9), 1),
+                    "table_SC7_incremental.csv")
+            if "full" in v and "rescan_every_increment" in v:
+                put(f"SC7_stream_{ds}_rescan_every_increment_over_full", half_up(round(v["rescan_every_increment"] / v["full"], 9)),
+                    "table_SC7_incremental.csv")
+            # the run with the rule against the five runs of the fixed lower threshold in SC2 (same arm, same
+            # stream): its distance from their mean, in standard deviations
+            rp = os.path.join(out, "table_SC2_replicates.csv")
+            if "full" in v and os.path.exists(rp):
+                r2 = pd.read_csv(rp)
+                r2 = r2[(r2["dataset"] == ds) & (r2["algorithm"] == FIXED)]
+                if len(r2) and float(r2["total_s_std"].iloc[0]) > 0:
+                    z = (v["full"] - float(r2["total_s_mean"].iloc[0])) / float(r2["total_s_std"].iloc[0])
+                    put(f"SC7_stream_{ds}_full_minus_fixed_floor_SC2_sd", half_up(round(z, 9), 1), "table_SC2_replicates.csv")
 
     ex = explored_one_convention()
     ex_path = os.path.join(out, "table_explored_nodes.csv")
