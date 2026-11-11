@@ -35,7 +35,7 @@ an hour.
 
 The session stops between arms, never inside one, so a session overruns by however long its
 last arm takes, bounded by `CapSeconds`. Among the arms of the proposal and of remining, the
-longest is FIFA/Remine-from-scratch in SC2 (see "What each scenario costs").
+longest is FIFA/Remine-from-scratch in SC2 (see "What each scenario runs").
 
 Several scenarios can share one sitting by chaining the commands; each takes its own
 `-SessionHours` budget, so give the later ones a smaller budget to keep the sitting bounded.
@@ -62,27 +62,32 @@ after each increment.
 |---|---|---|
 | JDK | Eclipse Temurin 25.0.4.1+1 | One exact build, pinned in `environment.lock.json` and checked by `campaign.ps1`, because runtimes from two JVMs do not belong in one table. The source compiles on JDK 17 or later. |
 | heap | `-Xmx48g` (`-HeapGb`) | One ceiling for the whole campaign, since it decides how far a memory-bound arm gets; 48 GB leaves the operating system 16 GB of 64. |
-| item ids | compacted on C8T1S5I8N5K only | Its 68,240 items carry ids up to 4,999,999 and every miner sizes per-item arrays by the largest id. Each id is replaced at load by its rank in the `_eui` file (`Datasets.compactItemIds`), which keeps the item order and so the patterns. The other seven databases are close to dense and are loaded as they are. |
-| `D_init` | per database, `Datasets.Entry.dInitCount` | Yan et al. (2025), Table 16 (OD.Num), for the databases both studies use; KOSARAK takes their Kosarak10k split scaled by a hundred; C8T1S5I8N5K and TAFENG keep an incremental stream of about 20,000 sequences. |
+| item ids | compacted on C8T1S5I8N5K only | Its 68,240 items carry ids up to 4,999,999 and every miner sizes per-item arrays by the largest id. Each id is replaced at load by its rank in the `_eui` file (`Datasets.compactItemIds`), which keeps the item order and so the patterns. The other eight databases are close to dense and are loaded as they are. |
+| `D_init` | per database, `Datasets.Entry.dInitCount` | Yan et al. (2025), Table 16 (OD.Num), for the databases both studies use; KOSARAK takes their Kosarak10k split scaled by a hundred; C8T1S5I8N5K, TAFENG and DUNNHUMBY keep an incremental stream of about 20,000 sequences. |
 | increments | `K = 100` | equal increments in SC2 and the SC7 incremental ablations. |
-| `r_l` | 0.80 | On all eight databases; for KOSARAK settled by the calibration (`results/calibration`, rule 2). The proposal and Pre-HUSPM read the same value. |
+| `r_l` | 0.80 | On all nine databases; for KOSARAK settled by the calibration (`results/calibration`, rule 2). The proposal and Pre-HUSPM read the same value. |
 | item removal | `once` | `-Dadapt.iip`; chosen by the calibration (`results/calibration`, rule 1): the two variants are within 2 percent of each other in total. |
-| repeats | 1 per arm; replicates as separate arms | `-Repeat n` and `-SeedIndex k` measure a replicate in a fresh JVM, into `results/campaign-replicates/s<k>r<n>`. Three repeats for SC1 and for SC2's proposal and remining on SIGN, TAFENG, BIBLE and C8T1S5I8N5K; five seeds for SC6. See `docs/experiments.md`, "Repetition". |
-| `SUBSET_3` | SIGN, LEVIATHAN, C8T1S5I8N5K | Small and dense, medium, and the one database with more than one item per event. Used by SC3, SC4, SC5 and SC6. |
+| repeats | 1 per arm; replicates as separate arms | `-Repeat n` and `-SeedIndex k` measure a replicate in a fresh JVM, into `results/campaign-replicates/s<k>r<n>`. The runs of every arm are listed in `figures/campaign/table_replicate_layout.csv`; see `docs/experiments.md`, "Repetition". |
+| `SUBSET_3` | SIGN, LEVIATHAN, C8T1S5I8N5K | Small and dense, medium, and a database with more than one item per event. Used by SC3, SC4 and SC5; the mixed streams (SC6, SC6D, SC6B) and the long streams add TAFENG and DUNNHUMBY (`MIXED_SETS`). |
 | `C5_ABLATION_SET` | SIGN, C8T1S5I8N5K (BMS1 listed, filtered out by scope) | The databases of SC7's incremental ablations (block index and adaptive rescan). `Pre-HUSPM-Joint-rescan-every-batch` rescans every increment, so it costs a hundred full mines. |
 | BMS1 | SC1 only | On the whole database 0.025 returns two patterns and 0.020 exceeds three billion candidates (`results/thresholds/bms1-whole`); its four levels lie below 0.020. |
 
-## What each scenario costs
+## What each scenario runs
 
-| scenario | arms | arms per database |
-|---|---:|---|
-| SC1 | 48 | the six static algorithms on eight databases |
-| SC2 | 105 | `Pre-HUSPM-Joint-fixed-threshold`, `Pre-HUSPM-Joint`, `Pre-HUSPM-SWUmax`, `Pre-HUSPM-TSU`, `Remine-from-scratch`, `Remine-own-UUT`, `Remine-HUSP-ULL`, `Remine-HUSP-SP`, `IncUSP-Miner+`, `Joint-miner+SWUmax`, `Joint-miner+TSU`, `Joint-rule+PreHUSPM-tracking`, `Joint-miner+SWUmax+PreHUSPM-tracking`, `Joint-rule+min-floor`, `Joint-rule+plain-floor` on seven databases |
-| SC3 | 18 | the six static algorithms on SIGN, LEVIATHAN, C8T1S5I8N5K |
-| SC4 | 6 | `Pre-HUSPM` and `Pre-HUSPM-Joint` on the same three |
-| SC5 | 27 | `Pre-HUSPM-Joint-fixed-threshold`, `Pre-HUSPM-Joint`, `Pre-HUSPM-SWUmax`, `Pre-HUSPM-TSU`, `Remine-from-scratch`, `Remine-own-UUT`, `Remine-HUSP-ULL`, `Remine-HUSP-SP`, `IncUSP-Miner+` on the same three |
-| SC6, SC6D, SC6B | 24 each, 32 in SC6 | `Pre-HUSPM-Joint-fixed-threshold`, `Pre-HUSPM-Joint`, `Remine-from-scratch`, `Remine-own-UUT`, `Remine-HUSP-ULL`, `Remine-HUSP-SP` on the same three and TAFENG; `Joint-rule+min-floor` and `Joint-rule+plain-floor` in SC6 |
-| SC7 | 44 | `Pre-HUSPM-Joint`, `Pre-HUSPM-Joint-no-IUB`, `Pre-HUSPM-Joint-no-IPS`, `Pre-HUSPM` on seven databases; `Pre-HUSPM-Joint-rescan-rule`, `Pre-HUSPM-Joint-rescan-every-batch`, `Pre-HUSPM-Joint-no-block-index` and the block sizes `Pre-HUSPM-Joint-bsz-1`, `_5`, `_10`, `_50`, `_200` on SIGN and C8T1S5I8N5K |
-| window sweep (`-WindowSweep`) | 35 in SC2, 15 in SC5, 20 in each mixed stream (four databases) | `Pre-HUSPM-Joint-w1`, `-w2`, `-w3`, `-w5`, `-w10` |
-| SC1, live memory | 48 | as SC1 |
-| SC2, live memory | 42 | `Pre-HUSPM-Joint-fixed-threshold`, `Pre-HUSPM-Joint`, `Pre-HUSPM-SWUmax`, `Pre-HUSPM-TSU`, `Remine-from-scratch`, `IncUSP-Miner+` on seven databases |
+The arms measured on every database, with their runs, are listed in
+`figures/campaign/table_replicate_layout.csv` (generated from the result trees); its rows of the
+tree `timing` whose replicates include `s0r0` are the arms of the main campaign.
+
+| scenario | databases | arms |
+|---|---|---|
+| SC1 | nine | the six static algorithms (`Pre-HUSPM-Joint`, `HUSP-ULL`, `HUSP-SP`, `USpan`, `IncUSP-Miner+`, `Pre-HUSPM`) and `Joint-miner@UUT` |
+| SC2 | eight (not BMS1) | `Pre-HUSPM-Joint`, `Pre-HUSPM-Joint-fixed-threshold`, `Pre-HUSPM-Joint-time`, the window arms `Pre-HUSPM-Joint-w1`, `-w2`, `-w3`, `-w5`, `-w10`, the break-even windows `Pre-HUSPM-Joint-be1`, `-be2`, `-be3`, `-be10`, `-be20`, `Pre-HUSPM-SWUmax`, `Pre-HUSPM-TSU`, `IncUSP-Miner+`, `Remine-from-scratch`, `Remine-own-UUT`, their `-rebuild` arms, `Remine-HUSP-ULL`, `Remine-HUSP-SP`, `Joint-miner+SWUmax`, `Joint-miner+TSU`, `Joint-rule+PreHUSPM-tracking`, `Joint-miner+SWUmax+PreHUSPM-tracking`, `Joint-rule+min-floor`, `Joint-rule+plain-floor` |
+| SC3 | SIGN, LEVIATHAN, C8T1S5I8N5K | as SC1 |
+| SC4 | the same three | `Pre-HUSPM` and `Pre-HUSPM-Joint` |
+| SC5 | the same three | the SC2 arms without the six `Joint-miner+...` and `Joint-rule+...` arms |
+| SC6, SC6D, SC6B | the same three, TAFENG and DUNNHUMBY | `Pre-HUSPM-Joint`, `Pre-HUSPM-Joint-fixed-threshold`, `Pre-HUSPM-Joint-time`, the five `-be<n>` arms, `Remine-from-scratch`, `Remine-own-UUT`, their `-rebuild` arms, `Remine-HUSP-ULL`, `Remine-HUSP-SP`; in SC6 also `Joint-rule+min-floor` and `Joint-rule+plain-floor`; the five window arms on SIGN, LEVIATHAN and C8T1S5I8N5K |
+| SC7 | eight (not BMS1); the incremental ablations on SIGN and C8T1S5I8N5K | `Pre-HUSPM-Joint`, `Pre-HUSPM-Joint-no-IUB`, `Pre-HUSPM-Joint-no-IPS`, `Pre-HUSPM`; `Pre-HUSPM-Joint-rescan-rule`, `Pre-HUSPM-Joint-rescan-every-batch`, `Pre-HUSPM-Joint-no-block-index` and the block sizes `Pre-HUSPM-Joint-bsz-1`, `-5`, `-10`, `-50`, `-200` |
+| SC8, SC8P, SC9, SC10, SC10H | SIGN, LEVIATHAN, C8T1S5I8N5K, TAFENG, DUNNHUMBY (SC10H without SIGN) | `Pre-HUSPM-Joint`, `Pre-HUSPM-Joint-fixed-threshold`, `Pre-HUSPM-Joint-w5`, `Remine-from-scratch`, `Remine-own-UUT`, their `-rebuild` arms; in SC9 also `Pre-HUSPM-Joint-index-rebuild` |
+| SC1, live memory | nine | the six static algorithms; `Joint-miner@UUT` too in the sampled tree |
+| SC2, live memory | eight | `Pre-HUSPM-Joint`, `Pre-HUSPM-Joint-fixed-threshold`, `Pre-HUSPM-Joint-time`, `Pre-HUSPM-Joint-w5`, `Pre-HUSPM-SWUmax`, `Pre-HUSPM-TSU`, `IncUSP-Miner+`, `Remine-from-scratch`, `Remine-own-UUT`, their `-rebuild` arms, `Joint-rule+PreHUSPM-tracking`, `Joint-miner+SWUmax+PreHUSPM-tracking`, `Joint-rule+min-floor`, `Joint-rule+plain-floor` |
+| SC9, live memory | the five of the long streams | `Pre-HUSPM-Joint`, `Pre-HUSPM-Joint-index-rebuild` |

@@ -1,0 +1,4 @@
+SC6: 25 streams, 75 modifications, 73 rescanned: 0 by the deletion half only, 15 by the whole unit only, 58 by both
+SC6D: 25 streams, 100 modifications, 93 rescanned: 0 by the deletion half only, 48 by the whole unit only, 45 by both
+SC6B: 25 streams, 75 modifications, 70 rescanned: 0 by the deletion half only, 13 by the whole unit only, 57 by both
+streams: 75; replay agrees with the measured rescans on every operation: 75; not: []

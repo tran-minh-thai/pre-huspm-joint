@@ -100,7 +100,7 @@ decisions with `analysis/insertion_alpha.py`, which computes both from the data 
 | C8T1S5I8N5K | 0.001132 | 0.0529 | 0.0212 | 0.1329 | 0/100 | 0.0588 | 0 of 100 differ |
 | LEVIATHAN | 0.015530 | 0.9024 | 0.7267 | 1.0000 | 0/100 | 0.8861 | 0 of 100 differ |
 | KOSARAK | 0.025000 | 0.8690 | 0.8363 | 0.8873 | 0/100 | 0.8694 | 0 of 100 differ |
-| DUNNHUMBY | 0.001464 | 0.5640 | 0.3359 | 0.8246 | 0/100 | not computed | 0 compared |
+| DUNNHUMBY | 0.001464 | 0.5640 | 0.3359 | 0.8246 | 0/100 | 0.5692 | 0 of 100 differ |
 
 ## The prediction registered before the campaign
 
@@ -115,12 +115,12 @@ completed the 100 increments.
 |---|---:|---:|---:|---:|---:|---:|
 | C8T1S5I8N5K | 0.0588 | 17.31 | 77 | 100 | 80 | 23 |
 | TAFENG | 0.1472 | 6.94 | 52 | 100 | 56 | 48 |
+| DUNNHUMBY | 0.5692 | 1.76 | 100 | 100 | 100 | 0 |
 | FIFA | 0.6213 | 1.67 | 27 | 41 | 29 | 14 |
 | BIBLE | 0.8158 | 1.23 | 63 | 77 | 63 | 14 |
 | KOSARAK | 0.8694 | 1.15 | 100 | 100 | 100 | 0 |
 | LEVIATHAN | 0.8861 | 1.13 | 98 | 100 | 98 | 2 |
 | SIGN | 0.9175 | 1.10 | 59 | 59 | 59 | 0 |
-| DUNNHUMBY | not computed | not computed | 100 | 100 | 100 | 0 |
 
 Verdict: **refuted** (largest-gap part holds, smallest-gap part fails).
 

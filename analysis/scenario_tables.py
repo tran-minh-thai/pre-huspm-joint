@@ -2171,16 +2171,16 @@ def mixed_pooled(put, out):
     return t
 
 
-OFFLINE_OPTIMUM = os.path.join(mf.DATA_DIR, "invariant-offline-optimum-nodes", "2026-10-30")
+OFFLINE_OPTIMUM = os.path.join(mf.REPO_DIR, "results-invariant", "offline-optimum-nodes", "2026-11-11")
 
 
 def offline_optimum_nodes(put):
-    """The rescan floor choices in explored nodes (results/invariant-offline-optimum-nodes, written by
+    """The rescan floor choices in explored nodes (results-invariant/offline-optimum-nodes, written by
     analysis/floor_policy_probe.py --nodes): per scenario the nodes of the method, of mining every rescan
     at the threshold, of the fixed lower threshold and of the offline optimum, a direct update costing 0;
     the method over the optimum; and the checks behind them."""
     path = os.path.join(OFFLINE_OPTIMUM, "floor_policy.csv")
-    src = "invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv"
+    src = "results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv"
     if not os.path.exists(path):
         print(f"[not written] offline optimum keys: {path} missing")
         return
@@ -2953,6 +2953,28 @@ def bms1_whole(put):
     put("BMS1_whole_candidate_budget", m.group(1), src)
 
 
+def replicate_layout():
+    """Which runs every arm has: one row per tree kind (timing, memory, sampled memory), scenario,
+    database and arm, with the number of finished runs and their replicates (s<seed index>r<repeat>;
+    the main tree is s0r0) and the number of deferred ones (a DEFERRED file in place of a run). Read
+    from the DONE and DEFERRED files of results/campaign*, so docs/experiments.md states no count."""
+    kinds = (("timing", "campaign"), ("memory", "campaign-mem"), ("memory, sampled", "campaign-mem-sampled"))
+    cells = {}
+    for kind, tree in kinds:
+        roots = [("s0r0", os.path.join(mf.DATA_DIR, tree))]
+        roots += [(os.path.basename(d), d) for d in sorted(glob.glob(os.path.join(mf.DATA_DIR, tree + "-replicates", "s*r*")))]
+        for rep, root in roots:
+            for name, slot in (("DONE", 0), ("DEFERRED", 1)):
+                for f in glob.glob(os.path.join(root, "*", "*", "*", name)):
+                    sc, db, arm = f.replace(os.sep, "/").split("/")[-4:-1]
+                    cells.setdefault((kind, sc, db, arm), ([], []))[slot].append(rep)
+    order = lambda r: (int(re.match(r"s(\d+)r(\d+)", r).group(1)), int(re.match(r"s(\d+)r(\d+)", r).group(2)))
+    rows = [dict(tree=k[0], scenario=k[1], dataset=k[2], algorithm=k[3], runs=len(v[0]),
+                 replicates=" ".join(sorted(v[0], key=order)), deferred=" ".join(sorted(v[1], key=order)))
+            for k, v in sorted(cells.items())]
+    return pd.DataFrame(rows)
+
+
 def export_all(out_dir=None):
     out = out_dir or mf.OUT_DIR
     os.makedirs(out, exist_ok=True)
@@ -3457,6 +3479,7 @@ def export_all(out_dir=None):
         seen.add(n["key"])
     if twice:
         sys.exit(f"paper_numbers.csv: {len(twice)} keys written more than once: {', '.join(twice[:10])}")
+    mf.write_csv(replicate_layout(), os.path.join(out, "table_replicate_layout.csv"))
     mf.write_csv(pd.DataFrame(nums), os.path.join(out, "paper_numbers.csv"))
     print(f"[saved] scenario tables and paper_numbers.csv ({len(nums)} numbers) in {out}")
 

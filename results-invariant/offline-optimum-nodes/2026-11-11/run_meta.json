@@ -1,0 +1,16 @@
+{
+  "command": "~/.venvs/pre-huspm-adaptive/bin/python analysis/floor_policy_probe.py --out results-invariant/offline-optimum-nodes/2026-11-11 --db SIGN TAFENG C8T1S5I8N5K BIBLE LEVIATHAN FIFA KOSARAK DUNNHUMBY --sc5 --sc6 --plans results-invariant/offline-optimum-nodes/2026-11-11/plans/mixed_plans.tsv --nodes",
+  "path_substitutions": 1,
+  "build_dir": "build-plans",
+  "git_commit": "954c935bae6f42040cda1bcdee7e9e3ca264445f",
+  "tree": "src clean, other files modified",
+  "source_sha256": "16349bc6c082034e60771378b3314e3a338e1304990f989b348699a08b4809cd",
+  "source_files": 46,
+  "java": "openjdk version \"25.0.4.1\" 2026-08-18 LTS",
+  "os": "Darwin 27.2.0 (macOS-27.2-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-11-11T09:14:10",
+  "end": "2026-11-11T09:45:19",
+  "exit_code": 0
+}

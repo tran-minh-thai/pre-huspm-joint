@@ -3155,89 +3155,89 @@ SC6D_every_kind_pooled_Remine-HUSP-ULL_over_proposal_range_without_TAFENG,1.047 
 SC6D_every_kind_pooled_Remine-HUSP-ULL-or-SP_over_proposal_range_without_TAFENG,1.047 (C8T1S5I8N5K modification) to 18.563 (DUNNHUMBY deletion),table_SC6_pooled.csv
 SC6D_every_kind_pooled_Remine-UUT_over_proposal_range_without_TAFENG,0.772 (C8T1S5I8N5K modification) to 3.858 (DUNNHUMBY deletion),table_SC6_pooled.csv
 SC6D_every_kind_pooled_window5_over_proposal_range_without_TAFENG,0.023 (LEVIATHAN deletion) to 1.763 (SIGN modification),table_SC6_pooled.csv
-offline_optimum_nodes_streams,115,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_above_a_policy,0 of 460 stream and policy pairs,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_method_replay,4804/4804,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_enumeration_check,"115 of 115 streams agree on their longest prefix with at most 1024 choice sequences (99027 sequences replayed, prefixes of 10 to 22 units)",invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_choice_sequences_whole_streams,1120 to 1.27e+30,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC2_method_total,2413385,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC2_always_threshold_total,2609807,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC2_fixed_lower_threshold_total,3846737,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC2_window5_total,3588575,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC2_offline_optimum_total,2376005,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC2_method_over_optimum_total,1.016,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC2_method_over_optimum_range,1.000 (C8T1S5I8N5K) to 1.113 (TAFENG),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC2_method_equals_optimum,2 of 7,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC2_always_threshold_over_optimum_total,1.098,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC2_always_threshold_over_optimum_range,1.000 (C8T1S5I8N5K) to 1.613 (TAFENG),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC2_fixed_lower_threshold_over_optimum_total,1.619,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC2_fixed_lower_threshold_over_optimum_range,1.023 (FIFA) to 1.994 (C8T1S5I8N5K),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC2_method_above_always_threshold,0 of 7 (equal in 4),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC5_method_total,16992937,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC5_always_threshold_total,17046806,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC5_fixed_lower_threshold_total,31460960,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC5_window5_total,23063720,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC5_offline_optimum_total,16372272,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC5_method_over_optimum_total,1.038,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC5_method_over_optimum_range,1.000 (SIGN SC5_K=67_strat=EVEN) to 1.210 (SIGN SC5_K=100_strat=BURST),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC5_method_equals_optimum,19 of 48,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC5_always_threshold_over_optimum_total,1.041,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC5_always_threshold_over_optimum_range,1.000 (SIGN SC5_K=67_strat=EVEN) to 1.253 (SIGN SC5_K=100_strat=DECREASING),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC5_fixed_lower_threshold_over_optimum_total,1.922,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC5_fixed_lower_threshold_over_optimum_range,1.174 (SIGN SC5_K=100_strat=BURST) to 2.586 (C8T1S5I8N5K SC5_K=25_strat=EVEN),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC5_method_above_always_threshold,11 of 48 (equal in 31),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC6_method_total,2364230,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC6_always_threshold_total,2377106,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC6_fixed_lower_threshold_total,3609010,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC6_window5_total,3577563,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC6_offline_optimum_total,2223447,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC6_method_over_optimum_total,1.063,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC6_method_over_optimum_range,1.000 (SC6 C8T1S5I8N5K seed 42) to 1.390 (SC6 TAFENG seed 42),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC6_method_equals_optimum,3 of 20,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC6_always_threshold_over_optimum_total,1.069,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC6_always_threshold_over_optimum_range,1.000 (SC6 C8T1S5I8N5K seed 42) to 1.530 (SC6 TAFENG seed 42),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC6_fixed_lower_threshold_over_optimum_total,1.623,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC6_fixed_lower_threshold_over_optimum_range,1.111 (SC6 TAFENG seed 2024) to 1.956 (SC6 SIGN seed 31415),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC6_method_above_always_threshold,1 of 20 (equal in 14),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC6B_method_total,2480367,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC6B_always_threshold_total,2482172,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC6B_fixed_lower_threshold_total,4339191,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC6B_window5_total,4198522,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC6B_offline_optimum_total,2415860,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC6B_method_over_optimum_total,1.027,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC6B_method_over_optimum_range,1.000 (SC6B C8T1S5I8N5K seed 42) to 1.439 (SC6B TAFENG seed 1337),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC6B_method_equals_optimum,6 of 20,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC6B_always_threshold_over_optimum_total,1.027,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC6B_always_threshold_over_optimum_range,1.000 (SC6B C8T1S5I8N5K seed 42) to 1.416 (SC6B TAFENG seed 42),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC6B_fixed_lower_threshold_over_optimum_total,1.796,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC6B_fixed_lower_threshold_over_optimum_range,1.149 (SC6B TAFENG seed 42) to 2.094 (SC6B SIGN seed 31415),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC6B_method_above_always_threshold,1 of 20 (equal in 15),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC6D_method_total,2424935,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC6D_always_threshold_total,2374160,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC6D_fixed_lower_threshold_total,2372828,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC6D_window5_total,2372828,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC6D_offline_optimum_total,1861020,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC6D_method_over_optimum_total,1.303,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC6D_method_over_optimum_range,1.067 (SC6D C8T1S5I8N5K seed 2024) to 1.716 (SC6D C8T1S5I8N5K seed 42),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC6D_method_equals_optimum,0 of 20,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC6D_always_threshold_over_optimum_total,1.276,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC6D_always_threshold_over_optimum_range,1.058 (SC6D C8T1S5I8N5K seed 2024) to 2.253 (SC6D TAFENG seed 271828),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC6D_fixed_lower_threshold_over_optimum_total,1.275,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC6D_fixed_lower_threshold_over_optimum_range,1.069 (SC6D TAFENG seed 271828) to 1.450 (SC6D C8T1S5I8N5K seed 42),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_SC6D_method_above_always_threshold,10 of 20 (equal in 0),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_all_method_total,26675854,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_all_always_threshold_total,26890051,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_all_fixed_lower_threshold_total,45628726,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_all_window5_total,36801208,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_all_offline_optimum_total,25248604,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_all_method_over_optimum_total,1.057,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_all_method_over_optimum_range,1.000 (C8T1S5I8N5K) to 1.716 (SC6D C8T1S5I8N5K seed 42),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_all_method_equals_optimum,30 of 115,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_all_always_threshold_over_optimum_total,1.065,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_all_always_threshold_over_optimum_range,1.000 (C8T1S5I8N5K) to 2.253 (SC6D TAFENG seed 271828),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_all_fixed_lower_threshold_over_optimum_total,1.807,invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_all_fixed_lower_threshold_over_optimum_range,1.023 (FIFA) to 2.586 (C8T1S5I8N5K SC5_K=25_strat=EVEN),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
-offline_optimum_nodes_all_method_above_always_threshold,23 of 115 (equal in 64),invariant-offline-optimum-nodes/2026-10-30/floor_policy.csv
+offline_optimum_nodes_streams,131,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_above_a_policy,0 of 524 stream and policy pairs,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_method_replay,5204/5204,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_enumeration_check,"131 of 131 streams agree on their longest prefix with at most 1024 choice sequences (111931 sequences replayed, prefixes of 10 to 22 units)",results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_choice_sequences_whole_streams,1120 to 1.27e+30,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC2_method_total,3880570,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC2_always_threshold_total,4073341,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC2_fixed_lower_threshold_total,5737446,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC2_window5_total,5071313,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC2_offline_optimum_total,3839539,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC2_method_over_optimum_total,1.011,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC2_method_over_optimum_range,1.000 (C8T1S5I8N5K) to 1.113 (TAFENG),results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC2_method_equals_optimum,3 of 8,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC2_always_threshold_over_optimum_total,1.061,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC2_always_threshold_over_optimum_range,1.000 (C8T1S5I8N5K) to 1.613 (TAFENG),results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC2_fixed_lower_threshold_over_optimum_total,1.494,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC2_fixed_lower_threshold_over_optimum_range,1.023 (FIFA) to 1.994 (C8T1S5I8N5K),results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC2_method_above_always_threshold,0 of 8 (equal in 5),results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC5_method_total,16999776,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC5_always_threshold_total,17046806,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC5_fixed_lower_threshold_total,31460960,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC5_window5_total,23063720,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC5_offline_optimum_total,16372272,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC5_method_over_optimum_total,1.038,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC5_method_over_optimum_range,1.000 (SIGN SC5_K=67_strat=EVEN) to 1.190 (SIGN SC5_K=100_strat=BURST),results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC5_method_equals_optimum,19 of 48,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC5_always_threshold_over_optimum_total,1.041,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC5_always_threshold_over_optimum_range,1.000 (SIGN SC5_K=67_strat=EVEN) to 1.253 (SIGN SC5_K=100_strat=DECREASING),results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC5_fixed_lower_threshold_over_optimum_total,1.922,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC5_fixed_lower_threshold_over_optimum_range,1.174 (SIGN SC5_K=100_strat=BURST) to 2.586 (C8T1S5I8N5K SC5_K=25_strat=EVEN),results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC5_method_above_always_threshold,11 of 48 (equal in 31),results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC6_method_total,3894216,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC6_always_threshold_total,3823412,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC6_fixed_lower_threshold_total,5223875,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC6_window5_total,5204505,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC6_offline_optimum_total,3516504,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC6_method_over_optimum_total,1.107,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC6_method_over_optimum_range,1.000 (SC6 C8T1S5I8N5K seed 42) to 1.390 (SC6 TAFENG seed 42),results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC6_method_equals_optimum,3 of 25,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC6_always_threshold_over_optimum_total,1.087,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC6_always_threshold_over_optimum_range,1.000 (SC6 C8T1S5I8N5K seed 42) to 1.530 (SC6 TAFENG seed 42),results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC6_fixed_lower_threshold_over_optimum_total,1.486,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC6_fixed_lower_threshold_over_optimum_range,1.111 (SC6 TAFENG seed 2024) to 1.956 (SC6 SIGN seed 31415),results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC6_method_above_always_threshold,5 of 25 (equal in 15),results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC6B_method_total,3989053,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC6B_always_threshold_total,3933760,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC6B_fixed_lower_threshold_total,6056196,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC6B_window5_total,5850940,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC6B_offline_optimum_total,3763780,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC6B_method_over_optimum_total,1.060,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC6B_method_over_optimum_range,1.000 (SC6B C8T1S5I8N5K seed 42) to 1.385 (SC6B TAFENG seed 42),results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC6B_method_equals_optimum,6 of 25,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC6B_always_threshold_over_optimum_total,1.045,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC6B_always_threshold_over_optimum_range,1.000 (SC6B C8T1S5I8N5K seed 42) to 1.416 (SC6B TAFENG seed 42),results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC6B_fixed_lower_threshold_over_optimum_total,1.609,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC6B_fixed_lower_threshold_over_optimum_range,1.149 (SC6B TAFENG seed 42) to 2.094 (SC6B SIGN seed 31415),results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC6B_method_above_always_threshold,4 of 25 (equal in 16),results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC6D_method_total,3581648,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC6D_always_threshold_total,3689019,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC6D_fixed_lower_threshold_total,3346074,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC6D_window5_total,3346074,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC6D_offline_optimum_total,2693003,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC6D_method_over_optimum_total,1.330,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC6D_method_over_optimum_range,1.109 (SC6D SIGN seed 31415) to 1.716 (SC6D C8T1S5I8N5K seed 42),results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC6D_method_equals_optimum,0 of 25,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC6D_always_threshold_over_optimum_total,1.370,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC6D_always_threshold_over_optimum_range,1.058 (SC6D C8T1S5I8N5K seed 2024) to 2.253 (SC6D TAFENG seed 271828),results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC6D_fixed_lower_threshold_over_optimum_total,1.243,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC6D_fixed_lower_threshold_over_optimum_range,1.069 (SC6D TAFENG seed 271828) to 1.450 (SC6D C8T1S5I8N5K seed 42),results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_SC6D_method_above_always_threshold,11 of 25 (equal in 0),results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_all_method_total,32345263,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_all_always_threshold_total,32566338,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_all_fixed_lower_threshold_total,51824551,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_all_window5_total,42536552,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_all_offline_optimum_total,30185098,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_all_method_over_optimum_total,1.072,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_all_method_over_optimum_range,1.000 (C8T1S5I8N5K) to 1.716 (SC6D C8T1S5I8N5K seed 42),results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_all_method_equals_optimum,31 of 131,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_all_always_threshold_over_optimum_total,1.079,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_all_always_threshold_over_optimum_range,1.000 (C8T1S5I8N5K) to 2.253 (SC6D TAFENG seed 271828),results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_all_fixed_lower_threshold_over_optimum_total,1.717,results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_all_fixed_lower_threshold_over_optimum_range,1.023 (FIFA) to 2.586 (C8T1S5I8N5K SC5_K=25_strat=EVEN),results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
+offline_optimum_nodes_all_method_above_always_threshold,31 of 131 (equal in 67),results-invariant/offline-optimum-nodes/2026-11-11/floor_policy.csv
 SC2_BIBLE_break_even_window_1_over_window5,0.983,table_break_even_window_sensitivity.csv
 SC2_BIBLE_break_even_window_2_over_window5,0.993,table_break_even_window_sensitivity.csv
 SC2_BIBLE_break_even_window_3_over_window5,0.997,table_break_even_window_sensitivity.csv
@@ -6582,8 +6582,8 @@ SC2_gain_stream_C8T1S5I8N5K,17.31,table_SC2_operating_region.csv
 SC2_alpha_decisions_DUNNHUMBY_median_pct,56.4,table_SC2_operating_region.csv
 SC2_alpha_decisions_DUNNHUMBY_range_pct,33.6 to 82.5,table_SC2_operating_region.csv
 SC2_gain_decisions_DUNNHUMBY,1.78,table_SC2_operating_region.csv
-SC2_alpha_stream_DUNNHUMBY_pct,nan,table_SC2_operating_region.csv
-SC2_gain_stream_DUNNHUMBY,nan,table_SC2_operating_region.csv
+SC2_alpha_stream_DUNNHUMBY_pct,56.9,table_SC2_operating_region.csv
+SC2_gain_stream_DUNNHUMBY,1.76,table_SC2_operating_region.csv
 SC2_alpha_decisions_FIFA_median_pct,62.3,table_SC2_operating_region.csv
 SC2_alpha_decisions_FIFA_range_pct,53.9 to 72.8,table_SC2_operating_region.csv
 SC2_gain_decisions_FIFA,1.67,table_SC2_operating_region.csv

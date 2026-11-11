@@ -837,10 +837,11 @@ def operating_region(df, arm=None):
     alpha = max_i A_i / U+ at each decision, read as 1 / iau_tightness (iau_tightness is
     U+ / max_i A_i at the decision): its median, minimum and maximum, and the increments with
     alpha <= UUT, which the joint rule never rescans. alpha_stream is alpha over the whole
-    insertion stream, from results/invariant-insertion-alpha/alpha_stream.csv, which
+    insertion stream, from alpha_stream.csv of results-invariant/floor-selection-windows/2026-11-11
+    (the eight SC2 streams; the seven of results/invariant-insertion-alpha have the same values), which
     analysis/insertion_alpha.py computes from the data files; alpha_check compares the
     per-increment alpha and decisions with that computation (alpha_batches.csv)."""
-    inv = os.path.join(DATA_DIR, "invariant-insertion-alpha")
+    inv = os.path.join(REPO_DIR, "results-invariant", "floor-selection-windows", "2026-11-11")
     stream = {}
     factor = {}
     batches = {}

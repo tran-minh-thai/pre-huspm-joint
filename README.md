@@ -69,6 +69,7 @@ JDK (the zip and SHA-256 of the lock file) into `..\jdk\` and sets `JAVA_HOME` f
 | SC4 | `r_l` in {0.3, 0.5, 0.7, 0.9} | same three |
 | SC5 | 25 to 100 batches cut in four shapes | same three |
 | SC6, SC6D, SC6B | 20 mixed insertions, deletions and modifications; SC6D mostly deletions; SC6B with one deletion that exceeds the budget alone; five seeds | same three, TAFENG and DUNNHUMBY |
+| SC8, SC8P, SC9, SC10, SC10H | long streams of 500 mixed operations: uniform, with a phase change, balanced insertions and deletions, modifications of recent sequences, uneven batches; three seeds | SIGN, LEVIATHAN, C8T1S5I8N5K, TAFENG and DUNNHUMBY (SC10H without SIGN) |
 | SC7 | ablations of the miner and of the maintenance | all but BMS1 |
 | FIDELITY | the Pre-HUSPM implementation under its paper's setting, on SPMF's files (`./fetch-spmf-husp.sh` or `.\fetch-spmf-husp.ps1` first) | SIGN, FIFA, BIBLE, Kosarak10k, BMS |
 
@@ -157,7 +158,7 @@ with `DIR`.
 | live-set sampling | at least 20 ms apart, longer as the live set grows; short mines repeated until 5 samples or 120 s | `-Dmem.interval.ms`, `-Dmem.minSamples`, `-Dmem.repeatMaxMs` |
 | JVM | Eclipse Temurin 25.0.4.1+1, `-Xmx48g -Xss64m` | `environment.lock.json`, `campaign.ps1` |
 | machine | AMD Ryzen 9 9950X, 64 GB, Windows 11 | `results/machine/PC-THAI.json` |
-| tie band | a time ratio in [0.921, 1.086] is a tie: the largest ratio between two arms that make the same search at every increment of SC2, and its reciprocal | `analysis/scenario_tables.py` (`jit_tie_band`) |
+| tie band | a time ratio inside the band of key `jit_tie_band` (`figures/campaign/paper_numbers.csv`) is a tie: the largest ratio between two arms that make the same search at every increment of SC2, and its reciprocal | `analysis/scenario_tables.py` (`jit_tie_band`) |
 
 | Database | Sequences | `D_init` | Default UUT | Utilities |
 |---|---:|---:|---:|---|

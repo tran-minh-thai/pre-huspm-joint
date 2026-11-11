@@ -77,6 +77,17 @@ scan. `results/invariant-root-items` counts them for every static configuration,
 `table_explored_nodes.csv`, the SC3 explored-node figure and the SC7 ablation table use
 `explored_nodes - root_stopped` for the proposal.
 
+**Deletion rows of the proposal.** The proposal and its versions reset `candidate_count` and
+`explored_nodes` at the initial mine and at the start of every insertion (the insertion half of a
+modification included), not at the start of a deletion. On a deletion row the two columns hold
+the previous row's value plus the work of the deletion's own mine when it rescanned; a deletion
+taken directly repeats the previous value. The work of one deletion is the difference from the
+previous row (SC6D on SIGN: an insertion row 5796, the deletion after it 11643, so 5847 for the
+deletion). No table, figure or key adds these columns over deletion rows: they are read on static
+mines, on SC2 (insertions only), on initial mines and on the remining arms, which use a new
+instance per operation. The break-even rule is not affected, since it takes the difference of the
+counter around each mine.
+
 ### Pruning counters
 
 Each column counts one pruning rule. Only the algorithms listed write a non-zero value.

@@ -9,8 +9,8 @@ any floor policy can therefore be replayed without mining, one phase at a time: 
 deletion, or the two phases of a modification (its deletion, then its insertion, each with its own
 decision, as PreHUSPMAdaptiveAlgo.runModification makes them).
 
-Streams: the seven SC2 streams; with --sc5 the 48 SC5 cells, whose increment sizes are read from the
-runner's log; with --sc6 the 60 streams of SC6, SC6D and SC6B (four databases, five seeds), whose
+Streams: the eight SC2 streams; with --sc5 the 48 SC5 cells, whose increment sizes are read from the
+runner's log; with --sc6 the streams of SC6, SC6D and SC6B (five databases, five seeds), whose
 operations are read from a plan written by verify.MixedPlanDump (--plans); with --long the long
 streams SC8, SC8P, SC9, SC10 and SC10H (four databases, three seeds, 500 operations), whose operations
 are read from a plan written by verify.LongPlanDump (--long-plans) and whose rows are the campaign's.
@@ -58,7 +58,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "analysis"))
 import make_figures as mf  # noqa: E402
 
-DBS = ["SIGN", "TAFENG", "C8T1S5I8N5K", "BIBLE", "LEVIATHAN", "FIFA", "KOSARAK"]
+DBS = ["SIGN", "TAFENG", "C8T1S5I8N5K", "BIBLE", "LEVIATHAN", "FIFA", "KOSARAK", "DUNNHUMBY"]
 K = 100
 
 
@@ -741,7 +741,7 @@ def main():
     ap.add_argument("--long-plans", default="results-probe/floor-policy/long-plans/long_plans.tsv",
                     help="plans written by verify.LongPlanDump, relative to the repository")
     ap.add_argument("--scenarios", nargs="*", help="with --long: only these long streams (SC8 SC8P SC9 SC10 SC10H)")
-    ap.add_argument("--no-sc2", action="store_true", help="leave out the seven SC2 streams")
+    ap.add_argument("--no-sc2", action="store_true", help="leave out the SC2 streams")
     ap.add_argument("--rule-before-initial-cycle", action="store_true",
                     help="replay the method as measured before 2026-11-02, without the initial mine's cycle")
     ap.add_argument("--nodes", action="store_true",

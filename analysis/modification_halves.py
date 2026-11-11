@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Which half of a modification makes it rescan, in SC6, SC6D and SC6B.
 
-    python3 analysis/modification_halves.py --out results/invariant-modification-halves/<date>
+    python3 analysis/modification_halves.py --out results-invariant/modification-halves/<date>
 
 A modification is one decision unit: its deletion half is tested, then its insertion half, and the
 unit rescans once, after the insertion, when either test exceeds the budget. Each mixed stream is
@@ -52,11 +52,14 @@ def halves(stream, su, rl):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", required=True)
-    ap.add_argument("--plans", default="results/invariant-offline-optimum-nodes/mixed_plans.tsv")
+    ap.add_argument("--plans", default="results-invariant/offline-optimum-nodes/2026-11-11/plans/mixed_plans.tsv")
     a = ap.parse_args()
     out = ROOT / a.out
     out.mkdir(parents=True, exist_ok=True)
-    ns = argparse.Namespace(db=["SIGN", "LEVIATHAN", "C8T1S5I8N5K", "TAFENG"], sc5=False, sc6=True, plans=a.plans)
+    # the databases are those of the plans file, so a database added to the plans is not left out
+    with open(ROOT / a.plans, newline="", encoding="utf-8") as f:
+        dbs = list(dict.fromkeys(r["dataset"] for r in csv.DictReader(f, delimiter="\t")))
+    ns = argparse.Namespace(db=dbs, no_sc2=True, sc5=False, sc6=True, long=False, plans=a.plans)
     rows, bad = [], []
     for s in fp.streams(ns):
         if not s.label.startswith("SC6"):

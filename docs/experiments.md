@@ -100,13 +100,16 @@ database, so it follows the database as it grows.
 
 ## 2. Datasets
 
-Eight databases. The data are not kept in this repository. The sequences of seven come from
+Nine databases. The data are not kept in this repository. The sequences of seven come from
 the SPMF dataset collection; their generated quantities and profits are release
 `v2.0.0-utilities` of `tran-minh-thai/huspm-datasets`. `fetch-datasets.ps1` / `fetch-datasets.sh`
 download both, assemble the databases with the release's `tools/assemble.py`, and verify them
 against `datasets.sha256`. These are the bytes every result was measured on; the measurements
 read them from release `v1.2.1-measured-quantity`, which holds the same 14 files. TAFENG is built
 locally from the raw Ta-Feng file by `tafeng/build_tafeng.py` and pinned by `tafeng/TAFENG.sha256`.
+DUNNHUMBY is built locally from dunnhumby "The Complete Journey", which is not redistributed, by
+`dunnhumby/build_dunnhumby.py`; `dunnhumby/SOURCE.sha256` pins the two source files and
+`dunnhumby/DUNNHUMBY.sha256` the result.
 
 | Database | Sequences | Distinct items | Events / sequence | Items / event | Total utility | Utilities |
 |---|---:|---:|---:|---:|---:|---|
@@ -118,8 +121,9 @@ locally from the raw Ta-Feng file by `tafeng/build_tafeng.py` and pinned by `taf
 | C8T1S5I8N5K | 47,132 | 68,240 | 2.36 | 7.97 | 47,416,411 | generated |
 | KOSARAK | 990,002 | 41,270 | 8.10 | 1.00 | 385,921,994 | generated |
 | TAFENG | 60,665 | 23,789 | 13.40 | 1.00 | 106,639,001 | measured |
+| DUNNHUMBY | 38,790 | 89,038 | 6.28 | 9.98 | 7,062,219 | measured |
 
-Counted from the files as `DatasetLoader` reads them. C8T1S5I8N5K's `_seq` file ends with an
+Counted from the files as `DatasetLoader` reads them (`analysis/database_stats.py`). C8T1S5I8N5K's `_seq` file ends with an
 empty sequence, which the loader skips.
 
 Generated utilities (seven databases): the sequence structure comes from SPMF; the internal
@@ -132,8 +136,14 @@ Measured utilities (TAFENG): the internal utility is Ta-Feng's `AMOUNT`, the ext
 the median of `SALES_PRICE / AMOUNT` per product; one sequence per customer and month, kept
 when it holds at least two events.
 
-C8T1S5I8N5K is the only database whose events hold more than one item, so it is the only one
-that exercises within-event extension. Its item ids reach 4,999,999 and are replaced at load
+Measured utilities (DUNNHUMBY): the internal utility is `QUANTITY`, the units bought, summed per
+product within a shopping trip; the external utility is the median of `SALES_VALUE / QUANTITY`
+per product. One sequence is one household in one block of four weeks, one event one shopping
+trip (`BASKET_ID`); a sequence is kept when it holds at least two events. Lines of the commodity
+COUPON/MISC ITEMS and lines with a quantity or a sales value of zero or less are dropped.
+
+C8T1S5I8N5K and DUNNHUMBY are the two databases whose events hold more than one item, so they
+are the ones that exercise within-event extension. The item ids of C8T1S5I8N5K reach 4,999,999 and are replaced at load
 by their rank in the `_eui` file (`Datasets.compactItemIds`), which keeps the item order and
 so the patterns.
 
@@ -187,16 +197,21 @@ and KOSARAK's `r_l`, 0.80 if the proposal mines KOSARAK at that floor within 120
 
 | Scenario | Setup | Databases | Output file |
 |---|---|---|---|
-| SC1 | static mining of `D_init`, four UUT levels, six algorithms | all eight | `SC1_static.csv` |
-| SC2 | `D_init` then `K = 100` equal increments; the proposal, the three remining arms, `Pre-HUSPM-SWUmax`, `Pre-HUSPM-TSU`, IncUSP-Miner+, and the isolation arms `Joint-miner+SWUmax`, `Joint-miner+TSU`, `Joint-rule+PreHUSPM-tracking`, `Joint-miner+SWUmax+PreHUSPM-tracking`, `Joint-rule+min-floor`, `Joint-rule+plain-floor` | seven (not BMS1) | `SC2_incremental.csv` |
+| SC1 | static mining of `D_init`, four UUT levels, six algorithms | all nine | `SC1_static.csv` |
+| SC2 | `D_init` then `K = 100` equal increments; the proposal, the three remining arms, `Pre-HUSPM-SWUmax`, `Pre-HUSPM-TSU`, IncUSP-Miner+, and the isolation arms `Joint-miner+SWUmax`, `Joint-miner+TSU`, `Joint-rule+PreHUSPM-tracking`, `Joint-miner+SWUmax+PreHUSPM-tracking`, `Joint-rule+min-floor`, `Joint-rule+plain-floor` | eight (not BMS1) | `SC2_incremental.csv` |
 | SC3 | static mining of the whole database, four UUT levels, six algorithms | SIGN, LEVIATHAN, C8T1S5I8N5K | `SC3_su.csv` |
 | SC4 | static mining of the whole database at `r_l` in {0.3, 0.5, 0.7, 0.9}, Pre-HUSPM and the proposal at the same `r_l` | SIGN, LEVIATHAN, C8T1S5I8N5K | `SC4_sl_sensitivity.csv` |
 | SC5 | the increments cut EVEN, INCREASING, DECREASING and BURST at `K` in {100, 67, 50, 25}; the SC2 arms | SIGN, LEVIATHAN, C8T1S5I8N5K | `SC5_batch_strategy.csv` |
-| SC6 | twenty operations, 14 insertions, 3 deletions and 3 modifications in a seeded order, each a hundredth of the incremental stream; the proposal and the three remining arms replay the same plan (`common.MixedPlan`) | SIGN, LEVIATHAN, C8T1S5I8N5K, TAFENG | `SC6_idm_mixed.csv` |
-| SC6D | as SC6 with 6 insertions, 10 deletions and 4 modifications | SIGN, LEVIATHAN, C8T1S5I8N5K, TAFENG | `SC6D_idm_mixed.csv` |
-| SC6B | SC6's schedule; one of its deletions, at a position a stream of its own draws from the seed, takes random current sequences until their utility exceeds `(1 - r_l)` times the largest total utility the database has had, so that it alone exceeds the joint rule's budget; its row is `SC6_DEL_BIG`. The operations before it are SC6's for the same seed | SIGN, LEVIATHAN, C8T1S5I8N5K, TAFENG | `SC6B_idm_mixed.csv` |
+| SC6 | twenty operations, 14 insertions, 3 deletions and 3 modifications in a seeded order, each a hundredth of the incremental stream; the proposal and the three remining arms replay the same plan (`common.MixedPlan`) | SIGN, LEVIATHAN, C8T1S5I8N5K, TAFENG, DUNNHUMBY | `SC6_idm_mixed.csv` |
+| SC6D | as SC6 with 6 insertions, 10 deletions and 4 modifications | SIGN, LEVIATHAN, C8T1S5I8N5K, TAFENG, DUNNHUMBY | `SC6D_idm_mixed.csv` |
+| SC6B | SC6's schedule; one of its deletions, at a position a stream of its own draws from the seed, takes random current sequences until their utility exceeds `(1 - r_l)` times the largest total utility the database has had, so that it alone exceeds the joint rule's budget; its row is `SC6_DEL_BIG`. The operations before it are SC6's for the same seed | SIGN, LEVIATHAN, C8T1S5I8N5K, TAFENG, DUNNHUMBY | `SC6B_idm_mixed.csv` |
+| SC8 | a long stream of 500 operations, each a thousandth of the sequences after `D_init`: 70% insertions, 15% deletions and 15% modifications as exact counts in a seeded order, three seeds; the method, its fixed-threshold and window-5 versions and the remining arms replay the same plan (`common.StreamPlans`) | SIGN, LEVIATHAN, C8T1S5I8N5K, TAFENG, DUNNHUMBY | `SC8_long.csv` |
+| SC8P | as SC8 with a phase change: the first half 80% insertions, 10% deletions and 10% modifications, the second half 10%, 80% and 10% | the same five | `SC8P_long.csv` |
+| SC9 | as SC8 with insertions and deletions of the same size alternating, so the database keeps about its size; also `Pre-HUSPM-Joint-index-rebuild`, the method with its block index rebuilt from the current database at every rescan | the same five | `SC9_long.csv` |
+| SC10 | SC8's proportions; a modification changes the sequences it picks instead of replacing them by others, and half of the modifications and of the deletions pick among the sequences of the last 20 insertions and modifications | the same five | `SC10_long.csv` |
+| SC10H | SC8's schedule with every tenth insertion ten times as large | LEVIATHAN, C8T1S5I8N5K, TAFENG, DUNNHUMBY; SIGN holds fewer sequences after `D_init` than the stream draws | `SC10H_long.csv` |
 | FIDELITY | the Pre-HUSPM implementation under the setting of its paper's runtime figure: the first OD.Num sequences mined, then 100 increments of a fixed number of sequences, Su and Sl as fractions of the total utility (SIGN 15%, 9%, 230, 5; FIFA 21%, 15%, 10,450, 80; BIBLE 16%, 10%, 21,369, 90; Kosarak10k 14%, 8%, 1,000, 90; BMS 3.6%, 2.7%, 39,601, 200), on SPMF's files with utilities (`fetch-spmf-husp`); LEVIATHAN is left out, SPMF publishes no file of it with utilities; one row per increment | the five SPMF files | `fidelity_increments.csv` |
-| SC7 | ablation. The IUB bound (C3) and the irrelevant item pruning (`-Dadapt.iip=off`) on one mine of the whole database, with Pre-HUSPM for reference; the block index (C4) and the adaptive rescan decision (C5) on `D_init` and 100 increments, one row per increment | C3: seven (not BMS1); C4, C5: SIGN, C8T1S5I8N5K | `SC7_ablation.csv` |
+| SC7 | ablation. The IUB bound (C3) and the irrelevant item pruning (`-Dadapt.iip=off`) on one mine of the whole database, with Pre-HUSPM for reference; the block index (C4) and the adaptive rescan decision (C5) on `D_init` and 100 increments, one row per increment | C3: eight (not BMS1); C4, C5: SIGN, C8T1S5I8N5K | `SC7_ablation.csv` |
 
 BMS1 takes part in SC1 only: on the whole database 0.025 returns two patterns and 0.020
 exceeds three billion candidates (`results/thresholds/bms1-whole`), and its four levels lie
@@ -320,16 +335,19 @@ the seed in their own columns.
 
 | Scenario | Replicates | Spread reported for |
 |---|---|---|
-| SC1 | three repeats (`r0`, `r1`, `r2`), all algorithms, all eight databases, all four thresholds | runtime at the default threshold; every SC1 comparison (fastest counts, geometric means) uses the mean of the three |
-| SC2 | three repeats of the proposal and remining on SIGN, TAFENG, BIBLE and C8T1S5I8N5K, and of the proposal and the runner-up on LEVIATHAN and KOSARAK (remining) and BIBLE (IncUSP-Miner+); one run elsewhere | runtime summed over the increments; the SC2 table prints mean and deviation where three runs exist |
-| SC3 | three repeats, all six algorithms, the three databases | runtime and every SC3 comparison |
-| SC5 | three repeats of the proposal and remining on LEVIATHAN and SIGN, every K and shape; one run on C8T1S5I8N5K, whose closest margin is 1.36 | runtime summed over the increments |
-| SC7 | three repeats of the four one-mine arms (full, IUB off, IPS off, Pre-HUSPM) on the seven databases | runtime of one mine |
-| SC6, SC6D, SC6B | five seeds (`s0` to `s4`: 42, 1337, 2024, 31415, 271828), every arm | each remining arm's time over the proposal's per kind of operation and over the stream, paired by seed (`table_SC6_by_op_arms.csv`, `table_SC6D_by_op.csv`, `table_SC6B_by_op.csv`) |
-| SC2 new arms | three repeats of `Remine-HUSP-ULL`, `Remine-HUSP-SP`, `Joint-miner+SWUmax`, `Joint-miner+TSU`, `Joint-rule+PreHUSPM-tracking` and `Joint-miner+SWUmax+PreHUSPM-tracking` on the seven databases | runtime summed over the increments (`table_SC2_remine.tex`, `table_SC2_rule_isolation.csv`) |
-| window arms | three repeats of `Pre-HUSPM-Joint-w1`, `-w2`, `-w3`, `-w5`, `-w10` in SC2; one run in SC5; five seeds in SC6, SC6D and SC6B | as the method's |
-| memory | `s0r1`: SC1 on SIGN, TAFENG, C8T1S5I8N5K, BMS1 and KOSARAK, all six algorithms; SC2, all five arms, on SIGN and TAFENG | the live set between two runs |
+| SC1 | three repeats (`r0`, `r1`, `r2`) of every algorithm on the nine databases at the four thresholds; on DUNNHUMBY USpan, IncUSP-Miner+ and Pre-HUSPM have one run, their replicates being deferred | runtime at the default threshold; every SC1 comparison (fastest counts, geometric means) uses the mean of the runs |
+| SC2 | five repeats (`r0` to `r4`) of every arm on the eight databases; three of the window arms other than `-w5` and of the `-be<n>` arms; one run of IncUSP-Miner+ on FIFA and DUNNHUMBY and of Pre-HUSPM-TSU on DUNNHUMBY | runtime summed over the increments; the SC2 tables print mean and deviation |
+| SC3 | three repeats, every algorithm, the three databases | runtime and every SC3 comparison |
+| SC5 | three repeats of the method, its time-rule and window-5 versions and the remining arms, and of its fixed-threshold version on SIGN and LEVIATHAN; one run of the other arms | runtime summed over the increments |
+| SC7 | three repeats of the four one-mine arms (full, IUB off, IPS off, Pre-HUSPM) on the eight databases; one run of the incremental ablations | runtime of one mine |
+| SC6, SC6D, SC6B | five seeds (`s0` to `s4`: 42, 1337, 2024, 31415, 271828), every arm | each arm's time over the method's per kind of operation and over the stream, paired by seed (`table_SC6_by_op_arms.csv`, `table_SC6D_by_op.csv`, `table_SC6B_by_op.csv`) |
+| SC8, SC8P, SC9, SC10, SC10H | three seeds inside every run; on DUNNHUMBY also repeats of the whole run: five of the method, three of its fixed-threshold and window-5 versions, of `Remine-own-UUT` and of both rebuild arms | time summed over the three seeds; on DUNNHUMBY the ratio of two arms is taken inside each repeat they share a session in (`analysis/long_streams.py`) |
+| memory | a second run (`s0r1`) of most SC1 cells and of some SC2 cells | the live set between two runs |
 | others | one run | - |
+
+The runs of every arm on every database, the replicates they are and the deferred ones are
+listed in `figures/campaign/table_replicate_layout.csv`, generated from the `DONE` and `DEFERRED`
+files of the result trees.
 
 Counters (pattern counts, rescans, explored nodes) are deterministic for a given stream, so
 their spread over repeats is zero by construction and is not reported. SC2 splits the stream
