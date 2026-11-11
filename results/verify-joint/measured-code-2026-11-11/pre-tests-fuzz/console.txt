@@ -1,0 +1,12 @@
+rule=pre_swumax trials=2000 seed=7 ops=20000 per-kind={insert=20000} direct-update={insert=6756} mismatching-ops=0 {} trials-with-mismatch=0
+rule=pre_tsu trials=2000 seed=7 ops=20000 per-kind={insert=20000} direct-update={insert=6368} mismatching-ops=0 {} trials-with-mismatch=0
+rule=joint trials=2000 seed=7 ops=20000 per-kind={insert=20000} direct-update={insert=7563} mismatching-ops=0 {} trials-with-mismatch=0
+rule=pre_swumax trials=5000 seed=11 ops=50000 per-kind={insert=50000} direct-update={insert=16645} mismatching-ops=0 {} trials-with-mismatch=0
+rule=pre_tsu trials=5000 seed=11 ops=50000 per-kind={insert=50000} direct-update={insert=15634} mismatching-ops=0 {} trials-with-mismatch=0
+rule=joint trials=5000 seed=11 ops=50000 per-kind={insert=50000} direct-update={insert=18522} mismatching-ops=0 {} trials-with-mismatch=0
+rule=pre_swumax trials=5000 seed=23 ops=50000 per-kind={insert=50000} direct-update={insert=16731} mismatching-ops=0 {} trials-with-mismatch=0
+rule=pre_tsu trials=5000 seed=23 ops=50000 per-kind={insert=50000} direct-update={insert=15772} mismatching-ops=0 {} trials-with-mismatch=0
+rule=joint trials=5000 seed=23 ops=50000 per-kind={insert=50000} direct-update={insert=18600} mismatching-ops=0 {} trials-with-mismatch=0
+rule=pre_swumax trials=5000 seed=101 ops=50000 per-kind={insert=50000} direct-update={insert=16586} mismatching-ops=0 {} trials-with-mismatch=0
+rule=pre_tsu trials=5000 seed=101 ops=50000 per-kind={insert=50000} direct-update={insert=15597} mismatching-ops=0 {} trials-with-mismatch=0
+rule=joint trials=5000 seed=101 ops=50000 per-kind={insert=50000} direct-update={insert=18531} mismatching-ops=0 {} trials-with-mismatch=0

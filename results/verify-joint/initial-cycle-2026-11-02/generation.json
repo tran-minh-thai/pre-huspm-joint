@@ -4,7 +4,7 @@
   "why": "The floor selection records the cycle of the initial mine from d6197a7ed on; the checks of the rule were run again.",
   "replaces": {
     "acceptance": [
-      "acceptance"
+      "merge-acceptance"
     ],
     "break-even-nodes-adversarial": [
       "break-even-nodes-adversarial"

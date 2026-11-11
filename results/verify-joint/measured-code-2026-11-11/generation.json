@@ -1,10 +1,10 @@
 {
   "date": "2026-11-11",
-  "commit": "d89b094b8",
-  "why": "Every check of the method's rule run again from the commit whose classes equal those of the measurements (results-invariant/bytecode/2026-11-11-running-example-check: only verify/RunningExampleCheck differs), the long streams with every arm of the scenario.",
+  "commit": "d89b094b8, or a later commit with the same source digest",
+  "why": "Every correctness check run again from the code whose classes equal those of the measurements (results-invariant/bytecode/2026-11-11-running-example-check: only verify/RunningExampleCheck differs): the checks of the method's rule, the long streams with every arm, and the checks of the other rules and arms. A record named *-modification-twice runs with -Dadapt.mergeModification=false, as the records it replaces did before that switch existed; the others mine a modification once, as the measured arms do. The direct-path checks now cover DUNNHUMBY too.",
   "replaces": {
     "acceptance": [
-      "acceptance"
+      "merge-acceptance"
     ],
     "break-even-nodes-adversarial": [
       "break-even-nodes-adversarial"
@@ -65,6 +65,157 @@
     ],
     "running-example": [
       "running-example-break-even-nodes"
+    ],
+    "fuzz-modification-twice": [
+      "fuzz"
+    ],
+    "acceptance-modification-twice": [
+      "acceptance"
+    ],
+    "random-modification-twice": [
+      "random"
+    ],
+    "adversarial-modification-twice": [
+      "adversarial"
+    ],
+    "husps-sc2-arms": [
+      "husps-sc2",
+      "husps-sc2-break-even",
+      "husps-sc2-remine"
+    ],
+    "husps-mixed-arms": [
+      "husps-mixed",
+      "husps-mixed-break-even",
+      "husps-mixed-remine"
+    ],
+    "merge-fuzz": [
+      "merge-fuzz"
+    ],
+    "merge-random": [
+      "merge-random"
+    ],
+    "merge-adversarial": [
+      "merge-adversarial"
+    ],
+    "floor-selection-acceptance": [
+      "floor-selection-acceptance"
+    ],
+    "pre-tests-acceptance": [
+      "pre-tests-acceptance"
+    ],
+    "prehuspm-tracking-acceptance": [
+      "prehuspm-tracking-acceptance"
+    ],
+    "min-floor-acceptance": [
+      "min-floor-acceptance"
+    ],
+    "plain-floor-acceptance": [
+      "plain-floor-acceptance"
+    ],
+    "min-floor-fuzz": [
+      "min-floor-fuzz"
+    ],
+    "plain-floor-fuzz": [
+      "plain-floor-fuzz"
+    ],
+    "floor-selection-fuzz": [
+      "floor-selection-fuzz"
+    ],
+    "pre-tests-fuzz": [
+      "pre-tests-fuzz"
+    ],
+    "prehuspm-tracking-fuzz": [
+      "prehuspm-tracking-fuzz"
+    ],
+    "break-even-fuzz": [
+      "break-even-fuzz"
+    ],
+    "ips-random": [
+      "ips-random"
+    ],
+    "ips-real": [
+      "ips-real"
+    ],
+    "stream-plans": [
+      "stream-plans"
+    ],
+    "static-joint-miner-uut": [
+      "static-joint-miner-uut"
+    ],
+    "fault-injection": [
+      "fault-injection"
+    ],
+    "fault-injection-floor-selection": [
+      "fault-injection-floor-selection"
+    ],
+    "fault-injection-ips": [
+      "fault-injection-ips"
+    ],
+    "fault-injection-real": [
+      "fault-injection-real"
+    ],
+    "min-floor-random": [
+      "min-floor-random"
+    ],
+    "plain-floor-random": [
+      "plain-floor-random"
+    ],
+    "floor-selection-random": [
+      "floor-selection-random"
+    ],
+    "break-even-random": [
+      "break-even-random"
+    ],
+    "pre-tests-random": [
+      "pre-tests-random"
+    ],
+    "prehuspm-tracking-random": [
+      "prehuspm-tracking-random"
+    ],
+    "adversarial-tafeng": [
+      "adversarial-tafeng"
+    ],
+    "adversarial-tafeng-probe0.7": [
+      "adversarial-tafeng-probe0.7"
+    ],
+    "min-floor-adversarial": [
+      "min-floor-adversarial"
+    ],
+    "plain-floor-adversarial": [
+      "plain-floor-adversarial"
+    ],
+    "floor-selection-adversarial": [
+      "floor-selection-adversarial"
+    ],
+    "break-even-adversarial": [
+      "break-even-adversarial"
+    ],
+    "prehuspm-tracking-adversarial": [
+      "prehuspm-tracking-adversarial"
+    ],
+    "prehuspm-tracking-equivalence": [
+      "prehuspm-tracking-equivalence"
+    ],
+    "pre-tests-adversarial": [
+      "pre-tests-adversarial"
+    ],
+    "floor-selection-switching-random": [
+      "floor-selection-switching-random"
+    ],
+    "break-even-switching-random": [
+      "break-even-switching-random"
+    ],
+    "break-even-switching-adversarial": [
+      "break-even-switching-adversarial"
+    ],
+    "floor-selection-switching-adversarial": [
+      "floor-selection-switching-adversarial"
+    ],
+    "check-break-even-nodes-sc2": [
+      "check-break-even-nodes-sc2"
+    ],
+    "check-break-even-nodes-mixed": [
+      "check-break-even-nodes-mixed"
     ]
   }
 }

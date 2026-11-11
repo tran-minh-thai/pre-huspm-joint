@@ -46,12 +46,12 @@ checked against USpan, HUSP-ULL and HUSP-SP by `verify.BaselineAgreement`.
 | rescan rule acceptance, plain-floor-acceptance | finished | 49 |  |  |  |  | 0 |  |
 | rescan rule acceptance, pre-tests-acceptance | finished | 49 |  |  |  |  | 0 |  |
 | rescan rule acceptance, prehuspm-tracking-acceptance | finished | 49 |  |  |  |  | 0 |  |
-| random streams (MixedBudgetFuzz), break-even-fuzz, rule joint | finished | 170,000 |  | 24,957 | 9,548 | 9,000 | 0 |  |
+| random streams (MixedBudgetFuzz), break-even-fuzz, rule joint | finished | 170,000 |  | 23,761 | 8,805 | 8,317 | 0 |  |
 | random streams (MixedBudgetFuzz), break-even-nodes-fuzz, rule joint | finished | 170,000 |  | 29,570 | 11,560 | 10,813 | 0 |  |
-| random streams (MixedBudgetFuzz), floor-selection-fuzz, rule joint | finished | 510,000 |  | 120,279 | 41,812 | 39,215 | 0 |  |
+| random streams (MixedBudgetFuzz), floor-selection-fuzz, rule joint | finished | 510,000 |  | 121,917 | 42,439 | 40,097 | 0 |  |
 | random streams (MixedBudgetFuzz), merge-fuzz, rule joint | finished | 170,000 |  | 47,844 | 15,636 | 14,821 | 0 |  |
-| random streams (MixedBudgetFuzz), min-floor-fuzz, rule joint | finished | 170,000 |  | 47,587 | 15,481 | 14,626 | 0 |  |
-| random streams (MixedBudgetFuzz), plain-floor-fuzz, rule joint | finished | 170,000 |  | 47,587 | 15,481 | 14,626 | 0 |  |
+| random streams (MixedBudgetFuzz), min-floor-fuzz, rule joint | finished | 170,000 |  | 47,844 | 15,636 | 14,821 | 0 |  |
+| random streams (MixedBudgetFuzz), plain-floor-fuzz, rule joint | finished | 170,000 |  | 47,844 | 15,636 | 14,821 | 0 |  |
 | random streams (MixedBudgetFuzz), pre-tests-fuzz, rule joint | finished | 170,000 |  | 0 | 63,216 | 0 | 0 |  |
 | random streams (MixedBudgetFuzz), pre-tests-fuzz, rule pre_swumax | finished | 170,000 |  | 0 | 56,718 | 0 | 0 |  |
 | random streams (MixedBudgetFuzz), pre-tests-fuzz, rule pre_tsu | finished | 170,000 |  | 0 | 53,371 | 0 | 0 |  |
@@ -459,17 +459,17 @@ A check that was run again after the code it exercises changed keeps its earlier
 rerun lies in a subdirectory with a `generation.json`, and the newest finished record of a check
 is the one read above (`analysis/verify_records.py`):
 
-* `measured-code-2026-11-11` (2026-11-11, commit d89b094b8): Every check of the method's rule run again from the commit whose classes equal those of the measurements (results-invariant/bytecode/2026-11-11-running-example-check: only verify/RunningExampleCheck differs), the long streams with every arm of the scenario. 0 of 20 of its records finished.
+* `measured-code-2026-11-11` (2026-11-11, commit d89b094b8, or a later commit with the same source digest): Every correctness check run again from the code whose classes equal those of the measurements (results-invariant/bytecode/2026-11-11-running-example-check: only verify/RunningExampleCheck differs): the checks of the method's rule, the long streams with every arm, and the checks of the other rules and arms. A record named *-modification-twice runs with -Dadapt.mergeModification=false, as the records it replaces did before that switch existed; the others mine a modification once, as the measured arms do. The direct-path checks now cover DUNNHUMBY too. 19 of 69 of its records finished.
 * `initial-cycle-2026-11-02` (2026-11-02, commit d6197a7ed (b54bfc310 for the two pattern checks)): The floor selection records the cycle of the initial mine from d6197a7ed on; the checks of the rule were run again. 6 of 6 of its records finished.
 
 | check | record read | commit | ended | exit code |
 |---|---:|---:|---:|---:|
-| acceptance | initial-cycle-2026-11-02/acceptance | d6197a7ed | 2026-11-02 | 0 |
+| acceptance | measured-code-2026-11-11/acceptance-modification-twice | f30fe6b41 | 2026-11-11 | 0 |
 | adversarial | adversarial | e84b5a89a | 2026-10-17 | 0 |
 | adversarial-tafeng | adversarial-tafeng | e84b5a89a | 2026-10-17 | 0 |
 | adversarial-tafeng-probe0.7 | adversarial-tafeng-probe0.7 | e84b5a89a | 2026-10-17 | 0 |
 | break-even-adversarial | break-even-adversarial | 7f226af39 | 2026-10-27 | 0 |
-| break-even-fuzz | break-even-fuzz | 80ac64471 | 2026-10-27 | 0 |
+| break-even-fuzz | measured-code-2026-11-11/break-even-fuzz | f30fe6b41 | 2026-11-11 | 0 |
 | break-even-nodes-adversarial | initial-cycle-2026-11-02/break-even-nodes-adversarial | d6197a7ed | 2026-11-02 | 0 |
 | break-even-nodes-fuzz | initial-cycle-2026-11-02/break-even-nodes-fuzz | d6197a7ed | 2026-11-02 | 0 |
 | break-even-nodes-random | initial-cycle-2026-11-02/break-even-nodes-random | d6197a7ed | 2026-11-02 | 0 |
@@ -482,18 +482,18 @@ is the one read above (`analysis/verify_records.py`):
 | check-break-even-nodes-mixed | check-break-even-nodes-mixed | 9a3843be4 | 2026-10-30 | 0 |
 | check-break-even-nodes-sc2 | check-break-even-nodes-sc2 | 9a3843be4 | 2026-10-30 | 0 |
 | check-break-even-sc2 | check-break-even-sc2 | 7f226af39 | 2026-10-27 | 0 |
-| fault-injection | fault-injection | e84b5a89a | 2026-10-17 | 0 |
-| fault-injection-floor-selection | fault-injection-floor-selection | e84b5a89a | 2026-10-17 | 0 |
-| fault-injection-ips | fault-injection-ips | 41f3af392 | 2026-10-12 | 0 |
+| fault-injection | measured-code-2026-11-11/fault-injection | f30fe6b41 | 2026-11-11 | 0 |
+| fault-injection-floor-selection | measured-code-2026-11-11/fault-injection-floor-selection | f30fe6b41 | 2026-11-11 | 0 |
+| fault-injection-ips | measured-code-2026-11-11/fault-injection-ips | f30fe6b41 | 2026-11-11 | 0 |
 | fault-injection-real | fault-injection-real | e84b5a89a | 2026-10-18 | 0 |
-| floor-selection-acceptance | floor-selection-acceptance | e84b5a89a | 2026-10-17 | 0 |
+| floor-selection-acceptance | measured-code-2026-11-11/floor-selection-acceptance | f30fe6b41 | 2026-11-11 | 0 |
 | floor-selection-adversarial | floor-selection-adversarial | e84b5a89a | 2026-10-17 | 0 |
-| floor-selection-fuzz | floor-selection-fuzz | e84b5a89a | 2026-10-17 | 0 |
+| floor-selection-fuzz | measured-code-2026-11-11/floor-selection-fuzz | f30fe6b41 | 2026-11-11 | 0 |
 | floor-selection-random | floor-selection-random | e84b5a89a | 2026-10-17 | 0 |
 | floor-selection-random-floors | floor-selection-random-floors | e84b5a89a | 2026-10-17 | 0 |
 | floor-selection-switching-adversarial | floor-selection-switching-adversarial | e84b5a89a | 2026-10-17 | 0 |
 | floor-selection-switching-random | floor-selection-switching-random | e84b5a89a | 2026-10-17 | 0 |
-| fuzz | fuzz | e84b5a89a | 2026-10-17 | 0 |
+| fuzz | measured-code-2026-11-11/fuzz-modification-twice | f30fe6b41 | 2026-11-11 | 0 |
 | husps-dunnhumby-mixed-all-arms | husps-dunnhumby-mixed-all-arms | b54bfc310 | 2026-11-02 | 0 |
 | husps-long-sc10 | husps-long-sc10 | 2ecbd83be | 2026-10-31 | 0 |
 | husps-long-sc10h | husps-long-sc10h | 2ecbd83be | 2026-10-31 | 1 |
@@ -513,39 +513,39 @@ is the one read above (`analysis/verify_records.py`):
 | husps-sc2-break-even | husps-sc2-break-even | 7f226af39 | 2026-10-27 | 0 |
 | husps-sc2-break-even-nodes | initial-cycle-2026-11-02/husps-sc2-break-even-nodes | b54bfc310 | 2026-11-02 | 0 |
 | husps-sc2-remine | husps-sc2-remine | e66ccb6f0 | 2026-10-26 | 0 |
-| ips-random | ips-random | 41f3af392 | 2026-10-12 | 0 |
+| ips-random | measured-code-2026-11-11/ips-random | f30fe6b41 | 2026-11-11 | 0 |
 | ips-real | ips-real | 41f3af392 | 2026-10-12 | 0 |
-| merge-acceptance | merge-acceptance | 80ac64471 | 2026-10-27 | 0 |
+| merge-acceptance | initial-cycle-2026-11-02/acceptance | d6197a7ed | 2026-11-02 | 0 |
 | merge-adversarial | merge-adversarial | 7f226af39 | 2026-10-27 | 0 |
-| merge-fuzz | merge-fuzz | 80ac64471 | 2026-10-27 | 0 |
+| merge-fuzz | measured-code-2026-11-11/merge-fuzz | f30fe6b41 | 2026-11-11 | 0 |
 | merge-random | merge-random | 80ac64471 | 2026-10-27 | 0 |
-| min-floor-acceptance | min-floor-acceptance | e84b5a89a | 2026-10-17 | 0 |
+| min-floor-acceptance | measured-code-2026-11-11/min-floor-acceptance | f30fe6b41 | 2026-11-11 | 0 |
 | min-floor-adversarial | min-floor-adversarial | e84b5a89a | 2026-10-17 | 0 |
-| min-floor-fuzz | min-floor-fuzz | e84b5a89a | 2026-10-17 | 0 |
+| min-floor-fuzz | measured-code-2026-11-11/min-floor-fuzz | f30fe6b41 | 2026-11-11 | 0 |
 | min-floor-random | min-floor-random | e84b5a89a | 2026-10-17 | 0 |
-| plain-floor-acceptance | plain-floor-acceptance | e84b5a89a | 2026-10-19 | 0 |
+| plain-floor-acceptance | measured-code-2026-11-11/plain-floor-acceptance | f30fe6b41 | 2026-11-11 | 0 |
 | plain-floor-adversarial | plain-floor-adversarial | e84b5a89a | 2026-10-19 | 0 |
-| plain-floor-fuzz | plain-floor-fuzz | e84b5a89a | 2026-10-19 | 0 |
+| plain-floor-fuzz | measured-code-2026-11-11/plain-floor-fuzz | f30fe6b41 | 2026-11-11 | 0 |
 | plain-floor-random | plain-floor-random | e84b5a89a | 2026-10-19 | 0 |
-| pre-tests-acceptance | pre-tests-acceptance | e84b5a89a | 2026-10-17 | 0 |
+| pre-tests-acceptance | measured-code-2026-11-11/pre-tests-acceptance | f30fe6b41 | 2026-11-11 | 0 |
 | pre-tests-adversarial | pre-tests-adversarial | e84b5a89a | 2026-10-17 | 0 |
-| pre-tests-fuzz | pre-tests-fuzz | e84b5a89a | 2026-10-17 | 0 |
+| pre-tests-fuzz | measured-code-2026-11-11/pre-tests-fuzz | f30fe6b41 | 2026-11-11 | 0 |
 | pre-tests-random | pre-tests-random | e84b5a89a | 2026-10-17 | 0 |
-| prehuspm-tracking-acceptance | prehuspm-tracking-acceptance | e84b5a89a | 2026-10-17 | 0 |
+| prehuspm-tracking-acceptance | measured-code-2026-11-11/prehuspm-tracking-acceptance | f30fe6b41 | 2026-11-11 | 0 |
 | prehuspm-tracking-adversarial | prehuspm-tracking-adversarial | e84b5a89a | 2026-10-17 | 0 |
 | prehuspm-tracking-equivalence | prehuspm-tracking-equivalence | e84b5a89a | 2026-10-17 | 0 |
-| prehuspm-tracking-fuzz | prehuspm-tracking-fuzz | e84b5a89a | 2026-10-17 | 0 |
+| prehuspm-tracking-fuzz | measured-code-2026-11-11/prehuspm-tracking-fuzz | f30fe6b41 | 2026-11-11 | 0 |
 | prehuspm-tracking-random | prehuspm-tracking-random | e84b5a89a | 2026-10-17 | 0 |
 | random | random | e84b5a89a | 2026-10-17 | 0 |
 | running-example | running-example | d15b36a24 | 2026-10-25 | 0 |
 | running-example-break-even-nodes | running-example-break-even-nodes | ae62486db | 2026-10-30 | 0 |
 | static-joint-miner-uut | static-joint-miner-uut | 906222294 | 2026-10-16 | 0 |
-| stream-plans | stream-plans | 1d020e38b | 2026-10-31 | 0 |
+| stream-plans | measured-code-2026-11-11/stream-plans | f30fe6b41 | 2026-11-11 | 0 |
 
 ## Commands
 
-    # initial-cycle-2026-11-02/acceptance: exit 0, commit d6197a7e, 2026-11-02T08:16:49
-    java -cp build verify.RescanRuleAcceptanceTest
+    # measured-code-2026-11-11/acceptance-modification-twice: exit 0, commit f30fe6b4, 2026-11-11T14:51:01
+    java -Dadapt.mergeModification=false -cp build-vq2-light verify.RescanRuleAcceptanceTest
     # adversarial: exit 0, commit e84b5a89, 2026-10-17T15:07:10
     java -Xmx24g -Xss64m -cp build-v31 verify.DirectPathVerifier ALL --adversarial --ops 16 --out results/verify-joint/adversarial
     # adversarial-tafeng: exit 0, commit e84b5a89, 2026-10-17T15:12:41
@@ -554,8 +554,8 @@ is the one read above (`analysis/verify_records.py`):
     java -Dverify.probeRl=0.7 -Xmx24g -Xss64m -cp build-v31 verify.DirectPathVerifier TAFENG --adversarial --ops 16 --out results/verify-joint/adversarial-tafeng-probe0.7
     # break-even-adversarial: exit 0, commit 7f226af3, 2026-10-27T14:52:00
     java -Dadapt.floorRule=breakEven -Xmx24g -Xss64m -cp build-be verify.DirectPathVerifier ALL --adversarial --ops 16 --out results/verify-joint/break-even-adversarial
-    # break-even-fuzz: exit 0, commit 80ac6447, 2026-10-27T10:34:17
-    bash -c rc=0; for s in "2000 7" "5000 11" "5000 23" "5000 101"; do set -- $s; java -Dadapt.floorRule=breakEven -cp build-be verify.MixedBudgetFuzz joint $1 $2 || rc=1; done; exit $rc
+    # measured-code-2026-11-11/break-even-fuzz: exit 0, commit f30fe6b4, 2026-11-11T15:06:16
+    bash -c rc=0; for s in "2000 7" "5000 11" "5000 23" "5000 101"; do set -- $s; for r in joint; do java -Dadapt.floorRule=breakEven -cp build-vq2-light verify.MixedBudgetFuzz $r $1 $2  || rc=1; done; done; exit $rc
     # initial-cycle-2026-11-02/break-even-nodes-adversarial: exit 0, commit d6197a7e, 2026-11-02T08:46:55
     java -Dadapt.floorRule=breakEven -Dadapt.breakEvenCost=nodes -Xmx16g -Xss64m -cp build verify.DirectPathVerifier ALL --adversarial --ops 16 --out results/verify-joint/initial-cycle-2026-11-02/break-even-nodes-adversarial
     # initial-cycle-2026-11-02/break-even-nodes-fuzz: exit 0, commit d6197a7e, 2026-11-02T08:17:52
@@ -580,20 +580,20 @@ is the one read above (`analysis/verify_records.py`):
     ~/.venvs/pre-huspm-adaptive/bin/python analysis/check_break_even.py --results results/verify-joint/husps-sc2-break-even-nodes
     # check-break-even-sc2: exit 0, commit 7f226af3, 2026-10-27T16:09:21
     ~/.venvs/pre-huspm-adaptive/bin/python analysis/check_break_even.py --results results/verify-joint/husps-sc2-break-even
-    # fault-injection: exit 0, commit e84b5a89, 2026-10-17T13:41:33
+    # measured-code-2026-11-11/fault-injection: exit 0, commit f30fe6b4, 2026-11-11T15:09:44
     python3 analysis/fault_injection.py --trials 2000 --seed 7
-    # fault-injection-floor-selection: exit 0, commit e84b5a89, 2026-10-17T13:41:48
+    # measured-code-2026-11-11/fault-injection-floor-selection: exit 0, commit f30fe6b4, 2026-11-11T15:10:43
     python3 analysis/fault_injection.py --floor-selection --trials 2000 --seed 7
-    # fault-injection-ips: exit 0, commit 41f3af39, 2026-10-12T15:08:58
+    # measured-code-2026-11-11/fault-injection-ips: exit 0, commit f30fe6b4, 2026-11-11T15:23:39
     python3 analysis/fault_injection.py --item-removal --trials 2000 --seed 1
     # fault-injection-real: exit 0, commit e84b5a89, 2026-10-18T00:07:46
     python3 analysis/fault_injection.py --real SIGN,LEVIATHAN,BIBLE,C8T1S5I8N5K,TAFENG
-    # floor-selection-acceptance: exit 0, commit e84b5a89, 2026-10-17T13:41:49
-    java -cp build-v31 verify.RescanRuleAcceptanceTest
+    # measured-code-2026-11-11/floor-selection-acceptance: exit 0, commit f30fe6b4, 2026-11-11T14:51:05
+    java -cp build-vq2-light verify.RescanRuleAcceptanceTest
     # floor-selection-adversarial: exit 0, commit e84b5a89, 2026-10-17T17:05:33
     java -Dadapt.floorWindow=1 -Xmx24g -Xss64m -cp build-v31 verify.DirectPathVerifier ALL --adversarial --ops 16 --out results/verify-joint/floor-selection-adversarial
-    # floor-selection-fuzz: exit 0, commit e84b5a89, 2026-10-17T13:42:51
-    bash -c rc=0; for w in 1 2 5; do for s in "2000 7" "5000 11" "5000 23" "5000 101"; do set -- $s; java -Dadapt.floorWindow=$w -cp build-v31 verify.MixedBudgetFuzz joint $1 $2 || rc=1; done; done; exit $rc
+    # measured-code-2026-11-11/floor-selection-fuzz: exit 0, commit f30fe6b4, 2026-11-11T14:57:46
+    bash -c rc=0; for w in 1 2 5; do for s in "2000 7" "5000 11" "5000 23" "5000 101"; do set -- $s; java -Dadapt.floorWindow=$w -cp build-vq2-light verify.MixedBudgetFuzz joint $1 $2 || rc=1; done; done; exit $rc
     # floor-selection-random: exit 0, commit e84b5a89, 2026-10-17T16:11:51
     java -Dadapt.floorWindow=1 -Xmx24g -Xss64m -cp build-v31 verify.DirectPathVerifier ALL --ops 16 --out results/verify-joint/floor-selection-random
     # floor-selection-random-floors: exit 0, commit e84b5a89, 2026-10-17T17:12:00
@@ -602,8 +602,8 @@ is the one read above (`analysis/verify_records.py`):
     java -Dadapt.floorWindow=1 -Xmx24g -Xss64m -cp build-v31 verify.DirectPathVerifier ALL --adversarial --ops 24 --share-alt 0.5 --out results/verify-joint/floor-selection-switching-adversarial
     # floor-selection-switching-random: exit 0, commit e84b5a89, 2026-10-17T17:44:06
     java -Dadapt.floorWindow=1 -Xmx24g -Xss64m -cp build-v31 verify.DirectPathVerifier ALL --ops 24 --share-alt 0.5 --out results/verify-joint/floor-selection-switching-random
-    # fuzz: exit 0, commit e84b5a89, 2026-10-17T13:40:59
-    bash -c rc=0; for s in "2000 7" "5000 11" "5000 23" "5000 101"; do set -- $s; for r in joint iaumax; do java -cp build-v31 verify.MixedBudgetFuzz $r $1 $2 || { [ $r = joint ] && rc=1; }; done; done; java -cp build-v31 verify.MixedBudgetProbe joint || rc=1; java -cp build-v31 verify.MixedBudgetProbe iaumax; exit $rc
+    # measured-code-2026-11-11/fuzz-modification-twice: exit 0, commit f30fe6b4, 2026-11-11T14:49:16
+    bash -c rc=0; for s in "2000 7" "5000 11" "5000 23" "5000 101"; do set -- $s; for r in joint iaumax; do java -Dadapt.mergeModification=false -cp build-vq2-light verify.MixedBudgetFuzz $r $1 $2 || { [ $r = joint ] && rc=1; }; done; done; java -Dadapt.mergeModification=false -cp build-vq2-light verify.MixedBudgetProbe joint || rc=1; java -Dadapt.mergeModification=false -cp build-vq2-light verify.MixedBudgetProbe iaumax; exit $rc
     # husps-dunnhumby-mixed-all-arms: exit 0, commit b54bfc31, 2026-11-02T10:44:48
     java -Xmx16g -Xss64m -cp build-reg -Dverify.husps=true -Dseeds=5 -Drepeats=1 -Ddataset.only=DUNNHUMBY -Dresults.dir=results/verify-joint/husps-dunnhumby-mixed-all-arms/ AutomatedExperimentRunner SC6 SC6D SC6B
     # husps-long-sc10: exit 0, commit 2ecbd83b, 2026-10-31T23:06:48
@@ -642,50 +642,50 @@ is the one read above (`analysis/verify_records.py`):
     bash -c rc=0; for d in DUNNHUMBY SIGN TAFENG C8T1S5I8N5K LEVIATHAN BIBLE KOSARAK FIFA; do java -Xmx20g -Xss64m -cp build-reg -Dverify.husps=true -Drepeats=1 -Ddataset.only=$d -Dalgo.only=Pre-HUSPM-Joint-fixed-threshold,Pre-HUSPM-Joint -Dresults.dir=results/verify-joint/initial-cycle-2026-11-02/husps-sc2-break-even-nodes/ AutomatedExperimentRunner SC2 || rc=1; done; exit $rc
     # husps-sc2-remine: exit 0, commit e66ccb6f, 2026-10-26T09:49:13
     bash -c rc=0; for d in SIGN TAFENG C8T1S5I8N5K LEVIATHAN BIBLE KOSARAK FIFA; do java -Xmx20g -Xss64m -cp build-remine -Dverify.husps=true -Drepeats=1 -Ddataset.only=$d -Dalgo.only=Pre-HUSPM-Joint-fixed-threshold,Remine-from-scratch,Remine-own-UUT -Dresults.dir=results/verify-joint/husps-sc2-remine/ AutomatedExperimentRunner SC2 || rc=1; done; exit $rc
-    # ips-random: exit 0, commit 41f3af39, 2026-10-12T14:58:58
-    java -Xmx8g -Xss64m -cp build-vj verify.ItemRemovalCheck random 2000 1
+    # measured-code-2026-11-11/ips-random: exit 0, commit f30fe6b4, 2026-11-11T15:07:44
+    java -Xmx8g -Xss64m -cp build-vq2-light verify.ItemRemovalCheck random 2000 1
     # ips-real: exit 0, commit 41f3af39, 2026-10-12T15:04:42
     bash -c rc=0; for d in SIGN LEVIATHAN FIFA BIBLE BMS1 KOSARAK C8T1S5I8N5K TAFENG; do java -Xmx24g -Xss64m -cp build-vj verify.ItemRemovalCheck real $d init floor || rc=1; done; for d in SIGN LEVIATHAN FIFA BIBLE KOSARAK C8T1S5I8N5K TAFENG; do java -Xmx24g -Xss64m -cp build-vj verify.ItemRemovalCheck real $d whole floor || rc=1; done; exit $rc
-    # merge-acceptance: exit 0, commit 80ac6447, 2026-10-27T10:34:18
-    java -cp build-be verify.RescanRuleAcceptanceTest
+    # initial-cycle-2026-11-02/acceptance: exit 0, commit d6197a7e, 2026-11-02T08:16:49
+    java -cp build verify.RescanRuleAcceptanceTest
     # merge-adversarial: exit 0, commit 7f226af3, 2026-10-27T13:53:24
     java -Xmx24g -Xss64m -cp build-be verify.DirectPathVerifier ALL --adversarial --ops 16 --out results/verify-joint/merge-adversarial
-    # merge-fuzz: exit 0, commit 80ac6447, 2026-10-27T10:33:56
-    bash -c rc=0; for s in "2000 7" "5000 11" "5000 23" "5000 101"; do set -- $s; java -cp build-be verify.MixedBudgetFuzz joint $1 $2 || rc=1; done; exit $rc
+    # measured-code-2026-11-11/merge-fuzz: exit 0, commit f30fe6b4, 2026-11-11T14:50:58
+    bash -c rc=0; for s in "2000 7" "5000 11" "5000 23" "5000 101"; do set -- $s; for r in joint; do java  -cp build-vq2-light verify.MixedBudgetFuzz $r $1 $2  || rc=1; done; done; exit $rc
     # merge-random: exit 0, commit 80ac6447, 2026-10-27T10:37:37
     java -Xmx24g -Xss64m -cp build-be verify.DirectPathVerifier ALL --ops 16 --out results/verify-joint/merge-random
-    # min-floor-acceptance: exit 0, commit e84b5a89, 2026-10-17T13:41:21
-    java -Dadapt.floor=min -cp build-v31 verify.RescanRuleAcceptanceTest
+    # measured-code-2026-11-11/min-floor-acceptance: exit 0, commit f30fe6b4, 2026-11-11T14:51:18
+    java -Dadapt.floor=min -cp build-vq2-light verify.RescanRuleAcceptanceTest
     # min-floor-adversarial: exit 0, commit e84b5a89, 2026-10-17T16:05:48
     java -Dadapt.floor=min -Xmx24g -Xss64m -cp build-v31 verify.DirectPathVerifier ALL --adversarial --ops 16 --out results/verify-joint/min-floor-adversarial
-    # min-floor-fuzz: exit 0, commit e84b5a89, 2026-10-17T13:41:20
-    bash -c rc=0; for s in "2000 7" "5000 11" "5000 23" "5000 101"; do set -- $s; java -Dadapt.floor=min -cp build-v31 verify.MixedBudgetFuzz joint $1 $2 || rc=1; done; exit $rc
+    # measured-code-2026-11-11/min-floor-fuzz: exit 0, commit f30fe6b4, 2026-11-11T14:52:50
+    bash -c rc=0; for s in "2000 7" "5000 11" "5000 23" "5000 101"; do set -- $s; for r in joint; do java -Dadapt.floor=min -cp build-vq2-light verify.MixedBudgetFuzz $r $1 $2  || rc=1; done; done; exit $rc
     # min-floor-random: exit 0, commit e84b5a89, 2026-10-17T15:25:18
     java -Dadapt.floor=min -Xmx24g -Xss64m -cp build-v31 verify.DirectPathVerifier ALL --ops 16 --out results/verify-joint/min-floor-random
-    # plain-floor-acceptance: exit 0, commit e84b5a89, 2026-10-19T15:44:39
-    java -Dadapt.floor=plain -cp build-v31 verify.RescanRuleAcceptanceTest
+    # measured-code-2026-11-11/plain-floor-acceptance: exit 0, commit f30fe6b4, 2026-11-11T14:51:22
+    java -Dadapt.floor=plain -cp build-vq2-light verify.RescanRuleAcceptanceTest
     # plain-floor-adversarial: exit 0, commit e84b5a89, 2026-10-19T16:56:01
     java -Dadapt.floor=plain -Xmx24g -Xss64m -cp build-v31 verify.DirectPathVerifier ALL --adversarial --ops 16 --out results/verify-joint/plain-floor-adversarial
-    # plain-floor-fuzz: exit 0, commit e84b5a89, 2026-10-19T15:45:25
-    bash -c rc=0; for s in "2000 7" "5000 11" "5000 23" "5000 101"; do set -- $s; java -Dadapt.floor=plain -cp build-v31 verify.MixedBudgetFuzz joint $1 $2 || rc=1; done; exit $rc
+    # measured-code-2026-11-11/plain-floor-fuzz: exit 0, commit f30fe6b4, 2026-11-11T14:54:06
+    bash -c rc=0; for s in "2000 7" "5000 11" "5000 23" "5000 101"; do set -- $s; for r in joint; do java -Dadapt.floor=plain -cp build-vq2-light verify.MixedBudgetFuzz $r $1 $2  || rc=1; done; done; exit $rc
     # plain-floor-random: exit 0, commit e84b5a89, 2026-10-19T15:51:39
     java -Dadapt.floor=plain -Xmx24g -Xss64m -cp build-v31 verify.DirectPathVerifier ALL --ops 16 --out results/verify-joint/plain-floor-random
-    # pre-tests-acceptance: exit 0, commit e84b5a89, 2026-10-17T13:42:52
-    java -cp build-v31 verify.RescanRuleAcceptanceTest
+    # measured-code-2026-11-11/pre-tests-acceptance: exit 0, commit f30fe6b4, 2026-11-11T14:51:09
+    java -cp build-vq2-light verify.RescanRuleAcceptanceTest
     # pre-tests-adversarial: exit 0, commit e84b5a89, 2026-10-17T22:59:08
     bash -c rc=0; for r in pre_swumax pre_tsu; do java -Xmx24g -Xss64m -cp build-v31 verify.DirectPathVerifier ALL --adversarial --ops 16 --rule $r --insert-only --out results/verify-joint/pre-tests-adversarial || rc=1; done; exit $rc
-    # pre-tests-fuzz: exit 0, commit e84b5a89, 2026-10-17T13:43:58
-    bash -c rc=0; for s in "2000 7" "5000 11" "5000 23" "5000 101"; do set -- $s; for r in pre_swumax pre_tsu joint; do java -cp build-v31 verify.MixedBudgetFuzz $r $1 $2 insert-only || rc=1; done; done; exit $rc
+    # measured-code-2026-11-11/pre-tests-fuzz: exit 0, commit f30fe6b4, 2026-11-11T15:01:50
+    bash -c rc=0; for s in "2000 7" "5000 11" "5000 23" "5000 101"; do set -- $s; for r in pre_swumax pre_tsu joint; do java  -cp build-vq2-light verify.MixedBudgetFuzz $r $1 $2 insert-only || rc=1; done; done; exit $rc
     # pre-tests-random: exit 0, commit e84b5a89, 2026-10-17T21:40:54
     bash -c rc=0; for r in pre_swumax pre_tsu; do java -Xmx24g -Xss64m -cp build-v31 verify.DirectPathVerifier ALL --ops 16 --rule $r --insert-only --out results/verify-joint/pre-tests-random || rc=1; done; exit $rc
-    # prehuspm-tracking-acceptance: exit 0, commit e84b5a89, 2026-10-17T13:43:59
-    java -cp build-v31 verify.RescanRuleAcceptanceTest
+    # measured-code-2026-11-11/prehuspm-tracking-acceptance: exit 0, commit f30fe6b4, 2026-11-11T14:51:13
+    java -cp build-vq2-light verify.RescanRuleAcceptanceTest
     # prehuspm-tracking-adversarial: exit 0, commit e84b5a89, 2026-10-17T23:52:45
     java -Dadapt.tracking=prehuspm -Xmx24g -Xss64m -cp build-v31 verify.DirectPathVerifier ALL --insert-only --adversarial --ops 16 --out results/verify-joint/prehuspm-tracking-adversarial
     # prehuspm-tracking-equivalence: exit 0, commit e84b5a89, 2026-10-17T14:29:53
     java -Xmx24g -Xss64m -cp build-v31 verify.PreHuspmTrackingCheck
-    # prehuspm-tracking-fuzz: exit 0, commit e84b5a89, 2026-10-17T13:44:44
-    bash -c rc=0; for s in "2000 7" "5000 11" "5000 23" "5000 101"; do set -- $s; for r in joint pre_swumax; do java -Dadapt.tracking=prehuspm -cp build-v31 verify.MixedBudgetFuzz $r $1 $2 insert-only || rc=1; done; done; exit $rc
+    # measured-code-2026-11-11/prehuspm-tracking-fuzz: exit 0, commit f30fe6b4, 2026-11-11T15:04:52
+    bash -c rc=0; for s in "2000 7" "5000 11" "5000 23" "5000 101"; do set -- $s; for r in joint pre_swumax; do java -Dadapt.tracking=prehuspm -cp build-vq2-light verify.MixedBudgetFuzz $r $1 $2 insert-only || rc=1; done; done; exit $rc
     # prehuspm-tracking-random: exit 0, commit e84b5a89, 2026-10-17T23:15:21
     java -Dadapt.tracking=prehuspm -Xmx24g -Xss64m -cp build-v31 verify.DirectPathVerifier ALL --insert-only --ops 16 --out results/verify-joint/prehuspm-tracking-random
     # random: exit 0, commit e84b5a89, 2026-10-17T14:33:05
@@ -696,5 +696,5 @@ is the one read above (`analysis/verify_records.py`):
     java -cp build-rex2 verify.RunningExampleCheck
     # static-joint-miner-uut: exit 0, commit 90622229, 2026-10-16T21:29:19
     java -Xmx24g -Xss64m -cp build-v30 -Drepeats=1 -Dalgo.only=HUSP-ULL,Joint-miner@UUT -Dresults.dir=results/verify-joint/static-joint-miner-uut/ AutomatedExperimentRunner SC1 SC3
-    # stream-plans: exit 0, commit 1d020e38, 2026-10-31T16:43:13
-    java -Xmx8g -cp build-plans verify.StreamPlansCheck
+    # measured-code-2026-11-11/stream-plans: exit 0, commit f30fe6b4, 2026-11-11T15:08:52
+    java -Xmx8g -cp build-vq2-light verify.StreamPlansCheck

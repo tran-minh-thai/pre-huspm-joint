@@ -1,0 +1,74 @@
+SC8 SIGN         seed 42    opSize 1   500 operations (350 insert, 75 delete, 75 modify); new sequences 0
+SC8 SIGN         seed 1337  opSize 1   500 operations (350 insert, 75 delete, 75 modify); new sequences 0
+SC8 SIGN         seed 2024  opSize 1   500 operations (350 insert, 75 delete, 75 modify); new sequences 0
+SC8P SIGN         seed 42    opSize 1   500 operations (225 insert, 225 delete, 50 modify); new sequences 0
+SC8P SIGN         seed 1337  opSize 1   500 operations (225 insert, 225 delete, 50 modify); new sequences 0
+SC8P SIGN         seed 2024  opSize 1   500 operations (225 insert, 225 delete, 50 modify); new sequences 0
+SC9 SIGN         seed 42    opSize 1   500 operations (250 insert, 250 delete, 0 modify); new sequences 0
+SC9 SIGN         seed 1337  opSize 1   500 operations (250 insert, 250 delete, 0 modify); new sequences 0
+SC9 SIGN         seed 2024  opSize 1   500 operations (250 insert, 250 delete, 0 modify); new sequences 0
+SC10 SIGN         seed 42    opSize 1   500 operations (350 insert, 75 delete, 75 modify); new sequences 75; picked among recent: 77 of 150
+SC10 SIGN         seed 1337  opSize 1   500 operations (350 insert, 75 delete, 75 modify); new sequences 75; picked among recent: 79 of 150
+SC10 SIGN         seed 2024  opSize 1   500 operations (350 insert, 75 delete, 75 modify); new sequences 75; picked among recent: 75 of 150
+SC10H SIGN         no plan: 500 sequences after D_init
+SC8 LEVIATHAN    seed 42    opSize 3   500 operations (350 insert, 75 delete, 75 modify); new sequences 0
+SC8 LEVIATHAN    seed 1337  opSize 3   500 operations (350 insert, 75 delete, 75 modify); new sequences 0
+SC8 LEVIATHAN    seed 2024  opSize 3   500 operations (350 insert, 75 delete, 75 modify); new sequences 0
+SC8P LEVIATHAN    seed 42    opSize 3   500 operations (225 insert, 225 delete, 50 modify); new sequences 0
+SC8P LEVIATHAN    seed 1337  opSize 3   500 operations (225 insert, 225 delete, 50 modify); new sequences 0
+SC8P LEVIATHAN    seed 2024  opSize 3   500 operations (225 insert, 225 delete, 50 modify); new sequences 0
+SC9 LEVIATHAN    seed 42    opSize 3   500 operations (250 insert, 250 delete, 0 modify); new sequences 0
+SC9 LEVIATHAN    seed 1337  opSize 3   500 operations (250 insert, 250 delete, 0 modify); new sequences 0
+SC9 LEVIATHAN    seed 2024  opSize 3   500 operations (250 insert, 250 delete, 0 modify); new sequences 0
+SC10 LEVIATHAN    seed 42    opSize 3   500 operations (350 insert, 75 delete, 75 modify); new sequences 225; picked among recent: 73 of 150
+SC10 LEVIATHAN    seed 1337  opSize 3   500 operations (350 insert, 75 delete, 75 modify); new sequences 225; picked among recent: 84 of 150
+SC10 LEVIATHAN    seed 2024  opSize 3   500 operations (350 insert, 75 delete, 75 modify); new sequences 225; picked among recent: 67 of 150
+SC10H LEVIATHAN    seed 42    opSize 3   500 operations (350 insert, 75 delete, 75 modify); new sequences 0
+SC10H LEVIATHAN    seed 1337  opSize 3   500 operations (350 insert, 75 delete, 75 modify); new sequences 0
+SC10H LEVIATHAN    seed 2024  opSize 3   500 operations (350 insert, 75 delete, 75 modify); new sequences 0
+SC8 C8T1S5I8N5K  seed 42    opSize 19  500 operations (350 insert, 75 delete, 75 modify); new sequences 0
+SC8 C8T1S5I8N5K  seed 1337  opSize 19  500 operations (350 insert, 75 delete, 75 modify); new sequences 0
+SC8 C8T1S5I8N5K  seed 2024  opSize 19  500 operations (350 insert, 75 delete, 75 modify); new sequences 0
+SC8P C8T1S5I8N5K  seed 42    opSize 19  500 operations (225 insert, 225 delete, 50 modify); new sequences 0
+SC8P C8T1S5I8N5K  seed 1337  opSize 19  500 operations (225 insert, 225 delete, 50 modify); new sequences 0
+SC8P C8T1S5I8N5K  seed 2024  opSize 19  500 operations (225 insert, 225 delete, 50 modify); new sequences 0
+SC9 C8T1S5I8N5K  seed 42    opSize 19  500 operations (250 insert, 250 delete, 0 modify); new sequences 0
+SC9 C8T1S5I8N5K  seed 1337  opSize 19  500 operations (250 insert, 250 delete, 0 modify); new sequences 0
+SC9 C8T1S5I8N5K  seed 2024  opSize 19  500 operations (250 insert, 250 delete, 0 modify); new sequences 0
+SC10 C8T1S5I8N5K  seed 42    opSize 19  500 operations (350 insert, 75 delete, 75 modify); new sequences 1425; picked among recent: 84 of 150
+SC10 C8T1S5I8N5K  seed 1337  opSize 19  500 operations (350 insert, 75 delete, 75 modify); new sequences 1425; picked among recent: 91 of 150
+SC10 C8T1S5I8N5K  seed 2024  opSize 19  500 operations (350 insert, 75 delete, 75 modify); new sequences 1425; picked among recent: 86 of 150
+SC10H C8T1S5I8N5K  seed 42    opSize 19  500 operations (350 insert, 75 delete, 75 modify); new sequences 0
+SC10H C8T1S5I8N5K  seed 1337  opSize 19  500 operations (350 insert, 75 delete, 75 modify); new sequences 0
+SC10H C8T1S5I8N5K  seed 2024  opSize 19  500 operations (350 insert, 75 delete, 75 modify); new sequences 0
+SC8 TAFENG       seed 42    opSize 20  500 operations (350 insert, 75 delete, 75 modify); new sequences 0
+SC8 TAFENG       seed 1337  opSize 20  500 operations (350 insert, 75 delete, 75 modify); new sequences 0
+SC8 TAFENG       seed 2024  opSize 20  500 operations (350 insert, 75 delete, 75 modify); new sequences 0
+SC8P TAFENG       seed 42    opSize 20  500 operations (225 insert, 225 delete, 50 modify); new sequences 0
+SC8P TAFENG       seed 1337  opSize 20  500 operations (225 insert, 225 delete, 50 modify); new sequences 0
+SC8P TAFENG       seed 2024  opSize 20  500 operations (225 insert, 225 delete, 50 modify); new sequences 0
+SC9 TAFENG       seed 42    opSize 20  500 operations (250 insert, 250 delete, 0 modify); new sequences 0
+SC9 TAFENG       seed 1337  opSize 20  500 operations (250 insert, 250 delete, 0 modify); new sequences 0
+SC9 TAFENG       seed 2024  opSize 20  500 operations (250 insert, 250 delete, 0 modify); new sequences 0
+SC10 TAFENG       seed 42    opSize 20  500 operations (350 insert, 75 delete, 75 modify); new sequences 1500; picked among recent: 71 of 150
+SC10 TAFENG       seed 1337  opSize 20  500 operations (350 insert, 75 delete, 75 modify); new sequences 1500; picked among recent: 83 of 150
+SC10 TAFENG       seed 2024  opSize 20  500 operations (350 insert, 75 delete, 75 modify); new sequences 1500; picked among recent: 86 of 150
+SC10H TAFENG       seed 42    opSize 20  500 operations (350 insert, 75 delete, 75 modify); new sequences 0
+SC10H TAFENG       seed 1337  opSize 20  500 operations (350 insert, 75 delete, 75 modify); new sequences 0
+SC10H TAFENG       seed 2024  opSize 20  500 operations (350 insert, 75 delete, 75 modify); new sequences 0
+SC8 DUNNHUMBY    seed 42    opSize 20  500 operations (350 insert, 75 delete, 75 modify); new sequences 0
+SC8 DUNNHUMBY    seed 1337  opSize 20  500 operations (350 insert, 75 delete, 75 modify); new sequences 0
+SC8 DUNNHUMBY    seed 2024  opSize 20  500 operations (350 insert, 75 delete, 75 modify); new sequences 0
+SC8P DUNNHUMBY    seed 42    opSize 20  500 operations (225 insert, 225 delete, 50 modify); new sequences 0
+SC8P DUNNHUMBY    seed 1337  opSize 20  500 operations (225 insert, 225 delete, 50 modify); new sequences 0
+SC8P DUNNHUMBY    seed 2024  opSize 20  500 operations (225 insert, 225 delete, 50 modify); new sequences 0
+SC9 DUNNHUMBY    seed 42    opSize 20  500 operations (250 insert, 250 delete, 0 modify); new sequences 0
+SC9 DUNNHUMBY    seed 1337  opSize 20  500 operations (250 insert, 250 delete, 0 modify); new sequences 0
+SC9 DUNNHUMBY    seed 2024  opSize 20  500 operations (250 insert, 250 delete, 0 modify); new sequences 0
+SC10 DUNNHUMBY    seed 42    opSize 20  500 operations (350 insert, 75 delete, 75 modify); new sequences 1500; picked among recent: 91 of 150
+SC10 DUNNHUMBY    seed 1337  opSize 20  500 operations (350 insert, 75 delete, 75 modify); new sequences 1500; picked among recent: 95 of 150
+SC10 DUNNHUMBY    seed 2024  opSize 20  500 operations (350 insert, 75 delete, 75 modify); new sequences 1500; picked among recent: 96 of 150
+SC10H DUNNHUMBY    seed 42    opSize 20  500 operations (350 insert, 75 delete, 75 modify); new sequences 0
+SC10H DUNNHUMBY    seed 1337  opSize 20  500 operations (350 insert, 75 delete, 75 modify); new sequences 0
+SC10H DUNNHUMBY    seed 2024  opSize 20  500 operations (350 insert, 75 delete, 75 modify); new sequences 0
+plans: 72, operations: 36000, new sequences checked: 14175, (scenario, database) without a plan: 1, violations: 0

@@ -1,0 +1,16 @@
+{
+  "command": "bash -c rc=0; for s in \"2000 7\" \"5000 11\" \"5000 23\" \"5000 101\"; do set -- $s; for r in joint; do java -Dadapt.floor=plain -cp build-vq2-light verify.MixedBudgetFuzz $r $1 $2  || rc=1; done; done; exit $rc",
+  "path_substitutions": 0,
+  "build_dir": "build-vq2-light",
+  "git_commit": "f30fe6b41337835c44ce021e6a168683521e369b",
+  "tree": "src clean, other files modified",
+  "source_sha256": "c29c8a62e0d964b54a928d9d25e53a8b5631a51efb1bb0414a2806f101a15608",
+  "source_files": 46,
+  "java": "openjdk version \"25.0.4.1\" 2026-08-18 LTS",
+  "os": "Darwin 27.2.0 (macOS-27.2-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-11-11T14:52:53",
+  "end": "2026-11-11T14:54:06",
+  "exit_code": 0
+}
