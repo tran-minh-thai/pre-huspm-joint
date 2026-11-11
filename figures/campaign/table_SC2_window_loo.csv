@@ -6,3 +6,4 @@ BIBLE,5,52.524,5,0.964,"separated, faster",IncUSP-Miner+,0.913,"separated, faste
 LEVIATHAN,5,28.026,5,0.796,"separated, faster",Remine-own-UUT,1.039,"separated, slower",False
 FIFA,5,176.145,5,0.99,overlapping,Remine-own-UUT,0.557,"separated, faster",True
 KOSARAK,5,278.41,5,0.445,"separated, faster",Remine-own-UUT,0.903,"separated, faster",True
+DUNNHUMBY,5,131.322,5,0.89,"separated, faster",Remine-own-UUT,0.98,overlapping,False

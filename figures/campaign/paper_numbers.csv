@@ -1401,12 +1401,37 @@ SC2_window_10_KOSARAK_over_fixed_floor,"0.45 (separated, faster)",table_SC2_wind
 SC2_window_10_KOSARAK_over_best_competitor,"0.91 (Remine-own-UUT; separated, faster)",table_SC2_window.csv
 SC2_window_10_KOSARAK_rescans,100,table_SC2_window.csv
 SC2_window_10_KOSARAK_at_uut,91,table_SC2_window.csv
-SC2_window_1_fastest_separated,6/7,table_SC2_window.csv
-SC2_window_2_fastest_separated,5/7,table_SC2_window.csv
-SC2_window_3_fastest_separated,5/7,table_SC2_window.csv
-SC2_window_5_fastest_separated,5/7,table_SC2_window.csv
-SC2_window_10_fastest_separated,5/7,table_SC2_window.csv
-SC2_window_rescans_match_simulation,35/35,table_SC2_window.csv
+SC2_window_1_DUNNHUMBY_time,127.47 ± 5.62 (3 runs),table_SC2_window.csv
+SC2_window_1_DUNNHUMBY_over_fixed_floor,"0.86 (separated, faster)",table_SC2_window.csv
+SC2_window_1_DUNNHUMBY_over_best_competitor,0.95 (Remine-own-UUT; overlapping),table_SC2_window.csv
+SC2_window_1_DUNNHUMBY_rescans,100,table_SC2_window.csv
+SC2_window_1_DUNNHUMBY_at_uut,100,table_SC2_window.csv
+SC2_window_2_DUNNHUMBY_time,123.64 ± 1.09 (3 runs),table_SC2_window.csv
+SC2_window_2_DUNNHUMBY_over_fixed_floor,"0.84 (separated, faster)",table_SC2_window.csv
+SC2_window_2_DUNNHUMBY_over_best_competitor,"0.92 (Remine-own-UUT; separated, faster)",table_SC2_window.csv
+SC2_window_2_DUNNHUMBY_rescans,100,table_SC2_window.csv
+SC2_window_2_DUNNHUMBY_at_uut,99,table_SC2_window.csv
+SC2_window_3_DUNNHUMBY_time,131.96 ± 7.24 (3 runs),table_SC2_window.csv
+SC2_window_3_DUNNHUMBY_over_fixed_floor,"0.89 (separated, faster)",table_SC2_window.csv
+SC2_window_3_DUNNHUMBY_over_best_competitor,0.98 (Remine-own-UUT; overlapping),table_SC2_window.csv
+SC2_window_3_DUNNHUMBY_rescans,100,table_SC2_window.csv
+SC2_window_3_DUNNHUMBY_at_uut,98,table_SC2_window.csv
+SC2_window_5_DUNNHUMBY_time,131.32 ± 7.08 (5 runs),table_SC2_window.csv
+SC2_window_5_DUNNHUMBY_over_fixed_floor,"0.89 (separated, faster)",table_SC2_window.csv
+SC2_window_5_DUNNHUMBY_over_best_competitor,0.98 (Remine-own-UUT; overlapping),table_SC2_window.csv
+SC2_window_5_DUNNHUMBY_rescans,100,table_SC2_window.csv
+SC2_window_5_DUNNHUMBY_at_uut,96,table_SC2_window.csv
+SC2_window_10_DUNNHUMBY_time,125.88 ± 1.95 (3 runs),table_SC2_window.csv
+SC2_window_10_DUNNHUMBY_over_fixed_floor,"0.85 (separated, faster)",table_SC2_window.csv
+SC2_window_10_DUNNHUMBY_over_best_competitor,0.94 (Remine-own-UUT; overlapping),table_SC2_window.csv
+SC2_window_10_DUNNHUMBY_rescans,100,table_SC2_window.csv
+SC2_window_10_DUNNHUMBY_at_uut,91,table_SC2_window.csv
+SC2_window_1_fastest_separated,6/8,table_SC2_window.csv
+SC2_window_2_fastest_separated,6/8,table_SC2_window.csv
+SC2_window_3_fastest_separated,5/8,table_SC2_window.csv
+SC2_window_5_fastest_separated,5/8,table_SC2_window.csv
+SC2_window_10_fastest_separated,5/8,table_SC2_window.csv
+SC2_window_rescans_match_simulation,40/40,table_SC2_window.csv
 SC2_loo_SIGN_w,5,table_SC2_window_loo.csv
 SC2_loo_SIGN_over_fixed_floor,"0.97 (separated, faster)",table_SC2_window_loo.csv
 SC2_loo_SIGN_over_best_competitor,"0.87 (Remine-own-UUT; separated, faster)",table_SC2_window_loo.csv
@@ -1435,7 +1460,11 @@ SC2_loo_KOSARAK_w,5,table_SC2_window_loo.csv
 SC2_loo_KOSARAK_over_fixed_floor,"0.44 (separated, faster)",table_SC2_window_loo.csv
 SC2_loo_KOSARAK_over_best_competitor,"0.90 (Remine-own-UUT; separated, faster)",table_SC2_window_loo.csv
 SC2_loo_KOSARAK_fastest,yes,table_SC2_window_loo.csv
-SC2_loo_fastest_separated,5/7,table_SC2_window_loo.csv
+SC2_loo_DUNNHUMBY_w,5,table_SC2_window_loo.csv
+SC2_loo_DUNNHUMBY_over_fixed_floor,"0.89 (separated, faster)",table_SC2_window_loo.csv
+SC2_loo_DUNNHUMBY_over_best_competitor,0.98 (Remine-own-UUT; overlapping),table_SC2_window_loo.csv
+SC2_loo_DUNNHUMBY_fastest,no,table_SC2_window_loo.csv
+SC2_loo_fastest_separated,5/8,table_SC2_window_loo.csv
 SC5_window_1_C8T1S5I8N5K_over_fixed_floor,"median 0.628, 0.536 to 1.062",table_SC5_window.csv
 SC5_window_1_C8T1S5I8N5K_vs_best_competitor,"faster 2, overlapping 0, slower 14 of 16; runs 1",table_SC5_window.csv
 SC5_window_1_LEVIATHAN_over_fixed_floor,"median 0.747, 0.726 to 0.923",table_SC5_window.csv
@@ -3796,18 +3825,75 @@ SC2_inference_Pre-HUSPM-Joint-fixed-threshold_over_proposal_KOSARAK_ratio,2.25,t
 SC2_inference_Pre-HUSPM-Joint-fixed-threshold_over_proposal_KOSARAK_fastest_over_slowest,2.20,table_SC2_inference.csv
 SC2_inference_Pre-HUSPM-Joint-fixed-threshold_over_proposal_KOSARAK_ci95,2.23 to 2.27,table_SC2_inference.csv
 SC2_inference_Pre-HUSPM-Joint-fixed-threshold_over_proposal_KOSARAK_runs,5 and 5,table_SC2_inference.csv
-SC2_sign_test_streams,7/7,table_SC2_inference.csv
-SC2_sign_test_p,0.0078,table_SC2_inference.csv
+SC2_inference_Pre-HUSPM-SWUmax_over_proposal_DUNNHUMBY_ratio,45.09,table_SC2_inference.csv
+SC2_inference_Pre-HUSPM-SWUmax_over_proposal_DUNNHUMBY_fastest_over_slowest,41.85,table_SC2_inference.csv
+SC2_inference_Pre-HUSPM-SWUmax_over_proposal_DUNNHUMBY_ci95,43.48 to 46.13,table_SC2_inference.csv
+SC2_inference_Pre-HUSPM-SWUmax_over_proposal_DUNNHUMBY_runs,5 and 5,table_SC2_inference.csv
+SC2_inference_Pre-HUSPM-TSU_over_proposal_DUNNHUMBY_ratio,44.77,table_SC2_inference.csv
+SC2_inference_Pre-HUSPM-TSU_over_proposal_DUNNHUMBY_fastest_over_slowest,41.74,table_SC2_inference.csv
+SC2_inference_Pre-HUSPM-TSU_over_proposal_DUNNHUMBY_ci95,43.19 to 45.77,table_SC2_inference.csv
+SC2_inference_Pre-HUSPM-TSU_over_proposal_DUNNHUMBY_runs,1 and 5,table_SC2_inference.csv
+SC2_inference_Remine-from-scratch_over_proposal_DUNNHUMBY_ratio,1.26,table_SC2_inference.csv
+SC2_inference_Remine-from-scratch_over_proposal_DUNNHUMBY_fastest_over_slowest,1.13,table_SC2_inference.csv
+SC2_inference_Remine-from-scratch_over_proposal_DUNNHUMBY_ci95,1.20 to 1.31,table_SC2_inference.csv
+SC2_inference_Remine-from-scratch_over_proposal_DUNNHUMBY_runs,5 and 5,table_SC2_inference.csv
+SC2_inference_IncUSP-Miner+_over_proposal_DUNNHUMBY_ratio,4.61,table_SC2_inference.csv
+SC2_inference_IncUSP-Miner+_over_proposal_DUNNHUMBY_fastest_over_slowest,4.30,table_SC2_inference.csv
+SC2_inference_IncUSP-Miner+_over_proposal_DUNNHUMBY_ci95,4.45 to 4.71,table_SC2_inference.csv
+SC2_inference_IncUSP-Miner+_over_proposal_DUNNHUMBY_runs,1 and 5,table_SC2_inference.csv
+SC2_inference_Remine-HUSP-ULL_over_proposal_DUNNHUMBY_ratio,2.43,table_SC2_inference.csv
+SC2_inference_Remine-HUSP-ULL_over_proposal_DUNNHUMBY_fastest_over_slowest,2.23,table_SC2_inference.csv
+SC2_inference_Remine-HUSP-ULL_over_proposal_DUNNHUMBY_ci95,2.34 to 2.51,table_SC2_inference.csv
+SC2_inference_Remine-HUSP-ULL_over_proposal_DUNNHUMBY_runs,5 and 5,table_SC2_inference.csv
+SC2_inference_Remine-HUSP-SP_over_proposal_DUNNHUMBY_ratio,5.01,table_SC2_inference.csv
+SC2_inference_Remine-HUSP-SP_over_proposal_DUNNHUMBY_fastest_over_slowest,4.66,table_SC2_inference.csv
+SC2_inference_Remine-HUSP-SP_over_proposal_DUNNHUMBY_ci95,4.83 to 5.12,table_SC2_inference.csv
+SC2_inference_Remine-HUSP-SP_over_proposal_DUNNHUMBY_runs,5 and 5,table_SC2_inference.csv
+SC2_inference_Remine-own-UUT_over_proposal_DUNNHUMBY_ratio,1.07,table_SC2_inference.csv
+SC2_inference_Remine-own-UUT_over_proposal_DUNNHUMBY_fastest_over_slowest,0.95,table_SC2_inference.csv
+SC2_inference_Remine-own-UUT_over_proposal_DUNNHUMBY_ci95,1.02 to 1.12,table_SC2_inference.csv
+SC2_inference_Remine-own-UUT_over_proposal_DUNNHUMBY_runs,5 and 5,table_SC2_inference.csv
+SC2_inference_Joint-miner+SWUmax_over_proposal_DUNNHUMBY_ratio,1.23,table_SC2_inference.csv
+SC2_inference_Joint-miner+SWUmax_over_proposal_DUNNHUMBY_fastest_over_slowest,1.09,table_SC2_inference.csv
+SC2_inference_Joint-miner+SWUmax_over_proposal_DUNNHUMBY_ci95,1.16 to 1.29,table_SC2_inference.csv
+SC2_inference_Joint-miner+SWUmax_over_proposal_DUNNHUMBY_runs,5 and 5,table_SC2_inference.csv
+SC2_inference_Joint-miner+TSU_over_proposal_DUNNHUMBY_ratio,1.23,table_SC2_inference.csv
+SC2_inference_Joint-miner+TSU_over_proposal_DUNNHUMBY_fastest_over_slowest,1.10,table_SC2_inference.csv
+SC2_inference_Joint-miner+TSU_over_proposal_DUNNHUMBY_ci95,1.16 to 1.29,table_SC2_inference.csv
+SC2_inference_Joint-miner+TSU_over_proposal_DUNNHUMBY_runs,5 and 5,table_SC2_inference.csv
+SC2_inference_Joint-rule+PreHUSPM-tracking_over_proposal_DUNNHUMBY_ratio,6.33,table_SC2_inference.csv
+SC2_inference_Joint-rule+PreHUSPM-tracking_over_proposal_DUNNHUMBY_fastest_over_slowest,5.41,table_SC2_inference.csv
+SC2_inference_Joint-rule+PreHUSPM-tracking_over_proposal_DUNNHUMBY_ci95,5.99 to 6.60,table_SC2_inference.csv
+SC2_inference_Joint-rule+PreHUSPM-tracking_over_proposal_DUNNHUMBY_runs,5 and 5,table_SC2_inference.csv
+SC2_inference_Joint-miner+SWUmax+PreHUSPM-tracking_over_proposal_DUNNHUMBY_ratio,6.38,table_SC2_inference.csv
+SC2_inference_Joint-miner+SWUmax+PreHUSPM-tracking_over_proposal_DUNNHUMBY_fastest_over_slowest,5.65,table_SC2_inference.csv
+SC2_inference_Joint-miner+SWUmax+PreHUSPM-tracking_over_proposal_DUNNHUMBY_ci95,6.11 to 6.60,table_SC2_inference.csv
+SC2_inference_Joint-miner+SWUmax+PreHUSPM-tracking_over_proposal_DUNNHUMBY_runs,5 and 5,table_SC2_inference.csv
+SC2_inference_Joint-rule+min-floor_over_proposal_DUNNHUMBY_ratio,1.27,table_SC2_inference.csv
+SC2_inference_Joint-rule+min-floor_over_proposal_DUNNHUMBY_fastest_over_slowest,1.11,table_SC2_inference.csv
+SC2_inference_Joint-rule+min-floor_over_proposal_DUNNHUMBY_ci95,1.21 to 1.32,table_SC2_inference.csv
+SC2_inference_Joint-rule+min-floor_over_proposal_DUNNHUMBY_runs,5 and 5,table_SC2_inference.csv
+SC2_inference_Joint-rule+plain-floor_over_proposal_DUNNHUMBY_ratio,1.21,table_SC2_inference.csv
+SC2_inference_Joint-rule+plain-floor_over_proposal_DUNNHUMBY_fastest_over_slowest,1.10,table_SC2_inference.csv
+SC2_inference_Joint-rule+plain-floor_over_proposal_DUNNHUMBY_ci95,1.16 to 1.25,table_SC2_inference.csv
+SC2_inference_Joint-rule+plain-floor_over_proposal_DUNNHUMBY_runs,5 and 5,table_SC2_inference.csv
+SC2_inference_Pre-HUSPM-Joint-fixed-threshold_over_proposal_DUNNHUMBY_ratio,1.18,table_SC2_inference.csv
+SC2_inference_Pre-HUSPM-Joint-fixed-threshold_over_proposal_DUNNHUMBY_fastest_over_slowest,1.08,table_SC2_inference.csv
+SC2_inference_Pre-HUSPM-Joint-fixed-threshold_over_proposal_DUNNHUMBY_ci95,1.14 to 1.21,table_SC2_inference.csv
+SC2_inference_Pre-HUSPM-Joint-fixed-threshold_over_proposal_DUNNHUMBY_runs,5 and 5,table_SC2_inference.csv
+SC2_sign_test_streams,8/8,table_SC2_inference.csv
+SC2_sign_test_p,0.0039,table_SC2_inference.csv
 SC2_inference_closest_BIBLE,"IncUSP-Miner+: 1.06, fastest over slowest 1.04, interval 1.05 to 1.07 (5 and 5 runs)",table_SC2_inference.csv
 SC2_inference_closest_C8T1S5I8N5K,"Remine-own-UUT: 1.17, fastest over slowest 1.15, interval 1.16 to 1.20 (5 and 5 runs)",table_SC2_inference.csv
+SC2_inference_closest_DUNNHUMBY,"Remine-own-UUT: 1.07, fastest over slowest 0.95, interval 1.02 to 1.12 (5 and 5 runs)",table_SC2_inference.csv
 SC2_inference_closest_FIFA,"Remine-own-UUT: 1.74, fastest over slowest 1.71, interval 1.73 to 1.75 (5 and 5 runs)",table_SC2_inference.csv
 SC2_inference_closest_KOSARAK,"Remine-own-UUT: 1.11, fastest over slowest 1.09, interval 1.10 to 1.12 (5 and 5 runs)",table_SC2_inference.csv
 SC2_inference_closest_LEVIATHAN,"Remine-own-UUT: 1.01, fastest over slowest 0.99, interval 1.00 to 1.03 (5 and 5 runs)",table_SC2_inference.csv
 SC2_inference_closest_SIGN,"Remine-own-UUT: 1.09, fastest over slowest 1.06, interval 1.08 to 1.10 (5 and 5 runs)",table_SC2_inference.csv
 SC2_inference_closest_TAFENG,"Pre-HUSPM-SWUmax: 1.19, fastest over slowest 1.17, interval 1.18 to 1.21 (5 and 5 runs)",table_SC2_inference.csv
-SC2_faster_than_published_and_remine_below_streams,7/7,table_SC2_inference.csv
+SC2_faster_than_published_and_remine_below_streams,8/8,table_SC2_inference.csv
 SC2_closest_published_or_remine_below,"IncUSP-Miner+ on BIBLE: 1.06, interval 1.05 to 1.07",table_SC2_inference.csv
-SC2_remine_uut_faster_streams,0/7,table_SC2_inference.csv
+SC2_remine_uut_faster_streams,0/8,table_SC2_inference.csv
 SC2_Remine-own-UUT_over_proposal_SIGN_min,1.06,table_SC2_inference.csv
 SC2_Remine-own-UUT_over_proposal_SIGN_max,1.12,table_SC2_inference.csv
 SC2_Remine-own-UUT_over_proposal_SIGN_separation,"separated, the method faster",table_SC2_inference.csv
@@ -3850,6 +3936,12 @@ SC2_Remine-own-UUT_over_proposal_KOSARAK_separation,"separated, the method faste
 SC2_Remine-own-UUT_over_proposal_KOSARAK_runs,5 and 5,table_SC2_inference.csv
 SC2_Remine-own-UUT_KOSARAK_nodes_own,71794,table_SC2_totals.csv
 SC2_Remine-own-UUT_KOSARAK_nodes_proposal,71794,table_SC2_totals.csv
+SC2_Remine-own-UUT_over_proposal_DUNNHUMBY_min,0.95,table_SC2_inference.csv
+SC2_Remine-own-UUT_over_proposal_DUNNHUMBY_max,1.14,table_SC2_inference.csv
+SC2_Remine-own-UUT_over_proposal_DUNNHUMBY_separation,overlapping,table_SC2_inference.csv
+SC2_Remine-own-UUT_over_proposal_DUNNHUMBY_runs,5 and 5,table_SC2_inference.csv
+SC2_Remine-own-UUT_DUNNHUMBY_nodes_own,1463534,table_SC2_totals.csv
+SC2_Remine-own-UUT_DUNNHUMBY_nodes_proposal,1463534,table_SC2_totals.csv
 SC6_SIGN_insertion_rescans,70/70,table_SC6_by_op_arms.csv
 SC6_SIGN_insertion_direct,0/70,table_SC6_by_op_arms.csv
 SC6_SIGN_insertion_Remine_over_proposal,1.95 ± 0.04 (5 seeds),table_SC6_by_op_arms.csv
@@ -6660,38 +6752,38 @@ classes_SC1_miner_at_threshold_vs_HUSP-SP_band_1.05,"wins 30, ties 5, losses 1 o
 classes_SC1_miner_at_threshold_vs_HUSP-SP_band_1.10,"wins 28, ties 7, losses 1 of 36",table_comparison_classes.csv
 classes_SC1_miner_at_threshold_vs_HUSP-ULL_band_1.05,"wins 26, ties 9, losses 1 of 36",table_comparison_classes.csv
 classes_SC1_miner_at_threshold_vs_HUSP-ULL_band_1.10,"wins 25, ties 11, losses 0 of 36",table_comparison_classes.csv
-classes_SC2_method_vs_IncUSP-Miner+_band_1.05,"wins 6, ties 0, losses 0 of 6",table_comparison_classes.csv
-classes_SC2_method_vs_IncUSP-Miner+_band_1.10,"wins 5, ties 1, losses 0 of 6",table_comparison_classes.csv
-classes_SC2_method_vs_Joint-miner+SWUmax_band_1.05,"wins 3, ties 4, losses 0 of 7",table_comparison_classes.csv
-classes_SC2_method_vs_Joint-miner+SWUmax_band_1.10,"wins 3, ties 4, losses 0 of 7",table_comparison_classes.csv
-classes_SC2_method_vs_Joint-miner+SWUmax+PreHUSPM-tracking_band_1.05,"wins 6, ties 0, losses 1 of 7",table_comparison_classes.csv
-classes_SC2_method_vs_Joint-miner+SWUmax+PreHUSPM-tracking_band_1.10,"wins 5, ties 1, losses 1 of 7",table_comparison_classes.csv
-classes_SC2_method_vs_Joint-miner+TSU_band_1.05,"wins 6, ties 1, losses 0 of 7",table_comparison_classes.csv
-classes_SC2_method_vs_Joint-miner+TSU_band_1.10,"wins 6, ties 1, losses 0 of 7",table_comparison_classes.csv
-classes_SC2_method_vs_Joint-rule+PreHUSPM-tracking_band_1.05,"wins 6, ties 0, losses 1 of 7",table_comparison_classes.csv
-classes_SC2_method_vs_Joint-rule+PreHUSPM-tracking_band_1.10,"wins 5, ties 1, losses 1 of 7",table_comparison_classes.csv
-classes_SC2_method_vs_Joint-rule+min-floor_band_1.05,"wins 3, ties 4, losses 0 of 7",table_comparison_classes.csv
-classes_SC2_method_vs_Joint-rule+min-floor_band_1.10,"wins 3, ties 4, losses 0 of 7",table_comparison_classes.csv
-classes_SC2_method_vs_Joint-rule+plain-floor_band_1.05,"wins 3, ties 3, losses 1 of 7",table_comparison_classes.csv
-classes_SC2_method_vs_Joint-rule+plain-floor_band_1.10,"wins 3, ties 4, losses 0 of 7",table_comparison_classes.csv
-classes_SC2_method_vs_Pre-HUSPM-Joint-fixed-threshold_band_1.05,"wins 3, ties 4, losses 0 of 7",table_comparison_classes.csv
-classes_SC2_method_vs_Pre-HUSPM-Joint-fixed-threshold_band_1.10,"wins 3, ties 4, losses 0 of 7",table_comparison_classes.csv
-classes_SC2_method_vs_Pre-HUSPM-SWUmax_band_1.05,"wins 7, ties 0, losses 0 of 7",table_comparison_classes.csv
-classes_SC2_method_vs_Pre-HUSPM-SWUmax_band_1.10,"wins 7, ties 0, losses 0 of 7",table_comparison_classes.csv
-classes_SC2_method_vs_Pre-HUSPM-TSU_band_1.05,"wins 7, ties 0, losses 0 of 7",table_comparison_classes.csv
-classes_SC2_method_vs_Pre-HUSPM-TSU_band_1.10,"wins 7, ties 0, losses 0 of 7",table_comparison_classes.csv
-classes_SC2_method_vs_Remine-HUSP-SP_band_1.05,"wins 7, ties 0, losses 0 of 7",table_comparison_classes.csv
-classes_SC2_method_vs_Remine-HUSP-SP_band_1.10,"wins 7, ties 0, losses 0 of 7",table_comparison_classes.csv
-classes_SC2_method_vs_Remine-HUSP-ULL_band_1.05,"wins 7, ties 0, losses 0 of 7",table_comparison_classes.csv
-classes_SC2_method_vs_Remine-HUSP-ULL_band_1.10,"wins 7, ties 0, losses 0 of 7",table_comparison_classes.csv
-classes_SC2_method_vs_Remine-from-scratch_band_1.05,"wins 7, ties 0, losses 0 of 7",table_comparison_classes.csv
-classes_SC2_method_vs_Remine-from-scratch_band_1.10,"wins 7, ties 0, losses 0 of 7",table_comparison_classes.csv
-classes_SC2_method_vs_Remine-own-UUT_band_1.05,"wins 6, ties 1, losses 0 of 7",table_comparison_classes.csv
-classes_SC2_method_vs_Remine-own-UUT_band_1.10,"wins 5, ties 2, losses 0 of 7",table_comparison_classes.csv
-classes_SC2_method_vs_best_window_band_1.05,"wins 1, ties 4, losses 2 of 7",table_comparison_classes.csv
-classes_SC2_method_vs_best_window_band_1.10,"wins 1, ties 5, losses 1 of 7",table_comparison_classes.csv
-classes_SC2_method_vs_closest_published_or_remine_below_band_1.05,"wins 7, ties 0, losses 0 of 7",table_comparison_classes.csv
-classes_SC2_method_vs_closest_published_or_remine_below_band_1.10,"wins 6, ties 1, losses 0 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_IncUSP-Miner+_band_1.05,"wins 7, ties 0, losses 0 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_IncUSP-Miner+_band_1.10,"wins 6, ties 1, losses 0 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Joint-miner+SWUmax_band_1.05,"wins 4, ties 4, losses 0 of 8",table_comparison_classes.csv
+classes_SC2_method_vs_Joint-miner+SWUmax_band_1.10,"wins 4, ties 4, losses 0 of 8",table_comparison_classes.csv
+classes_SC2_method_vs_Joint-miner+SWUmax+PreHUSPM-tracking_band_1.05,"wins 7, ties 0, losses 1 of 8",table_comparison_classes.csv
+classes_SC2_method_vs_Joint-miner+SWUmax+PreHUSPM-tracking_band_1.10,"wins 6, ties 1, losses 1 of 8",table_comparison_classes.csv
+classes_SC2_method_vs_Joint-miner+TSU_band_1.05,"wins 7, ties 1, losses 0 of 8",table_comparison_classes.csv
+classes_SC2_method_vs_Joint-miner+TSU_band_1.10,"wins 7, ties 1, losses 0 of 8",table_comparison_classes.csv
+classes_SC2_method_vs_Joint-rule+PreHUSPM-tracking_band_1.05,"wins 7, ties 0, losses 1 of 8",table_comparison_classes.csv
+classes_SC2_method_vs_Joint-rule+PreHUSPM-tracking_band_1.10,"wins 6, ties 1, losses 1 of 8",table_comparison_classes.csv
+classes_SC2_method_vs_Joint-rule+min-floor_band_1.05,"wins 4, ties 4, losses 0 of 8",table_comparison_classes.csv
+classes_SC2_method_vs_Joint-rule+min-floor_band_1.10,"wins 4, ties 4, losses 0 of 8",table_comparison_classes.csv
+classes_SC2_method_vs_Joint-rule+plain-floor_band_1.05,"wins 4, ties 3, losses 1 of 8",table_comparison_classes.csv
+classes_SC2_method_vs_Joint-rule+plain-floor_band_1.10,"wins 4, ties 4, losses 0 of 8",table_comparison_classes.csv
+classes_SC2_method_vs_Pre-HUSPM-Joint-fixed-threshold_band_1.05,"wins 4, ties 4, losses 0 of 8",table_comparison_classes.csv
+classes_SC2_method_vs_Pre-HUSPM-Joint-fixed-threshold_band_1.10,"wins 4, ties 4, losses 0 of 8",table_comparison_classes.csv
+classes_SC2_method_vs_Pre-HUSPM-SWUmax_band_1.05,"wins 8, ties 0, losses 0 of 8",table_comparison_classes.csv
+classes_SC2_method_vs_Pre-HUSPM-SWUmax_band_1.10,"wins 8, ties 0, losses 0 of 8",table_comparison_classes.csv
+classes_SC2_method_vs_Pre-HUSPM-TSU_band_1.05,"wins 8, ties 0, losses 0 of 8",table_comparison_classes.csv
+classes_SC2_method_vs_Pre-HUSPM-TSU_band_1.10,"wins 8, ties 0, losses 0 of 8",table_comparison_classes.csv
+classes_SC2_method_vs_Remine-HUSP-SP_band_1.05,"wins 8, ties 0, losses 0 of 8",table_comparison_classes.csv
+classes_SC2_method_vs_Remine-HUSP-SP_band_1.10,"wins 8, ties 0, losses 0 of 8",table_comparison_classes.csv
+classes_SC2_method_vs_Remine-HUSP-ULL_band_1.05,"wins 8, ties 0, losses 0 of 8",table_comparison_classes.csv
+classes_SC2_method_vs_Remine-HUSP-ULL_band_1.10,"wins 8, ties 0, losses 0 of 8",table_comparison_classes.csv
+classes_SC2_method_vs_Remine-from-scratch_band_1.05,"wins 8, ties 0, losses 0 of 8",table_comparison_classes.csv
+classes_SC2_method_vs_Remine-from-scratch_band_1.10,"wins 8, ties 0, losses 0 of 8",table_comparison_classes.csv
+classes_SC2_method_vs_Remine-own-UUT_band_1.05,"wins 7, ties 1, losses 0 of 8",table_comparison_classes.csv
+classes_SC2_method_vs_Remine-own-UUT_band_1.10,"wins 5, ties 3, losses 0 of 8",table_comparison_classes.csv
+classes_SC2_method_vs_best_window_band_1.05,"wins 1, ties 5, losses 2 of 8",table_comparison_classes.csv
+classes_SC2_method_vs_best_window_band_1.10,"wins 1, ties 6, losses 1 of 8",table_comparison_classes.csv
+classes_SC2_method_vs_closest_published_or_remine_below_band_1.05,"wins 8, ties 0, losses 0 of 8",table_comparison_classes.csv
+classes_SC2_method_vs_closest_published_or_remine_below_band_1.10,"wins 7, ties 1, losses 0 of 8",table_comparison_classes.csv
 classes_SC3_cold_method_vs_HUSP-SP_band_1.05,"wins 2, ties 2, losses 8 of 12",table_comparison_classes.csv
 classes_SC3_cold_method_vs_HUSP-SP_band_1.10,"wins 1, ties 4, losses 7 of 12",table_comparison_classes.csv
 classes_SC3_cold_method_vs_HUSP-ULL_band_1.05,"wins 1, ties 2, losses 9 of 12",table_comparison_classes.csv
@@ -6845,88 +6937,88 @@ classes_SC1_miner_at_threshold_vs_HUSP-ULL_ties,BIBLE 0.0181 1.077; BIBLE 0.0228
 classes_SC1_miner_at_threshold_vs_HUSP-ULL_wins,SIGN 0.049134 1.577; SIGN 0.065911 1.570; SIGN 0.083371 1.496; SIGN 0.091052 1.495; LEVIATHAN 0.014644 1.384; LEVIATHAN 0.01553 1.338; LEVIATHAN 0.01647 1.351; LEVIATHAN 0.017987 1.389; FIFA 0.056234 1.913; FIFA 0.059637 1.942; FIFA 0.067073 1.991; FIFA 0.075436 2.095; BMS1 0.013597 1.190; BMS1 0.015293 1.211; KOSARAK 0.022228 2.125; KOSARAK 0.025 1.657; KOSARAK 0.028117 1.488; KOSARAK 0.031623 1.225; C8T1S5I8N5K 0.001132 1.130; C8T1S5I8N5K 0.0012 1.181; C8T1S5I8N5K 0.001236 1.236; DUNNHUMBY 0.001158 2.602; DUNNHUMBY 0.001464 2.181; DUNNHUMBY 0.002083 1.775; DUNNHUMBY 0.002343 1.730,table_comparison_classes.csv
 classes_SC1_miner_at_threshold_vs_HUSP-ULL_wins_range,1.130 to 2.602,table_comparison_classes.csv
 classes_SC1_miner_at_threshold_vs_HUSP-ULL_wins_range_first_over_second,0.384 to 0.885,table_comparison_classes.csv
-classes_SC2_method_vs_IncUSP-Miner+,"wins 5, ties 1, losses 0 of 6",table_comparison_classes.csv
+classes_SC2_method_vs_IncUSP-Miner+,"wins 6, ties 1, losses 0 of 7",table_comparison_classes.csv
 classes_SC2_method_vs_IncUSP-Miner+_ties,BIBLE 1.059,table_comparison_classes.csv
-classes_SC2_method_vs_IncUSP-Miner+_wins,SIGN 2.396; TAFENG 2.521; C8T1S5I8N5K 3.025; LEVIATHAN 2.686; KOSARAK 5.717,table_comparison_classes.csv
+classes_SC2_method_vs_IncUSP-Miner+_wins,SIGN 2.396; TAFENG 2.521; C8T1S5I8N5K 3.025; LEVIATHAN 2.686; KOSARAK 5.717; DUNNHUMBY 4.611,table_comparison_classes.csv
 classes_SC2_method_vs_IncUSP-Miner+_wins_range,2.396 to 5.717,table_comparison_classes.csv
 classes_SC2_method_vs_IncUSP-Miner+_wins_range_first_over_second,0.175 to 0.417,table_comparison_classes.csv
-classes_SC2_method_vs_Joint-miner+SWUmax,"wins 3, ties 4, losses 0 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Joint-miner+SWUmax,"wins 4, ties 4, losses 0 of 8",table_comparison_classes.csv
 classes_SC2_method_vs_Joint-miner+SWUmax_ties,SIGN 0.984; TAFENG 1.040; BIBLE 1.001; FIFA 1.038,table_comparison_classes.csv
-classes_SC2_method_vs_Joint-miner+SWUmax_wins,C8T1S5I8N5K 1.539; LEVIATHAN 1.321; KOSARAK 2.245,table_comparison_classes.csv
-classes_SC2_method_vs_Joint-miner+SWUmax_wins_range,1.321 to 2.245,table_comparison_classes.csv
-classes_SC2_method_vs_Joint-miner+SWUmax_wins_range_first_over_second,0.445 to 0.757,table_comparison_classes.csv
-classes_SC2_method_vs_Joint-miner+SWUmax+PreHUSPM-tracking,"wins 5, ties 1, losses 1 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Joint-miner+SWUmax_wins,C8T1S5I8N5K 1.539; LEVIATHAN 1.321; KOSARAK 2.245; DUNNHUMBY 1.226,table_comparison_classes.csv
+classes_SC2_method_vs_Joint-miner+SWUmax_wins_range,1.226 to 2.245,table_comparison_classes.csv
+classes_SC2_method_vs_Joint-miner+SWUmax_wins_range_first_over_second,0.445 to 0.816,table_comparison_classes.csv
+classes_SC2_method_vs_Joint-miner+SWUmax+PreHUSPM-tracking,"wins 6, ties 1, losses 1 of 8",table_comparison_classes.csv
 classes_SC2_method_vs_Joint-miner+SWUmax+PreHUSPM-tracking_ties,BIBLE 1.085,table_comparison_classes.csv
-classes_SC2_method_vs_Joint-miner+SWUmax+PreHUSPM-tracking_wins,SIGN 1.556; C8T1S5I8N5K 3.634; LEVIATHAN 1.935; FIFA 6.889; KOSARAK 4.943,table_comparison_classes.csv
+classes_SC2_method_vs_Joint-miner+SWUmax+PreHUSPM-tracking_wins,SIGN 1.556; C8T1S5I8N5K 3.634; LEVIATHAN 1.935; FIFA 6.889; KOSARAK 4.943; DUNNHUMBY 6.382,table_comparison_classes.csv
 classes_SC2_method_vs_Joint-miner+SWUmax+PreHUSPM-tracking_wins_range,1.556 to 6.889,table_comparison_classes.csv
 classes_SC2_method_vs_Joint-miner+SWUmax+PreHUSPM-tracking_wins_range_first_over_second,0.145 to 0.643,table_comparison_classes.csv
 classes_SC2_method_vs_Joint-miner+SWUmax+PreHUSPM-tracking_losses,TAFENG 0.806,table_comparison_classes.csv
 classes_SC2_method_vs_Joint-miner+SWUmax+PreHUSPM-tracking_losses_range,0.806 to 0.806,table_comparison_classes.csv
 classes_SC2_method_vs_Joint-miner+SWUmax+PreHUSPM-tracking_losses_range_first_over_second,1.241 to 1.241,table_comparison_classes.csv
-classes_SC2_method_vs_Joint-miner+TSU,"wins 6, ties 1, losses 0 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Joint-miner+TSU,"wins 7, ties 1, losses 0 of 8",table_comparison_classes.csv
 classes_SC2_method_vs_Joint-miner+TSU_ties,SIGN 0.982,table_comparison_classes.csv
-classes_SC2_method_vs_Joint-miner+TSU_wins,TAFENG 1.828; C8T1S5I8N5K 1.864; BIBLE 1.219; LEVIATHAN 1.369; FIFA 1.466; KOSARAK 2.260,table_comparison_classes.csv
+classes_SC2_method_vs_Joint-miner+TSU_wins,TAFENG 1.828; C8T1S5I8N5K 1.864; BIBLE 1.219; LEVIATHAN 1.369; FIFA 1.466; KOSARAK 2.260; DUNNHUMBY 1.228,table_comparison_classes.csv
 classes_SC2_method_vs_Joint-miner+TSU_wins_range,1.219 to 2.260,table_comparison_classes.csv
 classes_SC2_method_vs_Joint-miner+TSU_wins_range_first_over_second,0.442 to 0.820,table_comparison_classes.csv
-classes_SC2_method_vs_Joint-rule+PreHUSPM-tracking,"wins 5, ties 1, losses 1 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Joint-rule+PreHUSPM-tracking,"wins 6, ties 1, losses 1 of 8",table_comparison_classes.csv
 classes_SC2_method_vs_Joint-rule+PreHUSPM-tracking_ties,BIBLE 1.078,table_comparison_classes.csv
-classes_SC2_method_vs_Joint-rule+PreHUSPM-tracking_wins,SIGN 1.560; C8T1S5I8N5K 3.518; LEVIATHAN 1.939; FIFA 6.417; KOSARAK 4.879,table_comparison_classes.csv
+classes_SC2_method_vs_Joint-rule+PreHUSPM-tracking_wins,SIGN 1.560; C8T1S5I8N5K 3.518; LEVIATHAN 1.939; FIFA 6.417; KOSARAK 4.879; DUNNHUMBY 6.330,table_comparison_classes.csv
 classes_SC2_method_vs_Joint-rule+PreHUSPM-tracking_wins_range,1.560 to 6.417,table_comparison_classes.csv
 classes_SC2_method_vs_Joint-rule+PreHUSPM-tracking_wins_range_first_over_second,0.156 to 0.641,table_comparison_classes.csv
 classes_SC2_method_vs_Joint-rule+PreHUSPM-tracking_losses,TAFENG 0.743,table_comparison_classes.csv
 classes_SC2_method_vs_Joint-rule+PreHUSPM-tracking_losses_range,0.743 to 0.743,table_comparison_classes.csv
 classes_SC2_method_vs_Joint-rule+PreHUSPM-tracking_losses_range_first_over_second,1.346 to 1.346,table_comparison_classes.csv
-classes_SC2_method_vs_Joint-rule+min-floor,"wins 3, ties 4, losses 0 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Joint-rule+min-floor,"wins 4, ties 4, losses 0 of 8",table_comparison_classes.csv
 classes_SC2_method_vs_Joint-rule+min-floor_ties,SIGN 0.984; TAFENG 0.961; BIBLE 0.996; FIFA 0.965,table_comparison_classes.csv
-classes_SC2_method_vs_Joint-rule+min-floor_wins,C8T1S5I8N5K 1.479; LEVIATHAN 1.347; KOSARAK 2.253,table_comparison_classes.csv
-classes_SC2_method_vs_Joint-rule+min-floor_wins_range,1.347 to 2.253,table_comparison_classes.csv
-classes_SC2_method_vs_Joint-rule+min-floor_wins_range_first_over_second,0.444 to 0.742,table_comparison_classes.csv
-classes_SC2_method_vs_Joint-rule+plain-floor,"wins 3, ties 4, losses 0 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Joint-rule+min-floor_wins,C8T1S5I8N5K 1.479; LEVIATHAN 1.347; KOSARAK 2.253; DUNNHUMBY 1.271,table_comparison_classes.csv
+classes_SC2_method_vs_Joint-rule+min-floor_wins_range,1.271 to 2.253,table_comparison_classes.csv
+classes_SC2_method_vs_Joint-rule+min-floor_wins_range_first_over_second,0.444 to 0.787,table_comparison_classes.csv
+classes_SC2_method_vs_Joint-rule+plain-floor,"wins 4, ties 4, losses 0 of 8",table_comparison_classes.csv
 classes_SC2_method_vs_Joint-rule+plain-floor_ties,SIGN 0.985; TAFENG 0.952; BIBLE 0.995; FIFA 0.965,table_comparison_classes.csv
-classes_SC2_method_vs_Joint-rule+plain-floor_wins,C8T1S5I8N5K 1.486; LEVIATHAN 1.327; KOSARAK 2.249,table_comparison_classes.csv
-classes_SC2_method_vs_Joint-rule+plain-floor_wins_range,1.327 to 2.249,table_comparison_classes.csv
-classes_SC2_method_vs_Joint-rule+plain-floor_wins_range_first_over_second,0.445 to 0.754,table_comparison_classes.csv
-classes_SC2_method_vs_Pre-HUSPM-Joint-fixed-threshold,"wins 3, ties 4, losses 0 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_Joint-rule+plain-floor_wins,C8T1S5I8N5K 1.486; LEVIATHAN 1.327; KOSARAK 2.249; DUNNHUMBY 1.207,table_comparison_classes.csv
+classes_SC2_method_vs_Joint-rule+plain-floor_wins_range,1.207 to 2.249,table_comparison_classes.csv
+classes_SC2_method_vs_Joint-rule+plain-floor_wins_range_first_over_second,0.445 to 0.829,table_comparison_classes.csv
+classes_SC2_method_vs_Pre-HUSPM-Joint-fixed-threshold,"wins 4, ties 4, losses 0 of 8",table_comparison_classes.csv
 classes_SC2_method_vs_Pre-HUSPM-Joint-fixed-threshold_ties,SIGN 0.979; TAFENG 0.959; BIBLE 1.002; FIFA 0.977,table_comparison_classes.csv
-classes_SC2_method_vs_Pre-HUSPM-Joint-fixed-threshold_wins,C8T1S5I8N5K 1.481; LEVIATHAN 1.325; KOSARAK 2.252,table_comparison_classes.csv
-classes_SC2_method_vs_Pre-HUSPM-Joint-fixed-threshold_wins_range,1.325 to 2.252,table_comparison_classes.csv
-classes_SC2_method_vs_Pre-HUSPM-Joint-fixed-threshold_wins_range_first_over_second,0.444 to 0.755,table_comparison_classes.csv
-classes_SC2_method_vs_Pre-HUSPM-SWUmax,"wins 7, ties 0, losses 0 of 7",table_comparison_classes.csv
-classes_SC2_method_vs_Pre-HUSPM-SWUmax_wins,SIGN 5.097; TAFENG 1.194; C8T1S5I8N5K 8.431; BIBLE 1.692; LEVIATHAN 4.212; FIFA 27.538; KOSARAK 2.619,table_comparison_classes.csv
-classes_SC2_method_vs_Pre-HUSPM-SWUmax_wins_range,1.194 to 27.538,table_comparison_classes.csv
-classes_SC2_method_vs_Pre-HUSPM-SWUmax_wins_range_first_over_second,0.036 to 0.838,table_comparison_classes.csv
-classes_SC2_method_vs_Pre-HUSPM-TSU,"wins 7, ties 0, losses 0 of 7",table_comparison_classes.csv
-classes_SC2_method_vs_Pre-HUSPM-TSU_wins,SIGN 5.074; TAFENG 2.124; C8T1S5I8N5K 10.316; BIBLE 2.058; LEVIATHAN 4.323; FIFA 38.308; KOSARAK 2.608,table_comparison_classes.csv
-classes_SC2_method_vs_Pre-HUSPM-TSU_wins_range,2.058 to 38.308,table_comparison_classes.csv
-classes_SC2_method_vs_Pre-HUSPM-TSU_wins_range_first_over_second,0.026 to 0.486,table_comparison_classes.csv
-classes_SC2_method_vs_Remine-HUSP-SP,"wins 7, ties 0, losses 0 of 7",table_comparison_classes.csv
-classes_SC2_method_vs_Remine-HUSP-SP_wins,SIGN 1.789; TAFENG 4.935; C8T1S5I8N5K 2.111; BIBLE 1.410; LEVIATHAN 1.341; FIFA 2.552; KOSARAK 1.238,table_comparison_classes.csv
-classes_SC2_method_vs_Remine-HUSP-SP_wins_range,1.238 to 4.935,table_comparison_classes.csv
-classes_SC2_method_vs_Remine-HUSP-SP_wins_range_first_over_second,0.203 to 0.808,table_comparison_classes.csv
-classes_SC2_method_vs_Remine-HUSP-ULL,"wins 7, ties 0, losses 0 of 7",table_comparison_classes.csv
-classes_SC2_method_vs_Remine-HUSP-ULL_wins,SIGN 1.773; TAFENG 2.823; C8T1S5I8N5K 1.922; BIBLE 1.458; LEVIATHAN 1.402; FIFA 3.248; KOSARAK 2.313,table_comparison_classes.csv
+classes_SC2_method_vs_Pre-HUSPM-Joint-fixed-threshold_wins,C8T1S5I8N5K 1.481; LEVIATHAN 1.325; KOSARAK 2.252; DUNNHUMBY 1.181,table_comparison_classes.csv
+classes_SC2_method_vs_Pre-HUSPM-Joint-fixed-threshold_wins_range,1.181 to 2.252,table_comparison_classes.csv
+classes_SC2_method_vs_Pre-HUSPM-Joint-fixed-threshold_wins_range_first_over_second,0.444 to 0.847,table_comparison_classes.csv
+classes_SC2_method_vs_Pre-HUSPM-SWUmax,"wins 8, ties 0, losses 0 of 8",table_comparison_classes.csv
+classes_SC2_method_vs_Pre-HUSPM-SWUmax_wins,SIGN 5.097; TAFENG 1.194; C8T1S5I8N5K 8.431; BIBLE 1.692; LEVIATHAN 4.212; FIFA 27.538; KOSARAK 2.619; DUNNHUMBY 45.085,table_comparison_classes.csv
+classes_SC2_method_vs_Pre-HUSPM-SWUmax_wins_range,1.194 to 45.085,table_comparison_classes.csv
+classes_SC2_method_vs_Pre-HUSPM-SWUmax_wins_range_first_over_second,0.022 to 0.838,table_comparison_classes.csv
+classes_SC2_method_vs_Pre-HUSPM-TSU,"wins 8, ties 0, losses 0 of 8",table_comparison_classes.csv
+classes_SC2_method_vs_Pre-HUSPM-TSU_wins,SIGN 5.074; TAFENG 2.124; C8T1S5I8N5K 10.316; BIBLE 2.058; LEVIATHAN 4.323; FIFA 38.308; KOSARAK 2.608; DUNNHUMBY 44.768,table_comparison_classes.csv
+classes_SC2_method_vs_Pre-HUSPM-TSU_wins_range,2.058 to 44.768,table_comparison_classes.csv
+classes_SC2_method_vs_Pre-HUSPM-TSU_wins_range_first_over_second,0.022 to 0.486,table_comparison_classes.csv
+classes_SC2_method_vs_Remine-HUSP-SP,"wins 8, ties 0, losses 0 of 8",table_comparison_classes.csv
+classes_SC2_method_vs_Remine-HUSP-SP_wins,SIGN 1.789; TAFENG 4.935; C8T1S5I8N5K 2.111; BIBLE 1.410; LEVIATHAN 1.341; FIFA 2.552; KOSARAK 1.238; DUNNHUMBY 5.006,table_comparison_classes.csv
+classes_SC2_method_vs_Remine-HUSP-SP_wins_range,1.238 to 5.006,table_comparison_classes.csv
+classes_SC2_method_vs_Remine-HUSP-SP_wins_range_first_over_second,0.200 to 0.808,table_comparison_classes.csv
+classes_SC2_method_vs_Remine-HUSP-ULL,"wins 8, ties 0, losses 0 of 8",table_comparison_classes.csv
+classes_SC2_method_vs_Remine-HUSP-ULL_wins,SIGN 1.773; TAFENG 2.823; C8T1S5I8N5K 1.922; BIBLE 1.458; LEVIATHAN 1.402; FIFA 3.248; KOSARAK 2.313; DUNNHUMBY 2.433,table_comparison_classes.csv
 classes_SC2_method_vs_Remine-HUSP-ULL_wins_range,1.402 to 3.248,table_comparison_classes.csv
 classes_SC2_method_vs_Remine-HUSP-ULL_wins_range_first_over_second,0.308 to 0.713,table_comparison_classes.csv
-classes_SC2_method_vs_Remine-from-scratch,"wins 7, ties 0, losses 0 of 7",table_comparison_classes.csv
-classes_SC2_method_vs_Remine-from-scratch_wins,SIGN 1.824; TAFENG 2.454; C8T1S5I8N5K 2.068; BIBLE 1.669; LEVIATHAN 1.378; FIFA 3.725; KOSARAK 2.369,table_comparison_classes.csv
-classes_SC2_method_vs_Remine-from-scratch_wins_range,1.378 to 3.725,table_comparison_classes.csv
-classes_SC2_method_vs_Remine-from-scratch_wins_range_first_over_second,0.268 to 0.726,table_comparison_classes.csv
-classes_SC2_method_vs_Remine-own-UUT,"wins 6, ties 1, losses 0 of 7",table_comparison_classes.csv
-classes_SC2_method_vs_Remine-own-UUT_ties,LEVIATHAN 1.015,table_comparison_classes.csv
+classes_SC2_method_vs_Remine-from-scratch,"wins 8, ties 0, losses 0 of 8",table_comparison_classes.csv
+classes_SC2_method_vs_Remine-from-scratch_wins,SIGN 1.824; TAFENG 2.454; C8T1S5I8N5K 2.068; BIBLE 1.669; LEVIATHAN 1.378; FIFA 3.725; KOSARAK 2.369; DUNNHUMBY 1.259,table_comparison_classes.csv
+classes_SC2_method_vs_Remine-from-scratch_wins_range,1.259 to 3.725,table_comparison_classes.csv
+classes_SC2_method_vs_Remine-from-scratch_wins_range_first_over_second,0.268 to 0.794,table_comparison_classes.csv
+classes_SC2_method_vs_Remine-own-UUT,"wins 6, ties 2, losses 0 of 8",table_comparison_classes.csv
+classes_SC2_method_vs_Remine-own-UUT_ties,LEVIATHAN 1.015; DUNNHUMBY 1.072,table_comparison_classes.csv
 classes_SC2_method_vs_Remine-own-UUT_wins,SIGN 1.090; TAFENG 2.264; C8T1S5I8N5K 1.174; BIBLE 1.268; FIFA 1.736; KOSARAK 1.109,table_comparison_classes.csv
 classes_SC2_method_vs_Remine-own-UUT_wins_range,1.090 to 2.264,table_comparison_classes.csv
 classes_SC2_method_vs_Remine-own-UUT_wins_range_first_over_second,0.442 to 0.917,table_comparison_classes.csv
-classes_SC2_method_vs_best_window,"wins 1, ties 5, losses 1 of 7",table_comparison_classes.csv
-classes_SC2_method_vs_best_window_ties,BIBLE 0.951; FIFA 0.963; KOSARAK 0.998; LEVIATHAN 1.015; TAFENG 0.958,table_comparison_classes.csv
+classes_SC2_method_vs_best_window,"wins 1, ties 6, losses 1 of 8",table_comparison_classes.csv
+classes_SC2_method_vs_best_window_ties,BIBLE 0.951; DUNNHUMBY 0.989; FIFA 0.963; KOSARAK 0.998; LEVIATHAN 1.015; TAFENG 0.958,table_comparison_classes.csv
 classes_SC2_method_vs_best_window_wins,C8T1S5I8N5K 1.138,table_comparison_classes.csv
 classes_SC2_method_vs_best_window_wins_range,1.138 to 1.138,table_comparison_classes.csv
 classes_SC2_method_vs_best_window_wins_range_first_over_second,0.879 to 0.879,table_comparison_classes.csv
 classes_SC2_method_vs_best_window_losses,SIGN 0.898,table_comparison_classes.csv
 classes_SC2_method_vs_best_window_losses_range,0.898 to 0.898,table_comparison_classes.csv
 classes_SC2_method_vs_best_window_losses_range_first_over_second,1.114 to 1.114,table_comparison_classes.csv
-classes_SC2_method_vs_closest_published_or_remine_below,"wins 6, ties 1, losses 0 of 7",table_comparison_classes.csv
+classes_SC2_method_vs_closest_published_or_remine_below,"wins 7, ties 1, losses 0 of 8",table_comparison_classes.csv
 classes_SC2_method_vs_closest_published_or_remine_below_ties,BIBLE 1.059,table_comparison_classes.csv
-classes_SC2_method_vs_closest_published_or_remine_below_wins,C8T1S5I8N5K 1.922; FIFA 2.552; KOSARAK 1.238; LEVIATHAN 1.341; SIGN 1.773; TAFENG 1.194,table_comparison_classes.csv
+classes_SC2_method_vs_closest_published_or_remine_below_wins,C8T1S5I8N5K 1.922; DUNNHUMBY 1.259; FIFA 2.552; KOSARAK 1.238; LEVIATHAN 1.341; SIGN 1.773; TAFENG 1.194,table_comparison_classes.csv
 classes_SC2_method_vs_closest_published_or_remine_below_wins_range,1.194 to 2.552,table_comparison_classes.csv
 classes_SC2_method_vs_closest_published_or_remine_below_wins_range_first_over_second,0.392 to 0.838,table_comparison_classes.csv
 classes_SC3_cold_method_vs_HUSP-SP,"wins 1, ties 4, losses 7 of 12",table_comparison_classes.csv

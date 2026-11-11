@@ -1,0 +1,16 @@
+{
+  "command": "~/.venvs/pre-huspm-adaptive/bin/python analysis/insertion_alpha.py --out results-invariant/floor-selection-windows/2026-11-11 --floor-windows 1 2 3 5 10",
+  "path_substitutions": 1,
+  "build_dir": "build",
+  "git_commit": "92be2c097a2e1a4bb6eb7751307779af81a5c365",
+  "tree": "clean",
+  "source_sha256": "16349bc6c082034e60771378b3314e3a338e1304990f989b348699a08b4809cd",
+  "source_files": 46,
+  "java": "openjdk version \"25.0.4.1\" 2026-08-18 LTS",
+  "os": "Darwin 27.2.0 (macOS-27.2-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "development machine: counters only, no timings",
+  "start": "2026-11-11T07:02:59",
+  "end": "2026-11-11T07:03:24",
+  "exit_code": 0
+}

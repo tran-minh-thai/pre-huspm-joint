@@ -1621,7 +1621,7 @@ def sc2_tex(totals, region, reps=None):
     T = {(r["dataset"], r["algorithm"]): r for _, r in totals.iterrows()}
     S = sc2_stats(totals, reps)
     op = region.set_index("dataset")
-    order = [d for d in ["SIGN", "TAFENG", "C8T1S5I8N5K", "BIBLE", "LEVIATHAN", "FIFA", "KOSARAK"] if d in op.index]
+    order = in_win_order(op.index, "table_SC2_time.tex")
 
     def stat(d, a):
         return S.get((d, a))
@@ -1757,7 +1757,18 @@ def sc7_static_runtime(put, t7):
 # ------------------------------------------------------------------------------ window study
 # The rescan floor selection by the window rule at w in mf.WINDOWS, one arm Pre-HUSPM-Joint-w<n> each
 # (w = 5 was the method's rule before the break-even rule); the fixed floor (FIXED) is the reference.
-WIN_ORDER = ["SIGN", "TAFENG", "C8T1S5I8N5K", "BIBLE", "LEVIATHAN", "FIFA", "KOSARAK"]   # as table_SC2_time
+WIN_ORDER = ["SIGN", "TAFENG", "C8T1S5I8N5K", "BIBLE", "LEVIATHAN", "FIFA", "KOSARAK", "DUNNHUMBY"]   # as table_SC2_time
+
+
+def in_win_order(present, where):
+    """The streams in `present`, in the row order of the SC2 tables. A stream the order does not name
+    stops the script: filtering by the list would leave it out of the table without a message."""
+    present = set(present)
+    unknown = sorted(present - set(WIN_ORDER))
+    if unknown:
+        raise SystemExit(f"{where}: {', '.join(unknown)} measured but not in WIN_ORDER; the table would leave "
+                         f"{'it' if len(unknown) == 1 else 'them'} out")
+    return [x for x in WIN_ORDER if x in present]
 
 
 def _is_window(a):
@@ -1796,7 +1807,7 @@ def window_sc2():
     runs = _run_totals(inc, ["dataset"])
     main = inc[inc["replicate"] == "s0r0"]
     rows = []
-    for d in [x for x in WIN_ORDER if (x, FIXED) in runs]:
+    for d in in_win_order((k[0] for k in runs if k[1] == FIXED), "table_SC2_window.csv"):
         fixed = runs[(d, FIXED)]
         comp = {b: runs[(d, b)] for b in SC2_COMPETITORS if b != P and runs.get((d, b))}
         best = min(comp, key=lambda b: np.mean(comp[b]))
@@ -1825,7 +1836,7 @@ def window_sc2_tex(t):
     its runs."""
     head = " & ".join(f"$w={w}$" for w in mf.WINDOWS)
     lines = []
-    for d in [x for x in WIN_ORDER if x in set(t["dataset"])]:
+    for d in in_win_order(t["dataset"], "table_SC2_window.tex"):
         g = t[t["dataset"] == d].set_index("window")
         txt = {w: f"{g.loc[w, 'over_fixed_floor']:.2f}" for w in mf.WINDOWS if w in g.index}
         ws = [w for w in mf.WINDOWS if w in txt]
@@ -1842,12 +1853,12 @@ def window_sc2_tex(t):
 
 
 def window_loo(t):
-    """For each database, the window the rule of analysis/window_rule.py picks on the other six
+    """For each database, the window the rule of analysis/window_rule.py picks on the other
     streams (bound 3; the smallest window on a tie), and the database's result at that window."""
     import window_rule
     picks = window_rule.leave_one_out(window_rule.load(), window_rule.EXTRA)
     rows = []
-    for d in [x for x in WIN_ORDER if x in set(t["dataset"])]:
+    for d in in_win_order(t["dataset"], "table_SC2_window_loo.csv"):
         w = picks[d]
         r = t[(t["dataset"] == d) & (t["window"] == w)].iloc[0]
         rows.append(dict(dataset=d, window=w, time_s=r["time_s"], runs=r["runs"],
@@ -2610,7 +2621,7 @@ def window_husp_check():
 
 def window_rescans_vs_simulation(t):
     """The SC2 rescans and rescans at UUT of every window against the simulation from the data
-    files (results/invariant-insertion-alpha/floor-selection-windows): (matching, compared)."""
+    files (window_rule.DEFAULT_TABLE): (matching, compared)."""
     import window_rule
     sim = pd.read_csv(window_rule.DEFAULT_TABLE)
     S = {(r.dataset, int(r.window)): (int(r.rescans_selection), int(r.rescans_at_uut)) for r in sim.itertuples()}
@@ -2806,7 +2817,7 @@ def sc2_own_uut(put):
     df = mf.load_scenario("SC2")
     inc = df[mf.is_inc(df)]
     src = "table_SC2_inference.csv"
-    for d in [x for x in WIN_ORDER if (x, P) in T and (x, OWN_UUT) in T]:
+    for d in in_win_order((k[0] for k in T if k[1] == P and (k[0], OWN_UUT) in T), "SC2 own-UUT keys"):
         p, q = T[(d, P)], T[(d, OWN_UUT)]
         k = f"SC2_{OWN_UUT}_over_proposal_{d}"
         # the ratio of the means itself is SC2_<arm>_over_proposal_<db> of sc2_speedups
@@ -2829,7 +2840,7 @@ def sc2_inference(put, out):
     T = _sc2_run_totals()
     rivals = [a for a in SC2_COMPETITORS if a != P]
     rows = []
-    for d in [x for x in WIN_ORDER if (x, P) in T]:
+    for d in in_win_order((k[0] for k in T if k[1] == P), "table_SC2_inference.csv"):
         p = T[(d, P)]
         for a in rivals + ISOLATION_ARMS + [FIXED]:
             if (d, a) not in T:

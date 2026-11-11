@@ -17,7 +17,9 @@ import csv
 import os
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DEFAULT_TABLE = os.path.join(ROOT, "results", "invariant-insertion-alpha", "floor-selection-windows",
+# The eight SC2 streams. The seven streams of results/invariant-insertion-alpha/floor-selection-windows
+# have the same counts in both records; DUNNHUMBY is in this one only.
+DEFAULT_TABLE = os.path.join(ROOT, "results-invariant", "floor-selection-windows", "2026-11-11",
                              "floor_selection.csv")
 EXTRA = 3
 

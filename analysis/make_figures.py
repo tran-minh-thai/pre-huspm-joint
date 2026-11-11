@@ -356,6 +356,10 @@ def load_scenario(sc, tree=TIMING_TREE, finished_only=True, replicates=False, wi
         print(f"[skip] no finished arms under {base}")
         return None
     df = pd.concat(frames, ignore_index=True)
+    unknown = sorted(set(df["dataset"]) - set(ALL_DATASETS))
+    if unknown:
+        # the tables walk ALL_DATASETS; a database outside it would be left out without a message
+        raise SystemExit(f"{tree}/{sc}: {', '.join(unknown)} measured but not in ALL_DATASETS")
     if rivals:
         df = apply_rivals(df, f"{tree}/{sc}")
     for c in df.columns:

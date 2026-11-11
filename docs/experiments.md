@@ -40,6 +40,10 @@ adds at most 3 rescans to the fixed floor on every stream. Every bound from 3 to
 `w`. `analysis/window_rule.py` applies it to the counts at `w` in {1, 2, 3, 5, 10}
 (`results/invariant-insertion-alpha/floor-selection-windows`), on all seven streams and leaving
 each stream out in turn; the windows it picks were fixed before the window arms were timed.
+DUNNHUMBY, the eighth SC2 stream, was simulated after its window arms had been timed
+(`results-invariant/floor-selection-windows/2026-11-11`, which repeats the seven streams with the
+same counts). The rule picks the same `w` on the eight streams, and the window picked for DUNNHUMBY
+when it is left out is the one fixed on the seven.
 
 **The method in the incremental scenarios** is the proposal with the rescan floor selection, arm
 `Pre-HUSPM-Joint`; the arm at the fixed floor is `Pre-HUSPM-Joint-fixed-threshold`. The static

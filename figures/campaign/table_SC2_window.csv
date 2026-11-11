@@ -34,3 +34,8 @@ KOSARAK,2,3,280.541,2.299,277.889,281.958,100,99,626.116,5,0.448,"separated, fas
 KOSARAK,3,3,277.533,2.022,275.343,279.328,100,98,626.116,5,0.443,"separated, faster",Remine-own-UUT,308.252,5,0.9,"separated, faster"
 KOSARAK,5,5,278.41,0.951,276.716,278.969,100,96,626.116,5,0.445,"separated, faster",Remine-own-UUT,308.252,5,0.903,"separated, faster"
 KOSARAK,10,3,279.33,1.387,277.751,280.352,100,91,626.116,5,0.446,"separated, faster",Remine-own-UUT,308.252,5,0.906,"separated, faster"
+DUNNHUMBY,1,3,127.474,5.618,123.766,133.938,100,100,147.605,5,0.864,"separated, faster",Remine-own-UUT,134.001,5,0.951,overlapping
+DUNNHUMBY,2,3,123.637,1.087,122.566,124.74,100,99,147.605,5,0.838,"separated, faster",Remine-own-UUT,134.001,5,0.923,"separated, faster"
+DUNNHUMBY,3,3,131.957,7.236,123.976,138.091,100,98,147.605,5,0.894,"separated, faster",Remine-own-UUT,134.001,5,0.985,overlapping
+DUNNHUMBY,5,5,131.322,7.075,122.888,137.15,100,96,147.605,5,0.89,"separated, faster",Remine-own-UUT,134.001,5,0.98,overlapping
+DUNNHUMBY,10,3,125.883,1.946,123.684,127.381,100,91,147.605,5,0.853,"separated, faster",Remine-own-UUT,134.001,5,0.939,overlapping
