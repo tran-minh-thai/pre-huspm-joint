@@ -2139,6 +2139,16 @@ LONG_stable_method_over_Remine_databases,SIGN LEVIATHAN C8T1S5I8N5K TAFENG,table
 LONG_stable_method_over_RemineUUT_range,0.046 to 0.312,table_long_streams.csv
 LONG_stable_method_over_RemineUUT_streams,19,table_long_streams.csv
 LONG_stable_method_over_RemineUUT_databases,SIGN LEVIATHAN C8T1S5I8N5K TAFENG,table_long_streams.csv
+LONG_all_method_over_FixedFloor_range,0.953 (SC10 SIGN) to 1.162 (SC10 DUNNHUMBY),table_long_streams.csv
+LONG_all_method_over_FixedFloor_streams,24,table_long_streams.csv
+LONG_all_method_over_IndexRebuild_range,0.857 (SC9 TAFENG) to 1.010 (SC9 DUNNHUMBY),table_long_streams.csv
+LONG_all_method_over_IndexRebuild_streams,5,table_long_streams.csv
+LONG_all_method_over_Window5_range,0.962 (SC10 SIGN) to 1.186 (SC10 DUNNHUMBY),table_long_streams.csv
+LONG_all_method_over_Window5_streams,24,table_long_streams.csv
+LONG_all_method_over_Remine_range,0.043 (SC9 TAFENG) to 0.831 (SC10 DUNNHUMBY),table_long_streams.csv
+LONG_all_method_over_Remine_streams,24,table_long_streams.csv
+LONG_all_method_over_RemineUUT_range,0.046 (SC9 TAFENG) to 0.969 (SC10 DUNNHUMBY),table_long_streams.csv
+LONG_all_method_over_RemineUUT_streams,24,table_long_streams.csv
 LONG_C8T1S5I8N5K_FixedFloor_classes,"wins 0, ties 5, losses 0 of 5",table_long_streams.csv
 LONG_C8T1S5I8N5K_FixedFloor_losses,0 of 5,table_long_streams.csv
 LONG_C8T1S5I8N5K_FixedFloor_loss_streams,none,table_long_streams.csv
@@ -2239,6 +2249,11 @@ LONG_TAFENG_RemineUUT_classes,"wins 5, ties 0, losses 0 of 5",table_long_streams
 LONG_TAFENG_RemineUUT_losses,0 of 5,table_long_streams.csv
 LONG_TAFENG_RemineUUT_loss_streams,none,table_long_streams.csv
 LONG_TAFENG_RemineUUT_win_streams,"SC8, SC8P, SC9, SC10, SC10H",table_long_streams.csv
+LONG_all_FixedFloor_classes,"wins 0, ties 21, losses 3 of 24",table_long_streams.csv
+LONG_all_IndexRebuild_classes,"wins 2, ties 3, losses 0 of 5",table_long_streams.csv
+LONG_all_Window5_classes,"wins 0, ties 21, losses 3 of 24",table_long_streams.csv
+LONG_all_Remine_classes,"wins 24, ties 0, losses 0 of 24",table_long_streams.csv
+LONG_all_RemineUUT_classes,"wins 23, ties 1, losses 0 of 24",table_long_streams.csv
 LONG_SC10_C8T1S5I8N5K_index_blocks_first,272,table_long_index.csv
 LONG_SC10_C8T1S5I8N5K_index_blocks_last,697,table_long_index.csv
 LONG_SC10_C8T1S5I8N5K_index_blocks_first_operation,0,table_long_index.csv

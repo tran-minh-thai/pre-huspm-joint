@@ -308,6 +308,14 @@ def summary_keys(st, put, keys_path, unstable=None):
         put(f"LONG_stable_method_over_{TAG[arm]}_streams", len(x), src)
         put(f"LONG_stable_method_over_{TAG[arm]}_databases",
             " ".join(d for d in mf.ALL_DATASETS if d in set(g["dataset"])), src)
+    # over every database: the smallest and the largest ratio with their streams (on a database whose
+    # times move between sessions the ratio is the paired one, taken inside the runs that share a session)
+    for arm, g in r.groupby("arm"):
+        lo, hi = g.loc[g["method_over_arm_pooled"].idxmin()], g.loc[g["method_over_arm_pooled"].idxmax()]
+        put(f"LONG_all_method_over_{TAG[arm]}_range",
+            f"{lo['method_over_arm_pooled']:.3f} ({lo['scenario']} {lo['dataset']}) to "
+            f"{hi['method_over_arm_pooled']:.3f} ({hi['scenario']} {hi['dataset']})", src)
+        put(f"LONG_all_method_over_{TAG[arm]}_streams", len(g), src)
     band = tie_band(keys_path)
     if band is None:
         print(f"[not written] LONG_<database>_<arm>_classes, _losses: no jit_tie_band in {keys_path}")
@@ -323,6 +331,10 @@ def summary_keys(st, put, keys_path, unstable=None):
         put(f"{b}_losses", f"{len(loss)} of {len(order)}", src)
         put(f"{b}_loss_streams", ", ".join(loss) if loss else "none", src)
         put(f"{b}_win_streams", ", ".join(win) if win else "none", src)
+    for arm, g in r.groupby("arm"):
+        x = g["method_over_arm_pooled"]
+        w, l = int((x < low).sum()), int((x > high).sum())
+        put(f"LONG_all_{TAG[arm]}_classes", f"wins {w}, ties {len(x) - w - l}, losses {l} of {len(x)}", src)
 
 
 def main(argv=None):

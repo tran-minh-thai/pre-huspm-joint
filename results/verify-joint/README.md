@@ -60,15 +60,21 @@ checked against USpan, HUSP-ULL and HUSP-SP by `verify.BaselineAgreement`.
 | bound invariant B(X) >= u(X), prehuspm-tracking-fuzz | finished | 7,748,983 |  |  |  |  | 0 |  |
 | patterns against the proposal after every operation, husps-dunnhumby-mixed-all-arms | finished | 2,205 |  |  |  |  | 0 |  |
 | patterns against the proposal after every operation, husps-long-sc10 | finished | 24,048 |  |  |  |  | 0 |  |
+| patterns against the proposal after every operation, husps-long-sc10-method | finished | 6,012 |  |  |  |  | 0 |  |
 | patterns against the proposal after every operation, husps-long-sc10h | exit 1 | 15,920 |  |  |  |  | 571 |  |
+| patterns against the proposal after every operation, husps-long-sc10h-method | finished | 4,509 |  |  |  |  | 0 |  |
 | patterns against the proposal after every operation, husps-long-sc10h-sequences-c8t1s5i8n5k | finished | 6,012 |  |  |  |  | 0 |  |
 | patterns against the proposal after every operation, husps-long-sc10h-sequences-leviathan | finished | 6,012 |  |  |  |  | 0 |  |
 | patterns against the proposal after every operation, husps-long-sc10h-sequences-tafeng | finished | 6,012 |  |  |  |  | 0 |  |
 | patterns against the proposal after every operation, husps-long-sc8 | finished | 24,048 |  |  |  |  | 0 |  |
 | patterns against the proposal after every operation, husps-long-sc8-dunnhumby | finished | 6,012 |  |  |  |  | 0 |  |
+| patterns against the proposal after every operation, husps-long-sc8-method | finished | 6,012 |  |  |  |  | 0 |  |
 | patterns against the proposal after every operation, husps-long-sc8p | finished | 24,048 |  |  |  |  | 0 |  |
+| patterns against the proposal after every operation, husps-long-sc8p-method | finished | 6,012 |  |  |  |  | 0 |  |
 | patterns against the proposal after every operation, husps-long-sc9 | finished | 30,060 |  |  |  |  | 0 |  |
 | patterns against the proposal after every operation, husps-long-sc9-dunnhumby | finished | 7,515 |  |  |  |  | 0 |  |
+| patterns against the proposal after every operation, husps-long-sc9-index-rebuild | finished | 6,012 |  |  |  |  | 0 |  |
+| patterns against the proposal after every operation, husps-long-sc9-method | finished | 6,012 |  |  |  |  | 0 |  |
 | patterns against the proposal after every operation, husps-mixed | finished | 8,820 |  |  |  |  | 0 |  |
 | patterns against the proposal after every operation, husps-mixed-break-even | finished | 5,040 |  |  |  |  | 0 |  |
 | patterns against the proposal after every operation, husps-mixed-break-even-nodes | finished | 1,575 |  |  |  |  | 0 |  |
@@ -459,7 +465,7 @@ A check that was run again after the code it exercises changed keeps its earlier
 rerun lies in a subdirectory with a `generation.json`, and the newest finished record of a check
 is the one read above (`analysis/verify_records.py`):
 
-* `measured-code-2026-11-11` (2026-11-11, commit d89b094b8, or a later commit with the same source digest): The checks that the code changes since their last record make necessary, and the checks on small databases as a control. Since the long-stream checks of 31 October the algorithm changed in two places only: the floor selection records the cycle of the initial mine (d6197a7ed), which concerns the method's arm alone, and a method was added for the rebuild arms. So the method's arm is checked again on every long stream (husps-long-<scenario>-method), the three DUNNHUMBY long streams that had no check get one, and the switching streams of the method's rule, recorded before d6197a7ed, are run again. The random streams and acceptance tests of every rule and arm, the item pruning, the stream plans and three fault injections were run again as a control: fourteen of nineteen repeat the old result lines, the others differ only in configuration. A record named *-modification-twice runs with -Dadapt.mergeModification=false, as the records it replaces did before that switch existed. 20 of 30 of its records finished.
+* `measured-code-2026-11-11` (2026-11-11, commit d89b094b8, or a later commit with the same source digest): The checks that the code changes since their last record make necessary, and the checks on small databases as a control. Since the long-stream checks of 31 October the algorithm changed in two places only: the floor selection records the cycle of the initial mine (d6197a7ed), which concerns the method's arm alone, and a method was added for the rebuild arms. So the method's arm is checked again on every long stream (husps-long-<scenario>-method), the three DUNNHUMBY long streams that had no check get one, and the switching streams of the method's rule, recorded before d6197a7ed, are run again. The random streams and acceptance tests of every rule and arm, the item pruning, the stream plans and three fault injections were run again as a control: fourteen of nineteen repeat the old result lines, the others differ only in configuration. A record named *-modification-twice runs with -Dadapt.mergeModification=false, as the records it replaces did before that switch existed. The index-rebuild arm of SC9, which the paper cites, is checked on the four databases where it had no pattern check. 26 of 31 of its records finished.
 * `initial-cycle-2026-11-02` (2026-11-02, commit d6197a7ed (b54bfc310 for the two pattern checks)): The floor selection records the cycle of the initial mine from d6197a7ed on; the checks of the rule were run again. 6 of 6 of its records finished.
 
 | check | record read | commit | ended | exit code |
@@ -496,15 +502,21 @@ is the one read above (`analysis/verify_records.py`):
 | fuzz | measured-code-2026-11-11/fuzz-modification-twice | f30fe6b41 | 2026-11-11 | 0 |
 | husps-dunnhumby-mixed-all-arms | husps-dunnhumby-mixed-all-arms | b54bfc310 | 2026-11-02 | 0 |
 | husps-long-sc10 | husps-long-sc10 | 2ecbd83be | 2026-10-31 | 0 |
+| husps-long-sc10-method | measured-code-2026-11-11/husps-long-sc10-method | 84e0bbbe5 | 2026-11-11 | 0 |
 | husps-long-sc10h | husps-long-sc10h | 2ecbd83be | 2026-10-31 | 1 |
+| husps-long-sc10h-method | measured-code-2026-11-11/husps-long-sc10h-method | 84e0bbbe5 | 2026-11-11 | 0 |
 | husps-long-sc10h-sequences-c8t1s5i8n5k | husps-long-sc10h-sequences-c8t1s5i8n5k | 5a2d99ce1 | 2026-10-31 | 0 |
 | husps-long-sc10h-sequences-leviathan | husps-long-sc10h-sequences-leviathan | 5a2d99ce1 | 2026-10-31 | 0 |
 | husps-long-sc10h-sequences-tafeng | husps-long-sc10h-sequences-tafeng | 5a2d99ce1 | 2026-10-31 | 0 |
 | husps-long-sc8 | husps-long-sc8 | 2ecbd83be | 2026-10-31 | 0 |
 | husps-long-sc8-dunnhumby | husps-long-sc8-dunnhumby | d3358b01b | 2026-11-02 | 0 |
+| husps-long-sc8-method | measured-code-2026-11-11/husps-long-sc8-method | 84e0bbbe5 | 2026-11-11 | 0 |
 | husps-long-sc8p | husps-long-sc8p | 2ecbd83be | 2026-10-31 | 0 |
+| husps-long-sc8p-method | measured-code-2026-11-11/husps-long-sc8p-method | 84e0bbbe5 | 2026-11-11 | 0 |
 | husps-long-sc9 | husps-long-sc9 | 2ecbd83be | 2026-10-31 | 0 |
 | husps-long-sc9-dunnhumby | husps-long-sc9-dunnhumby | 4aa1ce88c | 2026-11-02 | 0 |
+| husps-long-sc9-index-rebuild | measured-code-2026-11-11/husps-long-sc9-index-rebuild | 73487f9f8 | 2026-11-11 | 0 |
+| husps-long-sc9-method | measured-code-2026-11-11/husps-long-sc9-method | 84e0bbbe5 | 2026-11-11 | 0 |
 | husps-mixed | husps-mixed | e84b5a89a | 2026-10-18 | 0 |
 | husps-mixed-break-even | husps-mixed-break-even | 7f226af39 | 2026-10-27 | 0 |
 | husps-mixed-break-even-nodes | initial-cycle-2026-11-02/husps-mixed-break-even-nodes | b54bfc310 | 2026-11-02 | 0 |
@@ -608,8 +620,12 @@ is the one read above (`analysis/verify_records.py`):
     java -Xmx16g -Xss64m -cp build-reg -Dverify.husps=true -Dseeds=5 -Drepeats=1 -Ddataset.only=DUNNHUMBY -Dresults.dir=results/verify-joint/husps-dunnhumby-mixed-all-arms/ AutomatedExperimentRunner SC6 SC6D SC6B
     # husps-long-sc10: exit 0, commit 2ecbd83b, 2026-10-31T23:06:48
     java -Xmx5g -Xss64m -cp build-long-sc10 -Dverify.husps=true -Drepeats=1 -Ddataset.only=SIGN,LEVIATHAN,C8T1S5I8N5K,TAFENG -Dalgo.only=Pre-HUSPM-Joint-fixed-threshold,Remine-from-scratch,Pre-HUSPM-Joint,Remine-own-UUT,Pre-HUSPM-Joint-w5 -Dresults.dir=results/verify-joint/husps-long-sc10/ AutomatedExperimentRunner SC10
+    # measured-code-2026-11-11/husps-long-sc10-method: exit 0, commit 84e0bbbe, 2026-11-11T17:53:59
+    java -Xmx5g -Xss64m -cp build-vq3-sc10 -Dverify.husps=true -Drepeats=1 -Ddataset.only=SIGN,LEVIATHAN,C8T1S5I8N5K,TAFENG -Dalgo.only=Pre-HUSPM-Joint-fixed-threshold,Pre-HUSPM-Joint -Dresults.dir=results/verify-joint/measured-code-2026-11-11/husps-long-sc10-method/ AutomatedExperimentRunner SC10
     # husps-long-sc10h: exit 1, commit 2ecbd83b, 2026-10-31T21:24:20
     java -Xmx5g -Xss64m -cp build-long-sc10h -Dverify.husps=true -Drepeats=1 -Ddataset.only=SIGN,LEVIATHAN,C8T1S5I8N5K,TAFENG -Dalgo.only=Pre-HUSPM-Joint-fixed-threshold,Remine-from-scratch,Pre-HUSPM-Joint,Remine-own-UUT,Pre-HUSPM-Joint-w5 -Dresults.dir=results/verify-joint/husps-long-sc10h/ AutomatedExperimentRunner SC10H
+    # measured-code-2026-11-11/husps-long-sc10h-method: exit 0, commit 84e0bbbe, 2026-11-11T17:14:28
+    java -Xmx5g -Xss64m -cp build-vq3-sc10h -Dverify.husps=true -Drepeats=1 -Ddataset.only=SIGN,LEVIATHAN,C8T1S5I8N5K,TAFENG -Dalgo.only=Pre-HUSPM-Joint-fixed-threshold,Pre-HUSPM-Joint -Dresults.dir=results/verify-joint/measured-code-2026-11-11/husps-long-sc10h-method/ AutomatedExperimentRunner SC10H
     # husps-long-sc10h-sequences-c8t1s5i8n5k: exit 0, commit 5a2d99ce, 2026-10-31T23:40:28
     java -Xmx8g -Xss64m -cp build-h-c8t1s5i8n5k -Dverify.husps=true -Drepeats=1 -Ddataset.only=C8T1S5I8N5K -Dalgo.only=Pre-HUSPM-Joint-fixed-threshold,Remine-from-scratch,Pre-HUSPM-Joint,Remine-own-UUT,Pre-HUSPM-Joint-w5 -Dresults.dir=results/verify-joint/husps-long-sc10h-sequences-c8t1s5i8n5k/ AutomatedExperimentRunner SC10H
     # husps-long-sc10h-sequences-leviathan: exit 0, commit 5a2d99ce, 2026-10-31T23:44:53
@@ -620,12 +636,20 @@ is the one read above (`analysis/verify_records.py`):
     java -Xmx5g -Xss64m -cp build-long-sc8 -Dverify.husps=true -Drepeats=1 -Ddataset.only=SIGN,LEVIATHAN,C8T1S5I8N5K,TAFENG -Dalgo.only=Pre-HUSPM-Joint-fixed-threshold,Remine-from-scratch,Pre-HUSPM-Joint,Remine-own-UUT,Pre-HUSPM-Joint-w5 -Dresults.dir=results/verify-joint/husps-long-sc8/ AutomatedExperimentRunner SC8
     # husps-long-sc8-dunnhumby: exit 0, commit d3358b01, 2026-11-02T16:57:22
     java -Xmx20g -Xss64m -cp build-reg -Dverify.husps=true -Drepeats=1 -Ddataset.only=DUNNHUMBY -Dresults.dir=results/verify-joint/husps-long-sc8-dunnhumby/ AutomatedExperimentRunner SC8
+    # measured-code-2026-11-11/husps-long-sc8-method: exit 0, commit 84e0bbbe, 2026-11-11T18:58:54
+    java -Xmx5g -Xss64m -cp build-vq3-sc8 -Dverify.husps=true -Drepeats=1 -Ddataset.only=SIGN,LEVIATHAN,C8T1S5I8N5K,TAFENG -Dalgo.only=Pre-HUSPM-Joint-fixed-threshold,Pre-HUSPM-Joint -Dresults.dir=results/verify-joint/measured-code-2026-11-11/husps-long-sc8-method/ AutomatedExperimentRunner SC8
     # husps-long-sc8p: exit 0, commit 2ecbd83b, 2026-10-31T22:46:40
     java -Xmx5g -Xss64m -cp build-long-sc8p -Dverify.husps=true -Drepeats=1 -Ddataset.only=SIGN,LEVIATHAN,C8T1S5I8N5K,TAFENG -Dalgo.only=Pre-HUSPM-Joint-fixed-threshold,Remine-from-scratch,Pre-HUSPM-Joint,Remine-own-UUT,Pre-HUSPM-Joint-w5 -Dresults.dir=results/verify-joint/husps-long-sc8p/ AutomatedExperimentRunner SC8P
+    # measured-code-2026-11-11/husps-long-sc8p-method: exit 0, commit 84e0bbbe, 2026-11-11T17:42:38
+    java -Xmx5g -Xss64m -cp build-vq3-sc8p -Dverify.husps=true -Drepeats=1 -Ddataset.only=SIGN,LEVIATHAN,C8T1S5I8N5K,TAFENG -Dalgo.only=Pre-HUSPM-Joint-fixed-threshold,Pre-HUSPM-Joint -Dresults.dir=results/verify-joint/measured-code-2026-11-11/husps-long-sc8p-method/ AutomatedExperimentRunner SC8P
     # husps-long-sc9: exit 0, commit 2ecbd83b, 2026-10-31T23:34:55
     java -Xmx5g -Xss64m -cp build-long-sc9 -Dverify.husps=true -Drepeats=1 -Ddataset.only=SIGN,LEVIATHAN,C8T1S5I8N5K,TAFENG -Dalgo.only=Pre-HUSPM-Joint-fixed-threshold,Remine-from-scratch,Pre-HUSPM-Joint,Remine-own-UUT,Pre-HUSPM-Joint-w5,Pre-HUSPM-Joint-index-rebuild -Dresults.dir=results/verify-joint/husps-long-sc9/ AutomatedExperimentRunner SC9
     # husps-long-sc9-dunnhumby: exit 0, commit 4aa1ce88, 2026-11-02T20:26:24
     java -Xmx20g -Xss64m -cp build-reg -Dverify.husps=true -Drepeats=1 -Ddataset.only=DUNNHUMBY -Dresults.dir=results/verify-joint/husps-long-sc9-dunnhumby/ AutomatedExperimentRunner SC9
+    # measured-code-2026-11-11/husps-long-sc9-index-rebuild: exit 0, commit 73487f9f, 2026-11-11T19:08:09
+    java -Xmx5g -Xss64m -cp build-vq4 -Dverify.husps=true -Drepeats=1 -Ddataset.only=SIGN,LEVIATHAN,C8T1S5I8N5K,TAFENG -Dalgo.only=Pre-HUSPM-Joint-fixed-threshold,Pre-HUSPM-Joint-index-rebuild -Dresults.dir=results/verify-joint/measured-code-2026-11-11/husps-long-sc9-index-rebuild/ AutomatedExperimentRunner SC9
+    # measured-code-2026-11-11/husps-long-sc9-method: exit 0, commit 84e0bbbe, 2026-11-11T17:43:16
+    java -Xmx5g -Xss64m -cp build-vq3-sc9 -Dverify.husps=true -Drepeats=1 -Ddataset.only=SIGN,LEVIATHAN,C8T1S5I8N5K,TAFENG -Dalgo.only=Pre-HUSPM-Joint-fixed-threshold,Pre-HUSPM-Joint -Dresults.dir=results/verify-joint/measured-code-2026-11-11/husps-long-sc9-method/ AutomatedExperimentRunner SC9
     # husps-mixed: exit 0, commit e84b5a89, 2026-10-18T01:32:25
     java -Xmx16g -Xss64m -cp build-v31 -Dverify.husps=true -Dseeds=5 -Drepeats=1 -Ddataset.only=SIGN,LEVIATHAN,C8T1S5I8N5K,TAFENG -Dalgo.only=Adaptive-Full,Remine-from-scratch,Remine-HUSP-ULL,Remine-HUSP-SP,Adaptive-FloorSelect,Remine-own-UUT,Joint-rule+plain-floor,Joint-rule+min-floor -Dresults.dir=results/verify-joint/husps-mixed/ AutomatedExperimentRunner SC6 SC6D SC6B
     # husps-mixed-break-even: exit 0, commit 7f226af3, 2026-10-27T13:00:07

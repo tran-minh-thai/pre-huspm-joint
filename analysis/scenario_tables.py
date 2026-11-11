@@ -1370,7 +1370,9 @@ def measurement_check_keys(put):
 RULE_CHANGE = "d6197a7ed"
 # The arms of the long streams whose pattern sets are compared with the reference arm. The two
 # rebuild arms are covered by analysis/check_rival_rebuild.py, counter by counter against these.
-LONG_CHECKED_ARMS = (P, P + "-w5", "Remine-from-scratch", "Remine-own-UUT")
+LONG_CHECKED_ARMS = (P, P + "-w5", "Remine-from-scratch", "Remine-own-UUT", P + "-index-rebuild")
+# Of these, the arms that select the floor by the break-even rule: their check must follow RULE_CHANGE.
+LONG_RULE_ARMS = (P, P + "-index-rebuild")
 
 
 def _contains(commit, ancestor):
@@ -1420,9 +1422,9 @@ def long_pattern_checks(put, skip=(), rule_change=RULE_CHANGE):
     problems = [f"{sc} {d}: no pattern check of {', '.join(sorted(arms - have.get((sc, d), set())))}"
                 for (sc, d), arms in sorted(measured.items()) if arms - have.get((sc, d), set())]
     after = {c: _contains(c, rule_change) for c in set(cmp_rows["commit"])}      # one git call per commit
-    old = cmp_rows[(cmp_rows["arm"] == P) & ~cmp_rows["commit"].map(after)]
-    problems += [f"{sc} {d}: the method's check ({rec}) predates the rule change {rule_change}"
-                 for (sc, d, rec), _ in old.groupby(["scenario", "dataset", "record"])]
+    old = cmp_rows[cmp_rows["arm"].isin(LONG_RULE_ARMS) & ~cmp_rows["commit"].map(after)]
+    problems += [f"{sc} {d}: the check of {arm} ({rec}) predates the rule change {rule_change}"
+                 for (sc, d, arm, rec), _ in old.groupby(["scenario", "dataset", "arm", "record"])]
     if problems:
         print(f"[not written] verify_long_all_*: {len(problems)} gaps: " + "; ".join(problems))
         put("verify_long_all_status", f"incomplete: {len(problems)} gaps: " + "; ".join(problems), src)

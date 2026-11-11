@@ -1,7 +1,7 @@
 {
   "date": "2026-11-11",
   "commit": "d89b094b8, or a later commit with the same source digest",
-  "why": "The checks that the code changes since their last record make necessary, and the checks on small databases as a control. Since the long-stream checks of 31 October the algorithm changed in two places only: the floor selection records the cycle of the initial mine (d6197a7ed), which concerns the method's arm alone, and a method was added for the rebuild arms. So the method's arm is checked again on every long stream (husps-long-<scenario>-method), the three DUNNHUMBY long streams that had no check get one, and the switching streams of the method's rule, recorded before d6197a7ed, are run again. The random streams and acceptance tests of every rule and arm, the item pruning, the stream plans and three fault injections were run again as a control: fourteen of nineteen repeat the old result lines, the others differ only in configuration. A record named *-modification-twice runs with -Dadapt.mergeModification=false, as the records it replaces did before that switch existed.",
+  "why": "The checks that the code changes since their last record make necessary, and the checks on small databases as a control. Since the long-stream checks of 31 October the algorithm changed in two places only: the floor selection records the cycle of the initial mine (d6197a7ed), which concerns the method's arm alone, and a method was added for the rebuild arms. So the method's arm is checked again on every long stream (husps-long-<scenario>-method), the three DUNNHUMBY long streams that had no check get one, and the switching streams of the method's rule, recorded before d6197a7ed, are run again. The random streams and acceptance tests of every rule and arm, the item pruning, the stream plans and three fault injections were run again as a control: fourteen of nineteen repeat the old result lines, the others differ only in configuration. A record named *-modification-twice runs with -Dadapt.mergeModification=false, as the records it replaces did before that switch existed. The index-rebuild arm of SC9, which the paper cites, is checked on the four databases where it had no pattern check.",
   "replaces": {
     "fuzz-modification-twice": [
       "fuzz"
@@ -92,6 +92,9 @@
     ],
     "break-even-nodes-switching-adversarial": [
       "break-even-nodes-switching-adversarial"
+    ],
+    "husps-long-sc9-index-rebuild": [
+      "husps-long-sc9-index-rebuild"
     ]
   }
 }
