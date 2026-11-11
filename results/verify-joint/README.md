@@ -81,7 +81,7 @@ checked against USpan, HUSP-ULL and HUSP-SP by `verify.BaselineAgreement`.
 | item pruning on and off on real databases, init (ItemRemovalCheck real) | finished | 8 |  |  |  |  | 0 |  |
 | item pruning on and off on real databases, whole (ItemRemovalCheck real) | finished | 7 |  |  |  |  | 0 |  |
 | Pre-HUSPM's tracking against Pre-HUSPM's buffer (PreHuspmTrackingCheck) | finished |  |  |  |  |  | 0 |  |
-| running example of the manuscript (RunningExampleCheck) | finished | 40 |  |  |  |  | 0 |  |
+| running example of the manuscript (RunningExampleCheck) | finished | 49 |  |  |  |  | 0 |  |
 | fault injection, random streams and hand-built cases | finished | 4 |  |  |  |  |  | 4 |
 | fault injection, adversarial runs on real databases | finished | 4 |  |  |  |  |  | 4 |
 | fault injection into the item pruning | finished | 4 |  |  |  |  |  | 4 |
@@ -459,7 +459,7 @@ A check that was run again after the code it exercises changed keeps its earlier
 rerun lies in a subdirectory with a `generation.json`, and the newest finished record of a check
 is the one read above (`analysis/verify_records.py`):
 
-* `measured-code-2026-11-11` (2026-11-11, commit d89b094b8, or a later commit with the same source digest): Every correctness check run again from the code whose classes equal those of the measurements (results-invariant/bytecode/2026-11-11-running-example-check: only verify/RunningExampleCheck differs): the checks of the method's rule, the long streams with every arm, and the checks of the other rules and arms. A record named *-modification-twice runs with -Dadapt.mergeModification=false, as the records it replaces did before that switch existed; the others mine a modification once, as the measured arms do. The direct-path checks now cover DUNNHUMBY too. 19 of 69 of its records finished.
+* `measured-code-2026-11-11` (2026-11-11, commit d89b094b8, or a later commit with the same source digest): The checks that the code changes since their last record make necessary, and the checks on small databases as a control. Since the long-stream checks of 31 October the algorithm changed in two places only: the floor selection records the cycle of the initial mine (d6197a7ed), which concerns the method's arm alone, and a method was added for the rebuild arms. So the method's arm is checked again on every long stream (husps-long-<scenario>-method), the three DUNNHUMBY long streams that had no check get one, and the switching streams of the method's rule, recorded before d6197a7ed, are run again. The random streams and acceptance tests of every rule and arm, the item pruning, the stream plans and three fault injections were run again as a control: fourteen of nineteen repeat the old result lines, the others differ only in configuration. A record named *-modification-twice runs with -Dadapt.mergeModification=false, as the records it replaces did before that switch existed. 20 of 30 of its records finished.
 * `initial-cycle-2026-11-02` (2026-11-02, commit d6197a7ed (b54bfc310 for the two pattern checks)): The floor selection records the cycle of the initial mine from d6197a7ed on; the checks of the rule were run again. 6 of 6 of its records finished.
 
 | check | record read | commit | ended | exit code |
@@ -538,7 +538,7 @@ is the one read above (`analysis/verify_records.py`):
 | prehuspm-tracking-random | prehuspm-tracking-random | e84b5a89a | 2026-10-17 | 0 |
 | random | random | e84b5a89a | 2026-10-17 | 0 |
 | running-example | running-example | d15b36a24 | 2026-10-25 | 0 |
-| running-example-break-even-nodes | running-example-break-even-nodes | ae62486db | 2026-10-30 | 0 |
+| running-example-break-even-nodes | measured-code-2026-11-11/running-example | 84e0bbbe5 | 2026-11-11 | 0 |
 | static-joint-miner-uut | static-joint-miner-uut | 906222294 | 2026-10-16 | 0 |
 | stream-plans | measured-code-2026-11-11/stream-plans | f30fe6b41 | 2026-11-11 | 0 |
 
@@ -692,8 +692,8 @@ is the one read above (`analysis/verify_records.py`):
     java -Xmx24g -Xss64m -cp build-v31 verify.DirectPathVerifier ALL --ops 16 --out results/verify-joint/random
     # running-example: exit 0, commit d15b36a2, 2026-10-25T13:06:18
     java -cp build-rex verify.RunningExampleCheck
-    # running-example-break-even-nodes: exit 0, commit ae62486d, 2026-10-30T08:05:04
-    java -cp build-rex2 verify.RunningExampleCheck
+    # measured-code-2026-11-11/running-example: exit 0, commit 84e0bbbe, 2026-11-11T15:42:05
+    java -cp build-vq3-rex verify.RunningExampleCheck
     # static-joint-miner-uut: exit 0, commit 90622229, 2026-10-16T21:29:19
     java -Xmx24g -Xss64m -cp build-v30 -Drepeats=1 -Dalgo.only=HUSP-ULL,Joint-miner@UUT -Dresults.dir=results/verify-joint/static-joint-miner-uut/ AutomatedExperimentRunner SC1 SC3
     # measured-code-2026-11-11/stream-plans: exit 0, commit f30fe6b4, 2026-11-11T15:08:52

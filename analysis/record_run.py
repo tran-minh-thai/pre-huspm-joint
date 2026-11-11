@@ -90,7 +90,7 @@ def main():
         "java": java[0] if java else "",
         "os": f"{platform.system()} {platform.release()} ({platform.platform()})",
         "machine": platform.node(),
-        "role": "development machine: counters only, no timings",
+        "role": "correctness check: counters only, no timings",
         "start": datetime.datetime.now().isoformat(timespec="seconds"),
     }
     with open(out / "console.txt", "w", encoding="utf-8", newline="\n") as f:

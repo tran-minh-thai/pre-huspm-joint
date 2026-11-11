@@ -1365,51 +1365,79 @@ def measurement_check_keys(put):
     put("session_drift_others_arms", sum(n for n, _ in others.values()), src)
 
 
-def long_pattern_checks(put):
-    """The pattern checks of the long streams as one total: comparisons of every arm with the
-    reference arm after every operation, and those that do not match. Written only when the
-    current records finished and cover every (scenario, database) the campaign measured; what is
-    missing is printed otherwise, and the keys are not written."""
+# The floor selection records the cycle of the initial mine from this commit on: a pattern check of
+# the method made before it checked another rule. No other arm of the long streams changed with it.
+RULE_CHANGE = "d6197a7ed"
+# The arms of the long streams whose pattern sets are compared with the reference arm. The two
+# rebuild arms are covered by analysis/check_rival_rebuild.py, counter by counter against these.
+LONG_CHECKED_ARMS = (P, P + "-w5", "Remine-from-scratch", "Remine-own-UUT")
+
+
+def _contains(commit, ancestor):
+    """True when `ancestor` is an ancestor of `commit` in this repository; False when it is not,
+    or when the repository does not hold `commit` (a record older than the present history)."""
+    import subprocess
+    if subprocess.run(["git", "cat-file", "-e", f"{commit}^{{commit}}"], cwd=mf.REPO_DIR, capture_output=True).returncode:
+        return False
+    return subprocess.run(["git", "merge-base", "--is-ancestor", ancestor, commit], cwd=mf.REPO_DIR,
+                          capture_output=True).returncode == 0
+
+
+def long_pattern_checks(put, skip=(), rule_change=RULE_CHANGE):
+    """The pattern checks of the long streams as one total. For every measured (scenario, database)
+    and every arm of LONG_CHECKED_ARMS measured there, the comparisons of the newest finished record
+    that holds that arm, after every operation, against the reference arm. The keys are written only
+    when no stream lacks an arm and every record read for the method contains `rule_change`; what is
+    missing is printed and written as the status otherwise. `skip` leaves records out (self-test)."""
     import long_streams
     src = "table_verification_records.csv"
-    need = {(sc, d) for sc in long_streams.SCENARIOS
-            for d in os.listdir(os.path.join(mf.DATA_DIR, mf.TIMING_TREE, sc))
-            if os.path.isdir(os.path.join(mf.DATA_DIR, mf.TIMING_TREE, sc, d))} \
-        if os.path.isdir(os.path.join(mf.DATA_DIR, mf.TIMING_TREE)) else set()
-    arms_measured = {(sc, d): {a for a in os.listdir(os.path.join(mf.DATA_DIR, mf.TIMING_TREE, sc, d))
-                               if os.path.exists(os.path.join(mf.DATA_DIR, mf.TIMING_TREE, sc, d, a, "DONE"))}
-                     for sc, d in need}
-    frames, problems = [], []
-    for name in [n for n in verify_records.names(VERIFY_DIR) if n.startswith("husps-long-")]:
-        if _status(name) != "finished":
-            problems.append(f"{name}: {_status(name)}")
-            continue
+    root = os.path.join(mf.DATA_DIR, mf.TIMING_TREE)
+    measured = {}
+    for sc in long_streams.SCENARIOS:
+        for d in sorted(os.listdir(os.path.join(root, sc))) if os.path.isdir(os.path.join(root, sc)) else []:
+            arms = {a for a in LONG_CHECKED_ARMS if os.path.exists(os.path.join(root, sc, d, a, "DONE"))}
+            if arms:
+                measured[(sc, d)] = arms
+    frames = []
+    for name in [n for n in verify_records.names(VERIFY_DIR) if n.startswith("husps-long-") and n not in skip]:
         f = os.path.join(_record(name), "verify_husps.csv")
-        if not os.path.exists(f):
-            problems.append(f"{name}: no verify_husps.csv")
-            continue
-        frames.append(pd.read_csv(f).assign(record=name))
-    rows = pd.concat(frames) if frames else pd.DataFrame(columns=["scenario", "dataset", "arm", "status", "record"])
-    have = set(zip(rows["scenario"], rows["dataset"]))
-    problems += [f"{sc} {d}: no finished record" for sc, d in sorted(need - have)]
-    twice = rows.groupby(["scenario", "dataset"])["record"].nunique()
-    problems += [f"{sc} {d}: read from {n} records" for (sc, d), n in twice[twice > 1].items()]
-    rows = rows[[k in need for k in zip(rows["scenario"], rows["dataset"])]]
-    for (sc, d), g in rows.groupby(["scenario", "dataset"]):
-        unchecked = arms_measured[(sc, d)] - set(g["arm"])
-        if unchecked:
-            problems.append(f"{sc} {d}: measured arms without a check: {', '.join(sorted(unchecked))}")
-    if not need or problems:
-        print("[not written] verify_long_all_*: " + ("; ".join(problems) if problems else "no long stream measured"))
-        put("verify_long_all_status", "incomplete: " + "; ".join(problems) if problems else "no long stream measured", src)
+        if _status(name) != "finished" or not os.path.exists(f):
+            continue            # a record that stopped gives nothing; a stream it leaves uncovered is reported below
+        meta = json.load(open(os.path.join(_record(name), "run_meta.json"), encoding="utf-8"))
+        frames.append(pd.read_csv(f).assign(record=name, ended=str(meta.get("end", "")), commit=str(meta.get("git_commit", ""))))
+    if not measured or not frames:
+        put("verify_long_all_status", "no long stream measured" if not measured else "no finished record", src)
+        print("[not written] verify_long_all_*: " + ("no long stream measured" if not measured else "no finished record"))
         return
-    cmp_rows = rows[rows["status"] != "reference"]
+    rows = pd.concat(frames)
+    rows["arm"] = [rename_arms.new_name(sc, a) or a for sc, a in zip(rows["scenario"], rows["arm"])]
+    ref = rows[rows["status"] == "reference"]
+    cmp_rows = rows[(rows["status"] != "reference") & rows["arm"].isin(LONG_CHECKED_ARMS)]
+    cmp_rows = cmp_rows[[k in measured for k in zip(cmp_rows["scenario"], cmp_rows["dataset"])]]
+    newest = cmp_rows.groupby(["scenario", "dataset", "arm"])["ended"].transform("max")
+    cmp_rows = cmp_rows[cmp_rows["ended"] == newest]
+    have = {k: set(g["arm"]) for k, g in cmp_rows.groupby(["scenario", "dataset"])}
+    problems = [f"{sc} {d}: no pattern check of {', '.join(sorted(arms - have.get((sc, d), set())))}"
+                for (sc, d), arms in sorted(measured.items()) if arms - have.get((sc, d), set())]
+    after = {c: _contains(c, rule_change) for c in set(cmp_rows["commit"])}      # one git call per commit
+    old = cmp_rows[(cmp_rows["arm"] == P) & ~cmp_rows["commit"].map(after)]
+    problems += [f"{sc} {d}: the method's check ({rec}) predates the rule change {rule_change}"
+                 for (sc, d, rec), _ in old.groupby(["scenario", "dataset", "record"])]
+    if problems:
+        print(f"[not written] verify_long_all_*: {len(problems)} gaps: " + "; ".join(problems))
+        put("verify_long_all_status", f"incomplete: {len(problems)} gaps: " + "; ".join(problems), src)
+        return
     put("verify_long_all_status", "finished", src)
-    put("verify_long_all_streams", f"{len(have & need)} of {len(need)}", src)
+    put("verify_long_all_streams", f"{len(have)} of {len(measured)}", src)
     put("verify_long_all_comparisons", len(cmp_rows), src)
     put("verify_long_all_mismatches", int((cmp_rows["status"] != "match").sum()), src)
-    put("verify_long_all_reference_arm", "; ".join(sorted(set(rows[rows["status"] == "reference"]["arm"]))), src)
-    put("verify_long_all_arms", "; ".join(sorted(set(cmp_rows["arm"]))), src)
+    put("verify_long_all_reference_arm", "; ".join(sorted(set(ref["arm"]))), src)
+    put("verify_long_all_arms", "; ".join(a for a in LONG_CHECKED_ARMS if a in set(cmp_rows["arm"])), src)
+    put("verify_long_all_records", "; ".join(sorted(set(cmp_rows["record"]))), src)
+    for a, g in cmp_rows.groupby("arm"):
+        put(f"verify_long_all_{a}_comparisons", len(g), src)
+        put(f"verify_long_all_{a}_mismatches", int((g["status"] != "match").sum()), src)
+        put(f"verify_long_all_{a}_records", "; ".join(sorted(set(g["record"]))), src)
 
 
 # ------------------------------------------------------------------------------ agreement
