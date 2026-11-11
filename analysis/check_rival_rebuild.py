@@ -108,7 +108,9 @@ def trees(results):
     return out
 
 
-def check(results):
+def compare_all(results):
+    """(pairs, rows, failures, rebuild arms with no superseded arm beside them, pairs per tree)
+    over every campaign tree under results."""
     pairs = rows = 0
     failures, alone = [], []
     per_tree = collections.Counter()
@@ -140,6 +142,11 @@ def check(results):
                     failures += [f"{where}: {p}" for p in problems]
                 else:
                     alone.append(where)
+    return pairs, rows, failures, alone, per_tree
+
+
+def check(results):
+    pairs, rows, failures, alone, per_tree = compare_all(results)
     for t, c in sorted(per_tree.items()):
         print(f"  {t}: {c} pairs")
     print(f"pairs compared: {pairs}, rows compared: {rows}, problems: {len(failures)}, "

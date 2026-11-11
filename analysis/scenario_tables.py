@@ -36,6 +36,7 @@ import pandas as pd
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import rename_arms
+import verify_records
 import make_figures as mf  # noqa: E402
 
 _STARTED = float(os.environ.get("HUSP_RUN_STARTED") or time.time())   # tables older than this were not written by this run
@@ -1100,18 +1101,26 @@ def fidelity_keys(put, summ, inc, src="table_PreHUSPM_fidelity.csv"):
 
 # ------------------------------------------------------------------------------ verification
 VERIFY_DIR = os.path.join(mf.DATA_DIR, "verify-joint")
+CAPTION_RUNS = []          # (key, account of the runs behind a table's means), filled as the tables are written
+DATA_AVAILABILITY = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data_availability.json")
+
+
+def _record(name):
+    """The directory of the current record of a check: a rerun in a later generation of the
+    tree once it has finished, else the record at the top (analysis/verify_records.py)."""
+    return verify_records.record_dir(name, VERIFY_DIR)
 
 
 def _console(name):
-    path = os.path.join(VERIFY_DIR, name, "console.txt")
+    path = os.path.join(_record(name), "console.txt")
     return open(path, encoding="utf-8").read() if os.path.exists(path) else None
 
 
 def _status(name):
     """From the run record that analysis/record_run.py writes when the command ends: 'missing'
     with no output, 'not finished' while the record is absent, 'exit <n>' on a non-zero exit."""
-    meta = os.path.join(VERIFY_DIR, name, "run_meta.json")
-    if not os.path.isdir(os.path.join(VERIFY_DIR, name)):
+    meta = os.path.join(_record(name), "run_meta.json")
+    if not os.path.isdir(_record(name)):
         return "missing"
     if not os.path.exists(meta):
         return "not finished"
@@ -1163,8 +1172,7 @@ def verification():
     # floor selection, and the pattern checks of the runner (-Dverify.husps=true).
     # A check still running has no run_meta.json yet (analysis/record_run.py writes it at the end):
     # it is left out, so no key is read from a partial output.
-    done = lambda d: os.path.exists(os.path.join(d, "run_meta.json"))
-    later = sorted(os.path.basename(d) for d in glob.glob(os.path.join(VERIFY_DIR, "*")) if os.path.isdir(d) and done(d))
+    later = verify_records.names(VERIFY_DIR)
     for name in [n for n in later if n.endswith("-acceptance")]:
         m = re.search(r"acceptance: (\d+) passed, (\d+) failed", _console(name) or "")
         rows.append(dict(check=f"rescan rule acceptance, {name}", status=_status(name) if m else "missing",
@@ -1250,10 +1258,9 @@ def verification():
         rows.append(dict(check=label, status=_status(name),
                          operations=len(faults), caught=sum(f == "True" for f in faults)))
     # Every DirectPathVerifier run, found by its output file rather than by name.
-    runs = sorted(os.path.basename(os.path.dirname(f))
-                  for f in glob.glob(os.path.join(VERIFY_DIR, "*", "verification.csv")) if done(os.path.dirname(f)))
+    runs = [n for n in later if os.path.exists(os.path.join(_record(n), "verification.csv"))]
     for name in runs or ["random", "adversarial"]:
-        path = os.path.join(VERIFY_DIR, name, "verification.csv")
+        path = os.path.join(_record(name), "verification.csv")
         out = _console(name)
         if not os.path.exists(path):
             rows.append(dict(check=f"direct path on real databases, {name} operations", status="missing"))
@@ -1304,6 +1311,107 @@ def verification():
     return summary, by_db
 
 
+SESSION_DRIFT = os.path.join("results-invariant", "session-drift", "2026-11-06")
+
+
+def measurement_check_keys(put):
+    """Two checks of the measurement itself.
+
+    The remining controls against the arms they supersede (analysis/check_rival_rebuild.py), run
+    here over the trees as they are: pairs of runs and rows compared; written only without a
+    problem. And how far one arm moves between two days (analysis/session_drift.py), from its
+    record: the campaign overwrites a cell when it is measured again, so the pairs of days of
+    that record are no longer all in the tree."""
+    import pathlib
+    import check_rival_rebuild as crr
+    pairs, rows, failures, alone, _ = crr.compare_all(pathlib.Path(mf.DATA_DIR))
+    src = "analysis/check_rival_rebuild.py"
+    put("check_rival_rebuild_problems", len(failures) + len(alone), src)
+    if pairs and not failures and not alone:
+        put("check_rival_rebuild_pairs", pairs, src)
+        put("check_rival_rebuild_rows", rows, src)
+    else:
+        print(f"[not written] check_rival_rebuild_pairs, _rows: {pairs} pairs, {len(failures)} problems, "
+              f"{len(alone)} rebuild arms with nothing to compare with")
+    root = os.path.join(mf.REPO_DIR, SESSION_DRIFT)
+    con, meta = os.path.join(root, "console.txt"), os.path.join(root, "run_meta.json")
+    if not (os.path.exists(con) and os.path.exists(meta)) or json.load(open(meta, encoding="utf-8")).get("exit_code") != 0:
+        print(f"[not written] session_drift_*: no finished record in {SESSION_DRIFT}")
+        return
+    src = SESSION_DRIFT.replace(os.sep, "/") + "/console.txt"
+    text = open(con, encoding="utf-8").read()
+    per_db = {d: (int(n), float(x)) for d, n, x in re.findall(r"^  (\S+)\s+arms\s+(\d+) max deviation ([\d.]+)$", text, flags=re.M)}
+    m = re.search(r"^comparable arms: (\d+)", text, flags=re.M)
+    if not per_db or not m or sum(n for n, _ in per_db.values()) != int(m.group(1)):
+        raise SystemExit(f"{src}: the per-database lines do not add up to the comparable arms")
+    put("session_drift_comparable_arms", int(m.group(1)), src)
+    for d, (n, x) in sorted(per_db.items()):
+        put(f"session_drift_{d}_arms", n, src)
+        # the record prints |later/earlier - 1| to three decimals; the factor is one more than that
+        put(f"session_drift_{d}_max", f"{1 + x:.3f}", src)
+    # the factor the analyses use for a database that drifts (check_rival_rebuild.UNSTABLE, and the copy
+    # in affected_runs.py, which runs without the other modules) is this record's
+    import affected_runs
+    for name, table in (("check_rival_rebuild.UNSTABLE", crr.UNSTABLE), ("affected_runs.SESSION_DRIFT", affected_runs.SESSION_DRIFT)):
+        for d, f in table.items():
+            if d not in per_db or abs(1 + per_db[d][1] - f) > 5e-4:
+                raise SystemExit(f"{name}[{d}] = {f}, but {src} gives {per_db.get(d)}")
+    if set(crr.UNSTABLE) != set(affected_runs.SESSION_DRIFT):
+        raise SystemExit("check_rival_rebuild.UNSTABLE and affected_runs.SESSION_DRIFT name different databases")
+    others = {d: v for d, v in per_db.items() if d not in crr.UNSTABLE}
+    worst = max(others, key=lambda d: others[d][1])
+    put("session_drift_others_max_pct", f"{100 * others[worst][1]:.1f}", src)
+    put("session_drift_others_max_database", worst, src)
+    put("session_drift_others_arms", sum(n for n, _ in others.values()), src)
+
+
+def long_pattern_checks(put):
+    """The pattern checks of the long streams as one total: comparisons of every arm with the
+    reference arm after every operation, and those that do not match. Written only when the
+    current records finished and cover every (scenario, database) the campaign measured; what is
+    missing is printed otherwise, and the keys are not written."""
+    import long_streams
+    src = "table_verification_records.csv"
+    need = {(sc, d) for sc in long_streams.SCENARIOS
+            for d in os.listdir(os.path.join(mf.DATA_DIR, mf.TIMING_TREE, sc))
+            if os.path.isdir(os.path.join(mf.DATA_DIR, mf.TIMING_TREE, sc, d))} \
+        if os.path.isdir(os.path.join(mf.DATA_DIR, mf.TIMING_TREE)) else set()
+    arms_measured = {(sc, d): {a for a in os.listdir(os.path.join(mf.DATA_DIR, mf.TIMING_TREE, sc, d))
+                               if os.path.exists(os.path.join(mf.DATA_DIR, mf.TIMING_TREE, sc, d, a, "DONE"))}
+                     for sc, d in need}
+    frames, problems = [], []
+    for name in [n for n in verify_records.names(VERIFY_DIR) if n.startswith("husps-long-")]:
+        if _status(name) != "finished":
+            problems.append(f"{name}: {_status(name)}")
+            continue
+        f = os.path.join(_record(name), "verify_husps.csv")
+        if not os.path.exists(f):
+            problems.append(f"{name}: no verify_husps.csv")
+            continue
+        frames.append(pd.read_csv(f).assign(record=name))
+    rows = pd.concat(frames) if frames else pd.DataFrame(columns=["scenario", "dataset", "arm", "status", "record"])
+    have = set(zip(rows["scenario"], rows["dataset"]))
+    problems += [f"{sc} {d}: no finished record" for sc, d in sorted(need - have)]
+    twice = rows.groupby(["scenario", "dataset"])["record"].nunique()
+    problems += [f"{sc} {d}: read from {n} records" for (sc, d), n in twice[twice > 1].items()]
+    rows = rows[[k in need for k in zip(rows["scenario"], rows["dataset"])]]
+    for (sc, d), g in rows.groupby(["scenario", "dataset"]):
+        unchecked = arms_measured[(sc, d)] - set(g["arm"])
+        if unchecked:
+            problems.append(f"{sc} {d}: measured arms without a check: {', '.join(sorted(unchecked))}")
+    if not need or problems:
+        print("[not written] verify_long_all_*: " + ("; ".join(problems) if problems else "no long stream measured"))
+        put("verify_long_all_status", "incomplete: " + "; ".join(problems) if problems else "no long stream measured", src)
+        return
+    cmp_rows = rows[rows["status"] != "reference"]
+    put("verify_long_all_status", "finished", src)
+    put("verify_long_all_streams", f"{len(have & need)} of {len(need)}", src)
+    put("verify_long_all_comparisons", len(cmp_rows), src)
+    put("verify_long_all_mismatches", int((cmp_rows["status"] != "match").sum()), src)
+    put("verify_long_all_reference_arm", "; ".join(sorted(set(rows[rows["status"] == "reference"]["arm"]))), src)
+    put("verify_long_all_arms", "; ".join(sorted(set(cmp_rows["arm"]))), src)
+
+
 # ------------------------------------------------------------------------------ agreement
 def agreement():
     """Rows (per database and threshold, or per increment) where every finished arm reports
@@ -1321,6 +1429,24 @@ def agreement():
         multi = groups.size() >= 2
         same = groups.nunique() == 1
         rows.append(dict(scenario=sc, comparisons=int(multi.sum()), disagreeing=int((multi & ~same).sum())))
+    return pd.DataFrame(rows)
+
+
+def mixed_agreement(arms=(P, "Remine-from-scratch")):
+    """The mixed scenarios: operations (database, seed, operation; the initial mine left out)
+    after which the given arms, in every run that finished, report the same HUSP count."""
+    rows = []
+    for sc in ("SC6", "SC6D", "SC6B"):
+        df = mf.load_scenario(sc, replicates=True)
+        if df is None:
+            continue
+        fin = df[df["finished"] & df["algorithm"].isin(arms) & ~df["op_type"].astype(str).str.endswith("_INIT")]
+        g = fin.groupby(["dataset", "seed", "iteration"])
+        both = g["algorithm"].nunique() == len(arms)
+        same = g["total_patterns_found"].nunique() == 1
+        rows.append(dict(scenario=sc, arms=" and ".join(arms), databases=int(fin["dataset"].nunique()),
+                         comparisons=int(both.sum()), disagreeing=int((both & ~same).sum()),
+                         operations_without_both_arms=int((~both).sum())))
     return pd.DataFrame(rows)
 
 
@@ -1663,13 +1789,20 @@ def sc2_tex(totals, region, reps=None):
         other = sorted(f"{mf.ALGO_LABEL.get(a, a)} on {d} ({word(n)})" for (d, a), n in ns.items() if n != common)
         return text + (f", except {'; '.join(other)}" if other else "")
 
+    def caption(title, arms, key):
+        """The caption names the table; the runs behind its means go into it only when every cell
+        rests on the same number. The full account is the key, for the text that cites the table."""
+        phrase = runs_phrase(arms)
+        CAPTION_RUNS.append((key, phrase))
+        return title if ", except " in phrase else f"{title}, {phrase}"
+
     head = ("Database & \\begin{tabular}[b]{@{}r@{}}Pre-HUSPM-\\\\Joint\\end{tabular} & "
             "\\begin{tabular}[b]{@{}r@{}}Pre-HUSPM-\\\\SWUmax\\end{tabular} & "
             "\\begin{tabular}[b]{@{}r@{}}Pre-HUSPM-\\\\TSU\\end{tabular} & Remine & "
             "\\begin{tabular}[b]{@{}r@{}}IncUSP-\\\\Miner$^{+}$\\end{tabular} \\\\\\midrule")
     rows = [f"{d} & " + " & ".join(row(d, INC_ARMS)) + " \\\\" for d in order]
     time_tex = "\n".join(["\\begin{table}[!htbp]\\centering",
-                          f"\\caption{{Runtime (s) of SC2 over 100 increments, {runs_phrase(INC_ARMS)}}}\\label{{tab:sc2_time}}",
+                          f"\\caption{{{caption('Runtime (s) of SC2 over 100 increments', INC_ARMS, 'SC2_time_table_runs')}}}\\label{{tab:sc2_time}}",
                           "\\setlength{\\tabcolsep}{4pt}",
                           "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}lrrrrr}\\toprule", head] + rows +
                          ["\\bottomrule\\end{tabular*}", "\\end{table}", ""])
@@ -1686,7 +1819,7 @@ def sc2_tex(totals, region, reps=None):
                  "\\begin{tabular}[b]{@{}r@{}}Remine-\\\\UUT\\end{tabular} \\\\\\midrule")
         rrows = [f"{d} & " + " & ".join(row(d, remine_arms)) + " \\\\" for d in order]
         remine_tex = "\n".join(["\\begin{table}[!htbp]\\centering",
-                                f"\\caption{{Runtime (s) of SC2 against remining, {runs_phrase(remine_arms)}}}\\label{{tab:sc2_remine}}",
+                                f"\\caption{{{caption('Runtime (s) of SC2 against remining', remine_arms, 'SC2_remine_table_runs')}}}\\label{{tab:sc2_remine}}",
                                 "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}lrrrrr}\\toprule", rhead] + rrows +
                                ["\\bottomrule\\end{tabular*}", "\\end{table}", ""])
     def rescans(d):
@@ -2284,6 +2417,10 @@ def break_even_window_sensitivity(put, out):
             put(f"{sc}_break_even_window_{w}_total_over_window5", f"{r[w] / r[5]:.3f}", src)
         mid = [r[w] / r[5] for w in (2, 3, 10)]
         put(f"{sc}_break_even_windows_2_to_10_total_over_window5", f"{min(mid):.3f} to {max(mid):.3f}", src)
+    # the same over the scenarios of the table: the smallest and the largest total at m = 2, 3, 10
+    mids = [r[w] / r[5] for _, r in s.iterrows() for w in (2, 3, 10)]
+    put("break_even_window_2_to_10_total_min", f"{min(mids):.3f}", src)
+    put("break_even_window_2_to_10_total_max", f"{max(mids):.3f}", src)
     g = t[t["window"] != 5]
     for w, h in g.groupby("window"):
         m = h.loc[h["over_window5"].idxmax()]
@@ -3107,6 +3244,10 @@ def export_all(out_dir=None):
             put("SC5_cells_within_10pct_runs", "; ".join(sorted(set(near["runs_vs_closest"]))), "table_SC5_cells.csv")
         # median over the four shapes of Remine's time over the proposal's, per database and K,
         # and the share of increments the proposal rescans
+        # the same share over every database of SC5, per K
+        for k, g in c5.groupby("K"):
+            put(f"SC5_K{k}_rescan_share_range", f"{100 * g['proposal_rescan_share'].min():.0f}-"
+                                                 f"{100 * g['proposal_rescan_share'].max():.0f}%", "table_SC5_cells.csv")
         for (d, k), g in c5.groupby(["dataset", "K"]):
             put(f"SC5_{d}_K{k}_remine_over_proposal_median", f"{g['remine_over_proposal'].median():.2f}",
                 "table_SC5_cells.csv")
@@ -3210,6 +3351,10 @@ def export_all(out_dir=None):
     for _, r in vs.iterrows():
         key = "verify_" + re.sub(r"[^a-z0-9]+", "_", r["check"].lower()).strip("_")
         put(f"{key}_status", r["status"], "table_verification.csv")
+        if r["status"] != "finished":
+            # a check that stopped or did not end gives its status and no count: what it counted
+            # up to the stop is not the result of the check
+            continue
         if r["check"] == "fault injection into the rescan floor selection":
             con = _console("fault-injection-floor-selection") or ""
             faults = [f for f in re.findall(r"^fault: (.+)$", con, flags=re.M)]
@@ -3219,8 +3364,8 @@ def export_all(out_dir=None):
         if r["check"].startswith("patterns against the proposal after every operation, "):
             # the comparisons of each scenario, from the rows the runner wrote (the console gives
             # only the total of each command)
-            vh = os.path.join(VERIFY_DIR, r["check"].split(", ")[-1], "verify_husps.csv")
-            if os.path.exists(vh):
+            vh = os.path.join(_record(r["check"].split(", ")[-1]), "verify_husps.csv")
+            if os.path.exists(vh) and r["status"] == "finished":
                 cmp_rows = pd.read_csv(vh)
                 # the arm every other arm is compared with (it runs first on each stream)
                 ref = cmp_rows[cmp_rows["status"] == "reference"]
@@ -3271,6 +3416,24 @@ def export_all(out_dir=None):
                  for s in re.findall(r"at operation (\d+)", _heap_stops(_console(f"{rule}-switching-{k}"))[1] or "")]
         if stops:
             put(f"{key}_stopped_at_operations", ", ".join(sorted(set(stops), key=int)), "table_verification.csv")
+
+    # Where each check was read from: the record, its commit and the day it ended.
+    recs = []
+    for name in verify_records.names(VERIFY_DIR):
+        d = _record(name)
+        meta = json.load(open(os.path.join(d, "run_meta.json"), encoding="utf-8"))
+        recs.append(dict(check=name, record=os.path.relpath(d, VERIFY_DIR).replace(os.sep, "/"),
+                         git_commit=str(meta.get("git_commit", ""))[:9], ended=str(meta.get("end", ""))[:10],
+                         exit_code=meta.get("exit_code")))
+    mf.write_csv(pd.DataFrame(recs), os.path.join(out, "table_verification_records.csv"))
+    long_pattern_checks(put)
+    measurement_check_keys(put)
+    # what the data availability statement cites: addresses and the release, stated in one file
+    for key, v in json.load(open(DATA_AVAILABILITY, encoding="utf-8")).items():
+        if v.get("value"):
+            put(key, v["value"], "analysis/data_availability.json")
+        else:
+            print(f"[not written] {key}: no value in analysis/data_availability.json ({v.get('source', '')})")
 
     # SC7 over the incremental stream: the time of each variant summed over the 100 increments,
     # and what the block index saves
@@ -3363,6 +3526,18 @@ def export_all(out_dir=None):
     for _, r in ag.iterrows():
         put(f"{r['scenario']}_count_agreement", f"{r['comparisons'] - r['disagreeing']}/{r['comparisons']}",
             "table_agreement.csv")
+    mag = mixed_agreement()
+    mf.write_csv(mag, os.path.join(out, "table_agreement_mixed.csv"))
+    for _, r in mag.iterrows():
+        put(f"{r['scenario']}_count_agreement", f"{r['comparisons'] - r['disagreeing']}/{r['comparisons']}",
+            "table_agreement_mixed.csv")
+        put(f"{r['scenario']}_count_agreement_databases", int(r["databases"]), "table_agreement_mixed.csv")
+        # "the two agree after all N operations" holds only when none disagrees and none lacks an arm
+        if r["disagreeing"] == 0 and r["operations_without_both_arms"] == 0:
+            put(f"{r['scenario']}_count_agreement_operations", int(r["comparisons"]), "table_agreement_mixed.csv")
+        else:
+            print(f"[not written] {r['scenario']}_count_agreement_operations: {r['disagreeing']} operations "
+                  f"disagree, {r['operations_without_both_arms']} lack one of the arms")
 
     df2 = mf.load_scenario("SC2")
     if df2 is not None:
@@ -3407,6 +3582,9 @@ def export_all(out_dir=None):
             # the 100 decisions) and, for reference, over the whole insertion stream
             src = "table_SC2_operating_region.csv"
             for r in region.itertuples():
+                # the median over the increments of the batch's cost over the budget, in percent, as
+                # the operating-region table prints it
+                put(f"SC2_phi_over_beta_median_{r.dataset}", f"{100 * r.ratio_median:.0f}", src)
                 put(f"SC2_alpha_decisions_{r.dataset}_median_pct", f"{100 * r.alpha_median:.1f}", src)
                 put(f"SC2_alpha_decisions_{r.dataset}_range_pct", f"{100 * r.alpha_min:.1f} to {100 * r.alpha_max:.1f}", src)
                 put(f"SC2_gain_decisions_{r.dataset}", f"{r.gain_at_decisions:.2f}", src)
@@ -3467,6 +3645,12 @@ def export_all(out_dir=None):
             for stat, v in (("median", big["relative_spread"].median()), ("max", big["relative_spread"].max())):
                 put(f"noise_SC1_live_set_at_least_5mb_{stat}", f"{v:.4f}", "table_noise.csv")
                 put(f"noise_SC1_live_set_at_least_5mb_{stat}_pct", f"{100 * v:.1f}", "table_noise.csv")
+
+    # the runs behind the means of the tables whose caption no longer carries them
+    if not CAPTION_RUNS:
+        print("[not written] SC2_time_table_runs, SC2_remine_table_runs: the SC2 tables were not written")
+    for key, phrase in dict(CAPTION_RUNS).items():
+        put(key, phrase, "table_SC2_replicates.csv")
 
     # after every table above is written: the classes read them
     comparison_classes(put, out)

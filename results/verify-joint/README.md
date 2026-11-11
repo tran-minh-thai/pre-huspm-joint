@@ -47,7 +47,7 @@ checked against USpan, HUSP-ULL and HUSP-SP by `verify.BaselineAgreement`.
 | rescan rule acceptance, pre-tests-acceptance | finished | 49 |  |  |  |  | 0 |  |
 | rescan rule acceptance, prehuspm-tracking-acceptance | finished | 49 |  |  |  |  | 0 |  |
 | random streams (MixedBudgetFuzz), break-even-fuzz, rule joint | finished | 170,000 |  | 24,957 | 9,548 | 9,000 | 0 |  |
-| random streams (MixedBudgetFuzz), break-even-nodes-fuzz, rule joint | finished | 170,000 |  | 28,996 | 11,400 | 10,649 | 0 |  |
+| random streams (MixedBudgetFuzz), break-even-nodes-fuzz, rule joint | finished | 170,000 |  | 29,570 | 11,560 | 10,813 | 0 |  |
 | random streams (MixedBudgetFuzz), floor-selection-fuzz, rule joint | finished | 510,000 |  | 120,279 | 41,812 | 39,215 | 0 |  |
 | random streams (MixedBudgetFuzz), merge-fuzz, rule joint | finished | 170,000 |  | 47,844 | 15,636 | 14,821 | 0 |  |
 | random streams (MixedBudgetFuzz), min-floor-fuzz, rule joint | finished | 170,000 |  | 47,587 | 15,481 | 14,626 | 0 |  |
@@ -71,11 +71,11 @@ checked against USpan, HUSP-ULL and HUSP-SP by `verify.BaselineAgreement`.
 | patterns against the proposal after every operation, husps-long-sc9-dunnhumby | finished | 7,515 |  |  |  |  | 0 |  |
 | patterns against the proposal after every operation, husps-mixed | finished | 8,820 |  |  |  |  | 0 |  |
 | patterns against the proposal after every operation, husps-mixed-break-even | finished | 5,040 |  |  |  |  | 0 |  |
-| patterns against the proposal after every operation, husps-mixed-break-even-nodes | finished | 5,040 |  |  |  |  | 0 |  |
+| patterns against the proposal after every operation, husps-mixed-break-even-nodes | finished | 1,575 |  |  |  |  | 0 |  |
 | patterns against the proposal after every operation, husps-mixed-remine | finished | 2,520 |  |  |  |  | 0 |  |
 | patterns against the proposal after every operation, husps-sc2 | finished | 7,070 |  |  |  |  | 0 |  |
 | patterns against the proposal after every operation, husps-sc2-break-even | finished | 1,414 |  |  |  |  | 0 |  |
-| patterns against the proposal after every operation, husps-sc2-break-even-nodes | finished | 1,414 |  |  |  |  | 0 |  |
+| patterns against the proposal after every operation, husps-sc2-break-even-nodes | finished | 808 |  |  |  |  | 0 |  |
 | patterns against the proposal after every operation, husps-sc2-remine | finished | 1,414 |  |  |  |  | 0 |  |
 | item pruning against exhaustive enumeration (ItemRemovalCheck random) | finished | 1,444 | 1,951 |  |  |  | 0 |  |
 | item pruning on and off on real databases, init (ItemRemovalCheck real) | finished | 8 |  |  |  |  | 0 |  |
@@ -90,8 +90,8 @@ checked against USpan, HUSP-ULL and HUSP-SP by `verify.BaselineAgreement`.
 | direct path on real databases, adversarial-tafeng operations | finished | 16 | 0 | 4 | 8 | 4 | 0 |  |
 | direct path on real databases, adversarial-tafeng-probe0.7 operations | finished | 16 | 12 | 4 | 6 | 4 | 0 |  |
 | direct path on real databases, break-even-adversarial operations | finished | 128 | 108 | 25 | 46 | 25 | 0 |  |
-| direct path on real databases, break-even-nodes-adversarial operations | finished | 128 | 112 | 24 | 48 | 25 | 0 |  |
-| direct path on real databases, break-even-nodes-random operations | finished | 128 | 0 | 26 | 49 | 20 | 0 |  |
+| direct path on real databases, break-even-nodes-adversarial operations | finished | 128 | 102 | 25 | 49 | 26 | 0 |  |
+| direct path on real databases, break-even-nodes-random operations | finished | 128 | 0 | 29 | 57 | 24 | 0 |  |
 | direct path on real databases, break-even-nodes-switching-adversarial operations | finished | 150 | 123 | 16 | 38 | 17 | 0 |  |
 | direct path on real databases, break-even-nodes-switching-random operations | finished | 181 | 0 | 29 | 56 | 25 | 0 |  |
 | direct path on real databases, break-even-random operations | finished | 128 | 0 | 24 | 46 | 20 | 0 |  |
@@ -158,26 +158,26 @@ checked against USpan, HUSP-ULL and HUSP-SP by `verify.BaselineAgreement`.
 
 | database | operations | with a target | insert direct | insert rescan | delete direct | delete rescan | modify direct | modify rescan | mismatches |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| SIGN | 16 | 16 | 5 | 3 | 2 | 2 | 3 | 1 | 0 |
+| SIGN | 16 | 16 | 6 | 2 | 2 | 2 | 4 | 0 | 0 |
 | LEVIATHAN | 16 | 16 | 6 | 2 | 4 | 0 | 3 | 1 | 0 |
 | BIBLE | 16 | 16 | 7 | 1 | 3 | 1 | 3 | 1 | 0 |
 | BMS1 | 16 | 16 | 3 | 5 | 2 | 2 | 3 | 1 | 0 |
 | FIFA | 16 | 16 | 7 | 1 | 3 | 1 | 3 | 1 | 0 |
 | KOSARAK | 16 | 16 | 7 | 1 | 3 | 1 | 3 | 1 | 0 |
-| C8T1S5I8N5K | 16 | 16 | 5 | 3 | 3 | 1 | 3 | 1 | 0 |
+| C8T1S5I8N5K | 16 | 6 | 5 | 3 | 4 | 0 | 3 | 1 | 0 |
 | TAFENG | 16 | 0 | 8 | 0 | 4 | 0 | 4 | 0 | 0 |
 
 ### break-even-nodes-random
 
 | database | operations | with a target | insert direct | insert rescan | delete direct | delete rescan | modify direct | modify rescan | mismatches |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| SIGN | 16 | 0 | 5 | 3 | 2 | 2 | 2 | 2 | 0 |
+| SIGN | 16 | 0 | 6 | 2 | 3 | 1 | 3 | 1 | 0 |
 | LEVIATHAN | 16 | 0 | 7 | 1 | 3 | 1 | 2 | 2 | 0 |
 | BIBLE | 16 | 0 | 7 | 1 | 4 | 0 | 2 | 2 | 0 |
 | BMS1 | 16 | 0 | 8 | 0 | 4 | 0 | 4 | 0 | 0 |
-| FIFA | 16 | 0 | 3 | 5 | 2 | 2 | 2 | 2 | 0 |
+| FIFA | 16 | 0 | 7 | 1 | 3 | 1 | 4 | 0 | 0 |
 | KOSARAK | 16 | 0 | 7 | 1 | 4 | 0 | 2 | 2 | 0 |
-| C8T1S5I8N5K | 16 | 0 | 4 | 4 | 3 | 1 | 2 | 2 | 0 |
+| C8T1S5I8N5K | 16 | 0 | 7 | 1 | 4 | 0 | 3 | 1 | 0 |
 | TAFENG | 16 | 0 | 8 | 0 | 4 | 0 | 4 | 0 | 0 |
 
 ### break-even-nodes-switching-adversarial
@@ -453,10 +453,99 @@ checked against USpan, HUSP-ULL and HUSP-SP by `verify.BaselineAgreement`.
 | C8T1S5I8N5K | 16 | 0 | 7 | 1 | 4 | 0 | 4 | 0 | 0 |
 | TAFENG | 16 | 0 | 8 | 0 | 4 | 0 | 4 | 0 | 0 |
 
+## Records read
+
+A check that was run again after the code it exercises changed keeps its earlier record; the
+rerun lies in a subdirectory with a `generation.json`, and the newest finished record of a check
+is the one read above (`analysis/verify_records.py`):
+
+* `measured-code-2026-11-11` (2026-11-11, commit d89b094b8): Every check of the method's rule run again from the commit whose classes equal those of the measurements (results-invariant/bytecode/2026-11-11-running-example-check: only verify/RunningExampleCheck differs), the long streams with every arm of the scenario. 0 of 20 of its records finished.
+* `initial-cycle-2026-11-02` (2026-11-02, commit d6197a7ed (b54bfc310 for the two pattern checks)): The floor selection records the cycle of the initial mine from d6197a7ed on; the checks of the rule were run again. 6 of 6 of its records finished.
+
+| check | record read | commit | ended | exit code |
+|---|---:|---:|---:|---:|
+| acceptance | initial-cycle-2026-11-02/acceptance | d6197a7ed | 2026-11-02 | 0 |
+| adversarial | adversarial | e84b5a89a | 2026-10-17 | 0 |
+| adversarial-tafeng | adversarial-tafeng | e84b5a89a | 2026-10-17 | 0 |
+| adversarial-tafeng-probe0.7 | adversarial-tafeng-probe0.7 | e84b5a89a | 2026-10-17 | 0 |
+| break-even-adversarial | break-even-adversarial | 7f226af39 | 2026-10-27 | 0 |
+| break-even-fuzz | break-even-fuzz | 80ac64471 | 2026-10-27 | 0 |
+| break-even-nodes-adversarial | initial-cycle-2026-11-02/break-even-nodes-adversarial | d6197a7ed | 2026-11-02 | 0 |
+| break-even-nodes-fuzz | initial-cycle-2026-11-02/break-even-nodes-fuzz | d6197a7ed | 2026-11-02 | 0 |
+| break-even-nodes-random | initial-cycle-2026-11-02/break-even-nodes-random | d6197a7ed | 2026-11-02 | 0 |
+| break-even-nodes-switching-adversarial | break-even-nodes-switching-adversarial | 9a3843be4 | 2026-10-30 | 0 |
+| break-even-nodes-switching-random | break-even-nodes-switching-random | 9a3843be4 | 2026-10-30 | 0 |
+| break-even-random | break-even-random | c0180ac5c | 2026-10-27 | 0 |
+| break-even-switching-adversarial | break-even-switching-adversarial | 8e44d99da | 2026-10-27 | 0 |
+| break-even-switching-random | break-even-switching-random | 7f226af39 | 2026-10-27 | 0 |
+| check-break-even-mixed | check-break-even-mixed | 7f226af39 | 2026-10-27 | 0 |
+| check-break-even-nodes-mixed | check-break-even-nodes-mixed | 9a3843be4 | 2026-10-30 | 0 |
+| check-break-even-nodes-sc2 | check-break-even-nodes-sc2 | 9a3843be4 | 2026-10-30 | 0 |
+| check-break-even-sc2 | check-break-even-sc2 | 7f226af39 | 2026-10-27 | 0 |
+| fault-injection | fault-injection | e84b5a89a | 2026-10-17 | 0 |
+| fault-injection-floor-selection | fault-injection-floor-selection | e84b5a89a | 2026-10-17 | 0 |
+| fault-injection-ips | fault-injection-ips | 41f3af392 | 2026-10-12 | 0 |
+| fault-injection-real | fault-injection-real | e84b5a89a | 2026-10-18 | 0 |
+| floor-selection-acceptance | floor-selection-acceptance | e84b5a89a | 2026-10-17 | 0 |
+| floor-selection-adversarial | floor-selection-adversarial | e84b5a89a | 2026-10-17 | 0 |
+| floor-selection-fuzz | floor-selection-fuzz | e84b5a89a | 2026-10-17 | 0 |
+| floor-selection-random | floor-selection-random | e84b5a89a | 2026-10-17 | 0 |
+| floor-selection-random-floors | floor-selection-random-floors | e84b5a89a | 2026-10-17 | 0 |
+| floor-selection-switching-adversarial | floor-selection-switching-adversarial | e84b5a89a | 2026-10-17 | 0 |
+| floor-selection-switching-random | floor-selection-switching-random | e84b5a89a | 2026-10-17 | 0 |
+| fuzz | fuzz | e84b5a89a | 2026-10-17 | 0 |
+| husps-dunnhumby-mixed-all-arms | husps-dunnhumby-mixed-all-arms | b54bfc310 | 2026-11-02 | 0 |
+| husps-long-sc10 | husps-long-sc10 | 2ecbd83be | 2026-10-31 | 0 |
+| husps-long-sc10h | husps-long-sc10h | 2ecbd83be | 2026-10-31 | 1 |
+| husps-long-sc10h-sequences-c8t1s5i8n5k | husps-long-sc10h-sequences-c8t1s5i8n5k | 5a2d99ce1 | 2026-10-31 | 0 |
+| husps-long-sc10h-sequences-leviathan | husps-long-sc10h-sequences-leviathan | 5a2d99ce1 | 2026-10-31 | 0 |
+| husps-long-sc10h-sequences-tafeng | husps-long-sc10h-sequences-tafeng | 5a2d99ce1 | 2026-10-31 | 0 |
+| husps-long-sc8 | husps-long-sc8 | 2ecbd83be | 2026-10-31 | 0 |
+| husps-long-sc8-dunnhumby | husps-long-sc8-dunnhumby | d3358b01b | 2026-11-02 | 0 |
+| husps-long-sc8p | husps-long-sc8p | 2ecbd83be | 2026-10-31 | 0 |
+| husps-long-sc9 | husps-long-sc9 | 2ecbd83be | 2026-10-31 | 0 |
+| husps-long-sc9-dunnhumby | husps-long-sc9-dunnhumby | 4aa1ce88c | 2026-11-02 | 0 |
+| husps-mixed | husps-mixed | e84b5a89a | 2026-10-18 | 0 |
+| husps-mixed-break-even | husps-mixed-break-even | 7f226af39 | 2026-10-27 | 0 |
+| husps-mixed-break-even-nodes | initial-cycle-2026-11-02/husps-mixed-break-even-nodes | b54bfc310 | 2026-11-02 | 0 |
+| husps-mixed-remine | husps-mixed-remine | e66ccb6f0 | 2026-10-26 | 0 |
+| husps-sc2 | husps-sc2 | e84b5a89a | 2026-10-18 | 0 |
+| husps-sc2-break-even | husps-sc2-break-even | 7f226af39 | 2026-10-27 | 0 |
+| husps-sc2-break-even-nodes | initial-cycle-2026-11-02/husps-sc2-break-even-nodes | b54bfc310 | 2026-11-02 | 0 |
+| husps-sc2-remine | husps-sc2-remine | e66ccb6f0 | 2026-10-26 | 0 |
+| ips-random | ips-random | 41f3af392 | 2026-10-12 | 0 |
+| ips-real | ips-real | 41f3af392 | 2026-10-12 | 0 |
+| merge-acceptance | merge-acceptance | 80ac64471 | 2026-10-27 | 0 |
+| merge-adversarial | merge-adversarial | 7f226af39 | 2026-10-27 | 0 |
+| merge-fuzz | merge-fuzz | 80ac64471 | 2026-10-27 | 0 |
+| merge-random | merge-random | 80ac64471 | 2026-10-27 | 0 |
+| min-floor-acceptance | min-floor-acceptance | e84b5a89a | 2026-10-17 | 0 |
+| min-floor-adversarial | min-floor-adversarial | e84b5a89a | 2026-10-17 | 0 |
+| min-floor-fuzz | min-floor-fuzz | e84b5a89a | 2026-10-17 | 0 |
+| min-floor-random | min-floor-random | e84b5a89a | 2026-10-17 | 0 |
+| plain-floor-acceptance | plain-floor-acceptance | e84b5a89a | 2026-10-19 | 0 |
+| plain-floor-adversarial | plain-floor-adversarial | e84b5a89a | 2026-10-19 | 0 |
+| plain-floor-fuzz | plain-floor-fuzz | e84b5a89a | 2026-10-19 | 0 |
+| plain-floor-random | plain-floor-random | e84b5a89a | 2026-10-19 | 0 |
+| pre-tests-acceptance | pre-tests-acceptance | e84b5a89a | 2026-10-17 | 0 |
+| pre-tests-adversarial | pre-tests-adversarial | e84b5a89a | 2026-10-17 | 0 |
+| pre-tests-fuzz | pre-tests-fuzz | e84b5a89a | 2026-10-17 | 0 |
+| pre-tests-random | pre-tests-random | e84b5a89a | 2026-10-17 | 0 |
+| prehuspm-tracking-acceptance | prehuspm-tracking-acceptance | e84b5a89a | 2026-10-17 | 0 |
+| prehuspm-tracking-adversarial | prehuspm-tracking-adversarial | e84b5a89a | 2026-10-17 | 0 |
+| prehuspm-tracking-equivalence | prehuspm-tracking-equivalence | e84b5a89a | 2026-10-17 | 0 |
+| prehuspm-tracking-fuzz | prehuspm-tracking-fuzz | e84b5a89a | 2026-10-17 | 0 |
+| prehuspm-tracking-random | prehuspm-tracking-random | e84b5a89a | 2026-10-17 | 0 |
+| random | random | e84b5a89a | 2026-10-17 | 0 |
+| running-example | running-example | d15b36a24 | 2026-10-25 | 0 |
+| running-example-break-even-nodes | running-example-break-even-nodes | ae62486db | 2026-10-30 | 0 |
+| static-joint-miner-uut | static-joint-miner-uut | 906222294 | 2026-10-16 | 0 |
+| stream-plans | stream-plans | 1d020e38b | 2026-10-31 | 0 |
+
 ## Commands
 
-    # acceptance: exit 0, commit e84b5a89, 2026-10-17T13:40:18
-    java -cp build-v31 verify.RescanRuleAcceptanceTest
+    # initial-cycle-2026-11-02/acceptance: exit 0, commit d6197a7e, 2026-11-02T08:16:49
+    java -cp build verify.RescanRuleAcceptanceTest
     # adversarial: exit 0, commit e84b5a89, 2026-10-17T15:07:10
     java -Xmx24g -Xss64m -cp build-v31 verify.DirectPathVerifier ALL --adversarial --ops 16 --out results/verify-joint/adversarial
     # adversarial-tafeng: exit 0, commit e84b5a89, 2026-10-17T15:12:41
@@ -467,12 +556,12 @@ checked against USpan, HUSP-ULL and HUSP-SP by `verify.BaselineAgreement`.
     java -Dadapt.floorRule=breakEven -Xmx24g -Xss64m -cp build-be verify.DirectPathVerifier ALL --adversarial --ops 16 --out results/verify-joint/break-even-adversarial
     # break-even-fuzz: exit 0, commit 80ac6447, 2026-10-27T10:34:17
     bash -c rc=0; for s in "2000 7" "5000 11" "5000 23" "5000 101"; do set -- $s; java -Dadapt.floorRule=breakEven -cp build-be verify.MixedBudgetFuzz joint $1 $2 || rc=1; done; exit $rc
-    # break-even-nodes-adversarial: exit 0, commit 9a3843be, 2026-10-30T10:20:32
-    java -Dadapt.floorRule=breakEven -Dadapt.breakEvenCost=nodes -Xmx24g -Xss64m -cp build-nodes verify.DirectPathVerifier ALL --adversarial --ops 16 --out results/verify-joint/break-even-nodes-adversarial
-    # break-even-nodes-fuzz: exit 0, commit b752a69e, 2026-10-30T07:54:48
-    bash -c rc=0; for s in '2000 7' '5000 11' '5000 23' '5000 101'; do set -- $s; java -Dadapt.floorRule=breakEven -Dadapt.breakEvenCost=nodes -cp build-nodes verify.MixedBudgetFuzz joint $1 $2 || rc=1; done; exit $rc
-    # break-even-nodes-random: exit 0, commit b752a69e, 2026-10-30T08:01:36
-    java -Dadapt.floorRule=breakEven -Dadapt.breakEvenCost=nodes -Xmx24g -Xss64m -cp build-nodes verify.DirectPathVerifier ALL --ops 16 --out results/verify-joint/break-even-nodes-random
+    # initial-cycle-2026-11-02/break-even-nodes-adversarial: exit 0, commit d6197a7e, 2026-11-02T08:46:55
+    java -Dadapt.floorRule=breakEven -Dadapt.breakEvenCost=nodes -Xmx16g -Xss64m -cp build verify.DirectPathVerifier ALL --adversarial --ops 16 --out results/verify-joint/initial-cycle-2026-11-02/break-even-nodes-adversarial
+    # initial-cycle-2026-11-02/break-even-nodes-fuzz: exit 0, commit d6197a7e, 2026-11-02T08:17:52
+    bash -c rc=0; for s in '2000 7' '5000 11' '5000 23' '5000 101'; do set -- $s; java -Dadapt.floorRule=breakEven -Dadapt.breakEvenCost=nodes -cp build verify.MixedBudgetFuzz joint $1 $2 || rc=1; done; exit $rc
+    # initial-cycle-2026-11-02/break-even-nodes-random: exit 0, commit d6197a7e, 2026-11-02T08:21:07
+    java -Dadapt.floorRule=breakEven -Dadapt.breakEvenCost=nodes -Xmx16g -Xss64m -cp build verify.DirectPathVerifier ALL --ops 16 --out results/verify-joint/initial-cycle-2026-11-02/break-even-nodes-random
     # break-even-nodes-switching-adversarial: exit 0, commit 9a3843be, 2026-10-30T15:37:38
     java -Dadapt.floorRule=breakEven -Dadapt.breakEvenCost=nodes -Xmx24g -Xss64m -cp build-nodes verify.DirectPathVerifier ALL --adversarial --ops 24 --share-alt 0.5 --out results/verify-joint/break-even-nodes-switching-adversarial
     # break-even-nodes-switching-random: exit 0, commit 9a3843be, 2026-10-30T10:06:06
@@ -541,16 +630,16 @@ checked against USpan, HUSP-ULL and HUSP-SP by `verify.BaselineAgreement`.
     java -Xmx16g -Xss64m -cp build-v31 -Dverify.husps=true -Dseeds=5 -Drepeats=1 -Ddataset.only=SIGN,LEVIATHAN,C8T1S5I8N5K,TAFENG -Dalgo.only=Adaptive-Full,Remine-from-scratch,Remine-HUSP-ULL,Remine-HUSP-SP,Adaptive-FloorSelect,Remine-own-UUT,Joint-rule+plain-floor,Joint-rule+min-floor -Dresults.dir=results/verify-joint/husps-mixed/ AutomatedExperimentRunner SC6 SC6D SC6B
     # husps-mixed-break-even: exit 0, commit 7f226af3, 2026-10-27T13:00:07
     java -Xmx16g -Xss64m -cp build-be -Dverify.husps=true -Dseeds=5 -Drepeats=1 -Ddataset.only=SIGN,LEVIATHAN,C8T1S5I8N5K,TAFENG -Dalgo.only=Pre-HUSPM-Joint-fixed-threshold,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w5,Joint-rule+plain-floor,Joint-rule+min-floor -Dresults.dir=results/verify-joint/husps-mixed-break-even/ AutomatedExperimentRunner SC6 SC6D SC6B
-    # husps-mixed-break-even-nodes: exit 0, commit 9a3843be, 2026-10-30T09:45:16
-    java -Xmx16g -Xss64m -cp build-nodes -Dverify.husps=true -Dseeds=5 -Drepeats=1 -Ddataset.only=SIGN,LEVIATHAN,C8T1S5I8N5K,TAFENG -Dalgo.only=Pre-HUSPM-Joint-fixed-threshold,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w5,Joint-rule+plain-floor,Joint-rule+min-floor -Dresults.dir=results/verify-joint/husps-mixed-break-even-nodes/ AutomatedExperimentRunner SC6 SC6D SC6B
+    # initial-cycle-2026-11-02/husps-mixed-break-even-nodes: exit 0, commit b54bfc31, 2026-11-02T09:39:51
+    java -Xmx16g -Xss64m -cp build-reg -Dverify.husps=true -Dseeds=5 -Drepeats=1 -Ddataset.only=SIGN,LEVIATHAN,C8T1S5I8N5K,TAFENG,DUNNHUMBY -Dalgo.only=Pre-HUSPM-Joint-fixed-threshold,Pre-HUSPM-Joint -Dresults.dir=results/verify-joint/initial-cycle-2026-11-02/husps-mixed-break-even-nodes/ AutomatedExperimentRunner SC6 SC6D SC6B
     # husps-mixed-remine: exit 0, commit e66ccb6f, 2026-10-26T07:22:49
     java -Xmx16g -Xss64m -cp build-remine -Dverify.husps=true -Dseeds=5 -Drepeats=1 -Ddataset.only=SIGN,LEVIATHAN,C8T1S5I8N5K,TAFENG -Dalgo.only=Pre-HUSPM-Joint-fixed-threshold,Remine-from-scratch,Remine-own-UUT -Dresults.dir=results/verify-joint/husps-mixed-remine/ AutomatedExperimentRunner SC6 SC6D SC6B
     # husps-sc2: exit 0, commit e84b5a89, 2026-10-18T06:32:48
     bash -c rc=0; for d in SIGN TAFENG C8T1S5I8N5K LEVIATHAN BIBLE KOSARAK FIFA; do java -Xmx20g -Xss64m -cp build-v31 -Dverify.husps=true -Drepeats=1 -Ddataset.only=$d -Dalgo.only=Adaptive-Full,Remine-HUSP-ULL,Remine-HUSP-SP,Remine-own-UUT,Adaptive-FloorSelect,Joint-miner+SWUmax,Joint-miner+TSU,Joint-rule+PreHUSPM-tracking,Joint-miner+SWUmax+PreHUSPM-tracking,Joint-rule+plain-floor,Joint-rule+min-floor -Dresults.dir=results/verify-joint/husps-sc2/ AutomatedExperimentRunner SC2 || rc=1; done; exit $rc
     # husps-sc2-break-even: exit 0, commit 7f226af3, 2026-10-27T16:09:08
     bash -c rc=0; for d in SIGN TAFENG C8T1S5I8N5K LEVIATHAN BIBLE KOSARAK FIFA; do java -Xmx20g -Xss64m -cp build-be -Dverify.husps=true -Drepeats=1 -Ddataset.only=$d -Dalgo.only=Pre-HUSPM-Joint-fixed-threshold,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w5 -Dresults.dir=results/verify-joint/husps-sc2-break-even/ AutomatedExperimentRunner SC2 || rc=1; done; exit $rc
-    # husps-sc2-break-even-nodes: exit 0, commit fc847209, 2026-10-30T08:55:10
-    bash -c rc=0; for d in SIGN TAFENG C8T1S5I8N5K LEVIATHAN BIBLE KOSARAK FIFA; do java -Xmx20g -Xss64m -cp build-nodes -Dverify.husps=true -Drepeats=1 -Ddataset.only=$d -Dalgo.only=Pre-HUSPM-Joint-fixed-threshold,Pre-HUSPM-Joint,Pre-HUSPM-Joint-w5 -Dresults.dir=results/verify-joint/husps-sc2-break-even-nodes/ AutomatedExperimentRunner SC2 || rc=1; done; exit $rc
+    # initial-cycle-2026-11-02/husps-sc2-break-even-nodes: exit 0, commit b54bfc31, 2026-11-02T11:27:13
+    bash -c rc=0; for d in DUNNHUMBY SIGN TAFENG C8T1S5I8N5K LEVIATHAN BIBLE KOSARAK FIFA; do java -Xmx20g -Xss64m -cp build-reg -Dverify.husps=true -Drepeats=1 -Ddataset.only=$d -Dalgo.only=Pre-HUSPM-Joint-fixed-threshold,Pre-HUSPM-Joint -Dresults.dir=results/verify-joint/initial-cycle-2026-11-02/husps-sc2-break-even-nodes/ AutomatedExperimentRunner SC2 || rc=1; done; exit $rc
     # husps-sc2-remine: exit 0, commit e66ccb6f, 2026-10-26T09:49:13
     bash -c rc=0; for d in SIGN TAFENG C8T1S5I8N5K LEVIATHAN BIBLE KOSARAK FIFA; do java -Xmx20g -Xss64m -cp build-remine -Dverify.husps=true -Drepeats=1 -Ddataset.only=$d -Dalgo.only=Pre-HUSPM-Joint-fixed-threshold,Remine-from-scratch,Remine-own-UUT -Dresults.dir=results/verify-joint/husps-sc2-remine/ AutomatedExperimentRunner SC2 || rc=1; done; exit $rc
     # ips-random: exit 0, commit 41f3af39, 2026-10-12T14:58:58

@@ -1,0 +1,25 @@
+{
+  "date": "2026-11-02",
+  "commit": "d6197a7ed (b54bfc310 for the two pattern checks)",
+  "why": "The floor selection records the cycle of the initial mine from d6197a7ed on; the checks of the rule were run again.",
+  "replaces": {
+    "acceptance": [
+      "acceptance"
+    ],
+    "break-even-nodes-adversarial": [
+      "break-even-nodes-adversarial"
+    ],
+    "break-even-nodes-fuzz": [
+      "break-even-nodes-fuzz"
+    ],
+    "break-even-nodes-random": [
+      "break-even-nodes-random"
+    ],
+    "husps-mixed-break-even-nodes": [
+      "husps-mixed-break-even-nodes"
+    ],
+    "husps-sc2-break-even-nodes": [
+      "husps-sc2-break-even-nodes"
+    ]
+  }
+}

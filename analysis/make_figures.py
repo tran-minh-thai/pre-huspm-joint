@@ -1143,8 +1143,7 @@ def export_ablation_table():
     write_csv(pd.DataFrame(rows), os.path.join(OUT_DIR, "table_SC7_incremental.csv"))
 
     lines = ["\\begin{table}[!htbp]", "\\centering",
-             "\\caption{Ablation of the miner on the whole database; runtime as mean and standard deviation "
-             "of three runs}",
+             "\\caption{Ablation of the miner on the whole database}",
              "\\label{tab:sc7_ablation}",
              "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}llrr}", "\\toprule",
              "Database & Variant & Runtime (s) & Explored \\\\", "\\midrule"]

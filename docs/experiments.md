@@ -107,7 +107,8 @@ download both, assemble the databases with the release's `tools/assemble.py`, an
 against `datasets.sha256`. These are the bytes every result was measured on; the measurements
 read them from release `v1.2.1-measured-quantity`, which holds the same 14 files. TAFENG is built
 locally from the raw Ta-Feng file by `tafeng/build_tafeng.py` and pinned by `tafeng/TAFENG.sha256`.
-DUNNHUMBY is built locally from dunnhumby "The Complete Journey", which is not redistributed, by
+DUNNHUMBY is built locally from dunnhumby "The Complete Journey"
+(<https://www.dunnhumby.com/source-files/>), which is not redistributed, by
 `dunnhumby/build_dunnhumby.py`; `dunnhumby/SOURCE.sha256` pins the two source files and
 `dunnhumby/DUNNHUMBY.sha256` the result.
 

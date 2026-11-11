@@ -104,9 +104,19 @@ series keeps its own dash pattern and marker, so a black-and-white print still r
 | `table_SC5_window.csv`, `table_SC6_window.csv` | the same windows in SC5 (per cell: time over the fixed floor, against the fastest competitor) and in SC6, SC6D and SC6B (the stream's time over remining's and over the fixed floor's, averaged over the seeds; the deletions right after a mine at UUT) |
 | `table_datasets.csv`, `table_datasets.tex` | the database table: sequences, items that occur, the largest item identifier, average length, elements per sequence, items per element and total utility, counted on the data files (`results/invariant-database-stats`, `analysis/database_stats.py`), with `D_init` and the default UUT of `common.Datasets` |
 | `table_status_summary.csv` | rows per outcome for every tree, scenario and database |
+| `table_verification_records.csv` | for every correctness check, the record it is read from: a check that was run again after the code changed keeps its earlier record, and the newest finished one is read (`analysis/verify_records.py`, the generations under `results/verify-joint/`), with its commit, the day it ended and its exit code. A check that did not finish gives its status and no count |
+| `table_agreement_mixed.csv` | SC6, SC6D and SC6B: the operations after which the method and `Remine-from-scratch` report the same number of patterns, over every seed and run |
 | `platform.tex` | one sentence describing the measurement platform, generated from the machine record and `environment.lock.json`; not written when the `DONE` files name more than one host or the host has no record |
 
-Two scripts outside `main_all()` write into the same directory:
+Keys that are not read from a result file: `check_rival_rebuild_*` (the comparison of
+`analysis/check_rival_rebuild.py`, run when the keys are written), `session_drift_*` (the record
+`results-invariant/session-drift/2026-11-06`; the drift factor used by the analyses must equal it or
+the generation stops), `<table>_table_runs` (the runs behind the means of a table whose caption does
+not state them) and `DATA_*` (the addresses and the release that the data availability statement
+cites, stated once in `analysis/data_availability.json`).
+
+Two scripts outside `main_all()` write into the same directory; run them after it, since
+`analysis/long_streams.py` reads the tie band from `paper_numbers.csv`:
 
 | Script | Files | Content |
 |---|---|---|

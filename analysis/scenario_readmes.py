@@ -897,13 +897,19 @@ def verify_joint():
     base = os.path.join(mf.DATA_DIR, "verify-joint")
     if summ.empty:
         return
-    cmds = []
-    for name in sorted(os.listdir(base)):
-        meta = os.path.join(base, name, "run_meta.json")
-        if os.path.exists(meta):
-            m = json.load(open(meta, encoding="utf-8"))
-            cmds.append(f"    # {name}: exit {m.get('exit_code')}, commit {m.get('git_commit', '')[:8]}, {m.get('end', '')}\n"
-                        f"    {m['command']}")
+    import verify_records
+    cmds, read_rows = [], []
+    for name in verify_records.names(base):
+        d = verify_records.record_dir(name, base)
+        m = json.load(open(os.path.join(d, "run_meta.json"), encoding="utf-8"))
+        where = os.path.relpath(d, base).replace(os.sep, "/")
+        read_rows.append([name, where, m.get("git_commit", "")[:9], str(m.get("end", ""))[:10], m.get("exit_code")])
+        cmds.append(f"    # {where}: exit {m.get('exit_code')}, commit {m.get('git_commit', '')[:8]}, {m.get('end', '')}\n"
+                    f"    {m['command']}")
+    gens = "\n".join(
+        f"* `{os.path.basename(d)}` ({g['date']}, commit {g.get('commit', 'unknown')}): {g.get('why', '')} "
+        f"{sum(verify_records.finished(os.path.join(d, r)) for r in g['replaces'])} of {len(g['replaces'])} of its records finished."
+        for d, g in verify_records.generations(base))
     num = lambda v: "" if pd.isna(v) else f"{int(v):,}"
     rows = [[r["check"], r["status"], num(r.get("operations")), num(r.get("with_target")),
              num(r.get("direct_delete")), num(r.get("direct_insert")), num(r.get("direct_modify")),
@@ -959,6 +965,16 @@ checked against USpan, HUSP-ULL and HUSP-SP by `verify.BaselineAgreement`.
 
 ## Direct path on the real databases, per database
 {db_text}
+## Records read
+
+A check that was run again after the code it exercises changed keeps its earlier record; the
+rerun lies in a subdirectory with a `generation.json`, and the newest finished record of a check
+is the one read above (`analysis/verify_records.py`):
+
+{gens}
+
+{table(["check", "record read", "commit", "ended", "exit code"], read_rows)}
+
 ## Commands
 
 {chr(10).join(cmds)}

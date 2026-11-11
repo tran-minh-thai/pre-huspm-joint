@@ -281,6 +281,50 @@ def index_rows(sc, df, mem):
     return rows
 
 
+def tie_band(keys_path):
+    """(low, high) of the tie band, from key jit_tie_band ("0.920 to 1.087 (...)") of the
+    campaign's paper_numbers.csv; None when the file or the key is absent."""
+    if not os.path.exists(keys_path):
+        return None
+    k = pd.read_csv(keys_path, dtype=str)
+    v = k.loc[k["key"] == "jit_tie_band", "value"]
+    m = re.match(r"([\d.]+) to ([\d.]+)", v.iloc[0]) if len(v) else None
+    return (float(m.group(1)), float(m.group(2))) if m else None
+
+
+def summary_keys(st, put, keys_path, unstable=None):
+    """Keys over the long streams of a database: for every arm the method is compared with, the
+    streams in which the method wins, ties and loses by the tie band (a ratio below the band is a
+    win, above it a loss), and over the databases whose times hold between sessions the smallest
+    and the largest ratio. Without the tie band no class is written, and that is printed."""
+    if unstable is None:
+        from check_rival_rebuild import UNSTABLE as unstable
+    src = "table_long_streams.csv"
+    r = st[(st["arm"] != METHOD) & st["method_over_arm_pooled"].notna()]
+    stable = r[~r["dataset"].isin(unstable)]
+    for arm, g in stable.groupby("arm"):
+        x = g["method_over_arm_pooled"]
+        put(f"LONG_stable_method_over_{TAG[arm]}_range", f"{x.min():.3f} to {x.max():.3f}", src)
+        put(f"LONG_stable_method_over_{TAG[arm]}_streams", len(x), src)
+        put(f"LONG_stable_method_over_{TAG[arm]}_databases",
+            " ".join(d for d in mf.ALL_DATASETS if d in set(g["dataset"])), src)
+    band = tie_band(keys_path)
+    if band is None:
+        print(f"[not written] LONG_<database>_<arm>_classes, _losses: no jit_tie_band in {keys_path}")
+        return
+    low, high = band
+    for (d, arm), g in r.groupby(["dataset", "arm"]):
+        x = g.set_index("scenario")["method_over_arm_pooled"]
+        order = [sc for sc in SCENARIOS if sc in x.index]
+        win = [sc for sc in order if x[sc] < low]
+        loss = [sc for sc in order if x[sc] > high]
+        b = f"LONG_{d}_{TAG[arm]}"
+        put(f"{b}_classes", f"wins {len(win)}, ties {len(order) - len(win) - len(loss)}, losses {len(loss)} of {len(order)}", src)
+        put(f"{b}_losses", f"{len(loss)} of {len(order)}", src)
+        put(f"{b}_loss_streams", ", ".join(loss) if loss else "none", src)
+        put(f"{b}_win_streams", ", ".join(win) if win else "none", src)
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--root", default=os.path.join(mf.DATA_DIR, mf.TIMING_TREE))
@@ -346,7 +390,23 @@ def main(argv=None):
             put(f"{b}_rescans", r["rescans"], src)
             put(f"{b}_rescans_at_uut", r["rescans_at_uut"], src)
             put(f"{b}_rescans_at_lut_min", r["rescans_at_lut_min"], src)
+    summary_keys(st, put, os.path.join(args.out, "paper_numbers.csv"))
     if len(ix):
+        # the method's block index at the first and at the last operation of each stream, mean
+        # over the seeds (the counts of each seed are in table_long_index.csv)
+        m = ix[ix["arm"] == METHOD].sort_values("operation")
+        for (sc, d), g in m.groupby(["scenario", "dataset"]):
+            first, final = g.groupby("seed").head(1), g.groupby("seed").tail(1)
+            b = f"LONG_{sc}_{d}_index_blocks"
+            put(f"{b}_first", f"{first['index_blocks'].mean():.0f}", "table_long_index.csv")
+            put(f"{b}_last", f"{final['index_blocks'].mean():.0f}", "table_long_index.csv")
+            put(f"{b}_first_operation", int(first["operation"].max()), "table_long_index.csv")
+            put(f"{b}_last_operation", int(final["operation"].min()), "table_long_index.csv")
+            put(f"{b}_seeds", int(g["seed"].nunique()), "table_long_index.csv")
+            put(f"{b}_first_by_seed", " ".join(str(int(x)) for x in first.sort_values("seed")["index_blocks"]),
+                "table_long_index.csv")
+            put(f"{b}_last_by_seed", " ".join(str(int(x)) for x in final.sort_values("seed")["index_blocks"]),
+                "table_long_index.csv")
         last = ix.sort_values("operation").groupby(["scenario", "dataset", "arm", "seed"]).tail(1)
         for (sc, d, arm), g in last.groupby(["scenario", "dataset", "arm"]):
             b = f"LONG_{sc}_{d}_{TAG[arm]}"

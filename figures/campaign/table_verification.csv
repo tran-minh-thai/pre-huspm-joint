@@ -11,7 +11,7 @@ rescan rule acceptance (RescanRuleAcceptanceTest),finished,,49,,,,0,,,,,,,,
 "rescan rule acceptance, pre-tests-acceptance",finished,9,49,,,,0,,,,,,,,
 "rescan rule acceptance, prehuspm-tracking-acceptance",finished,9,49,,,,0,,,,,,,,
 "random streams (MixedBudgetFuzz), break-even-fuzz, rule joint",finished,4,170000,24957,9548,9000,0,,,,,,,,
-"random streams (MixedBudgetFuzz), break-even-nodes-fuzz, rule joint",finished,4,170000,28996,11400,10649,0,,,,,,,,
+"random streams (MixedBudgetFuzz), break-even-nodes-fuzz, rule joint",finished,4,170000,29570,11560,10813,0,,,,,,,,
 "random streams (MixedBudgetFuzz), floor-selection-fuzz, rule joint",finished,12,510000,120279,41812,39215,0,,,,,,,,
 "random streams (MixedBudgetFuzz), merge-fuzz, rule joint",finished,4,170000,47844,15636,14821,0,,,,,,,,
 "random streams (MixedBudgetFuzz), min-floor-fuzz, rule joint",finished,4,170000,47587,15481,14626,0,,,,,,,,
@@ -35,11 +35,11 @@ rescan rule acceptance (RescanRuleAcceptanceTest),finished,,49,,,,0,,,,,,,,
 "patterns against the proposal after every operation, husps-long-sc9-dunnhumby",finished,1,7515,,,,0,,,,,,,,
 "patterns against the proposal after every operation, husps-mixed",finished,1,8820,,,,0,,,,,,,,
 "patterns against the proposal after every operation, husps-mixed-break-even",finished,1,5040,,,,0,,,,,,,,
-"patterns against the proposal after every operation, husps-mixed-break-even-nodes",finished,1,5040,,,,0,,,,,,,,
+"patterns against the proposal after every operation, husps-mixed-break-even-nodes",finished,1,1575,,,,0,,,,,,,,
 "patterns against the proposal after every operation, husps-mixed-remine",finished,1,2520,,,,0,,,,,,,,
 "patterns against the proposal after every operation, husps-sc2",finished,7,7070,,,,0,,,,,,,,
 "patterns against the proposal after every operation, husps-sc2-break-even",finished,7,1414,,,,0,,,,,,,,
-"patterns against the proposal after every operation, husps-sc2-break-even-nodes",finished,7,1414,,,,0,,,,,,,,
+"patterns against the proposal after every operation, husps-sc2-break-even-nodes",finished,8,808,,,,0,,,,,,,,
 "patterns against the proposal after every operation, husps-sc2-remine",finished,7,1414,,,,0,,,,,,,,
 item pruning against exhaustive enumeration (ItemRemovalCheck random),finished,2000,1444,,,,0,1951,,,,,,,
 "item pruning on and off on real databases, init (ItemRemovalCheck real)",finished,8,8,,,,0,,,,,,,,
@@ -54,8 +54,8 @@ fault injection into the rescan floor selection,finished,,2,,,,,,,,2,,,,
 "direct path on real databases, adversarial-tafeng operations",finished,1,16,4,8,4,0,0,,,,0,0,0,0
 "direct path on real databases, adversarial-tafeng-probe0.7 operations",finished,1,16,4,6,4,0,12,,,,0,0,0,0
 "direct path on real databases, break-even-adversarial operations",finished,8,128,25,46,25,0,108,,,,18,7,0,0
-"direct path on real databases, break-even-nodes-adversarial operations",finished,8,128,24,48,25,0,112,,,,16,7,0,0
-"direct path on real databases, break-even-nodes-random operations",finished,8,128,26,49,20,0,0,,,,24,4,0,0
+"direct path on real databases, break-even-nodes-adversarial operations",finished,8,128,25,49,26,0,102,,,,12,7,0,0
+"direct path on real databases, break-even-nodes-random operations",finished,8,128,29,57,24,0,0,,,,6,6,0,0
 "direct path on real databases, break-even-nodes-switching-adversarial operations",finished,8,150,16,38,17,0,123,,,,42,18,0,3
 "direct path on real databases, break-even-nodes-switching-random operations",finished,8,181,29,56,25,0,0,,,,24,8,0,2
 "direct path on real databases, break-even-random operations",finished,8,128,24,46,20,0,0,,,,30,4,0,0
