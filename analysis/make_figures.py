@@ -1174,6 +1174,7 @@ def export_ablation_table():
         ex = f"\\textbf{{{ex}}}" if bold[i][1] else ex
         lines.append(f"{ds} & {SC7_PRINTED.get(r['variant'], r['variant'])} & {rt} & {ex} \\\\")
     lines += ["\\bottomrule", "\\end{tabular*}", "\\end{table}", ""]
+    one_run_note(lines)
     with open(os.path.join(OUT_DIR, "table_SC7_ablation.tex"), "w", encoding="utf-8") as fh:
         fh.write("\n".join(lines))
     print(f"[saved] {os.path.join(OUT_DIR, 'table_SC7_static.csv')}  (+ incremental csv + LaTeX)")
@@ -1504,6 +1505,19 @@ def lowest(printed, ranges=None, values=None):
     return mark
 
 
+# The mark of a cell that rests on one run, and the note under a table that holds one.
+ONE_RUN = "$^{\\dagger}$"
+
+
+def one_run_note(lines):
+    """lines of a table: when a cell carries ONE_RUN, the note saying so goes under the tabular."""
+    if any(ONE_RUN in l for l in lines):
+        i = max(k for k, l in enumerate(lines) if "\\end{tabular*}" in l)
+        lines.insert(i + 1, "\\par\\smallskip " + ONE_RUN + "\\,one run; every other cell is the mean $\\pm$ "
+                            "standard deviation of its runs.")
+    return lines
+
+
 def pm(st, digits=None, bold=False, inline=True):
     """'mean +- std' for LaTeX, or the mean alone when there is one replicate. Decimals follow
     the size of the mean - none from 100, one from 10, two below. bold sets the mean in bold,
@@ -1525,7 +1539,8 @@ def pm(st, digits=None, bold=False, inline=True):
         return (f"\\begin{{tabular}}[t]{{@{{}}r@{{}}}}{mean}\\\\"
                 f"{{\\scriptsize $\\pm${dev}}}\\end{{tabular}}")
     mean = f"{st['mean']:,.{digits}f}"
-    return f"\\textbf{{{mean}}}" if bold else mean
+    mean = f"\\textbf{{{mean}}}" if bold else mean
+    return mean + ONE_RUN if st.get("n") == 1 else mean
 
 
 def stacked_header(label):
@@ -1571,6 +1586,7 @@ def write_sc1_runtime_tex(tab, cols, fname, caption, label, tabcolsep=None):
             cells.append(pm(stats[c], bold=low[c], inline=False) if c in stats else r.iloc[0]["status"])
         lines.append(f"{ds} & " + " & ".join(cells) + " \\\\")
     lines += ["\\bottomrule", "\\end{tabular*}", "\\end{table}", ""]
+    one_run_note(lines)
     with open(os.path.join(OUT_DIR, fname), "w", encoding="utf-8") as fh:
         fh.write("\n".join(lines))
 

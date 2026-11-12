@@ -2599,6 +2599,10 @@ LONG_all_Window5_classes,"wins 0, ties 21, losses 3 of 24",table_long_streams.cs
 LONG_all_Remine_classes,"wins 24, ties 0, losses 0 of 24",table_long_streams.csv
 LONG_all_RemineUUT_classes,"wins 23, ties 1, losses 0 of 24",table_long_streams.csv
 LONG_all_Remine-UUT-reuse_classes,"wins 23, ties 1, losses 0 of 24",table_long_streams.csv
+latency_long_streams,24,table_long_streams.csv
+latency_long_p99_below_RemineUUTR,0 of 24,table_long_streams.csv
+latency_long_max_over_RemineUUTR_max,2.197 (SC10 C8T1S5I8N5K),table_long_streams.csv
+latency_long_max_over_RemineUUTR_range,0.526 to 2.197,table_long_streams.csv
 LONG_SC10_C8T1S5I8N5K_index_blocks_first,272,table_long_index.csv
 LONG_SC10_C8T1S5I8N5K_index_blocks_last,697,table_long_index.csv
 LONG_SC10_C8T1S5I8N5K_index_blocks_first_operation,0,table_long_index.csv

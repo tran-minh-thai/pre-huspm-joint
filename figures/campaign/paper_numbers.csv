@@ -4700,6 +4700,14 @@ SC7_block_size_C8T1S5I8N5K_100_sequences_read,6822900,table_SC7_block_size.csv
 SC7_block_size_C8T1S5I8N5K_100_direct_ms,196,table_SC7_block_size.csv
 SC7_block_size_C8T1S5I8N5K_200_sequences_read,12407800,table_SC7_block_size.csv
 SC7_block_size_C8T1S5I8N5K_200_direct_ms,246,table_SC7_block_size.csv
+verify_empty_database_counterexample_matches,3 of 3,results/verify-joint/empty-database/console.txt
+verify_empty_database_configurations,"fixed, nodes, time",results/verify-joint/empty-database/console.txt
+verify_empty_database_streams_per_configuration,3000,results/verify-joint/empty-database/console.txt
+verify_empty_database_operations_per_configuration,36000,results/verify-joint/empty-database/console.txt
+verify_empty_database_operations,108000,results/verify-joint/empty-database/console.txt
+verify_empty_database_deletions_to_empty_per_configuration,6738,results/verify-joint/empty-database/console.txt
+verify_empty_database_insertions_with_reference_zero_per_configuration,6917,results/verify-joint/empty-database/console.txt
+verify_empty_database_mismatches,0,results/verify-joint/empty-database/console.txt
 verify_random_streams_mixedbudgetfuzz_rule_joint_status,finished,table_verification.csv
 verify_random_streams_mixedbudgetfuzz_rule_joint_runs,4,table_verification.csv
 verify_random_streams_mixedbudgetfuzz_rule_joint_operations,170000,table_verification.csv
@@ -5497,6 +5505,10 @@ verify_patterns_against_the_proposal_after_every_operation_husps_sc2_remine_heap
 verify_patterns_against_the_proposal_after_every_operation_husps_sc2_remine_runs,7,table_verification.csv
 verify_patterns_against_the_proposal_after_every_operation_husps_sc2_remine_operations,1414,table_verification.csv
 verify_patterns_against_the_proposal_after_every_operation_husps_sc2_remine_mismatches,0,table_verification.csv
+verify_streams_through_an_empty_database_emptydatabasecheck_status,finished,table_verification.csv
+verify_streams_through_an_empty_database_emptydatabasecheck_runs,3,table_verification.csv
+verify_streams_through_an_empty_database_emptydatabasecheck_operations,108000,table_verification.csv
+verify_streams_through_an_empty_database_emptydatabasecheck_mismatches,0,table_verification.csv
 verify_item_pruning_against_exhaustive_enumeration_itemremovalcheck_random_status,finished,table_verification.csv
 verify_item_pruning_against_exhaustive_enumeration_itemremovalcheck_random_runs,2000,table_verification.csv
 verify_item_pruning_against_exhaustive_enumeration_itemremovalcheck_random_operations,1444,table_verification.csv
@@ -7934,3 +7946,58 @@ classes_mixed_joint_rule_vs_PIHUPMOD_wins,SC6 C8T1S5I8N5K 1.116; SC6 TAFENG 1.46
 classes_mixed_joint_rule_vs_PIHUPMOD_ties,SC6 SIGN 0.995; SC6 LEVIATHAN 1.007; SC6 DUNNHUMBY 1.010; SC6D SIGN 0.971; SC6D LEVIATHAN 0.985; SC6D C8T1S5I8N5K 1.061; SC6D DUNNHUMBY 1.057; SC6B SIGN 0.973; SC6B LEVIATHAN 0.998; SC6B C8T1S5I8N5K 1.039; SC6B DUNNHUMBY 1.042,table_total_counter.csv
 mixed_PIHUPMOD_time_over_joint_range_same_rescans,0.971 to 1.057 (9 combinations),table_total_counter.csv
 mixed_PIHUPMOD_time_seeds,5,table_total_counter.csv
+modification_halves_rescanned,236 of 250,results-invariant/modification-halves/2026-11-11/modification_halves.csv
+modification_halves_deletion_only,0,results-invariant/modification-halves/2026-11-11/modification_halves.csv
+modification_halves_whole_only,76,results-invariant/modification-halves/2026-11-11/modification_halves.csv
+modification_halves_both,160,results-invariant/modification-halves/2026-11-11/modification_halves.csv
+modification_halves_streams,"75 (SC6, SC6B, SC6D)",results-invariant/modification-halves/2026-11-11/modification_halves.csv
+exh_databases,2000,results-invariant/exhaustive-db-stats/2026-11-12/console.txt
+exh_sequences_min,8,results-invariant/exhaustive-db-stats/2026-11-12/console.txt
+exh_sequences_max,20,results-invariant/exhaustive-db-stats/2026-11-12/console.txt
+exh_elements_max,5,results-invariant/exhaustive-db-stats/2026-11-12/console.txt
+exh_items_max,11,results-invariant/exhaustive-db-stats/2026-11-12/console.txt
+exh_distinct_items_max,12,results-invariant/exhaustive-db-stats/2026-11-12/console.txt
+exh_multi_occurrence_databases,2000 of 2000,results-invariant/exhaustive-db-stats/2026-11-12/console.txt
+exh_multi_occurrence_sequences,18591 of 27992,results-invariant/exhaustive-db-stats/2026-11-12/console.txt
+offline_optimum_nodes_LONG_method_replay,36000/36000,results-invariant/offline-optimum-nodes-long/2026-11-12/*/floor_policy.csv
+offline_optimum_nodes_LONG_SC10_method_over_optimum_total,1.177,results-invariant/offline-optimum-nodes-long/2026-11-12/*/floor_policy.csv
+offline_optimum_nodes_LONG_SC10_always_threshold_over_optimum_total,2.096,results-invariant/offline-optimum-nodes-long/2026-11-12/*/floor_policy.csv
+offline_optimum_nodes_LONG_SC10_fixed_lower_threshold_over_optimum_total,1.146,results-invariant/offline-optimum-nodes-long/2026-11-12/*/floor_policy.csv
+offline_optimum_nodes_LONG_SC10_method_equals_optimum,0 of 15,results-invariant/offline-optimum-nodes-long/2026-11-12/*/floor_policy.csv
+offline_optimum_nodes_LONG_SC10_streams,15,results-invariant/offline-optimum-nodes-long/2026-11-12/*/floor_policy.csv
+offline_optimum_nodes_LONG_SC10H_method_over_optimum_total,1.187,results-invariant/offline-optimum-nodes-long/2026-11-12/*/floor_policy.csv
+offline_optimum_nodes_LONG_SC10H_always_threshold_over_optimum_total,1.918,results-invariant/offline-optimum-nodes-long/2026-11-12/*/floor_policy.csv
+offline_optimum_nodes_LONG_SC10H_fixed_lower_threshold_over_optimum_total,1.158,results-invariant/offline-optimum-nodes-long/2026-11-12/*/floor_policy.csv
+offline_optimum_nodes_LONG_SC10H_method_equals_optimum,0 of 12,results-invariant/offline-optimum-nodes-long/2026-11-12/*/floor_policy.csv
+offline_optimum_nodes_LONG_SC10H_streams,12,results-invariant/offline-optimum-nodes-long/2026-11-12/*/floor_policy.csv
+offline_optimum_nodes_LONG_SC8_method_over_optimum_total,1.182,results-invariant/offline-optimum-nodes-long/2026-11-12/*/floor_policy.csv
+offline_optimum_nodes_LONG_SC8_always_threshold_over_optimum_total,2.179,results-invariant/offline-optimum-nodes-long/2026-11-12/*/floor_policy.csv
+offline_optimum_nodes_LONG_SC8_fixed_lower_threshold_over_optimum_total,1.139,results-invariant/offline-optimum-nodes-long/2026-11-12/*/floor_policy.csv
+offline_optimum_nodes_LONG_SC8_method_equals_optimum,0 of 15,results-invariant/offline-optimum-nodes-long/2026-11-12/*/floor_policy.csv
+offline_optimum_nodes_LONG_SC8_streams,15,results-invariant/offline-optimum-nodes-long/2026-11-12/*/floor_policy.csv
+offline_optimum_nodes_LONG_SC8P_method_over_optimum_total,1.142,results-invariant/offline-optimum-nodes-long/2026-11-12/*/floor_policy.csv
+offline_optimum_nodes_LONG_SC8P_always_threshold_over_optimum_total,2.992,results-invariant/offline-optimum-nodes-long/2026-11-12/*/floor_policy.csv
+offline_optimum_nodes_LONG_SC8P_fixed_lower_threshold_over_optimum_total,1.128,results-invariant/offline-optimum-nodes-long/2026-11-12/*/floor_policy.csv
+offline_optimum_nodes_LONG_SC8P_method_equals_optimum,0 of 15,results-invariant/offline-optimum-nodes-long/2026-11-12/*/floor_policy.csv
+offline_optimum_nodes_LONG_SC8P_streams,15,results-invariant/offline-optimum-nodes-long/2026-11-12/*/floor_policy.csv
+offline_optimum_nodes_LONG_SC9_method_over_optimum_total,1.007,results-invariant/offline-optimum-nodes-long/2026-11-12/*/floor_policy.csv
+offline_optimum_nodes_LONG_SC9_always_threshold_over_optimum_total,2.904,results-invariant/offline-optimum-nodes-long/2026-11-12/*/floor_policy.csv
+offline_optimum_nodes_LONG_SC9_fixed_lower_threshold_over_optimum_total,1.002,results-invariant/offline-optimum-nodes-long/2026-11-12/*/floor_policy.csv
+offline_optimum_nodes_LONG_SC9_method_equals_optimum,0 of 15,results-invariant/offline-optimum-nodes-long/2026-11-12/*/floor_policy.csv
+offline_optimum_nodes_LONG_SC9_streams,15,results-invariant/offline-optimum-nodes-long/2026-11-12/*/floor_policy.csv
+offline_optimum_nodes_LONG_method_over_optimum_total,1.145,results-invariant/offline-optimum-nodes-long/2026-11-12/*/floor_policy.csv
+offline_optimum_nodes_LONG_always_threshold_over_optimum_total,2.359,results-invariant/offline-optimum-nodes-long/2026-11-12/*/floor_policy.csv
+offline_optimum_nodes_LONG_fixed_lower_threshold_over_optimum_total,1.119,results-invariant/offline-optimum-nodes-long/2026-11-12/*/floor_policy.csv
+offline_optimum_nodes_LONG_method_equals_optimum,0 of 72,results-invariant/offline-optimum-nodes-long/2026-11-12/*/floor_policy.csv
+offline_optimum_nodes_LONG_streams,72,results-invariant/offline-optimum-nodes-long/2026-11-12/*/floor_policy.csv
+altrule_compared,174,table_alternative_rule.csv
+altrule_changed,29,table_alternative_rule.csv
+altrule_to_loss,13,table_alternative_rule.csv
+altrule_to_win,14,table_alternative_rule.csv
+altrule_to_tie,2,table_alternative_rule.csv
+altrule_changed_list,"SC1_miner_at_threshold_vs_HUSP-ULL BIBLE 0.0181 tie to win (1.077, 1.061 to 1.094); SC1_miner_at_threshold_vs_HUSP-ULL BIBLE 0.022895 tie to win (1.031, 1.023 to 1.039); SC1_miner_at_threshold_vs_HUSP-ULL C8T1S5I8N5K 0.001132 win to tie (1.130, 0.873 to 1.453); SC1_miner_at_threshold_vs_HUSP-ULL TAFENG 0.005691 tie to loss (0.938, 0.915 to 0.962); SC1_method_vs_HUSP-ULL SIGN 0.049134 tie to loss (0.973, 0.963 to 0.981); SC1_method_vs_HUSP-ULL LEVIATHAN 0.01553 tie to loss (0.989, 0.980 to 0.997); SC1_method_vs_HUSP-ULL LEVIATHAN 0.01647 tie to loss (0.984, 0.969 to 0.997); SC1_method_vs_HUSP-ULL LEVIATHAN 0.017987 tie to win (1.012, 1.007 to 1.018); SC1_method_vs_HUSP-ULL FIFA 0.067073 tie to loss (0.929, 0.919 to 0.945); SC1_method_vs_HUSP-ULL FIFA 0.075436 tie to loss (0.965, 0.955 to 0.980); SC1_method_vs_HUSP-ULL BMS1 0.013597 tie to win (1.087, 1.043 to 1.141); SC1_method_vs_HUSP-ULL BMS1 0.015293 win to tie (1.109, 1.000 to 1.286); SC2_method_vs_IncUSP-Miner+ BIBLE tie to win (1.059, 1.051 to 1.068); SC2_method_vs_Remine-own-UUT LEVIATHAN tie to win (1.015, 1.003 to 1.027); SC2_method_vs_Remine-own-UUT DUNNHUMBY tie to win (1.072, 1.020 to 1.116); SC2_method_vs_Remine-own-UUT-reuse C8T1S5I8N5K tie to loss (0.967, 0.962 to 0.973); SC2_method_vs_Remine-own-UUT-reuse SIGN tie to win (1.087, 1.072 to 1.104); mixed_pooled_stream_vs_Remine-UUT SC6 LEVIATHAN tie to win (1.023, 1.006 to 1.038); mixed_pooled_stream_vs_Remine-UUT SC6B SIGN tie to win (1.077, 1.043 to 1.112); mixed_pooled_stream_vs_Remine-UUT-reuse SC6 SIGN tie to win (1.080, 1.066 to 1.093); mixed_pooled_stream_vs_Remine-UUT-reuse SC6B SIGN tie to win (1.081, 1.046 to 1.113); mixed_pooled_stream_vs_Remine-UUT-reuse SC6B DUNNHUMBY tie to loss (0.939, 0.900 to 0.977); mixed_pooled_stream_vs_FixedFloor SC6D SIGN tie to loss (0.962, 0.939 to 0.988); mixed_pooled_stream_vs_FixedFloor SC6D TAFENG tie to loss (0.963, 0.926 to 0.990); mixed_joint_rule_vs_PIHUPMOD SC6D SIGN tie to loss (0.971, 0.947 to 0.991); mixed_joint_rule_vs_PIHUPMOD SC6D DUNNHUMBY tie to win (1.057, 1.015 to 1.098); mixed_joint_rule_vs_PIHUPMOD SC6B SIGN tie to loss (0.973, 0.953 to 0.990); mixed_joint_rule_vs_PIHUPMOD SC6B C8T1S5I8N5K tie to win (1.039, 1.004 to 1.075); LONG_DUNNHUMBY_method_vs_FixedFloor SC8 tie to loss (0.924, 0.918 to 0.929)",table_alternative_rule.csv
+altrule_families,11,table_alternative_rule.csv
+single_run_classified_comparisons,1,table_alternative_rule.csv
+single_run_classified_min_factor,4.611,table_alternative_rule.csv
+single_run_classified_list,SC2_method_vs_IncUSP-Miner+ DUNNHUMBY win 4.611,table_alternative_rule.csv
+altrule_excluded_fewer_than_two_runs,1,table_alternative_rule.csv

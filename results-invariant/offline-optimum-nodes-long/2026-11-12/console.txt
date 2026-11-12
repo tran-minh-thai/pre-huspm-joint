@@ -1,0 +1,153 @@
+SC10H SIGN: no stream (500 sequences after D_init)
+operations written: 4500
+7190fdd1bca0adfb43b5fd54a788275e31a4331bc2940779093383fa77fcaca8  results-invariant/offline-optimum-nodes-long/2026-11-12/plans/long_plans_dunnhumby.tsv
+3ab44df4b9f05eedbec62413f80b4e50433f99afe3326d6876b832a617b3168a  results-invariant/offline-optimum-nodes-long/2026-11-12/plans/long_plans_others.tsv
+8566eeeb1a7ee5960f34480526218d23cce4d8b810b3f1b7c827405d5122a467  results-invariant/offline-optimum-nodes-long/2026-11-12/plans/sc10h_plans.tsv
+f8c2650ad11ee775c888f4ff9fb402f587eca041173695368f45a6266d4b5f98  results-probe/floor-policy/long-plans/long_plans.tsv
+7190fdd1bca0adfb43b5fd54a788275e31a4331bc2940779093383fa77fcaca8  results-probe/floor-policy/long-plans-dunnhumby/long_plans.tsv
+SC10 C8T1S5I8N5K seed 42: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC10 C8T1S5I8N5K seed 1337: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC10 C8T1S5I8N5K seed 2024: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC10 LEVIATHAN seed 42: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC10 LEVIATHAN seed 1337: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC10 LEVIATHAN seed 2024: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC10 SIGN seed 42: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC10 SIGN seed 1337: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC10 SIGN seed 2024: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC10 TAFENG seed 42: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC10 TAFENG seed 1337: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC10 TAFENG seed 2024: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC10H C8T1S5I8N5K seed 42: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC10H C8T1S5I8N5K seed 1337: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC10H C8T1S5I8N5K seed 2024: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC10H LEVIATHAN seed 42: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC10H LEVIATHAN seed 1337: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC10H LEVIATHAN seed 2024: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC10H TAFENG seed 42: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC10H TAFENG seed 1337: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC10H TAFENG seed 2024: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC8 C8T1S5I8N5K seed 42: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC8 C8T1S5I8N5K seed 1337: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC8 C8T1S5I8N5K seed 2024: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC8 LEVIATHAN seed 42: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC8 LEVIATHAN seed 1337: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC8 LEVIATHAN seed 2024: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC8 SIGN seed 42: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC8 SIGN seed 1337: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC8 SIGN seed 2024: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC8 TAFENG seed 42: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC8 TAFENG seed 1337: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC8 TAFENG seed 2024: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC8P C8T1S5I8N5K seed 42: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC8P C8T1S5I8N5K seed 1337: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC8P C8T1S5I8N5K seed 2024: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC8P LEVIATHAN seed 42: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC8P LEVIATHAN seed 1337: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC8P LEVIATHAN seed 2024: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC8P SIGN seed 42: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC8P SIGN seed 1337: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC8P SIGN seed 2024: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC8P TAFENG seed 42: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC8P TAFENG seed 1337: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC8P TAFENG seed 2024: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC9 C8T1S5I8N5K seed 42: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC9 C8T1S5I8N5K seed 1337: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC9 C8T1S5I8N5K seed 2024: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC9 LEVIATHAN seed 42: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC9 LEVIATHAN seed 1337: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC9 LEVIATHAN seed 2024: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC9 SIGN seed 42: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC9 SIGN seed 1337: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC9 SIGN seed 2024: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC9 TAFENG seed 42: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC9 TAFENG seed 1337: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC9 TAFENG seed 2024: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+streams: 57; replayed and priced: 57; not replayed: []
+SC10 DUNNHUMBY seed 42: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC10 DUNNHUMBY seed 1337: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC10 DUNNHUMBY seed 2024: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC10H DUNNHUMBY seed 42: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC10H DUNNHUMBY seed 1337: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC10H DUNNHUMBY seed 2024: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC8 DUNNHUMBY seed 42: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC8 DUNNHUMBY seed 1337: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC8 DUNNHUMBY seed 2024: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC8P DUNNHUMBY seed 42: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC8P DUNNHUMBY seed 1337: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC8P DUNNHUMBY seed 2024: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC9 DUNNHUMBY seed 42: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC9 DUNNHUMBY seed 1337: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+SC9 DUNNHUMBY seed 2024: replay agrees on 500/500 operations (window 5) and 500/500 (fixed lower threshold)
+  break-even replayed with the logged ratios: 500/500 operations agree
+streams: 15; replayed and priced: 15; not replayed: []

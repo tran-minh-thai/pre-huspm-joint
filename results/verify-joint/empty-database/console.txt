@@ -1,0 +1,6 @@
+counterexample config=fixed rescans=1 match
+counterexample config=nodes rescans=1 match
+counterexample config=time rescans=1 match
+random config=fixed trials=3000 seed=7 ops=36000 emptied=6738 inserts-with-reference-0=6917 mismatching-ops=0
+random config=nodes trials=3000 seed=7 ops=36000 emptied=6738 inserts-with-reference-0=6917 mismatching-ops=0
+random config=time trials=3000 seed=7 ops=36000 emptied=6738 inserts-with-reference-0=6917 mismatching-ops=0

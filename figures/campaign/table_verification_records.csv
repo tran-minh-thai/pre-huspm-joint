@@ -17,6 +17,7 @@ check-break-even-mixed,check-break-even-mixed,7f226af39,2026-10-27,0
 check-break-even-nodes-mixed,check-break-even-nodes-mixed,9a3843be4,2026-10-30,0
 check-break-even-nodes-sc2,check-break-even-nodes-sc2,9a3843be4,2026-10-30,0
 check-break-even-sc2,check-break-even-sc2,7f226af39,2026-10-27,0
+empty-database,empty-database,634efce73,2026-11-12,0
 fault-injection,measured-code-2026-11-11/fault-injection,f30fe6b41,2026-11-11,0
 fault-injection-floor-selection,measured-code-2026-11-11/fault-injection-floor-selection,f30fe6b41,2026-11-11,0
 fault-injection-ips,measured-code-2026-11-11/fault-injection-ips,f30fe6b41,2026-11-11,0

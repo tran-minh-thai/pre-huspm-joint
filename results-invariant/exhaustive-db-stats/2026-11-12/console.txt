@@ -1,0 +1,1 @@
+databases=2000 seed=1 sequences-per-database=8..20 sequences=27992 elements-per-sequence-max=5 items-per-sequence-max=11 distinct-items-per-database-max=12 databases-with-a-pattern-of-two-occurrence-utilities=2000 sequences-with-such-a-pattern=18591

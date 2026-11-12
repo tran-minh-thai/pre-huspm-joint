@@ -345,6 +345,44 @@ def summary_keys(st, put, keys_path, unstable=None):
         put(f"LONG_all_{TAG[arm]}_classes", f"wins {w}, ties {len(x) - w - l}, losses {l} of {len(x)}", src)
 
 
+def latency_keys(st, put, out):
+    """Per long stream, the per-operation latency of the method against remining at the threshold that
+    reuses the per-sequence data (REUSE): the streams where the method's 99th percentile is the lower,
+    and the largest ratio of the method's slowest operation to REUSE's. Writes table_latency.tex, the
+    median, 99th percentile and largest latency (ms) of both per stream."""
+    src = "table_long_streams.csv"
+    cols = ["latency_ms_median", "latency_ms_p99", "latency_ms_max"]
+    m = st[st["arm"] == METHOD].set_index(["scenario", "dataset"])[cols]
+    r = st[st["arm"] == REUSE].set_index(["scenario", "dataset"])[cols]
+    both = m.join(r, lsuffix="_m", rsuffix="_r", how="inner").dropna()
+    path = os.path.join(out, "table_latency.tex")
+    if not len(both):
+        if os.path.exists(path):
+            os.remove(path)
+        print("[not written] latency_long_*, table_latency.tex: no stream with both arms")
+        return
+    put("latency_long_streams", len(both), src)
+    put("latency_long_p99_below_RemineUUTR", f"{int((both['latency_ms_p99_m'] < both['latency_ms_p99_r']).sum())} of {len(both)}", src)
+    q = both["latency_ms_max_m"] / both["latency_ms_max_r"]
+    hi = q.idxmax()
+    put("latency_long_max_over_RemineUUTR_max", f"{q.max():.3f} ({hi[0]} {hi[1]})", src)
+    put("latency_long_max_over_RemineUUTR_range", f"{q.min():.3f} to {q.max():.3f}", src)
+    order = [(sc, d) for sc in SCENARIOS for d in mf.ALL_DATASETS if (sc, d) in both.index]
+    f = lambda v: f"{v:.1f}" if v >= 10 else f"{v:.2f}"
+    lines = ["\\begin{table}[!htbp]\\centering",
+             "\\caption{Per-operation latency (ms) on the long streams}\\label{tab:latency}",
+             "\\setlength{\\tabcolsep}{4pt}",
+             "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}llrrrrrr}\\toprule",
+             " & & \\multicolumn{3}{c}{Pre-HUSPM-Joint} & \\multicolumn{3}{c}{Remine-UUT-R} \\\\",
+             "\\cmidrule(lr){3-5}\\cmidrule(lr){6-8}",
+             "Stream & Database & Median & p99 & Max & Median & p99 & Max \\\\\\midrule"]
+    for sc, d in order:
+        x = both.loc[(sc, d)]
+        lines.append(f"{sc} & {d} & " + " & ".join(f(x[c + s]) for s in ("_m", "_r") for c in cols) + " \\\\")
+    lines += ["\\bottomrule\\end{tabular*}", "\\end{table}", ""]
+    open(path, "w", encoding="utf-8").write("\n".join(lines))
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--root", default=os.path.join(mf.DATA_DIR, mf.TIMING_TREE))
@@ -411,6 +449,7 @@ def main(argv=None):
             put(f"{b}_rescans_at_uut", r["rescans_at_uut"], src)
             put(f"{b}_rescans_at_lut_min", r["rescans_at_lut_min"], src)
     summary_keys(st, put, os.path.join(args.out, "paper_numbers.csv"))
+    latency_keys(st, put, args.out)
     if len(ix):
         # the method's block index at the first and at the last operation of each stream, mean
         # over the seeds (the counts of each seed are in table_long_index.csv)

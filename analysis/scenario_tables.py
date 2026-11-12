@@ -1242,6 +1242,17 @@ def verification():
                          operations=sum(int(a) for a, _, _ in found),
                          mismatches=sum(int(b) for _, b, _ in found),
                          without_reference=sum(int(c) for _, _, c in found), note=note))
+    # Streams through an empty database (verify.EmptyDatabaseCheck): the counterexample of a rescan of
+    # an empty database followed by two insertions, then random streams that delete every sequence
+    out = _console("empty-database")
+    if out is not None:
+        cx = re.findall(r"^counterexample config=\S+ rescans=\d+ (\w+)", out, flags=re.M)
+        rs = re.findall(r"^random config=\S+ .*?ops=(\d+) emptied=(\d+) inserts-with-reference-0=(\d+) mismatching-ops=(\d+)",
+                        out, flags=re.M)
+        rows.append(dict(check="streams through an empty database (EmptyDatabaseCheck)",
+                         status=_status("empty-database") if cx and rs else "missing", runs=len(rs),
+                         operations=sum(int(a) for a, _, _, _ in rs),
+                         mismatches=sum(int(d) for _, _, _, d in rs) + sum(x != "match" for x in cx)))
     # Irrelevant item pruning against exhaustive enumeration, and with the pruning on and off.
     out = _console("ips-random")
     if _status("ips-random") != "finished":
@@ -1953,7 +1964,8 @@ def sc2_tex(totals, region, reps=None):
                           "\\begin{tabular}[b]{@{}r@{}}No\\\\rescan\\end{tabular} & Joint & SWUmax & TSU & "
                           "\\begin{tabular}[b]{@{}r@{}}Selec-\\\\tion\\end{tabular} \\\\\\midrule"]
                          + rows + ["\\bottomrule\\end{tabular*}", "\\end{table}", ""])
-    return time_tex, rule_tex, remine_tex
+    note = lambda tex: tex if tex is None else "\n".join(mf.one_run_note(tex.split("\n")))
+    return note(time_tex), rule_tex, note(remine_tex)
 
 
 def sc7_static_runtime(put, t7):
@@ -2955,6 +2967,222 @@ def total_counter_keys(put, out):
     return t
 
 
+def _newest(rel):
+    """The newest dated record under results-invariant/<rel>, or None."""
+    base = os.path.join(mf.REPO_DIR, "results-invariant", rel)
+    dirs = sorted(d for d in glob.glob(os.path.join(base, "*")) if os.path.exists(os.path.join(d, "run_meta.json")))
+    return dirs[-1] if dirs else None
+
+
+def counted_record_keys(put):
+    """Counts read from records that replay or describe the data already measured, without a new
+    measurement: which half of a modification makes it rescan (analysis/modification_halves.py), the
+    small databases of the exhaustive enumeration check (verify.ExhaustiveDbStats, rebuilt from the
+    seed of the record ips-random), and the offline optimum in explored nodes on the long streams
+    (analysis/offline_optimum_long.sh)."""
+    d = _newest("modification-halves")
+    if d is None:
+        print("[not written] modification_halves_*: no record")
+    else:
+        t = pd.read_csv(os.path.join(d, "modification_halves.csv"))
+        src = os.path.relpath(os.path.join(d, "modification_halves.csv"), mf.REPO_DIR).replace(os.sep, "/")
+        ag = t["replay_agrees"].str.split("/", expand=True).astype(int)
+        if (ag[0] != ag[1]).any():
+            raise ValueError(f"{src}: the replay disagrees with the measured rescans")
+        put("modification_halves_rescanned", f"{int(t['modifications_rescanned'].sum())} of {int(t['modifications'].sum())}", src)
+        put("modification_halves_deletion_only", int(t["rescan_by_deletion_half_only"].sum()), src)
+        put("modification_halves_whole_only", int(t["rescan_by_whole_unit_only"].sum()), src)
+        put("modification_halves_both", int(t["rescan_by_both"].sum()), src)
+        put("modification_halves_streams", f"{len(t)} ({', '.join(sorted({x.split()[0] for x in t['stream']}))})", src)
+    d = _newest("exhaustive-db-stats")
+    if d is None:
+        print("[not written] exh_*: no record")
+    else:
+        line = open(os.path.join(d, "console.txt"), encoding="utf-8").read()
+        src = os.path.relpath(os.path.join(d, "console.txt"), mf.REPO_DIR).replace(os.sep, "/")
+        g = lambda k: re.search(k + r"=([\d.]+(?:\.\.\d+)?)", line).group(1)
+        # the record describes the databases of the check the paper reads: same number and seed
+        ips = _console("ips-random") or ""
+        m = re.search(r"random trials=(\d+) seed=(\d+) sequences=(\d+)", ips)
+        if not m or (m.group(1), m.group(2), m.group(3)) != (g("databases"), g("seed"), g("sequences")):
+            raise ValueError(f"{src}: does not describe the databases of ips-random ({m.groups() if m else None})")
+        lo, hi = g("sequences-per-database").split("..")
+        put("exh_databases", int(g("databases")), src)
+        put("exh_sequences_min", int(lo), src)
+        put("exh_sequences_max", int(hi), src)
+        put("exh_elements_max", int(g("elements-per-sequence-max")), src)
+        put("exh_items_max", int(g("items-per-sequence-max")), src)
+        put("exh_distinct_items_max", int(g("distinct-items-per-database-max")), src)
+        put("exh_multi_occurrence_databases", f"{g('databases-with-a-pattern-of-two-occurrence-utilities')} of {g('databases')}", src)
+        put("exh_multi_occurrence_sequences", f"{g('sequences-with-such-a-pattern')} of {g('sequences')}", src)
+    d = _newest("offline-optimum-nodes-long")
+    if d is None:
+        print("[not written] offline_optimum_nodes_LONG_*: no record")
+    else:
+        parts = [pd.read_csv(os.path.join(d, x, "floor_policy.csv")) for x in ("others", "dunnhumby")
+                 if os.path.exists(os.path.join(d, x, "floor_policy.csv"))]
+        t = pd.concat(parts, ignore_index=True)
+        src = os.path.relpath(d, mf.REPO_DIR).replace(os.sep, "/") + "/*/floor_policy.csv"
+        agree = t["nodes_rule_agrees_with_measured"].str.split("/", expand=True).astype(int)
+        above = sum(int((t["nodes_offline_optimum"] > t[f"nodes_{p}"]).sum())
+                    for p in ("method", "always_threshold", "fixed_lower_threshold", "window5"))
+        if above or agree[0].sum() != agree[1].sum():
+            raise ValueError(f"{src}: {above} stream and policy pairs above the optimum; replay {agree[0].sum()}/{agree[1].sum()}")
+        t = t.assign(scenario=t["stream"].str.split().str[0])
+        put("offline_optimum_nodes_LONG_method_replay", f"{int(agree[0].sum())}/{int(agree[1].sum())}", src)
+        for sc, g2 in list(t.groupby("scenario")) + [("all", t)]:
+            b = "offline_optimum_nodes_LONG" + ("" if sc == "all" else f"_{sc}")
+            put(f"{b}_method_over_optimum_total", f"{g2['nodes_method'].sum() / g2['nodes_offline_optimum'].sum():.3f}", src)
+            for p in ("always_threshold", "fixed_lower_threshold"):
+                put(f"{b}_{p}_over_optimum_total", f"{g2[f'nodes_{p}'].sum() / g2['nodes_offline_optimum'].sum():.3f}", src)
+            put(f"{b}_method_equals_optimum", f"{int((g2['nodes_method'] == g2['nodes_offline_optimum']).sum())} of {len(g2)}", src)
+            put(f"{b}_streams", len(g2), src)
+
+
+def _static_runs(sc):
+    """(database, threshold as in the classes, algorithm) -> runtimes (s) of the finished runs."""
+    df = mf.parse_su(mf.load_scenario(sc, replicates=True))
+    out = {}
+    for (d, su, a), g in df[df["finished"]].groupby(["dataset", "su", "algorithm"]):
+        out[(d, f"{su:g}", a)] = list(mf.ms_to_s(g["runtime_ms"]))
+    return out
+
+
+def alternative_rule_keys(put, out):
+    """The timed comparisons of the paper's summary table, classified a second way: a 95% bootstrap
+    interval of the ratio (BOOTSTRAP_RESAMPLES, BOOTSTRAP_SEED; runs resampled independently, seeds
+    and same-session runs in pairs) that leaves out 1 makes a win or a loss, an interval that holds 1
+    a tie. Only comparisons where both sides have at least two runs (or seeds) take part; the count of
+    those whose class differs from the tie-band class, and of those that become losses. Then the
+    comparisons classed a win or a loss with one side measured once, and the smallest factor among
+    them. Writes table_alternative_rule.csv."""
+    c = _fresh_table(out, "table_comparison_classes.csv")
+    rng_seed = BOOTSTRAP_SEED
+    T = _sc2_run_totals()
+    keep = mf.load_scenario("SC2", replicates=True, rivals=False)
+    R = {k: v for k, v in _run_totals(keep[mf.is_inc(keep)], ["dataset"]).items() if v}
+    S1 = _static_runs("SC1")
+    mixed = {sc: _mixed_seed_totals(sc, [P, OWN_UUT, OWN_UUT_REUSE, REM, FIXED]) for sc in ("SC6", "SC6D", "SC6B")}
+    tag_arm = {"Remine": REM, "Remine-UUT": OWN_UUT, "Remine-UUT-reuse": OWN_UUT_REUSE, "FixedFloor": FIXED}
+
+    def indep(group, fam):
+        if fam.startswith("SC1_"):
+            d, su = group.split(" ")
+            other = fam.split("_vs_")[1]
+            first = AT_UUT if "miner_at_threshold" in fam else P
+            return S1.get((d, su, other), []), S1.get((d, su, first), []), False
+        if fam == f"SC2_method_vs_{OWN_UUT_REUSE}":
+            return R.get((group, OWN_UUT), []), T.get((group, P), []), False
+        arm = fam.split("_vs_")[1]
+        return T.get((group, arm), []), T.get((group, P), []), False
+
+    def seeds(group, fam):
+        sc, d = group.split(" ", 1)
+        arm = tag_arm[fam.split("_vs_")[1]]
+        a, p = mixed[sc].get((d, arm), {}), mixed[sc].get((d, P), {})
+        common = sorted(k for k in a.keys() & p.keys() if a[k][0] == p[k][0])
+        return [a[k][1] for k in common], [p[k][1] for k in common], True
+
+    fams = {"SC1_miner_at_threshold_vs_HUSP-ULL": indep, "SC1_method_vs_HUSP-ULL": indep,
+            "SC2_method_vs_IncUSP-Miner+": indep, f"SC2_method_vs_{OWN_UUT}": indep,
+            f"SC2_method_vs_{OWN_UUT_REUSE}": indep,
+            "mixed_pooled_stream_vs_Remine": seeds, "mixed_pooled_stream_vs_Remine-UUT": seeds,
+            "mixed_pooled_stream_vs_Remine-UUT-reuse": seeds, "mixed_pooled_stream_vs_FixedFloor": seeds}
+    b, _ = tie_band(out)
+    rows = []
+    for fam, get in fams.items():
+        for r in c[c["family"] == fam].itertuples():
+            q, p, paired = get(r.group, fam)
+            n = min(len(q), len(p))
+            row = dict(family=fam, group=r.group, cls=r.cls, ratio=r.ratio, runs_second=len(q), runs_first=len(p))
+            if n >= 2:
+                if paired:
+                    qa, pa = np.asarray(q), np.asarray(p)
+                    idx = np.random.default_rng(rng_seed).integers(0, len(qa), size=(BOOTSTRAP_RESAMPLES, len(qa)))
+                    lo, hi = np.percentile(qa[idx].sum(axis=1) / pa[idx].sum(axis=1), [2.5, 97.5])
+                else:
+                    lo, hi = bootstrap_ratio(q, p)
+                alt = "win" if lo > 1 else ("loss" if hi < 1 else "tie")
+                row.update(ci_low=float(lo), ci_high=float(hi), alt_cls=alt)
+            rows.append(row)
+    # the joint rule against the rule of PIHUP-MOD: the two arms side by side, seeds in pairs
+    tc = _fresh_table(out, "table_total_counter.csv")
+    tree = os.path.join(mf.DATA_DIR, TOTAL_COUNTER_TREE)
+    per = {}
+    for csv in glob.glob(os.path.join(tree, "s*r*", "SC6*", "*", "*", "*.csv")):
+        arm_dir = os.path.dirname(csv)
+        if not os.path.exists(os.path.join(arm_dir, "DONE")):
+            continue
+        f = pd.read_csv(csv)
+        f.columns = [x.strip() for x in f.columns]
+        f = f[~f["op_type"].astype(str).str.contains("INIT")]
+        if (f["runtime_ms"] >= 0).all():
+            sc = os.path.basename(os.path.dirname(os.path.dirname(arm_dir)))
+            rep = os.path.basename(os.path.dirname(os.path.dirname(os.path.dirname(arm_dir))))
+            per[(sc, f["dataset"].iloc[0], f["algorithm"].iloc[0], rep)] = (len(f), float(f["runtime_ms"].sum()) / 1000)
+    for x in tc.dropna(subset=["time_ratio"]).itertuples():
+        reps = sorted({k[3] for k in per if k[:3] == (x.scenario, x.dataset, FIXED)}
+                      & {k[3] for k in per if k[:3] == (x.scenario, x.dataset, TOTAL_COUNTER)})
+        q = [per[(x.scenario, x.dataset, TOTAL_COUNTER, r)][1] for r in reps]
+        pr = [per[(x.scenario, x.dataset, FIXED, r)][1] for r in reps]
+        cls = "win" if x.time_ratio > b else ("loss" if x.time_ratio < 1 / b else "tie")
+        row = dict(family="mixed_joint_rule_vs_PIHUPMOD", group=f"{x.scenario} {x.dataset}", cls=cls, ratio=x.time_ratio,
+                   runs_second=len(q), runs_first=len(pr))
+        if len(reps) >= 2:
+            qa, pa = np.asarray(q), np.asarray(pr)
+            idx = np.random.default_rng(rng_seed).integers(0, len(qa), size=(BOOTSTRAP_RESAMPLES, len(qa)))
+            lo, hi = np.percentile(qa[idx].sum(axis=1) / pa[idx].sum(axis=1), [2.5, 97.5])
+            row.update(ci_low=float(lo), ci_high=float(hi), alt_cls="win" if lo > 1 else ("loss" if hi < 1 else "tie"))
+        rows.append(row)
+    # the long streams of DUNNHUMBY against the fixed lower threshold: the same-session ratios of
+    # long_streams.paired_ratios, resampled in pairs; the class of long_streams (method over the arm,
+    # below the band a win) is turned to the arm over the method as every other row
+    import long_streams as ls
+    for sc in ls.SCENARIOS:
+        root = os.path.join(mf.DATA_DIR, mf.TIMING_TREE, sc)
+        reps = [(os.path.basename(pth), os.path.join(pth, sc))
+                for pth in sorted(glob.glob(os.path.join(mf.DATA_DIR, mf.REPLICATE_TREE, ls.REPLICATE_RUN + "*")))
+                if os.path.isdir(os.path.join(pth, sc))]
+        raw = ls.load(root, sc, replicate_roots=reps)
+        if raw is None:
+            continue
+        pr_ = ls.paired_ratios(sc, raw[raw["dataset"] == "DUNNHUMBY"]).get(("DUNNHUMBY", FIXED), [])
+        if not pr_:
+            continue
+        x = np.asarray([1 / v for _, v, _ in pr_])          # the arm over the method, per session
+        gm = float(np.exp(np.log(x).mean()))
+        cls = "win" if gm > b else ("loss" if gm < 1 / b else "tie")
+        row = dict(family="LONG_DUNNHUMBY_method_vs_FixedFloor", group=sc, cls=cls, ratio=gm,
+                   runs_second=len(x), runs_first=len(x))
+        if len(x) >= 2:
+            idx = np.random.default_rng(rng_seed).integers(0, len(x), size=(BOOTSTRAP_RESAMPLES, len(x)))
+            lo, hi = np.percentile(np.exp(np.log(x)[idx].mean(axis=1)), [2.5, 97.5])
+            row.update(ci_low=float(lo), ci_high=float(hi), alt_cls="win" if lo > 1 else ("loss" if hi < 1 else "tie"))
+        rows.append(row)
+    t = pd.DataFrame(rows)
+    src = "table_alternative_rule.csv"
+    mf.write_csv(t, os.path.join(out, src))
+    both = t[t["alt_cls"].notna()]
+    changed = both[both["alt_cls"] != both["cls"]]
+    put("altrule_compared", len(both), src)
+    put("altrule_changed", len(changed), src)
+    put("altrule_to_loss", int((changed["alt_cls"] == "loss").sum()), src)
+    put("altrule_to_win", int((changed["alt_cls"] == "win").sum()), src)
+    put("altrule_to_tie", int((changed["alt_cls"] == "tie").sum()), src)
+    if len(changed):
+        put("altrule_changed_list", "; ".join(f"{x.family} {x.group} {x.cls} to {x.alt_cls} ({x.ratio:.3f}, "
+                                              f"{x.ci_low:.3f} to {x.ci_high:.3f})" for x in changed.itertuples()), src)
+    put("altrule_families", int(t["family"].nunique()), src)
+    one = t[((t["runs_second"] == 1) | (t["runs_first"] == 1)) & t["cls"].isin(["win", "loss"])]
+    put("single_run_classified_comparisons", len(one), src)
+    if len(one):
+        f = np.maximum(one["ratio"], 1 / one["ratio"])
+        put("single_run_classified_min_factor", f"{f.min():.3f}", src)
+        put("single_run_classified_list", "; ".join(f"{x.family} {x.group} {x.cls} {x.ratio:.3f}" for x in one.itertuples()), src)
+    put("altrule_excluded_fewer_than_two_runs", int(t["alt_cls"].isna().sum()), src)
+    return t
+
+
 TIME_ARM = P + "-time"
 
 
@@ -3173,6 +3401,12 @@ def assembly_keys(put):
         f"{int(t['identical_to_measured_release'].sum())}/{len(t)}", src)
 
 
+# The databases whose quantities and unit prices come from the source records (src/common/Datasets.java,
+# tafeng/ and dunnhumby/); the others take the generated utilities of release v2.0.0-utilities of
+# tran-minh-thai/huspm-datasets (seed 42, environment.lock.json).
+MEASURED_UTILITIES = ("TAFENG", "DUNNHUMBY")
+
+
 def datasets_table(put, out):
     """The database table: the shape of each database counted on the data files
     (results/invariant-database-stats, analysis/database_stats.py) with D_init and the default UUT
@@ -3187,19 +3421,22 @@ def datasets_table(put, out):
                          max_item_id=int(r["max_item_id"]), avg_length=float(r["items_per_sequence"]),
                          elements_per_sequence=float(r["elements_per_sequence"]),
                          items_per_element=float(r["items_per_element"]), total_utility=float(r["total_utility"]),
-                         d_init=v["d_init"], default_uut=v["default_uut"]))
+                         d_init=v["d_init"], default_uut=v["default_uut"],
+                         utilities="measured" if d in MEASURED_UTILITIES else "generated"))
     t = pd.DataFrame(rows)
     mf.write_csv(t, os.path.join(out, "table_datasets.csv"))
     lines = ["\\begin{table}[!htbp]\\centering", "\\setlength{\\tabcolsep}{3pt}",
              "\\caption{Databases}\\label{tab:datasets}",
-             "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}lrrrrrrr@{}}\\toprule",
-             "Database & $|D|$ & $|I|$ & \\begin{tabular}[b]{@{}r@{}}Avg.\\\\length\\end{tabular} & "
+             "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}lrrrrrrrrl@{}}\\toprule",
+             "Database & $|D|$ & $|I|$ & \\begin{tabular}[b]{@{}r@{}}Elements/\\\\sequence\\end{tabular} & "
+             "\\begin{tabular}[b]{@{}r@{}}Items/\\\\sequence\\end{tabular} & "
              "\\begin{tabular}[b]{@{}r@{}}Items/\\\\element\\end{tabular} & $\\TU(D)$ & $|D_{\\mathrm{init}}|$ & "
-             "\\begin{tabular}[b]{@{}r@{}}Default\\\\$\\UUT$ (\\%)\\end{tabular} \\\\\\midrule"]
+             "\\begin{tabular}[b]{@{}r@{}}Default\\\\$\\UUT$ (\\%)\\end{tabular} & Utilities \\\\\\midrule"]
     for r in t.itertuples():
         tu = f"{int(half_up(r.total_utility, 0)):,}"
-        lines.append(f"{r.dataset} & {r.sequences:,} & {r.items:,} & {half_up(r.avg_length)} & "
-                     f"{half_up(r.items_per_element)} & {tu} & {r.d_init:,} & {pct4(r.default_uut)} \\\\")
+        lines.append(f"{r.dataset} & {r.sequences:,} & {r.items:,} & {half_up(r.elements_per_sequence)} & "
+                     f"{half_up(r.avg_length)} & {half_up(r.items_per_element)} & {tu} & {r.d_init:,} & "
+                     f"{pct4(r.default_uut)} & {r.utilities} \\\\")
         b = f"DB_{r.dataset}"
         put(f"{b}_sequences", f"{r.sequences:,}", src)
         put(f"{b}_items", f"{r.items:,}", src)
@@ -3733,6 +3970,21 @@ def export_all(out_dir=None):
 
     vs, vd = verification()
     mf.write_csv(vs, os.path.join(out, "table_verification.csv"))
+    # the empty-database check, with the counts the generic columns do not carry
+    eo = _console("empty-database")
+    if eo is not None and _status("empty-database") == "finished":
+        cx = re.findall(r"^counterexample config=(\S+) rescans=\d+ (\w+)", eo, flags=re.M)
+        rs = re.findall(r"^random config=(\S+) trials=(\d+) .*?ops=(\d+) emptied=(\d+) inserts-with-reference-0=(\d+) "
+                        r"mismatching-ops=(\d+)", eo, flags=re.M)
+        src_e = "results/verify-joint/empty-database/console.txt"
+        put("verify_empty_database_counterexample_matches", f"{sum(m == 'match' for _, m in cx)} of {len(cx)}", src_e)
+        put("verify_empty_database_configurations", ", ".join(c for c, _ in cx), src_e)
+        put("verify_empty_database_streams_per_configuration", rs[0][1], src_e)
+        put("verify_empty_database_operations_per_configuration", rs[0][2], src_e)
+        put("verify_empty_database_operations", sum(int(x[2]) for x in rs), src_e)
+        put("verify_empty_database_deletions_to_empty_per_configuration", rs[0][3], src_e)
+        put("verify_empty_database_insertions_with_reference_zero_per_configuration", rs[0][4], src_e)
+        put("verify_empty_database_mismatches", sum(int(x[5]) for x in rs), src_e)
     mf.write_csv(vd, os.path.join(out, "table_verification_by_database.csv"))
     for _, r in vs.iterrows():
         key = "verify_" + re.sub(r"[^a-z0-9]+", "_", r["check"].lower()).strip("_")
@@ -4064,6 +4316,8 @@ def export_all(out_dir=None):
     comparison_classes(put, out)
     bootstrap_remine_uut(put, out)
     total_counter_keys(put, out)
+    counted_record_keys(put)
+    alternative_rule_keys(put, out)
 
     # a key written twice has two sources, and a later change of one would leave the other behind
     seen, twice = set(), []

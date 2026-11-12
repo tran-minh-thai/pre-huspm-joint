@@ -1,0 +1,16 @@
+{
+  "command": "bash analysis/offline_optimum_long.sh results-invariant/offline-optimum-nodes-long/2026-11-12 build-empty",
+  "path_substitutions": 0,
+  "build_dir": "build-empty",
+  "git_commit": "8f1c1c28232255ebf26c40b842985456bf119c8f",
+  "tree": "src clean, other files modified",
+  "source_sha256": "410db6a7c4e27ae1b423f98062dd312b1a556fcd76238d5b2be4aefd32603ca3",
+  "source_files": 47,
+  "java": "openjdk version \"25.0.4.1\" 2026-08-18 LTS",
+  "os": "Darwin 27.2.0 (macOS-27.2-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "correctness check: counters only, no timings",
+  "start": "2026-11-12T20:34:07",
+  "end": "2026-11-12T20:39:23",
+  "exit_code": 0
+}

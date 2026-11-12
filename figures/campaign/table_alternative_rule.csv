@@ -1,0 +1,176 @@
+family,group,cls,ratio,runs_second,runs_first,ci_low,ci_high,alt_cls
+SC1_miner_at_threshold_vs_HUSP-ULL,SIGN 0.049134,win,1.577,3,3,1.544,1.6,win
+SC1_miner_at_threshold_vs_HUSP-ULL,SIGN 0.065911,win,1.57,3,3,1.545,1.593,win
+SC1_miner_at_threshold_vs_HUSP-ULL,SIGN 0.083371,win,1.496,3,3,1.474,1.523,win
+SC1_miner_at_threshold_vs_HUSP-ULL,SIGN 0.091052,win,1.495,3,3,1.462,1.522,win
+SC1_miner_at_threshold_vs_HUSP-ULL,LEVIATHAN 0.014644,win,1.384,3,3,1.374,1.392,win
+SC1_miner_at_threshold_vs_HUSP-ULL,LEVIATHAN 0.01553,win,1.338,3,3,1.322,1.357,win
+SC1_miner_at_threshold_vs_HUSP-ULL,LEVIATHAN 0.01647,win,1.351,3,3,1.34,1.359,win
+SC1_miner_at_threshold_vs_HUSP-ULL,LEVIATHAN 0.017987,win,1.389,3,3,1.379,1.4,win
+SC1_miner_at_threshold_vs_HUSP-ULL,FIFA 0.056234,win,1.913,3,3,1.896,1.94,win
+SC1_miner_at_threshold_vs_HUSP-ULL,FIFA 0.059637,win,1.942,3,3,1.93,1.954,win
+SC1_miner_at_threshold_vs_HUSP-ULL,FIFA 0.067073,win,1.991,3,3,1.955,2.022,win
+SC1_miner_at_threshold_vs_HUSP-ULL,FIFA 0.075436,win,2.095,3,3,2.08,2.107,win
+SC1_miner_at_threshold_vs_HUSP-ULL,BIBLE 0.0181,tie,1.077,3,3,1.061,1.094,win
+SC1_miner_at_threshold_vs_HUSP-ULL,BIBLE 0.022895,tie,1.031,3,3,1.023,1.039,win
+SC1_miner_at_threshold_vs_HUSP-ULL,BIBLE 0.02896,tie,1.01,3,3,0.997,1.024,tie
+SC1_miner_at_threshold_vs_HUSP-ULL,BIBLE 0.03257,tie,0.996,3,3,0.975,1.016,tie
+SC1_miner_at_threshold_vs_HUSP-ULL,BMS1 0.012821,tie,1.039,3,3,0.768,1.309,tie
+SC1_miner_at_threshold_vs_HUSP-ULL,BMS1 0.013597,win,1.19,3,3,1.079,1.304,win
+SC1_miner_at_threshold_vs_HUSP-ULL,BMS1 0.015293,win,1.211,3,3,1.077,1.389,win
+SC1_miner_at_threshold_vs_HUSP-ULL,BMS1 0.016218,tie,1.038,3,3,0.964,1.08,tie
+SC1_miner_at_threshold_vs_HUSP-ULL,KOSARAK 0.022228,win,2.125,3,3,2.046,2.207,win
+SC1_miner_at_threshold_vs_HUSP-ULL,KOSARAK 0.025,win,1.657,3,3,1.508,1.796,win
+SC1_miner_at_threshold_vs_HUSP-ULL,KOSARAK 0.028117,win,1.488,3,3,1.385,1.597,win
+SC1_miner_at_threshold_vs_HUSP-ULL,KOSARAK 0.031623,win,1.225,3,3,1.181,1.254,win
+SC1_miner_at_threshold_vs_HUSP-ULL,C8T1S5I8N5K 0.001099,tie,0.964,3,3,0.75,1.145,tie
+SC1_miner_at_threshold_vs_HUSP-ULL,C8T1S5I8N5K 0.001132,win,1.13,3,3,0.873,1.453,tie
+SC1_miner_at_threshold_vs_HUSP-ULL,C8T1S5I8N5K 0.0012,win,1.181,3,3,1.139,1.25,win
+SC1_miner_at_threshold_vs_HUSP-ULL,C8T1S5I8N5K 0.001236,win,1.236,3,3,1.088,1.485,win
+SC1_miner_at_threshold_vs_HUSP-ULL,TAFENG 0.002812,tie,0.987,3,3,0.929,1.047,tie
+SC1_miner_at_threshold_vs_HUSP-ULL,TAFENG 0.003557,tie,0.987,3,3,0.901,1.128,tie
+SC1_miner_at_threshold_vs_HUSP-ULL,TAFENG 0.004499,tie,0.956,3,3,0.922,1.002,tie
+SC1_miner_at_threshold_vs_HUSP-ULL,TAFENG 0.005691,tie,0.938,3,3,0.915,0.962,loss
+SC1_miner_at_threshold_vs_HUSP-ULL,DUNNHUMBY 0.001158,win,2.602,3,3,2.269,2.994,win
+SC1_miner_at_threshold_vs_HUSP-ULL,DUNNHUMBY 0.001464,win,2.181,3,3,2.016,2.386,win
+SC1_miner_at_threshold_vs_HUSP-ULL,DUNNHUMBY 0.002083,win,1.775,3,3,1.629,1.946,win
+SC1_miner_at_threshold_vs_HUSP-ULL,DUNNHUMBY 0.002343,win,1.73,3,3,1.606,1.902,win
+SC1_method_vs_HUSP-ULL,SIGN 0.049134,tie,0.973,3,3,0.963,0.981,loss
+SC1_method_vs_HUSP-ULL,SIGN 0.065911,loss,0.89,3,3,0.827,0.938,loss
+SC1_method_vs_HUSP-ULL,SIGN 0.083371,loss,0.899,3,3,0.889,0.91,loss
+SC1_method_vs_HUSP-ULL,SIGN 0.091052,loss,0.895,3,3,0.882,0.908,loss
+SC1_method_vs_HUSP-ULL,LEVIATHAN 0.014644,tie,0.985,3,3,0.926,1.02,tie
+SC1_method_vs_HUSP-ULL,LEVIATHAN 0.01553,tie,0.989,3,3,0.98,0.997,loss
+SC1_method_vs_HUSP-ULL,LEVIATHAN 0.01647,tie,0.984,3,3,0.969,0.997,loss
+SC1_method_vs_HUSP-ULL,LEVIATHAN 0.017987,tie,1.012,3,3,1.007,1.018,win
+SC1_method_vs_HUSP-ULL,FIFA 0.056234,loss,0.896,3,3,0.886,0.913,loss
+SC1_method_vs_HUSP-ULL,FIFA 0.059637,loss,0.905,3,3,0.9,0.909,loss
+SC1_method_vs_HUSP-ULL,FIFA 0.067073,tie,0.929,3,3,0.919,0.945,loss
+SC1_method_vs_HUSP-ULL,FIFA 0.075436,tie,0.965,3,3,0.955,0.98,loss
+SC1_method_vs_HUSP-ULL,BIBLE 0.0181,loss,0.828,3,3,0.818,0.837,loss
+SC1_method_vs_HUSP-ULL,BIBLE 0.022895,loss,0.809,3,3,0.803,0.816,loss
+SC1_method_vs_HUSP-ULL,BIBLE 0.02896,loss,0.762,3,3,0.754,0.771,loss
+SC1_method_vs_HUSP-ULL,BIBLE 0.03257,loss,0.787,3,3,0.778,0.795,loss
+SC1_method_vs_HUSP-ULL,BMS1 0.012821,win,1.104,3,3,1.094,1.125,win
+SC1_method_vs_HUSP-ULL,BMS1 0.013597,tie,1.087,3,3,1.043,1.141,win
+SC1_method_vs_HUSP-ULL,BMS1 0.015293,win,1.109,3,3,1.0,1.286,tie
+SC1_method_vs_HUSP-ULL,BMS1 0.016218,tie,1.025,3,3,1.0,1.038,tie
+SC1_method_vs_HUSP-ULL,KOSARAK 0.022228,win,1.715,3,3,1.637,1.797,win
+SC1_method_vs_HUSP-ULL,KOSARAK 0.025,win,1.495,3,3,1.412,1.582,win
+SC1_method_vs_HUSP-ULL,KOSARAK 0.028117,win,1.378,3,3,1.331,1.451,win
+SC1_method_vs_HUSP-ULL,KOSARAK 0.031623,tie,1.029,3,3,0.983,1.112,tie
+SC1_method_vs_HUSP-ULL,C8T1S5I8N5K 0.001099,loss,0.379,3,3,0.305,0.678,loss
+SC1_method_vs_HUSP-ULL,C8T1S5I8N5K 0.001132,loss,0.546,3,3,0.37,0.85,loss
+SC1_method_vs_HUSP-ULL,C8T1S5I8N5K 0.0012,loss,0.673,3,3,0.565,0.78,loss
+SC1_method_vs_HUSP-ULL,C8T1S5I8N5K 0.001236,loss,0.804,3,3,0.712,0.971,loss
+SC1_method_vs_HUSP-ULL,TAFENG 0.002812,loss,0.907,3,3,0.85,0.968,loss
+SC1_method_vs_HUSP-ULL,TAFENG 0.003557,tie,0.93,3,3,0.845,1.066,tie
+SC1_method_vs_HUSP-ULL,TAFENG 0.004499,loss,0.9,3,3,0.869,0.944,loss
+SC1_method_vs_HUSP-ULL,TAFENG 0.005691,loss,0.87,3,3,0.853,0.887,loss
+SC1_method_vs_HUSP-ULL,DUNNHUMBY 0.001158,win,2.011,3,3,1.772,2.269,win
+SC1_method_vs_HUSP-ULL,DUNNHUMBY 0.001464,win,1.804,3,3,1.691,1.921,win
+SC1_method_vs_HUSP-ULL,DUNNHUMBY 0.002083,win,1.522,3,3,1.436,1.613,win
+SC1_method_vs_HUSP-ULL,DUNNHUMBY 0.002343,win,1.479,3,3,1.408,1.553,win
+SC2_method_vs_IncUSP-Miner+,SIGN,win,2.396,5,5,2.385,2.409,win
+SC2_method_vs_IncUSP-Miner+,TAFENG,win,2.521,5,5,2.371,2.61,win
+SC2_method_vs_IncUSP-Miner+,C8T1S5I8N5K,win,3.025,5,5,3.013,3.036,win
+SC2_method_vs_IncUSP-Miner+,BIBLE,tie,1.059,5,5,1.051,1.068,win
+SC2_method_vs_IncUSP-Miner+,LEVIATHAN,win,2.686,5,5,2.666,2.71,win
+SC2_method_vs_IncUSP-Miner+,KOSARAK,win,5.717,5,5,5.566,5.837,win
+SC2_method_vs_IncUSP-Miner+,DUNNHUMBY,win,4.611,1,5,,,
+SC2_method_vs_Remine-own-UUT,SIGN,win,1.09,5,5,1.077,1.102,win
+SC2_method_vs_Remine-own-UUT,TAFENG,win,2.264,5,5,2.244,2.284,win
+SC2_method_vs_Remine-own-UUT,C8T1S5I8N5K,win,1.174,5,5,1.156,1.2,win
+SC2_method_vs_Remine-own-UUT,BIBLE,win,1.268,5,5,1.259,1.279,win
+SC2_method_vs_Remine-own-UUT,LEVIATHAN,tie,1.015,5,5,1.003,1.027,win
+SC2_method_vs_Remine-own-UUT,FIFA,win,1.736,5,5,1.726,1.746,win
+SC2_method_vs_Remine-own-UUT,KOSARAK,win,1.109,5,5,1.101,1.116,win
+SC2_method_vs_Remine-own-UUT,DUNNHUMBY,tie,1.072,5,5,1.02,1.116,win
+SC2_method_vs_Remine-own-UUT-reuse,BIBLE,win,1.248,5,5,1.236,1.261,win
+SC2_method_vs_Remine-own-UUT-reuse,C8T1S5I8N5K,tie,0.967,5,5,0.962,0.973,loss
+SC2_method_vs_Remine-own-UUT-reuse,DUNNHUMBY,tie,1.052,5,5,0.999,1.098,tie
+SC2_method_vs_Remine-own-UUT-reuse,FIFA,win,1.761,5,5,1.75,1.772,win
+SC2_method_vs_Remine-own-UUT-reuse,KOSARAK,tie,1.011,5,5,0.998,1.023,tie
+SC2_method_vs_Remine-own-UUT-reuse,LEVIATHAN,tie,0.99,5,5,0.978,1.003,tie
+SC2_method_vs_Remine-own-UUT-reuse,SIGN,tie,1.087,5,5,1.072,1.104,win
+SC2_method_vs_Remine-own-UUT-reuse,TAFENG,win,1.678,5,5,1.666,1.69,win
+mixed_pooled_stream_vs_Remine,SC6 SIGN,win,1.914,5,5,1.889,1.954,win
+mixed_pooled_stream_vs_Remine,SC6 LEVIATHAN,win,1.404,5,5,1.365,1.459,win
+mixed_pooled_stream_vs_Remine,SC6 C8T1S5I8N5K,win,1.71,5,5,1.669,1.773,win
+mixed_pooled_stream_vs_Remine,SC6 TAFENG,win,1.907,5,5,1.837,1.959,win
+mixed_pooled_stream_vs_Remine,SC6 DUNNHUMBY,win,1.191,5,5,1.136,1.247,win
+mixed_pooled_stream_vs_Remine,SC6D SIGN,win,1.839,5,5,1.741,1.943,win
+mixed_pooled_stream_vs_Remine,SC6D LEVIATHAN,win,1.636,5,5,1.55,1.736,win
+mixed_pooled_stream_vs_Remine,SC6D C8T1S5I8N5K,win,1.562,5,5,1.467,1.72,win
+mixed_pooled_stream_vs_Remine,SC6D TAFENG,win,3.063,5,5,2.993,3.131,win
+mixed_pooled_stream_vs_Remine,SC6D DUNNHUMBY,win,1.723,5,5,1.41,2.041,win
+mixed_pooled_stream_vs_Remine,SC6B SIGN,win,1.867,5,5,1.836,1.893,win
+mixed_pooled_stream_vs_Remine,SC6B LEVIATHAN,win,1.403,5,5,1.373,1.433,win
+mixed_pooled_stream_vs_Remine,SC6B C8T1S5I8N5K,win,1.659,5,5,1.57,1.789,win
+mixed_pooled_stream_vs_Remine,SC6B TAFENG,win,1.729,5,5,1.696,1.783,win
+mixed_pooled_stream_vs_Remine,SC6B DUNNHUMBY,win,1.221,5,5,1.132,1.323,win
+mixed_pooled_stream_vs_Remine-UUT,SC6 SIGN,win,1.106,5,5,1.082,1.133,win
+mixed_pooled_stream_vs_Remine-UUT,SC6 LEVIATHAN,tie,1.023,5,5,1.006,1.038,win
+mixed_pooled_stream_vs_Remine-UUT,SC6 C8T1S5I8N5K,win,1.173,5,5,1.088,1.251,win
+mixed_pooled_stream_vs_Remine-UUT,SC6 TAFENG,win,1.739,5,5,1.679,1.791,win
+mixed_pooled_stream_vs_Remine-UUT,SC6 DUNNHUMBY,tie,1.009,5,5,0.956,1.047,tie
+mixed_pooled_stream_vs_Remine-UUT,SC6D SIGN,win,1.103,5,5,1.053,1.152,win
+mixed_pooled_stream_vs_Remine-UUT,SC6D LEVIATHAN,win,1.191,5,5,1.13,1.266,win
+mixed_pooled_stream_vs_Remine-UUT,SC6D C8T1S5I8N5K,win,1.134,5,5,1.086,1.181,win
+mixed_pooled_stream_vs_Remine-UUT,SC6D TAFENG,win,2.77,5,5,2.711,2.827,win
+mixed_pooled_stream_vs_Remine-UUT,SC6D DUNNHUMBY,win,1.451,5,5,1.175,1.721,win
+mixed_pooled_stream_vs_Remine-UUT,SC6B SIGN,tie,1.077,5,5,1.043,1.112,win
+mixed_pooled_stream_vs_Remine-UUT,SC6B LEVIATHAN,tie,1.008,5,5,0.99,1.028,tie
+mixed_pooled_stream_vs_Remine-UUT,SC6B C8T1S5I8N5K,win,1.183,5,5,1.12,1.258,win
+mixed_pooled_stream_vs_Remine-UUT,SC6B TAFENG,win,1.579,5,5,1.541,1.64,win
+mixed_pooled_stream_vs_Remine-UUT,SC6B DUNNHUMBY,tie,0.988,5,5,0.945,1.049,tie
+mixed_pooled_stream_vs_Remine-UUT-reuse,SC6 SIGN,tie,1.08,5,5,1.066,1.093,win
+mixed_pooled_stream_vs_Remine-UUT-reuse,SC6 LEVIATHAN,tie,0.989,5,5,0.968,1.01,tie
+mixed_pooled_stream_vs_Remine-UUT-reuse,SC6 C8T1S5I8N5K,tie,0.983,5,5,0.924,1.04,tie
+mixed_pooled_stream_vs_Remine-UUT-reuse,SC6 TAFENG,win,1.347,5,5,1.285,1.466,win
+mixed_pooled_stream_vs_Remine-UUT-reuse,SC6 DUNNHUMBY,tie,0.972,5,5,0.919,1.033,tie
+mixed_pooled_stream_vs_Remine-UUT-reuse,SC6D SIGN,win,1.089,5,5,1.038,1.143,win
+mixed_pooled_stream_vs_Remine-UUT-reuse,SC6D LEVIATHAN,win,1.161,5,5,1.102,1.228,win
+mixed_pooled_stream_vs_Remine-UUT-reuse,SC6D C8T1S5I8N5K,loss,0.911,5,5,0.884,0.941,loss
+mixed_pooled_stream_vs_Remine-UUT-reuse,SC6D TAFENG,win,2.068,5,5,2.021,2.119,win
+mixed_pooled_stream_vs_Remine-UUT-reuse,SC6D DUNNHUMBY,win,1.353,5,5,1.122,1.606,win
+mixed_pooled_stream_vs_Remine-UUT-reuse,SC6B SIGN,tie,1.081,5,5,1.046,1.113,win
+mixed_pooled_stream_vs_Remine-UUT-reuse,SC6B LEVIATHAN,tie,0.989,5,5,0.976,1.001,tie
+mixed_pooled_stream_vs_Remine-UUT-reuse,SC6B C8T1S5I8N5K,win,1.101,5,5,1.014,1.199,win
+mixed_pooled_stream_vs_Remine-UUT-reuse,SC6B TAFENG,win,1.153,5,5,1.124,1.19,win
+mixed_pooled_stream_vs_Remine-UUT-reuse,SC6B DUNNHUMBY,tie,0.939,5,5,0.9,0.977,loss
+mixed_pooled_stream_vs_FixedFloor,SC6 SIGN,win,1.425,5,5,1.397,1.454,win
+mixed_pooled_stream_vs_FixedFloor,SC6 LEVIATHAN,win,1.168,5,5,1.151,1.185,win
+mixed_pooled_stream_vs_FixedFloor,SC6 C8T1S5I8N5K,win,1.448,5,5,1.378,1.517,win
+mixed_pooled_stream_vs_FixedFloor,SC6 TAFENG,loss,0.866,5,5,0.831,0.908,loss
+mixed_pooled_stream_vs_FixedFloor,SC6 DUNNHUMBY,tie,1.012,5,5,0.949,1.076,tie
+mixed_pooled_stream_vs_FixedFloor,SC6D SIGN,tie,0.962,5,5,0.939,0.988,loss
+mixed_pooled_stream_vs_FixedFloor,SC6D LEVIATHAN,loss,0.834,5,5,0.788,0.886,loss
+mixed_pooled_stream_vs_FixedFloor,SC6D C8T1S5I8N5K,win,1.132,5,5,1.082,1.194,win
+mixed_pooled_stream_vs_FixedFloor,SC6D TAFENG,tie,0.963,5,5,0.926,0.99,loss
+mixed_pooled_stream_vs_FixedFloor,SC6D DUNNHUMBY,loss,0.883,5,5,0.752,0.996,loss
+mixed_pooled_stream_vs_FixedFloor,SC6B SIGN,win,1.562,5,5,1.464,1.646,win
+mixed_pooled_stream_vs_FixedFloor,SC6B LEVIATHAN,win,1.255,5,5,1.231,1.292,win
+mixed_pooled_stream_vs_FixedFloor,SC6B C8T1S5I8N5K,win,1.666,5,5,1.538,1.814,win
+mixed_pooled_stream_vs_FixedFloor,SC6B TAFENG,loss,0.855,5,5,0.831,0.885,loss
+mixed_pooled_stream_vs_FixedFloor,SC6B DUNNHUMBY,tie,1.042,5,5,0.97,1.12,tie
+mixed_joint_rule_vs_PIHUPMOD,SC6 SIGN,tie,0.995,5,5,0.966,1.018,tie
+mixed_joint_rule_vs_PIHUPMOD,SC6 LEVIATHAN,tie,1.007,5,5,0.993,1.017,tie
+mixed_joint_rule_vs_PIHUPMOD,SC6 C8T1S5I8N5K,win,1.116,5,5,1.077,1.164,win
+mixed_joint_rule_vs_PIHUPMOD,SC6 TAFENG,win,1.461,5,5,1.428,1.508,win
+mixed_joint_rule_vs_PIHUPMOD,SC6 DUNNHUMBY,tie,1.01,5,5,0.959,1.071,tie
+mixed_joint_rule_vs_PIHUPMOD,SC6D SIGN,tie,0.971,5,5,0.947,0.991,loss
+mixed_joint_rule_vs_PIHUPMOD,SC6D LEVIATHAN,tie,0.985,5,5,0.972,1.001,tie
+mixed_joint_rule_vs_PIHUPMOD,SC6D C8T1S5I8N5K,tie,1.061,5,5,0.999,1.109,tie
+mixed_joint_rule_vs_PIHUPMOD,SC6D TAFENG,win,1.312,5,5,1.278,1.367,win
+mixed_joint_rule_vs_PIHUPMOD,SC6D DUNNHUMBY,tie,1.057,5,5,1.015,1.098,win
+mixed_joint_rule_vs_PIHUPMOD,SC6B SIGN,tie,0.973,5,5,0.953,0.99,loss
+mixed_joint_rule_vs_PIHUPMOD,SC6B LEVIATHAN,tie,0.998,5,5,0.976,1.012,tie
+mixed_joint_rule_vs_PIHUPMOD,SC6B C8T1S5I8N5K,tie,1.039,5,5,1.004,1.075,win
+mixed_joint_rule_vs_PIHUPMOD,SC6B TAFENG,win,1.388,5,5,1.378,1.397,win
+mixed_joint_rule_vs_PIHUPMOD,SC6B DUNNHUMBY,tie,1.042,5,5,0.965,1.104,tie
+LONG_DUNNHUMBY_method_vs_FixedFloor,SC8,tie,0.924,3,3,0.918,0.929,loss
+LONG_DUNNHUMBY_method_vs_FixedFloor,SC8P,loss,0.917,3,3,0.873,0.95,loss
+LONG_DUNNHUMBY_method_vs_FixedFloor,SC9,tie,1.0,3,3,0.918,1.102,tie
+LONG_DUNNHUMBY_method_vs_FixedFloor,SC10,loss,0.86,3,3,0.823,0.919,loss
+LONG_DUNNHUMBY_method_vs_FixedFloor,SC10H,loss,0.904,3,3,0.856,0.93,loss
