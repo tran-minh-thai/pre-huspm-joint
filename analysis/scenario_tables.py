@@ -2901,6 +2901,21 @@ def total_counter_keys(put, out):
     lo, hi = tt.loc[tt["time_ratio"].idxmin()], tt.loc[tt["time_ratio"].idxmax()]
     put("mixed_PIHUPMOD_time_over_joint_range", f"{lo.time_ratio:.3f} ({where(lo)}) to {hi.time_ratio:.3f} ({where(hi)})", src)
     put("mixed_PIHUPMOD_combinations", len(tt), src)
+    # the same classes as every other comparison: the joint rule first, a win when the total-counter
+    # rule takes more than the tie band times its time
+    b, _ = tie_band(out)
+    cls = lambda x: "win" if x > b else ("loss" if x < 1 / b else "tie")
+    c = tt["time_ratio"].map(cls)
+    put("classes_mixed_joint_rule_vs_PIHUPMOD", f"wins {int((c == 'win').sum())}, ties {int((c == 'tie').sum())}, "
+        f"losses {int((c == 'loss').sum())} of {len(tt)}", src)
+    for word, k in (("wins", "win"), ("ties", "tie"), ("losses", "loss")):
+        h = tt[c == k]
+        if len(h):
+            put(f"classes_mixed_joint_rule_vs_PIHUPMOD_{word}", "; ".join(f"{where(r)} {r.time_ratio:.3f}" for r in h.itertuples()), src)
+    same = tt[tt["rescans_total"] == tt["rescans_fixed"]]
+    if len(same):
+        put("mixed_PIHUPMOD_time_over_joint_range_same_rescans",
+            f"{same['time_ratio'].min():.3f} to {same['time_ratio'].max():.3f} ({len(same)} combinations)", src)
     put("mixed_PIHUPMOD_time_seeds", f"{int(tt['seeds_time'].min())} to {int(tt['seeds_time'].max())}"
         if tt["seeds_time"].min() != tt["seeds_time"].max() else str(int(tt["seeds_time"].iloc[0])), src)
     return t

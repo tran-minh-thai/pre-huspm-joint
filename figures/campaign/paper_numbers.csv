@@ -7912,3 +7912,10 @@ bootstrap_remine_UUT_losses_excluding_one,SC6D C8T1S5I8N5K Remine-UUT-R 0.911 (0
 mixed_PIHUPMOD_rescans_over_joint_range,1.000 (SC6 SIGN) to 1.545 (SC6 TAFENG),table_total_counter.csv
 mixed_PIHUPMOD_rescans_combinations,15 of 15,table_total_counter.csv
 mixed_PIHUPMOD_rescans_below_joint,0 of 15,table_total_counter.csv
+mixed_PIHUPMOD_time_over_joint_range,0.971 (SC6D SIGN) to 1.461 (SC6 TAFENG),table_total_counter.csv
+mixed_PIHUPMOD_combinations,15,table_total_counter.csv
+classes_mixed_joint_rule_vs_PIHUPMOD,"wins 4, ties 11, losses 0 of 15",table_total_counter.csv
+classes_mixed_joint_rule_vs_PIHUPMOD_wins,SC6 C8T1S5I8N5K 1.116; SC6 TAFENG 1.461; SC6D TAFENG 1.312; SC6B TAFENG 1.388,table_total_counter.csv
+classes_mixed_joint_rule_vs_PIHUPMOD_ties,SC6 SIGN 0.995; SC6 LEVIATHAN 1.007; SC6 DUNNHUMBY 1.010; SC6D SIGN 0.971; SC6D LEVIATHAN 0.985; SC6D C8T1S5I8N5K 1.061; SC6D DUNNHUMBY 1.057; SC6B SIGN 0.973; SC6B LEVIATHAN 0.998; SC6B C8T1S5I8N5K 1.039; SC6B DUNNHUMBY 1.042,table_total_counter.csv
+mixed_PIHUPMOD_time_over_joint_range_same_rescans,0.971 to 1.057 (9 combinations),table_total_counter.csv
+mixed_PIHUPMOD_time_seeds,5,table_total_counter.csv
