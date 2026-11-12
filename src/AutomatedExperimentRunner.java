@@ -1069,6 +1069,16 @@ public class AutomatedExperimentRunner {
     static final String PLAIN_FLOOR_ARM = "Joint-rule+plain-floor";
     static final String MIN_FLOOR_ARM = "Joint-rule+min-floor";
 
+    /**
+     * The proposal at the fixed lower threshold with the rescan rule charging insertions by the
+     * inserted utility alone instead of max_i A_i (PreHUSPMAdaptiveAlgo.JointCounter.TOTAL), a rule
+     * with one counter for the whole database, of the PIHUP-MOD kind; tracking and the drop floor are
+     * the proposal's. Mixed streams only, and only when -Dalgo.only names it, so a run of a whole
+     * scenario measures the arms of the main tables only. It measures what the counters by item save
+     * over one counter.
+     */
+    static final String TOTAL_COUNTER_ARM = "Joint-rule+total-counter";
+
     /** The discard floor an arm runs with: the proposal's, unless the arm is a floor ablation. */
     static PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.Floor floorOf(String arm) {
         if (PLAIN_FLOOR_ARM.equals(arm)) return PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.Floor.PLAIN;
@@ -1234,6 +1244,7 @@ public class AutomatedExperimentRunner {
                         for (int n : BREAK_EVEN_SWEEP)
                             if (algoNamed(breakEvenArm(n))) runMixedArm(ds, dInit, initTotalUtil, plan, col, breakEvenArm(n));
                         if (algoNamed(TIME_BREAK_EVEN_ARM)) runMixedArm(ds, dInit, initTotalUtil, plan, col, TIME_BREAK_EVEN_ARM);
+                        if (algoNamed(TOTAL_COUNTER_ARM)) runMixedArm(ds, dInit, initTotalUtil, plan, col, TOTAL_COUNTER_ARM);
                     }
                     forceFullGC();
                 }
@@ -1295,7 +1306,8 @@ public class AutomatedExperimentRunner {
     private static void runMixedArm(DatasetConfig ds, List<Sequence> dInit, double initTotalUtil,
                                     List<MixedPlan.Op> plan, ResultCollector col, String arm) throws IOException {
         final boolean incremental = FIXED_THRESHOLD.equals(arm) || METHOD.equals(arm) || floorWindowOf(arm) > 0 || PLAIN_FLOOR_ARM.equals(arm)
-                || MIN_FLOOR_ARM.equals(arm) || isBreakEvenArm(arm) || INDEX_REBUILD_ARM.equals(arm);
+                || MIN_FLOOR_ARM.equals(arm) || isBreakEvenArm(arm) || INDEX_REBUILD_ARM.equals(arm)
+                || TOTAL_COUNTER_ARM.equals(arm);
 
         beginMemArm();
         // The initial mine on D_init: the proposal's for the proposal and for remining with the
@@ -1307,6 +1319,8 @@ public class AutomatedExperimentRunner {
         if (incremental) setFloorRule(adp, INDEX_REBUILD_ARM.equals(arm) ? METHOD : arm);
         if (INDEX_REBUILD_ARM.equals(arm)) adp.rebuildIndexOnRescan = true;
         if (adp != null) adp.floor = floorOf(arm);
+        if (TOTAL_COUNTER_ARM.equals(arm))
+            adp.jointCounter = PreHUSPMAdaptiveAlgorithm.PreHUSPMAdaptiveAlgo.JointCounter.TOTAL;
         ExperimentMetrics mInit;
         if (ownMiner) {
             announce(arm, ds.name, "SC6_INIT", 0);
@@ -1376,6 +1390,10 @@ public class AutomatedExperimentRunner {
             cur = after; total = newTotal;
             forceFullGC();
         }
+        // The total counter's argument rests on I >= max_i A_i at every decision: say so if it broke.
+        if (adp != null && adp.jointCounterViolations > 0)
+            throw new IllegalStateException(arm + "/" + ds.name + ": " + adp.jointCounterViolations
+                    + " decisions with the inserted utility below max_i A_i");
     }
 
     /**

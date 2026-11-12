@@ -77,6 +77,11 @@ param(
     # carry the repeat in their repeat column and the seed in their seed column.
     [int]      $Repeat = 0,
     [int]      $SeedIndex = 0,
+    # A tree of its own, results/<Tree>/s<k>r<n> (s0r0 included), for arms measured side by side in
+    # one session and read only by the analysis that names the tree. campaign-total-counter holds
+    # the total-counter arm and the fixed lower threshold on the mixed streams, so the ratio of the
+    # two is taken inside one session. The main and replicate trees are not touched.
+    [string]   $Tree = '',
     # The exact JDK every arm runs on: runtime version and vendor, not just the major
     # version, since two builds of the same major version are different runtimes. Read from
     # environment.lock.json, the one place they are set; these parameters override it only
@@ -218,7 +223,7 @@ if (-not $Datasets) {
 $knownAlgos = @('Pre-HUSPM-Joint','Pre-HUSPM-Joint-fixed-threshold','Pre-HUSPM','Pre-HUSPM-SWUmax','Pre-HUSPM-TSU','Remine-from-scratch','IncUSP-Miner+',
                 'Remine-HUSP-ULL','Remine-HUSP-SP','Joint-miner+SWUmax','Joint-miner+TSU','Joint-rule+PreHUSPM-tracking','Joint-miner+SWUmax+PreHUSPM-tracking',
                 'Remine-own-UUT','Joint-rule+plain-floor','Joint-rule+min-floor','Joint-miner@UUT',
-                'Remine-from-scratch-rebuild','Remine-own-UUT-rebuild',
+                'Remine-from-scratch-rebuild','Remine-own-UUT-rebuild','Joint-rule+total-counter',
                 'Pre-HUSPM-Joint-w1','Pre-HUSPM-Joint-w2','Pre-HUSPM-Joint-w3','Pre-HUSPM-Joint-w5','Pre-HUSPM-Joint-w10',
                 'Pre-HUSPM-Joint-be1','Pre-HUSPM-Joint-be2','Pre-HUSPM-Joint-be3','Pre-HUSPM-Joint-be10','Pre-HUSPM-Joint-be20','Pre-HUSPM-Joint-time',
                 'USpan','HUSP-ULL','HUSP-SP',
@@ -267,11 +272,21 @@ if ($Repeat -lt 0 -or $SeedIndex -lt 0 -or $SeedIndex -gt 4) {
 # so a re-measured live set never lands in the memory campaign's main tree.
 $memTree = if ($MemGeneration) { "campaign-mem-$MemGeneration" } else { 'campaign-mem' }
 if ($MemGeneration -and $MemMode -ne 'live') { throw "-MemGeneration applies to -MemMode live only." }
-$top   = if ($MemMode -eq 'live' -and $replicate) { "results/$memTree-replicates/s${SeedIndex}r${Repeat}" }
+if ($Tree) {
+    $taken = @('campaign','campaign-replicates','campaign-mem','campaign-mem-replicates',
+               'campaign-mem-sampled','campaign-mem-sampled-replicates')
+    if ($Tree -notmatch '^campaign-[a-z0-9-]+$' -or $taken -contains $Tree) {
+        throw "-Tree must be campaign-<name> and not one of $($taken -join ', '). Found '$Tree'."
+    }
+    if ($MemMode -eq 'live') { throw "-Tree applies to the timing campaign only." }
+}
+$top   = if ($Tree) { "results/$Tree/s${SeedIndex}r${Repeat}" }
+         elseif ($MemMode -eq 'live' -and $replicate) { "results/$memTree-replicates/s${SeedIndex}r${Repeat}" }
          elseif ($MemMode -eq 'live') { "results/$memTree" }
          elseif ($replicate) { "results/campaign-replicates/s${SeedIndex}r${Repeat}" }
          else { 'results/campaign' }
-$label = if ($MemMode -eq 'live' -and $replicate) { "mem s${SeedIndex}r${Repeat} $Scenario" }
+$label = if ($Tree) { "$Tree s${SeedIndex}r${Repeat} $Scenario" }
+         elseif ($MemMode -eq 'live' -and $replicate) { "mem s${SeedIndex}r${Repeat} $Scenario" }
          elseif ($MemMode -eq 'live') { "mem $Scenario" }
          elseif ($replicate) { "s${SeedIndex}r${Repeat} $Scenario" }
          else { $Scenario }

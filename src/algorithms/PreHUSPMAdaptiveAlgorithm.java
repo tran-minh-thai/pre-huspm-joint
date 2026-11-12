@@ -842,7 +842,45 @@ public class PreHUSPMAdaptiveAlgorithm {
         }
 
         private double jointTriggerQuantity() {
-            return iauMax - Su * insertedSinceRescan + Su * deletedSinceRescan;
+            return insertionCharge() - Su * insertedSinceRescan + Su * deletedSinceRescan;
+        }
+
+        /**
+         * What JOINT charges the insertions since the last rescan by (-Dadapt.jointCounter):
+         *   ITEM   max_i A_i, the default (the proposal).
+         *   TOTAL  the inserted utility I alone, one counter for the whole database (a rule of the
+         *          PIHUP-MOD kind): rescan iff (1 - UUT)*I + UUT*D > (UUT - LUT_min) * TSU_r.
+         * A_i <= I for every item i, since A_i sums u(s) over a subset of the inserted sequences, so
+         * TOTAL's quantity is never below ITEM's: at every state where ITEM rescans TOTAL rescans, and
+         * while TOTAL holds ITEM's condition holds, so the argument above (and the drop floor, which
+         * stays L_r + max_{i in X} A_i) applies unchanged. A comparison arm only
+         * (Joint-rule+total-counter), at the fixed floor: the floor selection's shadow counts by item.
+         */
+        public enum JointCounter { ITEM, TOTAL }
+
+        public JointCounter jointCounter = parseJointCounter(System.getProperty("adapt.jointCounter", "item"));
+
+        private static JointCounter parseJointCounter(String s) {
+            switch (s.trim().toLowerCase(java.util.Locale.ROOT)) {
+                case "item":  return JointCounter.ITEM;
+                case "total": return JointCounter.TOTAL;
+                default: throw new IllegalArgumentException("adapt.jointCounter must be item|total, got: " + s);
+            }
+        }
+
+        /** Decisions at which I < max_i A_i, which the argument above excludes (TOTAL only; must stay 0). */
+        public long jointCounterViolations = 0;
+
+        private double insertionCharge() {
+            if (jointCounter == JointCounter.ITEM) return iauMax;
+            if (insertedSinceRescan < iauMax * (1 - 1e-12)) jointCounterViolations++;
+            return insertedSinceRescan;
+        }
+
+        private void refuseTotalCounterWithSelection() {
+            if (jointCounter == JointCounter.TOTAL && (selectsFloor() || triggerRule != TriggerRule.JOINT))
+                throw new UnsupportedOperationException("adapt.jointCounter=total is defined for the JOINT rule "
+                        + "at the fixed floor, not " + triggerRule + (selectsFloor() ? " with a floor selection" : ""));
         }
 
         private double maxIauOf(CompactPattern p) {
@@ -1218,6 +1256,7 @@ public class PreHUSPMAdaptiveAlgorithm {
             cubValue = 0; cubTriggeredRescan = false;
             resetIau();
             insertedSinceRescan = 0; deletedSinceRescan = 0; preBuf = 0;
+            refuseTotalCounterWithSelection(); jointCounterViolations = 0;
             if (selectsFloor()) { Sl_min = slMinRatioEff * Su; overLowRun = 0; rescansAtUut = 0; }
             lastLowMineNs = lastHighMineNs = lastDirectNs = -1;
             lastLowMineNodes = lastHighMineNodes = -1;
@@ -1683,7 +1722,7 @@ public class PreHUSPMAdaptiveAlgorithm {
                 double midTotal = totalUtilityOf(mid), del = 0;
                 for (Sequence s : oldSeqs) del += s.sequenceUtility;
                 // the deletion phase's JOINT test, without its side effects
-                boolean deletionRescans = !useAdaptiveRescan || iauMax - Su * insertedSinceRescan
+                boolean deletionRescans = !useAdaptiveRescan || insertionCharge() - Su * insertedSinceRescan
                         + Su * (deletedSinceRescan + del) > (Su - Sl_min) * tsuAtLastRescan;
                 if (!deletionRescans) {
                     deletionPhase(oldSeqs, mid, midTotal);      // takes the direct update

@@ -48,6 +48,8 @@ public class MixedBudgetFuzz {
         Random r = new Random(seed);
         SyntheticDb.resetIds();
         int ops = 0, bad = 0, badTrials = 0, boundBad = 0, boundChecked = 0;
+        long counterBad = 0;
+        boolean totalCounter = false;
         Map<String, Integer> direct = new TreeMap<>(), total = new TreeMap<>(), badBy = new TreeMap<>();
         for (int t = 0; t < trials; t++) {
             double su = SUS[r.nextInt(SUS.length)];
@@ -113,12 +115,17 @@ public class MixedBudgetFuzz {
                 }
             }
             if (trialBad) badTrials++;
+            counterBad += algo.jointCounterViolations;
+            totalCounter |= algo.jointCounter == PreHUSPMAdaptiveAlgo.JointCounter.TOTAL;
         }
         System.out.printf("rule=%s trials=%d seed=%d ops=%d per-kind=%s direct-update=%s mismatching-ops=%d %s trials-with-mismatch=%d%n",
                 rule, trials, seed, ops, total, direct, bad, badBy, badTrials);
         if (boundChecked > 0 || boundBad > 0)
             System.out.printf("bound invariant B(X) >= u(X): %d tracked patterns checked, %d operations breaking it%n",
                     boundChecked, boundBad);
-        System.exit(bad > 0 || boundBad > 0 ? 1 : 0);
+        // -Dadapt.jointCounter=total: the rule charges insertions by I, sound because I >= max_i A_i
+        if (totalCounter)
+            System.out.printf("joint counter total: %d decisions with I below max_i A_i%n", counterBad);
+        System.exit(bad > 0 || boundBad > 0 || counterBad > 0 ? 1 : 0);
     }
 }

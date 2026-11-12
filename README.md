@@ -89,6 +89,8 @@ JDK (the zip and SHA-256 of the lock file) into `..\jdk\` and sets `JAVA_HOME` f
   - `IncUSP-Miner+`, `USpan`, `HUSP-ULL`, `HUSP-SP`
   - `Remine-from-scratch`, `Remine-HUSP-ULL`, `Remine-HUSP-SP`
   - `Joint-miner+SWUmax`, `Joint-miner+TSU`, `Joint-rule+PreHUSPM-tracking`, `Joint-miner+SWUmax+PreHUSPM-tracking`, `Joint-rule+min-floor`, `Joint-rule+plain-floor`
+  - `Joint-rule+total-counter` (mixed streams, run only when named; measured with the fixed lower
+    threshold in `results/campaign-total-counter/`)
 
 Each arm is described in `docs/experiments.md`.
 
@@ -105,7 +107,10 @@ java -Xmx4g -cp build verify.ItemRemovalCheck random 2000 1          # the miner
 `-Dverify.husps=true` makes the runner compare every arm's patterns with the method's after
 every operation.
 
-A check run by hand uses the class default for the rescan floor, the rule by time. The records
+The runner sets the rescan floor rule of each arm: the arm `Pre-HUSPM-Joint` of every incremental
+scenario runs the method's rule, break-even by explored nodes over the last 5 absorptions. A check
+run by hand uses the class defaults instead: without flags the floor stays at `r_l` (no selection),
+and `-Dadapt.floorRule=breakEven` alone selects by measured time. The records
 `results/verify-joint/*-nodes*` check the method's rule and were run with
 `-Dadapt.floorRule=breakEven -Dadapt.breakEvenCost=nodes`, for example:
 
@@ -113,7 +118,7 @@ A check run by hand uses the class default for the rescan floor, the rule by tim
 java -Dadapt.floorRule=breakEven -Dadapt.breakEvenCost=nodes -cp build verify.MixedBudgetFuzz joint 5000 11
 java -Dadapt.floorRule=breakEven -Dadapt.breakEvenCost=nodes -Xmx24g -Xss64m -cp build \
      verify.DirectPathVerifier ALL --adversarial --ops 24 --share-alt 0.5 --out results/verify-joint/mine
-java -cp build verify.RunningExampleCheck                            # the running example, 40 values
+java -cp build verify.RunningExampleCheck                            # the running example, 49 values
 ```
 
 Each record's `run_meta.json` holds its exact command.
@@ -145,7 +150,8 @@ with `DIR`.
 | `UUT` (threshold ratio) | per database, below | `src/common/Datasets.java` |
 | `r_l` (`LUT_min = r_l * UUT`) | 0.80 on every database | `Datasets.java` |
 | rescan rule | `joint` | `-Dadapt.trigger` |
-| rescan floor rule | break-even by explored nodes for `Pre-HUSPM-Joint` in the incremental scenarios, over the last 5 rescans (`Pre-HUSPM-Joint-be<n>`: the last n; `Pre-HUSPM-Joint-time`: by measured time); window `w = n` for `Pre-HUSPM-Joint-w<n>` (n = 1, 2, 3, 5, 10); fixed floor otherwise. The runner sets the rule of each arm; the class default, used when a check is run by hand, is the rule by time | `-Dadapt.floorRule`, `-Dadapt.breakEvenCost`, `-Dadapt.breakEvenWindow`, `-Dadapt.floorWindow` |
+| insertion charge of the rescan rule | `max_i A_i` (`item`); the inserted utility alone (`total`) in `Joint-rule+total-counter` | `-Dadapt.jointCounter` |
+| rescan floor rule | break-even by explored nodes for `Pre-HUSPM-Joint` in the incremental scenarios, over the last 5 rescans (`Pre-HUSPM-Joint-be<n>`: the last n; `Pre-HUSPM-Joint-time`: by measured time); window `w = n` for `Pre-HUSPM-Joint-w<n>` (n = 1, 2, 3, 5, 10); fixed floor otherwise. The runner sets the rule of each arm; a check run by hand keeps the floor fixed without flags, and selects by time with `-Dadapt.floorRule=breakEven` alone | `-Dadapt.floorRule`, `-Dadapt.breakEvenCost`, `-Dadapt.breakEvenWindow`, `-Dadapt.floorWindow` |
 | modification | one unit, mines at most once | `-Dadapt.mergeModification` |
 | irrelevant item pruning | `once` per node | `-Dadapt.iip` |
 | batches `K` | 100 (SC5: 100, 67, 50, 25) | `-Dbatch.count` |
