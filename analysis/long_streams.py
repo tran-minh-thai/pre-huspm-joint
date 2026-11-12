@@ -332,7 +332,10 @@ def summary_keys(st, put, keys_path, unstable=None):
         win = [sc for sc in order if x[sc] < low]
         loss = [sc for sc in order if x[sc] > high]
         b = f"LONG_{d}_{TAG[arm]}"
-        put(f"{b}_classes", f"wins {len(win)}, ties {len(order) - len(win) - len(loss)}, losses {len(loss)} of {len(order)}", src)
+        cls = f"wins {len(win)}, ties {len(order) - len(win) - len(loss)}, losses {len(loss)} of {len(order)}"
+        put(f"{b}_classes", cls, src)
+        # the same classes under the name of the campaign's other comparison classes
+        put(f"classes_LONG_{d}_method_vs_{TAG[arm]}", cls, src)
         put(f"{b}_losses", f"{len(loss)} of {len(order)}", src)
         put(f"{b}_loss_streams", ", ".join(loss) if loss else "none", src)
         put(f"{b}_win_streams", ", ".join(win) if win else "none", src)
