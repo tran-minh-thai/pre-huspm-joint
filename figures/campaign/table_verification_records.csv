@@ -53,6 +53,7 @@ husps-mixed,husps-mixed,e84b5a89a,2026-10-18,0
 husps-mixed-break-even,husps-mixed-break-even,7f226af39,2026-10-27,0
 husps-mixed-break-even-nodes,initial-cycle-2026-11-02/husps-mixed-break-even-nodes,b54bfc310,2026-11-02,0
 husps-mixed-remine,husps-mixed-remine,e66ccb6f0,2026-10-26,0
+husps-mixed-total-counter,husps-mixed-total-counter,00148042e,2026-11-12,0
 husps-sc2,husps-sc2,e84b5a89a,2026-10-18,0
 husps-sc2-break-even,husps-sc2-break-even,7f226af39,2026-10-27,0
 husps-sc2-break-even-nodes,initial-cycle-2026-11-02/husps-sc2-break-even-nodes,b54bfc310,2026-11-02,0
@@ -85,3 +86,4 @@ running-example,running-example,d15b36a24,2026-10-25,0
 running-example-break-even-nodes,measured-code-2026-11-11/running-example,84e0bbbe5,2026-11-11,0
 static-joint-miner-uut,static-joint-miner-uut,906222294,2026-10-16,0
 stream-plans,measured-code-2026-11-11/stream-plans,f30fe6b41,2026-11-11,0
+total-counter-fuzz,total-counter-fuzz,00148042e,2026-11-12,0

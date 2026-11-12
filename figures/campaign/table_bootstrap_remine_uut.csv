@@ -1,0 +1,47 @@
+setting,family,group,arm,cls,ratio,ci_low,ci_high,units,excludes_one
+SC2,SC2_method_vs_Remine-own-UUT,SIGN,Remine-own-UUT,win,1.09,1.077,1.102,5 and 5 runs,True
+SC2,SC2_method_vs_Remine-own-UUT,TAFENG,Remine-own-UUT,win,2.264,2.244,2.284,5 and 5 runs,True
+SC2,SC2_method_vs_Remine-own-UUT,C8T1S5I8N5K,Remine-own-UUT,win,1.174,1.156,1.2,5 and 5 runs,True
+SC2,SC2_method_vs_Remine-own-UUT,BIBLE,Remine-own-UUT,win,1.268,1.259,1.279,5 and 5 runs,True
+SC2,SC2_method_vs_Remine-own-UUT,LEVIATHAN,Remine-own-UUT,tie,1.015,1.003,1.027,5 and 5 runs,True
+SC2,SC2_method_vs_Remine-own-UUT,FIFA,Remine-own-UUT,win,1.736,1.726,1.746,5 and 5 runs,True
+SC2,SC2_method_vs_Remine-own-UUT,KOSARAK,Remine-own-UUT,win,1.109,1.101,1.116,5 and 5 runs,True
+SC2,SC2_method_vs_Remine-own-UUT,DUNNHUMBY,Remine-own-UUT,tie,1.072,1.02,1.116,5 and 5 runs,True
+SC2,SC2_method_vs_Remine-own-UUT-reuse,BIBLE,Remine-own-UUT-reuse,win,1.248,1.236,1.261,5 and 5 runs,True
+SC2,SC2_method_vs_Remine-own-UUT-reuse,C8T1S5I8N5K,Remine-own-UUT-reuse,tie,0.967,0.962,0.973,5 and 5 runs,True
+SC2,SC2_method_vs_Remine-own-UUT-reuse,DUNNHUMBY,Remine-own-UUT-reuse,tie,1.052,0.999,1.098,5 and 5 runs,False
+SC2,SC2_method_vs_Remine-own-UUT-reuse,FIFA,Remine-own-UUT-reuse,win,1.761,1.75,1.772,5 and 5 runs,True
+SC2,SC2_method_vs_Remine-own-UUT-reuse,KOSARAK,Remine-own-UUT-reuse,tie,1.011,0.998,1.023,5 and 5 runs,False
+SC2,SC2_method_vs_Remine-own-UUT-reuse,LEVIATHAN,Remine-own-UUT-reuse,tie,0.99,0.978,1.003,5 and 5 runs,False
+SC2,SC2_method_vs_Remine-own-UUT-reuse,SIGN,Remine-own-UUT-reuse,tie,1.087,1.072,1.104,5 and 5 runs,True
+SC2,SC2_method_vs_Remine-own-UUT-reuse,TAFENG,Remine-own-UUT-reuse,win,1.678,1.666,1.69,5 and 5 runs,True
+mixed,mixed_pooled_stream_vs_Remine-UUT,SC6 SIGN,Remine-own-UUT,win,1.106,1.082,1.133,5 seeds,True
+mixed,mixed_pooled_stream_vs_Remine-UUT,SC6 LEVIATHAN,Remine-own-UUT,tie,1.023,1.006,1.038,5 seeds,True
+mixed,mixed_pooled_stream_vs_Remine-UUT,SC6 C8T1S5I8N5K,Remine-own-UUT,win,1.173,1.088,1.251,5 seeds,True
+mixed,mixed_pooled_stream_vs_Remine-UUT,SC6 TAFENG,Remine-own-UUT,win,1.739,1.679,1.791,5 seeds,True
+mixed,mixed_pooled_stream_vs_Remine-UUT,SC6 DUNNHUMBY,Remine-own-UUT,tie,1.009,0.956,1.047,5 seeds,False
+mixed,mixed_pooled_stream_vs_Remine-UUT-reuse,SC6 SIGN,Remine-own-UUT-reuse,tie,1.08,1.066,1.093,5 seeds,True
+mixed,mixed_pooled_stream_vs_Remine-UUT-reuse,SC6 LEVIATHAN,Remine-own-UUT-reuse,tie,0.989,0.968,1.01,5 seeds,False
+mixed,mixed_pooled_stream_vs_Remine-UUT-reuse,SC6 C8T1S5I8N5K,Remine-own-UUT-reuse,tie,0.983,0.924,1.04,5 seeds,False
+mixed,mixed_pooled_stream_vs_Remine-UUT-reuse,SC6 TAFENG,Remine-own-UUT-reuse,win,1.347,1.285,1.466,5 seeds,True
+mixed,mixed_pooled_stream_vs_Remine-UUT-reuse,SC6 DUNNHUMBY,Remine-own-UUT-reuse,tie,0.972,0.919,1.033,5 seeds,False
+mixed,mixed_pooled_stream_vs_Remine-UUT,SC6D SIGN,Remine-own-UUT,win,1.103,1.053,1.152,5 seeds,True
+mixed,mixed_pooled_stream_vs_Remine-UUT,SC6D LEVIATHAN,Remine-own-UUT,win,1.191,1.13,1.266,5 seeds,True
+mixed,mixed_pooled_stream_vs_Remine-UUT,SC6D C8T1S5I8N5K,Remine-own-UUT,win,1.134,1.086,1.181,5 seeds,True
+mixed,mixed_pooled_stream_vs_Remine-UUT,SC6D TAFENG,Remine-own-UUT,win,2.77,2.711,2.827,5 seeds,True
+mixed,mixed_pooled_stream_vs_Remine-UUT,SC6D DUNNHUMBY,Remine-own-UUT,win,1.451,1.175,1.721,5 seeds,True
+mixed,mixed_pooled_stream_vs_Remine-UUT-reuse,SC6D SIGN,Remine-own-UUT-reuse,win,1.089,1.038,1.143,5 seeds,True
+mixed,mixed_pooled_stream_vs_Remine-UUT-reuse,SC6D LEVIATHAN,Remine-own-UUT-reuse,win,1.161,1.102,1.228,5 seeds,True
+mixed,mixed_pooled_stream_vs_Remine-UUT-reuse,SC6D C8T1S5I8N5K,Remine-own-UUT-reuse,loss,0.911,0.884,0.941,5 seeds,True
+mixed,mixed_pooled_stream_vs_Remine-UUT-reuse,SC6D TAFENG,Remine-own-UUT-reuse,win,2.068,2.021,2.119,5 seeds,True
+mixed,mixed_pooled_stream_vs_Remine-UUT-reuse,SC6D DUNNHUMBY,Remine-own-UUT-reuse,win,1.353,1.122,1.606,5 seeds,True
+mixed,mixed_pooled_stream_vs_Remine-UUT,SC6B SIGN,Remine-own-UUT,tie,1.077,1.043,1.112,5 seeds,True
+mixed,mixed_pooled_stream_vs_Remine-UUT,SC6B LEVIATHAN,Remine-own-UUT,tie,1.008,0.99,1.028,5 seeds,False
+mixed,mixed_pooled_stream_vs_Remine-UUT,SC6B C8T1S5I8N5K,Remine-own-UUT,win,1.183,1.12,1.258,5 seeds,True
+mixed,mixed_pooled_stream_vs_Remine-UUT,SC6B TAFENG,Remine-own-UUT,win,1.579,1.541,1.64,5 seeds,True
+mixed,mixed_pooled_stream_vs_Remine-UUT,SC6B DUNNHUMBY,Remine-own-UUT,tie,0.988,0.945,1.049,5 seeds,False
+mixed,mixed_pooled_stream_vs_Remine-UUT-reuse,SC6B SIGN,Remine-own-UUT-reuse,tie,1.081,1.046,1.113,5 seeds,True
+mixed,mixed_pooled_stream_vs_Remine-UUT-reuse,SC6B LEVIATHAN,Remine-own-UUT-reuse,tie,0.989,0.976,1.001,5 seeds,False
+mixed,mixed_pooled_stream_vs_Remine-UUT-reuse,SC6B C8T1S5I8N5K,Remine-own-UUT-reuse,win,1.101,1.014,1.199,5 seeds,True
+mixed,mixed_pooled_stream_vs_Remine-UUT-reuse,SC6B TAFENG,Remine-own-UUT-reuse,win,1.153,1.124,1.19,5 seeds,True
+mixed,mixed_pooled_stream_vs_Remine-UUT-reuse,SC6B DUNNHUMBY,Remine-own-UUT-reuse,tie,0.939,0.9,0.977,5 seeds,True

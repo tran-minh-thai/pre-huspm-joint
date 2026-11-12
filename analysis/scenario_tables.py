@@ -51,6 +51,10 @@ SC2_ARMS = INC_ARMS + ["Remine-HUSP-ULL", "Remine-HUSP-SP"]
 # maintenance and how much from the cutoff. It is a way of remining, so it takes part in every
 # "fastest competitor" and runner-up count; the printed SC2 tables keep SC2_ARMS.
 OWN_UUT = "Remine-own-UUT"
+# Remining at the threshold with the proposal's own miner, reusing the per-sequence data an earlier
+# operation built (the arm directory Remine-own-UUT, read with rivals=False). The paper's Remine-UUT-R;
+# the rival Remine-UUT is the arm that rebuilds that data inside the clock (make_figures.RIVAL_SOURCE).
+OWN_UUT_REUSE = "Remine-own-UUT-reuse"
 SC2_COMPETITORS = SC2_ARMS + [OWN_UUT]
 # the arms of the SC2 memory run: the incremental baselines, Remine, and remining with the proposal's
 # own miner at UUT (Remine-HUSP-ULL and Remine-HUSP-SP have no memory run)
@@ -1801,6 +1805,16 @@ def sc2_tex(totals, region, reps=None):
     S = sc2_stats(totals, reps)
     op = region.set_index("dataset")
     order = in_win_order(op.index, "table_SC2_time.tex")
+    # Remine-UUT-R, in the remining table only: the arm directory Remine-own-UUT (rivals=False), which
+    # reuses the per-sequence data; its runs summed over the increments, as table_SC2_replicates sums them
+    keep = mf.load_scenario("SC2", replicates=True, rivals=False)
+    if keep is not None:
+        g_all = keep[mf.is_inc(keep) & (keep["algorithm"] == OWN_UUT)]
+        for d, g in g_all.groupby("dataset"):
+            runs = [float(mf.ms_to_s(x["runtime_ms"]).sum()) for _, x in g.groupby("replicate") if x["finished"].all()]
+            if runs and len(runs) == g["replicate"].nunique():
+                S[(d, OWN_UUT_REUSE)] = mf.spread(runs)
+                T[(d, OWN_UUT_REUSE)] = {"increments_done": 1, "increments": 1}
 
     def stat(d, a):
         return S.get((d, a))
@@ -1842,7 +1856,7 @@ def sc2_tex(totals, region, reps=None):
         other = sorted(f"{mf.ALGO_LABEL.get(a, a)} on {d} ({word(n)})" for (d, a), n in ns.items() if n != common)
         return text + (f", except {'; '.join(other)}" if other else "")
 
-    def caption(title, arms, key):
+    def caption(title, arms, key, bare=False):
         """The caption names the table; the runs behind its means go into it only when every cell
         rests on the same number. The full account is the key, for the text that cites the table."""
         phrase = runs_phrase(arms)
@@ -1854,7 +1868,7 @@ def sc2_tex(totals, region, reps=None):
             for (d, a), n in ns.items():
                 if n != common:
                     CAPTION_RUNS.append((f"{key}_{a}_{d}", n))
-        return title if ", except " in phrase else f"{title}, {phrase}"
+        return title if bare or ", except " in phrase else f"{title}, {phrase}"
 
     head = ("Database & \\begin{tabular}[b]{@{}r@{}}Pre-HUSPM-\\\\Joint\\end{tabular} & "
             "\\begin{tabular}[b]{@{}r@{}}Pre-HUSPM-\\\\SWUmax\\end{tabular} & "
@@ -1869,18 +1883,20 @@ def sc2_tex(totals, region, reps=None):
     # Remining in three ways beside the proposal, in a table of its own: with the two static
     # miners the runtime table is wider than the text (measured: 89 pt over). None when
     # neither remining arm with a static miner has a row.
-    remine_arms = [P, REM, "Remine-HUSP-ULL", "Remine-HUSP-SP", OWN_UUT]
+    remine_arms = [P, REM, "Remine-HUSP-ULL", "Remine-HUSP-SP", OWN_UUT, OWN_UUT_REUSE]
     remine_tex = None
     if any((d, a) in T for d in order for a in remine_arms[2:]):
         rhead = ("Database & \\begin{tabular}[b]{@{}r@{}}Pre-HUSPM-\\\\Joint\\end{tabular} & "
                  "Remine & "
                  "\\begin{tabular}[b]{@{}r@{}}Remine-\\\\HUSP-ULL\\end{tabular} & "
                  "\\begin{tabular}[b]{@{}r@{}}Remine-\\\\HUSP-SP\\end{tabular} & "
-                 "\\begin{tabular}[b]{@{}r@{}}Remine-\\\\UUT\\end{tabular} \\\\\\midrule")
+                 "\\begin{tabular}[b]{@{}r@{}}Remine-\\\\UUT\\end{tabular} & "
+                 "\\begin{tabular}[b]{@{}r@{}}Remine-\\\\UUT-R\\end{tabular} \\\\\\midrule")
         rrows = [f"{d} & " + " & ".join(row(d, remine_arms)) + " \\\\" for d in order]
         remine_tex = "\n".join(["\\begin{table}[!htbp]\\centering",
-                                f"\\caption{{{caption('Runtime (s) of SC2 against remining', remine_arms, 'SC2_remine_table_runs')}}}\\label{{tab:sc2_remine}}",
-                                "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}lrrrrr}\\toprule", rhead] + rrows +
+                                f"\\caption{{{caption('Runtime (s) of SC2 against remining', remine_arms, 'SC2_remine_table_runs', bare=True)}}}\\label{{tab:sc2_remine}}",
+                                "\\setlength{\\tabcolsep}{4pt}",
+                                "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}lrrrrrr}\\toprule", rhead] + rrows +
                                ["\\bottomrule\\end{tabular*}", "\\end{table}", ""])
     def rescans(d):
         v = [str(int(op.loc[d, c])) for c in ("rescans", "rescans_swumax", "rescans_tsu")]
@@ -2259,7 +2275,8 @@ def mixed_shares(put, out):
 
 # Arms of the pooled mixed ratios, with the tag of their keys.
 MIXED_POOLED_ARMS = [(REM, "Remine"), ("Remine-HUSP-ULL", "Remine-HUSP-ULL"), ("Remine-HUSP-SP", "Remine-HUSP-SP"),
-                     (OWN_UUT, "Remine-UUT"), (FIXED, "FixedFloor"), (mf.window_arm(5), "window5")]
+                     (OWN_UUT, "Remine-UUT"), (OWN_UUT_REUSE, "Remine-UUT-reuse"), (FIXED, "FixedFloor"),
+                     (mf.window_arm(5), "window5")]
 MIXED_POOLED_KINDS = [("stream", None), ("insertion", "INS"), ("deletion", "DEL"), ("modification", "MOD"),
                       ("deletion_beyond_the_budget", "DEL_BIG")]
 
@@ -2278,6 +2295,10 @@ def mixed_pooled(put, out):
         df = mf.load_scenario(sc, replicates=True, windows=True)
         if df is None:
             continue
+        # Remine-UUT-R: the superseded arm directory of the rival, under a name of its own
+        keep = mf.load_scenario(sc, replicates=True, rivals=False)
+        reuse = keep[keep["algorithm"] == OWN_UUT].assign(algorithm=OWN_UUT_REUSE, arm=OWN_UUT_REUSE)
+        df = pd.concat([df, reuse], ignore_index=True)
         ops = df[~df["op_type"].astype(str).str.contains("INIT")].copy()
         ops["kind"] = ops["op_type"].astype(str).str.extract(r"SC6_(INS|DEL_BIG|DEL|MOD)")[0]
         ops = ops[ops["kind"].notna()]
@@ -2600,6 +2621,7 @@ def comparison_classes(put, out):
     JVM and is compiled differently, so any ratio within [1/b, b] is a tie. ratio = time of the second
     arm over time of the first; above b the first arm wins."""
     b, same = tie_band(out)
+    identical = _fresh_table(out, "table_SC2_identical_search.csv")
     put("jit_tie_band", f"{1 / b:.3f} to {b:.3f} (largest time ratio between two arms making the same search, "
         f"{len(same)} SC2 streams)", "table_SC2_identical_search.csv")
     cls = lambda r: "win" if r > b else ("loss" if r < 1 / b else "tie")
@@ -2611,6 +2633,10 @@ def comparison_classes(put, out):
     inf = _fresh_table(out, "table_SC2_inference.csv")
     for r in inf.itertuples():
         add(f"SC2_method_vs_{r.arm}", r.dataset, P, r.arm, r.ratio)
+    # Remine-UUT-R, the arm that makes the method's search: by construction a tie where the search is
+    # identical (the band is the largest of those ratios)
+    for r in identical.itertuples():
+        add(f"SC2_method_vs_{OWN_UUT_REUSE}", r.dataset, P, OWN_UUT_REUSE, r.remine_uut_over_method)
     comp = inf[inf["competitor"] & (inf["arm"] != OWN_UUT)]
     for db, g in comp.groupby("dataset"):
         m = g.loc[g["ratio"].idxmin()]
@@ -2694,6 +2720,190 @@ def comparison_classes(put, out):
                 put(f"classes_{fam}_{word}_range_first_over_second",
                     f"{1 / h['ratio'].max():.3f} to {1 / h['ratio'].min():.3f}", src)
     return c, b
+
+
+def _mixed_seed_totals(sc, arms):
+    """(dataset, arm) -> {seed: time in s over the stream's operations} for the seeds where the arm
+    finished every operation, read as mixed_pooled reads them (Remine-own-UUT is the rival, read from
+    its rebuild arm; OWN_UUT_REUSE the arm directory Remine-own-UUT)."""
+    df = mf.load_scenario(sc, replicates=True, windows=True)
+    keep = mf.load_scenario(sc, replicates=True, rivals=False)
+    if df is None or keep is None:
+        return {}
+    df = pd.concat([df, keep[keep["algorithm"] == OWN_UUT].assign(algorithm=OWN_UUT_REUSE)], ignore_index=True)
+    ops = df[~df["op_type"].astype(str).str.contains("INIT") & df["op_type"].astype(str).str.contains("SC6_")]
+    res = {}
+    for (d, a, r), g in ops[ops["algorithm"].isin(arms)].groupby(["dataset", "algorithm", "replicate"]):
+        if g["finished"].all():
+            res.setdefault((d, a), {})[r] = (len(g), float(g["runtime_ms"].sum()) / 1000)
+    return res
+
+
+def bootstrap_remine_uut(put, out):
+    """95% percentile bootstrap intervals (BOOTSTRAP_RESAMPLES resamples, BOOTSTRAP_SEED) of the time
+    of remining at the threshold over the method's, for every comparison the classes draw with the two
+    remining arms at the threshold, Remine-UUT (rebuilds the per-sequence data inside the clock) and
+    Remine-UUT-R (OWN_UUT_REUSE, reuses it): SC2, one comparison per stream, and the mixed streams, one
+    per scenario and database. SC2: the runs of the two arms are resampled independently
+    (bootstrap_ratio, as table_SC2_inference). Mixed: the seeds are resampled in pairs, since a seed
+    gives both arms the same stream, and the ratio is the arm's time summed over the drawn seeds over
+    the method's, the pooled ratio of mixed_pooled. Each point ratio must equal the one the classes
+    read. Writes table_bootstrap_remine_uut.csv; keys count, per class of the comparison, the
+    intervals that leave out 1."""
+    c = _fresh_table(out, "table_comparison_classes.csv")
+    src = "table_bootstrap_remine_uut.csv"
+    rows = []
+    # SC2: per-run totals of the method, the rival (rebuild) and the reuse arm
+    T = _sc2_run_totals()
+    keep = mf.load_scenario("SC2", replicates=True, rivals=False)
+    R = {k: v for k, v in _run_totals(keep[mf.is_inc(keep)], ["dataset"]).items() if v}
+    for fam, arm, runs in ((f"SC2_method_vs_{OWN_UUT}", OWN_UUT, lambda d: T.get((d, OWN_UUT))),
+                           (f"SC2_method_vs_{OWN_UUT_REUSE}", OWN_UUT_REUSE, lambda d: R.get((d, OWN_UUT)))):
+        for r in c[c["family"] == fam].itertuples():
+            q, p = runs(r.group), T.get((r.group, P))
+            if not q or not p:
+                raise ValueError(f"{fam} {r.group}: no runs to resample")
+            if abs(np.mean(q) / np.mean(p) - r.ratio) > 0.0005 + 1e-9:   # the classes table holds 3 decimals
+                raise ValueError(f"{fam} {r.group}: ratio {np.mean(q) / np.mean(p)} from the runs, {r.ratio} in the classes")
+            lo, hi = bootstrap_ratio(q, p)
+            rows.append(dict(setting="SC2", family=fam, group=r.group, arm=arm, cls=r.cls, ratio=np.mean(q) / np.mean(p),
+                             ci_low=lo, ci_high=hi, units=f"{len(q)} and {len(p)} runs"))
+    # mixed: seeds in pairs
+    for sc in ("SC6", "SC6D", "SC6B"):
+        S = _mixed_seed_totals(sc, [P, OWN_UUT, OWN_UUT_REUSE])
+        for fam, arm in (("mixed_pooled_stream_vs_Remine-UUT", OWN_UUT), ("mixed_pooled_stream_vs_Remine-UUT-reuse", OWN_UUT_REUSE)):
+            for r in c[(c["family"] == fam) & c["group"].str.startswith(sc + " ")].itertuples():
+                d = r.group.split(" ", 1)[1]
+                a, p = S.get((d, arm), {}), S.get((d, P), {})
+                seeds = sorted(k for k in a.keys() & p.keys() if a[k][0] == p[k][0])
+                if not seeds:
+                    raise ValueError(f"{fam} {r.group}: no seed where both arms finished")
+                ta, tp = np.array([a[k][1] for k in seeds]), np.array([p[k][1] for k in seeds])
+                if abs(ta.sum() / tp.sum() - r.ratio) > 0.0005 + 1e-9:
+                    raise ValueError(f"{fam} {r.group}: pooled ratio {ta.sum() / tp.sum()} from the seeds, {r.ratio} in the classes")
+                rng = np.random.default_rng(BOOTSTRAP_SEED)
+                idx = rng.integers(0, len(seeds), size=(BOOTSTRAP_RESAMPLES, len(seeds)))
+                lo, hi = np.percentile(ta[idx].sum(axis=1) / tp[idx].sum(axis=1), [2.5, 97.5])
+                rows.append(dict(setting="mixed", family=fam, group=r.group, arm=arm, cls=r.cls, ratio=ta.sum() / tp.sum(),
+                                 ci_low=float(lo), ci_high=float(hi), units=f"{len(seeds)} seeds"))
+    t = pd.DataFrame(rows)
+    t["excludes_one"] = (t["ci_low"] > 1) | (t["ci_high"] < 1)
+    mf.write_csv(t, os.path.join(out, src))
+    name = {OWN_UUT: "Remine-UUT", OWN_UUT_REUSE: "Remine-UUT-R"}
+    put("bootstrap_remine_UUT_comparisons", f"{len(t)} ({int((t['setting'] == 'SC2').sum())} SC2, "
+        f"{int((t['setting'] == 'mixed').sum())} mixed)", src)
+    put("bootstrap_remine_UUT_resamples", BOOTSTRAP_RESAMPLES, src)
+    put("bootstrap_remine_UUT_rng_seed", BOOTSTRAP_SEED, src)
+    for cls, word in (("win", "wins"), ("tie", "ties"), ("loss", "losses")):
+        h = t[t["cls"] == cls]
+        put(f"bootstrap_remine_UUT_{word}_interval_excludes_one", f"{int(h['excludes_one'].sum())} of {len(h)}", src)
+        for (setting, arm), g in h.groupby(["setting", "arm"]):
+            put(f"bootstrap_remine_UUT_{setting}_{name[arm]}_{word}_interval_excludes_one",
+                f"{int(g['excludes_one'].sum())} of {len(g)}", src)
+        for flag, tag in ((True, "excluding_one"), (False, "including_one")):
+            x = h[h["excludes_one"] == flag]
+            if len(x):
+                put(f"bootstrap_remine_UUT_{word}_{tag}", "; ".join(
+                    f"{'SC2 ' if r.setting == 'SC2' else ''}{r.group} {name[r.arm]} {r.ratio:.3f} "
+                    f"({r.ci_low:.3f} to {r.ci_high:.3f})" for r in x.itertuples()), src)
+    return t
+
+
+TOTAL_COUNTER = "Joint-rule+total-counter"
+TOTAL_COUNTER_TREE = "campaign-total-counter"
+TOTAL_COUNTER_CHECK = os.path.join("verify-joint", "husps-mixed-total-counter")
+
+
+def total_counter_keys(put, out):
+    """The rescan rule with one counter for the whole database (TOTAL_COUNTER: the inserted utility in
+    place of max_i A_i, a rule of the PIHUP-MOD kind) against the proposal at the fixed lower threshold
+    (FIXED), on the mixed streams, per scenario and database. Rescans, a count that does not depend on
+    the machine: from the pattern check (TOTAL_COUNTER_CHECK), which replays the five seeds of each
+    stream for both arms; per combination the ratio of the rescans summed over the seeds. Time: from
+    the tree TOTAL_COUNTER_TREE, where the two arms are measured side by side in one session on the
+    measurement machine; per combination the ratio of the times summed over the seeds where both
+    finished every operation, as the pooled ratios of mixed_pooled. Where both sources hold an arm,
+    its rescans must agree. Writes table_total_counter.csv."""
+    src = "table_total_counter.csv"
+    chk = os.path.join(mf.DATA_DIR, TOTAL_COUNTER_CHECK)
+    if not os.path.exists(os.path.join(chk, "run_meta.json")):
+        print(f"[not written] mixed_PIHUPMOD_*: no finished record in results/{TOTAL_COUNTER_CHECK}")
+        return None
+
+    def rescans(frame):
+        """(scenario, dataset, arm, seed) -> rescans over the stream (rescan_count is cumulative)."""
+        g = frame[~frame["op_type"].astype(str).str.contains("INIT")]
+        return g.groupby(["scenario", "dataset", "algorithm", "seed"])["rescan_count"].max().astype(int).to_dict()
+
+    frames = []
+    for sc in ("SC6", "SC6D", "SC6B"):
+        f = pd.read_csv(os.path.join(chk, f"{sc}_idm_mixed.csv"))
+        f.columns = [x.strip() for x in f.columns]
+        frames.append(f.assign(scenario=sc))
+    v = pd.concat(frames, ignore_index=True)
+    rc = rescans(v[v["algorithm"].isin([FIXED, TOTAL_COUNTER])])
+    rows = []
+    for sc in ("SC6", "SC6D", "SC6B"):
+        for d in [x for x in mf.ALL_DATASETS if (sc, x, FIXED) in {k[:3] for k in rc}]:
+            seeds = sorted({k[3] for k in rc if k[:3] == (sc, d, FIXED)} & {k[3] for k in rc if k[:3] == (sc, d, TOTAL_COUNTER)})
+            if not seeds:
+                continue
+            nf = sum(rc[(sc, d, FIXED, s)] for s in seeds)
+            nt = sum(rc[(sc, d, TOTAL_COUNTER, s)] for s in seeds)
+            rows.append(dict(scenario=sc, dataset=d, seeds_rescans=len(seeds), rescans_fixed=nf, rescans_total=nt,
+                             rescans_ratio=nt / nf if nf else np.nan))
+    t = pd.DataFrame(rows)
+    # time, from the measurement machine's tree
+    tree = os.path.join(mf.DATA_DIR, TOTAL_COUNTER_TREE)
+    timed = []
+    for csv in sorted(glob.glob(os.path.join(tree, "s*r*", "SC6*", "*", "*", "*.csv"))):
+        arm_dir = os.path.dirname(csv)
+        if not os.path.exists(os.path.join(arm_dir, "DONE")):
+            continue
+        f = pd.read_csv(csv)
+        f.columns = [x.strip() for x in f.columns]
+        timed.append(f.assign(scenario=os.path.basename(os.path.dirname(os.path.dirname(arm_dir))),
+                              replicate=os.path.basename(os.path.dirname(os.path.dirname(os.path.dirname(arm_dir))))))
+    t["seeds_time"], t["time_fixed_s"], t["time_total_s"], t["time_ratio"] = 0, np.nan, np.nan, np.nan
+    if timed:
+        m = pd.concat(timed, ignore_index=True)
+        m = m[~m["op_type"].astype(str).str.contains("INIT")]
+        m_rc = rescans(m)
+        for k, n in m_rc.items():
+            if k in rc and rc[k] != n:
+                raise ValueError(f"total counter: rescans of {k} are {n} in {TOTAL_COUNTER_TREE} and {rc[k]} in the check")
+        tot = {k: (len(g), bool((g["runtime_ms"] >= 0).all()), float(g["runtime_ms"].sum()) / 1000)
+               for k, g in m.groupby(["scenario", "dataset", "algorithm", "replicate"])}
+        for i, r in t.iterrows():
+            fx = {k[3]: v for k, v in tot.items() if k[:3] == (r.scenario, r.dataset, FIXED) and v[1]}
+            tc = {k[3]: v for k, v in tot.items() if k[:3] == (r.scenario, r.dataset, TOTAL_COUNTER) and v[1]}
+            seeds = sorted(x for x in fx.keys() & tc.keys() if fx[x][0] == tc[x][0])
+            if seeds:
+                sf, st = sum(fx[x][2] for x in seeds), sum(tc[x][2] for x in seeds)
+                t.loc[i, ["seeds_time", "time_fixed_s", "time_total_s", "time_ratio"]] = [len(seeds), sf, st, st / sf]
+    mf.write_csv(t, os.path.join(out, src))
+    where = lambda r: f"{r.scenario} {r.dataset}"
+    rr = t.dropna(subset=["rescans_ratio"])
+    if len(rr):
+        lo, hi = rr.loc[rr["rescans_ratio"].idxmin()], rr.loc[rr["rescans_ratio"].idxmax()]
+        put("mixed_PIHUPMOD_rescans_over_joint_range", f"{lo.rescans_ratio:.3f} ({where(lo)}) to {hi.rescans_ratio:.3f} ({where(hi)})", src)
+        put("mixed_PIHUPMOD_rescans_combinations", f"{len(rr)} of {len(t)}", src)
+        below = rr[rr["rescans_ratio"] < 1]
+        put("mixed_PIHUPMOD_rescans_below_joint", f"{len(below)} of {len(rr)}" + (
+            " (" + "; ".join(f"{where(r)} {r.rescans_ratio:.3f}" for r in below.itertuples()) + ")" if len(below) else ""), src)
+    if (t["rescans_fixed"] == 0).any():
+        put("mixed_PIHUPMOD_rescans_fixed_zero", "; ".join(where(r) for r in t[t["rescans_fixed"] == 0].itertuples()), src)
+    tt = t.dropna(subset=["time_ratio"])
+    if not len(tt):
+        print(f"[not written] mixed_PIHUPMOD_time_over_joint_range, mixed_PIHUPMOD_combinations: "
+              f"no finished pair of arms in results/{TOTAL_COUNTER_TREE}")
+        return t
+    lo, hi = tt.loc[tt["time_ratio"].idxmin()], tt.loc[tt["time_ratio"].idxmax()]
+    put("mixed_PIHUPMOD_time_over_joint_range", f"{lo.time_ratio:.3f} ({where(lo)}) to {hi.time_ratio:.3f} ({where(hi)})", src)
+    put("mixed_PIHUPMOD_combinations", len(tt), src)
+    put("mixed_PIHUPMOD_time_seeds", f"{int(tt['seeds_time'].min())} to {int(tt['seeds_time'].max())}"
+        if tt["seeds_time"].min() != tt["seeds_time"].max() else str(int(tt["seeds_time"].iloc[0])), src)
+    return t
 
 
 TIME_ARM = P + "-time"
@@ -3792,6 +4002,8 @@ def export_all(out_dir=None):
 
     # after every table above is written: the classes read them
     comparison_classes(put, out)
+    bootstrap_remine_uut(put, out)
+    total_counter_keys(put, out)
 
     # a key written twice has two sources, and a later change of one would leave the other behind
     seen, twice = set(), []

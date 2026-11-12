@@ -198,7 +198,7 @@ ALGO_LABEL = {
     "IncUSP-Miner+": "IncUSP-Miner$^{+}$", "Pre-HUSPM": "Pre-HUSPM", "Pre-HUSPM-SWUmax": "Pre-HUSPM-SWUmax",
     "Pre-HUSPM-TSU": "Pre-HUSPM-TSU", "Remine-from-scratch": "Remine",
     PROPOSED: PROPOSED_LABEL, FIXED: PROPOSED_LABEL + ", fixed lower threshold",
-    "Joint-miner@UUT": "Miner-UUT", "Remine-own-UUT": "Remine-UUT",
+    "Joint-miner@UUT": "Miner-UUT", "Remine-own-UUT": "Remine-UUT", "Remine-own-UUT-reuse": "Remine-UUT-R",
 }
 # One table for every series that is a method: colour, marker, dash pattern and bar texture. Every
 # figure reads its styles from here, so a series looks the same in all of them. The colours are dark
@@ -1713,7 +1713,7 @@ def export_platform():
     memory = rec.get("memory_gb")
     if isinstance(mods, list) and mods:
         memory = int(round(sum(float(m.get("capacity_gb", 0)) for m in mods)))
-    sentence = (f"All runtimes and memory figures were measured on one machine with an "
+    sentence = (f"All runtimes and memory figures are measured on one machine with an "
                 f"{rec.get('cpu')} ({rec.get('cpu_cores')} cores, {rec.get('cpu_threads')} threads) "
                 f"and {memory}\\,GB of memory, running {os_name} and "
                 f"{jvm}, with \\texttt{{{rec.get('jvm_flags')}}} and one Java virtual machine per run.")

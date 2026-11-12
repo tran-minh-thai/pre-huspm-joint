@@ -1,0 +1,16 @@
+{
+  "command": "java -Xmx16g -Xss64m -cp build-tc -Dverify.husps=true -Dseeds=5 -Drepeats=1 -Ddataset.only=SIGN,LEVIATHAN,C8T1S5I8N5K,TAFENG,DUNNHUMBY -Dalgo.only=Pre-HUSPM-Joint-fixed-threshold,Joint-rule+total-counter -Dresults.dir=results/verify-joint/husps-mixed-total-counter/ AutomatedExperimentRunner SC6 SC6D SC6B",
+  "path_substitutions": 0,
+  "build_dir": "build-tc",
+  "git_commit": "00148042e62b5417626f550ca28208c144e303c9",
+  "tree": "src clean, other files modified",
+  "source_sha256": "f5fac4276c0d0a1d815dc97f188535af449d2953e9e9ee7f4b0dd6f0ccdd335d",
+  "source_files": 46,
+  "java": "openjdk version \"25.0.4.1\" 2026-08-18 LTS",
+  "os": "Darwin 27.2.0 (macOS-27.2-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "correctness check: counters only, no timings",
+  "start": "2026-11-12T12:33:46",
+  "end": "2026-11-12T13:06:19",
+  "exit_code": 0
+}

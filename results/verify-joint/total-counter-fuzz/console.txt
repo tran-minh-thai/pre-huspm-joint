@@ -1,0 +1,8 @@
+rule=joint trials=2000 seed=7 ops=20000 per-kind={delete=6582, insert=6702, modify=6716} direct-update={delete=5659, insert=1502, modify=1644} mismatching-ops=0 {} trials-with-mismatch=0
+joint counter total: 0 decisions with I below max_i A_i
+rule=joint trials=5000 seed=11 ops=50000 per-kind={delete=16736, insert=16698, modify=16566} direct-update={delete=14271, insert=3960, modify=4102} mismatching-ops=0 {} trials-with-mismatch=0
+joint counter total: 0 decisions with I below max_i A_i
+rule=joint trials=5000 seed=23 ops=50000 per-kind={delete=16744, insert=16565, modify=16691} direct-update={delete=14210, insert=3828, modify=4242} mismatching-ops=0 {} trials-with-mismatch=0
+joint counter total: 0 decisions with I below max_i A_i
+rule=joint trials=5000 seed=101 ops=50000 per-kind={delete=16684, insert=16665, modify=16651} direct-update={delete=14219, insert=3801, modify=4134} mismatching-ops=0 {} trials-with-mismatch=0
+joint counter total: 0 decisions with I below max_i A_i
