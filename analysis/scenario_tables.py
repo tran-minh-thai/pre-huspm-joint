@@ -1895,7 +1895,7 @@ def sc2_tex(totals, region, reps=None):
         rrows = [f"{d} & " + " & ".join(row(d, remine_arms)) + " \\\\" for d in order]
         remine_tex = "\n".join(["\\begin{table}[!htbp]\\centering",
                                 f"\\caption{{{caption('Runtime (s) of SC2 against remining', remine_arms, 'SC2_remine_table_runs', bare=True)}}}\\label{{tab:sc2_remine}}",
-                                "\\setlength{\\tabcolsep}{4pt}",
+                                "\\setlength{\\tabcolsep}{3pt}",
                                 "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}lrrrrrr}\\toprule", rhead] + rrows +
                                ["\\bottomrule\\end{tabular*}", "\\end{table}", ""])
     def rescans(d):

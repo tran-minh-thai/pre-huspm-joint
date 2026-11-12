@@ -1303,7 +1303,8 @@ def figset_memory_incremental(tag="fig_memory_incremental", datasets=None):
     if df is None:
         return
     datasets = [d for d in (datasets or SC2_DATASETS) if d in set(df["dataset"])]
-    fig, axes = panel_grid(len(datasets), ncols=INC_FIG_COLS, h=INC_FIG_PANEL_H)   # laid out as Fig. 5
+    # laid out as Fig. 5, with rows 0.5 cm shorter than Fig. 5's (1.75 in)
+    fig, axes = panel_grid(len(datasets), ncols=INC_FIG_COLS, h=INC_FIG_PANEL_H - 0.5 / 2.54)
     absent = []
     for i, (ax, ds) in enumerate(zip(axes, datasets)):
         sub = df[df["dataset"] == ds]
