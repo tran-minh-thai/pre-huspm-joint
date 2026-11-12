@@ -3427,16 +3427,17 @@ def datasets_table(put, out):
     mf.write_csv(t, os.path.join(out, "table_datasets.csv"))
     lines = ["\\begin{table}[!htbp]\\centering", "\\setlength{\\tabcolsep}{3pt}",
              "\\caption{Databases}\\label{tab:datasets}",
-             "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}lrrrrrrrrl@{}}\\toprule",
+             "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}lrrrrrrrr@{}}\\toprule",
              "Database & $|D|$ & $|I|$ & \\begin{tabular}[b]{@{}r@{}}Elements/\\\\sequence\\end{tabular} & "
              "\\begin{tabular}[b]{@{}r@{}}Items/\\\\sequence\\end{tabular} & "
              "\\begin{tabular}[b]{@{}r@{}}Items/\\\\element\\end{tabular} & $\\TU(D)$ & $|D_{\\mathrm{init}}|$ & "
-             "\\begin{tabular}[b]{@{}r@{}}Default\\\\$\\UUT$ (\\%)\\end{tabular} & Utilities \\\\\\midrule"]
+             "\\begin{tabular}[b]{@{}r@{}}Default\\\\$\\UUT$ (\\%)\\end{tabular} \\\\\\midrule"]
     for r in t.itertuples():
         tu = f"{int(half_up(r.total_utility, 0)):,}"
-        lines.append(f"{r.dataset} & {r.sequences:,} & {r.items:,} & {half_up(r.elements_per_sequence)} & "
+        mark = "$^{\\ast}$" if r.utilities == "measured" else ""
+        lines.append(f"{r.dataset}{mark} & {r.sequences:,} & {r.items:,} & {half_up(r.elements_per_sequence)} & "
                      f"{half_up(r.avg_length)} & {half_up(r.items_per_element)} & {tu} & {r.d_init:,} & "
-                     f"{pct4(r.default_uut)} & {r.utilities} \\\\")
+                     f"{pct4(r.default_uut)} \\\\")
         b = f"DB_{r.dataset}"
         put(f"{b}_sequences", f"{r.sequences:,}", src)
         put(f"{b}_items", f"{r.items:,}", src)
@@ -3446,7 +3447,9 @@ def datasets_table(put, out):
         put(f"{b}_items_per_element", half_up(r.items_per_element), src)
         put(f"{b}_total_utility", tu, src)
     lines[-1] = lines[-1] + "\\bottomrule"
-    lines += ["\\end{tabular*}", "\\end{table}", ""]
+    lines += ["\\end{tabular*}",
+              "\\par\\smallskip $^{\\ast}$\\,utilities measured on the source records; the others from generated quantities and profits (seed 42).",
+              "\\end{table}", ""]
     open(os.path.join(out, "table_datasets.tex"), "w", encoding="utf-8").write("\n".join(lines))
 
 
