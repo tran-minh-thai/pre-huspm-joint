@@ -727,7 +727,9 @@ public class PreHUSPMAdaptiveAlgorithm {
                 return triggered();
             }
             boolean delete(double u) { del += u; return triggered(); }
-            private boolean triggered() { return aMax - Su * ins + Su * del > (Su - slMinRatioEff * Su) * ref; }
+            private boolean triggered() {
+                return (ref <= 0 && ins > 0) || aMax - Su * ins + Su * del > (Su - slMinRatioEff * Su) * ref;
+            }
         }
 
         /** BREAK_EVEN: the phases of a unit have been fed to the shadow; settle it before the decision. */
@@ -1451,7 +1453,11 @@ public class PreHUSPMAdaptiveAlgorithm {
                 this.sftValue = safetyBoundF;
             }
             // Adaptive rescan ablation: useAdaptiveRescan=false rescans every batch.
-            this.cubTriggeredRescan = forceRescan || (useAdaptiveRescan ? (triggerQuantity > safetyBoundF) : true);
+            // After a rescan of an empty database TU_ref = 0, so L_ref = 0 and a pattern that does not
+            // occur (utility 0 = L_ref) is not tracked: the budget argument needs TU_ref > 0, and the
+            // first insertion after such a rescan rescans (verify.EmptyDatabaseCheck).
+            this.cubTriggeredRescan = forceRescan || tsuAtLastRescan <= 0
+                    || (useAdaptiveRescan ? (triggerQuantity > safetyBoundF) : true);
             forceRescan = false;
             this.iauMaxAtDecision = triggerQuantity;   // recorded before resetIau() below
 
