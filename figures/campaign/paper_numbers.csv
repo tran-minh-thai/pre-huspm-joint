@@ -721,6 +721,10 @@ SC5_runs_vs_closest_remine_separated,46/48,table_SC5_cells.csv
 SC5_runs_vs_closest_remine_overlapping,2/48,table_SC5_cells.csv
 SC5_runs_vs_closest_remine_behind,0/48,table_SC5_cells.csv
 SC5_runs_vs_closest_remine_one_run,0/48,table_SC5_cells.csv
+SC5_C8T1S5I8N5K_runs_Remine-own-UUT-reuse,3,table_SC5_cells.csv
+SC5_LEVIATHAN_runs_Remine-own-UUT-reuse,3,table_SC5_cells.csv
+SC5_SIGN_runs_Remine-own-UUT-reuse,3,table_SC5_cells.csv
+SC5_arms_faster_than_Remine-UUT,Remine-own-UUT-reuse in 48 of 48 cells,table_SC5_cells.csv
 SC5_cells_within_10pct,26/48,table_SC5_cells.csv
 SC5_closest_over_proposal_min,1.022,table_SC5_cells.csv
 SC5_cells_within_10pct_runs,overlapping; separated,table_SC5_cells.csv
@@ -7110,6 +7114,10 @@ SC2_floor_plain_floor_over_max_floor_TAFENG_separation,overlapping,table_SC2_rul
 SC2_isolation_tracking_minus_fixed_floor_TAFENG_s,-1.33,table_SC2_rule_isolation.csv
 SC2_isolation_tracking_over_fixed_floor_TAFENG,0.78,table_SC2_rule_isolation.csv
 SC2_isolation_tracking_tracked_over_fixed_floor_TAFENG,21.11,table_SC2_rule_isolation.csv
+SC2_isolation_rule_Joint-miner+SWUmax_over_fixed_floor_range,0.997 (LEVIATHAN) to 1.085 (TAFENG),table_SC2_rule_isolation.csv
+SC2_isolation_rule_Joint-miner+SWUmax_over_fixed_floor_largest_change_pct,8.5 (TAFENG),table_SC2_rule_isolation.csv
+SC2_isolation_rule_Joint-miner+TSU_over_fixed_floor_range,1.003 (SIGN) to 1.905 (TAFENG),table_SC2_rule_isolation.csv
+SC2_isolation_rule_Joint-miner+TSU_over_fixed_floor_largest_change_pct,90.5 (TAFENG),table_SC2_rule_isolation.csv
 SC2_prediction,refuted,table_SC2_operating_region.csv
 SC2_phi_over_beta_median_BIBLE,120,table_SC2_operating_region.csv
 SC2_alpha_decisions_BIBLE_median_pct,84.6,table_SC2_operating_region.csv
@@ -7364,6 +7372,8 @@ classes_SC3_miner_at_threshold_vs_HUSP-SP_band_1.05,"wins 12, ties 0, losses 0 o
 classes_SC3_miner_at_threshold_vs_HUSP-SP_band_1.10,"wins 9, ties 3, losses 0 of 12",table_comparison_classes.csv
 classes_SC3_miner_at_threshold_vs_HUSP-ULL_band_1.05,"wins 10, ties 2, losses 0 of 12",table_comparison_classes.csv
 classes_SC3_miner_at_threshold_vs_HUSP-ULL_band_1.10,"wins 10, ties 2, losses 0 of 12",table_comparison_classes.csv
+classes_SC5_method_vs_Remine-own-UUT-reuse_band_1.05,"wins 19, ties 28, losses 1 of 48",table_comparison_classes.csv
+classes_SC5_method_vs_Remine-own-UUT-reuse_band_1.10,"wins 6, ties 42, losses 0 of 48",table_comparison_classes.csv
 classes_SC5_method_vs_closest_band_1.05,"wins 37, ties 11, losses 0 of 48",table_comparison_classes.csv
 classes_SC5_method_vs_closest_band_1.10,"wins 22, ties 26, losses 0 of 48",table_comparison_classes.csv
 classes_SC7_full_vs_no_item_pruning_band_1.05,"wins 7, ties 1, losses 0 of 8",table_comparison_classes.csv
@@ -7652,6 +7662,11 @@ classes_SC3_miner_at_threshold_vs_HUSP-ULL_ties,C8T1S5I8N5K 0.001099 1.033; C8T1
 classes_SC3_miner_at_threshold_vs_HUSP-ULL_wins,SIGN 0.049134 1.607; SIGN 0.065911 1.652; SIGN 0.083371 1.668; SIGN 0.091052 1.627; LEVIATHAN 0.014644 1.276; LEVIATHAN 0.01553 1.298; LEVIATHAN 0.01647 1.273; LEVIATHAN 0.017987 1.246; C8T1S5I8N5K 0.0012 1.133; C8T1S5I8N5K 0.001236 1.118,table_comparison_classes.csv
 classes_SC3_miner_at_threshold_vs_HUSP-ULL_wins_range,1.118 to 1.668,table_comparison_classes.csv
 classes_SC3_miner_at_threshold_vs_HUSP-ULL_wins_range_first_over_second,0.600 to 0.894,table_comparison_classes.csv
+classes_SC5_method_vs_Remine-own-UUT-reuse,"wins 7, ties 41, losses 0 of 48",table_comparison_classes.csv
+classes_SC5_method_vs_Remine-own-UUT-reuse_ties,C8T1S5I8N5K K=25 BURST 0.955; C8T1S5I8N5K K=25 DECREASING 0.963; C8T1S5I8N5K K=25 EVEN 0.949; C8T1S5I8N5K K=25 INCREASING 0.979; C8T1S5I8N5K K=50 BURST 0.964; C8T1S5I8N5K K=50 DECREASING 0.973; C8T1S5I8N5K K=50 EVEN 0.965; C8T1S5I8N5K K=50 INCREASING 0.992; C8T1S5I8N5K K=67 BURST 0.973; C8T1S5I8N5K K=67 DECREASING 0.987; C8T1S5I8N5K K=67 EVEN 0.975; C8T1S5I8N5K K=67 INCREASING 1.025; C8T1S5I8N5K K=100 BURST 0.966; C8T1S5I8N5K K=100 DECREASING 1.016; C8T1S5I8N5K K=100 EVEN 0.973; C8T1S5I8N5K K=100 INCREASING 1.056; LEVIATHAN K=25 BURST 0.994; LEVIATHAN K=25 DECREASING 0.998; LEVIATHAN K=25 EVEN 0.995; LEVIATHAN K=25 INCREASING 0.990; LEVIATHAN K=50 BURST 0.996; LEVIATHAN K=50 DECREASING 0.990; LEVIATHAN K=50 EVEN 0.997; LEVIATHAN K=50 INCREASING 1.014; LEVIATHAN K=67 BURST 1.000; LEVIATHAN K=67 DECREASING 1.065; LEVIATHAN K=67 EVEN 1.002; LEVIATHAN K=67 INCREASING 1.022; LEVIATHAN K=100 BURST 1.042; LEVIATHAN K=100 EVEN 0.996; LEVIATHAN K=100 INCREASING 1.038; SIGN K=25 BURST 1.085; SIGN K=25 DECREASING 1.081; SIGN K=25 EVEN 1.084; SIGN K=50 BURST 1.085; SIGN K=50 DECREASING 1.082; SIGN K=50 EVEN 1.086; SIGN K=67 DECREASING 1.069; SIGN K=67 EVEN 1.085; SIGN K=100 BURST 1.082; SIGN K=100 EVEN 1.085,table_comparison_classes.csv
+classes_SC5_method_vs_Remine-own-UUT-reuse_wins,LEVIATHAN K=100 DECREASING 1.216; SIGN K=25 INCREASING 1.115; SIGN K=50 INCREASING 1.104; SIGN K=67 BURST 1.088; SIGN K=67 INCREASING 1.114; SIGN K=100 DECREASING 1.270; SIGN K=100 INCREASING 1.122,table_comparison_classes.csv
+classes_SC5_method_vs_Remine-own-UUT-reuse_wins_range,1.088 to 1.270,table_comparison_classes.csv
+classes_SC5_method_vs_Remine-own-UUT-reuse_wins_range_first_over_second,0.787 to 0.919,table_comparison_classes.csv
 classes_SC5_method_vs_closest,"wins 32, ties 16, losses 0 of 48",table_comparison_classes.csv
 classes_SC5_method_vs_closest_ties,LEVIATHAN K=25 BURST 1.029; LEVIATHAN K=25 DECREASING 1.034; LEVIATHAN K=25 EVEN 1.032; LEVIATHAN K=25 INCREASING 1.029; LEVIATHAN K=50 BURST 1.029; LEVIATHAN K=50 DECREASING 1.022; LEVIATHAN K=50 EVEN 1.031; LEVIATHAN K=50 INCREASING 1.050; LEVIATHAN K=67 BURST 1.028; LEVIATHAN K=67 EVEN 1.029; LEVIATHAN K=67 INCREASING 1.059; LEVIATHAN K=100 BURST 1.071; LEVIATHAN K=100 EVEN 1.028; LEVIATHAN K=100 INCREASING 1.071; SIGN K=25 DECREASING 1.086; SIGN K=67 DECREASING 1.076,table_comparison_classes.csv
 classes_SC5_method_vs_closest_wins,C8T1S5I8N5K K=25 BURST 1.163; C8T1S5I8N5K K=25 DECREASING 1.158; C8T1S5I8N5K K=25 EVEN 1.154; C8T1S5I8N5K K=25 INCREASING 1.182; C8T1S5I8N5K K=50 BURST 1.159; C8T1S5I8N5K K=50 DECREASING 1.169; C8T1S5I8N5K K=50 EVEN 1.163; C8T1S5I8N5K K=50 INCREASING 1.194; C8T1S5I8N5K K=67 BURST 1.170; C8T1S5I8N5K K=67 DECREASING 1.178; C8T1S5I8N5K K=67 EVEN 1.175; C8T1S5I8N5K K=67 INCREASING 1.224; C8T1S5I8N5K K=100 BURST 1.164; C8T1S5I8N5K K=100 DECREASING 1.210; C8T1S5I8N5K K=100 EVEN 1.204; C8T1S5I8N5K K=100 INCREASING 1.261; LEVIATHAN K=67 DECREASING 1.092; LEVIATHAN K=100 DECREASING 1.252; SIGN K=25 BURST 1.091; SIGN K=25 EVEN 1.090; SIGN K=25 INCREASING 1.121; SIGN K=50 BURST 1.091; SIGN K=50 DECREASING 1.088; SIGN K=50 EVEN 1.091; SIGN K=50 INCREASING 1.109; SIGN K=67 BURST 1.094; SIGN K=67 EVEN 1.091; SIGN K=67 INCREASING 1.121; SIGN K=100 BURST 1.090; SIGN K=100 DECREASING 1.282; SIGN K=100 EVEN 1.089; SIGN K=100 INCREASING 1.134,table_comparison_classes.csv

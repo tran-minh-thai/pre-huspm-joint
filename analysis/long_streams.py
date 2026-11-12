@@ -67,10 +67,14 @@ SCENARIOS = ["SC8", "SC8P", "SC9", "SC10", "SC10H"]
 METHOD = mf.PROPOSED
 FIXED = mf.FIXED
 REBUILD = METHOD + "-index-rebuild"
-ARMS = [METHOD, FIXED, METHOD + "-w5", "Remine-from-scratch", "Remine-own-UUT", REBUILD]
+# Remine-UUT-R: the arm directory Remine-own-UUT, which reuses the per-sequence data an earlier
+# operation built; load() keeps its rows under this name before the rival Remine-own-UUT is read
+# from its rebuild arm (make_figures.apply_rivals)
+REUSE = "Remine-own-UUT-reuse"
+ARMS = [METHOD, FIXED, METHOD + "-w5", "Remine-from-scratch", "Remine-own-UUT", REUSE, REBUILD]
 INCREMENTAL = {METHOD, FIXED, METHOD + "-w5", REBUILD}
 TAG = {METHOD: "Method", FIXED: "FixedFloor", METHOD + "-w5": "Window5", "Remine-from-scratch": "Remine",
-       "Remine-own-UUT": "RemineUUT", REBUILD: "IndexRebuild"}
+       "Remine-own-UUT": "RemineUUT", REUSE: "Remine-UUT-reuse", REBUILD: "IndexRebuild"}
 KINDS = {"INS": "insertion", "DEL": "deletion", "MOD": "modification"}
 INDEX_STEP = 50
 REPLICATE_RUN = "s0r"          # replicates of the long streams: seed index 0, repeat n
@@ -105,7 +109,8 @@ def load(root, sc, need_done=True, replicate_roots=()):
         return None
     df = pd.concat(frames, ignore_index=True)
     df.columns = [c.strip() for c in df.columns]
-    df = mf.apply_rivals(df, sc, "algorithm")
+    reuse = df[df["algorithm"] == "Remine-own-UUT"].assign(algorithm=REUSE)
+    df = pd.concat([mf.apply_rivals(df, sc, "algorithm"), reuse], ignore_index=True)
     df["status"] = [mf.classify_status(o, r) for o, r in zip(df["op_type"], df["runtime_ms"])]
     df["kind"] = df["op_type"].astype(str).str.extract(r"SC6_(INS|DEL|MOD|INIT)")[0]
     dup = df.duplicated(KEY + ["replicate"], keep=False)

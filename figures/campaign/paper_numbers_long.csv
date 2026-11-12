@@ -79,6 +79,17 @@ LONG_SC8_SIGN_RemineUUT_method_over_arm_basis,pooled,table_long_streams.csv
 LONG_SC8_SIGN_RemineUUT_insertion_s_per_seed,30.14,table_long_streams.csv
 LONG_SC8_SIGN_RemineUUT_deletion_s_per_seed,6.46,table_long_streams.csv
 LONG_SC8_SIGN_RemineUUT_modification_s_per_seed,6.41,table_long_streams.csv
+LONG_SC8_SIGN_Remine-UUT-reuse_seeds,3,table_long_streams.csv
+LONG_SC8_SIGN_Remine-UUT-reuse_stream_s,40.98 (40.05 to 41.70),table_long_streams.csv
+LONG_SC8_SIGN_Remine-UUT-reuse_latency_ms_median,81.965,table_long_streams.csv
+LONG_SC8_SIGN_Remine-UUT-reuse_latency_ms_p95,94.987,table_long_streams.csv
+LONG_SC8_SIGN_Remine-UUT-reuse_latency_ms_p99,97.909,table_long_streams.csv
+LONG_SC8_SIGN_Remine-UUT-reuse_latency_ms_max,101.156,table_long_streams.csv
+LONG_SC8_SIGN_Remine-UUT-reuse_method_over_arm_pooled,0.264,table_long_streams.csv
+LONG_SC8_SIGN_Remine-UUT-reuse_method_over_arm_basis,pooled,table_long_streams.csv
+LONG_SC8_SIGN_Remine-UUT-reuse_insertion_s_per_seed,28.72,table_long_streams.csv
+LONG_SC8_SIGN_Remine-UUT-reuse_deletion_s_per_seed,6.15,table_long_streams.csv
+LONG_SC8_SIGN_Remine-UUT-reuse_modification_s_per_seed,6.10,table_long_streams.csv
 LONG_SC8_LEVIATHAN_Method_seeds,3,table_long_streams.csv
 LONG_SC8_LEVIATHAN_Method_stream_s,28.49 (27.97 to 29.06),table_long_streams.csv
 LONG_SC8_LEVIATHAN_Method_latency_ms_median,0.693,table_long_streams.csv
@@ -159,6 +170,17 @@ LONG_SC8_LEVIATHAN_RemineUUT_method_over_arm_basis,pooled,table_long_streams.csv
 LONG_SC8_LEVIATHAN_RemineUUT_insertion_s_per_seed,67.39,table_long_streams.csv
 LONG_SC8_LEVIATHAN_RemineUUT_deletion_s_per_seed,14.25,table_long_streams.csv
 LONG_SC8_LEVIATHAN_RemineUUT_modification_s_per_seed,14.44,table_long_streams.csv
+LONG_SC8_LEVIATHAN_Remine-UUT-reuse_seeds,3,table_long_streams.csv
+LONG_SC8_LEVIATHAN_Remine-UUT-reuse_stream_s,93.67 (92.61 to 95.34),table_long_streams.csv
+LONG_SC8_LEVIATHAN_Remine-UUT-reuse_latency_ms_median,187.516,table_long_streams.csv
+LONG_SC8_LEVIATHAN_Remine-UUT-reuse_latency_ms_p95,218.112,table_long_streams.csv
+LONG_SC8_LEVIATHAN_Remine-UUT-reuse_latency_ms_p99,223.416,table_long_streams.csv
+LONG_SC8_LEVIATHAN_Remine-UUT-reuse_latency_ms_max,289.951,table_long_streams.csv
+LONG_SC8_LEVIATHAN_Remine-UUT-reuse_method_over_arm_pooled,0.304,table_long_streams.csv
+LONG_SC8_LEVIATHAN_Remine-UUT-reuse_method_over_arm_basis,pooled,table_long_streams.csv
+LONG_SC8_LEVIATHAN_Remine-UUT-reuse_insertion_s_per_seed,65.72,table_long_streams.csv
+LONG_SC8_LEVIATHAN_Remine-UUT-reuse_deletion_s_per_seed,13.87,table_long_streams.csv
+LONG_SC8_LEVIATHAN_Remine-UUT-reuse_modification_s_per_seed,14.08,table_long_streams.csv
 LONG_SC8_C8T1S5I8N5K_Method_seeds,3,table_long_streams.csv
 LONG_SC8_C8T1S5I8N5K_Method_stream_s,6.82 (6.61 to 7.05),table_long_streams.csv
 LONG_SC8_C8T1S5I8N5K_Method_latency_ms_median,2.065,table_long_streams.csv
@@ -239,6 +261,17 @@ LONG_SC8_C8T1S5I8N5K_RemineUUT_method_over_arm_basis,pooled,table_long_streams.c
 LONG_SC8_C8T1S5I8N5K_RemineUUT_insertion_s_per_seed,23.95,table_long_streams.csv
 LONG_SC8_C8T1S5I8N5K_RemineUUT_deletion_s_per_seed,5.10,table_long_streams.csv
 LONG_SC8_C8T1S5I8N5K_RemineUUT_modification_s_per_seed,5.11,table_long_streams.csv
+LONG_SC8_C8T1S5I8N5K_Remine-UUT-reuse_seeds,3,table_long_streams.csv
+LONG_SC8_C8T1S5I8N5K_Remine-UUT-reuse_stream_s,28.61 (27.43 to 30.16),table_long_streams.csv
+LONG_SC8_C8T1S5I8N5K_Remine-UUT-reuse_latency_ms_median,56.656,table_long_streams.csv
+LONG_SC8_C8T1S5I8N5K_Remine-UUT-reuse_latency_ms_p95,64.568,table_long_streams.csv
+LONG_SC8_C8T1S5I8N5K_Remine-UUT-reuse_latency_ms_p99,66.212,table_long_streams.csv
+LONG_SC8_C8T1S5I8N5K_Remine-UUT-reuse_latency_ms_max,234.140,table_long_streams.csv
+LONG_SC8_C8T1S5I8N5K_Remine-UUT-reuse_method_over_arm_pooled,0.238,table_long_streams.csv
+LONG_SC8_C8T1S5I8N5K_Remine-UUT-reuse_method_over_arm_basis,pooled,table_long_streams.csv
+LONG_SC8_C8T1S5I8N5K_Remine-UUT-reuse_insertion_s_per_seed,20.08,table_long_streams.csv
+LONG_SC8_C8T1S5I8N5K_Remine-UUT-reuse_deletion_s_per_seed,4.25,table_long_streams.csv
+LONG_SC8_C8T1S5I8N5K_Remine-UUT-reuse_modification_s_per_seed,4.27,table_long_streams.csv
 LONG_SC8_TAFENG_Method_seeds,3,table_long_streams.csv
 LONG_SC8_TAFENG_Method_stream_s,3.82 (3.75 to 3.92),table_long_streams.csv
 LONG_SC8_TAFENG_Method_latency_ms_median,0.586,table_long_streams.csv
@@ -319,6 +352,17 @@ LONG_SC8_TAFENG_RemineUUT_method_over_arm_basis,pooled,table_long_streams.csv
 LONG_SC8_TAFENG_RemineUUT_insertion_s_per_seed,41.96,table_long_streams.csv
 LONG_SC8_TAFENG_RemineUUT_deletion_s_per_seed,8.95,table_long_streams.csv
 LONG_SC8_TAFENG_RemineUUT_modification_s_per_seed,8.98,table_long_streams.csv
+LONG_SC8_TAFENG_Remine-UUT-reuse_seeds,3,table_long_streams.csv
+LONG_SC8_TAFENG_Remine-UUT-reuse_stream_s,43.17 (42.56 to 43.66),table_long_streams.csv
+LONG_SC8_TAFENG_Remine-UUT-reuse_latency_ms_median,86.455,table_long_streams.csv
+LONG_SC8_TAFENG_Remine-UUT-reuse_latency_ms_p95,91.090,table_long_streams.csv
+LONG_SC8_TAFENG_Remine-UUT-reuse_latency_ms_p99,92.661,table_long_streams.csv
+LONG_SC8_TAFENG_Remine-UUT-reuse_latency_ms_max,120.103,table_long_streams.csv
+LONG_SC8_TAFENG_Remine-UUT-reuse_method_over_arm_pooled,0.089,table_long_streams.csv
+LONG_SC8_TAFENG_Remine-UUT-reuse_method_over_arm_basis,pooled,table_long_streams.csv
+LONG_SC8_TAFENG_Remine-UUT-reuse_insertion_s_per_seed,30.26,table_long_streams.csv
+LONG_SC8_TAFENG_Remine-UUT-reuse_deletion_s_per_seed,6.44,table_long_streams.csv
+LONG_SC8_TAFENG_Remine-UUT-reuse_modification_s_per_seed,6.47,table_long_streams.csv
 LONG_SC8_DUNNHUMBY_Method_seeds,3,table_long_streams.csv
 LONG_SC8_DUNNHUMBY_Method_runs,5,table_long_streams.csv
 LONG_SC8_DUNNHUMBY_Method_stream_s_runs,1211.95 to 1433.81,table_long_streams.csv
@@ -421,6 +465,22 @@ LONG_SC8_DUNNHUMBY_RemineUUT_method_over_arm_paired_method_faster,2 of 2,table_l
 LONG_SC8_DUNNHUMBY_RemineUUT_insertion_s_per_seed,344.51,table_long_streams.csv
 LONG_SC8_DUNNHUMBY_RemineUUT_deletion_s_per_seed,74.50,table_long_streams.csv
 LONG_SC8_DUNNHUMBY_RemineUUT_modification_s_per_seed,73.98,table_long_streams.csv
+LONG_SC8_DUNNHUMBY_Remine-UUT-reuse_seeds,3,table_long_streams.csv
+LONG_SC8_DUNNHUMBY_Remine-UUT-reuse_runs,3,table_long_streams.csv
+LONG_SC8_DUNNHUMBY_Remine-UUT-reuse_stream_s_runs,1332.00 to 1530.79,table_long_streams.csv
+LONG_SC8_DUNNHUMBY_Remine-UUT-reuse_stream_s,480.01 (476.48 to 482.69),table_long_streams.csv
+LONG_SC8_DUNNHUMBY_Remine-UUT-reuse_latency_ms_median,955.570,table_long_streams.csv
+LONG_SC8_DUNNHUMBY_Remine-UUT-reuse_latency_ms_p95,1099.144,table_long_streams.csv
+LONG_SC8_DUNNHUMBY_Remine-UUT-reuse_latency_ms_p99,1115.275,table_long_streams.csv
+LONG_SC8_DUNNHUMBY_Remine-UUT-reuse_latency_ms_max,1139.240,table_long_streams.csv
+LONG_SC8_DUNNHUMBY_Remine-UUT-reuse_method_over_arm_pooled,0.919,table_long_streams.csv
+LONG_SC8_DUNNHUMBY_Remine-UUT-reuse_method_over_arm_basis,paired,table_long_streams.csv
+LONG_SC8_DUNNHUMBY_Remine-UUT-reuse_method_over_arm_paired_range,0.832 to 0.997,table_long_streams.csv
+LONG_SC8_DUNNHUMBY_Remine-UUT-reuse_method_over_arm_paired_runs,3,table_long_streams.csv
+LONG_SC8_DUNNHUMBY_Remine-UUT-reuse_method_over_arm_paired_method_faster,3 of 3,table_long_streams.csv
+LONG_SC8_DUNNHUMBY_Remine-UUT-reuse_insertion_s_per_seed,335.42,table_long_streams.csv
+LONG_SC8_DUNNHUMBY_Remine-UUT-reuse_deletion_s_per_seed,72.58,table_long_streams.csv
+LONG_SC8_DUNNHUMBY_Remine-UUT-reuse_modification_s_per_seed,72.01,table_long_streams.csv
 LONG_SC8P_SIGN_Method_seeds,3,table_long_streams.csv
 LONG_SC8P_SIGN_Method_stream_s,8.05 (7.92 to 8.16),table_long_streams.csv
 LONG_SC8P_SIGN_Method_latency_ms_median,0.572,table_long_streams.csv
@@ -501,6 +561,17 @@ LONG_SC8P_SIGN_RemineUUT_method_over_arm_basis,pooled,table_long_streams.csv
 LONG_SC8P_SIGN_RemineUUT_insertion_s_per_seed,18.92,table_long_streams.csv
 LONG_SC8P_SIGN_RemineUUT_deletion_s_per_seed,16.18,table_long_streams.csv
 LONG_SC8P_SIGN_RemineUUT_modification_s_per_seed,3.88,table_long_streams.csv
+LONG_SC8P_SIGN_Remine-UUT-reuse_seeds,3,table_long_streams.csv
+LONG_SC8P_SIGN_Remine-UUT-reuse_stream_s,39.41 (38.68 to 39.79),table_long_streams.csv
+LONG_SC8P_SIGN_Remine-UUT-reuse_latency_ms_median,81.231,table_long_streams.csv
+LONG_SC8P_SIGN_Remine-UUT-reuse_latency_ms_p95,95.404,table_long_streams.csv
+LONG_SC8P_SIGN_Remine-UUT-reuse_latency_ms_p99,97.180,table_long_streams.csv
+LONG_SC8P_SIGN_Remine-UUT-reuse_latency_ms_max,100.036,table_long_streams.csv
+LONG_SC8P_SIGN_Remine-UUT-reuse_method_over_arm_pooled,0.204,table_long_streams.csv
+LONG_SC8P_SIGN_Remine-UUT-reuse_method_over_arm_basis,pooled,table_long_streams.csv
+LONG_SC8P_SIGN_Remine-UUT-reuse_insertion_s_per_seed,19.11,table_long_streams.csv
+LONG_SC8P_SIGN_Remine-UUT-reuse_deletion_s_per_seed,16.37,table_long_streams.csv
+LONG_SC8P_SIGN_Remine-UUT-reuse_modification_s_per_seed,3.92,table_long_streams.csv
 LONG_SC8P_LEVIATHAN_Method_seeds,3,table_long_streams.csv
 LONG_SC8P_LEVIATHAN_Method_stream_s,19.43 (19.36 to 19.56),table_long_streams.csv
 LONG_SC8P_LEVIATHAN_Method_latency_ms_median,0.619,table_long_streams.csv
@@ -581,6 +652,17 @@ LONG_SC8P_LEVIATHAN_RemineUUT_method_over_arm_basis,pooled,table_long_streams.cs
 LONG_SC8P_LEVIATHAN_RemineUUT_insertion_s_per_seed,40.82,table_long_streams.csv
 LONG_SC8P_LEVIATHAN_RemineUUT_deletion_s_per_seed,42.20,table_long_streams.csv
 LONG_SC8P_LEVIATHAN_RemineUUT_modification_s_per_seed,9.18,table_long_streams.csv
+LONG_SC8P_LEVIATHAN_Remine-UUT-reuse_seeds,3,table_long_streams.csv
+LONG_SC8P_LEVIATHAN_Remine-UUT-reuse_stream_s,89.37 (88.17 to 90.87),table_long_streams.csv
+LONG_SC8P_LEVIATHAN_Remine-UUT-reuse_latency_ms_median,179.327,table_long_streams.csv
+LONG_SC8P_LEVIATHAN_Remine-UUT-reuse_latency_ms_p95,195.834,table_long_streams.csv
+LONG_SC8P_LEVIATHAN_Remine-UUT-reuse_latency_ms_p99,199.981,table_long_streams.csv
+LONG_SC8P_LEVIATHAN_Remine-UUT-reuse_latency_ms_max,215.279,table_long_streams.csv
+LONG_SC8P_LEVIATHAN_Remine-UUT-reuse_method_over_arm_pooled,0.217,table_long_streams.csv
+LONG_SC8P_LEVIATHAN_Remine-UUT-reuse_method_over_arm_basis,pooled,table_long_streams.csv
+LONG_SC8P_LEVIATHAN_Remine-UUT-reuse_insertion_s_per_seed,39.57,table_long_streams.csv
+LONG_SC8P_LEVIATHAN_Remine-UUT-reuse_deletion_s_per_seed,40.94,table_long_streams.csv
+LONG_SC8P_LEVIATHAN_Remine-UUT-reuse_modification_s_per_seed,8.86,table_long_streams.csv
 LONG_SC8P_C8T1S5I8N5K_Method_seeds,3,table_long_streams.csv
 LONG_SC8P_C8T1S5I8N5K_Method_stream_s,5.06 (4.73 to 5.44),table_long_streams.csv
 LONG_SC8P_C8T1S5I8N5K_Method_latency_ms_median,3.580,table_long_streams.csv
@@ -661,6 +743,17 @@ LONG_SC8P_C8T1S5I8N5K_RemineUUT_method_over_arm_basis,pooled,table_long_streams.
 LONG_SC8P_C8T1S5I8N5K_RemineUUT_insertion_s_per_seed,13.98,table_long_streams.csv
 LONG_SC8P_C8T1S5I8N5K_RemineUUT_deletion_s_per_seed,12.77,table_long_streams.csv
 LONG_SC8P_C8T1S5I8N5K_RemineUUT_modification_s_per_seed,3.00,table_long_streams.csv
+LONG_SC8P_C8T1S5I8N5K_Remine-UUT-reuse_seeds,3,table_long_streams.csv
+LONG_SC8P_C8T1S5I8N5K_Remine-UUT-reuse_stream_s,24.56 (21.03 to 28.72),table_long_streams.csv
+LONG_SC8P_C8T1S5I8N5K_Remine-UUT-reuse_latency_ms_median,51.591,table_long_streams.csv
+LONG_SC8P_C8T1S5I8N5K_Remine-UUT-reuse_latency_ms_p95,60.875,table_long_streams.csv
+LONG_SC8P_C8T1S5I8N5K_Remine-UUT-reuse_latency_ms_p99,62.402,table_long_streams.csv
+LONG_SC8P_C8T1S5I8N5K_Remine-UUT-reuse_latency_ms_max,282.178,table_long_streams.csv
+LONG_SC8P_C8T1S5I8N5K_Remine-UUT-reuse_method_over_arm_pooled,0.206,table_long_streams.csv
+LONG_SC8P_C8T1S5I8N5K_Remine-UUT-reuse_method_over_arm_basis,pooled,table_long_streams.csv
+LONG_SC8P_C8T1S5I8N5K_Remine-UUT-reuse_insertion_s_per_seed,11.76,table_long_streams.csv
+LONG_SC8P_C8T1S5I8N5K_Remine-UUT-reuse_deletion_s_per_seed,10.33,table_long_streams.csv
+LONG_SC8P_C8T1S5I8N5K_Remine-UUT-reuse_modification_s_per_seed,2.47,table_long_streams.csv
 LONG_SC8P_TAFENG_Method_seeds,3,table_long_streams.csv
 LONG_SC8P_TAFENG_Method_stream_s,2.94 (2.81 to 3.17),table_long_streams.csv
 LONG_SC8P_TAFENG_Method_latency_ms_median,0.541,table_long_streams.csv
@@ -741,6 +834,17 @@ LONG_SC8P_TAFENG_RemineUUT_method_over_arm_basis,pooled,table_long_streams.csv
 LONG_SC8P_TAFENG_RemineUUT_insertion_s_per_seed,26.81,table_long_streams.csv
 LONG_SC8P_TAFENG_RemineUUT_deletion_s_per_seed,26.69,table_long_streams.csv
 LONG_SC8P_TAFENG_RemineUUT_modification_s_per_seed,5.95,table_long_streams.csv
+LONG_SC8P_TAFENG_Remine-UUT-reuse_seeds,3,table_long_streams.csv
+LONG_SC8P_TAFENG_Remine-UUT-reuse_stream_s,42.65 (42.63 to 42.69),table_long_streams.csv
+LONG_SC8P_TAFENG_Remine-UUT-reuse_latency_ms_median,85.588,table_long_streams.csv
+LONG_SC8P_TAFENG_Remine-UUT-reuse_latency_ms_p95,89.635,table_long_streams.csv
+LONG_SC8P_TAFENG_Remine-UUT-reuse_latency_ms_p99,90.920,table_long_streams.csv
+LONG_SC8P_TAFENG_Remine-UUT-reuse_latency_ms_max,146.809,table_long_streams.csv
+LONG_SC8P_TAFENG_Remine-UUT-reuse_method_over_arm_pooled,0.069,table_long_streams.csv
+LONG_SC8P_TAFENG_Remine-UUT-reuse_method_over_arm_basis,pooled,table_long_streams.csv
+LONG_SC8P_TAFENG_Remine-UUT-reuse_insertion_s_per_seed,19.29,table_long_streams.csv
+LONG_SC8P_TAFENG_Remine-UUT-reuse_deletion_s_per_seed,19.09,table_long_streams.csv
+LONG_SC8P_TAFENG_Remine-UUT-reuse_modification_s_per_seed,4.27,table_long_streams.csv
 LONG_SC8P_DUNNHUMBY_Method_seeds,3,table_long_streams.csv
 LONG_SC8P_DUNNHUMBY_Method_runs,5,table_long_streams.csv
 LONG_SC8P_DUNNHUMBY_Method_stream_s_runs,753.06 to 866.59,table_long_streams.csv
@@ -843,6 +947,22 @@ LONG_SC8P_DUNNHUMBY_RemineUUT_method_over_arm_paired_method_faster,2 of 2,table_
 LONG_SC8P_DUNNHUMBY_RemineUUT_insertion_s_per_seed,196.51,table_long_streams.csv
 LONG_SC8P_DUNNHUMBY_RemineUUT_deletion_s_per_seed,202.05,table_long_streams.csv
 LONG_SC8P_DUNNHUMBY_RemineUUT_modification_s_per_seed,44.46,table_long_streams.csv
+LONG_SC8P_DUNNHUMBY_Remine-UUT-reuse_seeds,3,table_long_streams.csv
+LONG_SC8P_DUNNHUMBY_Remine-UUT-reuse_runs,3,table_long_streams.csv
+LONG_SC8P_DUNNHUMBY_Remine-UUT-reuse_stream_s_runs,1238.82 to 1449.89,table_long_streams.csv
+LONG_SC8P_DUNNHUMBY_Remine-UUT-reuse_stream_s,437.41 (435.59 to 440.04),table_long_streams.csv
+LONG_SC8P_DUNNHUMBY_Remine-UUT-reuse_latency_ms_median,872.342,table_long_streams.csv
+LONG_SC8P_DUNNHUMBY_Remine-UUT-reuse_latency_ms_p95,953.873,table_long_streams.csv
+LONG_SC8P_DUNNHUMBY_Remine-UUT-reuse_latency_ms_p99,966.694,table_long_streams.csv
+LONG_SC8P_DUNNHUMBY_Remine-UUT-reuse_latency_ms_max,979.279,table_long_streams.csv
+LONG_SC8P_DUNNHUMBY_Remine-UUT-reuse_method_over_arm_pooled,0.607,table_long_streams.csv
+LONG_SC8P_DUNNHUMBY_Remine-UUT-reuse_method_over_arm_basis,paired,table_long_streams.csv
+LONG_SC8P_DUNNHUMBY_Remine-UUT-reuse_method_over_arm_paired_range,0.598 to 0.615,table_long_streams.csv
+LONG_SC8P_DUNNHUMBY_Remine-UUT-reuse_method_over_arm_paired_runs,3,table_long_streams.csv
+LONG_SC8P_DUNNHUMBY_Remine-UUT-reuse_method_over_arm_paired_method_faster,3 of 3,table_long_streams.csv
+LONG_SC8P_DUNNHUMBY_Remine-UUT-reuse_insertion_s_per_seed,195.07,table_long_streams.csv
+LONG_SC8P_DUNNHUMBY_Remine-UUT-reuse_deletion_s_per_seed,198.46,table_long_streams.csv
+LONG_SC8P_DUNNHUMBY_Remine-UUT-reuse_modification_s_per_seed,43.88,table_long_streams.csv
 LONG_SC9_SIGN_Method_seeds,3,table_long_streams.csv
 LONG_SC9_SIGN_Method_stream_s,7.31 (7.15 to 7.39),table_long_streams.csv
 LONG_SC9_SIGN_Method_latency_ms_median,0.574,table_long_streams.csv
@@ -920,6 +1040,17 @@ LONG_SC9_SIGN_RemineUUT_method_over_arm_basis,pooled,table_long_streams.csv
 LONG_SC9_SIGN_RemineUUT_insertion_s_per_seed,15.22,table_long_streams.csv
 LONG_SC9_SIGN_RemineUUT_deletion_s_per_seed,15.16,table_long_streams.csv
 LONG_SC9_SIGN_RemineUUT_modification_s_per_seed,0.00,table_long_streams.csv
+LONG_SC9_SIGN_Remine-UUT-reuse_seeds,3,table_long_streams.csv
+LONG_SC9_SIGN_Remine-UUT-reuse_stream_s,29.79 (28.80 to 30.35),table_long_streams.csv
+LONG_SC9_SIGN_Remine-UUT-reuse_latency_ms_median,59.370,table_long_streams.csv
+LONG_SC9_SIGN_Remine-UUT-reuse_latency_ms_p95,69.149,table_long_streams.csv
+LONG_SC9_SIGN_Remine-UUT-reuse_latency_ms_p99,70.147,table_long_streams.csv
+LONG_SC9_SIGN_Remine-UUT-reuse_latency_ms_max,97.444,table_long_streams.csv
+LONG_SC9_SIGN_Remine-UUT-reuse_method_over_arm_pooled,0.245,table_long_streams.csv
+LONG_SC9_SIGN_Remine-UUT-reuse_method_over_arm_basis,pooled,table_long_streams.csv
+LONG_SC9_SIGN_Remine-UUT-reuse_insertion_s_per_seed,14.93,table_long_streams.csv
+LONG_SC9_SIGN_Remine-UUT-reuse_deletion_s_per_seed,14.86,table_long_streams.csv
+LONG_SC9_SIGN_Remine-UUT-reuse_modification_s_per_seed,0.00,table_long_streams.csv
 LONG_SC9_SIGN_IndexRebuild_seeds,3,table_long_streams.csv
 LONG_SC9_SIGN_IndexRebuild_stream_s,7.29 (7.13 to 7.39),table_long_streams.csv
 LONG_SC9_SIGN_IndexRebuild_latency_ms_median,0.586,table_long_streams.csv
@@ -1019,6 +1150,17 @@ LONG_SC9_LEVIATHAN_RemineUUT_method_over_arm_basis,pooled,table_long_streams.csv
 LONG_SC9_LEVIATHAN_RemineUUT_insertion_s_per_seed,40.90,table_long_streams.csv
 LONG_SC9_LEVIATHAN_RemineUUT_deletion_s_per_seed,40.81,table_long_streams.csv
 LONG_SC9_LEVIATHAN_RemineUUT_modification_s_per_seed,0.00,table_long_streams.csv
+LONG_SC9_LEVIATHAN_Remine-UUT-reuse_seeds,3,table_long_streams.csv
+LONG_SC9_LEVIATHAN_Remine-UUT-reuse_stream_s,78.95 (77.14 to 81.36),table_long_streams.csv
+LONG_SC9_LEVIATHAN_Remine-UUT-reuse_latency_ms_median,157.249,table_long_streams.csv
+LONG_SC9_LEVIATHAN_Remine-UUT-reuse_latency_ms_p95,172.477,table_long_streams.csv
+LONG_SC9_LEVIATHAN_Remine-UUT-reuse_latency_ms_p99,175.524,table_long_streams.csv
+LONG_SC9_LEVIATHAN_Remine-UUT-reuse_latency_ms_max,230.933,table_long_streams.csv
+LONG_SC9_LEVIATHAN_Remine-UUT-reuse_method_over_arm_pooled,0.210,table_long_streams.csv
+LONG_SC9_LEVIATHAN_Remine-UUT-reuse_method_over_arm_basis,pooled,table_long_streams.csv
+LONG_SC9_LEVIATHAN_Remine-UUT-reuse_insertion_s_per_seed,39.50,table_long_streams.csv
+LONG_SC9_LEVIATHAN_Remine-UUT-reuse_deletion_s_per_seed,39.45,table_long_streams.csv
+LONG_SC9_LEVIATHAN_Remine-UUT-reuse_modification_s_per_seed,0.00,table_long_streams.csv
 LONG_SC9_LEVIATHAN_IndexRebuild_seeds,3,table_long_streams.csv
 LONG_SC9_LEVIATHAN_IndexRebuild_stream_s,16.97 (16.50 to 17.49),table_long_streams.csv
 LONG_SC9_LEVIATHAN_IndexRebuild_latency_ms_median,0.594,table_long_streams.csv
@@ -1118,6 +1260,17 @@ LONG_SC9_C8T1S5I8N5K_RemineUUT_method_over_arm_basis,pooled,table_long_streams.c
 LONG_SC9_C8T1S5I8N5K_RemineUUT_insertion_s_per_seed,14.56,table_long_streams.csv
 LONG_SC9_C8T1S5I8N5K_RemineUUT_deletion_s_per_seed,14.53,table_long_streams.csv
 LONG_SC9_C8T1S5I8N5K_RemineUUT_modification_s_per_seed,0.00,table_long_streams.csv
+LONG_SC9_C8T1S5I8N5K_Remine-UUT-reuse_seeds,3,table_long_streams.csv
+LONG_SC9_C8T1S5I8N5K_Remine-UUT-reuse_stream_s,24.64 (23.45 to 26.41),table_long_streams.csv
+LONG_SC9_C8T1S5I8N5K_Remine-UUT-reuse_latency_ms_median,49.351,table_long_streams.csv
+LONG_SC9_C8T1S5I8N5K_Remine-UUT-reuse_latency_ms_p95,55.709,table_long_streams.csv
+LONG_SC9_C8T1S5I8N5K_Remine-UUT-reuse_latency_ms_p99,60.047,table_long_streams.csv
+LONG_SC9_C8T1S5I8N5K_Remine-UUT-reuse_latency_ms_max,229.264,table_long_streams.csv
+LONG_SC9_C8T1S5I8N5K_Remine-UUT-reuse_method_over_arm_pooled,0.183,table_long_streams.csv
+LONG_SC9_C8T1S5I8N5K_Remine-UUT-reuse_method_over_arm_basis,pooled,table_long_streams.csv
+LONG_SC9_C8T1S5I8N5K_Remine-UUT-reuse_insertion_s_per_seed,12.36,table_long_streams.csv
+LONG_SC9_C8T1S5I8N5K_Remine-UUT-reuse_deletion_s_per_seed,12.28,table_long_streams.csv
+LONG_SC9_C8T1S5I8N5K_Remine-UUT-reuse_modification_s_per_seed,0.00,table_long_streams.csv
 LONG_SC9_C8T1S5I8N5K_IndexRebuild_seeds,3,table_long_streams.csv
 LONG_SC9_C8T1S5I8N5K_IndexRebuild_stream_s,5.02 (4.91 to 5.23),table_long_streams.csv
 LONG_SC9_C8T1S5I8N5K_IndexRebuild_latency_ms_median,3.607,table_long_streams.csv
@@ -1217,6 +1370,17 @@ LONG_SC9_TAFENG_RemineUUT_method_over_arm_basis,pooled,table_long_streams.csv
 LONG_SC9_TAFENG_RemineUUT_insertion_s_per_seed,28.64,table_long_streams.csv
 LONG_SC9_TAFENG_RemineUUT_deletion_s_per_seed,28.60,table_long_streams.csv
 LONG_SC9_TAFENG_RemineUUT_modification_s_per_seed,0.00,table_long_streams.csv
+LONG_SC9_TAFENG_Remine-UUT-reuse_seeds,3,table_long_streams.csv
+LONG_SC9_TAFENG_Remine-UUT-reuse_stream_s,40.66 (40.51 to 40.92),table_long_streams.csv
+LONG_SC9_TAFENG_Remine-UUT-reuse_latency_ms_median,81.291,table_long_streams.csv
+LONG_SC9_TAFENG_Remine-UUT-reuse_latency_ms_p95,83.389,table_long_streams.csv
+LONG_SC9_TAFENG_Remine-UUT-reuse_latency_ms_p99,84.292,table_long_streams.csv
+LONG_SC9_TAFENG_Remine-UUT-reuse_latency_ms_max,143.114,table_long_streams.csv
+LONG_SC9_TAFENG_Remine-UUT-reuse_method_over_arm_pooled,0.065,table_long_streams.csv
+LONG_SC9_TAFENG_Remine-UUT-reuse_method_over_arm_basis,pooled,table_long_streams.csv
+LONG_SC9_TAFENG_Remine-UUT-reuse_insertion_s_per_seed,20.35,table_long_streams.csv
+LONG_SC9_TAFENG_Remine-UUT-reuse_deletion_s_per_seed,20.31,table_long_streams.csv
+LONG_SC9_TAFENG_Remine-UUT-reuse_modification_s_per_seed,0.00,table_long_streams.csv
 LONG_SC9_TAFENG_IndexRebuild_seeds,3,table_long_streams.csv
 LONG_SC9_TAFENG_IndexRebuild_stream_s,3.10 (3.04 to 3.20),table_long_streams.csv
 LONG_SC9_TAFENG_IndexRebuild_latency_ms_median,0.543,table_long_streams.csv
@@ -1338,6 +1502,22 @@ LONG_SC9_DUNNHUMBY_RemineUUT_method_over_arm_paired_method_faster,2 of 2,table_l
 LONG_SC9_DUNNHUMBY_RemineUUT_insertion_s_per_seed,206.66,table_long_streams.csv
 LONG_SC9_DUNNHUMBY_RemineUUT_deletion_s_per_seed,206.39,table_long_streams.csv
 LONG_SC9_DUNNHUMBY_RemineUUT_modification_s_per_seed,0.00,table_long_streams.csv
+LONG_SC9_DUNNHUMBY_Remine-UUT-reuse_seeds,3,table_long_streams.csv
+LONG_SC9_DUNNHUMBY_Remine-UUT-reuse_runs,3,table_long_streams.csv
+LONG_SC9_DUNNHUMBY_Remine-UUT-reuse_stream_s_runs,1146.63 to 1302.52,table_long_streams.csv
+LONG_SC9_DUNNHUMBY_Remine-UUT-reuse_stream_s,409.84 (408.06 to 410.76),table_long_streams.csv
+LONG_SC9_DUNNHUMBY_Remine-UUT-reuse_latency_ms_median,817.281,table_long_streams.csv
+LONG_SC9_DUNNHUMBY_Remine-UUT-reuse_latency_ms_p95,842.250,table_long_streams.csv
+LONG_SC9_DUNNHUMBY_Remine-UUT-reuse_latency_ms_p99,847.532,table_long_streams.csv
+LONG_SC9_DUNNHUMBY_Remine-UUT-reuse_latency_ms_max,853.911,table_long_streams.csv
+LONG_SC9_DUNNHUMBY_Remine-UUT-reuse_method_over_arm_pooled,0.514,table_long_streams.csv
+LONG_SC9_DUNNHUMBY_Remine-UUT-reuse_method_over_arm_basis,paired,table_long_streams.csv
+LONG_SC9_DUNNHUMBY_Remine-UUT-reuse_method_over_arm_paired_range,0.479 to 0.536,table_long_streams.csv
+LONG_SC9_DUNNHUMBY_Remine-UUT-reuse_method_over_arm_paired_runs,3,table_long_streams.csv
+LONG_SC9_DUNNHUMBY_Remine-UUT-reuse_method_over_arm_paired_method_faster,3 of 3,table_long_streams.csv
+LONG_SC9_DUNNHUMBY_Remine-UUT-reuse_insertion_s_per_seed,205.01,table_long_streams.csv
+LONG_SC9_DUNNHUMBY_Remine-UUT-reuse_deletion_s_per_seed,204.83,table_long_streams.csv
+LONG_SC9_DUNNHUMBY_Remine-UUT-reuse_modification_s_per_seed,0.00,table_long_streams.csv
 LONG_SC9_DUNNHUMBY_IndexRebuild_seeds,3,table_long_streams.csv
 LONG_SC9_DUNNHUMBY_IndexRebuild_stream_s,230.19 (226.17 to 237.41),table_long_streams.csv
 LONG_SC9_DUNNHUMBY_IndexRebuild_latency_ms_median,0.714,table_long_streams.csv
@@ -1440,6 +1620,17 @@ LONG_SC10_SIGN_RemineUUT_method_over_arm_basis,pooled,table_long_streams.csv
 LONG_SC10_SIGN_RemineUUT_insertion_s_per_seed,30.66,table_long_streams.csv
 LONG_SC10_SIGN_RemineUUT_deletion_s_per_seed,6.55,table_long_streams.csv
 LONG_SC10_SIGN_RemineUUT_modification_s_per_seed,6.58,table_long_streams.csv
+LONG_SC10_SIGN_Remine-UUT-reuse_seeds,3,table_long_streams.csv
+LONG_SC10_SIGN_Remine-UUT-reuse_stream_s,43.32 (42.01 to 44.15),table_long_streams.csv
+LONG_SC10_SIGN_Remine-UUT-reuse_latency_ms_median,87.775,table_long_streams.csv
+LONG_SC10_SIGN_Remine-UUT-reuse_latency_ms_p95,98.825,table_long_streams.csv
+LONG_SC10_SIGN_Remine-UUT-reuse_latency_ms_p99,103.143,table_long_streams.csv
+LONG_SC10_SIGN_Remine-UUT-reuse_latency_ms_max,134.128,table_long_streams.csv
+LONG_SC10_SIGN_Remine-UUT-reuse_method_over_arm_pooled,0.260,table_long_streams.csv
+LONG_SC10_SIGN_Remine-UUT-reuse_method_over_arm_basis,pooled,table_long_streams.csv
+LONG_SC10_SIGN_Remine-UUT-reuse_insertion_s_per_seed,30.36,table_long_streams.csv
+LONG_SC10_SIGN_Remine-UUT-reuse_deletion_s_per_seed,6.49,table_long_streams.csv
+LONG_SC10_SIGN_Remine-UUT-reuse_modification_s_per_seed,6.47,table_long_streams.csv
 LONG_SC10_LEVIATHAN_Method_seeds,3,table_long_streams.csv
 LONG_SC10_LEVIATHAN_Method_stream_s,29.07 (28.46 to 29.79),table_long_streams.csv
 LONG_SC10_LEVIATHAN_Method_latency_ms_median,0.658,table_long_streams.csv
@@ -1520,6 +1711,17 @@ LONG_SC10_LEVIATHAN_RemineUUT_method_over_arm_basis,pooled,table_long_streams.cs
 LONG_SC10_LEVIATHAN_RemineUUT_insertion_s_per_seed,67.29,table_long_streams.csv
 LONG_SC10_LEVIATHAN_RemineUUT_deletion_s_per_seed,14.24,table_long_streams.csv
 LONG_SC10_LEVIATHAN_RemineUUT_modification_s_per_seed,14.41,table_long_streams.csv
+LONG_SC10_LEVIATHAN_Remine-UUT-reuse_seeds,3,table_long_streams.csv
+LONG_SC10_LEVIATHAN_Remine-UUT-reuse_stream_s,93.52 (93.16 to 93.81),table_long_streams.csv
+LONG_SC10_LEVIATHAN_Remine-UUT-reuse_latency_ms_median,187.221,table_long_streams.csv
+LONG_SC10_LEVIATHAN_Remine-UUT-reuse_latency_ms_p95,213.731,table_long_streams.csv
+LONG_SC10_LEVIATHAN_Remine-UUT-reuse_latency_ms_p99,216.153,table_long_streams.csv
+LONG_SC10_LEVIATHAN_Remine-UUT-reuse_latency_ms_max,219.469,table_long_streams.csv
+LONG_SC10_LEVIATHAN_Remine-UUT-reuse_method_over_arm_pooled,0.311,table_long_streams.csv
+LONG_SC10_LEVIATHAN_Remine-UUT-reuse_method_over_arm_basis,pooled,table_long_streams.csv
+LONG_SC10_LEVIATHAN_Remine-UUT-reuse_insertion_s_per_seed,65.60,table_long_streams.csv
+LONG_SC10_LEVIATHAN_Remine-UUT-reuse_deletion_s_per_seed,13.87,table_long_streams.csv
+LONG_SC10_LEVIATHAN_Remine-UUT-reuse_modification_s_per_seed,14.05,table_long_streams.csv
 LONG_SC10_C8T1S5I8N5K_Method_seeds,3,table_long_streams.csv
 LONG_SC10_C8T1S5I8N5K_Method_stream_s,6.81 (6.54 to 7.02),table_long_streams.csv
 LONG_SC10_C8T1S5I8N5K_Method_latency_ms_median,2.053,table_long_streams.csv
@@ -1600,6 +1802,17 @@ LONG_SC10_C8T1S5I8N5K_RemineUUT_method_over_arm_basis,pooled,table_long_streams.
 LONG_SC10_C8T1S5I8N5K_RemineUUT_insertion_s_per_seed,23.05,table_long_streams.csv
 LONG_SC10_C8T1S5I8N5K_RemineUUT_deletion_s_per_seed,4.92,table_long_streams.csv
 LONG_SC10_C8T1S5I8N5K_RemineUUT_modification_s_per_seed,4.92,table_long_streams.csv
+LONG_SC10_C8T1S5I8N5K_Remine-UUT-reuse_seeds,3,table_long_streams.csv
+LONG_SC10_C8T1S5I8N5K_Remine-UUT-reuse_stream_s,26.85 (25.75 to 27.59),table_long_streams.csv
+LONG_SC10_C8T1S5I8N5K_Remine-UUT-reuse_latency_ms_median,53.990,table_long_streams.csv
+LONG_SC10_C8T1S5I8N5K_Remine-UUT-reuse_latency_ms_p95,59.558,table_long_streams.csv
+LONG_SC10_C8T1S5I8N5K_Remine-UUT-reuse_latency_ms_p99,61.283,table_long_streams.csv
+LONG_SC10_C8T1S5I8N5K_Remine-UUT-reuse_latency_ms_max,79.362,table_long_streams.csv
+LONG_SC10_C8T1S5I8N5K_Remine-UUT-reuse_method_over_arm_pooled,0.254,table_long_streams.csv
+LONG_SC10_C8T1S5I8N5K_Remine-UUT-reuse_method_over_arm_basis,pooled,table_long_streams.csv
+LONG_SC10_C8T1S5I8N5K_Remine-UUT-reuse_insertion_s_per_seed,18.79,table_long_streams.csv
+LONG_SC10_C8T1S5I8N5K_Remine-UUT-reuse_deletion_s_per_seed,4.03,table_long_streams.csv
+LONG_SC10_C8T1S5I8N5K_Remine-UUT-reuse_modification_s_per_seed,4.03,table_long_streams.csv
 LONG_SC10_TAFENG_Method_seeds,3,table_long_streams.csv
 LONG_SC10_TAFENG_Method_stream_s,3.98 (3.77 to 4.11),table_long_streams.csv
 LONG_SC10_TAFENG_Method_latency_ms_median,0.581,table_long_streams.csv
@@ -1680,6 +1893,17 @@ LONG_SC10_TAFENG_RemineUUT_method_over_arm_basis,pooled,table_long_streams.csv
 LONG_SC10_TAFENG_RemineUUT_insertion_s_per_seed,42.23,table_long_streams.csv
 LONG_SC10_TAFENG_RemineUUT_deletion_s_per_seed,9.01,table_long_streams.csv
 LONG_SC10_TAFENG_RemineUUT_modification_s_per_seed,9.02,table_long_streams.csv
+LONG_SC10_TAFENG_Remine-UUT-reuse_seeds,3,table_long_streams.csv
+LONG_SC10_TAFENG_Remine-UUT-reuse_stream_s,43.09 (42.64 to 43.61),table_long_streams.csv
+LONG_SC10_TAFENG_Remine-UUT-reuse_latency_ms_median,86.615,table_long_streams.csv
+LONG_SC10_TAFENG_Remine-UUT-reuse_latency_ms_p95,91.370,table_long_streams.csv
+LONG_SC10_TAFENG_Remine-UUT-reuse_latency_ms_p99,92.867,table_long_streams.csv
+LONG_SC10_TAFENG_Remine-UUT-reuse_latency_ms_max,144.085,table_long_streams.csv
+LONG_SC10_TAFENG_Remine-UUT-reuse_method_over_arm_pooled,0.092,table_long_streams.csv
+LONG_SC10_TAFENG_Remine-UUT-reuse_method_over_arm_basis,pooled,table_long_streams.csv
+LONG_SC10_TAFENG_Remine-UUT-reuse_insertion_s_per_seed,30.19,table_long_streams.csv
+LONG_SC10_TAFENG_Remine-UUT-reuse_deletion_s_per_seed,6.44,table_long_streams.csv
+LONG_SC10_TAFENG_Remine-UUT-reuse_modification_s_per_seed,6.46,table_long_streams.csv
 LONG_SC10_DUNNHUMBY_Method_seeds,3,table_long_streams.csv
 LONG_SC10_DUNNHUMBY_Method_runs,5,table_long_streams.csv
 LONG_SC10_DUNNHUMBY_Method_stream_s_runs,1346.68 to 1474.64,table_long_streams.csv
@@ -1782,6 +2006,22 @@ LONG_SC10_DUNNHUMBY_RemineUUT_method_over_arm_paired_method_faster,1 of 2,table_
 LONG_SC10_DUNNHUMBY_RemineUUT_insertion_s_per_seed,329.17,table_long_streams.csv
 LONG_SC10_DUNNHUMBY_RemineUUT_deletion_s_per_seed,71.28,table_long_streams.csv
 LONG_SC10_DUNNHUMBY_RemineUUT_modification_s_per_seed,70.72,table_long_streams.csv
+LONG_SC10_DUNNHUMBY_Remine-UUT-reuse_seeds,3,table_long_streams.csv
+LONG_SC10_DUNNHUMBY_Remine-UUT-reuse_runs,3,table_long_streams.csv
+LONG_SC10_DUNNHUMBY_Remine-UUT-reuse_stream_s_runs,1335.14 to 1472.76,table_long_streams.csv
+LONG_SC10_DUNNHUMBY_Remine-UUT-reuse_stream_s,469.95 (469.31 to 470.29),table_long_streams.csv
+LONG_SC10_DUNNHUMBY_Remine-UUT-reuse_latency_ms_median,928.900,table_long_streams.csv
+LONG_SC10_DUNNHUMBY_Remine-UUT-reuse_latency_ms_p95,1088.606,table_long_streams.csv
+LONG_SC10_DUNNHUMBY_Remine-UUT-reuse_latency_ms_p99,1111.330,table_long_streams.csv
+LONG_SC10_DUNNHUMBY_Remine-UUT-reuse_latency_ms_max,1118.509,table_long_streams.csv
+LONG_SC10_DUNNHUMBY_Remine-UUT-reuse_method_over_arm_pooled,1.008,table_long_streams.csv
+LONG_SC10_DUNNHUMBY_Remine-UUT-reuse_method_over_arm_basis,paired,table_long_streams.csv
+LONG_SC10_DUNNHUMBY_Remine-UUT-reuse_method_over_arm_paired_range,0.964 to 1.037,table_long_streams.csv
+LONG_SC10_DUNNHUMBY_Remine-UUT-reuse_method_over_arm_paired_runs,3,table_long_streams.csv
+LONG_SC10_DUNNHUMBY_Remine-UUT-reuse_method_over_arm_paired_method_faster,1 of 3,table_long_streams.csv
+LONG_SC10_DUNNHUMBY_Remine-UUT-reuse_insertion_s_per_seed,328.39,table_long_streams.csv
+LONG_SC10_DUNNHUMBY_Remine-UUT-reuse_deletion_s_per_seed,71.03,table_long_streams.csv
+LONG_SC10_DUNNHUMBY_Remine-UUT-reuse_modification_s_per_seed,70.52,table_long_streams.csv
 LONG_SC10H_LEVIATHAN_Method_seeds,3,table_long_streams.csv
 LONG_SC10H_LEVIATHAN_Method_stream_s,34.51 (34.40 to 34.65),table_long_streams.csv
 LONG_SC10H_LEVIATHAN_Method_latency_ms_median,0.655,table_long_streams.csv
@@ -1862,6 +2102,17 @@ LONG_SC10H_LEVIATHAN_RemineUUT_method_over_arm_basis,pooled,table_long_streams.c
 LONG_SC10H_LEVIATHAN_RemineUUT_insertion_s_per_seed,77.53,table_long_streams.csv
 LONG_SC10H_LEVIATHAN_RemineUUT_deletion_s_per_seed,16.32,table_long_streams.csv
 LONG_SC10H_LEVIATHAN_RemineUUT_modification_s_per_seed,16.60,table_long_streams.csv
+LONG_SC10H_LEVIATHAN_Remine-UUT-reuse_seeds,3,table_long_streams.csv
+LONG_SC10H_LEVIATHAN_Remine-UUT-reuse_stream_s,109.70 (109.27 to 110.03),table_long_streams.csv
+LONG_SC10H_LEVIATHAN_Remine-UUT-reuse_latency_ms_median,218.906,table_long_streams.csv
+LONG_SC10H_LEVIATHAN_Remine-UUT-reuse_latency_ms_p95,266.690,table_long_streams.csv
+LONG_SC10H_LEVIATHAN_Remine-UUT-reuse_latency_ms_p99,279.721,table_long_streams.csv
+LONG_SC10H_LEVIATHAN_Remine-UUT-reuse_latency_ms_max,286.834,table_long_streams.csv
+LONG_SC10H_LEVIATHAN_Remine-UUT-reuse_method_over_arm_pooled,0.315,table_long_streams.csv
+LONG_SC10H_LEVIATHAN_Remine-UUT-reuse_method_over_arm_basis,pooled,table_long_streams.csv
+LONG_SC10H_LEVIATHAN_Remine-UUT-reuse_insertion_s_per_seed,76.98,table_long_streams.csv
+LONG_SC10H_LEVIATHAN_Remine-UUT-reuse_deletion_s_per_seed,16.21,table_long_streams.csv
+LONG_SC10H_LEVIATHAN_Remine-UUT-reuse_modification_s_per_seed,16.51,table_long_streams.csv
 LONG_SC10H_C8T1S5I8N5K_Method_seeds,3,table_long_streams.csv
 LONG_SC10H_C8T1S5I8N5K_Method_stream_s,8.15 (7.74 to 8.48),table_long_streams.csv
 LONG_SC10H_C8T1S5I8N5K_Method_latency_ms_median,2.343,table_long_streams.csv
@@ -1942,6 +2193,17 @@ LONG_SC10H_C8T1S5I8N5K_RemineUUT_method_over_arm_basis,pooled,table_long_streams
 LONG_SC10H_C8T1S5I8N5K_RemineUUT_insertion_s_per_seed,21.83,table_long_streams.csv
 LONG_SC10H_C8T1S5I8N5K_RemineUUT_deletion_s_per_seed,4.65,table_long_streams.csv
 LONG_SC10H_C8T1S5I8N5K_RemineUUT_modification_s_per_seed,4.67,table_long_streams.csv
+LONG_SC10H_C8T1S5I8N5K_Remine-UUT-reuse_seeds,3,table_long_streams.csv
+LONG_SC10H_C8T1S5I8N5K_Remine-UUT-reuse_stream_s,25.13 (22.95 to 27.73),table_long_streams.csv
+LONG_SC10H_C8T1S5I8N5K_Remine-UUT-reuse_latency_ms_median,51.107,table_long_streams.csv
+LONG_SC10H_C8T1S5I8N5K_Remine-UUT-reuse_latency_ms_p95,60.201,table_long_streams.csv
+LONG_SC10H_C8T1S5I8N5K_Remine-UUT-reuse_latency_ms_p99,61.823,table_long_streams.csv
+LONG_SC10H_C8T1S5I8N5K_Remine-UUT-reuse_latency_ms_max,232.193,table_long_streams.csv
+LONG_SC10H_C8T1S5I8N5K_Remine-UUT-reuse_method_over_arm_pooled,0.324,table_long_streams.csv
+LONG_SC10H_C8T1S5I8N5K_Remine-UUT-reuse_method_over_arm_basis,pooled,table_long_streams.csv
+LONG_SC10H_C8T1S5I8N5K_Remine-UUT-reuse_insertion_s_per_seed,17.63,table_long_streams.csv
+LONG_SC10H_C8T1S5I8N5K_Remine-UUT-reuse_deletion_s_per_seed,3.73,table_long_streams.csv
+LONG_SC10H_C8T1S5I8N5K_Remine-UUT-reuse_modification_s_per_seed,3.77,table_long_streams.csv
 LONG_SC10H_TAFENG_Method_seeds,3,table_long_streams.csv
 LONG_SC10H_TAFENG_Method_stream_s,5.11 (4.97 to 5.36),table_long_streams.csv
 LONG_SC10H_TAFENG_Method_latency_ms_median,0.591,table_long_streams.csv
@@ -2022,6 +2284,17 @@ LONG_SC10H_TAFENG_RemineUUT_method_over_arm_basis,pooled,table_long_streams.csv
 LONG_SC10H_TAFENG_RemineUUT_insertion_s_per_seed,45.04,table_long_streams.csv
 LONG_SC10H_TAFENG_RemineUUT_deletion_s_per_seed,9.54,table_long_streams.csv
 LONG_SC10H_TAFENG_RemineUUT_modification_s_per_seed,9.62,table_long_streams.csv
+LONG_SC10H_TAFENG_Remine-UUT-reuse_seeds,3,table_long_streams.csv
+LONG_SC10H_TAFENG_Remine-UUT-reuse_stream_s,45.41 (45.09 to 45.73),table_long_streams.csv
+LONG_SC10H_TAFENG_Remine-UUT-reuse_latency_ms_median,90.303,table_long_streams.csv
+LONG_SC10H_TAFENG_Remine-UUT-reuse_latency_ms_p95,101.018,table_long_streams.csv
+LONG_SC10H_TAFENG_Remine-UUT-reuse_latency_ms_p99,103.428,table_long_streams.csv
+LONG_SC10H_TAFENG_Remine-UUT-reuse_latency_ms_max,145.403,table_long_streams.csv
+LONG_SC10H_TAFENG_Remine-UUT-reuse_method_over_arm_pooled,0.113,table_long_streams.csv
+LONG_SC10H_TAFENG_Remine-UUT-reuse_method_over_arm_basis,pooled,table_long_streams.csv
+LONG_SC10H_TAFENG_Remine-UUT-reuse_insertion_s_per_seed,31.85,table_long_streams.csv
+LONG_SC10H_TAFENG_Remine-UUT-reuse_deletion_s_per_seed,6.77,table_long_streams.csv
+LONG_SC10H_TAFENG_Remine-UUT-reuse_modification_s_per_seed,6.79,table_long_streams.csv
 LONG_SC10H_DUNNHUMBY_Method_seeds,3,table_long_streams.csv
 LONG_SC10H_DUNNHUMBY_Method_runs,5,table_long_streams.csv
 LONG_SC10H_DUNNHUMBY_Method_stream_s_runs,1293.45 to 1480.30,table_long_streams.csv
@@ -2124,6 +2397,22 @@ LONG_SC10H_DUNNHUMBY_RemineUUT_method_over_arm_paired_method_faster,2 of 2,table
 LONG_SC10H_DUNNHUMBY_RemineUUT_insertion_s_per_seed,403.82,table_long_streams.csv
 LONG_SC10H_DUNNHUMBY_RemineUUT_deletion_s_per_seed,88.08,table_long_streams.csv
 LONG_SC10H_DUNNHUMBY_RemineUUT_modification_s_per_seed,87.05,table_long_streams.csv
+LONG_SC10H_DUNNHUMBY_Remine-UUT-reuse_seeds,3,table_long_streams.csv
+LONG_SC10H_DUNNHUMBY_Remine-UUT-reuse_runs,3,table_long_streams.csv
+LONG_SC10H_DUNNHUMBY_Remine-UUT-reuse_stream_s_runs,1567.89 to 1716.90,table_long_streams.csv
+LONG_SC10H_DUNNHUMBY_Remine-UUT-reuse_stream_s,553.98 (550.13 to 556.72),table_long_streams.csv
+LONG_SC10H_DUNNHUMBY_Remine-UUT-reuse_latency_ms_median,1137.096,table_long_streams.csv
+LONG_SC10H_DUNNHUMBY_Remine-UUT-reuse_latency_ms_p95,1348.803,table_long_streams.csv
+LONG_SC10H_DUNNHUMBY_Remine-UUT-reuse_latency_ms_p99,1375.551,table_long_streams.csv
+LONG_SC10H_DUNNHUMBY_Remine-UUT-reuse_latency_ms_max,1395.102,table_long_streams.csv
+LONG_SC10H_DUNNHUMBY_Remine-UUT-reuse_method_over_arm_pooled,0.837,table_long_streams.csv
+LONG_SC10H_DUNNHUMBY_Remine-UUT-reuse_method_over_arm_basis,paired,table_long_streams.csv
+LONG_SC10H_DUNNHUMBY_Remine-UUT-reuse_method_over_arm_paired_range,0.780 to 0.870,table_long_streams.csv
+LONG_SC10H_DUNNHUMBY_Remine-UUT-reuse_method_over_arm_paired_runs,3,table_long_streams.csv
+LONG_SC10H_DUNNHUMBY_Remine-UUT-reuse_method_over_arm_paired_method_faster,3 of 3,table_long_streams.csv
+LONG_SC10H_DUNNHUMBY_Remine-UUT-reuse_insertion_s_per_seed,386.45,table_long_streams.csv
+LONG_SC10H_DUNNHUMBY_Remine-UUT-reuse_deletion_s_per_seed,84.24,table_long_streams.csv
+LONG_SC10H_DUNNHUMBY_Remine-UUT-reuse_modification_s_per_seed,83.29,table_long_streams.csv
 LONG_stable_method_over_FixedFloor_range,0.953 to 1.054,table_long_streams.csv
 LONG_stable_method_over_FixedFloor_streams,19,table_long_streams.csv
 LONG_stable_method_over_FixedFloor_databases,SIGN LEVIATHAN C8T1S5I8N5K TAFENG,table_long_streams.csv
@@ -2139,6 +2428,9 @@ LONG_stable_method_over_Remine_databases,SIGN LEVIATHAN C8T1S5I8N5K TAFENG,table
 LONG_stable_method_over_RemineUUT_range,0.046 to 0.312,table_long_streams.csv
 LONG_stable_method_over_RemineUUT_streams,19,table_long_streams.csv
 LONG_stable_method_over_RemineUUT_databases,SIGN LEVIATHAN C8T1S5I8N5K TAFENG,table_long_streams.csv
+LONG_stable_method_over_Remine-UUT-reuse_range,0.065 to 0.324,table_long_streams.csv
+LONG_stable_method_over_Remine-UUT-reuse_streams,19,table_long_streams.csv
+LONG_stable_method_over_Remine-UUT-reuse_databases,SIGN LEVIATHAN C8T1S5I8N5K TAFENG,table_long_streams.csv
 LONG_all_method_over_FixedFloor_range,0.953 (SC10 SIGN) to 1.162 (SC10 DUNNHUMBY),table_long_streams.csv
 LONG_all_method_over_FixedFloor_streams,24,table_long_streams.csv
 LONG_all_method_over_IndexRebuild_range,0.857 (SC9 TAFENG) to 1.010 (SC9 DUNNHUMBY),table_long_streams.csv
@@ -2149,6 +2441,8 @@ LONG_all_method_over_Remine_range,0.043 (SC9 TAFENG) to 0.831 (SC10 DUNNHUMBY),t
 LONG_all_method_over_Remine_streams,24,table_long_streams.csv
 LONG_all_method_over_RemineUUT_range,0.046 (SC9 TAFENG) to 0.969 (SC10 DUNNHUMBY),table_long_streams.csv
 LONG_all_method_over_RemineUUT_streams,24,table_long_streams.csv
+LONG_all_method_over_Remine-UUT-reuse_range,0.065 (SC9 TAFENG) to 1.008 (SC10 DUNNHUMBY),table_long_streams.csv
+LONG_all_method_over_Remine-UUT-reuse_streams,24,table_long_streams.csv
 LONG_C8T1S5I8N5K_FixedFloor_classes,"wins 0, ties 5, losses 0 of 5",table_long_streams.csv
 LONG_C8T1S5I8N5K_FixedFloor_losses,0 of 5,table_long_streams.csv
 LONG_C8T1S5I8N5K_FixedFloor_loss_streams,none,table_long_streams.csv
@@ -2169,6 +2463,10 @@ LONG_C8T1S5I8N5K_RemineUUT_classes,"wins 5, ties 0, losses 0 of 5",table_long_st
 LONG_C8T1S5I8N5K_RemineUUT_losses,0 of 5,table_long_streams.csv
 LONG_C8T1S5I8N5K_RemineUUT_loss_streams,none,table_long_streams.csv
 LONG_C8T1S5I8N5K_RemineUUT_win_streams,"SC8, SC8P, SC9, SC10, SC10H",table_long_streams.csv
+LONG_C8T1S5I8N5K_Remine-UUT-reuse_classes,"wins 5, ties 0, losses 0 of 5",table_long_streams.csv
+LONG_C8T1S5I8N5K_Remine-UUT-reuse_losses,0 of 5,table_long_streams.csv
+LONG_C8T1S5I8N5K_Remine-UUT-reuse_loss_streams,none,table_long_streams.csv
+LONG_C8T1S5I8N5K_Remine-UUT-reuse_win_streams,"SC8, SC8P, SC9, SC10, SC10H",table_long_streams.csv
 LONG_DUNNHUMBY_FixedFloor_classes,"wins 0, ties 2, losses 3 of 5",table_long_streams.csv
 LONG_DUNNHUMBY_FixedFloor_losses,3 of 5,table_long_streams.csv
 LONG_DUNNHUMBY_FixedFloor_loss_streams,"SC8P, SC10, SC10H",table_long_streams.csv
@@ -2189,6 +2487,10 @@ LONG_DUNNHUMBY_RemineUUT_classes,"wins 4, ties 1, losses 0 of 5",table_long_stre
 LONG_DUNNHUMBY_RemineUUT_losses,0 of 5,table_long_streams.csv
 LONG_DUNNHUMBY_RemineUUT_loss_streams,none,table_long_streams.csv
 LONG_DUNNHUMBY_RemineUUT_win_streams,"SC8, SC8P, SC9, SC10H",table_long_streams.csv
+LONG_DUNNHUMBY_Remine-UUT-reuse_classes,"wins 4, ties 1, losses 0 of 5",table_long_streams.csv
+LONG_DUNNHUMBY_Remine-UUT-reuse_losses,0 of 5,table_long_streams.csv
+LONG_DUNNHUMBY_Remine-UUT-reuse_loss_streams,none,table_long_streams.csv
+LONG_DUNNHUMBY_Remine-UUT-reuse_win_streams,"SC8, SC8P, SC9, SC10H",table_long_streams.csv
 LONG_LEVIATHAN_FixedFloor_classes,"wins 0, ties 5, losses 0 of 5",table_long_streams.csv
 LONG_LEVIATHAN_FixedFloor_losses,0 of 5,table_long_streams.csv
 LONG_LEVIATHAN_FixedFloor_loss_streams,none,table_long_streams.csv
@@ -2209,6 +2511,10 @@ LONG_LEVIATHAN_RemineUUT_classes,"wins 5, ties 0, losses 0 of 5",table_long_stre
 LONG_LEVIATHAN_RemineUUT_losses,0 of 5,table_long_streams.csv
 LONG_LEVIATHAN_RemineUUT_loss_streams,none,table_long_streams.csv
 LONG_LEVIATHAN_RemineUUT_win_streams,"SC8, SC8P, SC9, SC10, SC10H",table_long_streams.csv
+LONG_LEVIATHAN_Remine-UUT-reuse_classes,"wins 5, ties 0, losses 0 of 5",table_long_streams.csv
+LONG_LEVIATHAN_Remine-UUT-reuse_losses,0 of 5,table_long_streams.csv
+LONG_LEVIATHAN_Remine-UUT-reuse_loss_streams,none,table_long_streams.csv
+LONG_LEVIATHAN_Remine-UUT-reuse_win_streams,"SC8, SC8P, SC9, SC10, SC10H",table_long_streams.csv
 LONG_SIGN_FixedFloor_classes,"wins 0, ties 4, losses 0 of 4",table_long_streams.csv
 LONG_SIGN_FixedFloor_losses,0 of 4,table_long_streams.csv
 LONG_SIGN_FixedFloor_loss_streams,none,table_long_streams.csv
@@ -2229,6 +2535,10 @@ LONG_SIGN_RemineUUT_classes,"wins 4, ties 0, losses 0 of 4",table_long_streams.c
 LONG_SIGN_RemineUUT_losses,0 of 4,table_long_streams.csv
 LONG_SIGN_RemineUUT_loss_streams,none,table_long_streams.csv
 LONG_SIGN_RemineUUT_win_streams,"SC8, SC8P, SC9, SC10",table_long_streams.csv
+LONG_SIGN_Remine-UUT-reuse_classes,"wins 4, ties 0, losses 0 of 4",table_long_streams.csv
+LONG_SIGN_Remine-UUT-reuse_losses,0 of 4,table_long_streams.csv
+LONG_SIGN_Remine-UUT-reuse_loss_streams,none,table_long_streams.csv
+LONG_SIGN_Remine-UUT-reuse_win_streams,"SC8, SC8P, SC9, SC10",table_long_streams.csv
 LONG_TAFENG_FixedFloor_classes,"wins 0, ties 5, losses 0 of 5",table_long_streams.csv
 LONG_TAFENG_FixedFloor_losses,0 of 5,table_long_streams.csv
 LONG_TAFENG_FixedFloor_loss_streams,none,table_long_streams.csv
@@ -2249,11 +2559,16 @@ LONG_TAFENG_RemineUUT_classes,"wins 5, ties 0, losses 0 of 5",table_long_streams
 LONG_TAFENG_RemineUUT_losses,0 of 5,table_long_streams.csv
 LONG_TAFENG_RemineUUT_loss_streams,none,table_long_streams.csv
 LONG_TAFENG_RemineUUT_win_streams,"SC8, SC8P, SC9, SC10, SC10H",table_long_streams.csv
+LONG_TAFENG_Remine-UUT-reuse_classes,"wins 5, ties 0, losses 0 of 5",table_long_streams.csv
+LONG_TAFENG_Remine-UUT-reuse_losses,0 of 5,table_long_streams.csv
+LONG_TAFENG_Remine-UUT-reuse_loss_streams,none,table_long_streams.csv
+LONG_TAFENG_Remine-UUT-reuse_win_streams,"SC8, SC8P, SC9, SC10, SC10H",table_long_streams.csv
 LONG_all_FixedFloor_classes,"wins 0, ties 21, losses 3 of 24",table_long_streams.csv
 LONG_all_IndexRebuild_classes,"wins 2, ties 3, losses 0 of 5",table_long_streams.csv
 LONG_all_Window5_classes,"wins 0, ties 21, losses 3 of 24",table_long_streams.csv
 LONG_all_Remine_classes,"wins 24, ties 0, losses 0 of 24",table_long_streams.csv
 LONG_all_RemineUUT_classes,"wins 23, ties 1, losses 0 of 24",table_long_streams.csv
+LONG_all_Remine-UUT-reuse_classes,"wins 23, ties 1, losses 0 of 24",table_long_streams.csv
 LONG_SC10_C8T1S5I8N5K_index_blocks_first,272,table_long_index.csv
 LONG_SC10_C8T1S5I8N5K_index_blocks_last,697,table_long_index.csv
 LONG_SC10_C8T1S5I8N5K_index_blocks_first_operation,0,table_long_index.csv

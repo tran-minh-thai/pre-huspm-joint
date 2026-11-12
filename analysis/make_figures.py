@@ -375,7 +375,7 @@ def load_scenario(sc, tree=TIMING_TREE, finished_only=True, replicates=False, wi
     return df
 
 
-def load_mean(sc, tree=TIMING_TREE):
+def load_mean(sc, tree=TIMING_TREE, rivals=True):
     """One row per measurement (database, algorithm, arm, operation, iteration) of a scenario,
     with its runtime the mean over the replicates that finished it: what every table, figure
     and number of the scenario reports, so that they agree with each other. Counters (patterns,
@@ -383,7 +383,7 @@ def load_mean(sc, tree=TIMING_TREE):
     the replicates agree with it on every row (checked when they arrive). Adds `runs`, the
     number of replicates averaged, and `runtime_ms_std`. A measurement no replicate finished
     keeps the main run's row and status."""
-    df = load_scenario(sc, tree=tree, replicates=True)
+    df = load_scenario(sc, tree=tree, replicates=True, rivals=rivals)
     if df is None:
         return None
     key = ["dataset", "algorithm", "arm", "op_type", "iteration"]

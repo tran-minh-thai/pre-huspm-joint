@@ -311,11 +311,23 @@ def sc5_cells():
     df = mf.parse_batch(df)
     inc = df[df["phase"] == "INC"]
     runs = sc5_run_totals()
+    # Remine-UUT-R: the arm directory Remine-own-UUT read with rivals=False, mean over its runs as above
+    keep = mf.parse_batch(mf.load_mean("SC5", rivals=False))
+    keep = keep[(keep["phase"] == "INC") & (keep["algorithm"] == OWN_UUT)]
+    reuse = {(d, int(k), s): (mf.ms_to_s(g["runtime_ms"]).sum() if g["finished"].all() else np.nan)
+             for (d, k, s), g in keep.groupby(["dataset", "K", "strat"])}
+    reuse_runs = {(d, int(k), s): int(g["runs"].min()) for (d, k, s), g in keep.groupby(["dataset", "K", "strat"])}
     rows = []
     for (d, k, s), g in inc.groupby(["dataset", "K", "strat"]):
         tot = {}
         for a, ga in g.groupby("algorithm"):
             tot[a] = mf.ms_to_s(ga["runtime_ms"]).sum() if ga["finished"].all() else np.nan
+        tr = reuse.get((d, int(k), s), np.nan)
+        # the arms other than the proposal's versions that are faster than Remine-UUT, with Remine-UUT-R
+        cand = {a: v for a, v in tot.items() if np.isfinite(v) and a not in (P, FS) and a not in ISOLATION_ARMS}
+        if np.isfinite(tr):
+            cand[OWN_UUT_REUSE] = tr
+        faster_than_uut = sorted(a for a, v in cand.items() if OWN_UUT in cand and a != OWN_UUT and v < cand[OWN_UUT])
         # competitors only: the versions of the proposal (FS, ISOLATION_ARMS) are not rivals
         done = {a: v for a, v in tot.items() if np.isfinite(v) and a != FS and a not in ISOLATION_ARMS}
         fastest = min(done, key=done.get) if done else ""
@@ -340,6 +352,9 @@ def sc5_cells():
                          if tot.get(P) else np.nan,
                          fastest=fastest, closest=close,
                          closest_over_proposal=others[close] / tot[P] if close and tot.get(P) else np.nan,
+                         reuse_s=tr, reuse_over_proposal=tr / tot[P] if tot.get(P) else np.nan,
+                         runs_reuse=reuse_runs.get((d, int(k), s), 0),
+                         faster_than_remine_uut=" ".join(faster_than_uut),
                          runs_proposal=len(rp), runs_closest=len(rc), runs_vs_closest=runs_vs_closest,
                          proposal_s_min=min(rp) if rp else np.nan, proposal_s_max=max(rp) if rp else np.nan,
                          closest_s_min=min(rc) if rc else np.nan, closest_s_max=max(rc) if rc else np.nan,
@@ -1215,10 +1230,18 @@ def verification():
     for name in [n for n in later if n.startswith("husps-")]:
         found = re.findall(r"HUSP check: (\d+) comparisons with the proposal, (\d+) mismatching, (\d+) without",
                            _console(name) or "")
+        # a row without a reference (the reference arm stopped before that operation) is not a
+        # mismatch: it is counted on its own, and a record whose README says why it is kept names it
+        readme = os.path.join(_record(name), "README.md")
+        note = ""
+        if os.path.exists(readme):
+            first = open(readme, encoding="utf-8").readline().strip().lstrip("# ").strip()
+            note = f"{first} ({os.path.relpath(readme, mf.REPO_DIR).replace(os.sep, '/')})"
         rows.append(dict(check=f"patterns against the proposal after every operation, {name}",
                          status=_status(name) if found else "missing", runs=len(found),
                          operations=sum(int(a) for a, _, _ in found),
-                         mismatches=sum(int(b) + int(c) for _, b, c in found)))
+                         mismatches=sum(int(b) for _, b, _ in found),
+                         without_reference=sum(int(c) for _, _, c in found), note=note))
     # Irrelevant item pruning against exhaustive enumeration, and with the pruning on and off.
     out = _console("ips-random")
     if _status("ips-random") != "finished":
@@ -1319,7 +1342,7 @@ def verification():
                          # (the line is absent from runs written before the verifier reported it)
                          stopped_by_heap=_heap_stops(out)[0]))
     summary = pd.DataFrame(rows)
-    for col in summary.columns.drop(["check", "status"]):
+    for col in summary.columns.drop(["check", "status", "note"], errors="ignore"):
         summary[col] = summary[col].astype("Int64")
     by_db = pd.DataFrame(per_db)
     for col in ("rescans_at_uut", "rescans_back_to_low"):
@@ -1743,6 +1766,7 @@ def sc2_isolation_keys(put, iso):
         put(f"SC2_isolation_{r.algorithm}_{r.dataset}_direct_s", f"{r.direct_time_s:.2f}", src)
     T = {(r.dataset, r.algorithm): r for r in iso.itertuples() if r.finished}
     RT = _sc2_run_totals()
+    rule_ratio = {}
     for d in sorted({r.dataset for r in iso.itertuples()}):
         pr = T.get((d, FIXED))
         if pr is None:
@@ -1753,6 +1777,7 @@ def sc2_isolation_keys(put, iso):
             if x is not None:
                 put(f"SC2_isolation_rule_{a}_minus_fixed_floor_{d}_s", f"{x.time_s - pr.time_s:.2f}", src)
                 put(f"SC2_isolation_rule_{a}_over_fixed_floor_{d}", f"{x.time_s / pr.time_s:.2f}", src)
+                rule_ratio.setdefault(a, []).append((d, x.time_s / pr.time_s))
             if x is not None and y is not None:
                 # what remains between Pre-HUSPM and the same test on the proposal's miner and tracking
                 put(f"SC2_isolation_rest_{pre}_minus_{a}_{d}_s", f"{y.time_s - x.time_s:.2f}", src)
@@ -1794,6 +1819,13 @@ def sc2_isolation_keys(put, iso):
             put(f"SC2_isolation_tracking_over_fixed_floor_{d}", f"{x.time_s / pr.time_s:.2f}", src)
             put(f"SC2_isolation_tracking_tracked_over_fixed_floor_{d}",
                 f"{x.tracked_after_last / pr.tracked_after_last:.2f}" if pr.tracked_after_last else "", src)
+    # the rule over every stream: each Pre-HUSPM test on the proposal's miner and tracking over the
+    # joint rule, the smallest and the largest ratio, and the largest change in either direction
+    for a, v in rule_ratio.items():
+        lo, hi = min(v, key=lambda t: t[1]), max(v, key=lambda t: t[1])
+        put(f"SC2_isolation_rule_{a}_over_fixed_floor_range", f"{lo[1]:.3f} ({lo[0]}) to {hi[1]:.3f} ({hi[0]})", src)
+        far = max(v, key=lambda t: abs(t[1] - 1))
+        put(f"SC2_isolation_rule_{a}_over_fixed_floor_largest_change_pct", f"{100 * abs(far[1] - 1):.1f} ({far[0]})", src)
 
 
 def sc2_tex(totals, region, reps=None):
@@ -2644,6 +2676,8 @@ def comparison_classes(put, out):
     sc5 = _fresh_table(out, "table_SC5_cells.csv")
     for r in sc5.itertuples():
         add("SC5_method_vs_closest", f"{r.dataset} K={r.K} {r.shape}", P, r.closest, r.closest_over_proposal)
+        if pd.notna(r.reuse_over_proposal):
+            add(f"SC5_method_vs_{OWN_UUT_REUSE}", f"{r.dataset} K={r.K} {r.shape}", P, OWN_UUT_REUSE, r.reuse_over_proposal)
     sh = _fresh_table(out, "table_SC6_shares.csv")
     for r in sh.itertuples():
         arm = REM if r.against == "remine" else OWN_UUT
@@ -3558,6 +3592,17 @@ def export_all(out_dir=None):
         for state in ("separated", "overlapping", "behind", "one run"):
             put(f"SC5_runs_vs_closest_remine_{state.replace(' ', '_')}",
                 f"{int((c5['runs_vs_closest_remine'] == state).sum())}/{len(c5)}", "table_SC5_cells.csv")
+        # Remine-UUT-R: its runs per database, and every arm (Remine-UUT-R included, the proposal's
+        # versions not) faster than Remine-UUT in some cell, with the number of such cells
+        for d, g in c5.groupby("dataset"):
+            put(f"SC5_{d}_runs_{OWN_UUT_REUSE}", ", ".join(map(str, sorted(set(g["runs_reuse"])))), "table_SC5_cells.csv")
+        fa = c5["faster_than_remine_uut"].fillna("").astype(str)
+        cnt = {}
+        for v in fa:
+            for a in v.split():
+                cnt[a] = cnt.get(a, 0) + 1
+        put("SC5_arms_faster_than_Remine-UUT", "; ".join(f"{a} in {n} of {len(c5)} cells" for a, n in sorted(cnt.items()))
+            or "none", "table_SC5_cells.csv")
         near = c5[c5["closest_over_proposal"] < 1.10]
         put("SC5_cells_within_10pct", f"{len(near)}/{len(c5)}", "table_SC5_cells.csv")
         if len(near):
