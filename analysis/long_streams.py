@@ -352,9 +352,9 @@ def latency_keys(st, put, out):
     median, 99th percentile and largest latency (ms) of both per stream."""
     src = "table_long_streams.csv"
     cols = ["latency_ms_median", "latency_ms_p99", "latency_ms_max"]
-    m = st[st["arm"] == METHOD].set_index(["scenario", "dataset"])[cols]
-    r = st[st["arm"] == REUSE].set_index(["scenario", "dataset"])[cols]
-    both = m.join(r, lsuffix="_m", rsuffix="_r", how="inner").dropna()
+    m = st[st["arm"] == METHOD].set_index(["scenario", "dataset"])[cols + ["runs"]]
+    r = st[st["arm"] == REUSE].set_index(["scenario", "dataset"])[cols + ["runs"]]
+    both = m.join(r, lsuffix="_m", rsuffix="_r", how="inner").dropna(subset=[c + s for c in cols for s in ("_m", "_r")])
     path = os.path.join(out, "table_latency.tex")
     if not len(both):
         if os.path.exists(path):
@@ -376,10 +376,31 @@ def latency_keys(st, put, out):
              " & & \\multicolumn{3}{c}{Pre-HUSPM-Joint} & \\multicolumn{3}{c}{Remine-UUT-R} \\\\",
              "\\cmidrule(lr){3-5}\\cmidrule(lr){6-8}",
              "Stream & Database & Median & p99 & Max & Median & p99 & Max \\\\\\midrule"]
+    one = mf.ONE_RUN
+    several = set()
     for sc, d in order:
         x = both.loc[(sc, d)]
-        lines.append(f"{sc} & {d} & " + " & ".join(f(x[c + s]) for s in ("_m", "_r") for c in cols) + " \\\\")
-    lines += ["\\bottomrule\\end{tabular*}", "\\end{table}", ""]
+        rm, rr = int(x["runs_m"]), int(x["runs_r"])
+        if min(rm, rr) < 1:
+            sys.exit(f"[latency] {sc} {d}: an arm has no finished run")
+        # a row where both arms ran once carries the mark on its database; otherwise each arm that ran
+        # once carries it on its three cells
+        label = d + (one if rm == 1 and rr == 1 else "")
+        cells = []
+        for s, n in (("_m", rm), ("_r", rr)):
+            mark = one if n == 1 and not (rm == 1 and rr == 1) else ""
+            cells += [f(x[c + s]) + mark for c in cols]
+        if rm > 1 or rr > 1:
+            several.add((rm, rr))
+        lines.append(f"{sc} & {label} & " + " & ".join(cells) + " \\\\")
+    lines.append("\\bottomrule\\end{tabular*}")
+    if any(one in l for l in lines):
+        note = one + "\\,one run"
+        if several:
+            runs = "; ".join(f"Pre-HUSPM-Joint {a}, Remine-UUT-R {b}" for a, b in sorted(several))
+            note += f"; elsewhere each operation time is the mean of its runs ({runs})"
+        lines.append("\\par\\smallskip " + note + ".")
+    lines += ["\\end{table}", ""]
     open(path, "w", encoding="utf-8").write("\n".join(lines))
 
 

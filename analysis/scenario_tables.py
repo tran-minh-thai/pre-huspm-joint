@@ -3183,6 +3183,57 @@ def alternative_rule_keys(put, out):
     return t
 
 
+# The rows of the paper's table of correctness checks whose mismatches come from several records:
+# per row, the keys whose values add up to its mismatches (a fraction "a/b" counts b - a).
+V = "verify_"
+VP = V + "patterns_against_the_proposal_after_every_operation_husps_"
+VD = V + "direct_path_on_real_databases_"
+VF = V + "random_streams_mixedbudgetfuzz_"
+VA = V + "rescan_rule_acceptance_"
+CHECKS_ROWS = {
+    "ips_vs_noips": [V + "ips_vs_noips_real_init_equal", V + "ips_vs_noips_real_whole_equal"],
+    "acceptance": [VA + "rescanruleacceptancetest_mismatches", VA + "merge_acceptance_mismatches"],
+    "direct_eight": [VD + "random_operations_mismatches", VD + "adversarial_operations_mismatches",
+                     VD + "adversarial_tafeng_probe0_7_operations_mismatches"],
+    "other_floors": [VF + f"{f}_floor_fuzz_rule_joint_mismatches" for f in ("plain", "min")]
+                    + [VA + f"{f}_floor_acceptance_mismatches" for f in ("plain", "min")]
+                    + [VD + f"{f}_floor_{m}_operations_mismatches" for f in ("plain", "min") for m in ("random", "adversarial")],
+    "exact_rational": ["tight_light_floor_max_mismatching_states", "tight_heavy_floor_max_mismatching_states"],
+    "selection_eight": [VD + f"break_even_nodes_{m}_operations_mismatches" for m in ("random", "adversarial")],
+    "window_random": [VF + "floor_selection_fuzz_rule_joint_mismatches"],
+    "pre_tests_swu": [VF + f"pre_tests_fuzz_rule_{r}_mismatches" for r in ("pre_swumax", "pre_tsu", "joint")]
+                     + [VF + f"prehuspm_tracking_fuzz_rule_{r}_mismatches" for r in ("joint", "pre_swumax")]
+                     + [VD + f"{a}_{m}_operations_mismatches" for a in ("pre_tests", "prehuspm_tracking")
+                        for m in ("random", "adversarial")]
+                     + [V + "bound_invariant_b_x_u_x_prehuspm_tracking_fuzz_mismatches"],
+    "acceptance_arms": [VA + f"{a}_acceptance_mismatches" for a in ("floor_selection", "prehuspm_tracking", "pre_tests")],
+    "arms_sc2": [VP + "sc2_mismatches", VP + "sc2_break_even_nodes_mismatches"],
+    "arms_mixed": [VP + f"{r}_mismatches" for r in ("mixed_break_even_nodes", "mixed_break_even", "mixed_total_counter",
+                                                    "mixed_remine", "dunnhumby_mixed_all_arms")],
+}
+
+
+def checks_rows(put, nums):
+    """One mismatch count per row of the paper's checks table, summed over the keys of CHECKS_ROWS,
+    with the number of records behind it. A key that is missing stops the script: a row whose sum
+    left a record out would read as clean."""
+    k = {n["key"]: str(n["value"]) for n in nums}
+    for row, keys in CHECKS_ROWS.items():
+        missing = [x for x in keys if x not in k]
+        if missing:
+            raise ValueError(f"checks_row_{row}: keys missing: {missing}")
+        total = 0
+        for x in keys:
+            v = k[x].replace(",", "")
+            if "/" in v:
+                a, b = v.split("/")
+                total += int(b) - int(a)
+            else:
+                total += int(v)
+        put(f"checks_row_{row}_mismatches", total, "table_verification.csv")
+        put(f"checks_row_{row}_counts", len(keys), "table_verification.csv")
+
+
 TIME_ARM = P + "-time"
 
 
@@ -4321,6 +4372,7 @@ def export_all(out_dir=None):
     total_counter_keys(put, out)
     counted_record_keys(put)
     alternative_rule_keys(put, out)
+    checks_rows(put, nums)
 
     # a key written twice has two sources, and a later change of one would leave the other behind
     seen, twice = set(), []
