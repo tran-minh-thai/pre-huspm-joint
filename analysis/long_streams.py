@@ -397,7 +397,7 @@ def latency_keys(st, put, out):
     if any(one in l for l in lines):
         note = one + "\\,one run"
         if several:
-            runs = "; ".join(f"Pre-HUSPM-Joint {a}, Remine-UUT-R {b}" for a, b in sorted(several))
+            runs = "; ".join(f"\\mbox{{Pre-HUSPM-Joint}} {a}, \\mbox{{Remine-UUT-R}} {b}" for a, b in sorted(several))
             note += f"; elsewhere each operation time is the mean of its runs ({runs})"
         lines.append("\\par\\smallskip " + note + ".")
     lines += ["\\end{table}", ""]

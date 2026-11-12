@@ -3169,6 +3169,9 @@ def alternative_rule_keys(put, out):
     put("altrule_to_loss", int((changed["alt_cls"] == "loss").sum()), src)
     put("altrule_to_win", int((changed["alt_cls"] == "win").sum()), src)
     put("altrule_to_tie", int((changed["alt_cls"] == "tie").sum()), src)
+    # where the changes to a win or a loss come from: a comparison the band calls a tie, or the opposite class
+    for to in ("loss", "win"):
+        put(f"altrule_to_{to}_from_tie", int(((changed["alt_cls"] == to) & (changed["cls"] == "tie")).sum()), src)
     if len(changed):
         put("altrule_changed_list", "; ".join(f"{x.family} {x.group} {x.cls} to {x.alt_cls} ({x.ratio:.3f}, "
                                               f"{x.ci_low:.3f} to {x.ci_high:.3f})" for x in changed.itertuples()), src)
