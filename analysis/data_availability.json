@@ -4,7 +4,7 @@
     "source": "canonical address of the page that offers dunnhumby The Complete Journey, as read on 2026-11-02"
   },
   "DATA_code_release_tag": {
-    "value": "v2.4-submission",
+    "value": "v2.5-submission",
     "source": "the release of this repository that the paper cites; set when the tag is made"
   }
 }
