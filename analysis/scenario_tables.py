@@ -1017,6 +1017,19 @@ def warmup_effect_keys(put, src="static-warmup-effect/warmup_effect_summary.csv"
         put(f"{k}_cells", int(r.cells), src)
         put(f"{k}_warm_over_cold_geomean", f"{r.geomean_warm_over_cold:.2f}", src)
         put(f"{k}_warm_over_cold_range", f"{r.min:.2f} to {r.max:.2f}", src)
+    # the smallest and largest geometric mean over the baselines (the static algorithms other than
+    # the proposal), per scenario, with the algorithms at the two ends
+    summ = pd.read_csv(f)
+    for sc, g in summ.groupby("scenario"):
+        b = g[g["algorithm"].isin([a for a in mf.STATIC_ORDER if a != mf.PROPOSED])]
+        if b.empty:
+            continue
+        lo, hi = b.loc[b["geomean_warm_over_cold"].idxmin()], b.loc[b["geomean_warm_over_cold"].idxmax()]
+        k = f"warmup_{sc}_baselines_warm_over_cold_geomean"
+        put(f"{k}_range", f"{lo.geomean_warm_over_cold:.2f} to {hi.geomean_warm_over_cold:.2f}", src)
+        put(f"{k}_min_algorithm", lo.algorithm, src)
+        put(f"{k}_max_algorithm", hi.algorithm, src)
+        put(f"{k}_baselines", len(b), src)
     con = open(os.path.join(WARMUP_EFFECT, "console.txt"), encoding="utf-8").read()
     m = re.search(r"counter values compared: (\d+); differing: (\d+)", con)
     if m is None:
@@ -3159,6 +3172,42 @@ def replicate_layout():
     return pd.DataFrame(rows)
 
 
+def sc1_runtime_runs_keys(put, out, src="table_SC1_runtime_replicates.csv"):
+    """The runs behind the means of the SC1 runtime table, read from the replicate table that
+    make_figures wrote before this module runs, over the cells the table prints (a finished run
+    in a column of SC1_TABLE_ORDER). SC1_runtime_runs_common is the most common number of runs;
+    SC1_runtime_runs_<algorithm>_<database> the number of every cell that differs from it;
+    SC1_runtime_runs_other_<database> the algorithms of such cells in table order; and
+    SC1_runtime_runs the phrase in the form of the SC2 table keys."""
+    path = os.path.join(out, src)
+    if not os.path.exists(path):
+        print(f"[not written] SC1_runtime_runs: {path} does not exist")
+        return
+    tab = pd.read_csv(path)
+    tab = tab[tab["algorithm"].isin(mf.SC1_TABLE_ORDER) & (tab["n"] > 0)]
+    if tab.empty:
+        print(f"[not written] SC1_runtime_runs: {path} has no finished cell of the SC1 table")
+        return
+    ns = {(r.dataset, r.algorithm): int(r.n) for r in tab.itertuples()}
+    counts = list(ns.values())
+    common = max(set(counts), key=counts.count)
+    put("SC1_runtime_runs_common", common, src)
+    words = {1: "one", 2: "two", 3: "three", 4: "four", 5: "five"}
+    word = lambda n: words.get(n, str(n))
+    other = []
+    for d in [d for d in mf.ALL_DATASETS if d in set(tab["dataset"])]:
+        algos = [a for a in mf.SC1_TABLE_ORDER if (d, a) in ns and ns[(d, a)] != common]
+        for a in algos:
+            put(f"SC1_runtime_runs_{a}_{d}", ns[(d, a)], src)
+            other.append(f"{mf.ALGO_LABEL.get(a, a)} on {d} ({word(ns[(d, a)])})")
+        if algos:
+            labels = [mf.ALGO_LABEL.get(a, a) for a in algos]
+            put(f"SC1_runtime_runs_other_{d}",
+                labels[0] if len(labels) == 1 else ", ".join(labels[:-1]) + " and " + labels[-1], src)
+    put("SC1_runtime_runs", f"mean and standard deviation of {word(common)} runs"
+        + (f", except {'; '.join(other)}" if other else ""), src)
+
+
 def export_all(out_dir=None):
     out = out_dir or mf.OUT_DIR
     os.makedirs(out, exist_ok=True)
@@ -3739,6 +3788,7 @@ def export_all(out_dir=None):
         print("[not written] SC2_time_table_runs, SC2_remine_table_runs: the SC2 tables were not written")
     for key, phrase in dict(CAPTION_RUNS).items():
         put(key, phrase, "table_SC2_replicates.csv")
+    sc1_runtime_runs_keys(put, out)
 
     # after every table above is written: the classes read them
     comparison_classes(put, out)

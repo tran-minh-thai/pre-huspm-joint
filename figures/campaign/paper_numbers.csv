@@ -200,6 +200,18 @@ warmup_SC7_Pre-HUSPM-Joint-no-IPS_warm_over_cold_range,0.43 to 0.99,static-warmu
 warmup_SC7_Pre-HUSPM-Joint-no-IUB_cells,7,static-warmup-effect/warmup_effect_summary.csv
 warmup_SC7_Pre-HUSPM-Joint-no-IUB_warm_over_cold_geomean,0.66,static-warmup-effect/warmup_effect_summary.csv
 warmup_SC7_Pre-HUSPM-Joint-no-IUB_warm_over_cold_range,0.46 to 0.96,static-warmup-effect/warmup_effect_summary.csv
+warmup_SC1_baselines_warm_over_cold_geomean_range,0.87 to 0.97,static-warmup-effect/warmup_effect_summary.csv
+warmup_SC1_baselines_warm_over_cold_geomean_min_algorithm,HUSP-SP,static-warmup-effect/warmup_effect_summary.csv
+warmup_SC1_baselines_warm_over_cold_geomean_max_algorithm,IncUSP-Miner+,static-warmup-effect/warmup_effect_summary.csv
+warmup_SC1_baselines_warm_over_cold_geomean_baselines,5,static-warmup-effect/warmup_effect_summary.csv
+warmup_SC3_baselines_warm_over_cold_geomean_range,0.84 to 0.99,static-warmup-effect/warmup_effect_summary.csv
+warmup_SC3_baselines_warm_over_cold_geomean_min_algorithm,HUSP-SP,static-warmup-effect/warmup_effect_summary.csv
+warmup_SC3_baselines_warm_over_cold_geomean_max_algorithm,IncUSP-Miner+,static-warmup-effect/warmup_effect_summary.csv
+warmup_SC3_baselines_warm_over_cold_geomean_baselines,5,static-warmup-effect/warmup_effect_summary.csv
+warmup_SC7_baselines_warm_over_cold_geomean_range,0.89 to 0.89,static-warmup-effect/warmup_effect_summary.csv
+warmup_SC7_baselines_warm_over_cold_geomean_min_algorithm,Pre-HUSPM,static-warmup-effect/warmup_effect_summary.csv
+warmup_SC7_baselines_warm_over_cold_geomean_max_algorithm,Pre-HUSPM,static-warmup-effect/warmup_effect_summary.csv
+warmup_SC7_baselines_warm_over_cold_geomean_baselines,1,static-warmup-effect/warmup_effect_summary.csv
 warmup_counters_compared,1008,static-warmup-effect/console.txt
 warmup_counters_differing,0,static-warmup-effect/console.txt
 fidelity_BIBLE_swumax_rescans,4,table_PreHUSPM_fidelity.csv
@@ -6984,6 +6996,12 @@ SC2_time_table_runs_Pre-HUSPM-TSU_DUNNHUMBY,1,table_SC2_replicates.csv
 SC2_time_table_runs_IncUSP-Miner+_DUNNHUMBY,1,table_SC2_replicates.csv
 SC2_remine_table_runs,mean and standard deviation of five runs,table_SC2_replicates.csv
 SC2_remine_table_runs_common,5,table_SC2_replicates.csv
+SC1_runtime_runs_common,3,table_SC1_runtime_replicates.csv
+SC1_runtime_runs_USpan_DUNNHUMBY,1,table_SC1_runtime_replicates.csv
+SC1_runtime_runs_IncUSP-Miner+_DUNNHUMBY,1,table_SC1_runtime_replicates.csv
+SC1_runtime_runs_Pre-HUSPM_DUNNHUMBY,1,table_SC1_runtime_replicates.csv
+SC1_runtime_runs_other_DUNNHUMBY,"USpan, IncUSP-Miner$^{+}$ and Pre-HUSPM",table_SC1_runtime_replicates.csv
+SC1_runtime_runs,"mean and standard deviation of three runs, except USpan on DUNNHUMBY (one); IncUSP-Miner$^{+}$ on DUNNHUMBY (one); Pre-HUSPM on DUNNHUMBY (one)",table_SC1_runtime_replicates.csv
 jit_tie_band,"0.920 to 1.087 (largest time ratio between two arms making the same search, 5 SC2 streams)",table_SC2_identical_search.csv
 SC1_cold_cells,32 of 36,static-warmup-effect/warmup_effect.csv
 SC1_cold_runs_per_cell,3,static-warmup-effect/warmup_effect.csv
