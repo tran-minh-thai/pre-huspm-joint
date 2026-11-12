@@ -207,9 +207,11 @@ ALGO_LABEL = {
 #   static figures       Pre-HUSPM-Joint, Pre-HUSPM, IncUSP-Miner+, HUSP-ULL, HUSP-SP, USpan
 #                        red, blue, green, purple, brown, dark teal
 #   incremental figures  Pre-HUSPM-Joint, Pre-HUSPM-SWUmax, Pre-HUSPM-TSU, IncUSP-Miner+, Remine,
-#                        Remine-UUT: red, blue, dark goldenrod, green, black, pink
+#                        Remine-UUT: red, blue, dark goldenrod, green, black, deep blue
 # Chosen by search over dark colours: every two of the nine differ by a CIE76 distance of at least
-# 44.8, and every colour has a contrast ratio of at least 3.2 against white.
+# 44.8, and every colour has a contrast ratio of at least 3.2 against white. Remine-UUT's deep blue
+# (2026-11-12) replaces a pink read as close to the proposal's red: 90.6 from the blue of
+# Pre-HUSPM-SWUmax and 116.2 from black, the two nearest it in the incremental figures; contrast 11.2.
 # Pre-HUSPM in the static scenarios and Pre-HUSPM-SWUmax are the same algorithm and share a style.
 # Lines and marker edges are coloured, nothing is filled, and the dash patterns, hollow markers and
 # textures stay, so a figure printed in black and white still reads.
@@ -221,7 +223,7 @@ SERIES_STYLE = {
     "Pre-HUSPM-TSU":       ("#B8860B", "P", (0, (6, 1.5, 1, 1.5, 1, 1.5)),    "----"),
     "IncUSP-Miner+":       ("#2CA02C", "^", (0, (6, 2)),                      "xxxx"),
     "Remine-from-scratch": ("#000000", "x", (0, (8, 2, 2, 2)),                "++"),
-    "Remine-own-UUT":      ("#E7298A", "+", (0, (3, 1.5)),                    "oo"),
+    "Remine-own-UUT":      ("#0000CD", "+", (0, (3, 1.5)),                    "oo"),
     "HUSP-ULL":            ("#7B3294", "s", (0, (4, 1.5)),                    "////"),
     "HUSP-SP":             ("#8C564B", "v", (0, (4, 1.5, 1, 1.5)),            "\\\\"),
     "USpan":               ("#01665E", "o", (0, (1, 1.5)),                    ""),
@@ -770,7 +772,7 @@ def figset_scalability(sc="SC3", tag="fig_scalability", datasets=None,
 # %% ------------------------------------------------------------------ Cell 4
 #    INCREMENTAL (SC2): cumulative runtime along the stream, one panel per database
 INC_FIG_COLS = 4         # the eight SC2 streams in two rows: three columns made the figure nearly a page tall
-INC_FIG_PANEL_H = 1.75   # inches per row; the fonts stay at FONT_PT
+INC_FIG_PANEL_H = 1.75 + 0.5 / 2.54   # inches per row (0.5 cm taller than 1.75 in); the fonts stay at FONT_PT
 
 
 def figset_incremental(tag="fig_incremental_cumulative", datasets=None):
@@ -1301,7 +1303,7 @@ def figset_memory_incremental(tag="fig_memory_incremental", datasets=None):
     if df is None:
         return
     datasets = [d for d in (datasets or SC2_DATASETS) if d in set(df["dataset"])]
-    fig, axes = panel_grid(len(datasets))
+    fig, axes = panel_grid(len(datasets), ncols=INC_FIG_COLS, h=INC_FIG_PANEL_H)   # laid out as Fig. 5
     absent = []
     for i, (ax, ds) in enumerate(zip(axes, datasets)):
         sub = df[df["dataset"] == ds]
@@ -1319,12 +1321,14 @@ def figset_memory_incremental(tag="fig_memory_incremental", datasets=None):
                 ax.plot(ok["iteration"].iloc[-1], y[-1], marker="X", color="black",
                         markerfacecolor="black", ms=5, linestyle="none")
         absent.append((i, ds, note_absent(sub, INC_FIG_ORDER, os.path.join(DATA_DIR, MEMORY_TREE, "SC2"), ds)))
-        ax.set_xticks([0, 50, 100])
-        panel_xlabel(ax, i, ds, "Increment (0 = $D_{\\mathrm{init}}$)")
+        # increment 0 is the state after the initial mine on D_init, named on its tick: a longer
+        # axis label overlaps its neighbour in four columns
+        ax.set_xticks([0, 50, 100], ["$D_{\\mathrm{init}}$", "50", "100"])
+        panel_xlabel(ax, i, ds, "Increment")
         safe_log(ax)
-        if i % PANEL_COLS == 0:
+        if i % INC_FIG_COLS == 0:
             ax.set_ylabel("State held (MB)")
-    fig.tight_layout(w_pad=0.6)
+    fig.tight_layout(w_pad=0.4)
     place_legend(fig, axes, tag, spare=[a for a in fig.axes if not a.get_visible()], ncol=2)
     absent_footnote(fig, absent)
     save(fig, f"{tag}.pdf")
