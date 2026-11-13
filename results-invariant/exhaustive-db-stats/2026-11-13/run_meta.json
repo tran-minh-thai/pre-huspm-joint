@@ -1,0 +1,16 @@
+{
+  "command": "java -cp build-exh verify.ExhaustiveDbStats 2000 1",
+  "path_substitutions": 0,
+  "build_dir": "build-exh",
+  "git_commit": "a9b13a29ff41a8e81dba00c28f47cdb44b449357",
+  "tree": "clean",
+  "source_sha256": "d5ee5e9352f697b5eff6bc100a59eb08b06da612c6dd1036e82370ada57e8d7c",
+  "source_files": 51,
+  "java": "openjdk version \"25.0.4.1\" 2026-08-18 LTS",
+  "os": "Darwin 27.2.0 (macOS-27.2.1-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "correctness check: counters only, no timings",
+  "start": "2026-11-13T14:47:44",
+  "end": "2026-11-13T14:47:48",
+  "exit_code": 0
+}
