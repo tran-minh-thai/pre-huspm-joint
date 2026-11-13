@@ -1050,6 +1050,12 @@ def warmup_effect_keys(put, src="static-warmup-effect/warmup_effect_summary.csv"
         put(f"{k}_min_algorithm", lo.algorithm, src)
         put(f"{k}_max_algorithm", hi.algorithm, src)
         put(f"{k}_baselines", len(b), src)
+        # the two baselines with the item pruning of the proposal, whose clock did not change after their
+        # runs without the warm-up (USpan, IncUSP-Miner+ and Pre-HUSPM were measured again afterwards)
+        q = g[g["algorithm"].isin(["HUSP-ULL", "HUSP-SP"])]
+        if len(q) == 2:
+            put(f"warmup_{sc}_pruning_baselines_warm_over_cold_geomean_range",
+                f"{q['geomean_warm_over_cold'].min():.2f} to {q['geomean_warm_over_cold'].max():.2f}", src)
     con = open(os.path.join(WARMUP_EFFECT, "console.txt"), encoding="utf-8").read()
     m = re.search(r"counter values compared: (\d+); differing: (\d+)", con)
     if m is None:
