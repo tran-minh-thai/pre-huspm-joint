@@ -1,0 +1,11 @@
+pairs with both runs: 80 of 80 (0 missing)
+band: 0.911 to 1.098 (largest q 1.0983)
+q percentiles: 95th 1.0776, 99th 1.0974
+  BIBLE        largest q 1.0251
+  C8T1S5I8N5K  largest q 1.0243
+  DUNNHUMBY    largest q 1.0983
+  FIFA         largest q 1.0168
+  KOSARAK      largest q 1.0158
+  LEVIATHAN    largest q 1.0317
+  SIGN         largest q 1.0518
+  TAFENG       largest q 1.0231

@@ -1,0 +1,16 @@
+{
+  "command": "~/.venvs/pre-huspm-adaptive/bin/python analysis/aa_band.py --results results/campaign-aa --out results-invariant/aa-band/2026-11-13",
+  "path_substitutions": 1,
+  "build_dir": "build-bx",
+  "git_commit": "80b98bb5b76e768183b260268d201413b1f3bf1a",
+  "tree": "clean",
+  "source_sha256": "d5ee5e9352f697b5eff6bc100a59eb08b06da612c6dd1036e82370ada57e8d7c",
+  "source_files": 51,
+  "java": "openjdk version \"25.0.4.1\" 2026-08-18 LTS",
+  "os": "Darwin 27.2.0 (macOS-27.2.1-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "correctness check: counters only, no timings",
+  "start": "2026-11-13T21:15:41",
+  "end": "2026-11-13T21:15:43",
+  "exit_code": 0
+}
