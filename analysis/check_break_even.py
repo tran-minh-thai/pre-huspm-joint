@@ -17,7 +17,9 @@ each rescan with a logged decision it checks
      at UUT iff absorption < (rho - 1) / (1 - delta); the first rescan is at UUT.
 
 rho and delta come from measured times, so they are taken from the run; everything else is
-recomputed. Exits 1 when a check fails or when no decision was checked.
+recomputed. The units taken directly after the initial mine, a mine at r_l, count as the first
+absorption, as in the Java rule since commit d6197a7ed; --rule-before-initial-cycle replays records
+measured before it. Exits 1 when a check fails or when no decision was checked.
 """
 import argparse
 import csv
@@ -51,11 +53,16 @@ def stream_units(db, plan_ops=None):
     return init, units
 
 
-def check(db, rows, init, units, window=5):
-    """rows: the arm's rows after the initial mine, in order. Returns (checked, failures)."""
+def check(db, rows, init, units, window=5, log=None, initial_cycle=True):
+    """rows: the arm's rows after the initial mine, in order. Returns (checked, failures). With a list
+    as log, appends one dict per decision: the unit, the absorptions in the window, the logged and the
+    recomputed mean absorption, rho, delta, whether the rescan mined at UUT, whether it was the first."""
     su, rl = mf.DATASETS[db]["default_uut"], 0.8
     r = fp.Replay(su, rl, sum(u for u, _ in init))
-    shadow, shadow_n, absorbed, direct_since_low = None, 0, [], -1
+    # the initial mine is at r_l: the units taken directly before the first rescan are the first
+    # absorption (countInitialCycle of the Java rule, on by default since d6197a7ed); initial_cycle=False
+    # replays records measured before that commit
+    shadow, shadow_n, absorbed, direct_since_low = None, 0, [], (0 if initial_cycle else -1)
     checked, fails = 0, []
     prev_rc = prev_ru = 0
     first = True
@@ -86,6 +93,9 @@ def check(db, rows, init, units, window=5):
             absorbed.append(direct_since_low)
         a_hat = statistics.mean(absorbed[-window:]) if absorbed else 1.0
         rho, delta, a_log = (float(row[k]) for k in ("floor_rho", "floor_delta", "floor_absorption"))
+        if log is not None:
+            log.append(dict(unit=t + 1, absorptions_in_window=min(len(absorbed), window), a_logged=a_log,
+                            a_recomputed=a_hat, rho=rho, delta=delta, at_threshold=at_uut == 1, first=first))
         if first:
             ok = at_uut == 1
             first = False
@@ -109,7 +119,10 @@ def main():
     ap.add_argument("--results", required=True)
     ap.add_argument("--plans")
     ap.add_argument("--arm", default=mf.PROPOSED)
+    ap.add_argument("--rule-before-initial-cycle", action="store_true",
+                    help="replay the rule as it was before the initial cycle counted as an absorption")
     a = ap.parse_args()
+    ic = not a.rule_before_initial_cycle
     res = pathlib.Path(a.results)
     total_checked, failures, streams = 0, [], 0
     sc2 = res / "SC2_incremental.csv"
@@ -120,7 +133,7 @@ def main():
                 by[(row["dataset"], row["seed"], row["repeat"])].append(row)
         for (db, _, _), rows in by.items():
             init, units = stream_units(db)
-            c, f = check(db, sorted(rows, key=lambda x: int(x["iteration"])), init, units)
+            c, f = check(db, sorted(rows, key=lambda x: int(x["iteration"])), init, units, initial_cycle=ic)
             total_checked += c; failures += f; streams += 1
     if a.plans:
         plans = defaultdict(list)
@@ -136,7 +149,7 @@ def main():
                     by[(row["dataset"], int(row["seed"]), row["repeat"])].append(row)
             for (db, seed, _), rows in by.items():
                 init, units = stream_units(db, plans[(sc, db, seed)])
-                c, f = check(db, sorted(rows, key=lambda x: int(x["iteration"])), init, units)
+                c, f = check(db, sorted(rows, key=lambda x: int(x["iteration"])), init, units, initial_cycle=ic)
                 total_checked += c; failures += f; streams += 1
     for f in failures[:20]:
         print("FAILED " + f)

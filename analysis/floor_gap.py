@@ -224,6 +224,62 @@ def absorption_rows(results):
     return pd.DataFrame(rows)
 
 
+MIXED_PLANS = ROOT / "results-invariant" / "offline-optimum-nodes" / "2026-11-11" / "plans" / "mixed_plans.tsv"
+
+
+def decision_rows(results, plans=MIXED_PLANS):
+    """Every decision of the threshold selection on the mixed streams of the main tree: the stream is
+    replayed from the data and its plan (check_break_even.check), which recomputes the absorptions the
+    rule averages and checks the decision against the logged rho; one row per rescan with the number of
+    absorptions in the window, the mean absorption and rho, and the threshold chosen."""
+    import csv
+    import check_break_even as cb
+    by_plan = collections.defaultdict(list)
+    for o in csv.DictReader(open(plans, encoding="utf-8"), delimiter="\t"):
+        by_plan[(o["scenario"], o["dataset"], int(o["seed"]))].append(o)
+    rows = []
+    root = results / "campaign"
+    for sc in ("SC6", "SC6D", "SC6B"):
+        for d in sorted((root / sc).glob("*/" + P)) if (root / sc).is_dir() else []:
+            db = d.parent.name
+            m, _ = read_arm(d)
+            if m is None:
+                continue
+            for seed, g in streams_of(m).items():
+                plan = by_plan.get((sc, db, int(seed)))
+                if not plan:
+                    raise SystemExit(f"{sc} {db} seed {seed}: no plan in {plans}")
+                g = g[g["iteration"] > 0].sort_values("iteration")
+                init, units = cb.stream_units(db, plan)
+                log = []
+                checked, fails = cb.check(db, g.to_dict("records"), init, units, log=log)
+                if fails:
+                    raise SystemExit(f"{sc} {db} seed {seed}: " + "; ".join(fails[:3]))
+                for x in log:
+                    rows.append(dict(scenario=sc, dataset=db, seed=int(seed), **x))
+    return pd.DataFrame(rows)
+
+
+def decision_keys(dec, put):
+    """Per scenario and database: the rescans at the threshold, how many of them are the first rescan,
+    how many come with fewer than WINDOW absorptions in the window, how many with a mean absorption below
+    rho - 1, and the largest mean absorption and the smallest rho - 1 at those decisions."""
+    src = "table_floor_decisions.csv"
+    for (sc, db), g in dec.groupby(["scenario", "dataset"], sort=False):
+        k = f"DECIDE_{sc}_{db}"
+        up = g[g["at_threshold"]]
+        later = up[~up["first"]]
+        below = later[later["a_logged"] < later["rho"] - 1]
+        put(f"{k}_rescans", len(g), src)
+        put(f"{k}_at_threshold", len(up), src)
+        put(f"{k}_at_threshold_first_rescan", int(up["first"].sum()), src)
+        put(f"{k}_at_threshold_window_under_{WINDOW}", int((later["absorptions_in_window"] < WINDOW).sum()), src)
+        put(f"{k}_at_threshold_mean_absorption_below_break_even", f"{len(below)} of {len(later)}", src)
+        if len(later):
+            put(f"{k}_at_threshold_mean_absorption_max", f"{later['a_logged'].max():.3f}", src)
+            put(f"{k}_at_threshold_break_even_min", f"{(later['rho'] - 1).min():.3f}", src)
+
+
 def keys(gap, ab):
     out = []
     src_g, src_a = "table_floor_gap.csv", "table_floor_absorption.csv"
@@ -268,19 +324,24 @@ def keys(gap, ab):
 def export(results, out):
     gap, skipped = gap_rows(results)
     ab = absorption_rows(results)
+    dec = decision_rows(results)
     if gap.empty:
         print("no stream of the method and its fixed version measured in one session")
         return 2
     out.mkdir(parents=True, exist_ok=True)
     mf.write_csv(gap, str(out / "table_floor_gap.csv"))
     mf.write_csv(ab, str(out / "table_floor_absorption.csv"))
+    mf.write_csv(dec, str(out / "table_floor_decisions.csv"))
     k = keys(gap, ab)
+    extra = []
+    decision_keys(dec, lambda key, v, src: extra.append(dict(key=key, value=v, source=src)))
+    k = pd.concat([k, pd.DataFrame(extra)], ignore_index=True)
     if k["key"].duplicated().any():
         raise SystemExit("a key is written twice")
     mf.write_csv(k, str(out / "paper_numbers_floor_gap.csv"))
     print(f"streams compared: {len(gap)} ({gap[['scenario', 'dataset']].drop_duplicates().shape[0]} scenario and database pairs); "
           f"left out: {dict(skipped) or 'none'}")
-    print(f"absorption rows: {len(ab)}; keys: {len(k)} -> {out}")
+    print(f"absorption rows: {len(ab)}; decisions replayed: {len(dec)}; keys: {len(k)} -> {out}")
     return 0
 
 
