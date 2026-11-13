@@ -204,10 +204,12 @@ warmup_SC1_baselines_warm_over_cold_geomean_range,0.87 to 0.97,static-warmup-eff
 warmup_SC1_baselines_warm_over_cold_geomean_min_algorithm,HUSP-SP,static-warmup-effect/warmup_effect_summary.csv
 warmup_SC1_baselines_warm_over_cold_geomean_max_algorithm,IncUSP-Miner+,static-warmup-effect/warmup_effect_summary.csv
 warmup_SC1_baselines_warm_over_cold_geomean_baselines,5,static-warmup-effect/warmup_effect_summary.csv
+warmup_SC1_pruning_baselines_warm_over_cold_geomean_range,0.87 to 0.88,static-warmup-effect/warmup_effect_summary.csv
 warmup_SC3_baselines_warm_over_cold_geomean_range,0.84 to 0.99,static-warmup-effect/warmup_effect_summary.csv
 warmup_SC3_baselines_warm_over_cold_geomean_min_algorithm,HUSP-SP,static-warmup-effect/warmup_effect_summary.csv
 warmup_SC3_baselines_warm_over_cold_geomean_max_algorithm,IncUSP-Miner+,static-warmup-effect/warmup_effect_summary.csv
 warmup_SC3_baselines_warm_over_cold_geomean_baselines,5,static-warmup-effect/warmup_effect_summary.csv
+warmup_SC3_pruning_baselines_warm_over_cold_geomean_range,0.84 to 0.90,static-warmup-effect/warmup_effect_summary.csv
 warmup_SC7_baselines_warm_over_cold_geomean_range,0.89 to 0.89,static-warmup-effect/warmup_effect_summary.csv
 warmup_SC7_baselines_warm_over_cold_geomean_min_algorithm,Pre-HUSPM,static-warmup-effect/warmup_effect_summary.csv
 warmup_SC7_baselines_warm_over_cold_geomean_max_algorithm,Pre-HUSPM,static-warmup-effect/warmup_effect_summary.csv
@@ -7998,14 +8000,16 @@ modification_halves_deletion_only,0,results-invariant/modification-halves/2026-1
 modification_halves_whole_only,76,results-invariant/modification-halves/2026-11-11/modification_halves.csv
 modification_halves_both,160,results-invariant/modification-halves/2026-11-11/modification_halves.csv
 modification_halves_streams,"75 (SC6, SC6B, SC6D)",results-invariant/modification-halves/2026-11-11/modification_halves.csv
-exh_databases,2000,results-invariant/exhaustive-db-stats/2026-11-12/console.txt
-exh_sequences_min,8,results-invariant/exhaustive-db-stats/2026-11-12/console.txt
-exh_sequences_max,20,results-invariant/exhaustive-db-stats/2026-11-12/console.txt
-exh_elements_max,5,results-invariant/exhaustive-db-stats/2026-11-12/console.txt
-exh_items_max,11,results-invariant/exhaustive-db-stats/2026-11-12/console.txt
-exh_distinct_items_max,12,results-invariant/exhaustive-db-stats/2026-11-12/console.txt
-exh_multi_occurrence_databases,2000 of 2000,results-invariant/exhaustive-db-stats/2026-11-12/console.txt
-exh_multi_occurrence_sequences,18591 of 27992,results-invariant/exhaustive-db-stats/2026-11-12/console.txt
+exh_databases,2000,results-invariant/exhaustive-db-stats/2026-11-13/console.txt
+exh_sequences_min,8,results-invariant/exhaustive-db-stats/2026-11-13/console.txt
+exh_sequences_max,20,results-invariant/exhaustive-db-stats/2026-11-13/console.txt
+exh_elements_max,5,results-invariant/exhaustive-db-stats/2026-11-13/console.txt
+exh_items_max,11,results-invariant/exhaustive-db-stats/2026-11-13/console.txt
+exh_distinct_items_max,12,results-invariant/exhaustive-db-stats/2026-11-13/console.txt
+exh_multi_occurrence_databases,2000 of 2000,results-invariant/exhaustive-db-stats/2026-11-13/console.txt
+exh_multi_occurrence_sequences,18591 of 27992,results-invariant/exhaustive-db-stats/2026-11-13/console.txt
+exh_zero_utility_items,17870 of 196240,results-invariant/exhaustive-db-stats/2026-11-13/console.txt
+exh_zero_utility_databases,1998 of 2000,results-invariant/exhaustive-db-stats/2026-11-13/console.txt
 offline_optimum_nodes_LONG_method_replay,36000/36000,results-invariant/offline-optimum-nodes-long/2026-11-12/*/floor_policy.csv
 offline_optimum_nodes_LONG_SC10_method_over_optimum_total,1.177,results-invariant/offline-optimum-nodes-long/2026-11-12/*/floor_policy.csv
 offline_optimum_nodes_LONG_SC10_always_threshold_over_optimum_total,2.096,results-invariant/offline-optimum-nodes-long/2026-11-12/*/floor_policy.csv

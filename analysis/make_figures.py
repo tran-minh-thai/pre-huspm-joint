@@ -75,8 +75,9 @@ def memory_replicate_dirs(sc):
 # Lettering follows the artwork rules of Data Mining and Knowledge Discovery (Springer): Arial,
 # a sans-serif face, consistently sized within 8-12 pt at final size, fonts embedded, lines at
 # least 0.3 pt. The journal prints at 155 x 235 mm and sizes figures to 119 mm wide and at
-# most 195 mm high, so every figure is drawn at 119 mm and a 9 pt font here is 9 pt in print.
-# The manuscript includes them at its \linewidth, which only scales them up.
+# most 195 mm high, so every figure is drawn at 119 mm and an 8 pt font here is 8 pt in print; the
+# manuscript includes them at natural size. 8 pt, the smallest size the rules allow, because Arial has
+# a taller x-height than the 10 pt Computer Modern of the text: at 9 pt the figures read larger than it.
 from matplotlib import font_manager
 try:
     font_manager.findfont("Arial", fallback_to_default=False)
@@ -85,7 +86,7 @@ except Exception:
 
 LINEWIDTH_IN = 119 / 25.4              # final figure width of the journal, in inches
 MAX_HEIGHT_IN = 195 / 25.4             # final figure height limit of the journal
-FONT_PT = 9
+FONT_PT = 8
 plt.rcParams.update({
     "font.family":        "Arial",
     "mathtext.fontset":   "custom",
@@ -119,8 +120,8 @@ plt.rcParams.update({
 })
 
 # Sub- and superscripts (10^3, D_init, B_sz, r_l, IncUSP-Miner^+) are drawn at 0.7 of the base
-# size by matplotlib, 6.3 pt here, below the journal's 8 pt. The factor is a module constant of
-# the pinned matplotlib (3.11.2); raise it so that they print at 8 pt.
+# size by matplotlib, 5.6 pt here, below the journal's 8 pt. The factor is a module constant of
+# the pinned matplotlib (3.11.2); raise it so that they print at 8 pt, the size of the rest.
 import matplotlib._mathtext as _mathtext
 if not hasattr(_mathtext, "SHRINK_FACTOR"):
     sys.exit("matplotlib._mathtext.SHRINK_FACTOR is gone; sub- and superscripts would print below 8 pt.")
@@ -619,7 +620,7 @@ def place_legend(fig, axes, tag, spare=None, ncol=None):
     """One legend for the whole figure, placed where no data is drawn.
 
     spare: hidden grid cells; the legend goes there when given. Otherwise the panels are
-    tried in turn, each at the positions of LEGEND_LOCS, at 9 pt then 8 pt, with one or more
+    tried in turn, each at the positions of LEGEND_LOCS, at FONT_PT, with one or more
     columns; the first placement inside a panel that covers no point, segment or bar is kept,
     as measured on the drawn figure. When none is clear the legend goes above the panels and
     the figure is named."""
@@ -652,7 +653,7 @@ def place_legend(fig, axes, tag, spare=None, ncol=None):
         return
     axes = list(np.atleast_1d(axes).ravel())
     ncols = list(range(len(labels), 0, -1))       # fewest rows first
-    for fs in (FONT_PT, 8):
+    for fs in (FONT_PT,):
         for ax in axes[::-1]:
             for loc in LEGEND_LOCS:
                 for nc in ncols:
@@ -746,7 +747,7 @@ def figset_scalability(sc="SC3", tag="fig_scalability", datasets=None,
                     annotate_fail(ax, level[r["su"]], r["status"])
             ax.set_xticks(range(len(sus)))
             # UUT in percent, three significant digits (trailing zeros kept), flat. Where the
-            # four labels overlap at 9 pt (measured on the drawn figure), only the two ends are
+            # four labels overlap at FONT_PT (measured on the drawn figure), only the two ends are
             # labelled and the figure is named.
             ax.set_xticklabels([f"{100 * v:#.3g}" for v in sus])
             ax.set_xlim(-0.3, len(sus) - 0.7)
@@ -761,10 +762,12 @@ def figset_scalability(sc="SC3", tag="fig_scalability", datasets=None,
         for i, (ax, ds) in enumerate(zip(axes, datasets)):
             texts = [t.get_text() for t in ax.get_xticklabels()]
             ex = [t.get_window_extent() for t in ax.get_xticklabels() if t.get_text()]
-            if any(b.x0 - a.x1 < 1.0 for a, b in zip(ex, ex[1:])):
+            # at least 2.5 pt between two labels: one display pixel (0.24 pt at 300 dpi) let labels that
+            # touch pass as separate
+            if any(b.x0 - a.x1 < 2.5 * fig.dpi / 72 for a, b in zip(ex, ex[1:])):
                 ax.set_xticklabels([t if k in (0, len(texts) - 1) else "" for k, t in enumerate(texts)])
                 print(f"[labels] {tag}_{sc}_{metric} ({chr(ord('a') + i)}) {ds}: the UUT labels overlap "
-                      "at 9 pt; only the lowest and highest are labelled")
+                      f"at {FONT_PT} pt; only the lowest and highest are labelled")
         place_legend(fig, axes, f"{tag}_{sc}_{metric}", ncol=3)
         save(fig, f"{tag}_{sc}_{metric}.pdf")
 
@@ -1069,7 +1072,7 @@ def figset_block_size(tag="fig_block_size"):
             ax.plot([pos[b] for b in g["block_size"]], g[col] * scale, **series_style(k, label=d, **st))
         ax.axvline(pos[default], color="0.5", lw=0.6, linestyle=":")
         # A tick at every block size measured (1, 5, 10, 50, 100, 200); labels on 1, 10 and 100
-        # only, flat: six labels at 9 pt do not fit in a third of the column.
+        # only, flat: six labels at FONT_PT do not fit in a third of the column.
         shown = {1, 10, 100}
         ax.set_xticks(range(len(ticks)))
         ax.set_xticklabels([str(t) if t in shown else "" for t in ticks])
