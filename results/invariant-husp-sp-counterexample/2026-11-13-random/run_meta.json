@@ -1,0 +1,16 @@
+{
+  "command": "env REF=build-authors/src REF_COMMIT=8b1f5f04c941fc2f7f4a0c14ae143d6bc67ffa4a CLASSES=build-bx bash results/invariant-husp-sp-counterexample/tools/run_random.sh 2000 1",
+  "path_substitutions": 0,
+  "build_dir": "build-bx",
+  "git_commit": "c483c52310695ee7ac5f54c601d66a82a3daa33f",
+  "tree": "src clean, other files modified",
+  "source_sha256": "0f46067a4923b6cd9e6c058d6e27238ba582aca93e09593f5ac3cd60963c5078",
+  "source_files": 51,
+  "java": "openjdk version \"25.0.4.1\" 2026-08-18 LTS",
+  "os": "Darwin 27.2.0 (macOS-27.2.1-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "correctness check: counters only, no timings",
+  "start": "2026-11-13T14:01:50",
+  "end": "2026-11-13T14:02:12",
+  "exit_code": 0
+}

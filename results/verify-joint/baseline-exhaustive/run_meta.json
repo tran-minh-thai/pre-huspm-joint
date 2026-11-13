@@ -1,0 +1,16 @@
+{
+  "command": "java -Xmx8g -Xss64m -cp build-bx verify.BaselineExhaustiveCheck 2000 1",
+  "path_substitutions": 0,
+  "build_dir": "build-bx",
+  "git_commit": "a255d65b38c522e008711d9f3d33f86e0fc94896",
+  "tree": "clean",
+  "source_sha256": "a2469a9d6cf52f1cf54d3cfdc5110f8dcae811af213841f7832e36eda2d13697",
+  "source_files": 51,
+  "java": "openjdk version \"25.0.4.1\" 2026-08-18 LTS",
+  "os": "Darwin 27.2.0 (macOS-27.2.1-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "correctness check: counters only, no timings",
+  "start": "2026-11-13T13:56:37",
+  "end": "2026-11-13T13:57:08",
+  "exit_code": 0
+}

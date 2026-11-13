@@ -1,0 +1,5 @@
+columns: TRANSACTION_DT, CUSTOMER_ID, AGE_GROUP, PIN_CODE, PRODUCT_SUBCLASS, PRODUCT_ID, AMOUNT, ASSET, SALES_PRICE
+rows: 817,741
+rows identical in every column to an earlier row: 0
+rows repeating the (day, customer, product) of an earlier row: 0
+customer-days: 119,578; lines per customer-day: median 5, max 112

@@ -1,0 +1,23 @@
+baseline-exhaustive trials=2000 seed=1 comparisons=3366 (at UUT 2000, at the cutoff below UUT 1366) databases-with->=1-pattern=1444 reference-patterns=8028179
+  USpan                 measured  mismatching-comparisons=0 mismatching-databases=0 missing=0 extra=0 comparisons-with-a-utility-gap=0 maxUtilGap=0.000000
+  HUSP-SP               measured  mismatching-comparisons=0 mismatching-databases=0 missing=0 extra=0 comparisons-with-a-utility-gap=0 maxUtilGap=0.000000
+  HUSP-ULL              measured  mismatching-comparisons=0 mismatching-databases=0 missing=0 extra=0 comparisons-with-a-utility-gap=0 maxUtilGap=0.000000
+  USpan-as-published    published mismatching-comparisons=15 mismatching-databases=13 missing=30 extra=0 comparisons-with-a-utility-gap=0 maxUtilGap=0.000000
+    first mismatch: trial 151 threshold-share=0.12 ref=2160 got=2158 missing=2 extra=0 maxUtilGap=0.000000 firstMissing=<(2 4) 2 (4 5)>
+      db: 2[4] 3[9] 4[5] | 2[2] 3[3] 4[5] | 2[10] 4[2] 12[2] | 4[8] 5[1] ; 2[9] | 1[4] 2[6] 8[3] | 9[0] ; 4[9] 12[10] ; 1[10] 3[6] 4[7] ; 9[9] | 8[6] ; 2[2] 7[9] 10[7] | 1[7] 2[8] 3[0] | 1[7] 3[2] | 2[5] 3[9] 5[10] ; 4[7] ; 3[2] 4[1] | 1[2] 2[6] 3[9] 4[3]
+  HUSP-SP-as-published  published mismatching-comparisons=25 mismatching-databases=22 missing=41 extra=0 comparisons-with-a-utility-gap=0 maxUtilGap=0.000000
+    first mismatch: trial 179 threshold-share=0.03 ref=11426 got=11418 missing=8 extra=0 maxUtilGap=0.000000 firstMissing=<(1 3 4) (4 10)>
+      db: 1[2] 11[3] | 1[1] 2[8] 5[3] | 1[10] 3[9] 4[10] 12[3] | 2[2] 3[7] ; 5[5] | 4[0] 12[8] | 1[9] 2[3] | 3[2] 4[4] 9[0] ; 5[7] | 9[2] | 1[2] 3[6] 5[10] 7[5] | 1[5] 2[0] 3[0] ; 1[4] 2[2] 3[2] 4[2] | 1[2] 2[2] 3[10] 4[10] | 2[1] 4[0] 10[0] ; 5[6] | 1[6] 3[8] 5[1] ; 1[2] ; 2[8] 4[5] | 2[9] 3[2] 4[9] 6[0] | 2[6] 3[7] 5[8] 9[9] | 10[7] ; 2[6] 5[6] 7[2] 9[3] | 1[5] 9[6] | 1[2] 11[2] | 3[4] 4[1] | 5[8] ; 1[9] 2[2] 5[6] | 9[10] | 2[7] 5[6] 6[8] ; 1[4] 2[1] 4[2] 5[0] | 2[2] 5[0] 11[10] | 4[2] 5[6] 9[2] ; 1[1] 2[5] 9[4] 11[7] ; 2[3] 4[2] 9[1] 12[0] | 2[5] 6[10] 8[10] | 2[7] 12[1] | 4[6] 5[6] ; 1[0] 4[6] 10[4] 12[5] | 1[10] 3[5] 8[3] | 3[3] 4[9] | 3[6] 7[7] ; 2[2] 3[3] 5[9] 10[5] ; 4[1] 5[3] | 2[9] 9[10] | 1[8] 4[7] 5[2] | 3[9] | 2[9] 3[10] 11[3] ; 12[6] | 2[6] 4[6] | 1[2] 3[7] 4[1] 5[7] | 1[8] ; 1[5] 4[1] | 1[7] 2[5] 4[3] 12[0] | 2[6] 3[7] 6[7] 8[10] ; 2[1] 5[5] ; 4[1] 10[3]
+counterexample <(1:1)(2:1)(1:50)(3:1)(2:1)(3:1)> TU=55 threshold 52, 1 2 3 utility 52:
+  USpan                 returns it: yes
+  HUSP-SP               returns it: yes
+  HUSP-ULL              returns it: yes
+  USpan-as-published    returns it: yes
+  HUSP-SP-as-published  returns it: no
+counterexample <(1:1)(1:50 2:1)(2:1)(3:1)> threshold 52, 1 2 3 utility 52:
+  USpan                 returns it: yes
+  HUSP-SP               returns it: yes
+  HUSP-ULL              returns it: yes
+  USpan-as-published    returns it: no
+  HUSP-SP-as-published  returns it: yes
+RESULT every measured baseline matches the enumeration on every comparison

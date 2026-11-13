@@ -1,0 +1,31 @@
+== comparisons where the TRSU of Definition 4.11 returns fewer patterns (zero-to-one)
+differs trial=179 level=0 enumeration=11196 definition-4.11=11187
+differs trial=294 level=0 enumeration=3728 definition-4.11=3726
+differs trial=354 level=0 enumeration=8729 definition-4.11=8728
+differs trial=362 level=1 enumeration=6595 definition-4.11=6594
+differs trial=548 level=1 enumeration=1801 definition-4.11=1800
+differs trial=598 level=1 enumeration=3541 definition-4.11=3540
+differs trial=672 level=0 enumeration=11595 definition-4.11=11594
+differs trial=716 level=1 enumeration=9463 definition-4.11=9460
+differs trial=767 level=0 enumeration=12162 definition-4.11=12161
+differs trial=928 level=0 enumeration=1120 definition-4.11=1119
+differs trial=1077 level=0 enumeration=4697 definition-4.11=4695
+differs trial=1215 level=0 enumeration=9602 definition-4.11=9601
+differs trial=1444 level=0 enumeration=4148 definition-4.11=4147
+differs trial=1444 level=1 enumeration=4299 definition-4.11=4298
+differs trial=1499 level=0 enumeration=5692 definition-4.11=5690
+differs trial=1633 level=0 enumeration=1951 definition-4.11=1950
+differs trial=1633 level=1 enumeration=3551 definition-4.11=3549
+differs trial=1688 level=1 enumeration=4568 definition-4.11=4567
+differs trial=1999 level=1 enumeration=7948 definition-4.11=7947
+
+== published code, database 1402, threshold 58 (TU 722)
+I-extension prefix "[1, -1, 9, -1, 1]" item 4 bound 57 minUtility 58
+S-extension prefix "[1, -1, 9, -1, 1]" item 4 bound 24 minUtility 58
+
+== Definition 4.11 at the same node
+PG 1 9 1 RSU {1=34.0, 4=67.0} IIP-deleted [1]
+   TRSU*-I {4=58.0}
+   TRSU*-S {4=25.0}
+UC 1 9 (1 4) u=58.0 PEU=58.0
+patterns 372

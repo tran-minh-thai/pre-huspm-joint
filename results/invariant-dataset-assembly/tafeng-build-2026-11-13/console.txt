@@ -1,0 +1,15 @@
+source        : build-tafeng/ta-feng.zip :: ta_feng_all_months_merged.csv
+segment by    : month, min-events=2
+rows kept     : 817,741
+
+sequences     : 60,665   (5,031 with fewer than 2 events dropped)
+distinct items: 23,812
+events/seq    : mean 13.40  median 9  max 550
+   p90          = 28
+   p95          = 38
+   p99          = 63
+max quantity  : 1,200
+total utility : 106,638,996
+
+-> build-tafeng/out/TAFENG_seq.txt
+-> build-tafeng/out/TAFENG_eui.txt
