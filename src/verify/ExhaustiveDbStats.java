@@ -43,8 +43,8 @@ public final class ExhaustiveDbStats {
         long seed = args.length > 1 ? Long.parseLong(args[1]) : 1;
         Random r = new Random(seed);
         int minSeqs = Integer.MAX_VALUE, maxSeqs = 0, maxElements = 0, maxItems = 0, maxDistinctItems = 0;
-        int multiDbs = 0;
-        long seqs = 0, multiSeqs = 0;
+        int multiDbs = 0, zeroDbs = 0;
+        long seqs = 0, multiSeqs = 0, itemPositions = 0, zeroPositions = 0;
         for (int t = 0; t < trials; t++) {
             SyntheticDb.resetIds();
             r.nextInt(ItemRemovalCheck.SUS.length);      // su, as the check draws it
@@ -52,12 +52,19 @@ public final class ExhaustiveDbStats {
             int n = 8 + r.nextInt(13);
             minSeqs = Math.min(minSeqs, n); maxSeqs = Math.max(maxSeqs, n);
             Set<Integer> distinct = new HashSet<>();
-            boolean multi = false;
+            boolean multi = false, zero = false;
             for (int i = 0; i < n; i++) {
                 Sequence s = SyntheticDb.seq(ItemRemovalCheck.randSeq(r));
                 seqs++;
                 int items = 0;
-                for (QItemset is : s.itemsets) { items += is.items.size(); for (QItem q : is.items) distinct.add(q.id); }
+                for (QItemset is : s.itemsets) {
+                    items += is.items.size();
+                    for (QItem q : is.items) {
+                        distinct.add(q.id);
+                        itemPositions++;
+                        if (q.utility == 0) { zeroPositions++; zero = true; }
+                    }
+                }
                 maxElements = Math.max(maxElements, s.itemsets.size());
                 maxItems = Math.max(maxItems, items);
                 Map<String, Set<Double>> occ = new HashMap<>();
@@ -68,10 +75,13 @@ public final class ExhaustiveDbStats {
             }
             maxDistinctItems = Math.max(maxDistinctItems, distinct.size());
             if (multi) multiDbs++;
+            if (zero) zeroDbs++;
         }
         System.out.printf("databases=%d seed=%d sequences-per-database=%d..%d sequences=%d elements-per-sequence-max=%d "
                         + "items-per-sequence-max=%d distinct-items-per-database-max=%d "
-                        + "databases-with-a-pattern-of-two-occurrence-utilities=%d sequences-with-such-a-pattern=%d%n",
-                trials, seed, minSeqs, maxSeqs, seqs, maxElements, maxItems, maxDistinctItems, multiDbs, multiSeqs);
+                        + "databases-with-a-pattern-of-two-occurrence-utilities=%d sequences-with-such-a-pattern=%d "
+                        + "item-positions=%d item-positions-of-utility-0=%d databases-with-a-utility-0=%d%n",
+                trials, seed, minSeqs, maxSeqs, seqs, maxElements, maxItems, maxDistinctItems, multiDbs, multiSeqs,
+                itemPositions, zeroPositions, zeroDbs);
     }
 }

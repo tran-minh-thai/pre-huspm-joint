@@ -3103,6 +3103,10 @@ def counted_record_keys(put):
         put("exh_distinct_items_max", int(g("distinct-items-per-database-max")), src)
         put("exh_multi_occurrence_databases", f"{g('databases-with-a-pattern-of-two-occurrence-utilities')} of {g('databases')}", src)
         put("exh_multi_occurrence_sequences", f"{g('sequences-with-such-a-pattern')} of {g('sequences')}", src)
+        if "item-positions-of-utility-0=" in line:
+            # the generator draws utility 0 with probability 1/11 (ItemRemovalCheck.randSeq)
+            put("exh_zero_utility_items", f"{g('item-positions-of-utility-0')} of {g('item-positions')}", src)
+            put("exh_zero_utility_databases", f"{g('databases-with-a-utility-0')} of {g('databases')}", src)
     d = _newest("offline-optimum-nodes-long")
     if d is None:
         print("[not written] offline_optimum_nodes_LONG_*: no record")
