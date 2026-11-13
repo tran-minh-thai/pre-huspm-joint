@@ -286,13 +286,14 @@ def index_rows(sc, df, mem):
     return rows
 
 
-def tie_band(keys_path):
+def tie_band(keys_path, key="jit_tie_band"):
     """(low, high) of the tie band, from key jit_tie_band ("0.920 to 1.087 (...)") of the
-    campaign's paper_numbers.csv; None when the file or the key is absent."""
+    campaign's paper_numbers.csv, or of the A/A band with key="aa_tie_band"; None when the file or the
+    key is absent."""
     if not os.path.exists(keys_path):
         return None
     k = pd.read_csv(keys_path, dtype=str)
-    v = k.loc[k["key"] == "jit_tie_band", "value"]
+    v = k.loc[k["key"] == key, "value"]
     m = re.match(r"([\d.]+) to ([\d.]+)", v.iloc[0]) if len(v) else None
     return (float(m.group(1)), float(m.group(2))) if m else None
 
@@ -343,6 +344,26 @@ def summary_keys(st, put, keys_path, unstable=None):
         x = g["method_over_arm_pooled"]
         w, l = int((x < low).sum()), int((x > high).sum())
         put(f"LONG_all_{TAG[arm]}_classes", f"wins {w}, ties {len(x) - w - l}, losses {l} of {len(x)}", src)
+    # the same classes under the band of the A/A runs (docs/aa-tie-band.md), when it is measured
+    aa = tie_band(keys_path, "aa_tie_band")
+    if aa is None:
+        print(f"[not written] classes_aa_LONG_*: no aa_tie_band in {keys_path}")
+        return
+    low2, high2 = aa
+    changed = 0
+    for (d, arm), g in r.groupby(["dataset", "arm"]):
+        x = g.set_index("scenario")["method_over_arm_pooled"]
+        order = [sc for sc in SCENARIOS if sc in x.index]
+        win = [sc for sc in order if x[sc] < low2]
+        loss = [sc for sc in order if x[sc] > high2]
+        put(f"classes_aa_LONG_{d}_method_vs_{TAG[arm]}",
+            f"wins {len(win)}, ties {len(order) - len(win) - len(loss)}, losses {len(loss)} of {len(order)}", src)
+        put(f"LONG_{d}_{TAG[arm]}_losses_aa", f"{len(loss)} of {len(order)}", src)
+        for sc in order:
+            old = "win" if x[sc] < low else ("loss" if x[sc] > high else "tie")
+            new = "win" if x[sc] < low2 else ("loss" if x[sc] > high2 else "tie")
+            changed += old != new
+    put("LONG_aa_changed_comparisons", changed, src)
 
 
 def latency_keys(st, put, out):

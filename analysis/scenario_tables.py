@@ -2674,6 +2674,39 @@ def tie_band(out):
     return float(np.exp(np.abs(np.log(same)).max())), same
 
 
+AA_TREE = os.environ.get("AA_TREE", os.path.join(mf.DATA_DIR, "campaign-aa"))
+_AA_CACHE = {}
+
+
+def aa_band():
+    """The tie band of the A/A runs (docs/aa-tie-band.md, analysis/aa_band.py): a dict with r, the pair
+    counts and the percentiles, or None while no pair of the A/A tree has both runs."""
+    if AA_TREE in _AA_CACHE:
+        return _AA_CACHE[AA_TREE]
+    import aa_band as aa
+    b = None
+    if os.path.isdir(AA_TREE):
+        t = aa.pairs(aa.run_totals(AA_TREE))
+        b = aa.band(t)
+        if b is not None:
+            b["of"] = len(t)
+    _AA_CACHE[AA_TREE] = b
+    return b
+
+
+def aa_classes(put, fam, ratios, old, src, transitions):
+    """Classes of one family under the A/A band, in the format of classes_<family>, and the changes of
+    class against the band in use, counted into transitions."""
+    b = aa_band()
+    r = b["r"]
+    new = ["win" if x > r else ("loss" if x < 1 / r else "tie") for x in ratios]
+    w, lo = new.count("win"), new.count("loss")
+    put(f"classes_aa_{fam}", f"wins {w}, ties {len(new) - w - lo}, losses {lo} of {len(new)}", src)
+    for a, c in zip(old, new):
+        if a != c:
+            transitions[(fam, a, c)] = transitions.get((fam, a, c), 0) + 1
+
+
 def comparison_classes(put, out):
     """Every comparison the text draws on, classified as a win, a tie or a loss of the first arm against
     the second, with a tie band measured rather than chosen: two arms that make the same search at every
@@ -2782,7 +2815,39 @@ def comparison_classes(put, out):
                 put(f"classes_{fam}_{word}_range", f"{h['ratio'].min():.3f} to {h['ratio'].max():.3f}", src)
                 put(f"classes_{fam}_{word}_range_first_over_second",
                     f"{1 / h['ratio'].max():.3f} to {1 / h['ratio'].min():.3f}", src)
+    # The same comparisons under the band of the A/A runs (docs/aa-tie-band.md), with the band in use kept
+    aa = aa_band()
+    if aa is None:
+        print(f"[not written] aa_tie_band, classes_aa_*: no pair with both runs under {AA_TREE}")
+    else:
+        put("aa_tie_band", f"{1 / aa['r']:.3f} to {aa['r']:.3f} (largest time ratio between two runs of the method, "
+            f"{aa['pairs']} pairs)", "table_aa_pairs.csv")
+        put("aa_tie_band_pairs", f"{aa['pairs']} of {aa['of']}", "table_aa_pairs.csv")
+        put("aa_q_p95", f"{aa['p95']:.3f}", "table_aa_pairs.csv")
+        put("aa_q_p99", f"{aa['p99']:.3f}", "table_aa_pairs.csv")
+        put("aa_q_largest_per_stream", "; ".join(f"{d} {v:.3f}" for d, v in aa["per_stream"].items()), "table_aa_pairs.csv")
+        trans = {}
+        for fam, g in c.groupby("family"):
+            aa_classes(put, fam, g["ratio"].tolist(), g["cls"].tolist(), src, trans)
+        AA_TRANSITIONS.update(trans)
     return c, b
+
+
+AA_TRANSITIONS = {}
+
+
+def aa_transition_keys(put, src):
+    """Changes of class under the A/A band: over every comparison of table_comparison_classes and the
+    joint rule against PIHUP-MOD, by direction, and the timed rows of the summary table whose counts change."""
+    tot = {}
+    for (fam, a, c), n in AA_TRANSITIONS.items():
+        tot[(a, c)] = tot.get((a, c), 0) + n
+    put("aa_changed_comparisons", sum(tot.values()), src)
+    put("aa_changed_by_direction", "; ".join(f"{a} to {c} {n}" for (a, c), n in sorted(tot.items())) or "none", src)
+    fams = sorted({f for f, _, _ in AA_TRANSITIONS if f in SUMMARY_TIMED_FAMILIES})
+    put("aa_changed_summary_families", "; ".join(
+        f"{f}: " + ", ".join(f"{a} to {c} {n}" for (g, a, c), n in sorted(AA_TRANSITIONS.items()) if g == f)
+        for f in fams) or "none", src)
 
 
 def _mixed_seed_totals(sc, arms):
@@ -2971,6 +3036,10 @@ def total_counter_keys(put, out):
     c = tt["time_ratio"].map(cls)
     for r in tt.itertuples():
         RATIO_POINT[("mixed_joint_rule_vs_PIHUPMOD", where(r))] = float(r.time_ratio)   # unrounded
+    if aa_band() is not None:
+        trans = {}
+        aa_classes(put, "mixed_joint_rule_vs_PIHUPMOD", tt["time_ratio"].tolist(), c.tolist(), src, trans)
+        AA_TRANSITIONS.update(trans)
     put("classes_mixed_joint_rule_vs_PIHUPMOD", f"wins {int((c == 'win').sum())}, ties {int((c == 'tie').sum())}, "
         f"losses {int((c == 'loss').sum())} of {len(tt)}", src)
     for word, k in (("wins", "win"), ("ties", "tie"), ("losses", "loss")):
@@ -4541,6 +4610,8 @@ def export_all(out_dir=None):
     total_counter_keys(put, out)
     counted_record_keys(put)
     alternative_rule_keys(put, out)
+    if aa_band() is not None:
+        aa_transition_keys(put, "table_comparison_classes.csv")
     summary_ratio_intervals(put, out)
     checks_rows(put, nums)
 
