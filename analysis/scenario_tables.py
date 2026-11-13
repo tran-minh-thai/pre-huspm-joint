@@ -3295,6 +3295,26 @@ def alternative_rule_keys(put, out):
         put("single_run_classified_min_factor", f"{f.min():.3f}", src)
         put("single_run_classified_list", "; ".join(f"{x.family} {x.group} {x.cls} {x.ratio:.3f}" for x in one.itertuples()), src)
     put("altrule_excluded_fewer_than_two_runs", int(t["alt_cls"].isna().sum()), src)
+    # The same counts with the classes of the A/A band (docs/aa-tie-band.md), on the unrounded ratios
+    aa = aa_band()
+    if aa is not None:
+        r_aa = aa["r"]
+        pts = []
+        for x in t.itertuples():
+            if (x.family, x.group) not in RATIO_POINT:
+                raise ValueError(f"alternative rule, A/A band: no unrounded ratio for {x.family} {x.group}")
+            pts.append(RATIO_POINT[(x.family, x.group)])
+        t2 = t.assign(cls=["win" if v > r_aa else ("loss" if v < 1 / r_aa else "tie") for v in pts])
+        both = t2[t2["alt_cls"].notna()]
+        changed = both[both["alt_cls"] != both["cls"]]
+        put("altrule_aa_compared", len(both), src)
+        put("altrule_aa_changed", len(changed), src)
+        for to in ("loss", "win", "tie"):
+            put(f"altrule_aa_to_{to}", int((changed["alt_cls"] == to).sum()), src)
+        for to in ("loss", "win"):
+            put(f"altrule_aa_to_{to}_from_tie", int(((changed["alt_cls"] == to) & (changed["cls"] == "tie")).sum()), src)
+        one = t2[((t2["runs_second"] == 1) | (t2["runs_first"] == 1)) & t2["cls"].isin(["win", "loss"])]
+        put("single_run_classified_aa_comparisons", len(one), src)
     return t
 
 
