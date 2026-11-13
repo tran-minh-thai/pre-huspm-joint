@@ -397,8 +397,10 @@ def latency_keys(st, put, out):
     if any(one in l for l in lines):
         note = one + "\\,one run"
         if several:
-            runs = "; ".join(f"\\mbox{{Pre-HUSPM-Joint}} {a}, \\mbox{{Remine-UUT-R}} {b}" for a, b in sorted(several))
-            note += f"; elsewhere each operation time is the mean of its runs ({runs})"
+            # the cells of these rows are not means of runs: each operation's time is averaged over
+            # the runs first, and the median, 99th percentile and maximum are taken over those means
+            runs = "; ".join(f"{a} runs (\\mbox{{Pre-HUSPM-Joint}}) or {b} (\\mbox{{Remine-UUT-R}})" for a, b in sorted(several))
+            note += f"; other rows: operation times averaged over {runs}"
         lines.append("\\par\\smallskip " + note + ".")
     lines += ["\\end{table}", ""]
     open(path, "w", encoding="utf-8").write("\n".join(lines))

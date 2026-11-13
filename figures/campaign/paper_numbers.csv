@@ -7305,8 +7305,6 @@ SC2_time_table_runs,"mean and standard deviation of five runs, except IncUSP-Min
 SC2_time_table_runs_common,5,table_SC2_replicates.csv
 SC2_time_table_runs_Pre-HUSPM-TSU_DUNNHUMBY,1,table_SC2_replicates.csv
 SC2_time_table_runs_IncUSP-Miner+_DUNNHUMBY,1,table_SC2_replicates.csv
-SC2_remine_table_runs,mean and standard deviation of five runs,table_SC2_replicates.csv
-SC2_remine_table_runs_common,5,table_SC2_replicates.csv
 SC1_runtime_runs_common,3,table_SC1_runtime_replicates.csv
 SC1_runtime_runs_USpan_DUNNHUMBY,1,table_SC1_runtime_replicates.csv
 SC1_runtime_runs_IncUSP-Miner+_DUNNHUMBY,1,table_SC1_runtime_replicates.csv

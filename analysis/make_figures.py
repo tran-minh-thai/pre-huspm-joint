@@ -1513,8 +1513,7 @@ def one_run_note(lines):
     """lines of a table: when a cell carries ONE_RUN, the note saying so goes under the tabular."""
     if any(ONE_RUN in l for l in lines):
         i = max(k for k, l in enumerate(lines) if "\\end{tabular*}" in l)
-        lines.insert(i + 1, "\\par\\smallskip " + ONE_RUN + "\\,one run; every other cell is the mean $\\pm$ "
-                            "standard deviation of its runs.")
+        lines.insert(i + 1, "\\par\\smallskip " + ONE_RUN + "\\,one run; other cells: mean $\\pm$ standard deviation.")
     return lines
 
 

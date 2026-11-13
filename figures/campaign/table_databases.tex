@@ -1,0 +1,19 @@
+\begin{table}[!htbp]\centering
+\setlength{\tabcolsep}{1.5pt}
+\footnotesize
+\caption{Databases and the thresholds of SC1 and SC3}\label{tab:datasets}
+\begin{tabular*}{\textwidth}{@{\extracolsep\fill}lrrrrrrrrrrr@{}}\toprule
+ & & & & & & & & \multicolumn{4}{c@{}}{$\UUT$ (\%)} \\\cmidrule(l){9-12}
+Database & $|D|$ & $|I|$ & \begin{tabular}[b]{@{}r@{}}Elem./\\seq.\end{tabular} & \begin{tabular}[b]{@{}r@{}}Items/\\seq.\end{tabular} & \begin{tabular}[b]{@{}r@{}}Items/\\elem.\end{tabular} & $\TU(D)$ & $|D_{\mathrm{init}}|$ & & default & & \\\midrule
+SIGN & 730 & 267 & 52.00 & 52.00 & 1.00 & 1,796,483 & 230 & 4.913 & 6.591 & 8.337 & 9.105 \\
+LEVIATHAN & 5,834 & 9,025 & 33.81 & 33.81 & 1.00 & 10,502,159 & 2,834 & 1.464 & 1.553 & 1.647 & 1.799 \\
+FIFA & 20,450 & 2,990 & 36.24 & 36.24 & 1.00 & 42,781,841 & 10,450 & 5.623 & 5.964 & 6.707 & 7.544 \\
+BIBLE & 36,369 & 13,905 & 21.64 & 21.64 & 1.00 & 35,550,162 & 21,369 & 1.810 & 2.290 & 2.896 & 3.257 \\
+BMS1 & 59,601 & 497 & 2.51 & 2.51 & 1.00 & 7,229,030 & 39,601 & 1.282 & 1.360 & 1.529 & 1.622 \\
+KOSARAK & 990,002 & 41,270 & 8.10 & 8.10 & 1.00 & 385,921,994 & 90,002 & 2.223 & 2.500 & 2.812 & 3.162 \\
+C8T1S5I8N5K & 47,132 & 68,240 & 2.36 & 18.83 & 7.97 & 47,416,411 & 27,133 & 0.1099 & 0.1132 & 0.1200 & 0.1236 \\
+TAFENG$^{\ast}$ & 60,665 & 23,789 & 13.40 & 13.40 & 1.00 & 106,639,001 & 40,665 & 0.2812 & 0.3557 & 0.4499 & 0.5691 \\
+DUNNHUMBY$^{\ast}$ & 38,790 & 89,038 & 6.28 & 62.67 & 9.98 & 7,062,219 & 18,790 & 0.1158 & 0.1464 & 0.2083 & 0.2343 \\\bottomrule
+\end{tabular*}
+\par\smallskip $^{\ast}$\,measured utilities; the others generated (seed 42).
+\end{table}

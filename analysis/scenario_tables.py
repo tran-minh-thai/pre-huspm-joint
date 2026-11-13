@@ -22,7 +22,8 @@ make_figures.main() calls export_all(). Writes:
     table_SC7_block_index.csv    SC7: the increments without a rescan, with and without the index
     table_agreement.csv          HUSP-count agreement of every finished arm in SC1, SC3, SC5
     paper_numbers.csv            every number the paper quotes, key -> value
-    table_SC2_time.tex, table_SC2_rule.tex   the two SC2 tables of the paper
+    table_SC2_runtime.tex, table_SC2_rule.tex   the two SC2 tables of the paper
+    table_databases.tex          the databases and the thresholds of SC1 and SC3
 """
 import glob
 import json
@@ -1847,7 +1848,7 @@ def sc2_tex(totals, region, reps=None):
     T = {(r["dataset"], r["algorithm"]): r for _, r in totals.iterrows()}
     S = sc2_stats(totals, reps)
     op = region.set_index("dataset")
-    order = in_win_order(op.index, "table_SC2_time.tex")
+    order = in_win_order(op.index, "table_SC2_runtime.tex")
     # Remine-UUT-R, in the remining table only: the arm directory Remine-own-UUT (rivals=False), which
     # reuses the per-sequence data; its runs summed over the increments, as table_SC2_replicates sums them
     keep = mf.load_scenario("SC2", replicates=True, rivals=False)
@@ -1862,13 +1863,16 @@ def sc2_tex(totals, region, reps=None):
     def stat(d, a):
         return S.get((d, a))
 
-    def row(d, arms):
-        st = {a: stat(d, a) for a in arms}
-        low = dict(zip(arms, mf.lowest([f"{st[a]['mean']:.{mf.pm_digits(st[a]['mean'])}f}"
-                                        if st[a] else None for a in arms],
-                                       [(st[a]["min"], st[a]["max"], st[a]["n"]) if st[a] else None
-                                        for a in arms],
-                                       [st[a]["mean"] if st[a] else None for a in arms])))
+    def row(d, arms, among=None):
+        """The cells of arms on database d; the bold marks the lowest time among `among`
+        (default: arms), so that a table in two parts sets it over every arm of the row."""
+        among = list(dict.fromkeys(among or arms))
+        st = {a: stat(d, a) for a in among}
+        low = dict(zip(among, mf.lowest([f"{st[a]['mean']:.{mf.pm_digits(st[a]['mean'])}f}"
+                                         if st[a] else None for a in among],
+                                        [(st[a]["min"], st[a]["max"], st[a]["n"]) if st[a] else None
+                                         for a in among],
+                                        [st[a]["mean"] if st[a] else None for a in among])))
         cells = []
         for a in arms:
             r = T.get((d, a))
@@ -1913,34 +1917,34 @@ def sc2_tex(totals, region, reps=None):
                     CAPTION_RUNS.append((f"{key}_{a}_{d}", n))
         return title if bare or ", except " in phrase else f"{title}, {phrase}"
 
-    head = ("Database & \\begin{tabular}[b]{@{}r@{}}Pre-HUSPM-\\\\Joint\\end{tabular} & "
-            "\\begin{tabular}[b]{@{}r@{}}Pre-HUSPM-\\\\SWUmax\\end{tabular} & "
-            "\\begin{tabular}[b]{@{}r@{}}Pre-HUSPM-\\\\TSU\\end{tabular} & Remine & "
-            "\\begin{tabular}[b]{@{}r@{}}IncUSP-\\\\Miner$^{+}$\\end{tabular} \\\\\\midrule")
-    rows = [f"{d} & " + " & ".join(row(d, INC_ARMS)) + " \\\\" for d in order]
-    time_tex = "\n".join(["\\begin{table}[!htbp]\\centering",
-                          f"\\caption{{{caption('Runtime (s) of SC2 over 100 increments', INC_ARMS, 'SC2_time_table_runs')}}}\\label{{tab:sc2_time}}",
-                          "\\setlength{\\tabcolsep}{4pt}",
-                          "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}lrrrrr}\\toprule", head] + rows +
-                         ["\\bottomrule\\end{tabular*}", "\\end{table}", ""])
-    # Remining in three ways beside the proposal, in a table of its own: with the two static
-    # miners the runtime table is wider than the text (measured: 89 pt over). None when
-    # neither remining arm with a static miner has a row.
-    remine_arms = [P, REM, "Remine-HUSP-ULL", "Remine-HUSP-SP", OWN_UUT, OWN_UUT_REUSE]
-    remine_tex = None
-    if any((d, a) in T for d in order for a in remine_arms[2:]):
-        rhead = ("Database & \\begin{tabular}[b]{@{}r@{}}Pre-HUSPM-\\\\Joint\\end{tabular} & "
-                 "Remine & "
-                 "\\begin{tabular}[b]{@{}r@{}}Remine-\\\\HUSP-ULL\\end{tabular} & "
-                 "\\begin{tabular}[b]{@{}r@{}}Remine-\\\\HUSP-SP\\end{tabular} & "
-                 "\\begin{tabular}[b]{@{}r@{}}Remine-\\\\UUT\\end{tabular} & "
-                 "\\begin{tabular}[b]{@{}r@{}}Remine-\\\\UUT-R\\end{tabular} \\\\\\midrule")
-        rrows = [f"{d} & " + " & ".join(row(d, remine_arms)) + " \\\\" for d in order]
-        remine_tex = "\n".join(["\\begin{table}[!htbp]\\centering",
-                                f"\\caption{{{caption('Runtime (s) of SC2 against remining', remine_arms, 'SC2_remine_table_runs', bare=True)}}}\\label{{tab:sc2_remine}}",
-                                "\\setlength{\\tabcolsep}{3pt}",
-                                "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}lrrrrrr}\\toprule", rhead] + rrows +
-                               ["\\bottomrule\\end{tabular*}", "\\end{table}", ""])
+    # One table in two parts: the incremental methods, then remining after every operation. The
+    # proposal is printed in both parts; the bold of a row is set over all nine arms of the row.
+    two = lambda a, b: f"\\begin{{tabular}}[b]{{@{{}}r@{{}}}}{a}\\\\{b}\\end{{tabular}}"
+    label = {P: two("Pre-HUSPM-", "Joint"), "Pre-HUSPM-SWUmax": two("Pre-HUSPM-", "SWUmax"),
+             "Pre-HUSPM-TSU": two("Pre-HUSPM-", "TSU"), "IncUSP-Miner+": two("IncUSP-", "Miner$^{+}$"),
+             REM: "Remine", "Remine-HUSP-ULL": two("Remine-", "HUSP-ULL"), "Remine-HUSP-SP": two("Remine-", "HUSP-SP"),
+             OWN_UUT: two("Remine-", "UUT"), OWN_UUT_REUSE: two("Remine-", "UUT-R")}
+    upper = [P, "Pre-HUSPM-SWUmax", "Pre-HUSPM-TSU", "IncUSP-Miner+"]
+    lower = [P, REM, "Remine-HUSP-ULL", "Remine-HUSP-SP", OWN_UUT, OWN_UUT_REUSE]
+    if not any((d, a) in T for d in order for a in lower[2:]):
+        lower = []        # no finished arm of Remine-HUSP-ULL or Remine-HUSP-SP: the upper part alone
+    every = upper + lower
+    width = max(len(upper), len(lower))
+    fill = lambda cells: cells + [""] * (width - len(cells))
+
+    def part(title, arms):
+        out = [f"\\multicolumn{{{width + 1}}}{{@{{}}l}}{{\\emph{{{title}}}}} \\\\",
+               "Database & " + " & ".join(fill([label[a] for a in arms])) + " \\\\\\midrule"]
+        return out + [f"{d} & " + " & ".join(fill(row(d, arms, every))) + " \\\\" for d in order]
+
+    body = part("Incremental methods", upper)
+    if lower:
+        body += ["\\midrule"] + part("Remining after every operation", lower)
+    runtime_tex = "\n".join(["\\begin{table}[!htbp]\\centering",
+                             f"\\caption{{{caption('Runtime (s) of SC2 over 100 increments', every, 'SC2_time_table_runs', bare=True)}}}\\label{{tab:sc2_time}}",
+                             "\\setlength{\\tabcolsep}{2pt}", "\\footnotesize",
+                             f"\\begin{{tabular*}}{{\\textwidth}}{{@{{\\extracolsep\\fill}}l{'r' * width}@{{}}}}\\toprule"]
+                            + body + ["\\bottomrule\\end{tabular*}", "\\end{table}", ""])
     def rescans(d):
         v = [str(int(op.loc[d, c])) for c in ("rescans", "rescans_swumax", "rescans_tsu")]
         cells = " & ".join(f"\\textbf{{{x}}}" if b else x for x, b in zip(v, mf.lowest(v)))
@@ -1964,8 +1968,7 @@ def sc2_tex(totals, region, reps=None):
                           "\\begin{tabular}[b]{@{}r@{}}No\\\\rescan\\end{tabular} & Joint & SWUmax & TSU & "
                           "\\begin{tabular}[b]{@{}r@{}}Selec-\\\\tion\\end{tabular} \\\\\\midrule"]
                          + rows + ["\\bottomrule\\end{tabular*}", "\\end{table}", ""])
-    note = lambda tex: tex if tex is None else "\n".join(mf.one_run_note(tex.split("\n")))
-    return note(time_tex), rule_tex, note(remine_tex)
+    return "\n".join(mf.one_run_note(runtime_tex.split("\n"))), rule_tex
 
 
 def sc7_static_runtime(put, t7):
@@ -2010,7 +2013,7 @@ def sc7_static_runtime(put, t7):
 # ------------------------------------------------------------------------------ window study
 # The rescan floor selection by the window rule at w in mf.WINDOWS, one arm Pre-HUSPM-Joint-w<n> each
 # (w = 5 was the method's rule before the break-even rule); the fixed floor (FIXED) is the reference.
-WIN_ORDER = ["SIGN", "TAFENG", "C8T1S5I8N5K", "BIBLE", "LEVIATHAN", "FIFA", "KOSARAK", "DUNNHUMBY"]   # as table_SC2_time
+WIN_ORDER = ["SIGN", "TAFENG", "C8T1S5I8N5K", "BIBLE", "LEVIATHAN", "FIFA", "KOSARAK", "DUNNHUMBY"]   # as table_SC2_runtime
 
 
 def in_win_order(present, where):
@@ -3479,19 +3482,27 @@ def datasets_table(put, out):
                          utilities="measured" if d in MEASURED_UTILITIES else "generated"))
     t = pd.DataFrame(rows)
     mf.write_csv(t, os.path.join(out, "table_datasets.csv"))
-    lines = ["\\begin{table}[!htbp]\\centering", "\\setlength{\\tabcolsep}{3pt}",
-             "\\caption{Databases}\\label{tab:datasets}",
-             "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}lrrrrrrrr@{}}\\toprule",
-             "Database & $|D|$ & $|I|$ & \\begin{tabular}[b]{@{}r@{}}Elements/\\\\sequence\\end{tabular} & "
-             "\\begin{tabular}[b]{@{}r@{}}Items/\\\\sequence\\end{tabular} & "
-             "\\begin{tabular}[b]{@{}r@{}}Items/\\\\element\\end{tabular} & $\\TU(D)$ & $|D_{\\mathrm{init}}|$ & "
-             "\\begin{tabular}[b]{@{}r@{}}Default\\\\$\\UUT$ (\\%)\\end{tabular} \\\\\\midrule"]
+    # One table for the databases and the thresholds of SC1 and SC3: the four thresholds take the
+    # place of the default, which is always the second of them (checked here, so that the column
+    # headed "default" cannot name another).
+    for d in mf.ALL_DATASETS:
+        sweep = mf.DATASETS[d]["sweep"]
+        if len(sweep) != 4 or pct4(f"{sweep[1]:.6f}") != pct4(f"{mf.DATASETS[d]['default_uut']:.6f}"):
+            sys.exit(f"table_databases.tex: on {d} the default UUT {mf.DATASETS[d]['default_uut']} is not "
+                     f"the second of the four thresholds {sweep}")
+    two = lambda a, b: f"\\begin{{tabular}}[b]{{@{{}}r@{{}}}}{a}\\\\{b}\\end{{tabular}}"
+    lines = ["\\begin{table}[!htbp]\\centering", "\\setlength{\\tabcolsep}{1.5pt}", "\\footnotesize",
+             "\\caption{Databases and the thresholds of SC1 and SC3}\\label{tab:datasets}",
+             "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}lrrrrrrrrrrr@{}}\\toprule",
+             " & & & & & & & & \\multicolumn{4}{c@{}}{$\\UUT$ (\\%)} \\\\\\cmidrule(l){9-12}",
+             f"Database & $|D|$ & $|I|$ & {two('Elem./', 'seq.')} & {two('Items/', 'seq.')} & "
+             f"{two('Items/', 'elem.')} & $\\TU(D)$ & $|D_{{\\mathrm{{init}}}}|$ & & default & & \\\\\\midrule"]
     for r in t.itertuples():
         tu = f"{int(half_up(r.total_utility, 0)):,}"
         mark = "$^{\\ast}$" if r.utilities == "measured" else ""
         lines.append(f"{r.dataset}{mark} & {r.sequences:,} & {r.items:,} & {half_up(r.elements_per_sequence)} & "
                      f"{half_up(r.avg_length)} & {half_up(r.items_per_element)} & {tu} & {r.d_init:,} & "
-                     f"{pct4(r.default_uut)} \\\\")
+                     + " & ".join(pct4(f"{v:.6f}") for v in mf.DATASETS[r.dataset]["sweep"]) + " \\\\")
         b = f"DB_{r.dataset}"
         put(f"{b}_sequences", f"{r.sequences:,}", src)
         put(f"{b}_items", f"{r.items:,}", src)
@@ -3502,9 +3513,12 @@ def datasets_table(put, out):
         put(f"{b}_total_utility", tu, src)
     lines[-1] = lines[-1] + "\\bottomrule"
     lines += ["\\end{tabular*}",
-              "\\par\\smallskip $^{\\ast}$\\,utilities measured on the source records; the others from generated quantities and profits (seed 42).",
+              "\\par\\smallskip $^{\\ast}$\\,measured utilities; the others generated (seed 42).",
               "\\end{table}", ""]
-    open(os.path.join(out, "table_datasets.tex"), "w", encoding="utf-8").write("\n".join(lines))
+    open(os.path.join(out, "table_databases.tex"), "w", encoding="utf-8").write("\n".join(lines))
+    for old in ("table_datasets.tex", "table_thresholds.tex"):   # merged into table_databases.tex
+        if os.path.exists(os.path.join(out, old)):
+            os.remove(os.path.join(out, old))
 
 
 def repeated_sequence_keys(put):
@@ -4263,14 +4277,10 @@ def export_all(out_dir=None):
         if totals is not None and len(region):
             rp = os.path.join(out, "table_SC2_replicates.csv")
             reps = pd.read_csv(rp) if os.path.exists(rp) else None
-            time_tex, rule_tex, remine_tex = sc2_tex(totals, region, reps)
-            remine_path = os.path.join(out, "table_SC2_remine.tex")
-            if remine_tex is None:
-                if os.path.exists(remine_path):
-                    os.remove(remine_path)
-                print("[not written] table_SC2_remine.tex: no finished arm of Remine-HUSP-ULL or Remine-HUSP-SP")
-            else:
-                open(remine_path, "w", encoding="utf-8").write(remine_tex)
+            runtime_tex, rule_tex = sc2_tex(totals, region, reps)
+            for old in ("table_SC2_time.tex", "table_SC2_remine.tex"):   # merged into table_SC2_runtime.tex
+                if os.path.exists(os.path.join(out, old)):
+                    os.remove(os.path.join(out, old))
             sc2_speedups(put, totals, reps)
             fsel = sc2_floor_selection(totals, reps)
             fs_path = os.path.join(out, "table_SC2_floor_selection.csv")
@@ -4290,7 +4300,7 @@ def export_all(out_dir=None):
                 if os.path.exists(iso_path):
                     os.remove(iso_path)
                 print("[not written] table_SC2_rule_isolation.csv: no finished arm of " + ", ".join(ISOLATION_ARMS))
-            open(os.path.join(out, "table_SC2_time.tex"), "w", encoding="utf-8").write(time_tex)
+            open(os.path.join(out, "table_SC2_runtime.tex"), "w", encoding="utf-8").write(runtime_tex)
             open(os.path.join(out, "table_SC2_rule.tex"), "w", encoding="utf-8").write(rule_tex)
             h = mf.rescan_hypothesis(region)
             put("SC2_prediction", h["verdict"], "table_SC2_operating_region.csv")
@@ -4321,16 +4331,6 @@ def export_all(out_dir=None):
     th = [dict(dataset=d, d_init=v["d_init"], default_uut=v["default_uut"], r_l=v["sl_ratio"],
                thresholds=" ".join(f"{x:.6f}" for x in v["sweep"])) for d, v in mf.DATASETS.items()]
     mf.write_csv(pd.DataFrame(th), os.path.join(out, "table_thresholds.csv"))
-    lines = ["\\begin{table}[!htbp]\\centering", "\\caption{Thresholds of SC1 and SC3}\\label{tab:thresholds}",
-             "\\begin{tabular*}{\\textwidth}{@{\\extracolsep\\fill}lrrrr}\\toprule",
-             "Database & \\multicolumn{4}{c}{$\\UUT$ (\\%)} \\\\\\midrule"]
-    for r in th:
-        # In percent, four significant digits, rounded half up on the decimal value: in binary
-        # 0.022895 * 100 falls just below 2.2895 and would print 2.289.
-        lines.append(r["dataset"] + " & " + " & ".join(pct4(v) for v in r["thresholds"].split()) + " \\\\")
-    lines += ["\\bottomrule\\end{tabular*}", "\\end{table}", ""]
-    open(os.path.join(out, "table_thresholds.tex"), "w", encoding="utf-8").write("\n".join(lines))
-
     datasets_table(put, out)
     assembly_keys(put)
     repeated_sequence_keys(put)
