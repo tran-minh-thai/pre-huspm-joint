@@ -1,0 +1,1 @@
+cold runs: 1008 in 336 cells -> results/static-warmup-effect/cold-runs/cold_runs.csv

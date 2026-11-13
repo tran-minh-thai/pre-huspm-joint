@@ -1266,6 +1266,19 @@ def verification():
         rows.append(dict(check="item pruning against exhaustive enumeration (ItemRemovalCheck random)",
                          status="finished", runs=int(m.group(1)), operations=int(m.group(2)),
                          with_target=int(nodes.group(1)) if nodes else None, mismatches=bad))
+    # The static baselines, as measured, against exhaustive enumeration on the same small databases
+    # (verify.BaselineExhaustiveCheck), as generated and with every utility 0 set to 1.
+    for rec, tag in (("baseline-exhaustive", ""), ("baseline-exhaustive-zero-to-one", ", utilities 0 set to 1")):
+        name = f"static baselines against exhaustive enumeration (BaselineExhaustiveCheck{tag})"
+        out = _console(rec)
+        if _status(rec) != "finished" or out is None:
+            rows.append(dict(check=name, status=_status(rec)))
+            continue
+        m = re.search(r"comparisons=(\d+) .*databases-with->=1-pattern=(\d+)", out)
+        bad = sum(int(x) for x in re.findall(r"^  \S+\s+measured\s+mismatching-comparisons=(\d+)", out, flags=re.M))
+        if len(re.findall(r"^  \S+\s+measured\s", out, flags=re.M)) != 3:
+            raise ValueError(f"{rec}: expected the three measured baselines in the console")
+        rows.append(dict(check=name, status="finished", runs=int(m.group(1)), operations=int(m.group(2)), mismatches=bad))
     out = _console("ips-real")
     if _status("ips-real") != "finished":
         rows.append(dict(check="item pruning on and off on real databases (ItemRemovalCheck real)",
@@ -2675,6 +2688,7 @@ def comparison_classes(put, out):
     rows = []
 
     def add(family, group, first, second, ratio):
+        RATIO_POINT[(family, group)] = float(ratio)   # unrounded, for summary_ratio_intervals
         rows.append(dict(family=family, group=group, first=first, second=second, ratio=ratio, cls=cls(ratio)))
 
     inf = _fresh_table(out, "table_SC2_inference.csv")
@@ -2955,6 +2969,8 @@ def total_counter_keys(put, out):
     b, _ = tie_band(out)
     cls = lambda x: "win" if x > b else ("loss" if x < 1 / b else "tie")
     c = tt["time_ratio"].map(cls)
+    for r in tt.itertuples():
+        RATIO_POINT[("mixed_joint_rule_vs_PIHUPMOD", where(r))] = float(r.time_ratio)   # unrounded
     put("classes_mixed_joint_rule_vs_PIHUPMOD", f"wins {int((c == 'win').sum())}, ties {int((c == 'tie').sum())}, "
         f"losses {int((c == 'loss').sum())} of {len(tt)}", src)
     for word, k in (("wins", "win"), ("ties", "tie"), ("losses", "loss")):
@@ -3051,6 +3067,13 @@ def _static_runs(sc):
     return out
 
 
+# (family, group) -> the bootstrap values of the time ratio of one comparison, filled by
+# alternative_rule_keys and read by summary_ratio_intervals
+RATIO_SAMPLES = {}
+# (family, group) -> the unrounded time ratio of one comparison (the tables keep three decimals)
+RATIO_POINT = {}
+
+
 def alternative_rule_keys(put, out):
     """The timed comparisons of the paper's summary table, classified a second way: a 95% bootstrap
     interval of the ratio (BOOTSTRAP_RESAMPLES, BOOTSTRAP_SEED; runs resampled independently, seeds
@@ -3102,9 +3125,11 @@ def alternative_rule_keys(put, out):
                 if paired:
                     qa, pa = np.asarray(q), np.asarray(p)
                     idx = np.random.default_rng(rng_seed).integers(0, len(qa), size=(BOOTSTRAP_RESAMPLES, len(qa)))
-                    lo, hi = np.percentile(qa[idx].sum(axis=1) / pa[idx].sum(axis=1), [2.5, 97.5])
+                    smp = qa[idx].sum(axis=1) / pa[idx].sum(axis=1)
                 else:
-                    lo, hi = bootstrap_ratio(q, p)
+                    smp = bootstrap_ratio_samples(q, p)
+                RATIO_SAMPLES[(fam, r.group)] = smp
+                lo, hi = np.percentile(smp, [2.5, 97.5])
                 alt = "win" if lo > 1 else ("loss" if hi < 1 else "tie")
                 row.update(ci_low=float(lo), ci_high=float(hi), alt_cls=alt)
             rows.append(row)
@@ -3134,7 +3159,9 @@ def alternative_rule_keys(put, out):
         if len(reps) >= 2:
             qa, pa = np.asarray(q), np.asarray(pr)
             idx = np.random.default_rng(rng_seed).integers(0, len(qa), size=(BOOTSTRAP_RESAMPLES, len(qa)))
-            lo, hi = np.percentile(qa[idx].sum(axis=1) / pa[idx].sum(axis=1), [2.5, 97.5])
+            smp = qa[idx].sum(axis=1) / pa[idx].sum(axis=1)
+            RATIO_SAMPLES[("mixed_joint_rule_vs_PIHUPMOD", f"{x.scenario} {x.dataset}")] = smp
+            lo, hi = np.percentile(smp, [2.5, 97.5])
             row.update(ci_low=float(lo), ci_high=float(hi), alt_cls="win" if lo > 1 else ("loss" if hi < 1 else "tie"))
         rows.append(row)
     # the long streams of DUNNHUMBY against the fixed lower threshold: the same-session ratios of
@@ -3155,11 +3182,14 @@ def alternative_rule_keys(put, out):
         x = np.asarray([1 / v for _, v, _ in pr_])          # the arm over the method, per session
         gm = float(np.exp(np.log(x).mean()))
         cls = "win" if gm > b else ("loss" if gm < 1 / b else "tie")
+        RATIO_POINT[("LONG_DUNNHUMBY_method_vs_FixedFloor", sc)] = gm
         row = dict(family="LONG_DUNNHUMBY_method_vs_FixedFloor", group=sc, cls=cls, ratio=gm,
                    runs_second=len(x), runs_first=len(x))
         if len(x) >= 2:
             idx = np.random.default_rng(rng_seed).integers(0, len(x), size=(BOOTSTRAP_RESAMPLES, len(x)))
-            lo, hi = np.percentile(np.exp(np.log(x)[idx].mean(axis=1)), [2.5, 97.5])
+            smp = np.exp(np.log(x)[idx].mean(axis=1))
+            RATIO_SAMPLES[("LONG_DUNNHUMBY_method_vs_FixedFloor", sc)] = smp
+            lo, hi = np.percentile(smp, [2.5, 97.5])
             row.update(ci_low=float(lo), ci_high=float(hi), alt_cls="win" if lo > 1 else ("loss" if hi < 1 else "tie"))
         rows.append(row)
     t = pd.DataFrame(rows)
@@ -3189,6 +3219,81 @@ def alternative_rule_keys(put, out):
     return t
 
 
+# The families of the timed rows of the paper's summary table, in its order. The row against both
+# Pre-HUSPM tests and remining below the threshold counts streams by their interval and is not a family.
+SUMMARY_TIMED_FAMILIES = [
+    "SC1_miner_at_threshold_vs_HUSP-ULL", "SC1_cold_miner_at_threshold_vs_HUSP-ULL",
+    "SC1_cold_miner_at_threshold_vs_HUSP-SP", "SC3_cold_miner_at_threshold_vs_HUSP-ULL",
+    "SC3_cold_miner_at_threshold_vs_HUSP-SP", "SC1_cold_method_vs_HUSP-ULL", "SC1_cold_method_vs_HUSP-SP",
+    "SC1_method_vs_HUSP-ULL", "SC2_method_vs_IncUSP-Miner+", f"SC2_method_vs_{OWN_UUT}",
+    f"SC2_method_vs_{OWN_UUT_REUSE}", "mixed_pooled_stream_vs_Remine", "mixed_pooled_stream_vs_Remine-UUT",
+    "mixed_pooled_stream_vs_Remine-UUT-reuse", "mixed_joint_rule_vs_PIHUPMOD", "mixed_pooled_stream_vs_FixedFloor",
+    "LONG_DUNNHUMBY_method_vs_FixedFloor"]
+
+
+def summary_ratio_intervals(put, out):
+    """Per timed row of the summary table: the geometric mean over its comparisons of the time ratio
+    (second arm over the first, above 1 the first is faster) and a 95% percentile bootstrap interval of
+    it. Each resample draws, in every comparison, the resample of alternative_rule_keys (runs resampled
+    independently, seeds and same-session runs in pairs; the same draws as the interval of that
+    comparison), and takes the geometric mean over the comparisons. The cold static rows draw the runs
+    without the warm-up (static-warmup-effect/cold-runs) in the same way. A comparison with one run on a
+    side enters at its ratio in every resample and is counted. The interval covers the spread between runs
+    of the configurations measured, not a population of configurations. Writes table_summary_ratios.csv."""
+    c = _fresh_table(out, "table_comparison_classes.csv")
+    alt = _fresh_table(out, "table_alternative_rule.csv")
+    cold = pd.read_csv(os.path.join(WARMUP_EFFECT, "cold-runs", "cold_runs.csv"))
+    runs = {}
+    for (sc, d, op, a), g in cold[cold["scenario"].isin(["SC1", "SC3"])].groupby(["scenario", "dataset", "op_type", "algorithm"]):
+        runs[(sc, d, f"{float(op.split('=')[1]):g}", a)] = g.sort_values("run")["runtime_ms"].astype(float).tolist()
+    rows = []
+    for fam in SUMMARY_TIMED_FAMILIES:
+        if fam.startswith("LONG_") or fam == "mixed_joint_rule_vs_PIHUPMOD":
+            fc = alt[alt["family"] == fam][["group", "ratio"]]
+        else:
+            fc = c[c["family"] == fam][["group", "ratio"]]
+        if fc.empty:
+            raise ValueError(f"summary_ratio_intervals: no comparison of {fam}")
+        draws, single = [], 0
+        points = []
+        for g in fc["group"]:
+            if (fam, g) not in RATIO_POINT:
+                raise ValueError(f"summary_ratio_intervals: no unrounded ratio for {fam} {g}")
+            ratio = RATIO_POINT[(fam, g)]
+            points.append(ratio)
+            smp = RATIO_SAMPLES.get((fam, g))
+            if smp is None and "_cold_" in fam:
+                sc = fam.split("_")[0]
+                d, su = g.split(" ")
+                first = AT_UUT if "miner_at_threshold" in fam else P
+                q, p = runs.get((sc, d, su, fam.split("_vs_")[1]), []), runs.get((sc, d, su, first), [])
+                # the class ratio comes from the means of warmup_effect.csv, written to 0.001 ms: a relative
+                # difference of at most 0.0005 / mean(q) + 0.0005 / mean(p)
+                tol = (0.0005 / np.mean(q) + 0.0005 / np.mean(p)) * 1.01 if len(q) and len(p) else 0
+                if len(q) and len(p) and abs(np.mean(q) / np.mean(p) / ratio - 1) > tol:
+                    raise ValueError(f"{fam} {g}: cold runs give {np.mean(q) / np.mean(p)}, the table {ratio}")
+                if min(len(q), len(p)) >= 2:
+                    smp = bootstrap_ratio_samples(q, p)
+            if smp is None:
+                single += 1
+                smp = np.full(BOOTSTRAP_RESAMPLES, ratio)
+            draws.append(np.log(smp))
+        gm = float(np.exp(np.log(points).mean()))
+        lo, hi = np.percentile(np.exp(np.mean(draws, axis=0)), [2.5, 97.5])
+        rows.append(dict(family=fam, comparisons=len(fc), single_run_comparisons=single, geomean=gm,
+                         ci_low=float(lo), ci_high=float(hi)))
+    t = pd.DataFrame(rows)
+    src = "table_summary_ratios.csv"
+    mf.write_csv(t, os.path.join(out, src))
+    for r in t.itertuples():
+        k = f"summary_ratio_{r.family}"
+        put(f"{k}_geomean", f"{r.geomean:.3f}", src)
+        put(f"{k}_ci95", f"{r.ci_low:.3f} to {r.ci_high:.3f}", src)
+        put(f"{k}_comparisons", int(r.comparisons), src)
+        put(f"{k}_single_run_comparisons", int(r.single_run_comparisons), src)
+    put("summary_ratio_resamples", BOOTSTRAP_RESAMPLES, src)
+
+
 # The rows of the paper's table of correctness checks whose mismatches come from several records:
 # per row, the keys whose values add up to its mismatches (a fraction "a/b" counts b - a).
 V = "verify_"
@@ -3196,6 +3301,60 @@ VP = V + "patterns_against_the_proposal_after_every_operation_husps_"
 VD = V + "direct_path_on_real_databases_"
 VF = V + "random_streams_mixedbudgetfuzz_"
 VA = V + "rescan_rule_acceptance_"
+def baseline_exhaustive_keys(put, row_of):
+    """Keys of the static baselines against exhaustive enumeration (verify.BaselineExhaustiveCheck), of
+    the two bounds as published on the same databases, and of the HUSP-SP code its authors publish
+    (results/invariant-husp-sp-counterexample, RandomDatabases.java), as generated and with every
+    utility 0 set to 1. A record that is missing writes no key."""
+    for rec, suf in (("baseline-exhaustive", ""), ("baseline-exhaustive-zero-to-one", "_zero_to_one")):
+        out = _console(rec)
+        if _status(rec) != "finished" or out is None:
+            continue
+        src = f"results/verify-joint/{rec}/console.txt"
+        head = re.search(r"trials=(\d+) .*comparisons=(\d+) \(at UUT (\d+), at the cutoff below UUT (\d+)\) "
+                         r"databases-with->=1-pattern=(\d+) reference-patterns=(\d+)", out)
+        put(f"verify_baselines_vs_exhaustive{suf}_databases", int(head.group(1)), src)
+        put(f"verify_baselines_vs_exhaustive{suf}_comparisons", int(head.group(2)), src)
+        put(f"verify_baselines_vs_exhaustive{suf}_comparisons_at_cutoff", int(head.group(4)), src)
+        put(f"verify_baselines_vs_exhaustive{suf}_databases_with_patterns", int(head.group(5)), src)
+        put(f"verify_baselines_vs_exhaustive{suf}_reference_patterns", int(head.group(6)), src)
+        r = row_of("static baselines against exhaustive enumeration (BaselineExhaustiveCheck" + (")" if not suf else ","))
+        put(f"verify_baselines_vs_exhaustive{suf}_mismatches", int(r["mismatches"]), src)
+        for name, slug in (("USpan-as-published", "USpan"), ("HUSP-SP-as-published", "HUSP-SP")):
+            m = re.search(r"^  " + re.escape(name) + r"\s+published\s+mismatching-comparisons=(\d+) "
+                          r"mismatching-databases=(\d+) missing=(\d+) extra=(\d+)", out, flags=re.M)
+            put(f"published_bound_{slug}{suf}_mismatching_comparisons", int(m.group(1)), src)
+            put(f"published_bound_{slug}{suf}_mismatching_databases", int(m.group(2)), src)
+            put(f"published_bound_{slug}{suf}_missing_patterns", int(m.group(3)), src)
+            put(f"published_bound_{slug}{suf}_extra_patterns", int(m.group(4)), src)
+    rec = os.path.join(mf.DATA_DIR, "invariant-husp-sp-counterexample", "2026-11-13-random")
+    if os.path.exists(os.path.join(rec, "run_meta.json")):
+        out = open(os.path.join(rec, "console.txt"), encoding="utf-8").read()
+        src = "results/invariant-husp-sp-counterexample/2026-11-13-random/console.txt"
+        put("husp_sp_authors_code_commit", re.search(r"HUSPM commit: ([0-9a-f]{40})", out).group(1)[:8], src)
+        for mode, suf in (("as-generated", "as_generated"), ("zero-to-one", "zero_to_one")):
+            m = re.search(r"utilities=" + mode + r" comparisons=(\d+) count-differs=(\d+) \(fewer (\d+), more (\d+)\) "
+                          r"databases=(\d+) deficit=(\d+) surplus=(\d+)", out)
+            put(f"husp_sp_authors_code_{suf}_comparisons", int(m.group(1)), src)
+            put(f"husp_sp_authors_code_{suf}_comparisons_with_fewer", int(m.group(3)), src)
+            put(f"husp_sp_authors_code_{suf}_comparisons_with_more", int(m.group(4)), src)
+            put(f"husp_sp_authors_code_{suf}_databases", int(m.group(5)), src)
+            put(f"husp_sp_authors_code_{suf}_missing_patterns", int(m.group(6)), src)
+    tr = os.path.join(mf.DATA_DIR, "invariant-husp-sp-counterexample", "2026-11-13-trace-1402")
+    if os.path.exists(os.path.join(tr, "run_meta.json")) and os.path.exists(os.path.join(rec, "console.txt")):
+        # comparison by comparison, the published code against the TRSU of Definition 4.11 (zero-to-one)
+        out = open(os.path.join(rec, "console.txt"), encoding="utf-8").read().split("== utilities zero-to-one")[1]
+        pub = {(int(a), int(b)): int(c) for a, b, c in
+               re.findall(r"^differs trial=(\d+) level=(\d+) threshold=\d+ enumeration=\d+ published-code=(\d+)", out, flags=re.M)}
+        dfn = {(int(a), int(b)): int(c) for a, b, c in
+               re.findall(r"^differs trial=(\d+) level=(\d+) enumeration=\d+ definition-4.11=(\d+)",
+                          open(os.path.join(tr, "console.txt"), encoding="utf-8").read(), flags=re.M)}
+        same = sum(1 for k in pub if k in dfn and dfn[k] == pub[k])
+        src = "results/invariant-husp-sp-counterexample/2026-11-13-trace-1402/console.txt"
+        put("husp_sp_authors_code_zero_to_one_comparisons_as_definition", f"{same} of {len(pub)}", src)
+        put("husp_sp_authors_code_zero_to_one_comparisons_beyond_definition", len(set(pub) - set(dfn)), src)
+
+
 CHECKS_ROWS = {
     "ips_vs_noips": [V + "ips_vs_noips_real_init_equal", V + "ips_vs_noips_real_whole_equal"],
     "acceptance": [VA + "rescanruleacceptancetest_mismatches", VA + "merge_acceptance_mismatches"],
@@ -3216,6 +3375,7 @@ CHECKS_ROWS = {
     "arms_sc2": [VP + "sc2_mismatches", VP + "sc2_break_even_nodes_mismatches"],
     "arms_mixed": [VP + f"{r}_mismatches" for r in ("mixed_break_even_nodes", "mixed_break_even", "mixed_total_counter",
                                                     "mixed_remine", "dunnhumby_mixed_all_arms")],
+    "baselines_exhaustive": ["verify_baselines_vs_exhaustive_mismatches", "verify_baselines_vs_exhaustive_zero_to_one_mismatches"],
 }
 
 
@@ -3553,14 +3713,19 @@ def _sc2_run_totals():
     return {k: v for k, v in _run_totals(inc, ["dataset"]).items() if v}
 
 
-def bootstrap_ratio(a, b, resamples=BOOTSTRAP_RESAMPLES, seed=BOOTSTRAP_SEED):
-    """95% percentile interval of mean(a) / mean(b), each side resampled with replacement on
-    its own (the runs of two arms are independent)."""
+def bootstrap_ratio_samples(a, b, resamples=BOOTSTRAP_RESAMPLES, seed=BOOTSTRAP_SEED):
+    """The resampled values of mean(a) / mean(b), each side resampled with replacement on its own."""
     rng = np.random.default_rng(seed)
     a, b = np.asarray(a, float), np.asarray(b, float)
     ra = rng.choice(a, size=(resamples, len(a)), replace=True).mean(axis=1)
     rb = rng.choice(b, size=(resamples, len(b)), replace=True).mean(axis=1)
-    lo, hi = np.percentile(ra / rb, [2.5, 97.5])
+    return ra / rb
+
+
+def bootstrap_ratio(a, b, resamples=BOOTSTRAP_RESAMPLES, seed=BOOTSTRAP_SEED):
+    """95% percentile interval of mean(a) / mean(b), each side resampled with replacement on
+    its own (the runs of two arms are independent)."""
+    lo, hi = np.percentile(bootstrap_ratio_samples(a, b, resamples, seed), [2.5, 97.5])
     return float(lo), float(hi)
 
 
@@ -4242,6 +4407,7 @@ def export_all(out_dir=None):
         put("verify_ips_vs_exhaustive_databases", int(r["runs"]), "table_verification.csv")
         put("verify_ips_vs_exhaustive_databases_with_patterns", int(r["operations"]), "table_verification.csv")
         put("verify_ips_vs_exhaustive_mismatches", int(r["mismatches"]), "table_verification.csv")
+    baseline_exhaustive_keys(put, row_of)
     for scope in ("init", "whole"):
         r = row_of(f"item pruning on and off on real databases, {scope}")
         if r is not None and r["status"] == "finished":
@@ -4375,6 +4541,7 @@ def export_all(out_dir=None):
     total_counter_keys(put, out)
     counted_record_keys(put)
     alternative_rule_keys(put, out)
+    summary_ratio_intervals(put, out)
     checks_rows(put, nums)
 
     # a key written twice has two sources, and a later change of one would leave the other behind

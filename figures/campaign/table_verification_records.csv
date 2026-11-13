@@ -3,6 +3,8 @@ acceptance,measured-code-2026-11-11/acceptance-modification-twice,f30fe6b41,2026
 adversarial,adversarial,e84b5a89a,2026-10-17,0
 adversarial-tafeng,adversarial-tafeng,e84b5a89a,2026-10-17,0
 adversarial-tafeng-probe0.7,adversarial-tafeng-probe0.7,e84b5a89a,2026-10-17,0
+baseline-exhaustive,baseline-exhaustive,a255d65b3,2026-11-13,0
+baseline-exhaustive-zero-to-one,baseline-exhaustive-zero-to-one,c483c5231,2026-11-13,0
 break-even-adversarial,break-even-adversarial,7f226af39,2026-10-27,0
 break-even-fuzz,measured-code-2026-11-11/break-even-fuzz,f30fe6b41,2026-11-11,0
 break-even-nodes-adversarial,initial-cycle-2026-11-02/break-even-nodes-adversarial,d6197a7ed,2026-11-02,0
