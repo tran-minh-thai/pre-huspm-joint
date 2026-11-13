@@ -10,7 +10,8 @@ runtime over the replicates without and with the warm-up, and their ratio; then 
 algorithm the geometric mean, minimum and maximum of that ratio. Counters (patterns, explored
 nodes, candidates) must agree between the two: a difference ends the run with exit status 1, since
 the warm-up may change when a mine is timed, never what it computes. Writes warmup_effect.csv
-(per cell) and warmup_effect_summary.csv (per scenario and algorithm).
+(per cell) and warmup_effect_summary.csv (per scenario and algorithm). --cold-runs FILE writes only the
+runtime of every run without the warm-up, for the bootstrap intervals of scenario_tables.
 """
 import argparse
 import csv
@@ -77,7 +78,19 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--cold-commit", default="0ede3e29")
     ap.add_argument("--out", default=str(ROOT / "results" / "static-warmup-effect"))
+    ap.add_argument("--cold-runs", metavar="FILE",
+                    help="write only the runtime of every run without the warm-up, one row per run, and stop")
     a = ap.parse_args()
+    if a.cold_runs:
+        c = cold(a.cold_commit)
+        with open(a.cold_runs, "w", newline="", encoding="utf-8") as fh:
+            wr = csv.writer(fh, lineterminator="\n")
+            wr.writerow(["scenario", "dataset", "op_type", "algorithm", "run", "runtime_ms"])
+            for k in sorted(c):
+                for i, r in enumerate(c[k]):
+                    wr.writerow([*k, i, str(r["runtime_ms"]).strip()])
+        print(f"cold runs: {sum(len(v) for v in c.values())} in {len(c)} cells -> {a.cold_runs}")
+        return 0
     c, w = cold(a.cold_commit), warm()
     cells, bad, compared = [], 0, 0
     for k in sorted(set(c) & set(w)):
