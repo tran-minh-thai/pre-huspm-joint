@@ -2700,9 +2700,10 @@ def aa_band():
     return b
 
 
-def aa_classes(put, fam, ratios, old, src, transitions):
+def aa_classes(put, fam, ratios, old, src, transitions, groups=None):
     """Classes of one family under the A/A band, in the format of classes_<family>, and the changes of
-    class against the band in use, counted into transitions."""
+    class against the band in use, counted into transitions. With the groups, also the lists and ranges
+    of classes_<family>_<wins|ties|losses>[_range[_first_over_second]] under classes_aa_."""
     b = aa_band()
     r = b["r"]
     new = ["win" if x > r else ("loss" if x < 1 / r else "tie") for x in ratios]
@@ -2711,6 +2712,16 @@ def aa_classes(put, fam, ratios, old, src, transitions):
     for a, c in zip(old, new):
         if a != c:
             transitions[(fam, a, c)] = transitions.get((fam, a, c), 0) + 1
+    if groups is None:
+        return
+    for c_, word in (("tie", "ties"), ("win", "wins"), ("loss", "losses")):
+        h = [(g, x) for g, x, k in zip(groups, ratios, new) if k == c_]
+        if h:
+            put(f"classes_aa_{fam}_{word}", "; ".join(f"{g} {x:.3f}" for g, x in h), src)
+        if h and c_ != "tie":
+            xs = [x for _, x in h]
+            put(f"classes_aa_{fam}_{word}_range", f"{min(xs):.3f} to {max(xs):.3f}", src)
+            put(f"classes_aa_{fam}_{word}_range_first_over_second", f"{1 / max(xs):.3f} to {1 / min(xs):.3f}", src)
 
 
 def comparison_classes(put, out):
@@ -2832,9 +2843,12 @@ def comparison_classes(put, out):
         put("aa_q_p95", f"{aa['p95']:.3f}", "table_aa_pairs.csv")
         put("aa_q_p99", f"{aa['p99']:.3f}", "table_aa_pairs.csv")
         put("aa_q_largest_per_stream", "; ".join(f"{d} {v:.3f}" for d, v in aa["per_stream"].items()), "table_aa_pairs.csv")
+        top = max(aa["per_stream"], key=aa["per_stream"].get)
+        put("aa_q_largest_stream", top, "table_aa_pairs.csv")
+        put("aa_q_largest_other_streams", f"{max(v for d, v in aa['per_stream'].items() if d != top):.3f}", "table_aa_pairs.csv")
         trans = {}
         for fam, g in c.groupby("family"):
-            aa_classes(put, fam, g["ratio"].tolist(), g["cls"].tolist(), src, trans)
+            aa_classes(put, fam, g["ratio"].tolist(), g["cls"].tolist(), src, trans, groups=g["group"].tolist())
         AA_TRANSITIONS.update(trans)
     return c, b
 
@@ -2940,6 +2954,23 @@ def bootstrap_remine_uut(put, out):
                 put(f"bootstrap_remine_UUT_{word}_{tag}", "; ".join(
                     f"{'SC2 ' if r.setting == 'SC2' else ''}{r.group} {name[r.arm]} {r.ratio:.3f} "
                     f"({r.ci_low:.3f} to {r.ci_high:.3f})" for r in x.itertuples()), src)
+    # the same counts with the classes of the A/A band, on the unrounded ratios of the runs
+    aa = aa_band()
+    if aa is not None:
+        ra = aa["r"]
+        t2 = t.assign(cls=["win" if v > ra else ("loss" if v < 1 / ra else "tie") for v in t["ratio"]])
+        for cls, word in (("win", "wins"), ("tie", "ties"), ("loss", "losses")):
+            h = t2[t2["cls"] == cls]
+            put(f"bootstrap_aa_remine_UUT_{word}_interval_excludes_one", f"{int(h['excludes_one'].sum())} of {len(h)}", src)
+            for (setting, arm), g in h.groupby(["setting", "arm"]):
+                put(f"bootstrap_aa_remine_UUT_{setting}_{name[arm]}_{word}_interval_excludes_one",
+                    f"{int(g['excludes_one'].sum())} of {len(g)}", src)
+            for flag, tag in ((True, "excluding_one"), (False, "including_one")):
+                x = h[h["excludes_one"] == flag]
+                if len(x):
+                    put(f"bootstrap_aa_remine_UUT_{word}_{tag}", "; ".join(
+                        f"{'SC2 ' if r.setting == 'SC2' else ''}{r.group} {name[r.arm]} {r.ratio:.3f} "
+                        f"({r.ci_low:.3f} to {r.ci_high:.3f})" for r in x.itertuples()), src)
     return t
 
 
@@ -3044,7 +3075,8 @@ def total_counter_keys(put, out):
         RATIO_POINT[("mixed_joint_rule_vs_PIHUPMOD", where(r))] = float(r.time_ratio)   # unrounded
     if aa_band() is not None:
         trans = {}
-        aa_classes(put, "mixed_joint_rule_vs_PIHUPMOD", tt["time_ratio"].tolist(), c.tolist(), src, trans)
+        aa_classes(put, "mixed_joint_rule_vs_PIHUPMOD", tt["time_ratio"].tolist(), c.tolist(), src, trans,
+                   groups=[where(r) for r in tt.itertuples()])
         AA_TRANSITIONS.update(trans)
     put("classes_mixed_joint_rule_vs_PIHUPMOD", f"wins {int((c == 'win').sum())}, ties {int((c == 'tie').sum())}, "
         f"losses {int((c == 'loss').sum())} of {len(tt)}", src)

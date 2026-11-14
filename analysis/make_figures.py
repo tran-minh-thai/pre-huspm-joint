@@ -1802,7 +1802,9 @@ def main():
     import scenario_tables                             # summary CSVs, paper_numbers.csv, SC2 LaTeX tables
     scenario_tables.export_all()
     # SC5 over Remine-UUT against K, with the tie band the tables above measured
-    figset_batch_ratio(band=scenario_tables.tie_band(OUT_DIR)[0])
+    # the band the text classifies by: the band of the A/A runs once measured (docs/aa-tie-band.md)
+    aa = scenario_tables.aa_band()
+    figset_batch_ratio(band=aa["r"] if aa is not None else scenario_tables.tie_band(OUT_DIR)[0])
     print("\nDONE.")
 
 
