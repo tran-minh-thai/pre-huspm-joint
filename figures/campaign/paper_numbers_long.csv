@@ -2601,65 +2601,161 @@ LONG_all_RemineUUT_classes,"wins 23, ties 1, losses 0 of 24",table_long_streams.
 LONG_all_Remine-UUT-reuse_classes,"wins 23, ties 1, losses 0 of 24",table_long_streams.csv
 classes_aa_LONG_C8T1S5I8N5K_method_vs_FixedFloor,"wins 0, ties 5, losses 0 of 5",table_long_streams.csv
 LONG_C8T1S5I8N5K_FixedFloor_losses_aa,0 of 5,table_long_streams.csv
+LONG_C8T1S5I8N5K_FixedFloor_loss_streams_aa,none,table_long_streams.csv
+LONG_C8T1S5I8N5K_FixedFloor_win_streams_aa,none,table_long_streams.csv
+LONG_C8T1S5I8N5K_FixedFloor_tie_streams_aa,"SC8, SC8P, SC9, SC10, SC10H",table_long_streams.csv
 classes_aa_LONG_C8T1S5I8N5K_method_vs_IndexRebuild,"wins 1, ties 0, losses 0 of 1",table_long_streams.csv
 LONG_C8T1S5I8N5K_IndexRebuild_losses_aa,0 of 1,table_long_streams.csv
+LONG_C8T1S5I8N5K_IndexRebuild_loss_streams_aa,none,table_long_streams.csv
+LONG_C8T1S5I8N5K_IndexRebuild_win_streams_aa,SC9,table_long_streams.csv
+LONG_C8T1S5I8N5K_IndexRebuild_tie_streams_aa,none,table_long_streams.csv
 classes_aa_LONG_C8T1S5I8N5K_method_vs_Window5,"wins 0, ties 5, losses 0 of 5",table_long_streams.csv
 LONG_C8T1S5I8N5K_Window5_losses_aa,0 of 5,table_long_streams.csv
+LONG_C8T1S5I8N5K_Window5_loss_streams_aa,none,table_long_streams.csv
+LONG_C8T1S5I8N5K_Window5_win_streams_aa,none,table_long_streams.csv
+LONG_C8T1S5I8N5K_Window5_tie_streams_aa,"SC8, SC8P, SC9, SC10, SC10H",table_long_streams.csv
 classes_aa_LONG_C8T1S5I8N5K_method_vs_Remine,"wins 5, ties 0, losses 0 of 5",table_long_streams.csv
 LONG_C8T1S5I8N5K_Remine_losses_aa,0 of 5,table_long_streams.csv
+LONG_C8T1S5I8N5K_Remine_loss_streams_aa,none,table_long_streams.csv
+LONG_C8T1S5I8N5K_Remine_win_streams_aa,"SC8, SC8P, SC9, SC10, SC10H",table_long_streams.csv
+LONG_C8T1S5I8N5K_Remine_tie_streams_aa,none,table_long_streams.csv
 classes_aa_LONG_C8T1S5I8N5K_method_vs_RemineUUT,"wins 5, ties 0, losses 0 of 5",table_long_streams.csv
 LONG_C8T1S5I8N5K_RemineUUT_losses_aa,0 of 5,table_long_streams.csv
+LONG_C8T1S5I8N5K_RemineUUT_loss_streams_aa,none,table_long_streams.csv
+LONG_C8T1S5I8N5K_RemineUUT_win_streams_aa,"SC8, SC8P, SC9, SC10, SC10H",table_long_streams.csv
+LONG_C8T1S5I8N5K_RemineUUT_tie_streams_aa,none,table_long_streams.csv
 classes_aa_LONG_C8T1S5I8N5K_method_vs_Remine-UUT-reuse,"wins 5, ties 0, losses 0 of 5",table_long_streams.csv
 LONG_C8T1S5I8N5K_Remine-UUT-reuse_losses_aa,0 of 5,table_long_streams.csv
+LONG_C8T1S5I8N5K_Remine-UUT-reuse_loss_streams_aa,none,table_long_streams.csv
+LONG_C8T1S5I8N5K_Remine-UUT-reuse_win_streams_aa,"SC8, SC8P, SC9, SC10, SC10H",table_long_streams.csv
+LONG_C8T1S5I8N5K_Remine-UUT-reuse_tie_streams_aa,none,table_long_streams.csv
 classes_aa_LONG_DUNNHUMBY_method_vs_FixedFloor,"wins 0, ties 3, losses 2 of 5",table_long_streams.csv
 LONG_DUNNHUMBY_FixedFloor_losses_aa,2 of 5,table_long_streams.csv
+LONG_DUNNHUMBY_FixedFloor_loss_streams_aa,"SC10, SC10H",table_long_streams.csv
+LONG_DUNNHUMBY_FixedFloor_win_streams_aa,none,table_long_streams.csv
+LONG_DUNNHUMBY_FixedFloor_tie_streams_aa,"SC8, SC8P, SC9",table_long_streams.csv
 classes_aa_LONG_DUNNHUMBY_method_vs_IndexRebuild,"wins 0, ties 1, losses 0 of 1",table_long_streams.csv
 LONG_DUNNHUMBY_IndexRebuild_losses_aa,0 of 1,table_long_streams.csv
+LONG_DUNNHUMBY_IndexRebuild_loss_streams_aa,none,table_long_streams.csv
+LONG_DUNNHUMBY_IndexRebuild_win_streams_aa,none,table_long_streams.csv
+LONG_DUNNHUMBY_IndexRebuild_tie_streams_aa,SC9,table_long_streams.csv
 classes_aa_LONG_DUNNHUMBY_method_vs_Window5,"wins 0, ties 3, losses 2 of 5",table_long_streams.csv
 LONG_DUNNHUMBY_Window5_losses_aa,2 of 5,table_long_streams.csv
+LONG_DUNNHUMBY_Window5_loss_streams_aa,"SC8, SC10",table_long_streams.csv
+LONG_DUNNHUMBY_Window5_win_streams_aa,none,table_long_streams.csv
+LONG_DUNNHUMBY_Window5_tie_streams_aa,"SC8P, SC9, SC10H",table_long_streams.csv
 classes_aa_LONG_DUNNHUMBY_method_vs_Remine,"wins 5, ties 0, losses 0 of 5",table_long_streams.csv
 LONG_DUNNHUMBY_Remine_losses_aa,0 of 5,table_long_streams.csv
+LONG_DUNNHUMBY_Remine_loss_streams_aa,none,table_long_streams.csv
+LONG_DUNNHUMBY_Remine_win_streams_aa,"SC8, SC8P, SC9, SC10, SC10H",table_long_streams.csv
+LONG_DUNNHUMBY_Remine_tie_streams_aa,none,table_long_streams.csv
 classes_aa_LONG_DUNNHUMBY_method_vs_RemineUUT,"wins 4, ties 1, losses 0 of 5",table_long_streams.csv
 LONG_DUNNHUMBY_RemineUUT_losses_aa,0 of 5,table_long_streams.csv
+LONG_DUNNHUMBY_RemineUUT_loss_streams_aa,none,table_long_streams.csv
+LONG_DUNNHUMBY_RemineUUT_win_streams_aa,"SC8, SC8P, SC9, SC10H",table_long_streams.csv
+LONG_DUNNHUMBY_RemineUUT_tie_streams_aa,SC10,table_long_streams.csv
 classes_aa_LONG_DUNNHUMBY_method_vs_Remine-UUT-reuse,"wins 3, ties 2, losses 0 of 5",table_long_streams.csv
 LONG_DUNNHUMBY_Remine-UUT-reuse_losses_aa,0 of 5,table_long_streams.csv
+LONG_DUNNHUMBY_Remine-UUT-reuse_loss_streams_aa,none,table_long_streams.csv
+LONG_DUNNHUMBY_Remine-UUT-reuse_win_streams_aa,"SC8P, SC9, SC10H",table_long_streams.csv
+LONG_DUNNHUMBY_Remine-UUT-reuse_tie_streams_aa,"SC8, SC10",table_long_streams.csv
 classes_aa_LONG_LEVIATHAN_method_vs_FixedFloor,"wins 0, ties 5, losses 0 of 5",table_long_streams.csv
 LONG_LEVIATHAN_FixedFloor_losses_aa,0 of 5,table_long_streams.csv
+LONG_LEVIATHAN_FixedFloor_loss_streams_aa,none,table_long_streams.csv
+LONG_LEVIATHAN_FixedFloor_win_streams_aa,none,table_long_streams.csv
+LONG_LEVIATHAN_FixedFloor_tie_streams_aa,"SC8, SC8P, SC9, SC10, SC10H",table_long_streams.csv
 classes_aa_LONG_LEVIATHAN_method_vs_IndexRebuild,"wins 0, ties 1, losses 0 of 1",table_long_streams.csv
 LONG_LEVIATHAN_IndexRebuild_losses_aa,0 of 1,table_long_streams.csv
+LONG_LEVIATHAN_IndexRebuild_loss_streams_aa,none,table_long_streams.csv
+LONG_LEVIATHAN_IndexRebuild_win_streams_aa,none,table_long_streams.csv
+LONG_LEVIATHAN_IndexRebuild_tie_streams_aa,SC9,table_long_streams.csv
 classes_aa_LONG_LEVIATHAN_method_vs_Window5,"wins 0, ties 5, losses 0 of 5",table_long_streams.csv
 LONG_LEVIATHAN_Window5_losses_aa,0 of 5,table_long_streams.csv
+LONG_LEVIATHAN_Window5_loss_streams_aa,none,table_long_streams.csv
+LONG_LEVIATHAN_Window5_win_streams_aa,none,table_long_streams.csv
+LONG_LEVIATHAN_Window5_tie_streams_aa,"SC8, SC8P, SC9, SC10, SC10H",table_long_streams.csv
 classes_aa_LONG_LEVIATHAN_method_vs_Remine,"wins 5, ties 0, losses 0 of 5",table_long_streams.csv
 LONG_LEVIATHAN_Remine_losses_aa,0 of 5,table_long_streams.csv
+LONG_LEVIATHAN_Remine_loss_streams_aa,none,table_long_streams.csv
+LONG_LEVIATHAN_Remine_win_streams_aa,"SC8, SC8P, SC9, SC10, SC10H",table_long_streams.csv
+LONG_LEVIATHAN_Remine_tie_streams_aa,none,table_long_streams.csv
 classes_aa_LONG_LEVIATHAN_method_vs_RemineUUT,"wins 5, ties 0, losses 0 of 5",table_long_streams.csv
 LONG_LEVIATHAN_RemineUUT_losses_aa,0 of 5,table_long_streams.csv
+LONG_LEVIATHAN_RemineUUT_loss_streams_aa,none,table_long_streams.csv
+LONG_LEVIATHAN_RemineUUT_win_streams_aa,"SC8, SC8P, SC9, SC10, SC10H",table_long_streams.csv
+LONG_LEVIATHAN_RemineUUT_tie_streams_aa,none,table_long_streams.csv
 classes_aa_LONG_LEVIATHAN_method_vs_Remine-UUT-reuse,"wins 5, ties 0, losses 0 of 5",table_long_streams.csv
 LONG_LEVIATHAN_Remine-UUT-reuse_losses_aa,0 of 5,table_long_streams.csv
+LONG_LEVIATHAN_Remine-UUT-reuse_loss_streams_aa,none,table_long_streams.csv
+LONG_LEVIATHAN_Remine-UUT-reuse_win_streams_aa,"SC8, SC8P, SC9, SC10, SC10H",table_long_streams.csv
+LONG_LEVIATHAN_Remine-UUT-reuse_tie_streams_aa,none,table_long_streams.csv
 classes_aa_LONG_SIGN_method_vs_FixedFloor,"wins 0, ties 4, losses 0 of 4",table_long_streams.csv
 LONG_SIGN_FixedFloor_losses_aa,0 of 4,table_long_streams.csv
+LONG_SIGN_FixedFloor_loss_streams_aa,none,table_long_streams.csv
+LONG_SIGN_FixedFloor_win_streams_aa,none,table_long_streams.csv
+LONG_SIGN_FixedFloor_tie_streams_aa,"SC8, SC8P, SC9, SC10",table_long_streams.csv
 classes_aa_LONG_SIGN_method_vs_IndexRebuild,"wins 0, ties 1, losses 0 of 1",table_long_streams.csv
 LONG_SIGN_IndexRebuild_losses_aa,0 of 1,table_long_streams.csv
+LONG_SIGN_IndexRebuild_loss_streams_aa,none,table_long_streams.csv
+LONG_SIGN_IndexRebuild_win_streams_aa,none,table_long_streams.csv
+LONG_SIGN_IndexRebuild_tie_streams_aa,SC9,table_long_streams.csv
 classes_aa_LONG_SIGN_method_vs_Window5,"wins 0, ties 4, losses 0 of 4",table_long_streams.csv
 LONG_SIGN_Window5_losses_aa,0 of 4,table_long_streams.csv
+LONG_SIGN_Window5_loss_streams_aa,none,table_long_streams.csv
+LONG_SIGN_Window5_win_streams_aa,none,table_long_streams.csv
+LONG_SIGN_Window5_tie_streams_aa,"SC8, SC8P, SC9, SC10",table_long_streams.csv
 classes_aa_LONG_SIGN_method_vs_Remine,"wins 4, ties 0, losses 0 of 4",table_long_streams.csv
 LONG_SIGN_Remine_losses_aa,0 of 4,table_long_streams.csv
+LONG_SIGN_Remine_loss_streams_aa,none,table_long_streams.csv
+LONG_SIGN_Remine_win_streams_aa,"SC8, SC8P, SC9, SC10",table_long_streams.csv
+LONG_SIGN_Remine_tie_streams_aa,none,table_long_streams.csv
 classes_aa_LONG_SIGN_method_vs_RemineUUT,"wins 4, ties 0, losses 0 of 4",table_long_streams.csv
 LONG_SIGN_RemineUUT_losses_aa,0 of 4,table_long_streams.csv
+LONG_SIGN_RemineUUT_loss_streams_aa,none,table_long_streams.csv
+LONG_SIGN_RemineUUT_win_streams_aa,"SC8, SC8P, SC9, SC10",table_long_streams.csv
+LONG_SIGN_RemineUUT_tie_streams_aa,none,table_long_streams.csv
 classes_aa_LONG_SIGN_method_vs_Remine-UUT-reuse,"wins 4, ties 0, losses 0 of 4",table_long_streams.csv
 LONG_SIGN_Remine-UUT-reuse_losses_aa,0 of 4,table_long_streams.csv
+LONG_SIGN_Remine-UUT-reuse_loss_streams_aa,none,table_long_streams.csv
+LONG_SIGN_Remine-UUT-reuse_win_streams_aa,"SC8, SC8P, SC9, SC10",table_long_streams.csv
+LONG_SIGN_Remine-UUT-reuse_tie_streams_aa,none,table_long_streams.csv
 classes_aa_LONG_TAFENG_method_vs_FixedFloor,"wins 0, ties 5, losses 0 of 5",table_long_streams.csv
 LONG_TAFENG_FixedFloor_losses_aa,0 of 5,table_long_streams.csv
+LONG_TAFENG_FixedFloor_loss_streams_aa,none,table_long_streams.csv
+LONG_TAFENG_FixedFloor_win_streams_aa,none,table_long_streams.csv
+LONG_TAFENG_FixedFloor_tie_streams_aa,"SC8, SC8P, SC9, SC10, SC10H",table_long_streams.csv
 classes_aa_LONG_TAFENG_method_vs_IndexRebuild,"wins 1, ties 0, losses 0 of 1",table_long_streams.csv
 LONG_TAFENG_IndexRebuild_losses_aa,0 of 1,table_long_streams.csv
+LONG_TAFENG_IndexRebuild_loss_streams_aa,none,table_long_streams.csv
+LONG_TAFENG_IndexRebuild_win_streams_aa,SC9,table_long_streams.csv
+LONG_TAFENG_IndexRebuild_tie_streams_aa,none,table_long_streams.csv
 classes_aa_LONG_TAFENG_method_vs_Window5,"wins 0, ties 5, losses 0 of 5",table_long_streams.csv
 LONG_TAFENG_Window5_losses_aa,0 of 5,table_long_streams.csv
+LONG_TAFENG_Window5_loss_streams_aa,none,table_long_streams.csv
+LONG_TAFENG_Window5_win_streams_aa,none,table_long_streams.csv
+LONG_TAFENG_Window5_tie_streams_aa,"SC8, SC8P, SC9, SC10, SC10H",table_long_streams.csv
 classes_aa_LONG_TAFENG_method_vs_Remine,"wins 5, ties 0, losses 0 of 5",table_long_streams.csv
 LONG_TAFENG_Remine_losses_aa,0 of 5,table_long_streams.csv
+LONG_TAFENG_Remine_loss_streams_aa,none,table_long_streams.csv
+LONG_TAFENG_Remine_win_streams_aa,"SC8, SC8P, SC9, SC10, SC10H",table_long_streams.csv
+LONG_TAFENG_Remine_tie_streams_aa,none,table_long_streams.csv
 classes_aa_LONG_TAFENG_method_vs_RemineUUT,"wins 5, ties 0, losses 0 of 5",table_long_streams.csv
 LONG_TAFENG_RemineUUT_losses_aa,0 of 5,table_long_streams.csv
+LONG_TAFENG_RemineUUT_loss_streams_aa,none,table_long_streams.csv
+LONG_TAFENG_RemineUUT_win_streams_aa,"SC8, SC8P, SC9, SC10, SC10H",table_long_streams.csv
+LONG_TAFENG_RemineUUT_tie_streams_aa,none,table_long_streams.csv
 classes_aa_LONG_TAFENG_method_vs_Remine-UUT-reuse,"wins 5, ties 0, losses 0 of 5",table_long_streams.csv
 LONG_TAFENG_Remine-UUT-reuse_losses_aa,0 of 5,table_long_streams.csv
+LONG_TAFENG_Remine-UUT-reuse_loss_streams_aa,none,table_long_streams.csv
+LONG_TAFENG_Remine-UUT-reuse_win_streams_aa,"SC8, SC8P, SC9, SC10, SC10H",table_long_streams.csv
+LONG_TAFENG_Remine-UUT-reuse_tie_streams_aa,none,table_long_streams.csv
 LONG_aa_changed_comparisons,3,table_long_streams.csv
+LONG_all_aa_FixedFloor_classes,"wins 0, ties 22, losses 2 of 24",table_long_streams.csv
+LONG_all_aa_IndexRebuild_classes,"wins 2, ties 3, losses 0 of 5",table_long_streams.csv
+LONG_all_aa_Window5_classes,"wins 0, ties 22, losses 2 of 24",table_long_streams.csv
+LONG_all_aa_Remine_classes,"wins 24, ties 0, losses 0 of 24",table_long_streams.csv
+LONG_all_aa_RemineUUT_classes,"wins 23, ties 1, losses 0 of 24",table_long_streams.csv
+LONG_all_aa_Remine-UUT-reuse_classes,"wins 22, ties 2, losses 0 of 24",table_long_streams.csv
 latency_long_streams,24,table_long_streams.csv
 latency_long_p99_below_RemineUUTR,0 of 24,table_long_streams.csv
 latency_long_max_over_RemineUUTR_max,2.197 (SC10 C8T1S5I8N5K),table_long_streams.csv

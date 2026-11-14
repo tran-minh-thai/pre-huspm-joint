@@ -2840,6 +2840,7 @@ def comparison_classes(put, out):
         put("aa_tie_band", f"{1 / aa['r']:.3f} to {aa['r']:.3f} (largest time ratio between two runs of the method, "
             f"{aa['pairs']} pairs)", "table_aa_pairs.csv")
         put("aa_tie_band_pairs", f"{aa['pairs']} of {aa['of']}", "table_aa_pairs.csv")
+        put("aa_tie_band_pairs_count", aa["pairs"], "table_aa_pairs.csv")
         put("aa_q_p95", f"{aa['p95']:.3f}", "table_aa_pairs.csv")
         put("aa_q_p99", f"{aa['p99']:.3f}", "table_aa_pairs.csv")
         put("aa_q_largest_per_stream", "; ".join(f"{d} {v:.3f}" for d, v in aa["per_stream"].items()), "table_aa_pairs.csv")
@@ -3484,6 +3485,9 @@ def baseline_exhaustive_keys(put, row_of):
         src = "results/invariant-husp-sp-counterexample/2026-11-13-trace-1402/console.txt"
         put("husp_sp_authors_code_zero_to_one_comparisons_as_definition", f"{same} of {len(pub)}", src)
         put("husp_sp_authors_code_zero_to_one_comparisons_beyond_definition", len(set(pub) - set(dfn)), src)
+        words = "zero one two three four five six seven eight nine ten".split()
+        nb = len(set(pub) - set(dfn))
+        put("husp_sp_authors_code_zero_to_one_comparisons_beyond_definition_in_words", words[nb] if nb <= 10 else str(nb), src)
 
 
 CHECKS_ROWS = {

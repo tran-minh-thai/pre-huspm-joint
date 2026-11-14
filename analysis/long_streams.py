@@ -359,11 +359,19 @@ def summary_keys(st, put, keys_path, unstable=None):
         put(f"classes_aa_LONG_{d}_method_vs_{TAG[arm]}",
             f"wins {len(win)}, ties {len(order) - len(win) - len(loss)}, losses {len(loss)} of {len(order)}", src)
         put(f"LONG_{d}_{TAG[arm]}_losses_aa", f"{len(loss)} of {len(order)}", src)
+        put(f"LONG_{d}_{TAG[arm]}_loss_streams_aa", ", ".join(loss) if loss else "none", src)
+        put(f"LONG_{d}_{TAG[arm]}_win_streams_aa", ", ".join(win) if win else "none", src)
+        ties = [sc for sc in order if sc not in win and sc not in loss]
+        put(f"LONG_{d}_{TAG[arm]}_tie_streams_aa", ", ".join(ties) if ties else "none", src)
         for sc in order:
             old = "win" if x[sc] < low else ("loss" if x[sc] > high else "tie")
             new = "win" if x[sc] < low2 else ("loss" if x[sc] > high2 else "tie")
             changed += old != new
     put("LONG_aa_changed_comparisons", changed, src)
+    for arm, g in r.groupby("arm"):
+        x = g["method_over_arm_pooled"]
+        w, l = int((x < low2).sum()), int((x > high2).sum())
+        put(f"LONG_all_aa_{TAG[arm]}_classes", f"wins {w}, ties {len(x) - w - l}, losses {l} of {len(x)}", src)
 
 
 def latency_keys(st, put, out):

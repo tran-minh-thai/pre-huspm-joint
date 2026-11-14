@@ -6269,6 +6269,7 @@ husp_sp_authors_code_zero_to_one_databases,18,results/invariant-husp-sp-countere
 husp_sp_authors_code_zero_to_one_missing_patterns,34,results/invariant-husp-sp-counterexample/2026-11-13-random/console.txt
 husp_sp_authors_code_zero_to_one_comparisons_as_definition,19 of 20,results/invariant-husp-sp-counterexample/2026-11-13-trace-1402/console.txt
 husp_sp_authors_code_zero_to_one_comparisons_beyond_definition,1,results/invariant-husp-sp-counterexample/2026-11-13-trace-1402/console.txt
+husp_sp_authors_code_zero_to_one_comparisons_beyond_definition_in_words,one,results/invariant-husp-sp-counterexample/2026-11-13-trace-1402/console.txt
 verify_ips_vs_noips_real_init_equal,8/8,table_verification.csv
 verify_ips_vs_noips_real_whole_equal,7/7,table_verification.csv
 verify_ips_faults_caught,4/4,table_verification.csv
@@ -7968,6 +7969,7 @@ classes_mixed_pooled_stream_vs_window5_losses_range,0.847 to 0.847,table_compari
 classes_mixed_pooled_stream_vs_window5_losses_range_first_over_second,1.181 to 1.181,table_comparison_classes.csv
 aa_tie_band,"0.911 to 1.098 (largest time ratio between two runs of the method, 80 pairs)",table_aa_pairs.csv
 aa_tie_band_pairs,80 of 80,table_aa_pairs.csv
+aa_tie_band_pairs_count,80,table_aa_pairs.csv
 aa_q_p95,1.078,table_aa_pairs.csv
 aa_q_p99,1.097,table_aa_pairs.csv
 aa_q_largest_per_stream,BIBLE 1.025; C8T1S5I8N5K 1.024; DUNNHUMBY 1.098; FIFA 1.017; KOSARAK 1.016; LEVIATHAN 1.032; SIGN 1.052; TAFENG 1.023,table_aa_pairs.csv
