@@ -6006,7 +6006,7 @@ session_drift_others_max_pct,4.7,results-invariant/session-drift/2026-11-06/cons
 session_drift_others_max_database,KOSARAK,results-invariant/session-drift/2026-11-06/console.txt
 session_drift_others_arms,119,results-invariant/session-drift/2026-11-06/console.txt
 DATA_dunnhumby_url,https://www.dunnhumby.com/source-files/,analysis/data_availability.json
-DATA_code_release_tag,v2.6-submission,analysis/data_availability.json
+DATA_code_release_tag,v2.7-submission,analysis/data_availability.json
 SC7_stream_C8T1S5I8N5K_full_s,8.94,table_SC7_incremental.csv
 SC7_stream_C8T1S5I8N5K_rescan_every_increment_s,11.31,table_SC7_incremental.csv
 SC7_stream_C8T1S5I8N5K_no_block_index_s,9.69,table_SC7_incremental.csv
