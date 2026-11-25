@@ -242,9 +242,39 @@ public final class Datasets {
 
     public static List<Entry> all() { return ALL; }
 
+    /**
+     * Databases replayed from a log rather than cut into D_init and a stream (common.LogReplay):
+     * NAME_seq.txt holds D_init only and NAME_ops.txt the operations. They are measured in SC11
+     * alone, so they are kept out of all(), which every other scenario and check iterates.
+     *
+     * ONLINERETAIL: Online Retail II, built by onlineretail/build_onlineretail.py; one customer in
+     * one calendar month, one invoice per element, every occurrence at one unit and the median unit
+     * price as external utility; D_init the twelve months up to November 2010, then the second year
+     * by day. fullScopeOk is false: no scenario of all() takes it.
+     */
+    private static final List<Entry> REPLAYED = List.of(
+        // Targets 10 8 5 3 (experiments.ThresholdScan): 8, 5 and 4 patterns from its search; the
+        // lowest level from its grid, 0.0044 giving ten, since the search gallops from 0.00488 past
+        // the plateau of ten (0.0042 to 0.0045) to below the cliff at 0.0035. Gates: the floor
+        // 0.8 * 0.0044 = 0.00352 mines 20 patterns on D_init and 19 on the last state; the
+        // highest level keeps 1 of its 4 (dataset-build probe of 2026-11-25).
+        new Entry("ONLINERETAIL",         12444, 0.00488,
+                new double[]{0.0044, 0.00488, 0.00549, 0.00618},
+                true,  "10 8 5 4 on D_init; 6 3 3 1 on the last state; the floor of the lowest level "
+                     + "mines 20 patterns on D_init and 19 on the last state", false)
+    );
+
+    public static List<Entry> replayed() { return REPLAYED; }
+
+    private static List<Entry> every() {
+        List<Entry> out = new java.util.ArrayList<>(ALL);
+        out.addAll(REPLAYED);
+        return out;
+    }
+
     /** The pre-large floor for a database, as a fraction of Su. */
     public static double slMinRatio(String name) {
-        for (Entry e : ALL) if (e.name.equals(name)) return e.slMinRatio;
+        for (Entry e : every()) if (e.name.equals(name)) return e.slMinRatio;
         return DEFAULT_SL_MIN_RATIO;
     }
 
@@ -255,7 +285,7 @@ public final class Datasets {
      * incremental stream empty and turn SC2 into a second copy of SC1 without saying so.
      */
     public static int dInitCount(String name, int dbSize) {
-        for (Entry e : ALL) {
+        for (Entry e : every()) {
             if (e.name.equals(name)) return Math.max(1, Math.min(e.dInitCount, dbSize));
         }
         return Math.max(1, dbSize / 2);
@@ -263,7 +293,7 @@ public final class Datasets {
 
     /** The entry for a database, or null when it is not one this study measures. */
     public static Entry byName(String name) {
-        for (Entry e : ALL) if (e.name.equalsIgnoreCase(name)) return e;
+        for (Entry e : every()) if (e.name.equalsIgnoreCase(name)) return e;
         return null;
     }
 

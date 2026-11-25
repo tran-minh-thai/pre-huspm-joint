@@ -87,7 +87,7 @@ public class DatasetLoader {
         return f.endsWith("_seq.txt") ? f.substring(0, f.length() - "_seq.txt".length()) : f;
     }
 
-    private static Map<Integer, Double> loadExternalUtilities(String euiPath) throws IOException {
+    static Map<Integer, Double> loadExternalUtilities(String euiPath) throws IOException {
         Map<Integer, Double> map = new HashMap<>();
         try (BufferedReader r = new BufferedReader(new FileReader(euiPath))) {
             String line;
@@ -104,7 +104,7 @@ public class DatasetLoader {
         return map;
     }
 
-    private static Sequence parseSequenceLine(String line, int seqId, Map<Integer, Double> eui,
+    static Sequence parseSequenceLine(String line, int seqId, Map<Integer, Double> eui,
                                               Map<Integer, Integer> relabel) {
         Sequence seq = new Sequence(seqId);
         QItemset currentSet = new QItemset();

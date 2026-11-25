@@ -692,6 +692,7 @@ public class AutomatedExperimentRunner {
         if (scenarios.contains("SC6D")) runSC6D_DeletionHeavy();
         if (scenarios.contains("SC6B")) runSC6B_DeletionBeyondBudget();
         for (String sc : LONG_SCENARIOS) if (scenarios.contains(sc)) runLongScenario(sc);
+        if (scenarios.contains(REPLAY_SCENARIO)) runReplayScenario();
         if (scenarios.contains("FIDELITY")) runFidelity();
         if (scenarios.contains("SC7")) runSC7_Ablation();
         System.out.printf("=== ALL SCENARIOS DONE (%.1fs) ===%n",
@@ -742,6 +743,8 @@ public class AutomatedExperimentRunner {
         known.add("FIDELITY");
         // The long streams run only when named: 500 operations, remining after each one.
         known.addAll(Arrays.asList(LONG_SCENARIOS));
+        // SC11 replays a log (common.LogReplay); it too runs only when named.
+        known.add(REPLAY_SCENARIO);
         if (args == null || args.length == 0) return all;
         Set<String> chosen = new LinkedHashSet<>();
         for (String a : args) {
@@ -1298,6 +1301,50 @@ public class AutomatedExperimentRunner {
                     }
                     forceFullGC();
                 }
+            }
+        }
+    }
+
+    // ==================================================================
+    // SC11 - A LOG REPLAYED BY DAY (common.LogReplay, common.Datasets.replayed())
+    // ==================================================================
+    static final String REPLAY_SCENARIO = "SC11";
+    /** The arms of SC11: those of the long streams and, at the fixed lower threshold, the rescan
+     *  rule of PIHUP-MOD (one counter for the inserted utility). FIXED_THRESHOLD first, as the
+     *  reference of -Dverify.husps. */
+    static final String[] REPLAY_ARMS = {FIXED_THRESHOLD, "Remine-from-scratch", METHOD, "Remine-own-UUT", METHOD + "-w5",
+            "Remine-from-scratch-rebuild", "Remine-own-UUT-rebuild", TOTAL_COUNTER_ARM};
+
+    /**
+     * Replays each database of common.Datasets.replayed() from its log: D_init from NAME_seq.txt,
+     * the operations of NAME_ops.txt in order. The log fixes every operation, so there is one
+     * stream, written with seed 0; -Drepeats and the campaign's replicate trees give the runs.
+     * Rows go to SC11_long.csv, in the columns of the long streams.
+     */
+    private static void runReplayScenario() throws IOException {
+        System.out.println("\n--- [" + REPLAY_SCENARIO + "] Log replayed by day ---");
+        try (ResultCollector col = new ResultCollector(RESULTS_DIR + REPLAY_SCENARIO + "_long.csv")) {
+            for (common.Datasets.Entry e : common.Datasets.replayed()) {
+                if (!datasetEnabled(e.name)) continue;
+                DatasetConfig ds = new DatasetConfig(e.name, e.defaultUut, e.sweep, e.calibrated, e.note);
+                ds.fullScopeOk = e.fullScopeOk;
+                ds.dInitCount = e.dInitCount;
+                if (!calibrationOk(ds)) continue;
+                common.LogReplay.Log log = common.LogReplay.load(datasetDir, ds.name, "_ops.txt");
+                if (log.dInit.size() != ds.dInitCount)
+                    throw new IllegalStateException(ds.name + ": D_init holds " + log.dInit.size()
+                            + " sequences, common.Datasets says " + ds.dInitCount);
+                double initTotalUtil = sumUtility(log.dInit);
+                System.out.println(">> [" + REPLAY_SCENARIO + "] " + ds.name + " D_init=" + log.dInit.size()
+                        + " operations=" + log.plan.size() + " (" + log.days.get(0) + " to "
+                        + log.days.get(log.days.size() - 1) + ") plan=" + common.StreamPlans.summary(log.plan));
+                for (int r = 0; r < REPEATS; r++) {
+                    setRunContext(0L, r);
+                    beginVerify(REPLAY_SCENARIO, ds.name);
+                    for (String arm : REPLAY_ARMS)
+                        if (algoEnabled(arm)) runMixedArm(ds, log.dInit, initTotalUtil, log.plan, col, arm);
+                }
+                forceFullGC();
             }
         }
     }

@@ -98,6 +98,12 @@ public final class ThresholdScan {
             // floor 0.8 * UUT = 0.000776 exceeds the pattern budget on D_init (the cost gate
             // fails), so the lowest level asks for 30 patterns.
             {"DUNNHUMBY",            new int[]{30, 18, 10, 5}},
+
+            // Online Retail II replayed from its log, every occurrence at one unit: ten is the
+            // ceiling, 0.0044 gives ten patterns with its floor 0.00352 above the cliff at 0.0035
+            // (20 patterns in under a second) and 0.0034 (beyond the budget). Below ten the
+            // counts step 10, 8, 5, 4, 3, 2, 1 (dataset-build probe of 2026-11-25).
+            {"ONLINERETAIL",         new int[]{10, 8, 5, 3}},
     };
 
     /**
@@ -282,7 +288,28 @@ public final class ThresholdScan {
         // different database from the one they are used on.
         currentRl = rl(name);
         int initN = common.Datasets.dInitCount(name, all.size());
+        // A database replayed from a log (common.LogReplay) holds only D_init in NAME_seq.txt;
+        // its largest state, the one the whole-database gates must see, is the database after
+        // the last operation, NAME_final_seq.txt.
+        Path last = Paths.get(DIR, name + "_final_seq.txt");
+        if (Files.exists(last)) {
+            initN = all.size();
+            List<Sequence> init = all;
+            all = DatasetLoader.loadDataset(last.toString(), Paths.get(DIR, name + "_eui.txt").toString());
+            System.out.printf("replayed database: D_init is %s (%,d sequences), the whole database %s (%,d)%n",
+                    name + "_seq.txt", init.size(), last.getFileName(), all.size());
+            if (!full) {
+                List<Sequence> db0 = new ArrayList<>(init);
+                runScan(name, full, grid, targets, w, all, db0);
+                return;
+            }
+        }
         List<Sequence> db = full ? all : new ArrayList<>(all.subList(0, initN));
+        runScan(name, full, grid, targets, w, all, db);
+    }
+
+    private static void runScan(String name, boolean full, double[] grid, int[] targets, PrintWriter w,
+                                List<Sequence> all, List<Sequence> db) throws IOException {
         double tsu = 0;
         for (Sequence s : db) tsu += s.sequenceUtility;
         String scope = full ? "full" : "D_init";
