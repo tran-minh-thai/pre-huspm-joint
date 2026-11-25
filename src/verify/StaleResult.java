@@ -41,11 +41,17 @@ import java.util.*;
  * are written as examples, with the pattern, the day, and the utility and threshold before and
  * after.
  *
+ * For the patterns both results hold, the utility the second reports is compared with the utility
+ * in the log's database: the largest and the mean overstatement, in percent, per day.
+ *
  * Writes OUT_DIR/stale_by_day.csv, stale_events.csv, stale_examples.csv and stale_summary.txt.
  */
 public final class StaleResult {
 
     private StaleResult() {}
+
+    private static double globalOverMax;
+    private static String globalOverDay;
 
     public static void main(String[] args) throws IOException {
         if (args.length == 1 && "--self-test".equals(args[0])) { System.exit(selfTest()); }
@@ -73,7 +79,8 @@ public final class StaleResult {
         PrintWriter byDay = new PrintWriter(Files.newBufferedWriter(out.resolve("stale_by_day.csv"), StandardCharsets.UTF_8));
         byDay.println("day,sequences,total_utility,threshold,sequences_without_cancellations,"
                 + "total_utility_without_cancellations,threshold_without_cancellations,result,result_without_cancellations,"
-                + "false_patterns,missed_patterns,wrong_patterns");
+                + "false_patterns,missed_patterns,wrong_patterns,common_patterns,utility_overstated_max_pct,"
+                + "utility_overstated_mean_pct");
         PrintWriter events = new PrintWriter(Files.newBufferedWriter(out.resolve("stale_events.csv"), StandardCharsets.UTF_8));
         events.println("day,event,pattern,utility_before,utility_after,threshold_before,threshold_after");
 
@@ -82,6 +89,7 @@ public final class StaleResult {
         List<Sequence> prevDb = null;
         List<String[]> leave = new ArrayList<>(), enter = new ArrayList<>();
         int maxWrong = -1;
+        globalOverMax = 0; globalOverDay = "";
         String maxWrongDay = "";
         String lastLine = "";
         List<String> allDays = new ArrayList<>();
@@ -118,9 +126,23 @@ public final class StaleResult {
                 checked++;
             }
             int wrong = fls.size() + mis.size();
+            // the patterns both report: by how much the result kept without the cancellations
+            // overstates their utility, relative to the utility in the log's database
+            double overMax = 0, overSum = 0;
+            int common = 0;
+            for (Map.Entry<String, Double> x : res.entrySet()) {
+                Double ue = resE.get(x.getKey());
+                if (ue == null) continue;
+                double pct = 100.0 * (ue - x.getValue()) / x.getValue();
+                overMax = Math.max(overMax, pct);
+                overSum += pct;
+                common++;
+            }
+            if (common > 0 && overMax > globalOverMax) { globalOverMax = overMax; globalOverDay = day; }
             if (wrong > maxWrong) { maxWrong = wrong; maxWrongDay = day; }
-            lastLine = String.format(Locale.ROOT, "%s,%d,%.2f,%.4f,%d,%.2f,%.4f,%d,%d,%d,%d,%d", day, d.size(), tu, thr,
-                    e.size(), tuE, thrE, res.size(), resE.size(), fls.size(), mis.size(), wrong);
+            lastLine = String.format(Locale.ROOT, "%s,%d,%.2f,%.4f,%d,%.2f,%.4f,%d,%d,%d,%d,%d,%d,%.4f,%.4f", day, d.size(),
+                    tu, thr, e.size(), tuE, thrE, res.size(), resE.size(), fls.size(), mis.size(), wrong, common,
+                    overMax, common > 0 ? overSum / common : 0.0);
             byDay.println(lastLine);
 
             if (prev != null) {
@@ -163,9 +185,12 @@ public final class StaleResult {
                         + "end of log: result %s, false %s, missed %s%n"
                         + "largest number of wrong patterns: %d on %s%n"
                         + "leavings with a fall of utility: %d; enterings by a fall of the threshold: %d%n"
+                        + "end of log: utility of the common patterns overstated by at most %s%% (mean %s%%)%n"
+                        + "largest overstatement over the log: %.4f%% on %s%n"
+                        + "total utility without the cancellations at the end: %s against %s%n"
                         + "utilities checked against the definition: %d%n",
                 name, args[2], days.size(), allDays.size(), last[7], last[9], last[10], maxWrong, maxWrongDay,
-                leave.size(), enter.size(), checked);
+                leave.size(), enter.size(), last[13], last[14], globalOverMax, globalOverDay, last[5], last[2], checked);
         Files.writeString(out.resolve("stale_summary.txt"), summary, StandardCharsets.UTF_8);
         System.out.print(summary);
         if (checked == 0) {
