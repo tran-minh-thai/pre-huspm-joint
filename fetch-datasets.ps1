@@ -84,6 +84,41 @@ function Test-Dunnhumby {
 # Both locally built databases; each reports itself.
 function Test-Local { $t = Test-Tafeng; $d = Test-Dunnhumby; return ($t -and $d) }
 
+# ONLINERETAIL (SC11) comes from its own release, v2.1.0-onlineretail, which attaches the files
+# onlineretail/build_onlineretail.py builds from UCI Online Retail II (CC BY 4.0);
+# onlineretail/ONLINERETAIL.sha256 pins them.
+$orRelease = 'v2.1.0-onlineretail'
+$orArchiveSha256 = 'dc1c3fb847778c29003a0343fedd56e5858eb4564b3fdf3fe6c9da8f8064220f'
+$orBaseUrl = "https://github.com/tran-minh-thai/huspm-datasets/releases/download/$orRelease"
+function Test-OnlineRetail {
+    $s = Test-Files (Read-Sums (Join-Path $PSScriptRoot 'onlineretail/ONLINERETAIL.sha256'))
+    if ($s.missing -eq 0 -and $s.wrong -eq 0) { Write-Host '==> ONLINERETAIL present and verified'; return $true }
+    Write-Host "==> ONLINERETAIL not ready: $($s.missing) missing, $($s.wrong) not matching onlineretail\ONLINERETAIL.sha256"
+    return $false
+}
+function Get-OnlineRetail {
+    if ((Test-OnlineRetail) -and -not $Force) { return }
+    $orTmp = Join-Path ([System.IO.Path]::GetTempPath()) "husp-onlineretail-$PID"
+    New-Item -ItemType Directory -Force -Path $orTmp | Out-Null
+    try {
+        $orArchive = "huspm-datasets-$orRelease.tar.gz"
+        $orTar = Join-Path $orTmp $orArchive
+        Write-Host "==> release $orRelease"
+        Invoke-WebRequest -Uri "$orBaseUrl/$orArchive" -OutFile $orTar -UseBasicParsing
+        $have = (Get-FileHash -LiteralPath $orTar -Algorithm SHA256).Hash.ToLower()
+        if ($have -ne $orArchiveSha256) { throw "$orArchive has SHA-256 $have, expected $orArchiveSha256. Not using it." }
+        & tar -xzf $orTar -C $orTmp
+        if ($LASTEXITCODE -ne 0) { throw "tar failed on $orTar" }
+        $orRel = Join-Path $orTmp "huspm-datasets-$orRelease"
+        foreach ($name in (Read-Sums (Join-Path $PSScriptRoot 'onlineretail/ONLINERETAIL.sha256')).Keys) {
+            Copy-Item -LiteralPath (Join-Path $orRel $name) -Destination (Join-Path $Dir $name) -Force
+        }
+    } finally {
+        Remove-Item -LiteralPath $orTmp -Recurse -Force -ErrorAction SilentlyContinue
+    }
+    if (-not (Test-OnlineRetail)) { throw 'ONLINERETAIL does not match onlineretail\ONLINERETAIL.sha256. Do not measure on it.' }
+}
+
 $expected = Read-Sums $pinned
 if ($expected.Count -eq 0) { throw "No checksum listed in $pinned" }
 $state = Test-Files $expected
@@ -92,9 +127,11 @@ if ($VerifyOnly) {
     Write-Host ("==> {0} files: {1} verified, {2} missing, {3} not matching datasets.sha256" -f
                 $state.total, ($state.total - $state.missing - $state.wrong), $state.missing, $state.wrong)
     $tafengOk = Test-Local
-    if ($state.missing -gt 0 -or $state.wrong -gt 0 -or -not $tafengOk) { exit 1 }
+    $orOk = Test-OnlineRetail
+    if ($state.missing -gt 0 -or $state.wrong -gt 0 -or -not $tafengOk -or -not $orOk) { exit 1 }
     exit 0
 }
+Get-OnlineRetail
 if (-not $Force -and $state.missing -eq 0 -and $state.wrong -eq 0) {
     Write-Host "==> $($state.total) files already present and verified; nothing to do"
     if (-not (Test-Local)) { exit 1 }

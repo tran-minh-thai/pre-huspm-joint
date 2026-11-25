@@ -1,0 +1,16 @@
+{
+  "command": "python3 onlineretail/build_onlineretail.py --xlsx datasets/online_retail_II.xlsx --out-dir results-invariant/onlineretail-build/2026-11-25/out",
+  "path_substitutions": 0,
+  "build_dir": "build-sc11b",
+  "git_commit": "bd52c62a18c5f61685b44ade96ce23997bc4eb03",
+  "tree": "src clean, other files modified",
+  "source_sha256": "940ed074eb1b58acf66397620791a6417d80c003f0640a7256c33d5e159be31f",
+  "source_files": 53,
+  "java": "openjdk version \"25.0.4.1\" 2026-08-18 LTS",
+  "os": "Darwin 27.2.0 (macOS-27.2.1-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "correctness check: counters only, no timings",
+  "start": "2026-11-25T21:21:17",
+  "end": "2026-11-25T21:21:33",
+  "exit_code": 0
+}

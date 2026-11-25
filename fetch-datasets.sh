@@ -80,15 +80,50 @@ check_dunnhumby() {
 # Both locally built databases; each reports itself.
 check_local() { local r=0; check_tafeng || r=1; check_dunnhumby || r=1; return $r; }
 
+# ONLINERETAIL (SC11) comes from its own release, which attaches the files
+# onlineretail/build_onlineretail.py builds from UCI Online Retail II (CC BY 4.0);
+# onlineretail/ONLINERETAIL.sha256 pins them.
+OR_RELEASE="v2.1.0-onlineretail"
+OR_ARCHIVE_SHA256="dc1c3fb847778c29003a0343fedd56e5858eb4564b3fdf3fe6c9da8f8064220f"
+OR_BASE="${OR_BASE:-https://github.com/tran-minh-thai/huspm-datasets/releases/download/${OR_RELEASE}}"
+check_onlineretail() {
+  read -r m w t <<< "$(verify onlineretail/ONLINERETAIL.sha256)"
+  if [ "$m" -eq 0 ] && [ "$w" -eq 0 ]; then echo '==> ONLINERETAIL present and verified'; return 0; fi
+  echo "==> ONLINERETAIL not ready: ${m} missing, ${w} not matching onlineretail/ONLINERETAIL.sha256"
+  return 1
+}
+fetch_onlineretail() {
+  if [ "$FORCE" != "1" ] && check_onlineretail; then return 0; fi
+  local tmp archive have name
+  tmp="$(mktemp -d)"
+  archive="huspm-datasets-${OR_RELEASE}.tar.gz"
+  echo "==> release ${OR_RELEASE}"
+  curl -fsSL -o "${tmp}/${archive}" "${OR_BASE}/${archive}"
+  have="$(sha_of "${tmp}/${archive}")"
+  if [ "$have" != "$OR_ARCHIVE_SHA256" ]; then
+    echo "${archive} has SHA-256 ${have}, expected ${OR_ARCHIVE_SHA256}. Not using it." >&2
+    rm -rf "$tmp"; return 1
+  fi
+  tar -xzf "${tmp}/${archive}" -C "$tmp"
+  while read -r _ name; do
+    [ -n "${name:-}" ] && cp "${tmp}/huspm-datasets-${OR_RELEASE}/${name}" "${DIR}/${name}"
+  done < onlineretail/ONLINERETAIL.sha256
+  rm -rf "$tmp"
+  check_onlineretail || { echo 'ONLINERETAIL does not match onlineretail/ONLINERETAIL.sha256. Do not measure on it.' >&2; return 1; }
+}
+
 read -r MISSING WRONG TOTAL <<< "$(verify "$PINNED")"
 [ "$TOTAL" -gt 0 ] || { echo "No checksum listed in ${PINNED}" >&2; exit 1; }
 
 if [ "$VERIFY_ONLY" = "1" ]; then
   echo "==> ${TOTAL} files: $((TOTAL - MISSING - WRONG)) verified, ${MISSING} missing, ${WRONG} not matching ${PINNED}"
   TAFENG_OK=0; check_local || TAFENG_OK=1
-  [ "$MISSING" -eq 0 ] && [ "$WRONG" -eq 0 ] && [ "$TAFENG_OK" -eq 0 ]
+  OR_OK=0; check_onlineretail || OR_OK=1
+  [ "$MISSING" -eq 0 ] && [ "$WRONG" -eq 0 ] && [ "$TAFENG_OK" -eq 0 ] && [ "$OR_OK" -eq 0 ]
   exit $?
 fi
+
+fetch_onlineretail || exit 1
 
 if [ "$FORCE" != "1" ] && [ "$MISSING" -eq 0 ] && [ "$WRONG" -eq 0 ]; then
   echo "==> ${TOTAL} files already present and verified; nothing to do"
