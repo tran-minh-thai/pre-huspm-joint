@@ -101,13 +101,15 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--datasets", default=str(ROOT / "datasets"))
     ap.add_argument("--out", default=str(ROOT / "results" / "invariant-database-stats"))
+    ap.add_argument("--final", action="store_true",
+                    help="count NAME_final_seq.txt, the database after the last operation of a replayed log")
     ap.add_argument("dbs", nargs="*", help="default: every database of common.Datasets")
     a = ap.parse_args(argv)
     a.dbs = a.dbs or default_dbs()
     print(f"self-test: {self_test()} checks passed")
     rows = []
     for name in a.dbs:
-        seq = os.path.join(a.datasets, f"{name}_seq.txt")
+        seq = os.path.join(a.datasets, f"{name}_final_seq.txt" if a.final else f"{name}_seq.txt")
         eui = os.path.join(a.datasets, f"{name}_eui.txt")
         if not (os.path.exists(seq) and os.path.exists(eui)):
             print(f"{name}: data files missing in {a.datasets}", file=sys.stderr)

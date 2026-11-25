@@ -89,6 +89,8 @@ tree `timing` whose replicates include `s0r0` are the arms of the main campaign.
 | SC6, SC6D, SC6B, `-Tree campaign-total-counter` | the same five | `Pre-HUSPM-Joint-fixed-threshold` and `Joint-rule+total-counter`, side by side in one session, seeds 0 to 4 (`-SeedIndex`); read only by the total-counter keys |
 | SC7 | eight (not BMS1); the incremental ablations on SIGN and C8T1S5I8N5K | `Pre-HUSPM-Joint`, `Pre-HUSPM-Joint-no-IUB`, `Pre-HUSPM-Joint-no-IPS`, `Pre-HUSPM`; `Pre-HUSPM-Joint-rescan-rule`, `Pre-HUSPM-Joint-rescan-every-batch`, `Pre-HUSPM-Joint-no-block-index` and the block sizes `Pre-HUSPM-Joint-bsz-1`, `-5`, `-10`, `-50`, `-200` |
 | SC8, SC8P, SC9, SC10, SC10H | SIGN, LEVIATHAN, C8T1S5I8N5K, TAFENG, DUNNHUMBY (SC10H without SIGN) | `Pre-HUSPM-Joint`, `Pre-HUSPM-Joint-fixed-threshold`, `Pre-HUSPM-Joint-w5`, `Remine-from-scratch`, `Remine-own-UUT`, their `-rebuild` arms; in SC9 also `Pre-HUSPM-Joint-index-rebuild` |
+| SC11 | ONLINERETAIL | the arms of the long streams and `Joint-rule+total-counter` |
+| SC11, live memory | ONLINERETAIL | the same |
 | SC1, live memory | nine | the six static algorithms; `Joint-miner@UUT` too in the sampled tree |
 | SC2, live memory | eight | `Pre-HUSPM-Joint`, `Pre-HUSPM-Joint-fixed-threshold`, `Pre-HUSPM-Joint-time`, `Pre-HUSPM-Joint-w5`, `Pre-HUSPM-SWUmax`, `Pre-HUSPM-TSU`, `IncUSP-Miner+`, `Remine-from-scratch`, `Remine-own-UUT`, their `-rebuild` arms, `Joint-rule+PreHUSPM-tracking`, `Joint-miner+SWUmax+PreHUSPM-tracking`, `Joint-rule+min-floor`, `Joint-rule+plain-floor` |
 | SC9, live memory | the five of the long streams | `Pre-HUSPM-Joint`, `Pre-HUSPM-Joint-index-rebuild` |

@@ -14,7 +14,7 @@ Roles of the columns:
     Quantity      the units bought and cancelled; the build nets cancellations on them, but every
                   item occurrence written has internal utility 1 (see below)
     Price         the unit price; the external utility of a product is the median of its unit
-                  prices over the purchase lines kept (quantity > 0)
+                  prices over the purchase lines kept (quantity > 0), written with two decimals
     Description   written to the item table, for reading patterns; most frequent text per code
 
 Lines dropped, in this order: no customer, a stock code that is not a product, a nonpositive
@@ -407,7 +407,8 @@ def main():
             names[r[4]][r[7]] += 1
     items = sorted(prices, key=lambda s: (int(s[:5]), s))
     item_id = {s: i + 1 for i, s in enumerate(items)}
-    eui = {s: statistics.median(prices[s]) for s in items}
+    # the median unit price as written to NAME_eui.txt, two decimals; every count below uses this value
+    eui = {s: float(f"{statistics.median(prices[s]):.2f}") for s in items}
     cancel_rows = [r for r in rows if r[8]]
     for r in cancel_rows:
         if r[4] not in item_id:
