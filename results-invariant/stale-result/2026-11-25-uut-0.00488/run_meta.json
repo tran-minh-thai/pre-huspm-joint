@@ -1,0 +1,16 @@
+{
+  "command": "java -Xmx12g -Xss64m -cp build-stale verify.StaleResult datasets ONLINERETAIL 0.00488 results-invariant/stale-result/2026-11-25-uut-0.00488",
+  "path_substitutions": 0,
+  "build_dir": "build-stale",
+  "git_commit": "be2daee8e3998fbb18763c2640d318374eb410c7",
+  "tree": "src clean, other files modified",
+  "source_sha256": "2ae69609e456da84768c5dd13b7565a273258e85b502f5745e9d362387d793cb",
+  "source_files": 53,
+  "java": "openjdk version \"25.0.4.1\" 2026-08-18 LTS",
+  "os": "Darwin 27.2.0 (macOS-27.2.1-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "correctness check: counters only, no timings",
+  "start": "2026-11-25T21:26:49",
+  "end": "2026-11-25T21:30:21",
+  "exit_code": 0
+}
