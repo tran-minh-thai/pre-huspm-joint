@@ -3757,6 +3757,9 @@ def assembly_keys(put):
 # tafeng/ and dunnhumby/); the others take the generated utilities of release v2.0.0-utilities of
 # tran-minh-thai/huspm-datasets (seed 42, environment.lock.json).
 MEASURED_UTILITIES = ("TAFENG", "DUNNHUMBY")
+# Replayed from a log, measured in SC11 alone (common.Datasets.replayed()): measured unit prices, every
+# quantity 1; the shape is that of the database after the last day (results-invariant/onlineretail-stats).
+REPLAYED = ("ONLINERETAIL",)
 
 
 def datasets_table(put, out):
@@ -3775,12 +3778,23 @@ def datasets_table(put, out):
                          items_per_element=float(r["items_per_element"]), total_utility=float(r["total_utility"]),
                          d_init=v["d_init"], default_uut=v["default_uut"],
                          utilities="measured" if d in MEASURED_UTILITIES else "generated"))
+    for d in REPLAYED:
+        recs = sorted(glob.glob(os.path.join(mf.REPO_DIR, "results-invariant", "onlineretail-stats", "*", "database_stats.csv")))
+        if not recs or d not in mf.DATASETS:
+            print(f"[not written] the row of {d} in table_databases.tex: no record or no entry in common.Datasets")
+            continue
+        r, v = pd.read_csv(recs[-1]).set_index("dataset").loc[d], mf.DATASETS[d]
+        rows.append(dict(dataset=d, sequences=int(r["sequences"]), items=int(r["items_occurring"]),
+                         max_item_id=int(r["max_item_id"]), avg_length=float(r["items_per_sequence"]),
+                         elements_per_sequence=float(r["elements_per_sequence"]),
+                         items_per_element=float(r["items_per_element"]), total_utility=float(r["total_utility"]),
+                         d_init=v["d_init"], default_uut=v["default_uut"], utilities="replayed"))
     t = pd.DataFrame(rows)
     mf.write_csv(t, os.path.join(out, "table_datasets.csv"))
     # One table for the databases and the thresholds of SC1 and SC3: the four thresholds take the
     # place of the default, which is always the second of them (checked here, so that the column
     # headed "default" cannot name another).
-    for d in mf.ALL_DATASETS:
+    for d in list(t["dataset"]):
         sweep = mf.DATASETS[d]["sweep"]
         if len(sweep) != 4 or pct4(f"{sweep[1]:.6f}") != pct4(f"{mf.DATASETS[d]['default_uut']:.6f}"):
             sys.exit(f"table_databases.tex: on {d} the default UUT {mf.DATASETS[d]['default_uut']} is not "
@@ -3794,7 +3808,7 @@ def datasets_table(put, out):
              f"{two('Items/', 'elem.')} & $\\TU(D)$ & $|D_{{\\mathrm{{init}}}}|$ & & default & & \\\\\\midrule"]
     for r in t.itertuples():
         tu = f"{int(half_up(r.total_utility, 0)):,}"
-        mark = "$^{\\ast}$" if r.utilities == "measured" else ""
+        mark = {"measured": "$^{\\ast}$", "replayed": "$^{\\dagger}$"}.get(r.utilities, "")
         lines.append(f"{r.dataset}{mark} & {r.sequences:,} & {r.items:,} & {half_up(r.elements_per_sequence)} & "
                      f"{half_up(r.avg_length)} & {half_up(r.items_per_element)} & {tu} & {r.d_init:,} & "
                      + " & ".join(pct4(f"{v:.6f}") for v in mf.DATASETS[r.dataset]["sweep"]) + " \\\\")
@@ -3808,7 +3822,9 @@ def datasets_table(put, out):
         put(f"{b}_total_utility", tu, src)
     lines[-1] = lines[-1] + "\\bottomrule"
     lines += ["\\end{tabular*}",
-              "\\par\\smallskip $^{\\ast}$\\,measured utilities; the others generated (seed 42).",
+              "\\par\\smallskip $^{\\ast}$\\,measured utilities; the others generated (seed 42)."
+              + ("\\\\ $^{\\dagger}$\\,measured prices, every quantity 1; replayed in SC11 only, $|D|$ after its last day."
+                 if (t["utilities"] == "replayed").any() else ""),
               "\\end{table}", ""]
     open(os.path.join(out, "table_databases.tex"), "w", encoding="utf-8").write("\n".join(lines))
     for old in ("table_datasets.tex", "table_thresholds.tex"):   # merged into table_databases.tex

@@ -199,14 +199,18 @@ def latency_ms(x):
     return x["runtime_ms"].to_numpy(float)
 
 
-def stream_rows(sc, df, runs_of=None, paired=None):
+def stream_rows(sc, df, runs_of=None, paired=None, arms=None, incremental=None, datasets=None):
     """runs_of: per (arm, database, seed), the stream time of each run averaged (mean_over_runs).
-    paired: per (database, arm), the same-session ratios of paired_ratios."""
+    paired: per (database, arm), the same-session ratios of paired_ratios. arms, incremental and
+    datasets default to ARMS, INCREMENTAL and make_figures.ALL_DATASETS (SC11 names its own)."""
+    arms = ARMS if arms is None else arms
+    incremental = INCREMENTAL if incremental is None else incremental
+    datasets = mf.ALL_DATASETS if datasets is None else datasets
     rows = []
-    for d in [x for x in mf.ALL_DATASETS if x in set(df["dataset"])]:
+    for d in [x for x in datasets if x in set(df["dataset"])]:
         g = df[df["dataset"] == d]
         per_seed = {}
-        for arm in [a for a in ARMS if a in set(g["algorithm"])]:
+        for arm in [a for a in arms if a in set(g["algorithm"])]:
             a = g[g["algorithm"] == arm].sort_values(["seed", "iteration"])
             ops = a[a["kind"] != "INIT"]
             done = {s: x for s, x in ops.groupby("seed") if (x["status"] == "OK").all()}
@@ -228,17 +232,17 @@ def stream_rows(sc, df, runs_of=None, paired=None):
                 r.update(latency_ms_median=np.percentile(lat, 50), latency_ms_p95=np.percentile(lat, 95),
                          latency_ms_p99=np.percentile(lat, 99), latency_ms_max=lat.max(), latency_ops=len(lat))
             resc = pd.concat([x["rescan_count"].diff().fillna(x["rescan_count"]) > 0 for _, x in a.groupby("seed")]) \
-                if arm in INCREMENTAL else pd.Series(False, index=a.index)
+                if arm in incremental else pd.Series(False, index=a.index)
             a = a.assign(rescanned=resc.reindex(a.index))
             for k, name in KINDS.items():
                 ak = a[(a["kind"] == k) & a["seed"].isin(done)]
                 r[f"{name}_operations"] = len(ak)
                 r[f"{name}_s_per_seed"] = ak["runtime_ms"].sum() / 1000.0 / max(1, len(done))
-                if arm in INCREMENTAL:
+                if arm in incremental:
                     r[f"{name}_rescans"] = int(ak["rescanned"].sum())
                     r[f"{name}_direct"] = int((~ak["rescanned"]).sum())
                     r[f"{name}_direct_share"] = r[f"{name}_direct"] / len(ak) if len(ak) else np.nan
-            if arm in INCREMENTAL:
+            if arm in incremental:
                 last = a[a["seed"].isin(done)].groupby("seed").tail(1)
                 # the initial mine is not a rescan, so the counters at the last operation are the stream's
                 r["rescans"] = int(last["rescan_count"].sum())

@@ -47,7 +47,7 @@
   "elements_per_sequence": 1.4506,
   "items_per_sequence": 30.2899,
   "items_per_element": 20.8812,
-  "total_utility": 1134241.97
+  "total_utility": 1134241.89
  },
  "final": {
   "sequences": 25425,
@@ -55,7 +55,7 @@
   "elements_per_sequence": 1.4281,
   "items_per_sequence": 29.9041,
   "items_per_element": 20.9394,
-  "total_utility": 2239842.48
+  "total_utility": 2239842.41
  },
  "operations": {
   "INS": 305,
