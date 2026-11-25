@@ -88,7 +88,7 @@ function Test-Local { $t = Test-Tafeng; $d = Test-Dunnhumby; return ($t -and $d)
 # onlineretail/build_onlineretail.py builds from UCI Online Retail II (CC BY 4.0);
 # onlineretail/ONLINERETAIL.sha256 pins them.
 $orRelease = 'v2.1.0-onlineretail'
-$orArchiveSha256 = 'dc1c3fb847778c29003a0343fedd56e5858eb4564b3fdf3fe6c9da8f8064220f'
+$orArchiveSha256 = '47ac46675d528181d3b3a86b1eaebde11cabd36296b87c3349e4b17fde831fab'
 $orBaseUrl = "https://github.com/tran-minh-thai/huspm-datasets/releases/download/$orRelease"
 function Test-OnlineRetail {
     $s = Test-Files (Read-Sums (Join-Path $PSScriptRoot 'onlineretail/ONLINERETAIL.sha256'))
