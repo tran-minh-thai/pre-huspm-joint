@@ -1,2 +1,0 @@
-self-test: 7 checks passed
-ONLINERETAIL: 25425 sequences, 4611 items occur (largest id 4619), 1.4281 elements per sequence, 20.9394 items per element, 29.9041 per sequence, TU 2239842

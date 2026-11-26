@@ -1,8 +1,0 @@
-database=ONLINERETAIL uut=0.00488 days=305 (with D_init 306 states)
-end of log: result 3, false 0, missed 0
-largest number of wrong patterns: 1 on 2010-12-16
-leavings with a fall of utility: 1; enterings by a fall of the threshold: 0
-end of log: utility of the common patterns overstated by at most 1.2121% (mean 0.7836%)
-largest overstatement over the log: 7.4074% on 2011-06-07
-total utility without the cancellations at the end: 2255906.08 against 2239842.41
-utilities checked against the definition: 1992
