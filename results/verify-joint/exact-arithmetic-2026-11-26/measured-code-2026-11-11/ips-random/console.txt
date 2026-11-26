@@ -1,0 +1,13 @@
+random trials=2000 seed=1 sequences=27992 itemsets=80930 (multi-item 59238) sequences-with-a-repeated-item=19052 databases-with-floor-below-UUT=1366 reference-patterns: at-cutoff=5398075 at-UUT=3872462 databases-with->=1-pattern=1444
+  off      mismatching-databases=4 missing=0 extra=342 | dbs-with-root-removal=0 root-removed=0 dbs-with-node-removal=0 node-removed=0 | explored=6224897 candidates=7604638 dbs-with-fewer-explored-than-off=0
+    first mismatch: trial 104 su=0.05 ratio=0.8 all: ref=4632 got=4671 missing=0 extra=39 maxUtilGap=0.000000 large: ref=4419 got=4419 missing=0 extra=0 maxUtilGap=0.000000
+      db: 2[3] | 1[3] 5[4] | 1[9] 2[10] 4[7] 8[9] | 1[3] 3[6] 5[1] 9[3] ; 2[0] 5[1] 6[8] 8[7] | 3[5] | 3[7] 7[8] 8[9] 9[3] ; 4[8] | 1[3] 3[1] 5[1] ; 3[0] 4[2] 8[6] 12[0] | 1[9] 3[3] ; 2[6] 3[7] | 1[6] 2[6] 3[5] | 1[5] 9[8] 11[1] | 3[3] | 5[4] 8[7] ; 2[2] 3[6] 4[10] 8[3] | 1[7] 5[3] ; 4[8] 5[7] | 3[6] 4[5] 5[8] 7[0] | 8[1] | 1[7] 2[2] ; 1[8] 2[10] 4[6] | 4[9] 7[8] | 1[6] | 3[6]
+  once     mismatching-databases=4 missing=0 extra=342 | dbs-with-root-removal=820 root-removed=2205 dbs-with-node-removal=1951 node-removed=309612 | explored=6198104 candidates=6985647 dbs-with-fewer-explored-than-off=1441
+    first mismatch: trial 104 su=0.05 ratio=0.8 all: ref=4632 got=4671 missing=0 extra=39 maxUtilGap=0.000000 large: ref=4419 got=4419 missing=0 extra=0 maxUtilGap=0.000000
+      db: 2[3] | 1[3] 5[4] | 1[9] 2[10] 4[7] 8[9] | 1[3] 3[6] 5[1] 9[3] ; 2[0] 5[1] 6[8] 8[7] | 3[5] | 3[7] 7[8] 8[9] 9[3] ; 4[8] | 1[3] 3[1] 5[1] ; 3[0] 4[2] 8[6] 12[0] | 1[9] 3[3] ; 2[6] 3[7] | 1[6] 2[6] 3[5] | 1[5] 9[8] 11[1] | 3[3] | 5[4] 8[7] ; 2[2] 3[6] 4[10] 8[3] | 1[7] 5[3] ; 4[8] 5[7] | 3[6] 4[5] 5[8] 7[0] | 8[1] | 1[7] 2[2] ; 1[8] 2[10] 4[6] | 4[9] 7[8] | 1[6] | 3[6]
+  fixpoint mismatching-databases=4 missing=0 extra=342 | dbs-with-root-removal=820 root-removed=2524 dbs-with-node-removal=1931 node-removed=332744 | explored=6195633 candidates=6932991 dbs-with-fewer-explored-than-off=1443
+    first mismatch: trial 104 su=0.05 ratio=0.8 all: ref=4632 got=4671 missing=0 extra=39 maxUtilGap=0.000000 large: ref=4419 got=4419 missing=0 extra=0 maxUtilGap=0.000000
+      db: 2[3] | 1[3] 5[4] | 1[9] 2[10] 4[7] 8[9] | 1[3] 3[6] 5[1] 9[3] ; 2[0] 5[1] 6[8] 8[7] | 3[5] | 3[7] 7[8] 8[9] 9[3] ; 4[8] | 1[3] 3[1] 5[1] ; 3[0] 4[2] 8[6] 12[0] | 1[9] 3[3] ; 2[6] 3[7] | 1[6] 2[6] 3[5] | 1[5] 9[8] 11[1] | 3[3] | 5[4] 8[7] ; 2[2] 3[6] 4[10] 8[3] | 1[7] 5[3] ; 4[8] 5[7] | 3[6] 4[5] 5[8] 7[0] | 8[1] | 1[7] 2[2] ; 1[8] 2[10] 4[6] | 4[9] 7[8] | 1[6] | 3[6]
+  sequences with flat arrays inconsistent with their itemsets after mining: 0
+  off runs with a non-zero removal counter: 0
+RESULT MISMATCH
