@@ -40,17 +40,18 @@ TARGET = "src/algorithms/PreHUSPMAdaptiveAlgorithm.java"
 
 FAULTS = [
     ("trigger without the deletion term",
-     "return iauMax - Su * insertedSinceRescan + Su * deletedSinceRescan;",
-     "return iauMax - Su * insertedSinceRescan;"),
+     '.subtract(su.multiply(common.Exact.integral(ins, "inserted utility")))\n'
+     '                    .add(su.multiply(common.Exact.integral(del, "deleted utility")));',
+     '.subtract(su.multiply(common.Exact.integral(ins, "inserted utility")));'),
     ("drop floor with the largest counter of all items instead of the largest of the pattern's",
-     "case MAX: default: return Sl_min * tsuAtLastRescan + maxIauOf(p);",
-     "case MAX: default: return Sl_min * tsuAtLastRescan + iauMax;"),
+     "case MAX: default: return floorAbs(tsuAtLastRescan) + maxIauOf(p);",
+     "case MAX: default: return floorAbs(tsuAtLastRescan) + iauMax;"),
     ("block index intersected over the batch's blocks but its last block",
      "shouldRead = (bid >= from && bid < to && relevantBlocks.get(bid - from));",
      "shouldRead = (bid >= from && bid < to - 1 && relevantBlocks.get(bid - from));"),
     ("drop floor raised by 5 percent of the lower threshold above the pattern's largest counter",
-     "case MAX: default: return Sl_min * tsuAtLastRescan + maxIauOf(p);",
-     "case MAX: default: return 1.05 * Sl_min * tsuAtLastRescan + maxIauOf(p);"),
+     "case MAX: default: return floorAbs(tsuAtLastRescan) + maxIauOf(p);",
+     "case MAX: default: return 1.05 * floorAbs(tsuAtLastRescan) + maxIauOf(p);"),
 ]
 
 FAULTS_IIP = [
@@ -70,12 +71,20 @@ FAULTS_IIP = [
 
 
 FAULTS_FLOOR = [
+    # the rescan decisions compare exactly (jointExceeds); safetyBoundF and safetyBoundDel are only
+    # written to the CSV, so the faults change the floor ratio passed to the two decisions
     ("a rescan mined at UUT keeps the budget of r_l for insertions",
-     "safetyBoundF = (Su - Sl_min) * tsuAtLastRescan;",
-     "safetyBoundF = (Su - (floorWindow > 0 ? slMinRatioEff * Su : Sl_min)) * tsuAtLastRescan;"),
+     "final boolean over = this.triggerRule == TriggerRule.JOINT\n"
+     "                    ? jointExceeds(insertionCharge(), insertedSinceRescan, deletedSinceRescan, tsuAtLastRescan, lamDec())",
+     "final boolean over = this.triggerRule == TriggerRule.JOINT\n"
+     "                    ? jointExceeds(insertionCharge(), insertedSinceRescan, deletedSinceRescan, tsuAtLastRescan, "
+     "(floorWindow > 0 ? common.Exact.dec(slMinRatioEff).multiply(suDec()) : lamDec()))"),
     ("a rescan mined at UUT keeps the budget of r_l for deletions",
-     "safetyBoundDel = (Su - Sl_min) * tsuAtLastRescan;",
-     "safetyBoundDel = (Su - (floorWindow > 0 ? slMinRatioEff * Su : Sl_min)) * tsuAtLastRescan;"),
+     "this.cubTriggeredRescan = useAdaptiveRescan\n"
+     "                        ? jointExceeds(insertionCharge(), insertedSinceRescan, deletedSinceRescan, tsuAtLastRescan, lamDec())",
+     "this.cubTriggeredRescan = useAdaptiveRescan\n"
+     "                        ? jointExceeds(insertionCharge(), insertedSinceRescan, deletedSinceRescan, tsuAtLastRescan, "
+     "(floorWindow > 0 ? common.Exact.dec(slMinRatioEff).multiply(suDec()) : lamDec()))"),
 ]
 
 
