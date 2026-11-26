@@ -1,0 +1,40 @@
+rule=joint trials=2000 seed=7 ops=20000 per-kind={delete=6582, insert=6702, modify=6716} direct-update={delete=5578, insert=1806, modify=1695} mismatching-ops=0 {} trials-with-mismatch=0
+rule=iaumax trials=2000 seed=7 ops=20000 per-kind={delete=6582, insert=6702, modify=6716} direct-update={delete=5729, insert=1940, modify=2558} mismatching-ops=45 {delete/direct=28, insert/direct=2, modify/direct=15} trials-with-mismatch=42
+rule=joint trials=5000 seed=11 ops=50000 per-kind={delete=16736, insert=16698, modify=16566} direct-update={delete=14056, insert=4644, modify=4263} mismatching-ops=0 {} trials-with-mismatch=0
+rule=iaumax trials=5000 seed=11 ops=50000 per-kind={delete=16736, insert=16698, modify=16566} direct-update={delete=14438, insert=4957, modify=6288} mismatching-ops=117 {delete/direct=66, insert/direct=7, modify/direct=44} trials-with-mismatch=105
+rule=joint trials=5000 seed=23 ops=50000 per-kind={delete=16744, insert=16565, modify=16691} direct-update={delete=14011, insert=4534, modify=4394} mismatching-ops=0 {} trials-with-mismatch=0
+rule=iaumax trials=5000 seed=23 ops=50000 per-kind={delete=16744, insert=16565, modify=16691} direct-update={delete=14441, insert=4838, modify=6385} mismatching-ops=121 {delete/direct=80, insert/direct=5, modify/direct=36} trials-with-mismatch=108
+rule=joint trials=5000 seed=101 ops=50000 per-kind={delete=16684, insert=16665, modify=16651} direct-update={delete=13966, insert=4515, modify=4294} mismatching-ops=0 {} trials-with-mismatch=0
+rule=iaumax trials=5000 seed=101 ops=50000 per-kind={delete=16684, insert=16665, modify=16651} direct-update={delete=14354, insert=4850, modify=6342} mismatching-ops=126 {delete/direct=82, insert/direct=10, modify/direct=34} trials-with-mismatch=114
+trigger rule = JOINT
+Case A: delete two fillers, then insert <1[6]>
+  after init                   TSU= 100.0 uut= 25.00 rescans=0 trig=0.000 sft=5.000 lutDyn=20.000 | ref={} got={} missing=[] extra=[]
+  after delete(18)             TSU=  82.0 uut= 20.50 rescans=0 trig=4.500 sft=5.000 lutDyn=20.000 | ref={} got={} missing=[] extra=[]
+  after insert(6)              TSU=  88.0 uut= 22.00 rescans=1 trig=9.000 sft=5.000 lutDyn=18.000 | ref={1=25.0} got={1=25.0} missing=[] extra=[]
+Case B: one modification, two fillers (18) -> <1[6]>
+  after modify                 TSU=  88.0 uut= 22.00 rescans=1 trig=9.000 sft=5.000 lutDyn=18.000 | ref={1=25.0} got={1=25.0} missing=[] extra=[]
+Control C: insert <1[6]> without the deletion (X = 25 < 26.5)
+  after insert(6)              TSU= 106.0 uut= 26.50 rescans=0 trig=4.500 sft=5.000 lutDyn=20.000 | ref={} got={} missing=[] extra=[]
+Case D (insertion only): X = <1[227]> pre-large; insert <50[30]>, then <1[60]>
+  after init                   TSU=1000.0 uut=250.00 rescans=0 trig=0.000 sft=50.000 lutDyn=200.000 | ref={} got={} missing=[] extra=[]
+    prelarge after init: {1=227.0}
+  after insert <50[30]>        TSU=1030.0 uut=257.50 rescans=0 trig=22.500 sft=50.000 lutDyn=200.000 | ref={} got={} missing=[] extra=[]
+    prelarge: {1=227.0} deltaD=58.0
+  after insert <1[60]>         TSU=1090.0 uut=272.50 rescans=0 trig=37.500 sft=50.000 lutDyn=200.000 | ref={1=287.0} got={1=287.0} missing=[] extra=[]
+caseD mismatch=false ; cases with a mismatch: A=false B=false ; total mismatching patterns over 8 checks = 0
+trigger rule = IAUMAX
+Case A: delete two fillers, then insert <1[6]>
+  after init                   TSU= 100.0 uut= 25.00 rescans=0 trig=0.000 sft=5.000 lutDyn=20.000 | ref={} got={} missing=[] extra=[]
+  after delete(18)             TSU=  82.0 uut= 20.50 rescans=0 trig=0.000 sft=20.000 lutDyn=17.000 | ref={} got={} missing=[] extra=[]
+  after insert(6)              TSU=  88.0 uut= 22.00 rescans=0 trig=6.000 sft=6.667 lutDyn=18.000 | ref={1=25.0} got={} missing=[1] extra=[]
+Case B: one modification, two fillers (18) -> <1[6]>
+  after modify                 TSU=  88.0 uut= 22.00 rescans=0 trig=6.000 sft=6.667 lutDyn=18.000 | ref={1=25.0} got={} missing=[1] extra=[]
+Control C: insert <1[6]> without the deletion (X = 25 < 26.5)
+  after insert(6)              TSU= 106.0 uut= 26.50 rescans=0 trig=6.000 sft=6.667 lutDyn=22.000 | ref={} got={} missing=[] extra=[]
+Case D (insertion only): X = <1[227]> pre-large; insert <50[30]>, then <1[60]>
+  after init                   TSU=1000.0 uut=250.00 rescans=0 trig=0.000 sft=50.000 lutDyn=200.000 | ref={} got={} missing=[] extra=[]
+    prelarge after init: {1=227.0}
+  after insert <50[30]>        TSU=1030.0 uut=257.50 rescans=0 trig=30.000 sft=66.667 lutDyn=227.897 | ref={} got={} missing=[] extra=[]
+    prelarge: {} deltaD=30.103
+  after insert <1[60]>         TSU=1090.0 uut=272.50 rescans=0 trig=60.000 sft=66.667 lutDyn=218.000 | ref={1=287.0} got={} missing=[1] extra=[]
+caseD mismatch=true ; cases with a mismatch: A=true B=true ; total mismatching patterns over 8 checks = 3
