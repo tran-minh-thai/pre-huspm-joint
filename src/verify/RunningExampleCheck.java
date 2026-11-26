@@ -112,7 +112,9 @@ public final class RunningExampleCheck {
         // 2. the mine of D with the proposal's settings
         PreHUSPMAdaptiveAlgo p = proposal(0.8);
         p.runInitialMining(new ArrayList<>(d), 68);
-        check("mining cutoff L_ref", p.lutDynValue, 13.6);
+        // The utilities are integers and the cutoff is the threshold rounded up (common.Exact): a pattern of
+        // integer utility u reaches the real L_ref exactly when u >= ceil(L_ref).
+        check("mining cutoff ceil(L_ref), L_ref = 13.6", p.lutDynValue, Math.ceil(13.6));
         check("u(<(a)>)", tracked(p, "1"), 20);
         check("u(<(c)>)", tracked(p, "3"), 14);
         check("u(<(a)(g)>)", tracked(p, "1 5"), 16);
@@ -150,7 +152,7 @@ public final class RunningExampleCheck {
         check("Example 2, d1: budget beta of the decision", s.sftValue, 3.4);
         check("Example 2, d1: rescans", s.rescanCount, 1);
         check("Example 2, d1: rescans at UUT", s.rescansAtUut, 1);
-        check("Example 2, d1: rescan at lambda = UUT, cutoff", s.lutDynValue, 19);
+        check("Example 2, d1: rescan at lambda = UUT, cutoff ceil(19)", s.lutDynValue, Math.ceil(19));
         check("Example 2, d1: nodes visited", s.exploredNodes, 57);
         List<Sequence> d2 = List.of(s5());
         c2.addAll(d2);
@@ -162,7 +164,7 @@ public final class RunningExampleCheck {
         check("Example 2, d2: absorption a (the initial mine's cycle)", s.floorAbsorption, 0);
         check("Example 2, d2: rho = 65/57", s.floorRho, 65.0 / 57.0);
         check("Example 2, d2: delta", s.floorDelta, 0);
-        check("Example 2, d2: rescan at lambda = UUT, cutoff", s.lutDynValue, 20);
+        check("Example 2, d2: rescan at lambda = UUT, cutoff ceil(20)", s.lutDynValue, Math.ceil(20));
         check("Example 2, d2: nodes visited", s.exploredNodes, 52);
         List<Sequence> d3 = List.of(s5());
         c2.addAll(d3);
@@ -172,7 +174,7 @@ public final class RunningExampleCheck {
         check("Example 2, d3: rescans at UUT", s.rescansAtUut, 2);
         check("Example 2, d3: absorption a = (0 + 1) / 2", s.floorAbsorption, 0.5);
         check("Example 2, d3: rho = 65/52", s.floorRho, 65.0 / 52.0);
-        check("Example 2, d3: rescan at LUT_min, cutoff", s.lutDynValue, 16.8);
+        check("Example 2, d3: rescan at LUT_min, cutoff ceil(16.8)", s.lutDynValue, Math.ceil(16.8));
         List<Sequence> d4 = List.of(s5());
         c2.addAll(d4);
         s.runIncrementalMining(new ArrayList<>(d4), new ArrayList<>(c2), tu(c2));

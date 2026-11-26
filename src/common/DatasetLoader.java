@@ -87,8 +87,35 @@ public class DatasetLoader {
         return f.endsWith("_seq.txt") ? f.substring(0, f.length() - "_seq.txt".length()) : f;
     }
 
+    /**
+     * The external utilities of an _eui file, scaled to integers: each value is read as the decimal it
+     * is written as and multiplied by utilityScale(euiPath) = 10^d, d the largest number of decimals in
+     * the file (0 for a file of integers, which is left as it is). With integer quantities every utility
+     * is then an integer, which a double holds exactly, so sums and differences of utilities do not
+     * depend on their order (see common.Exact). A pattern's utility in these units is its utility in the
+     * file's units times the scale; every threshold is a ratio of the total, so the patterns found are
+     * the same.
+     */
     static Map<Integer, Double> loadExternalUtilities(String euiPath) throws IOException {
+        Map<Integer, java.math.BigDecimal> raw = readExternalUtilities(euiPath);
+        int d = 0;
+        for (java.math.BigDecimal v : raw.values()) d = Math.max(d, Math.max(0, v.stripTrailingZeros().scale()));
         Map<Integer, Double> map = new HashMap<>();
+        for (Map.Entry<Integer, java.math.BigDecimal> e : raw.entrySet())
+            map.put(e.getKey(), e.getValue().movePointRight(d).doubleValue());
+        return map;
+    }
+
+    /** The factor by which loadExternalUtilities scales the external utilities of an _eui file. */
+    public static long utilityScale(String euiPath) throws IOException {
+        int d = 0;
+        for (java.math.BigDecimal v : readExternalUtilities(euiPath).values())
+            d = Math.max(d, Math.max(0, v.stripTrailingZeros().scale()));
+        return java.math.BigInteger.TEN.pow(d).longValueExact();
+    }
+
+    private static Map<Integer, java.math.BigDecimal> readExternalUtilities(String euiPath) throws IOException {
+        Map<Integer, java.math.BigDecimal> map = new HashMap<>();
         try (BufferedReader r = new BufferedReader(new FileReader(euiPath))) {
             String line;
             while ((line = r.readLine()) != null) {
@@ -96,8 +123,7 @@ public class DatasetLoader {
                 if (t.isEmpty() || t.startsWith("#") || t.startsWith("%")) continue;
                 String[] parts = t.split(":");
                 if (parts.length == 2) {
-                    map.put(Integer.parseInt(parts[0].trim()),
-                            Double.parseDouble(parts[1].trim()));
+                    map.put(Integer.parseInt(parts[0].trim()), new java.math.BigDecimal(parts[1].trim()));
                 }
             }
         }
@@ -137,6 +163,10 @@ public class DatasetLoader {
                         itemId = r;
                     }
                     double internalUtil = Double.parseDouble(token.substring(leftIdx + 1, rightIdx).trim());
+                    // integer quantities, so that every utility is an integer (loadExternalUtilities)
+                    if (internalUtil != Math.rint(internalUtil))
+                        throw new IllegalStateException("sequence " + seqId + ": quantity " + internalUtil
+                                + " of item " + itemId + " is not an integer; exact utilities need integer quantities");
                     currentSet.items.add(new QItem(itemId, internalUtil * eui.getOrDefault(itemId, 0.0)));
                 } catch (NumberFormatException nfe) {
                     // Skip a malformed token

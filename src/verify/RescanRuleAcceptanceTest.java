@@ -452,13 +452,14 @@ public final class RescanRuleAcceptanceTest {
         PatternSetDiff dt = PatternSetDiff.of(remineFromScratch(ta), tight.exportLargeAsStrings());
         check("  matches remining after that batch", dt.isClean(), dt.toString());
 
-        // T6's insertions alone
+        // T6's insertions alone, every utility times 10 so that they are integers (common.Exact); the
+        // thresholds are ratios, so the case is the same
         SyntheticDb.resetIds();
-        List<Sequence> cur = fillers("1[22.7]", 8, 9);
-        cur.add(SyntheticDb.seq("30[5.3]"));
+        List<Sequence> cur = fillers("1[227]", 8, 90);
+        cur.add(SyntheticDb.seq("30[53]"));
         PreHUSPMAdaptiveAlgo t6 = preHuspmTrackingAlgo();
         t6.runInitialMining(copyOf(cur), SyntheticDb.tsu(cur));
-        for (String spec : new String[]{"50[3]", "1[6]"}) {
+        for (String spec : new String[]{"50[30]", "1[60]"}) {
             List<Sequence> ins = SyntheticDb.db(spec);
             cur.addAll(ins);
             before = t6.rescanCount;
@@ -496,16 +497,17 @@ public final class RescanRuleAcceptanceTest {
     private static void testFloorSelection() {
         System.out.println("T9 - rescan floor selection, window 2");
         SyntheticDb.resetIds();
-        // TU = 100, UUT = 0.25, r_l = 0.8: the low budget is 0.05 * TU. A batch of one sequence
-        // 1[10] charges max_i a_i - UUT * u = 10 - 2.5 = 7.5 > 0.05 * 110 = 5.5 on its own.
-        List<Sequence> cur = fillers("1[19]", 9, 9);
+        // TU = 1000, UUT = 0.25, r_l = 0.8: the low budget is 0.05 * TU. A batch of one sequence
+        // 1[100] charges max_i a_i - UUT * u = 100 - 25 = 75 > 0.05 * 1100 = 55 on its own. (The case
+        // in integer utilities, every utility times 10, common.Exact.)
+        List<Sequence> cur = fillers("1[190]", 9, 90);
         PreHUSPMAdaptiveAlgo a = newAlgo(TriggerRule.JOINT);
         a.floorWindow = 2;
         a.runInitialMining(copyOf(cur), SyntheticDb.tsu(cur));
         boolean allMatch = true;
         double[] floors = new double[4];
         int[] rescans = new int[4];
-        String[] specs = {"1[10]", "1[10]", "1[10]", "40[0.1]"};
+        String[] specs = {"1[100]", "1[100]", "1[100]", "40[1]"};
         for (int k = 0; k < specs.length; k++) {
             List<Sequence> ins = SyntheticDb.db(specs[k]);
             cur.addAll(ins);
@@ -528,13 +530,13 @@ public final class RescanRuleAcceptanceTest {
         PreHUSPMAdaptiveAlgo b = newAlgo(TriggerRule.IAUMAX);
         b.floorWindow = 2;
         b.runInitialMining(copyOf(cur), SyntheticDb.tsu(cur));
-        try { b.runIncrementalMining(SyntheticDb.db("1[10]"), copyOf(cur), SyntheticDb.tsu(cur)); }
+        try { b.runIncrementalMining(SyntheticDb.db("1[100]"), copyOf(cur), SyntheticDb.tsu(cur)); }
         catch (UnsupportedOperationException e) { refusedRule = true; }
         PreHUSPMAdaptiveAlgo c = newAlgo(TriggerRule.JOINT);
         c.floorWindow = 2;
         c.tracking = PreHUSPMAdaptiveAlgo.Tracking.PREHUSPM;
         c.runInitialMining(copyOf(cur), SyntheticDb.tsu(cur));
-        try { c.runIncrementalMining(SyntheticDb.db("1[10]"), copyOf(cur), SyntheticDb.tsu(cur)); }
+        try { c.runIncrementalMining(SyntheticDb.db("1[100]"), copyOf(cur), SyntheticDb.tsu(cur)); }
         catch (UnsupportedOperationException e) { refusedTracking = true; }
         check("  refused under another rule and under tracking by the bound", refusedRule && refusedTracking,
                 "rule " + refusedRule + ", tracking " + refusedTracking);
@@ -590,11 +592,12 @@ public final class RescanRuleAcceptanceTest {
 
     private static boolean caseInsertionsOnly(TriggerRule rule) {
         SyntheticDb.resetIds();
-        List<Sequence> cur = fillers("1[22.7]", 8, 9);
-        cur.add(SyntheticDb.seq("30[5.3]"));
+        // every utility times 10 so that they are integers (common.Exact); the thresholds are ratios
+        List<Sequence> cur = fillers("1[227]", 8, 90);
+        cur.add(SyntheticDb.seq("30[53]"));
         PreHUSPMAdaptiveAlgo algo = newAlgo(rule);
         algo.runInitialMining(copyOf(cur), SyntheticDb.tsu(cur));
-        for (String spec : new String[]{"50[3]", "1[6]"}) {
+        for (String spec : new String[]{"50[30]", "1[60]"}) {
             List<Sequence> ins = SyntheticDb.db(spec);
             cur.addAll(ins);
             algo.runIncrementalMining(copyOf(ins), copyOf(cur), SyntheticDb.tsu(cur));

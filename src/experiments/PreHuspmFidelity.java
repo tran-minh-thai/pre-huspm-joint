@@ -62,6 +62,8 @@ public final class PreHuspmFidelity {
         if (all.size() < odNum) throw new IllegalArgumentException(name + " has " + all.size()
                 + " sequences, fewer than OD.Num " + odNum);
         List<Sequence> current = new ArrayList<>(all.subList(0, odNum));
+        // utilities are held in integer units; the file reports the total in the units of the data
+        double scale = DatasetLoader.utilityScale(Paths.get(dir, name + "_eui.txt").toString());
         double tu = 0;
         for (Sequence s : current) tu += s.sequenceUtility;
 
@@ -78,7 +80,7 @@ public final class PreHuspmFidelity {
             long t0 = System.nanoTime();
             algo.runInitialMining(new ArrayList<>(current), tu);
             double ms = (System.nanoTime() - t0) / 1e6, cum = ms;
-            row(w, name, variant, su, sl, odNum, per, 0, current.size(), tu, false, algo, ms, cum);
+            row(w, name, variant, su, sl, odNum, per, 0, current.size(), tu / scale, false, algo, ms, cum);
             int next = odNum, done = 0;
             for (int k = 1; k <= increments; k++) {
                 if (next + per > all.size()) {
@@ -95,7 +97,7 @@ public final class PreHuspmFidelity {
                 algo.runIncrementalMining(delta, new ArrayList<>(current), tu);
                 ms = (System.nanoTime() - t0) / 1e6;
                 cum += ms;
-                row(w, name, variant, su, sl, odNum, per, k, current.size(), tu, algo.rescanCount > before, algo, ms, cum);
+                row(w, name, variant, su, sl, odNum, per, k, current.size(), tu / scale, algo.rescanCount > before, algo, ms, cum);
                 done = k;
             }
             System.out.printf("%s %s: %d increments, %d rescans, %.1f s%n", name, variant, done,

@@ -1375,7 +1375,7 @@ public class AutomatedExperimentRunner {
                     () -> adp.runInitialMining(dInit, initTotalUtil));
             if (!failedRun(mInit)) verifyHusps(arm, 0, "SC6_INIT", adp::exportLargeAsStrings);
         } else {
-            mInit = remineStatic(arm, ds.name, 0, "SC6_INIT", dInit, ds.defaultSu * initTotalUtil);
+            mInit = remineStatic(arm, ds.name, 0, "SC6_INIT", dInit, common.Exact.ceilTimes(ds.defaultSu, initTotalUtil));
         }
         col.log(mInit);
         boolean poisoned = (failedRun(mInit));
@@ -1413,7 +1413,7 @@ public class AutomatedExperimentRunner {
                 m.rescanCount = 0;   // no incremental rescan in this reference
                 if (!failedRun(m)) verifyHusps(arm, op.iter, op.tag(), rm::exportLargeAsStrings);
             } else if (!incremental) {
-                m = remineStatic(arm, ds.name, op.iter, op.tag(), snapshot, ds.defaultSu * newTotal);
+                m = remineStatic(arm, ds.name, op.iter, op.tag(), snapshot, common.Exact.ceilTimes(ds.defaultSu, newTotal));
             } else {
                 announce(arm, ds.name, op.tag(), op.iter);
                 switch (op.kind) {
@@ -2021,7 +2021,7 @@ public class AutomatedExperimentRunner {
         for (String arm : new String[]{"Remine-HUSP-ULL", "Remine-HUSP-SP"}) {
             if (!algoEnabled(arm)) continue;
             beginMemArm();
-            ExperimentMetrics m0 = remineStatic(arm, dsName, 0, tag + "_INIT", dInit, Su * initTotal);
+            ExperimentMetrics m0 = remineStatic(arm, dsName, 0, tag + "_INIT", dInit, common.Exact.ceilTimes(Su, initTotal));
             col.log(m0);
             boolean poisoned = failedRun(m0);
             forceFullGC();
@@ -2040,7 +2040,7 @@ public class AutomatedExperimentRunner {
                     continue;
                 }
                 final List<Sequence> snapshot = new ArrayList<>(dSoFar);
-                ExperimentMetrics mb = remineStatic(arm, dsName, batchIdx, tag + "_INC", snapshot, Su * newTotal);
+                ExperimentMetrics mb = remineStatic(arm, dsName, batchIdx, tag + "_INC", snapshot, common.Exact.ceilTimes(Su, newTotal));
                 col.log(mb);
                 if (failedRun(mb)) poisoned = true;
                 forceFullGC();
@@ -2289,10 +2289,10 @@ public class AutomatedExperimentRunner {
         try {
             switch (algo) {
                 case "USpan": {
-                    final USpanAlgorithm[] u = { new USpanAlgorithm(totalUtil * su) };
+                    final USpanAlgorithm[] u = { new USpanAlgorithm(common.Exact.ceilTimes(su, totalUtil)) };
                     ExperimentMetrics m = measure(algo, dsName, iter, tag,
                             () -> repeatForLiveSamples(() -> u[0].run(db),
-                                    () -> { u[0] = new USpanAlgorithm(totalUtil * su); u[0].run(db); }),
+                                    () -> { u[0] = new USpanAlgorithm(common.Exact.ceilTimes(su, totalUtil)); u[0].run(db); }),
                             () -> u[0].candidateCount, () -> u[0].patternCount, null, null);
                     if (m != null && m.runtimeMs != -1) {
                         m.prunedSwu = u[0].prunedSWU;
@@ -2305,10 +2305,10 @@ public class AutomatedExperimentRunner {
                     // A STATIC algorithm without incremental updates, so it appears only in
                     // SC1 and SC3. Counted like the other baselines: candidate_count before
                     // any pruning, explored_nodes at each recursion entry.
-                    final HUSPSPAlgorithm[] sp = { new HUSPSPAlgorithm(totalUtil * su) };
+                    final HUSPSPAlgorithm[] sp = { new HUSPSPAlgorithm(common.Exact.ceilTimes(su, totalUtil)) };
                     ExperimentMetrics m = measure(algo, dsName, iter, tag,
                             () -> repeatForLiveSamples(() -> sp[0].run(db),
-                                    () -> { sp[0] = new HUSPSPAlgorithm(totalUtil * su); sp[0].run(db); }),
+                                    () -> { sp[0] = new HUSPSPAlgorithm(common.Exact.ceilTimes(su, totalUtil)); sp[0].run(db); }),
                             () -> sp[0].candidateCount, () -> sp[0].patternCount, null, null,
                             null, null, null, null, null, null, () -> sp[0].cancel());
                     if (m != null && m.runtimeMs != -1) {
@@ -2321,10 +2321,10 @@ public class AutomatedExperimentRunner {
                     return logged(m);
                 }
                 case "HUSP-ULL": {
-                    final HUSPULLAlgorithm[] h = { new HUSPULLAlgorithm(totalUtil * su) };
+                    final HUSPULLAlgorithm[] h = { new HUSPULLAlgorithm(common.Exact.ceilTimes(su, totalUtil)) };
                     ExperimentMetrics m = measure(algo, dsName, iter, tag,
                             () -> repeatForLiveSamples(() -> h[0].run(db),
-                                    () -> { h[0] = new HUSPULLAlgorithm(totalUtil * su); h[0].run(db); }),
+                                    () -> { h[0] = new HUSPULLAlgorithm(common.Exact.ceilTimes(su, totalUtil)); h[0].run(db); }),
                             () -> h[0].candidateCount, () -> h[0].patternCount, null, null);
                     if (m != null && m.runtimeMs != -1) {
                         m.prunedSwu = h[0].prunedSWU;

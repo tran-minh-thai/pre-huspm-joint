@@ -728,7 +728,8 @@ public class PreHUSPMAdaptiveAlgorithm {
             }
             boolean delete(double u) { del += u; return triggered(); }
             private boolean triggered() {
-                return (ref <= 0 && ins > 0) || aMax - Su * ins + Su * del > (Su - slMinRatioEff * Su) * ref;
+                return (ref <= 0 && ins > 0)
+                        || jointExceeds(aMax, ins, del, ref, common.Exact.dec(slMinRatioEff).multiply(suDec()));
             }
         }
 
@@ -873,6 +874,38 @@ public class PreHUSPMAdaptiveAlgorithm {
         /** Decisions at which I < max_i A_i, which the argument above excludes (TOTAL only; must stay 0). */
         public long jointCounterViolations = 0;
 
+        /** UUT as the decimal it was written as (common.Exact). */
+        private java.math.BigDecimal suDec() { return common.Exact.dec(Su); }
+
+        /** The lower threshold ratio of the current floor in decimal: UUT itself, or slMinRatioEff * UUT,
+         *  the only two values Sl_min takes. */
+        private java.math.BigDecimal lamDec() {
+            if (Sl_min == Su) return suDec();
+            if (Sl_min != slMinRatioEff * Su)
+                throw new IllegalStateException("Sl_min = " + Sl_min + " is neither UUT nor slMinRatioEff * UUT");
+            return common.Exact.dec(slMinRatioEff).multiply(suDec());
+        }
+
+        /** The absolute lower threshold at a total tsu: ceil(lambda * tsu), exact for integer utilities. */
+        private double floorAbs(double tsu) { return common.Exact.ceilTimes(lamDec(), tsu); }
+
+        /** The joint rule, exactly: charge - UUT * I + UUT * D > (UUT - lam) * TU_ref, every quantity an
+         *  integer utility and UUT, lam decimal ratios. */
+        private boolean jointExceeds(double charge, double ins, double del, double ref, java.math.BigDecimal lam) {
+            java.math.BigDecimal su = suDec();
+            java.math.BigDecimal phi = common.Exact.integral(charge, "insertion charge")
+                    .subtract(su.multiply(common.Exact.integral(ins, "inserted utility")))
+                    .add(su.multiply(common.Exact.integral(del, "deleted utility")));
+            return common.Exact.exceeds(phi, su.subtract(lam).multiply(common.Exact.integral(ref, "TU_ref")));
+        }
+
+        /** A budget of Hong et al., exactly: trigger * den > (UUT - lam) * TU_ref, i.e. trigger > the
+         *  safety bound (UUT - lam) / den * TU_ref, with den = 1 - UUT for insertions and UUT for deletions. */
+        private boolean boundExceeds(double trigger, java.math.BigDecimal den, double ref) {
+            return common.Exact.exceeds(common.Exact.integral(trigger, "trigger quantity").multiply(den),
+                    suDec().subtract(lamDec()).multiply(common.Exact.integral(ref, "TU_ref")));
+        }
+
         private double insertionCharge() {
             if (jointCounter == JointCounter.ITEM) return iauMax;
             if (insertedSinceRescan < iauMax * (1 - 1e-12)) jointCounterViolations++;
@@ -917,9 +950,9 @@ public class PreHUSPMAdaptiveAlgorithm {
 
         private double jointFloor(CompactPattern p) {
             switch (floor) {
-                case MIN:   return Sl_min * tsuAtLastRescan + minIauOf(p);
-                case PLAIN: return Sl_min * tsuAtLastRescan;
-                case MAX: default: return Sl_min * tsuAtLastRescan + maxIauOf(p);
+                case MIN:   return floorAbs(tsuAtLastRescan) + minIauOf(p);
+                case PLAIN: return floorAbs(tsuAtLastRescan);
+                case MAX: default: return floorAbs(tsuAtLastRescan) + maxIauOf(p);
             }
         }
 
@@ -1298,9 +1331,9 @@ public class PreHUSPMAdaptiveAlgorithm {
             }
 
             // Initial LUT_dyn and SFT.
-            double uut_abs = currentTotalUtility * Su;
+            double uut_abs = common.Exact.ceilTimes(Su, currentTotalUtility);
             this.uutValue = uut_abs; // absolute HUSP threshold (exported to CSV)
-            this.lutDynValue = currentTotalUtility * Sl_min; // starts at the fixed floor
+            this.lutDynValue = floorAbs(currentTotalUtility); // starts at the fixed floor
             // SFT is the absolute utility gap between the large threshold (uut_abs) and the
             // pre-large floor (lutDynValue); same unit as cubValue.
             this.sftValue = uut_abs - this.lutDynValue;
@@ -1348,9 +1381,9 @@ public class PreHUSPMAdaptiveAlgorithm {
             trackerPool.warmup(POOL_WARMUP_TRACKERS);
             trackerListPool.warmup(POOL_WARMUP_TRACKER_LISTS);
 
-            double uut_abs = currentTotalUtility * Su;
+            double uut_abs = common.Exact.ceilTimes(Su, currentTotalUtility);
             this.uutValue = uut_abs;
-            this.lutDynValue = currentTotalUtility * Sl_min;
+            this.lutDynValue = floorAbs(currentTotalUtility);
             this.sftValue = uut_abs - this.lutDynValue;
 
             mineWithBudget(db, uut_abs, currentTotalUtility);
@@ -1409,9 +1442,9 @@ public class PreHUSPMAdaptiveAlgorithm {
             trackerPool.warmup(POOL_WARMUP_TRACKERS);
             trackerListPool.warmup(POOL_WARMUP_TRACKER_LISTS);
 
-            double uut_abs = newTotalUtility * Su;
+            double uut_abs = common.Exact.ceilTimes(Su, newTotalUtility);
             this.uutValue = uut_abs; // absolute HUSP threshold (exported to CSV)
-            double lut_min_abs = newTotalUtility * Sl_min;
+            double lut_min_abs = floorAbs(newTotalUtility);
 
             // Required order within a batch:
             //   load batch -> update counters (CUB, A_i) -> test the trigger ->
@@ -1456,8 +1489,12 @@ public class PreHUSPMAdaptiveAlgorithm {
             // After a rescan of an empty database TU_ref = 0, so L_ref = 0 and a pattern that does not
             // occur (utility 0 = L_ref) is not tracked: the budget argument needs TU_ref > 0, and the
             // first insertion after such a rescan rescans (verify.EmptyDatabaseCheck).
+            // the comparison is exact (common.Exact); safetyBoundF is the bound as written to the CSV
+            final boolean over = this.triggerRule == TriggerRule.JOINT
+                    ? jointExceeds(insertionCharge(), insertedSinceRescan, deletedSinceRescan, tsuAtLastRescan, lamDec())
+                    : boundExceeds(triggerQuantity, java.math.BigDecimal.ONE.subtract(suDec()), tsuAtLastRescan);
             this.cubTriggeredRescan = forceRescan || tsuAtLastRescan <= 0
-                    || (useAdaptiveRescan ? (triggerQuantity > safetyBoundF) : true);
+                    || (useAdaptiveRescan ? over : true);
             forceRescan = false;
             this.iauMaxAtDecision = triggerQuantity;   // recorded before resetIau() below
 
@@ -1476,7 +1513,7 @@ public class PreHUSPMAdaptiveAlgorithm {
             if (joint) {
                 // JOINT keeps no global band: the drop floor is per pattern (jointFloor), and
                 // a rescan mines at L_r = LUT_min * TSU_ref. lut_dyn reports L_r.
-                this.lutDynValue = Sl_min * tsuAtLastRescan;
+                this.lutDynValue = floorAbs(tsuAtLastRescan);
                 this.deltaDValue = uut_abs - this.lutDynValue;
             } else {
                 // --- Step 4: adaptive width Delta, with a lower bound ---
@@ -1596,9 +1633,9 @@ public class PreHUSPMAdaptiveAlgorithm {
             double deletedTotal = 0;
             for (Sequence s : deletedSeqs) deletedTotal += s.sequenceUtility;
 
-            double uut_abs = newTotalUtility * Su;
+            double uut_abs = common.Exact.ceilTimes(Su, newTotalUtility);
             this.uutValue = uut_abs; // absolute HUSP threshold (exported to CSV)
-            double lut_min_abs = newTotalUtility * Sl_min;
+            double lut_min_abs = floorAbs(newTotalUtility);
 
             // Update LUT_dyn with the same logic as insertion.
             boolean joint = this.triggerRule == TriggerRule.JOINT;
@@ -1623,9 +1660,11 @@ public class PreHUSPMAdaptiveAlgorithm {
                 safetyBoundDel = (Su - Sl_min) * tsuAtLastRescan;
                 this.sftValue = safetyBoundDel;
                 this.iauMaxAtDecision = jointTriggerQuantity();
-                this.cubTriggeredRescan = useAdaptiveRescan ? (iauMaxAtDecision > safetyBoundDel) : true;
+                this.cubTriggeredRescan = useAdaptiveRescan
+                        ? jointExceeds(insertionCharge(), insertedSinceRescan, deletedSinceRescan, tsuAtLastRescan, lamDec())
+                        : true;
             } else {
-                this.cubTriggeredRescan = useAdaptiveRescan ? (cubValue > safetyBoundDel) : true;
+                this.cubTriggeredRescan = useAdaptiveRescan ? boundExceeds(cubValue, suDec(), tsuAtLastRescan) : true;
             }
 
             if (cubTriggeredRescan) {
@@ -1638,7 +1677,7 @@ public class PreHUSPMAdaptiveAlgorithm {
             }
 
             if (joint) {
-                this.lutDynValue = Sl_min * tsuAtLastRescan;
+                this.lutDynValue = floorAbs(tsuAtLastRescan);
                 this.deltaDValue = uut_abs - this.lutDynValue;
             } else {
                 // Lower bound on Delta, symmetric to the insertion phase.
@@ -2803,7 +2842,7 @@ public class PreHUSPMAdaptiveAlgorithm {
                         if (slMinRatioEff >= SL_RATIO_CAP || attempt >= SL_MAX_RETRIES) throw e;
                         slMinRatioEff = Math.min(SL_RATIO_CAP, slMinRatioEff + SL_RATIO_STEP);
                         Sl_min = slMinRatioEff * Su;
-                        lutDynValue = Math.max(lutDynValue, tsuRef * Sl_min);
+                        lutDynValue = Math.max(lutDynValue, floorAbs(tsuRef));
                         rescanRetries++;
                         largeMap.clear(); prelargeMap.clear();   // discard partial results
                         candidateCount = 0;

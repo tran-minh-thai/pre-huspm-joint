@@ -52,6 +52,7 @@ public final class StaleResult {
     private StaleResult() {}
 
     private static double globalOverMax;
+    private static double scale = 1;
     private static String globalOverDay;
 
     public static void main(String[] args) throws IOException {
@@ -66,6 +67,9 @@ public final class StaleResult {
         Files.createDirectories(out);
 
         LogReplay.Log log = LogReplay.load(dir, name, "_ops.txt");
+        // utilities are held in integer units (DatasetLoader, common.Exact); the files report them in the
+        // units of the data, the internal ones divided by this scale
+        scale = common.DatasetLoader.utilityScale(Paths.get(dir, name + "_eui.txt").toString());
         String other = args.length == 5 ? args[4] : "_ops_nocancel.txt";
         LogReplay.Log nc = LogReplay.load(dir, name, other);
         if (other.contains("insertonly"))
@@ -105,26 +109,26 @@ public final class StaleResult {
                 for (MixedPlan.Op op : byDayNc.getOrDefault(day, List.of())) apply(e, op);
             }
             double tu = total(d), tuE = total(e);
-            double thr = uut * tu, thrE = uut * tuE;
+            double thr = common.Exact.ceilTimes(uut, tu), thrE = common.Exact.ceilTimes(uut, tuE);
             Map<String, Double> res = mine(d, uut, tu), resE = mine(e, uut, tuE);
 
             // the miner's utilities against the definition, and the two sides of every difference
             for (Map.Entry<String, Double> x : res.entrySet()) {
                 double u = utility(parse(x.getKey()), d);
-                if (Math.abs(u - x.getValue()) > 1e-6 * Math.max(1, u))
+                if (u != x.getValue())
                     throw new IllegalStateException(day + ": " + x.getKey() + " miner " + x.getValue() + ", definition " + u);
-                if (u < thr - 1e-9) throw new IllegalStateException(day + ": " + x.getKey() + " below the threshold");
+                if (u < thr) throw new IllegalStateException(day + ": " + x.getKey() + " below the threshold");
                 checked++;
             }
             Set<String> fls = new TreeSet<>(resE.keySet()); fls.removeAll(res.keySet());
             Set<String> mis = new TreeSet<>(res.keySet()); mis.removeAll(resE.keySet());
             for (String x : fls) {
-                if (utility(parse(x), d) >= thr - 1e-9)
+                if (utility(parse(x), d) >= thr)
                     throw new IllegalStateException(day + ": false pattern " + x + " reaches the threshold");
                 checked++;
             }
             for (String x : mis) {
-                if (utility(parse(x), e) >= thrE - 1e-9)
+                if (utility(parse(x), e) >= thrE)
                     throw new IllegalStateException(day + ": missed pattern " + x + " reaches the other threshold");
                 checked++;
             }
@@ -144,7 +148,7 @@ public final class StaleResult {
             if (common > 0 && overMax > globalOverMax) { globalOverMax = overMax; globalOverDay = day; }
             if (wrong > maxWrong) { maxWrong = wrong; maxWrongDay = day; }
             lastLine = String.format(Locale.ROOT, "%s,%d,%.2f,%.4f,%d,%.2f,%.4f,%d,%d,%d,%d,%d,%d,%.4f,%.4f", day, d.size(),
-                    tu, thr, e.size(), tuE, thrE, res.size(), resE.size(), fls.size(), mis.size(), wrong, common,
+                    tu / scale, thr / scale, e.size(), tuE / scale, thrE / scale, res.size(), resE.size(), fls.size(), mis.size(), wrong, common,
                     overMax, common > 0 ? overSum / common : 0.0);
             byDay.println(lastLine);
 
@@ -154,14 +158,14 @@ public final class StaleResult {
                     double after = utility(parse(x.getKey()), d);
                     String[] row = {day, "leave", x.getKey(), num(x.getValue()), num(after), num(prevThr), num(thr)};
                     events.println(String.join(",", row));
-                    if (after < x.getValue() - 1e-9) leave.add(row);
+                    if (after < x.getValue()) leave.add(row);
                 }
                 for (Map.Entry<String, Double> x : res.entrySet()) {
                     if (prev.containsKey(x.getKey())) continue;
                     double before = utility(parse(x.getKey()), prevDb);
                     String[] row = {day, "enter", x.getKey(), num(before), num(x.getValue()), num(prevThr), num(thr)};
                     events.println(String.join(",", row));
-                    if (x.getValue() <= before + 1e-9 && thr < prevThr) enter.add(row);
+                    if (x.getValue() <= before && thr < prevThr) enter.add(row);
                 }
             }
             prev = res; prevTu = tu; prevThr = thr;
@@ -222,7 +226,8 @@ public final class StaleResult {
         return bad == 0 ? 0 : 1;
     }
 
-    private static String num(double v) { return String.format(Locale.ROOT, "%.4f", v); }
+    /** A utility in the units of the data. */
+    private static String num(double v) { return String.format(Locale.ROOT, "%.4f", v / scale); }
 
     private static TreeMap<String, List<MixedPlan.Op>> byDay(LogReplay.Log log) {
         TreeMap<String, List<MixedPlan.Op>> m = new TreeMap<>();

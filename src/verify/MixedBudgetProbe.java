@@ -91,25 +91,26 @@ public class MixedBudgetProbe {
         algo.runIncrementalMining(ins, new ArrayList<>(cur), tsu(cur));
         bad += check("after insert(6)", algo, cur);
 
-        System.out.println("Case D (insertion only): X = <1[22.7]> pre-large; insert <50[3]>, then <1[6]>");
+        // every utility of case D times 10 so that they are integers (common.Exact); the thresholds are ratios
+        System.out.println("Case D (insertion only): X = <1[227]> pre-large; insert <50[30]>, then <1[60]>");
         SyntheticDb.resetIds();
         cur = new ArrayList<>();
-        cur.add(SyntheticDb.seq("1[22.7]"));
-        for (int i = 0; i < 8; i++) cur.add(SyntheticDb.seq((10 + i) + "[9]"));
-        cur.add(SyntheticDb.seq("30[5.3]"));
+        cur.add(SyntheticDb.seq("1[227]"));
+        for (int i = 0; i < 8; i++) cur.add(SyntheticDb.seq((10 + i) + "[90]"));
+        cur.add(SyntheticDb.seq("30[53]"));
         algo = fresh();
         algo.runInitialMining(new ArrayList<>(cur), tsu(cur));
         bad += check("after init", algo, cur);
         System.out.println("    prelarge after init: " + algo.exportPrelargeAsStrings());
-        ins = List.of(SyntheticDb.seq("50[3]"));
+        ins = List.of(SyntheticDb.seq("50[30]"));
         cur.addAll(ins);
         algo.runIncrementalMining(ins, new ArrayList<>(cur), tsu(cur));
-        bad += check("after insert <50[3]>", algo, cur);
+        bad += check("after insert <50[30]>", algo, cur);
         System.out.println("    prelarge: " + algo.exportPrelargeAsStrings() + " deltaD=" + algo.deltaDValue);
-        ins = List.of(SyntheticDb.seq("1[6]"));
+        ins = List.of(SyntheticDb.seq("1[60]"));
         cur.addAll(ins);
         algo.runIncrementalMining(ins, new ArrayList<>(cur), tsu(cur));
-        int caseD = check("after insert <1[6]>", algo, cur);
+        int caseD = check("after insert <1[60]>", algo, cur);
         bad += caseD;
 
         System.out.printf("caseD mismatch=%s ; ", caseD > 0);
