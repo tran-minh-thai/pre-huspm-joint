@@ -84,7 +84,7 @@ check_local() { local r=0; check_tafeng || r=1; check_dunnhumby || r=1; return $
 # onlineretail/build_onlineretail.py builds from UCI Online Retail II (CC BY 4.0);
 # onlineretail/ONLINERETAIL.sha256 pins them.
 OR_RELEASE="v2.1.0-onlineretail"
-OR_ARCHIVE_SHA256="47ac46675d528181d3b3a86b1eaebde11cabd36296b87c3349e4b17fde831fab"
+OR_ARCHIVE_SHA256="f5441f443c871aad3cda32e1d897c86539477cdb4cd395e94330d3892a561b4b"
 OR_BASE="${OR_BASE:-https://github.com/tran-minh-thai/huspm-datasets/releases/download/${OR_RELEASE}}"
 check_onlineretail() {
   read -r m w t <<< "$(verify onlineretail/ONLINERETAIL.sha256)"
