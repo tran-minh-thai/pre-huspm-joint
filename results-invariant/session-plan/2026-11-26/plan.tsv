@@ -1,0 +1,88 @@
+tree	replicate	scenario	database	arm	kind	seconds
+campaign		SC2	DUNNHUMBY	Pre-HUSPM-Joint	method	201
+campaign		SC2	DUNNHUMBY	Joint-miner+SWUmax	near	217
+campaign		SC2	DUNNHUMBY	Joint-miner+TSU	near	224
+campaign		SC2	DUNNHUMBY	Joint-rule+min-floor	near	239
+campaign		SC2	DUNNHUMBY	Joint-rule+plain-floor	near	228
+campaign		SC2	DUNNHUMBY	Pre-HUSPM-Joint-be1	near	204
+campaign		SC2	DUNNHUMBY	Pre-HUSPM-Joint-be10	near	214
+campaign		SC2	DUNNHUMBY	Pre-HUSPM-Joint-be2	near	201
+campaign		SC2	DUNNHUMBY	Pre-HUSPM-Joint-be20	near	211
+campaign		SC2	DUNNHUMBY	Pre-HUSPM-Joint-be3	near	214
+campaign		SC2	DUNNHUMBY	Pre-HUSPM-Joint-fixed-threshold	near	226
+campaign		SC2	DUNNHUMBY	Pre-HUSPM-Joint-time	near	199
+campaign		SC2	DUNNHUMBY	Pre-HUSPM-Joint-w1	near	207
+campaign		SC2	DUNNHUMBY	Pre-HUSPM-Joint-w10	near	200
+campaign		SC2	DUNNHUMBY	Pre-HUSPM-Joint-w2	near	197
+campaign		SC2	DUNNHUMBY	Pre-HUSPM-Joint-w3	near	213
+campaign		SC2	DUNNHUMBY	Pre-HUSPM-Joint-w5	near	211
+campaign		SC2	DUNNHUMBY	Remine-from-scratch	near	285
+campaign		SC2	DUNNHUMBY	Remine-from-scratch-rebuild	near	298
+campaign		SC2	DUNNHUMBY	Remine-own-UUT	near	275
+campaign		SC2	DUNNHUMBY	Remine-own-UUT-rebuild	near	262
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Pre-HUSPM-Joint	method	199
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Joint-miner+SWUmax	near	226
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Joint-miner+TSU	near	244
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Joint-rule+min-floor	near	243
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Joint-rule+plain-floor	near	229
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Pre-HUSPM-Joint-be1	near	216
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Pre-HUSPM-Joint-be10	near	205
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Pre-HUSPM-Joint-be2	near	217
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Pre-HUSPM-Joint-be20	near	208
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Pre-HUSPM-Joint-be3	near	216
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Pre-HUSPM-Joint-fixed-threshold	near	229
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Pre-HUSPM-Joint-time	near	218
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Pre-HUSPM-Joint-w1	near	204
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Pre-HUSPM-Joint-w10	near	207
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Pre-HUSPM-Joint-w2	near	203
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Pre-HUSPM-Joint-w3	near	216
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Pre-HUSPM-Joint-w5	near	197
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Remine-from-scratch	near	287
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Remine-from-scratch-rebuild	near	283
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Remine-own-UUT	near	265
+campaign-replicates	s0r1	SC2	DUNNHUMBY	Remine-own-UUT-rebuild	near	272
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Pre-HUSPM-Joint	method	205
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Joint-miner+SWUmax	near	238
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Joint-miner+TSU	near	230
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Joint-rule+min-floor	near	243
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Joint-rule+plain-floor	near	235
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Pre-HUSPM-Joint-be1	near	208
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Pre-HUSPM-Joint-be10	near	218
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Pre-HUSPM-Joint-be2	near	217
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Pre-HUSPM-Joint-be20	near	218
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Pre-HUSPM-Joint-be3	near	206
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Pre-HUSPM-Joint-fixed-threshold	near	232
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Pre-HUSPM-Joint-time	near	220
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Pre-HUSPM-Joint-w1	near	203
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Pre-HUSPM-Joint-w10	near	206
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Pre-HUSPM-Joint-w2	near	202
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Pre-HUSPM-Joint-w3	near	203
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Pre-HUSPM-Joint-w5	near	216
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Remine-from-scratch	near	306
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Remine-from-scratch-rebuild	near	290
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Remine-own-UUT	near	284
+campaign-replicates	s0r2	SC2	DUNNHUMBY	Remine-own-UUT-rebuild	near	280
+campaign-replicates	s0r3	SC2	DUNNHUMBY	Pre-HUSPM-Joint	method	217
+campaign-replicates	s0r3	SC2	DUNNHUMBY	Joint-miner+SWUmax	near	239
+campaign-replicates	s0r3	SC2	DUNNHUMBY	Joint-miner+TSU	near	228
+campaign-replicates	s0r3	SC2	DUNNHUMBY	Joint-rule+min-floor	near	231
+campaign-replicates	s0r3	SC2	DUNNHUMBY	Joint-rule+plain-floor	near	230
+campaign-replicates	s0r3	SC2	DUNNHUMBY	Pre-HUSPM-Joint-fixed-threshold	near	227
+campaign-replicates	s0r3	SC2	DUNNHUMBY	Pre-HUSPM-Joint-time	near	207
+campaign-replicates	s0r3	SC2	DUNNHUMBY	Pre-HUSPM-Joint-w5	near	202
+campaign-replicates	s0r3	SC2	DUNNHUMBY	Remine-from-scratch	near	294
+campaign-replicates	s0r3	SC2	DUNNHUMBY	Remine-from-scratch-rebuild	near	303
+campaign-replicates	s0r3	SC2	DUNNHUMBY	Remine-own-UUT	near	276
+campaign-replicates	s0r3	SC2	DUNNHUMBY	Remine-own-UUT-rebuild	near	272
+campaign-replicates	s0r4	SC2	DUNNHUMBY	Pre-HUSPM-Joint	method	206
+campaign-replicates	s0r4	SC2	DUNNHUMBY	Joint-miner+SWUmax	near	226
+campaign-replicates	s0r4	SC2	DUNNHUMBY	Joint-miner+TSU	near	243
+campaign-replicates	s0r4	SC2	DUNNHUMBY	Joint-rule+min-floor	near	245
+campaign-replicates	s0r4	SC2	DUNNHUMBY	Joint-rule+plain-floor	near	242
+campaign-replicates	s0r4	SC2	DUNNHUMBY	Pre-HUSPM-Joint-fixed-threshold	near	233
+campaign-replicates	s0r4	SC2	DUNNHUMBY	Pre-HUSPM-Joint-time	near	218
+campaign-replicates	s0r4	SC2	DUNNHUMBY	Pre-HUSPM-Joint-w5	near	215
+campaign-replicates	s0r4	SC2	DUNNHUMBY	Remine-from-scratch	near	289
+campaign-replicates	s0r4	SC2	DUNNHUMBY	Remine-from-scratch-rebuild	near	297
+campaign-replicates	s0r4	SC2	DUNNHUMBY	Remine-own-UUT	near	272
+campaign-replicates	s0r4	SC2	DUNNHUMBY	Remine-own-UUT-rebuild	near	279

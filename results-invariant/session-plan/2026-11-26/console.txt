@@ -1,0 +1,51 @@
+DUNNHUMBY: 335 arms compared with a run of the method in 26 (tree, scenario) pairs; drift factor 1.664; gaps between 6 and 24 h, counted as another session: 0
+  SC1   far    cells   4  hours   4.35
+  SC1   method cells   3  hours   0.02
+  SC1   same   cells   8  hours   0.09
+  SC2   far    cells  27  hours  15.45
+  SC2   method cells   5  hours   0.29
+  SC2   near   cells  82  hours   5.34
+  SC6   method cells   5  hours   0.05
+  SC6   same   cells  75  hours   0.87
+  SC6B  method cells   5  hours   0.05
+  SC6B  same   cells  65  hours   0.72
+  SC6D  method cells   5  hours   0.04
+  SC6D  same   cells  65  hours   0.69
+  SC7   far    cells   3  hours   0.04
+  SC7   method cells   3  hours   0.01
+  SC7   same   cells   6  hours   0.04
+  SC1   far  HUSP-SP                                  cells 1  method over arm 0.294 to 0.294  smallest gap 192.0 h
+  SC1   far  IncUSP-Miner+                            cells 1  method over arm 0.016 to 0.016  smallest gap 53.2 h
+  SC1   far  Pre-HUSPM                                cells 1  method over arm 0.005 to 0.005  smallest gap 51.4 h
+  SC1   far  USpan                                    cells 1  method over arm 0.017 to 0.017  smallest gap 49.3 h
+  SC2   far  IncUSP-Miner+                            cells 1  method over arm 0.215 to 0.215  smallest gap 130.6 h
+  SC2   near Joint-miner+SWUmax                       cells 5  method over arm 0.762 to 0.851  smallest gap 0.1 h
+  SC2   far  Joint-miner+SWUmax+PreHUSPM-tracking     cells 5  method over arm 0.151 to 0.165  smallest gap 94.0 h
+  SC2   near Joint-miner+TSU                          cells 5  method over arm 0.750 to 0.911  smallest gap 0.1 h
+  SC2   far  Joint-rule+PreHUSPM-tracking             cells 5  method over arm 0.150 to 0.185  smallest gap 93.7 h
+  SC2   near Joint-rule+min-floor                     cells 5  method over arm 0.750 to 0.900  smallest gap 0.2 h
+  SC2   near Joint-rule+plain-floor                   cells 5  method over arm 0.766 to 0.902  smallest gap 0.3 h
+  SC2   near Pre-HUSPM-Joint-be1                      cells 3  method over arm 0.909 to 0.980  smallest gap 0.3 h
+  SC2   near Pre-HUSPM-Joint-be10                     cells 3  method over arm 0.904 to 0.990  smallest gap 0.4 h
+  SC2   near Pre-HUSPM-Joint-be2                      cells 3  method over arm 0.907 to 0.998  smallest gap 0.4 h
+  SC2   near Pre-HUSPM-Joint-be20                     cells 3  method over arm 0.903 to 0.966  smallest gap 0.5 h
+  SC2   near Pre-HUSPM-Joint-be3                      cells 3  method over arm 0.909 to 0.986  smallest gap 0.6 h
+  SC2   near Pre-HUSPM-Joint-fixed-threshold          cells 5  method over arm 0.822 to 0.922  smallest gap 0.3 h
+  SC2   near Pre-HUSPM-Joint-time                     cells 5  method over arm 0.897 to 1.068  smallest gap 0.4 h
+  SC2   near Pre-HUSPM-Joint-w1                       cells 3  method over arm 0.925 to 0.990  smallest gap 0.7 h
+  SC2   near Pre-HUSPM-Joint-w10                      cells 3  method over arm 0.962 to 0.984  smallest gap 0.8 h
+  SC2   near Pre-HUSPM-Joint-w2                       cells 3  method over arm 0.976 to 1.002  smallest gap 0.8 h
+  SC2   near Pre-HUSPM-Joint-w3                       cells 3  method over arm 0.882 to 0.989  smallest gap 0.8 h
+  SC2   near Pre-HUSPM-Joint-w5                       cells 5  method over arm 0.901 to 1.091  smallest gap 0.5 h
+  SC2   far  Pre-HUSPM-SWUmax                         cells 5  method over arm 0.022 to 0.024  smallest gap 91.9 h
+  SC2   far  Pre-HUSPM-TSU                            cells 1  method over arm 0.022 to 0.022  smallest gap 126.5 h
+  SC2   far  Remine-HUSP-SP                           cells 5  method over arm 0.195 to 0.215  smallest gap 0.5 h
+  SC2   far  Remine-HUSP-ULL                          cells 5  method over arm 0.393 to 0.444  smallest gap 0.4 h
+  SC2   near Remine-from-scratch                      cells 5  method over arm 0.770 to 0.916  smallest gap 0.3 h
+  SC2   near Remine-from-scratch-rebuild              cells 5  method over arm 0.748 to 0.825  smallest gap 0.2 h
+  SC2   near Remine-own-UUT                           cells 5  method over arm 0.904 to 0.990  smallest gap 0.1 h
+  SC2   near Remine-own-UUT-rebuild                   cells 5  method over arm 0.883 to 1.043  smallest gap 0.1 h
+  SC7   far  Pre-HUSPM                                cells 3  method over arm 0.128 to 0.134  smallest gap 53.9 h
+plan: 87 cells in 5 (tree, scenario) pairs: method 5, near 82, same 0; 5.63 hours by their DONE files; left as measured: far 34, cells of pairs without a near arm 240
+plan written: results-invariant/session-plan/2026-11-26/plan.tsv
+removed 87 run directories
