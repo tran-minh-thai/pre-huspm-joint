@@ -130,7 +130,8 @@ def main():
             continue
         chosen.append((r, h, m["command"]))
     # check-* records read other records: run them last, and only when what they read is in the tree
-    chosen.sort(key=lambda x: os.path.basename(x[0]).startswith("check-"))
+    # and the others shortest first, by the duration of the old record, so that a failure shows early
+    chosen.sort(key=lambda x: (os.path.basename(x[0]).startswith("check-"), x[1]))
 
     if a.names:
         for r, _, _ in chosen:
