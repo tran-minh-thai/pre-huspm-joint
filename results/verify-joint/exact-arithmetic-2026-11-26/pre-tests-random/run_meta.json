@@ -1,0 +1,16 @@
+{
+  "command": "C:\\Program Files\\Git\\bin\\bash.exe -c rc=0; for r in pre_swumax pre_tsu; do java -Xmx24g -Xss64m -cp build-rerun verify.DirectPathVerifier ALL --ops 16 --rule $r --insert-only --out results/verify-joint/exact-arithmetic-2026-11-26/pre-tests-random || rc=1; done; exit $rc",
+  "path_substitutions": 0,
+  "build_dir": "build-rerun",
+  "git_commit": "36c0911fdd4435e703099ad56e12408f1b673bd8",
+  "tree": "src clean, other files modified",
+  "source_sha256": "b85daf2155f9b64952db0d1d9b91f0c05c6ecea835a6806031ec188dee40dcd7",
+  "source_files": 55,
+  "java": "openjdk version \"25.0.4.1\" 2026-08-18 LTS",
+  "os": "Windows 10 (Windows-10-10.0.26300-SP0)",
+  "machine": "PC-THAI",
+  "role": "correctness check: counters only, no timings",
+  "start": "2026-11-27T03:34:21",
+  "end": "2026-11-27T03:42:32",
+  "exit_code": 0
+}
