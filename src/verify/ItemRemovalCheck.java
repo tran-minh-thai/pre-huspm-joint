@@ -167,9 +167,10 @@ public final class ItemRemovalCheck {
             }
             if (ratio < 1.0) floorBelowUut++;
             double tsu = SyntheticDb.tsu(db);
-            // Same products as the miner: tsu*su for the large set, tsu*(ratio*su) for the cutoff.
-            Map<String, Double> bfLarge = IncUspVerifier.bruteForceHusps(db, su);
-            Map<String, Double> bfAll = ratio == 1.0 ? bfLarge : IncUspVerifier.bruteForceHusps(db, ratio * su);
+            // The thresholds the miner forms, in decimal: ceil(su*TU) for the large set, ceil(ratio*su*TU) for the cutoff.
+            Map<String, Double> bfLarge = IncUspVerifier.bruteForceHusps(db, common.Exact.dec(su));
+            Map<String, Double> bfAll = ratio == 1.0 ? bfLarge
+                    : IncUspVerifier.bruteForceHusps(db, common.Exact.dec(ratio).multiply(common.Exact.dec(su)));
             refAll += bfAll.size(); refLarge += bfLarge.size();
             if (!bfAll.isEmpty()) dbsNonEmpty++;
             Run off = null;

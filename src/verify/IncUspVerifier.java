@@ -163,6 +163,18 @@ public final class IncUspVerifier {
 
     /** Every pattern of every sequence with u(t,s) from its definition, summed over the database. */
     static Map<String, Double> bruteForceHusps(List<Sequence> db, double su) {
+        return bruteForceHusps(db, su, null);
+    }
+
+    /**
+     * As above, with the threshold ceil(ratio * TU) formed in decimal (common.Exact), the comparison
+     * the proposal's miner makes; ratio is a product of decimals such as lambda * UUT.
+     */
+    static Map<String, Double> bruteForceHusps(List<Sequence> db, java.math.BigDecimal ratio) {
+        return bruteForceHusps(db, Double.NaN, ratio);
+    }
+
+    private static Map<String, Double> bruteForceHusps(List<Sequence> db, double su, java.math.BigDecimal ratio) {
         Map<String, Double> total = new HashMap<>();
         double tu = 0;
         for (Sequence s : db) {
@@ -171,7 +183,7 @@ public final class IncUspVerifier {
             enumerate(s, 0, new ArrayList<>(), 0, best);
             for (Map.Entry<String, Double> e : best.entrySet()) total.merge(e.getKey(), e.getValue(), Double::sum);
         }
-        double min = su * tu;
+        double min = ratio == null ? su * tu : common.Exact.ceilTimes(ratio, tu);
         Map<String, Double> out = new HashMap<>();
         for (Map.Entry<String, Double> e : total.entrySet()) if (e.getValue() >= min) out.put(e.getKey(), e.getValue());
         return out;
