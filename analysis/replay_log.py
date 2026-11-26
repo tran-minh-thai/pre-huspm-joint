@@ -87,29 +87,39 @@ def build_keys(put):
     put("ORII_sequences_inserted", f"{b['sequences_inserted']:,}", src)
     put("ORII_sequences_modified", f"{b['sequences_modified']:,}", src)
     put("ORII_sequences_deleted", f"{b['sequences_deleted']:,}", src)
+    put("ORII_window_months", b["window_months"], src)
+    tags = b["operation_tags"]
+    put("ORII_expiry_operations", tags.get("expiry", 0), src)
+    put("ORII_expiry_sequences", f"{b['sequences_expired']:,}", src)
+    put("ORII_emptied_operations", tags.get("emptied", 0), src)
+    put("ORII_emptied_sequences", f"{b['sequences_deleted_emptied']:,}", src)
+    put("ORII_lines_after_last_day", f"{L['lines after the last day replayed (dropped)']:,}", src)
     return b
 
 
-def stale_keys(put, uut):
-    d = newest(os.path.join(INVARIANT, "stale-result", f"*-uut-{uut}"))
+def stale_keys(put, uut, other, prefix):
+    """Keys of verify.StaleResult against OTHER (insertonly: the result a method for insertion only keeps,
+    keys ORII_stale_*; nocancel: the cancellations ignored and the expiry kept, keys ORII_stale_cancel_*)."""
+    d = newest(os.path.join(INVARIANT, "stale-result", f"*-uut-{uut}-{other}"))
     src = os.path.relpath(os.path.join(d, "stale_by_day.csv"), mf.REPO_DIR)
     t = pd.read_csv(os.path.join(d, "stale_by_day.csv"))
     end = t.iloc[-1]
-    put("ORII_result_size_end", int(end["result"]), src)
-    put("ORII_stale_false_end", int(end["false_patterns"]), src)
-    put("ORII_stale_missed_end", int(end["missed_patterns"]), src)
+    if prefix == "ORII_stale":
+        put("ORII_result_size_end", int(end["result"]), src)
+        put("ORII_result_size_range", f"{int(t['result'].min())} to {int(t['result'].max())}", src)
+    put(f"{prefix}_result_size_end", int(end["result_without_cancellations"]), src)
+    put(f"{prefix}_false_end", int(end["false_patterns"]), src)
+    put(f"{prefix}_missed_end", int(end["missed_patterns"]), src)
     i = int(t["wrong_patterns"].idxmax())
-    put("ORII_stale_wrong_max", int(t.loc[i, "wrong_patterns"]), src)
-    put("ORII_stale_wrong_max_day", t.loc[i, "day"], src)
-    put("ORII_stale_days_with_wrong", f"{int((t['wrong_patterns'] > 0).sum())} of {len(t) - 1}", src)
-    put("ORII_result_size_range", f"{int(t['result'].min())} to {int(t['result'].max())}", src)
-    put("ORII_tu_without_cancellations_end_pct",
+    put(f"{prefix}_wrong_max", int(t.loc[i, "wrong_patterns"]), src)
+    put(f"{prefix}_wrong_max_day", t.loc[i, "day"], src)
+    put(f"{prefix}_days_with_wrong", f"{int((t['wrong_patterns'] > 0).sum())} of {len(t) - 1}", src)
+    put(f"{prefix}_total_utility_end_pct",
         f"{pct(end['total_utility_without_cancellations'] - end['total_utility'], end['total_utility']):.2f}%", src)
-    if "utility_overstated_max_pct" in t:
-        j = int(t["utility_overstated_max_pct"].idxmax())
-        put("ORII_stale_utility_overstated_max_pct", f"{t.loc[j, 'utility_overstated_max_pct']:.2f}%", src)
-        put("ORII_stale_utility_overstated_max_day", t.loc[j, "day"], src)
-        put("ORII_stale_utility_overstated_end_max_pct", f"{end['utility_overstated_max_pct']:.2f}%", src)
+    j = int(t["utility_overstated_max_pct"].idxmax())
+    put(f"{prefix}_utility_overstated_max_pct", f"{t.loc[j, 'utility_overstated_max_pct']:.2f}%", src)
+    put(f"{prefix}_utility_overstated_max_day", t.loc[j, "day"], src)
+    put(f"{prefix}_utility_overstated_end_max_pct", f"{end['utility_overstated_max_pct']:.2f}%", src)
     return d
 
 
@@ -265,7 +275,8 @@ def main(argv=None):
     build_keys(put)
     uut = mf.DATASETS[DB]["default_uut"]
     put("ORII_uut_pct", f"{100 * uut:.3f}", "src/common/Datasets.java")
-    stale_dir = stale_keys(put, f"{uut:g}")
+    stale_dir = stale_keys(put, f"{uut:g}", "insertonly", "ORII_stale")
+    stale_keys(put, f"{uut:g}", "nocancel", "ORII_stale_cancel")
     examples_table(stale_dir, a.out, put)
     verify_keys(put)
     root = a.root if a.no_done else os.path.join(a.root, SC)
