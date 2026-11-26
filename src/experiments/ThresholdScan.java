@@ -99,11 +99,15 @@ public final class ThresholdScan {
             // fails), so the lowest level asks for 30 patterns.
             {"DUNNHUMBY",            new int[]{30, 18, 10, 5}},
 
-            // Online Retail II replayed from its log, every occurrence at one unit: ten is the
-            // ceiling, 0.0044 gives ten patterns with its floor 0.00352 above the cliff at 0.0035
-            // (20 patterns in under a second) and 0.0034 (beyond the budget). Below ten the
-            // counts step 10, 8, 5, 4, 3, 2, 1 (dataset-build probe of 2026-11-25).
-            {"ONLINERETAIL",         new int[]{10, 8, 5, 3}},
+            // Online Retail II replayed from its log in a window of twelve months, every occurrence
+            // at one unit. On D_init the counts step 10 (up to 0.0044), 8 (0.0045 to 0.00488), 7, 5,
+            // 4, 3. A lowest level of ten fails the cost gate: its floor 0.8 * 0.0044 = 0.00352
+            // exceeds the budget on the window at the ends of March to September 2011, and nine is
+            // never returned, so the lowest level asks for eight (its floor 0.0039 mines 12 to 24
+            // patterns on every month-end state; dataset-build probe of 2026-11-26). The others are
+            // two apart, as KOSARAK's: a target of 7 lands on 0.00488, the threshold of 8, within the
+            // acceptance band of one pattern.
+            {"ONLINERETAIL",         new int[]{8, 5, 3, 1}},
     };
 
     /**

@@ -18,12 +18,13 @@ import java.util.*;
 /**
  * What a result kept by insertions alone gets wrong on a replayed log (SC11).
  *
- *   java -Xmx16g -Xss64m -cp build verify.StaleResult DIR NAME UUT OUT_DIR
+ *   java -Xmx16g -Xss64m -cp build verify.StaleResult DIR NAME UUT OUT_DIR [OTHER_LOG]
  *
  * Two databases are replayed from the same D_init day by day: the database of the log
- * (NAME_ops.txt, cancellations applied) and the database a method for insertion only maintains
- * (NAME_ops_nocancel.txt, every cancellation after D_init ignored, so it only inserts sequences and
- * appends invoices). After D_init and after every day each is mined from scratch at UUT times its
+ * (NAME_ops.txt) and the database of another log of the same days, OTHER_LOG, by default
+ * _ops_nocancel.txt (every cancellation after D_init ignored); _ops_insertonly.txt ignores the
+ * expiry too, so it only inserts sequences and appends invoices, which is what a method for
+ * insertion only maintains. After D_init and after every day each is mined from scratch at UUT times its
  * own total utility, which is the exact result a maintenance method returns for it. The patterns
  * of the second that the first does not hold are reported but below the threshold of the log's
  * database (false); the patterns of the first that the second lacks are missed.
@@ -55,8 +56,8 @@ public final class StaleResult {
 
     public static void main(String[] args) throws IOException {
         if (args.length == 1 && "--self-test".equals(args[0])) { System.exit(selfTest()); }
-        if (args.length != 4) {
-            System.err.println("usage: StaleResult DIR NAME UUT OUT_DIR");
+        if (args.length != 4 && args.length != 5) {
+            System.err.println("usage: StaleResult DIR NAME UUT OUT_DIR [OTHER_LOG]");
             System.exit(2);
         }
         String dir = args[0], name = args[1];
@@ -65,9 +66,11 @@ public final class StaleResult {
         Files.createDirectories(out);
 
         LogReplay.Log log = LogReplay.load(dir, name, "_ops.txt");
-        LogReplay.Log nc = LogReplay.load(dir, name, "_ops_nocancel.txt");
-        for (MixedPlan.Op op : nc.plan)
-            if (op.kind == MixedPlan.Kind.DEL) throw new IllegalStateException("the log without cancellations deletes");
+        String other = args.length == 5 ? args[4] : "_ops_nocancel.txt";
+        LogReplay.Log nc = LogReplay.load(dir, name, other);
+        if (other.contains("insertonly"))
+            for (MixedPlan.Op op : nc.plan)
+                if (op.kind == MixedPlan.Kind.DEL) throw new IllegalStateException("the log of insertions alone deletes");
 
         TreeMap<String, List<MixedPlan.Op>> byDayLog = byDay(log), byDayNc = byDay(nc);
         TreeSet<String> days = new TreeSet<>(byDayLog.keySet());
@@ -181,7 +184,7 @@ public final class StaleResult {
         }
         String[] last = lastLine.split(",");
         String summary = String.format(Locale.ROOT,
-                "database=%s uut=%s days=%d (with D_init %d states)%n"
+                "database=%s uut=%s other log=%s days=%d (with D_init %d states)%n"
                         + "end of log: result %s, false %s, missed %s%n"
                         + "largest number of wrong patterns: %d on %s%n"
                         + "leavings with a fall of utility: %d; enterings by a fall of the threshold: %d%n"
@@ -189,7 +192,7 @@ public final class StaleResult {
                         + "largest overstatement over the log: %.4f%% on %s%n"
                         + "total utility without the cancellations at the end: %s against %s%n"
                         + "utilities checked against the definition: %d%n",
-                name, args[2], days.size(), allDays.size(), last[7], last[9], last[10], maxWrong, maxWrongDay,
+                name, args[2], other, days.size(), allDays.size(), last[7], last[9], last[10], maxWrong, maxWrongDay,
                 leave.size(), enter.size(), last[13], last[14], globalOverMax, globalOverDay, last[5], last[2], checked);
         Files.writeString(out.resolve("stale_summary.txt"), summary, StandardCharsets.UTF_8);
         System.out.print(summary);

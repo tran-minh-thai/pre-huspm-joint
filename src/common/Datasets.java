@@ -249,19 +249,19 @@ public final class Datasets {
      *
      * ONLINERETAIL: Online Retail II, built by onlineretail/build_onlineretail.py; one customer in
      * one calendar month, one invoice per element, every occurrence at one unit and the median unit
-     * price as external utility; D_init the twelve months up to November 2010, then the second year
-     * by day. fullScopeOk is false: no scenario of all() takes it.
+     * price as external utility; D_init the twelve months up to November 2010, then the log by day up
+     * to 2011-09-30 in a window of twelve months. fullScopeOk is false: no scenario of all() takes it.
      */
     private static final List<Entry> REPLAYED = List.of(
-        // Targets 10 8 5 3 (experiments.ThresholdScan): 8, 5 and 4 patterns from its search; the
-        // lowest level from its grid, 0.0044 giving ten, since the search gallops from 0.00488 past
-        // the plateau of ten (0.0042 to 0.0045) to below the cliff at 0.0035. Gates: the floor
-        // 0.8 * 0.0044 = 0.00352 mines 20 patterns on D_init and 19 on the last state; the
-        // highest level keeps 1 of its 4 (dataset-build probe of 2026-11-25).
-        new Entry("ONLINERETAIL",         12444, 0.00488,
-                new double[]{0.0044, 0.00488, 0.00549, 0.00618},
-                true,  "10 8 5 4 on D_init; 6 3 3 1 on the last state; the floor of the lowest level "
-                     + "mines 20 patterns on D_init and 19 on the last state", false)
+        // Targets 8 5 3 1 (experiments.ThresholdScan, the four levels in one search): 8, 5, 4 and 1
+        // patterns on D_init. A lowest level of ten fails the cost gate on the window (its floor
+        // exceeds the budget from March 2011) and nine is never returned. Gates: the floor
+        // 0.8 * 0.00488 = 0.0039 mines 12 to 24 patterns on every month-end state, 19 on the last;
+        // the highest level keeps 1 of its 1 (dataset-build probe of 2026-11-26).
+        new Entry("ONLINERETAIL",         12444, 0.00549,
+                new double[]{0.00488, 0.00549, 0.00618, 0.0125},
+                true,  "8 5 4 1 on D_init; 8 3 1 1 on the last state; the floor of the lowest level "
+                     + "mines 12 to 24 patterns on every month-end state", false)
     );
 
     public static List<Entry> replayed() { return REPLAYED; }

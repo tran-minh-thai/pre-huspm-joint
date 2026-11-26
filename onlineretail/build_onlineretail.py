@@ -41,13 +41,26 @@ by the same customer that is still in the database; it is capped at the quantity
 zero units is removed from its element, an empty element from its sequence. At the end of a day
 the sequences it touched are compared with the start of the day: a new nonempty sequence is
 inserted, a changed one is modified (old version out, new version in), an emptied one is deleted.
-So a day yields at most one insertion, one modification and one deletion, in this order.
+
+The database keeps the last twelve calendar months (WINDOW_MONTHS), as D_init does: on the first day
+with data of a month, before anything else of that day, the sequences of the months before the
+last twelve are deleted. A cancellation of a purchase that has left the database finds no purchase.
+So a day yields at most an expiry, then one insertion, one modification and one deletion.
+
+The log is replayed up to LAST_DAY, 2011-09-30, and the lines after it are dropped. From October
+2011 several customer-months list several hundred products each and overlap, and within a window of
+twelve months their shared subsets reach every threshold at which D_init holds a pattern: the
+database at the end of November 2011 exceeds the search budget at every threshold from 0.0045 to
+0.007, for any exact miner (dataset-build probe of 2026-11-25). Prices, quantities and all counts
+below use the lines up to LAST_DAY only; the share of cancellation invoices in raw_invoices and
+raw_cancellation_invoices is that of the whole file.
 
 Outputs, with NAME = ONLINERETAIL:
     NAME_seq.txt            D_init, one sequence per line in the order (month, customer)
     NAME_eui.txt            external utilities, itemID:price
     NAME_ops.txt            the operations of SC11 (format below)
-    NAME_ops_nocancel.txt   the same log with every cancellation after D_init ignored: what a
+    NAME_ops_nocancel.txt   the same log with every cancellation after D_init ignored (the expiry kept)
+    NAME_ops_insertonly.txt the same log with every cancellation and every expiry ignored: what a
                             method for insertion only maintains
     NAME_final_seq.txt      the database after the last operation, for an end-to-end check
     NAME_items.tsv          itemID, stock code, description, price
@@ -76,6 +89,8 @@ RNS = "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}"
 PRODUCT = re.compile(r"^\d{5}[A-Za-z]*$")
 SPLIT = datetime.datetime(2010, 12, 1)          # first instant after D_init
 NAME = "ONLINERETAIL"
+WINDOW_MONTHS = 12                              # months a customer-month stays in the database
+LAST_DAY = datetime.date(2011, 9, 30)           # the last day replayed (see the docstring)
 
 
 def col_index(ref):
@@ -254,8 +269,10 @@ def fmt(snap, item_id):
                     for el in snap) + " -2"
 
 
-def replay(rows, item_id, counts, apply_cancellations):
-    """D_init snapshots and the operations after it."""
+def replay(rows, item_id, counts, apply_cancellations, window=WINDOW_MONTHS):
+    """D_init snapshots, the operations after it, the database after the last one, and per operation
+    whether it is an expiry and, for a modification, whether a cancellation removed a purchase of it.
+    window: months a sequence stays in the database (0: no expiry)."""
     db = Database()
     days = defaultdict(list)
     pre, post = Counter(), Counter()
@@ -274,9 +291,22 @@ def replay(rows, item_id, counts, apply_cancellations):
     for k in init:
         ident[k], current[k], next_id = next_id, db.snapshot(k), next_id + 1
     init_snaps = [current[k] for k in init]
-    ops = []
+    ops, tags = [], []
+    month = lambda k: int(k[1][:4]) * 12 + int(k[1][5:7])
     for day in sorted(days):
-        touched = set()
+        if window:
+            # the first day with data of a month: the sequences of the months before the last
+            # `window` ones leave the database, before anything else of the day
+            gone = sorted((k for k in db.seqs if month(k) <= day.year * 12 + day.month - window),
+                          key=lambda k: (k[1], int(k[0])))
+            expired = [ident.pop(k) for k in gone if k in current]
+            for k in gone:
+                db.seqs.pop(k)
+                current.pop(k, None)
+            if expired:
+                ops.append(("DEL", day, expired)); tags.append("expiry")
+                post["sequences expired"] += len(expired)
+        touched, lowered = set(), set()
         for when, inv, order, cust, stock, qty, price, desc, cancel in days[day]:
             if cancel:
                 if not apply_cancellations:
@@ -285,9 +315,11 @@ def replay(rows, item_id, counts, apply_cancellations):
                 k = db.cancel(cust, stock, qty, post)
                 if k is not None:
                     touched.add(k)
+                    lowered.add(k)
             else:
                 touched.add(db.purchase(when, inv, order, cust, stock, qty))
         ins, mod, dele = [], [], []
+        low = False
         for k in sorted(touched, key=lambda k: (k[1], int(k[0]))):
             snap = db.snapshot(k)
             old = current.get(k)
@@ -297,37 +329,16 @@ def replay(rows, item_id, counts, apply_cancellations):
                 dele.append(ident.pop(k)); del current[k]
             elif old is not None and snap != old:
                 mod.append((ident[k], next_id, snap, k)); ident[k] = next_id; current[k] = snap; next_id += 1
-        for kind, lst in (("INS", ins), ("MOD", mod), ("DEL", dele)):
+                low = low or k in lowered
+        for kind, lst, tag in (("INS", ins, "insertion"), ("MOD", mod, "modification lowering a purchase" if low
+                                                                  else "modification"), ("DEL", dele, "emptied")):
             if lst:
-                ops.append((kind, day, lst))
+                ops.append((kind, day, lst)); tags.append(tag)
     for k, v in pre.items():
         counts["before 2010-12-01: " + k] += v
     for k, v in post.items():
         counts["from 2010-12-01: " + k] += v
-    return init_snaps, ops, current
-
-
-def mod_by_cancel(rows, item_id, counts):
-    """Modifications of SC11 that lower a purchase: replay once more, recording which touched keys a
-    cancellation reached on each day."""
-    db = Database()
-    hit = defaultdict(set)
-    days = defaultdict(list)
-    for r in rows:
-        if r[0] < SPLIT:
-            when, inv, order, cust, stock, qty, price, desc, cancel = r
-            (db.cancel(cust, stock, qty, Counter()) if cancel else db.purchase(when, inv, order, cust, stock, qty))
-        else:
-            days[r[0].date()].append(r)
-    for day in sorted(days):
-        for when, inv, order, cust, stock, qty, price, desc, cancel in days[day]:
-            if cancel:
-                k = db.cancel(cust, stock, qty, Counter())
-                if k is not None:
-                    hit[day].add(k)
-            else:
-                db.purchase(when, inv, order, cust, stock, qty)
-    return hit
+    return init_snaps, ops, current, tags
 
 
 def write_ops(path, ops, item_id):
@@ -399,6 +410,8 @@ def main():
     counts = Counter()
     rows, raw_invoices = read_log(a.xlsx, counts)
     rows.sort(key=lambda r: (r[0], r[1], r[2]))
+    counts["lines after the last day replayed (dropped)"] = sum(1 for r in rows if r[0].date() > LAST_DAY)
+    rows = [r for r in rows if r[0].date() <= LAST_DAY]
 
     prices, names = defaultdict(list), defaultdict(Counter)
     for r in rows:
@@ -415,15 +428,12 @@ def main():
             counts["cancellation lines of a product never bought (dropped)"] += 1
     rows = [r for r in rows if r[4] in item_id]
 
-    init_snaps, ops, final = replay(rows, item_id, counts, True)
-    init_nc, ops_nc, _ = replay(rows, item_id, Counter(), False)
-    if init_nc != init_snaps:
-        raise SystemExit("D_init differs between the two replays")
-    hit = mod_by_cancel(rows, item_id, counts)
-    mod_cancel = 0
-    for kind, day, lst in ops:
-        if kind == "MOD" and any(e[3] in hit.get(day, ()) for e in lst):
-            mod_cancel += 1
+    init_snaps, ops, final, tags = replay(rows, item_id, counts, True)
+    init_nc, ops_nc, _, _ = replay(rows, item_id, Counter(), False)
+    init_io, ops_io, _, _ = replay(rows, item_id, Counter(), False, window=0)
+    if init_nc != init_snaps or init_io != init_snaps:
+        raise SystemExit("D_init differs between the replays")
+    mod_cancel = tags.count("modification lowering a purchase")
 
     out = lambda s: f"{a.out_dir}/{NAME}{s}"
     with open(out("_seq.txt"), "w", encoding="utf-8", newline="\n") as f:
@@ -434,6 +444,7 @@ def main():
             f.write(f"{item_id[s]}:{eui[s]:.2f}\n")
     write_ops(out("_ops.txt"), [(k, d, [e[:3] if k == "MOD" else e for e in l]) for k, d, l in ops], item_id)
     write_ops(out("_ops_nocancel.txt"), [(k, d, [e[:3] if k == "MOD" else e for e in l]) for k, d, l in ops_nc], item_id)
+    write_ops(out("_ops_insertonly.txt"), [(k, d, [e[:3] if k == "MOD" else e for e in l]) for k, d, l in ops_io], item_id)
     fin = sorted(final, key=lambda k: (k[1], int(k[0])))
     with open(out("_final_seq.txt"), "w", encoding="utf-8", newline="\n") as f:
         f.write("\n".join(fmt(final[k], item_id) for k in fin) + "\n")
@@ -449,9 +460,10 @@ def main():
     if replayed != final_lines:
         raise SystemExit(f"the operations do not rebuild the final database: {len(replayed)} against "
                          f"{len(final_lines)} sequences")
-    if any(k == "DEL" for k, _, _ in ops_nc):
-        raise SystemExit("the log without cancellations deletes a sequence")
+    if any(k == "DEL" for k, _, _ in ops_io):
+        raise SystemExit("the log of insertions alone deletes a sequence")
     apply_ops(out("_seq.txt"), out("_ops_nocancel.txt"))
+    apply_ops(out("_seq.txt"), out("_ops_insertonly.txt"))
     kinds = Counter(k for k, _, _ in ops)
     stats = {
         "input_sha256": sha256(a.xlsx),
@@ -468,10 +480,16 @@ def main():
         "sequences_modified": sum(len(l) for k, _, l in ops if k == "MOD"),
         "sequences_deleted": sum(len(l) for k, _, l in ops if k == "DEL"),
         "nocancel_operations": dict(Counter(k for k, _, _ in ops_nc)),
+        "insertonly_operations": dict(Counter(k for k, _, _ in ops_io)),
+        "window_months": WINDOW_MONTHS,
+        "operation_tags": dict(Counter(tags)),
+        "expiry_operations": [i + 1 for i, g in enumerate(tags) if g == "expiry"],
+        "sequences_expired": sum(len(l) for (k, _, l), g in zip(ops, tags) if g == "expiry"),
+        "sequences_deleted_emptied": sum(len(l) for (k, _, l), g in zip(ops, tags) if g == "emptied"),
         "end_to_end_check": f"the {len(ops)} operations rebuild the {len(final_lines)} sequences of the final database",
         "files": {},
     }
-    for s in ("_seq.txt", "_eui.txt", "_ops.txt", "_ops_nocancel.txt", "_final_seq.txt", "_items.tsv"):
+    for s in ("_seq.txt", "_eui.txt", "_ops.txt", "_ops_nocancel.txt", "_ops_insertonly.txt", "_final_seq.txt", "_items.tsv"):
         stats["files"][NAME + s] = sha256(out(s))
     with open(out("_build.json"), "w", encoding="utf-8", newline="\n") as f:
         json.dump(stats, f, indent=1)
