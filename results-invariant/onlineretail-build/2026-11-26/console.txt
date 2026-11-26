@@ -1,0 +1,113 @@
+{
+ "input_sha256": "bcbe73b35f5b7babf197fb0cb983a11f5d9ff929078d4aa53d171b1f2df2e980",
+ "raw_invoices": 53628,
+ "raw_cancellation_invoices": 8292,
+ "lines": {
+  "before 2010-12-01: cancellation lines": 9081,
+  "before 2010-12-01: cancellations capped at the purchase": 185,
+  "before 2010-12-01: cancellations lowering the units only (no change at internal utility 1)": 4858,
+  "before 2010-12-01: cancellations removing a purchase": 2826,
+  "before 2010-12-01: cancellations without a purchase (dropped)": 1397,
+  "before 2010-12-01: units cancelled": 184003,
+  "before 2010-12-01: units of capped cancellations not applied": 2521,
+  "cancellation lines of a product never bought (dropped)": 21,
+  "dropped: no customer": 235287,
+  "dropped: price <= 0": 60,
+  "dropped: stock code not a product": 3673,
+  "from 2010-12-01: cancellation lines": 6086,
+  "from 2010-12-01: cancellations capped at the purchase": 113,
+  "from 2010-12-01: cancellations lowering the units only (no change at internal utility 1)": 3959,
+  "from 2010-12-01: cancellations removing a purchase": 1955,
+  "from 2010-12-01: cancellations without a purchase (dropped)": 172,
+  "from 2010-12-01: sequences expired": 9353,
+  "from 2010-12-01: units cancelled": 144807,
+  "from 2010-12-01: units of capped cancellations not applied": 3190,
+  "lines after the last day replayed (dropped)": 133363,
+  "overlap rows checked identical": 22523,
+  "rows of the first sheet in the overlap, read from the second": 22523,
+  "rows read": 1044848
+ },
+ "dropped_stock_codes": {
+  "POST": 1983,
+  "M": 1096,
+  "C2": 254,
+  "D": 170,
+  "ADJUST": 61,
+  "BANK CHARGES": 37,
+  "PADS": 19,
+  "DOT": 16,
+  "CRUK": 16,
+  "TEST001": 15,
+  "ADJUST2": 3,
+  "SP1002": 2,
+  "TEST002": 1
+ },
+ "items": 4497,
+ "d_init": {
+  "sequences": 12444,
+  "items": 3990,
+  "elements_per_sequence": 1.4506,
+  "items_per_sequence": 30.2899,
+  "items_per_element": 20.8812,
+  "total_utility": 1138368.07
+ },
+ "final": {
+  "sequences": 12453,
+  "items": 3732,
+  "elements_per_sequence": 1.4156,
+  "items_per_sequence": 29.1497,
+  "items_per_element": 20.5911,
+  "total_utility": 1078487.27
+ },
+ "operations": {
+  "DEL": 29,
+  "INS": 245,
+  "MOD": 244
+ },
+ "days_with_operations": 245,
+ "modifications_lowering_a_purchase": 218,
+ "sequences_inserted": 9381,
+ "sequences_modified": 3241,
+ "sequences_deleted": 9372,
+ "nocancel_operations": {
+  "DEL": 10,
+  "INS": 245,
+  "MOD": 226
+ },
+ "insertonly_operations": {
+  "INS": 245,
+  "MOD": 226
+ },
+ "window_months": 12,
+ "operation_tags": {
+  "expiry": 10,
+  "insertion": 245,
+  "modification lowering a purchase": 218,
+  "emptied": 19,
+  "modification": 26
+ },
+ "expiry_operations": [
+  1,
+  45,
+  96,
+  148,
+  204,
+  249,
+  302,
+  358,
+  412,
+  465
+ ],
+ "sequences_expired": 9353,
+ "sequences_deleted_emptied": 19,
+ "end_to_end_check": "the 518 operations rebuild the 12453 sequences of the final database",
+ "files": {
+  "ONLINERETAIL_seq.txt": "aa289a0fee513da7b12db32546969beb22aaa63ccbed1ce0f16972e07ee487fe",
+  "ONLINERETAIL_eui.txt": "74167af8a5430561cc41076581d6f8af399408d676d8b8bafcae9c08ad57844a",
+  "ONLINERETAIL_ops.txt": "63c85e53b1cdb492c4a6fed76b7285f93a5cf87a24dce93cd676a04cc3e43307",
+  "ONLINERETAIL_ops_nocancel.txt": "e612a7d91cd53e588a8a3199170fbeea702302ea798faa0eed84863a6450a3a8",
+  "ONLINERETAIL_ops_insertonly.txt": "a228beb0f82e227ffb522bad97a5bc17b0aa3f457a0458ac3c2810aca8cefe21",
+  "ONLINERETAIL_final_seq.txt": "934b9480540d209aa857ac2be1997b2025500316be20604cb9793fb08c17ba32",
+  "ONLINERETAIL_items.tsv": "cb6cebc8dc4822a02a98ea231a8b1d6b01ee7b88be0486d8200889c0867b3fe5"
+ }
+}

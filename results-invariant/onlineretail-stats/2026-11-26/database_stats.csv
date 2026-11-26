@@ -1,0 +1,2 @@
+dataset,sequences,items_occurring,max_item_id,elements,occurrences,elements_per_sequence,items_per_element,items_per_sequence,total_utility
+ONLINERETAIL,12453,3732,4497,17629,363001,1.4156428169918895,20.59112825458052,29.149682807355656,1078487.2699982908

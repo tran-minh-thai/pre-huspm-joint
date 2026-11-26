@@ -1,0 +1,16 @@
+{
+  "command": "java -Xmx6g -Xss64m -cp build-stale verify.StaleResult datasets ONLINERETAIL 0.00549 results-invariant/stale-result/2026-11-26-uut-0.00549-insertonly _ops_insertonly.txt",
+  "path_substitutions": 0,
+  "build_dir": "build-stale",
+  "git_commit": "6b949fd3347cfd69d5af59db85d91bfa9844c11f",
+  "tree": "src clean, other files modified",
+  "source_sha256": "5a5de4603d853ce134228853e06e502f69f9c7781218b752b9d723845a74074c",
+  "source_files": 55,
+  "java": "openjdk version \"25.0.4.1\" 2026-08-18 LTS",
+  "os": "Darwin 27.2.0 (macOS-27.2.1-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "correctness check: counters only, no timings",
+  "start": "2026-11-26T07:41:08",
+  "end": "2026-11-26T07:45:07",
+  "exit_code": 0
+}

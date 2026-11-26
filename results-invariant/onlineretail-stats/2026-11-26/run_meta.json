@@ -1,0 +1,16 @@
+{
+  "command": "python3 analysis/database_stats.py --final --out results-invariant/onlineretail-stats/2026-11-26 ONLINERETAIL",
+  "path_substitutions": 0,
+  "build_dir": "build-w",
+  "git_commit": "de8516573e6b3d6787623f4e1ed3dc4baa8b0610",
+  "tree": "src clean, other files modified",
+  "source_sha256": "1e7e855f8d586fcf1bf7f8b64619f546abbbce48233b48043e4502f9e9d80914",
+  "source_files": 53,
+  "java": "openjdk version \"25.0.4.1\" 2026-08-18 LTS",
+  "os": "Darwin 27.2.0 (macOS-27.2.1-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "correctness check: counters only, no timings",
+  "start": "2026-11-26T07:11:35",
+  "end": "2026-11-26T07:11:35",
+  "exit_code": 0
+}

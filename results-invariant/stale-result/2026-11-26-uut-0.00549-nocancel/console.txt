@@ -1,0 +1,8 @@
+database=ONLINERETAIL uut=0.00549 other log=_ops_nocancel.txt days=245 (with D_init 246 states)
+end of log: result 3, false 1, missed 0
+largest number of wrong patterns: 3 on 2011-09-01
+leavings with a fall of utility: 5; enterings by a fall of the threshold: 5
+end of log: utility of the common patterns overstated by at most 1.5056% (mean 1.1836%)
+largest overstatement over the log: 15.7895% on 2011-08-01
+total utility without the cancellations at the end: 1090040.59 against 1078487.27
+utilities checked against the definition: 1186
