@@ -107,6 +107,7 @@ def main():
     ap.add_argument("--build", default=None, help="build directory (default: build-rerun)")
     ap.add_argument("--list", action="store_true", help="print the selection and the commands, run nothing")
     ap.add_argument("--exclude-checks", action="store_true", help="leave out the check-* records")
+    ap.add_argument("--names", action="store_true", help="print the names of the selection in run order, one per line")
     a = ap.parse_args()
     tree = a.tree.rstrip("/")
     recs = records()
@@ -131,6 +132,10 @@ def main():
     # check-* records read other records: run them last, and only when what they read is in the tree
     chosen.sort(key=lambda x: os.path.basename(x[0]).startswith("check-"))
 
+    if a.names:
+        for r, _, _ in chosen:
+            print(r)
+        return
     done = failed = skipped = 0
     for r, h, command in chosen:
         new, argv = rewrite(command, recs, tree, build)
