@@ -20,7 +20,7 @@ new code, so that they are kept rather than measured again.
   the same miner, read for the comparisons). Both run the threshold code that changed.
 - Streams: the eight SC2 streams (BIBLE, C8T1S5I8N5K, DUNNHUMBY, FIFA, KOSARAK, LEVIATHAN, SIGN,
   TAFENG), seed index 0, as in the campaign.
-- Trees: `results/exact-timing-old/s0r<k>` and `results/exact-timing-new/s0r<k>`, k = 0..3.
+- Trees: `results/campaign-exact-old/s0r<k>` and `results/campaign-exact-new/s0r<k>`, k = 0..3.
 - Pairs: for k = 0..3 and for each stream in the order above, both arms are run with the old code
   and with the new code back to back, old first when k is even and new first when k is odd. Each run
   is its own JVM. A pair is (stream, arm, k): 8 x 2 x 4 = 64 pairs.

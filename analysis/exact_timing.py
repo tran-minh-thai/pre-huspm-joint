@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Old against new arithmetic on the SC2 streams (pre-registered in docs/exact-arithmetic-timing.md).
 
-    python3 analysis/exact_timing.py [--old results/exact-timing-old] [--new results/exact-timing-new]
+    python3 analysis/exact_timing.py [--old results/campaign-exact-old] [--new results/campaign-exact-new]
                                      [--aa results/campaign-aa] [--out DIR]
     python3 analysis/exact_timing.py --self-test
 
@@ -163,8 +163,8 @@ def self_test():
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--old", default=os.path.join(ROOT, "results", "exact-timing-old"))
-    ap.add_argument("--new", default=os.path.join(ROOT, "results", "exact-timing-new"))
+    ap.add_argument("--old", default=os.path.join(ROOT, "results", "campaign-exact-old"))
+    ap.add_argument("--new", default=os.path.join(ROOT, "results", "campaign-exact-new"))
     ap.add_argument("--aa", default=os.path.join(ROOT, "results", "campaign-aa"))
     ap.add_argument("--campaign", default=os.path.join(ROOT, "results", "campaign"))
     ap.add_argument("--out", default=os.path.join(ROOT, "results-invariant", "exact-timing"))
