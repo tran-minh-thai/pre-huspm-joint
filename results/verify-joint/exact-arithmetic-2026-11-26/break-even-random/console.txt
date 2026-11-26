@@ -159,3 +159,9 @@
   op 13 delete n=567   path=direct after=insert/rescan ref=16 got=16 missing=0 extra=0 maxUtilGap=0.000000  OK
   op 14 insert n=3     path=direct after=delete/direct ref=16 got=16 missing=0 extra=0 maxUtilGap=0.000000  OK
   op 15 modify n=1     path=direct after=insert/direct ref=16 got=16 missing=0 extra=0 maxUtilGap=0.000000  OK
+  op 16 insert n=2     path=direct after=modify/direct ref=16 got=16 missing=0 extra=0 maxUtilGap=0.000000  OK
+
+operations by kind/path: {delete/direct=31, delete/rescan=5, insert/direct=60, insert/direct after direct delete=30, insert/direct after direct modify=24, insert/rescan=12, modify/direct=27, modify/rescan=9, rescan mined at UUT=13}
+databases stopped by the heap: 0
+mismatching operations: 0
+verification.csv -> results\verify-joint\exact-arithmetic-2026-11-26\break-even-random\verification.csv
