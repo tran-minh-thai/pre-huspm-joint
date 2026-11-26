@@ -1,1 +1,25 @@
-fault 'trigger without the deletion term': the original text occurs 0 times, expected 1
+fault: trigger without the deletion term
+  replaced: .subtract(su.multiply(common.Exact.integral(ins, "inserted utility")))
+                    .add(su.multiply(common.Exact.integral(del, "deleted utility")));
+      with: .subtract(su.multiply(common.Exact.integral(ins, "inserted utility")));
+  fuzz : rule=joint trials=2000 seed=7 ops=20000 per-kind={delete=6582, insert=6702, modify=6716} direct-update={delete=6582, insert=2097, modify=2264} mismatching-ops=554 {delete/direct=510, insert/direct=25, modify/direct=19} trials-with-mismatch=353
+  probe: caseD mismatch=false ; cases with a mismatch: A=true B=true ; total mismatching patterns over 8 checks = 2
+  caught: True (by fuzz, probe)
+fault: drop floor with the largest counter of all items instead of the largest of the pattern's
+  replaced: case MAX: default: return floorAbs(tsuAtLastRescan) + maxIauOf(p);
+      with: case MAX: default: return floorAbs(tsuAtLastRescan) + iauMax;
+  fuzz : rule=joint trials=2000 seed=7 ops=20000 per-kind={delete=6582, insert=6702, modify=6716} direct-update={delete=5615, insert=1818, modify=1717} mismatching-ops=5 {insert/direct=3, modify/direct=2} trials-with-mismatch=5
+  probe: caseD mismatch=true ; cases with a mismatch: A=false B=false ; total mismatching patterns over 8 checks = 1
+  caught: True (by fuzz, probe)
+fault: block index intersected over the batch's blocks but its last block
+  replaced: shouldRead = (bid >= from && bid < to && relevantBlocks.get(bid - from));
+      with: shouldRead = (bid >= from && bid < to - 1 && relevantBlocks.get(bid - from));
+  fuzz : rule=joint trials=2000 seed=7 ops=20000 per-kind={delete=6582, insert=6702, modify=6716} direct-update={delete=5615, insert=1818, modify=1717} mismatching-ops=1154 {delete/direct=170, insert/direct=484, modify/direct=500} trials-with-mismatch=678
+  probe: caseD mismatch=true ; cases with a mismatch: A=false B=false ; total mismatching patterns over 8 checks = 1
+  caught: True (by fuzz, probe)
+fault: drop floor raised by 5 percent of the lower threshold above the pattern's largest counter
+  replaced: case MAX: default: return floorAbs(tsuAtLastRescan) + maxIauOf(p);
+      with: case MAX: default: return 1.05 * floorAbs(tsuAtLastRescan) + maxIauOf(p);
+  fuzz : rule=joint trials=2000 seed=7 ops=20000 per-kind={delete=6582, insert=6702, modify=6716} direct-update={delete=5615, insert=1818, modify=1717} mismatching-ops=185 {delete/direct=174, insert/direct=2, modify/direct=9} trials-with-mismatch=173
+  probe: caseD mismatch=false ; cases with a mismatch: A=false B=false ; total mismatching patterns over 8 checks = 0
+  caught: True (by fuzz)
