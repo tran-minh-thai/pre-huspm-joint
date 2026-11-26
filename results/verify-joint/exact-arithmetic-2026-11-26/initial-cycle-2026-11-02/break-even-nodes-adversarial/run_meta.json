@@ -1,0 +1,16 @@
+{
+  "command": "java -Dadapt.floorRule=breakEven -Dadapt.breakEvenCost=nodes -Xmx16g -Xss64m -cp build-rerun verify.DirectPathVerifier ALL --adversarial --ops 16 --out results/verify-joint/exact-arithmetic-2026-11-26/initial-cycle-2026-11-02/break-even-nodes-adversarial",
+  "path_substitutions": 0,
+  "build_dir": "build-rerun",
+  "git_commit": "03d7742cf5358ec530ed5acb31fb60aa6977e054",
+  "tree": "src clean, other files modified",
+  "source_sha256": "b85daf2155f9b64952db0d1d9b91f0c05c6ecea835a6806031ec188dee40dcd7",
+  "source_files": 55,
+  "java": "openjdk version \"25.0.4.1\" 2026-08-18 LTS",
+  "os": "Windows 10 (Windows-10-10.0.26300-SP0)",
+  "machine": "PC-THAI",
+  "role": "correctness check: counters only, no timings",
+  "start": "2026-11-27T04:40:24",
+  "end": "2026-11-27T04:51:16",
+  "exit_code": 0
+}
