@@ -1,0 +1,360 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 9 | Scenarios: [SC1, SC3]
+Heap max: 24576 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC1] Static baseline on D_init ---
+>> WARM-UP (not measured) HUSP-ULL/LEVIATHAN/SC1
+>> RUNNING HUSP-ULL/LEVIATHAN/SC1_su=0.014644#0  (heap free=117MB / total=160MB / max=24576MB)
+[HUSP-ULL/LEVIATHAN/SC1_su=0.014644#0] OK t=316ms cand=363869 pat=136 heapDelta=168MB
+>> RUNNING HUSP-ULL/LEVIATHAN/SC1_su=0.014644#0  (heap free=366MB / total=576MB / max=24576MB)
+[HUSP-ULL/LEVIATHAN/SC1_su=0.014644#0] OK t=264ms cand=363869 pat=136 heapDelta=106MB
+>> RUNNING HUSP-ULL/LEVIATHAN/SC1_su=0.014644#0  (heap free=173MB / total=224MB / max=24576MB)
+[HUSP-ULL/LEVIATHAN/SC1_su=0.014644#0] OK t=261ms cand=363869 pat=136 heapDelta=150MB
+   warm-up mines (ms, not measured): [316, 264, 261]
+>> RUNNING HUSP-ULL/LEVIATHAN/SC1_su=0.014644#0  (heap free=118MB / total=160MB / max=24576MB)
+[HUSP-ULL/LEVIATHAN/SC1_su=0.014644#0] OK t=261ms cand=363869 pat=136 heapDelta=73MB
+>> WARM-UP (not measured) Joint-miner@UUT/LEVIATHAN/SC1
+>> RUNNING Joint-miner@UUT/LEVIATHAN/SC1_su=0.014644#0  (heap free=118MB / total=160MB / max=24576MB)
+[Joint-miner@UUT/LEVIATHAN/SC1_su=0.014644#0] OK t=425ms cand=10267 pat=136 heapDelta=49MB
+>> RUNNING Joint-miner@UUT/LEVIATHAN/SC1_su=0.014644#0  (heap free=68MB / total=160MB / max=24576MB)
+[Joint-miner@UUT/LEVIATHAN/SC1_su=0.014644#0] OK t=222ms cand=10267 pat=136 heapDelta=43MB
+>> RUNNING Joint-miner@UUT/LEVIATHAN/SC1_su=0.014644#0  (heap free=72MB / total=160MB / max=24576MB)
+[Joint-miner@UUT/LEVIATHAN/SC1_su=0.014644#0] OK t=230ms cand=10267 pat=136 heapDelta=35MB
+   warm-up mines (ms, not measured): [425, 222, 230]
+>> RUNNING Joint-miner@UUT/LEVIATHAN/SC1_su=0.014644#0  (heap free=116MB / total=160MB / max=24576MB)
+[Joint-miner@UUT/LEVIATHAN/SC1_su=0.014644#0] OK t=183ms cand=10267 pat=136 heapDelta=35MB
+>> RUNNING HUSP-ULL/LEVIATHAN/SC1_su=0.01553#0  (heap free=116MB / total=160MB / max=24576MB)
+[HUSP-ULL/LEVIATHAN/SC1_su=0.01553#0] OK t=237ms cand=342823 pat=107 heapDelta=202MB
+>> RUNNING Joint-miner@UUT/LEVIATHAN/SC1_su=0.01553#0  (heap free=116MB / total=160MB / max=24576MB)
+[Joint-miner@UUT/LEVIATHAN/SC1_su=0.01553#0] OK t=168ms cand=8947 pat=107 heapDelta=31MB
+>> RUNNING HUSP-ULL/LEVIATHAN/SC1_su=0.01647#0  (heap free=116MB / total=160MB / max=24576MB)
+[HUSP-ULL/LEVIATHAN/SC1_su=0.01647#0] OK t=214ms cand=321056 pat=89 heapDelta=85MB
+>> RUNNING Joint-miner@UUT/LEVIATHAN/SC1_su=0.01647#0  (heap free=116MB / total=160MB / max=24576MB)
+[Joint-miner@UUT/LEVIATHAN/SC1_su=0.01647#0] OK t=156ms cand=7752 pat=89 heapDelta=31MB
+>> RUNNING HUSP-ULL/LEVIATHAN/SC1_su=0.017987#0  (heap free=116MB / total=160MB / max=24576MB)
+[HUSP-ULL/LEVIATHAN/SC1_su=0.017987#0] OK t=192ms cand=296768 pat=63 heapDelta=146MB
+>> RUNNING Joint-miner@UUT/LEVIATHAN/SC1_su=0.017987#0  (heap free=116MB / total=160MB / max=24576MB)
+[Joint-miner@UUT/LEVIATHAN/SC1_su=0.017987#0] OK t=134ms cand=6283 pat=63 heapDelta=31MB
+>> WARM-UP (not measured) HUSP-ULL/SIGN/SC1
+>> RUNNING HUSP-ULL/SIGN/SC1_su=0.049134#0  (heap free=54MB / total=64MB / max=24576MB)
+[HUSP-ULL/SIGN/SC1_su=0.049134#0] OK t=234ms cand=911060 pat=2814 heapDelta=275MB
+>> RUNNING HUSP-ULL/SIGN/SC1_su=0.049134#0  (heap free=467MB / total=528MB / max=24576MB)
+[HUSP-ULL/SIGN/SC1_su=0.049134#0] OK t=210ms cand=911060 pat=2814 heapDelta=255MB
+>> RUNNING HUSP-ULL/SIGN/SC1_su=0.049134#0  (heap free=295MB / total=560MB / max=24576MB)
+[HUSP-ULL/SIGN/SC1_su=0.049134#0] OK t=208ms cand=911060 pat=2814 heapDelta=207MB
+   warm-up mines (ms, not measured): [234, 210, 208]
+>> RUNNING HUSP-ULL/SIGN/SC1_su=0.049134#0  (heap free=54MB / total=64MB / max=24576MB)
+[HUSP-ULL/SIGN/SC1_su=0.049134#0] OK t=219ms cand=911060 pat=2814 heapDelta=202MB
+>> WARM-UP (not measured) Joint-miner@UUT/SIGN/SC1
+>> RUNNING Joint-miner@UUT/SIGN/SC1_su=0.049134#0  (heap free=54MB / total=64MB / max=24576MB)
+[Joint-miner@UUT/SIGN/SC1_su=0.049134#0] OK t=197ms cand=87794 pat=2814 heapDelta=8MB
+>> RUNNING Joint-miner@UUT/SIGN/SC1_su=0.049134#0  (heap free=45MB / total=64MB / max=24576MB)
+[Joint-miner@UUT/SIGN/SC1_su=0.049134#0] OK t=141ms cand=87794 pat=2814 heapDelta=8MB
+>> RUNNING Joint-miner@UUT/SIGN/SC1_su=0.049134#0  (heap free=45MB / total=64MB / max=24576MB)
+[Joint-miner@UUT/SIGN/SC1_su=0.049134#0] OK t=141ms cand=87794 pat=2814 heapDelta=8MB
+   warm-up mines (ms, not measured): [197, 141, 141]
+>> RUNNING Joint-miner@UUT/SIGN/SC1_su=0.049134#0  (heap free=54MB / total=64MB / max=24576MB)
+[Joint-miner@UUT/SIGN/SC1_su=0.049134#0] OK t=142ms cand=87794 pat=2814 heapDelta=8MB
+>> RUNNING HUSP-ULL/SIGN/SC1_su=0.065911#0  (heap free=54MB / total=64MB / max=24576MB)
+[HUSP-ULL/SIGN/SC1_su=0.065911#0] OK t=105ms cand=384337 pat=583 heapDelta=131MB
+>> RUNNING Joint-miner@UUT/SIGN/SC1_su=0.065911#0  (heap free=54MB / total=64MB / max=24576MB)
+[Joint-miner@UUT/SIGN/SC1_su=0.065911#0] OK t=69ms cand=35251 pat=583 heapDelta=6MB
+>> RUNNING HUSP-ULL/SIGN/SC1_su=0.083371#0  (heap free=54MB / total=64MB / max=24576MB)
+[HUSP-ULL/SIGN/SC1_su=0.083371#0] OK t=60ms cand=196718 pat=140 heapDelta=28MB
+>> RUNNING Joint-miner@UUT/SIGN/SC1_su=0.083371#0  (heap free=54MB / total=64MB / max=24576MB)
+[Joint-miner@UUT/SIGN/SC1_su=0.083371#0] OK t=39ms cand=16812 pat=140 heapDelta=5MB
+>> RUNNING HUSP-ULL/SIGN/SC1_su=0.091052#0  (heap free=54MB / total=64MB / max=24576MB)
+[HUSP-ULL/SIGN/SC1_su=0.091052#0] OK t=48ms cand=148650 pat=79 heapDelta=5MB
+>> RUNNING Joint-miner@UUT/SIGN/SC1_su=0.091052#0  (heap free=54MB / total=64MB / max=24576MB)
+[Joint-miner@UUT/SIGN/SC1_su=0.091052#0] OK t=32ms cand=12771 pat=79 heapDelta=5MB
+>> WARM-UP (not measured) HUSP-ULL/BMS1/SC1
+>> RUNNING HUSP-ULL/BMS1/SC1_su=0.012821#0  (heap free=116MB / total=160MB / max=24576MB)
+[HUSP-ULL/BMS1/SC1_su=0.012821#0] OK t=55ms cand=59580 pat=22 heapDelta=53MB
+>> RUNNING HUSP-ULL/BMS1/SC1_su=0.012821#0  (heap free=64MB / total=160MB / max=24576MB)
+[HUSP-ULL/BMS1/SC1_su=0.012821#0] OK t=34ms cand=59580 pat=22 heapDelta=51MB
+>> RUNNING HUSP-ULL/BMS1/SC1_su=0.012821#0  (heap free=65MB / total=160MB / max=24576MB)
+[HUSP-ULL/BMS1/SC1_su=0.012821#0] OK t=34ms cand=59580 pat=22 heapDelta=51MB
+   warm-up mines (ms, not measured): [55, 34, 34]
+>> RUNNING HUSP-ULL/BMS1/SC1_su=0.012821#0  (heap free=117MB / total=160MB / max=24576MB)
+[HUSP-ULL/BMS1/SC1_su=0.012821#0] OK t=34ms cand=59580 pat=22 heapDelta=51MB
+>> WARM-UP (not measured) Joint-miner@UUT/BMS1/SC1
+>> RUNNING Joint-miner@UUT/BMS1/SC1_su=0.012821#0  (heap free=117MB / total=160MB / max=24576MB)
+[Joint-miner@UUT/BMS1/SC1_su=0.012821#0] OK t=28ms cand=2833 pat=22 heapDelta=38MB
+>> RUNNING Joint-miner@UUT/BMS1/SC1_su=0.012821#0  (heap free=78MB / total=160MB / max=24576MB)
+[Joint-miner@UUT/BMS1/SC1_su=0.012821#0] OK t=26ms cand=2833 pat=22 heapDelta=38MB
+   warm-up mines (ms, not measured): [28, 26]
+>> RUNNING Joint-miner@UUT/BMS1/SC1_su=0.012821#0  (heap free=112MB / total=160MB / max=24576MB)
+[Joint-miner@UUT/BMS1/SC1_su=0.012821#0] OK t=26ms cand=2833 pat=22 heapDelta=38MB
+>> RUNNING HUSP-ULL/BMS1/SC1_su=0.013597#0  (heap free=112MB / total=160MB / max=24576MB)
+[HUSP-ULL/BMS1/SC1_su=0.013597#0] OK t=29ms cand=52877 pat=21 heapDelta=49MB
+>> RUNNING Joint-miner@UUT/BMS1/SC1_su=0.013597#0  (heap free=112MB / total=160MB / max=24576MB)
+[Joint-miner@UUT/BMS1/SC1_su=0.013597#0] OK t=25ms cand=2134 pat=21 heapDelta=38MB
+>> RUNNING HUSP-ULL/BMS1/SC1_su=0.015293#0  (heap free=112MB / total=160MB / max=24576MB)
+[HUSP-ULL/BMS1/SC1_su=0.015293#0] OK t=27ms cand=46841 pat=18 heapDelta=46MB
+>> RUNNING Joint-miner@UUT/BMS1/SC1_su=0.015293#0  (heap free=112MB / total=160MB / max=24576MB)
+[Joint-miner@UUT/BMS1/SC1_su=0.015293#0] OK t=23ms cand=1381 pat=18 heapDelta=37MB
+>> RUNNING HUSP-ULL/BMS1/SC1_su=0.016218#0  (heap free=112MB / total=160MB / max=24576MB)
+[HUSP-ULL/BMS1/SC1_su=0.016218#0] OK t=25ms cand=45487 pat=15 heapDelta=44MB
+>> RUNNING Joint-miner@UUT/BMS1/SC1_su=0.016218#0  (heap free=112MB / total=160MB / max=24576MB)
+[Joint-miner@UUT/BMS1/SC1_su=0.016218#0] OK t=23ms cand=1135 pat=15 heapDelta=37MB
+>> WARM-UP (not measured) HUSP-ULL/KOSARAK/SC1
+>> RUNNING HUSP-ULL/KOSARAK/SC1_su=0.022228#0  (heap free=1378MB / total=3104MB / max=24576MB)
+[HUSP-ULL/KOSARAK/SC1_su=0.022228#0] OK t=781ms cand=2154814 pat=11 heapDelta=560MB
+>> RUNNING HUSP-ULL/KOSARAK/SC1_su=0.022228#0  (heap free=826MB / total=3104MB / max=24576MB)
+[HUSP-ULL/KOSARAK/SC1_su=0.022228#0] OK t=763ms cand=2154814 pat=11 heapDelta=560MB
+   warm-up mines (ms, not measured): [781, 763]
+>> RUNNING HUSP-ULL/KOSARAK/SC1_su=0.022228#0  (heap free=1380MB / total=3104MB / max=24576MB)
+[HUSP-ULL/KOSARAK/SC1_su=0.022228#0] OK t=741ms cand=2154814 pat=11 heapDelta=552MB
+>> WARM-UP (not measured) Joint-miner@UUT/KOSARAK/SC1
+>> RUNNING Joint-miner@UUT/KOSARAK/SC1_su=0.022228#0  (heap free=1382MB / total=3104MB / max=24576MB)
+[Joint-miner@UUT/KOSARAK/SC1_su=0.022228#0] OK t=329ms cand=1703 pat=11 heapDelta=200MB
+>> RUNNING Joint-miner@UUT/KOSARAK/SC1_su=0.022228#0  (heap free=1185MB / total=3104MB / max=24576MB)
+[Joint-miner@UUT/KOSARAK/SC1_su=0.022228#0] OK t=310ms cand=1703 pat=11 heapDelta=200MB
+   warm-up mines (ms, not measured): [329, 310]
+>> RUNNING Joint-miner@UUT/KOSARAK/SC1_su=0.022228#0  (heap free=1442MB / total=3184MB / max=24576MB)
+[Joint-miner@UUT/KOSARAK/SC1_su=0.022228#0] OK t=305ms cand=1703 pat=11 heapDelta=200MB
+>> RUNNING HUSP-ULL/KOSARAK/SC1_su=0.025#0  (heap free=1441MB / total=3184MB / max=24576MB)
+[HUSP-ULL/KOSARAK/SC1_su=0.025#0] OK t=562ms cand=1833375 pat=10 heapDelta=480MB
+>> RUNNING Joint-miner@UUT/KOSARAK/SC1_su=0.025#0  (heap free=1443MB / total=3184MB / max=24576MB)
+[Joint-miner@UUT/KOSARAK/SC1_su=0.025#0] OK t=284ms cand=1202 pat=10 heapDelta=200MB
+>> RUNNING HUSP-ULL/KOSARAK/SC1_su=0.028117#0  (heap free=1443MB / total=3184MB / max=24576MB)
+[HUSP-ULL/KOSARAK/SC1_su=0.028117#0] OK t=435ms cand=1530498 pat=7 heapDelta=408MB
+>> RUNNING Joint-miner@UUT/KOSARAK/SC1_su=0.028117#0  (heap free=1444MB / total=3184MB / max=24576MB)
+[Joint-miner@UUT/KOSARAK/SC1_su=0.028117#0] OK t=268ms cand=869 pat=7 heapDelta=192MB
+>> RUNNING HUSP-ULL/KOSARAK/SC1_su=0.031623#0  (heap free=1444MB / total=3184MB / max=24576MB)
+[HUSP-ULL/KOSARAK/SC1_su=0.031623#0] OK t=329ms cand=1293340 pat=5 heapDelta=360MB
+>> RUNNING Joint-miner@UUT/KOSARAK/SC1_su=0.031623#0  (heap free=1444MB / total=3184MB / max=24576MB)
+[Joint-miner@UUT/KOSARAK/SC1_su=0.031623#0] OK t=247ms cand=612 pat=5 heapDelta=184MB
+>> WARM-UP (not measured) HUSP-ULL/BIBLE/SC1
+>> RUNNING HUSP-ULL/BIBLE/SC1_su=0.0181#0  (heap free=479MB / total=640MB / max=24576MB)
+[HUSP-ULL/BIBLE/SC1_su=0.0181#0] OK t=781ms cand=375757 pat=376 heapDelta=256MB
+>> RUNNING HUSP-ULL/BIBLE/SC1_su=0.0181#0  (heap free=416MB / total=640MB / max=24576MB)
+[HUSP-ULL/BIBLE/SC1_su=0.0181#0] OK t=790ms cand=375757 pat=376 heapDelta=498MB
+   warm-up mines (ms, not measured): [781, 790]
+>> RUNNING HUSP-ULL/BIBLE/SC1_su=0.0181#0  (heap free=432MB / total=592MB / max=24576MB)
+[HUSP-ULL/BIBLE/SC1_su=0.0181#0] OK t=778ms cand=375757 pat=376 heapDelta=299MB
+>> WARM-UP (not measured) Joint-miner@UUT/BIBLE/SC1
+>> RUNNING Joint-miner@UUT/BIBLE/SC1_su=0.0181#0  (heap free=432MB / total=592MB / max=24576MB)
+[Joint-miner@UUT/BIBLE/SC1_su=0.0181#0] OK t=722ms cand=2994 pat=376 heapDelta=188MB
+>> RUNNING Joint-miner@UUT/BIBLE/SC1_su=0.0181#0  (heap free=244MB / total=592MB / max=24576MB)
+[Joint-miner@UUT/BIBLE/SC1_su=0.0181#0] OK t=696ms cand=2994 pat=376 heapDelta=187MB
+   warm-up mines (ms, not measured): [722, 696]
+>> RUNNING Joint-miner@UUT/BIBLE/SC1_su=0.0181#0  (heap free=422MB / total=592MB / max=24576MB)
+[Joint-miner@UUT/BIBLE/SC1_su=0.0181#0] OK t=697ms cand=2994 pat=376 heapDelta=187MB
+>> RUNNING HUSP-ULL/BIBLE/SC1_su=0.022895#0  (heap free=422MB / total=592MB / max=24576MB)
+[HUSP-ULL/BIBLE/SC1_su=0.022895#0] OK t=578ms cand=335596 pat=192 heapDelta=267MB
+>> RUNNING Joint-miner@UUT/BIBLE/SC1_su=0.022895#0  (heap free=422MB / total=592MB / max=24576MB)
+[Joint-miner@UUT/BIBLE/SC1_su=0.022895#0] OK t=522ms cand=1691 pat=192 heapDelta=172MB
+>> RUNNING HUSP-ULL/BIBLE/SC1_su=0.02896#0  (heap free=422MB / total=592MB / max=24576MB)
+[HUSP-ULL/BIBLE/SC1_su=0.02896#0] OK t=423ms cand=297524 pat=96 heapDelta=272MB
+>> RUNNING Joint-miner@UUT/BIBLE/SC1_su=0.02896#0  (heap free=422MB / total=592MB / max=24576MB)
+[Joint-miner@UUT/BIBLE/SC1_su=0.02896#0] OK t=389ms cand=946 pat=96 heapDelta=150MB
+>> RUNNING HUSP-ULL/BIBLE/SC1_su=0.03257#0  (heap free=422MB / total=592MB / max=24576MB)
+[HUSP-ULL/BIBLE/SC1_su=0.03257#0] OK t=373ms cand=282831 pat=58 heapDelta=272MB
+>> RUNNING Joint-miner@UUT/BIBLE/SC1_su=0.03257#0  (heap free=470MB / total=640MB / max=24576MB)
+[Joint-miner@UUT/BIBLE/SC1_su=0.03257#0] OK t=349ms cand=718 pat=58 heapDelta=140MB
+>> WARM-UP (not measured) HUSP-ULL/TAFENG/SC1
+>> RUNNING HUSP-ULL/TAFENG/SC1_su=0.002812#0  (heap free=468MB / total=640MB / max=24576MB)
+[HUSP-ULL/TAFENG/SC1_su=0.002812#0] OK t=141ms cand=2986211 pat=10 heapDelta=197MB
+>> RUNNING HUSP-ULL/TAFENG/SC1_su=0.002812#0  (heap free=274MB / total=640MB / max=24576MB)
+[HUSP-ULL/TAFENG/SC1_su=0.002812#0] OK t=142ms cand=2986211 pat=10 heapDelta=197MB
+   warm-up mines (ms, not measured): [141, 142]
+>> RUNNING HUSP-ULL/TAFENG/SC1_su=0.002812#0  (heap free=470MB / total=640MB / max=24576MB)
+[HUSP-ULL/TAFENG/SC1_su=0.002812#0] OK t=144ms cand=2986211 pat=10 heapDelta=197MB
+>> WARM-UP (not measured) Joint-miner@UUT/TAFENG/SC1
+>> RUNNING Joint-miner@UUT/TAFENG/SC1_su=0.002812#0  (heap free=470MB / total=640MB / max=24576MB)
+[Joint-miner@UUT/TAFENG/SC1_su=0.002812#0] OK t=160ms cand=2161 pat=10 heapDelta=144MB
+>> RUNNING Joint-miner@UUT/TAFENG/SC1_su=0.002812#0  (heap free=327MB / total=640MB / max=24576MB)
+[Joint-miner@UUT/TAFENG/SC1_su=0.002812#0] OK t=146ms cand=2161 pat=10 heapDelta=143MB
+   warm-up mines (ms, not measured): [160, 146]
+>> RUNNING Joint-miner@UUT/TAFENG/SC1_su=0.002812#0  (heap free=456MB / total=640MB / max=24576MB)
+[Joint-miner@UUT/TAFENG/SC1_su=0.002812#0] OK t=144ms cand=2161 pat=10 heapDelta=143MB
+>> RUNNING HUSP-ULL/TAFENG/SC1_su=0.003557#0  (heap free=457MB / total=640MB / max=24576MB)
+[HUSP-ULL/TAFENG/SC1_su=0.003557#0] OK t=133ms cand=2611537 pat=6 heapDelta=181MB
+>> RUNNING Joint-miner@UUT/TAFENG/SC1_su=0.003557#0  (heap free=457MB / total=640MB / max=24576MB)
+[Joint-miner@UUT/TAFENG/SC1_su=0.003557#0] OK t=135ms cand=1628 pat=6 heapDelta=138MB
+>> RUNNING HUSP-ULL/TAFENG/SC1_su=0.004499#0  (heap free=457MB / total=640MB / max=24576MB)
+[HUSP-ULL/TAFENG/SC1_su=0.004499#0] OK t=119ms cand=2197342 pat=5 heapDelta=170MB
+>> RUNNING Joint-miner@UUT/TAFENG/SC1_su=0.004499#0  (heap free=457MB / total=640MB / max=24576MB)
+[Joint-miner@UUT/TAFENG/SC1_su=0.004499#0] OK t=127ms cand=1178 pat=5 heapDelta=133MB
+>> RUNNING HUSP-ULL/TAFENG/SC1_su=0.005691#0  (heap free=457MB / total=640MB / max=24576MB)
+[HUSP-ULL/TAFENG/SC1_su=0.005691#0] OK t=107ms cand=1817985 pat=3 heapDelta=159MB
+>> RUNNING Joint-miner@UUT/TAFENG/SC1_su=0.005691#0  (heap free=457MB / total=640MB / max=24576MB)
+[Joint-miner@UUT/TAFENG/SC1_su=0.005691#0] OK t=116ms cand=846 pat=3 heapDelta=127MB
+>> WARM-UP (not measured) HUSP-ULL/DUNNHUMBY/SC1
+>> RUNNING HUSP-ULL/DUNNHUMBY/SC1_su=0.001158#0  (heap free=529MB / total=704MB / max=24576MB)
+[HUSP-ULL/DUNNHUMBY/SC1_su=0.001158#0] OK t=2597ms cand=36615357 pat=33 heapDelta=401MB
+>> RUNNING HUSP-ULL/DUNNHUMBY/SC1_su=0.001158#0  (heap free=327MB / total=704MB / max=24576MB)
+[HUSP-ULL/DUNNHUMBY/SC1_su=0.001158#0] OK t=2581ms cand=36615357 pat=33 heapDelta=426MB
+   warm-up mines (ms, not measured): [2597, 2581]
+>> RUNNING HUSP-ULL/DUNNHUMBY/SC1_su=0.001158#0  (heap free=579MB / total=752MB / max=24576MB)
+[HUSP-ULL/DUNNHUMBY/SC1_su=0.001158#0] OK t=2563ms cand=36615357 pat=33 heapDelta=442MB
+>> WARM-UP (not measured) Joint-miner@UUT/DUNNHUMBY/SC1
+>> RUNNING Joint-miner@UUT/DUNNHUMBY/SC1_su=0.001158#0  (heap free=532MB / total=704MB / max=24576MB)
+[Joint-miner@UUT/DUNNHUMBY/SC1_su=0.001158#0] OK t=1226ms cand=225949 pat=33 heapDelta=240MB
+>> RUNNING Joint-miner@UUT/DUNNHUMBY/SC1_su=0.001158#0  (heap free=294MB / total=704MB / max=24576MB)
+[Joint-miner@UUT/DUNNHUMBY/SC1_su=0.001158#0] OK t=1043ms cand=225949 pat=33 heapDelta=240MB
+>> RUNNING Joint-miner@UUT/DUNNHUMBY/SC1_su=0.001158#0  (heap free=269MB / total=704MB / max=24576MB)
+[Joint-miner@UUT/DUNNHUMBY/SC1_su=0.001158#0] OK t=1029ms cand=225949 pat=33 heapDelta=240MB
+   warm-up mines (ms, not measured): [1226, 1043, 1029]
+>> RUNNING Joint-miner@UUT/DUNNHUMBY/SC1_su=0.001158#0  (heap free=509MB / total=704MB / max=24576MB)
+[Joint-miner@UUT/DUNNHUMBY/SC1_su=0.001158#0] OK t=1034ms cand=225949 pat=33 heapDelta=240MB
+>> RUNNING HUSP-ULL/DUNNHUMBY/SC1_su=0.001464#0  (heap free=510MB / total=704MB / max=24576MB)
+[HUSP-ULL/DUNNHUMBY/SC1_su=0.001464#0] OK t=1895ms cand=31943308 pat=17 heapDelta=414MB
+>> RUNNING Joint-miner@UUT/DUNNHUMBY/SC1_su=0.001464#0  (heap free=542MB / total=736MB / max=24576MB)
+[Joint-miner@UUT/DUNNHUMBY/SC1_su=0.001464#0] OK t=843ms cand=118800 pat=17 heapDelta=224MB
+>> RUNNING HUSP-ULL/DUNNHUMBY/SC1_su=0.002083#0  (heap free=542MB / total=736MB / max=24576MB)
+[HUSP-ULL/DUNNHUMBY/SC1_su=0.002083#0] OK t=1215ms cand=27179621 pat=9 heapDelta=708MB
+>> RUNNING Joint-miner@UUT/DUNNHUMBY/SC1_su=0.002083#0  (heap free=606MB / total=800MB / max=24576MB)
+[Joint-miner@UUT/DUNNHUMBY/SC1_su=0.002083#0] OK t=663ms cand=50505 pat=9 heapDelta=216MB
+>> RUNNING HUSP-ULL/DUNNHUMBY/SC1_su=0.002343#0  (heap free=606MB / total=800MB / max=24576MB)
+[HUSP-ULL/DUNNHUMBY/SC1_su=0.002343#0] OK t=1054ms cand=25863791 pat=4 heapDelta=469MB
+>> RUNNING Joint-miner@UUT/DUNNHUMBY/SC1_su=0.002343#0  (heap free=606MB / total=800MB / max=24576MB)
+[Joint-miner@UUT/DUNNHUMBY/SC1_su=0.002343#0] OK t=609ms cand=38475 pat=4 heapDelta=208MB
+>> WARM-UP (not measured) HUSP-ULL/C8T1S5I8N5K/SC1
+>> RUNNING HUSP-ULL/C8T1S5I8N5K/SC1_su=0.001099#0  (heap free=247MB / total=320MB / max=24576MB)
+[HUSP-ULL/C8T1S5I8N5K/SC1_su=0.001099#0] OK t=91ms cand=443804 pat=6090 heapDelta=179MB
+>> RUNNING HUSP-ULL/C8T1S5I8N5K/SC1_su=0.001099#0  (heap free=68MB / total=320MB / max=24576MB)
+[HUSP-ULL/C8T1S5I8N5K/SC1_su=0.001099#0] OK t=91ms cand=443804 pat=6090 heapDelta=179MB
+   warm-up mines (ms, not measured): [91, 91]
+>> RUNNING HUSP-ULL/C8T1S5I8N5K/SC1_su=0.001099#0  (heap free=248MB / total=320MB / max=24576MB)
+[HUSP-ULL/C8T1S5I8N5K/SC1_su=0.001099#0] OK t=91ms cand=443804 pat=6090 heapDelta=179MB
+>> WARM-UP (not measured) Joint-miner@UUT/C8T1S5I8N5K/SC1
+>> RUNNING Joint-miner@UUT/C8T1S5I8N5K/SC1_su=0.001099#0  (heap free=248MB / total=320MB / max=24576MB)
+[Joint-miner@UUT/C8T1S5I8N5K/SC1_su=0.001099#0] OK t=81ms cand=23064 pat=6090 heapDelta=71MB
+>> RUNNING Joint-miner@UUT/C8T1S5I8N5K/SC1_su=0.001099#0  (heap free=176MB / total=320MB / max=24576MB)
+[Joint-miner@UUT/C8T1S5I8N5K/SC1_su=0.001099#0] OK t=72ms cand=23064 pat=6090 heapDelta=71MB
+>> RUNNING Joint-miner@UUT/C8T1S5I8N5K/SC1_su=0.001099#0  (heap free=164MB / total=320MB / max=24576MB)
+[Joint-miner@UUT/C8T1S5I8N5K/SC1_su=0.001099#0] OK t=71ms cand=23064 pat=6090 heapDelta=71MB
+   warm-up mines (ms, not measured): [81, 72, 71]
+>> RUNNING Joint-miner@UUT/C8T1S5I8N5K/SC1_su=0.001099#0  (heap free=236MB / total=320MB / max=24576MB)
+[Joint-miner@UUT/C8T1S5I8N5K/SC1_su=0.001099#0] OK t=71ms cand=23064 pat=6090 heapDelta=71MB
+>> RUNNING HUSP-ULL/C8T1S5I8N5K/SC1_su=0.001132#0  (heap free=236MB / total=320MB / max=24576MB)
+[HUSP-ULL/C8T1S5I8N5K/SC1_su=0.001132#0] OK t=83ms cand=419535 pat=5067 heapDelta=171MB
+>> RUNNING Joint-miner@UUT/C8T1S5I8N5K/SC1_su=0.001132#0  (heap free=236MB / total=320MB / max=24576MB)
+[Joint-miner@UUT/C8T1S5I8N5K/SC1_su=0.001132#0] OK t=65ms cand=20252 pat=5067 heapDelta=71MB
+>> RUNNING HUSP-ULL/C8T1S5I8N5K/SC1_su=0.0012#0  (heap free=236MB / total=320MB / max=24576MB)
+[HUSP-ULL/C8T1S5I8N5K/SC1_su=0.0012#0] OK t=73ms cand=371224 pat=3427 heapDelta=147MB
+>> RUNNING Joint-miner@UUT/C8T1S5I8N5K/SC1_su=0.0012#0  (heap free=236MB / total=320MB / max=24576MB)
+[Joint-miner@UUT/C8T1S5I8N5K/SC1_su=0.0012#0] OK t=54ms cand=14478 pat=3427 heapDelta=67MB
+>> RUNNING HUSP-ULL/C8T1S5I8N5K/SC1_su=0.001236#0  (heap free=236MB / total=320MB / max=24576MB)
+[HUSP-ULL/C8T1S5I8N5K/SC1_su=0.001236#0] OK t=67ms cand=350837 pat=2722 heapDelta=139MB
+>> RUNNING Joint-miner@UUT/C8T1S5I8N5K/SC1_su=0.001236#0  (heap free=236MB / total=320MB / max=24576MB)
+[Joint-miner@UUT/C8T1S5I8N5K/SC1_su=0.001236#0] OK t=50ms cand=12400 pat=2722 heapDelta=67MB
+>> WARM-UP (not measured) HUSP-ULL/FIFA/SC1
+>> RUNNING HUSP-ULL/FIFA/SC1_su=0.056234#0  (heap free=218MB / total=368MB / max=24576MB)
+[HUSP-ULL/FIFA/SC1_su=0.056234#0] OK t=4990ms cand=437609 pat=42 heapDelta=425MB
+>> RUNNING HUSP-ULL/FIFA/SC1_su=0.056234#0  (heap free=267MB / total=704MB / max=24576MB)
+[HUSP-ULL/FIFA/SC1_su=0.056234#0] OK t=5007ms cand=437609 pat=42 heapDelta=353MB
+   warm-up mines (ms, not measured): [4990, 5007]
+>> RUNNING HUSP-ULL/FIFA/SC1_su=0.056234#0  (heap free=394MB / total=544MB / max=24576MB)
+[HUSP-ULL/FIFA/SC1_su=0.056234#0] OK t=5020ms cand=437609 pat=42 heapDelta=324MB
+>> WARM-UP (not measured) Joint-miner@UUT/FIFA/SC1
+>> RUNNING Joint-miner@UUT/FIFA/SC1_su=0.056234#0  (heap free=395MB / total=544MB / max=24576MB)
+[Joint-miner@UUT/FIFA/SC1_su=0.056234#0] OK t=2818ms cand=64712 pat=42 heapDelta=316MB
+>> RUNNING Joint-miner@UUT/FIFA/SC1_su=0.056234#0  (heap free=340MB / total=560MB / max=24576MB)
+[Joint-miner@UUT/FIFA/SC1_su=0.056234#0] OK t=2776ms cand=64712 pat=42 heapDelta=304MB
+   warm-up mines (ms, not measured): [2818, 2776]
+>> RUNNING Joint-miner@UUT/FIFA/SC1_su=0.056234#0  (heap free=403MB / total=560MB / max=24576MB)
+[Joint-miner@UUT/FIFA/SC1_su=0.056234#0] OK t=2738ms cand=64712 pat=42 heapDelta=288MB
+>> RUNNING HUSP-ULL/FIFA/SC1_su=0.059637#0  (heap free=386MB / total=544MB / max=24576MB)
+[HUSP-ULL/FIFA/SC1_su=0.059637#0] OK t=4168ms cand=372754 pat=18 heapDelta=934MB
+>> RUNNING Joint-miner@UUT/FIFA/SC1_su=0.059637#0  (heap free=386MB / total=544MB / max=24576MB)
+[Joint-miner@UUT/FIFA/SC1_su=0.059637#0] OK t=2253ms cand=51321 pat=18 heapDelta=284MB
+>> RUNNING HUSP-ULL/FIFA/SC1_su=0.067073#0  (heap free=388MB / total=544MB / max=24576MB)
+[HUSP-ULL/FIFA/SC1_su=0.067073#0] OK t=2902ms cand=281236 pat=5 heapDelta=661MB
+>> RUNNING Joint-miner@UUT/FIFA/SC1_su=0.067073#0  (heap free=388MB / total=544MB / max=24576MB)
+[Joint-miner@UUT/FIFA/SC1_su=0.067073#0] OK t=1512ms cand=32682 pat=5 heapDelta=220MB
+>> RUNNING HUSP-ULL/FIFA/SC1_su=0.075436#0  (heap free=388MB / total=544MB / max=24576MB)
+[HUSP-ULL/FIFA/SC1_su=0.075436#0] OK t=2020ms cand=228155 pat=1 heapDelta=576MB
+>> RUNNING Joint-miner@UUT/FIFA/SC1_su=0.075436#0  (heap free=436MB / total=592MB / max=24576MB)
+[Joint-miner@UUT/FIFA/SC1_su=0.075436#0] OK t=999ms cand=20521 pat=1 heapDelta=167MB
+
+--- [SC3] Su sensitivity ---
+>> WARM-UP (not measured) HUSP-ULL/LEVIATHAN/SC3
+>> RUNNING HUSP-ULL/LEVIATHAN/SC3_su=0.014644#0  (heap free=119MB / total=160MB / max=24576MB)
+[HUSP-ULL/LEVIATHAN/SC3_su=0.014644#0] OK t=578ms cand=511048 pat=173 heapDelta=102MB
+>> RUNNING HUSP-ULL/LEVIATHAN/SC3_su=0.014644#0  (heap free=541MB / total=608MB / max=24576MB)
+[HUSP-ULL/LEVIATHAN/SC3_su=0.014644#0] OK t=579ms cand=511048 pat=173 heapDelta=100MB
+   warm-up mines (ms, not measured): [578, 579]
+>> RUNNING HUSP-ULL/LEVIATHAN/SC3_su=0.014644#0  (heap free=119MB / total=160MB / max=24576MB)
+[HUSP-ULL/LEVIATHAN/SC3_su=0.014644#0] OK t=573ms cand=511048 pat=173 heapDelta=123MB
+>> WARM-UP (not measured) Joint-miner@UUT/LEVIATHAN/SC3
+>> RUNNING Joint-miner@UUT/LEVIATHAN/SC3_su=0.014644#0  (heap free=119MB / total=160MB / max=24576MB)
+[Joint-miner@UUT/LEVIATHAN/SC3_su=0.014644#0] OK t=443ms cand=10247 pat=173 heapDelta=65MB
+>> RUNNING Joint-miner@UUT/LEVIATHAN/SC3_su=0.014644#0  (heap free=52MB / total=160MB / max=24576MB)
+[Joint-miner@UUT/LEVIATHAN/SC3_su=0.014644#0] OK t=440ms cand=10247 pat=173 heapDelta=65MB
+   warm-up mines (ms, not measured): [443, 440]
+>> RUNNING Joint-miner@UUT/LEVIATHAN/SC3_su=0.014644#0  (heap free=114MB / total=160MB / max=24576MB)
+[Joint-miner@UUT/LEVIATHAN/SC3_su=0.014644#0] OK t=436ms cand=10247 pat=173 heapDelta=65MB
+>> RUNNING HUSP-ULL/LEVIATHAN/SC3_su=0.01553#0  (heap free=114MB / total=160MB / max=24576MB)
+[HUSP-ULL/LEVIATHAN/SC3_su=0.01553#0] OK t=537ms cand=490441 pat=135 heapDelta=324MB
+>> RUNNING Joint-miner@UUT/LEVIATHAN/SC3_su=0.01553#0  (heap free=114MB / total=160MB / max=24576MB)
+[Joint-miner@UUT/LEVIATHAN/SC3_su=0.01553#0] OK t=407ms cand=8896 pat=135 heapDelta=65MB
+>> RUNNING HUSP-ULL/LEVIATHAN/SC3_su=0.01647#0  (heap free=114MB / total=160MB / max=24576MB)
+[HUSP-ULL/LEVIATHAN/SC3_su=0.01647#0] OK t=485ms cand=468966 pat=116 heapDelta=118MB
+>> RUNNING Joint-miner@UUT/LEVIATHAN/SC3_su=0.01647#0  (heap free=114MB / total=160MB / max=24576MB)
+[Joint-miner@UUT/LEVIATHAN/SC3_su=0.01647#0] OK t=374ms cand=7777 pat=116 heapDelta=63MB
+>> RUNNING HUSP-ULL/LEVIATHAN/SC3_su=0.017987#0  (heap free=114MB / total=160MB / max=24576MB)
+[HUSP-ULL/LEVIATHAN/SC3_su=0.017987#0] OK t=424ms cand=444169 pat=81 heapDelta=102MB
+>> RUNNING Joint-miner@UUT/LEVIATHAN/SC3_su=0.017987#0  (heap free=114MB / total=160MB / max=24576MB)
+[Joint-miner@UUT/LEVIATHAN/SC3_su=0.017987#0] OK t=329ms cand=6299 pat=81 heapDelta=61MB
+>> WARM-UP (not measured) HUSP-ULL/SIGN/SC3
+>> RUNNING HUSP-ULL/SIGN/SC3_su=0.049134#0  (heap free=54MB / total=64MB / max=24576MB)
+[HUSP-ULL/SIGN/SC3_su=0.049134#0] OK t=508ms cand=761499 pat=793 heapDelta=291MB
+>> RUNNING HUSP-ULL/SIGN/SC3_su=0.049134#0  (heap free=278MB / total=560MB / max=24576MB)
+[HUSP-ULL/SIGN/SC3_su=0.049134#0] OK t=494ms cand=761499 pat=793 heapDelta=303MB
+   warm-up mines (ms, not measured): [508, 494]
+>> RUNNING HUSP-ULL/SIGN/SC3_su=0.049134#0  (heap free=54MB / total=64MB / max=24576MB)
+[HUSP-ULL/SIGN/SC3_su=0.049134#0] OK t=498ms cand=761499 pat=793 heapDelta=243MB
+>> WARM-UP (not measured) Joint-miner@UUT/SIGN/SC3
+>> RUNNING Joint-miner@UUT/SIGN/SC3_su=0.049134#0  (heap free=54MB / total=64MB / max=24576MB)
+[Joint-miner@UUT/SIGN/SC3_su=0.049134#0] OK t=329ms cand=63177 pat=793 heapDelta=19MB
+>> RUNNING Joint-miner@UUT/SIGN/SC3_su=0.049134#0  (heap free=34MB / total=64MB / max=24576MB)
+[Joint-miner@UUT/SIGN/SC3_su=0.049134#0] OK t=327ms cand=63177 pat=793 heapDelta=19MB
+   warm-up mines (ms, not measured): [329, 327]
+>> RUNNING Joint-miner@UUT/SIGN/SC3_su=0.049134#0  (heap free=53MB / total=64MB / max=24576MB)
+[Joint-miner@UUT/SIGN/SC3_su=0.049134#0] OK t=326ms cand=63177 pat=793 heapDelta=19MB
+>> RUNNING HUSP-ULL/SIGN/SC3_su=0.065911#0  (heap free=53MB / total=64MB / max=24576MB)
+[HUSP-ULL/SIGN/SC3_su=0.065911#0] OK t=270ms cand=337661 pat=141 heapDelta=236MB
+>> RUNNING Joint-miner@UUT/SIGN/SC3_su=0.065911#0  (heap free=53MB / total=64MB / max=24576MB)
+[Joint-miner@UUT/SIGN/SC3_su=0.065911#0] OK t=173ms cand=27028 pat=141 heapDelta=17MB
+>> RUNNING HUSP-ULL/SIGN/SC3_su=0.083371#0  (heap free=53MB / total=64MB / max=24576MB)
+[HUSP-ULL/SIGN/SC3_su=0.083371#0] OK t=160ms cand=174761 pat=31 heapDelta=163MB
+>> RUNNING Joint-miner@UUT/SIGN/SC3_su=0.083371#0  (heap free=53MB / total=64MB / max=24576MB)
+[Joint-miner@UUT/SIGN/SC3_su=0.083371#0] OK t=103ms cand=13513 pat=31 heapDelta=16MB
+>> RUNNING HUSP-ULL/SIGN/SC3_su=0.091052#0  (heap free=53MB / total=64MB / max=24576MB)
+[HUSP-ULL/SIGN/SC3_su=0.091052#0] OK t=131ms cand=136204 pat=16 heapDelta=81MB
+>> RUNNING Joint-miner@UUT/SIGN/SC3_su=0.091052#0  (heap free=53MB / total=64MB / max=24576MB)
+[Joint-miner@UUT/SIGN/SC3_su=0.091052#0] OK t=83ms cand=10170 pat=16 heapDelta=16MB
+>> skipping BMS1 for SC3: measurable on D_init only (22 21 18 15; SC1 only, unmineable on the whole database).
+>> WARM-UP (not measured) HUSP-ULL/C8T1S5I8N5K/SC3
+>> RUNNING HUSP-ULL/C8T1S5I8N5K/SC3_su=0.001099#0  (heap free=246MB / total=320MB / max=24576MB)
+[HUSP-ULL/C8T1S5I8N5K/SC3_su=0.001099#0] OK t=166ms cand=496427 pat=4256 heapDelta=106MB
+>> RUNNING HUSP-ULL/C8T1S5I8N5K/SC3_su=0.001099#0  (heap free=152MB / total=320MB / max=24576MB)
+[HUSP-ULL/C8T1S5I8N5K/SC3_su=0.001099#0] OK t=159ms cand=496427 pat=4256 heapDelta=112MB
+   warm-up mines (ms, not measured): [166, 159]
+>> RUNNING HUSP-ULL/C8T1S5I8N5K/SC3_su=0.001099#0  (heap free=247MB / total=320MB / max=24576MB)
+[HUSP-ULL/C8T1S5I8N5K/SC3_su=0.001099#0] OK t=160ms cand=496427 pat=4256 heapDelta=113MB
+>> WARM-UP (not measured) Joint-miner@UUT/C8T1S5I8N5K/SC3
+>> RUNNING Joint-miner@UUT/C8T1S5I8N5K/SC3_su=0.001099#0  (heap free=247MB / total=320MB / max=24576MB)
+[Joint-miner@UUT/C8T1S5I8N5K/SC3_su=0.001099#0] OK t=152ms cand=17469 pat=4256 heapDelta=108MB
+>> RUNNING Joint-miner@UUT/C8T1S5I8N5K/SC3_su=0.001099#0  (heap free=139MB / total=320MB / max=24576MB)
+[Joint-miner@UUT/C8T1S5I8N5K/SC3_su=0.001099#0] OK t=139ms cand=17469 pat=4256 heapDelta=106MB
+   warm-up mines (ms, not measured): [152, 139]
+>> RUNNING Joint-miner@UUT/C8T1S5I8N5K/SC3_su=0.001099#0  (heap free=227MB / total=320MB / max=24576MB)
+[Joint-miner@UUT/C8T1S5I8N5K/SC3_su=0.001099#0] OK t=134ms cand=17469 pat=4256 heapDelta=106MB
+>> RUNNING HUSP-ULL/C8T1S5I8N5K/SC3_su=0.001132#0  (heap free=227MB / total=320MB / max=24576MB)
+[HUSP-ULL/C8T1S5I8N5K/SC3_su=0.001132#0] OK t=158ms cand=474242 pat=3438 heapDelta=113MB
+>> RUNNING Joint-miner@UUT/C8T1S5I8N5K/SC3_su=0.001132#0  (heap free=227MB / total=320MB / max=24576MB)
+[Joint-miner@UUT/C8T1S5I8N5K/SC3_su=0.001132#0] OK t=129ms cand=14932 pat=3438 heapDelta=106MB
+>> RUNNING HUSP-ULL/C8T1S5I8N5K/SC3_su=0.0012#0  (heap free=227MB / total=320MB / max=24576MB)
+[HUSP-ULL/C8T1S5I8N5K/SC3_su=0.0012#0] OK t=132ms cand=427996 pat=2110 heapDelta=139MB
+>> RUNNING Joint-miner@UUT/C8T1S5I8N5K/SC3_su=0.0012#0  (heap free=291MB / total=384MB / max=24576MB)
+[Joint-miner@UUT/C8T1S5I8N5K/SC3_su=0.0012#0] OK t=116ms cand=11130 pat=2110 heapDelta=104MB
+>> RUNNING HUSP-ULL/C8T1S5I8N5K/SC3_su=0.001236#0  (heap free=291MB / total=384MB / max=24576MB)
+[HUSP-ULL/C8T1S5I8N5K/SC3_su=0.001236#0] OK t=125ms cand=393622 pat=1484 heapDelta=113MB
+>> RUNNING Joint-miner@UUT/C8T1S5I8N5K/SC3_su=0.001236#0  (heap free=291MB / total=384MB / max=24576MB)
+[Joint-miner@UUT/C8T1S5I8N5K/SC3_su=0.001236#0] OK t=104ms cand=9260 pat=1484 heapDelta=101MB
+=== ALL SCENARIOS DONE (252.8s) ===
