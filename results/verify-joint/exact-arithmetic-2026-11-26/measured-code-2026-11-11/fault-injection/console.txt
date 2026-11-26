@@ -1,0 +1,1 @@
+fault 'trigger without the deletion term': the original text occurs 0 times, expected 1
