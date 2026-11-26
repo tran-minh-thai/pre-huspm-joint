@@ -2,7 +2,7 @@
   "command": "~\\AppData\\Local\\Programs\\Python\\Python311\\python.exe analysis/fault_injection.py --floor-selection --trials 2000 --seed 7",
   "path_substitutions": 1,
   "build_dir": "build-rerun",
-  "git_commit": "c202653428107aec1c841db77b1239c4aeb50972",
+  "git_commit": "317182ee41180df45fc20a090ee06f75a95fa9f9",
   "tree": "src clean, other files modified",
   "source_sha256": "b85daf2155f9b64952db0d1d9b91f0c05c6ecea835a6806031ec188dee40dcd7",
   "source_files": 55,
@@ -10,7 +10,7 @@
   "os": "Windows 10 (Windows-10-10.0.26300-SP0)",
   "machine": "PC-THAI",
   "role": "correctness check: counters only, no timings",
-  "start": "2026-11-26T20:50:57",
-  "end": "2026-11-26T20:51:15",
-  "exit_code": 1
+  "start": "2026-11-27T03:03:20",
+  "end": "2026-11-27T03:03:38",
+  "exit_code": 0
 }
