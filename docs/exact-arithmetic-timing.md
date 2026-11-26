@@ -52,3 +52,24 @@ new code, so that they are kept rather than measured again.
 
 The measurement machine runs the block of the project's run list; the analysis is
 `python analysis/exact_timing.py` on the development machine after the branch is fetched.
+
+## Outcome (added 2026-11-26, after the runs; the rule above is unchanged)
+
+`analysis/exact_timing.py` on the 64 pairs of branch `campaign-sc11` (commit 383a01712), A/A bound
+r = 1.098296 from 80 pairs: every counter of every increment equal between old and new code (6,464
+of 6,464 rows, and equal to the rows of `results/campaign`); 15 of the 16 (stream, arm) keep their
+campaign timings. DUNNHUMBY with `Pre-HUSPM-Joint` does not: pair 2 has q = 1.1097 (old 135.654 s,
+new 122.245 s), the other three pairs 1.0148, 1.0044 and 1.0816. Median new/old over the 32 pairs
+of an arm: 0.9997 (`Pre-HUSPM-Joint`), 1.0031 (`Remine-own-UUT-rebuild`).
+
+That (stream, arm) is measured again with the new code. Two points the rule did not settle:
+
+- Repeats. The rule names repeats 0 to 2; the SC2 tables pool five runs of the method on DUNNHUMBY
+  (`results/campaign` and `results/campaign-replicates/s0r1` to `s0r4`). All five are measured
+  again, so that no cell pools runs of the old and the new code.
+- Sessions. On DUNNHUMBY times move between sessions by up to a factor 1.664
+  (`results-invariant/session-drift/2026-11-06`), so every arm whose time is within that factor of
+  the method's is measured again in the method's session:
+  `python analysis/session_cells.py --db DUNNHUMBY --drift 1.664 --new-session SC2`, 87 cells (the
+  method 5, near arms 82), plan in `results-invariant/session-plan/2026-11-26`. The far arms (more
+  than 1.664 times slower) keep their runs: the side of their comparison cannot change.

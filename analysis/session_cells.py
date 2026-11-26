@@ -3,6 +3,7 @@
 
     python3 analysis/session_cells.py --db DUNNHUMBY --drift 1.664
     python3 analysis/session_cells.py --db DUNNHUMBY --drift 1.664 --plan-out plan.tsv [--remove]
+    python3 analysis/session_cells.py --db DUNNHUMBY --drift 1.664 --new-session SC2 --plan-out plan.tsv
     python3 analysis/session_cells.py --self-test
 
 On a database whose times move between sessions, the time of the method over an arm's measures the
@@ -30,6 +31,10 @@ that holds a near cell: the method, the near arms and the same-session arms (mea
 again would otherwise put them in another session). A (tree, scenario) without a near cell is left
 alone, and so are the far cells. Prints the cells by scenario and kind with the hours their DONE
 files give (an estimate of the next run, not a measurement), and how many cells it could compare.
+
+--new-session SC,... is for a method measured again on other code: its runs of those scenarios
+will come from a new session, so every arm beside them counts as measured in another session
+(near or far by the drift as above) and the plan holds the method and every near arm of them.
 
 --plan-out writes tree, replicate, scenario, database, arm, kind, seconds of the planned cells.
 --remove deletes the run directories of the planned cells (campaign.ps1 measures a cell again when
@@ -83,7 +88,7 @@ def trees(results):
     return out
 
 
-def cells(results, db, drift):
+def cells(results, db, drift, new_session=()):
     """One dict per finished arm of db beside a finished method run; kinds as in the module text."""
     rows = []
     for tree, sub, base in trees(results):
@@ -102,7 +107,8 @@ def cells(results, db, drift):
                 gap = abs((dm[0] - da[0]).total_seconds()) / 3600.0
                 ta = stream_seconds(a)
                 rows.append(dict(tree=tree, replicate=sub, scenario=sc, database=db, arm=a.name,
-                                 kind="same" if gap <= SESSION_HOURS else "cross", seconds=da[1], gap_h=gap,
+                                 kind="same" if gap <= SESSION_HOURS and sc not in new_session else "cross",
+                                 seconds=da[1], gap_h=gap,
                                  ratio=tm / ta if ta > 0 else float("nan"), path=a))
     # an arm measured in another session is near when its ratio is within the drift in any tree
     near = {(r["scenario"], r["arm"]) for r in rows
@@ -119,8 +125,8 @@ def plan(rows):
     return [r for r in rows if (r["tree"], r["replicate"], r["scenario"]) in hit and r["kind"] != "far"]
 
 
-def report(results, db, drift, plan_out=None, remove=False):
-    rows = cells(results, db, drift)
+def report(results, db, drift, plan_out=None, remove=False, new_session=()):
+    rows = cells(results, db, drift, new_session)
     compared = [r for r in rows if r["kind"] != "method"]
     print(f"{db}: {len(compared)} arms compared with a run of the method in {len(rows) - len(compared)} "
           f"(tree, scenario) pairs; drift factor {drift:g}; gaps between {SESSION_HOURS:g} and "
@@ -230,6 +236,12 @@ def self_test():
         t3 = pathlib.Path(tmp) / "narrow"
         build(t3)
         check("drift 1.1: no near arm, empty plan", plan(cells(t3, "D", 1.1)) == [])
+        # the method measured again in SC2: its same-session arms become near or far, SC7 is untouched
+        p5 = {(r["tree"], r["replicate"], r["scenario"], r["arm"], r["kind"]) for r in plan(cells(t3, "D", 1.6, ("SC2",)))}
+        w5 = {(tr, rp, "SC2", a, k) for tr, rp in (("campaign", ""), ("campaign-replicates", "s0r1"))
+              for a, k in ((METHOD, "method"), ("A-same", "near"), ("B-near", "near"))}
+        check("--new-session SC2: method and near arms of both trees, no far arm, no SC7 cell", p5 == w5,
+              str(sorted(p5 ^ w5)))
     print(f"self-test failed: {fails}")
     return 1 if fails else 0
 
@@ -240,6 +252,7 @@ def main():
     ap.add_argument("--drift", type=float)
     ap.add_argument("--plan-out")
     ap.add_argument("--remove", action="store_true")
+    ap.add_argument("--new-session", default="", help="comma-separated scenarios the method is measured again in")
     ap.add_argument("--results", default=str(ROOT / "results"))
     ap.add_argument("--self-test", action="store_true")
     a = ap.parse_args()
@@ -247,7 +260,8 @@ def main():
         return self_test()
     if not a.db or not a.drift or a.drift <= 1:
         ap.error("give --db and --drift (a factor above 1), or --self-test")
-    return report(pathlib.Path(a.results), a.db, a.drift, a.plan_out, a.remove)
+    ns = tuple(s for s in a.new_session.split(",") if s)
+    return report(pathlib.Path(a.results), a.db, a.drift, a.plan_out, a.remove, ns)
 
 
 if __name__ == "__main__":
