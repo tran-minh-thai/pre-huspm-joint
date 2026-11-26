@@ -15,8 +15,14 @@ The rewritten command is printed before it runs, and record_run stores it in the
 
 --max-hours / --min-hours select by the duration of the old record, so that the short ones can
 run on one machine and the long ones on another. A record that already has a run_meta.json with
-exit code 0 at the commit of HEAD is skipped, so that running the same command again continues.
-A check-* record runs after the records it reads, and only when they are in the new tree.
+exit code 0 and the source digest of the working tree is skipped (the same src/, whatever the
+commit), so that running the same command again continues, on this machine or another one.
+A check-* record runs after the records it reads, and only when they are in the new tree;
+--exclude-checks leaves them out (they read the other records and run in seconds).
+
+Portability: a command that started with python3 or with a virtual environment's python runs with
+the interpreter of this script; a bash -c command runs with the bash of Git for Windows on Windows
+(found from git --exec-path), so that the WSL launcher is never taken for it.
 """
 import argparse
 import datetime
@@ -25,6 +31,7 @@ import os
 import pathlib
 import re
 import shlex
+import shutil
 import subprocess
 import sys
 
@@ -69,11 +76,26 @@ def rewrite(command, recs, tree, build):
         return f"{tree}/{by_leaf[x][0]}"
     c = re.sub(re.escape(VERIFY) + r"/([^\s/]+)(?=[/\s]|$)", leaf, c)
     c = re.sub(r"-cp \S+", f"-cp {build}", c)
-    if c.startswith("~/"):
-        c = str(pathlib.Path.home()) + c[1:]
     if c.startswith("bash -c "):
-        return c, ["bash", "-c", c[len("bash -c "):]]
-    return c, shlex.split(c)
+        return c, [bash(), "-c", c[len("bash -c "):]]
+    argv = shlex.split(c)
+    if argv[0] == "python3" or re.search(r"[/\\]\.?venvs?[/\\].*python[0-9.]*$", argv[0]):
+        argv[0] = sys.executable
+        c = " ".join(["python", *argv[1:]])
+    return c, argv
+
+
+def bash():
+    if os.name == "nt":
+        core = pathlib.Path(subprocess.check_output(["git", "--exec-path"], text=True).strip())
+        for b in (core.parents[2] / "bin" / "bash.exe", core.parents[1] / "bin" / "bash.exe"):
+            if b.exists():
+                return str(b)
+        sys.exit(f"no bash of Git for Windows next to {core}")
+    b = shutil.which("bash")
+    if not b:
+        sys.exit("bash not found")
+    return b
 
 
 def main():
@@ -84,10 +106,13 @@ def main():
     ap.add_argument("--only", help="comma-separated record names")
     ap.add_argument("--build", default=None, help="build directory (default: build-rerun)")
     ap.add_argument("--list", action="store_true", help="print the selection and the commands, run nothing")
+    ap.add_argument("--exclude-checks", action="store_true", help="leave out the check-* records")
     a = ap.parse_args()
     tree = a.tree.rstrip("/")
     recs = records()
-    head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
+    sys.path.insert(0, str(ROOT / "analysis"))
+    import record_run
+    digest = record_run.source_digest()[0]
     build = a.build or "build-rerun"
 
     chosen = []
@@ -95,6 +120,8 @@ def main():
         m = meta(r)
         h = hours(m)
         if a.only and r not in a.only.split(","):
+            continue
+        if a.exclude_checks and os.path.basename(r).startswith("check-"):
             continue
         if a.max_hours is not None and h > a.max_hours:
             continue
@@ -115,8 +142,8 @@ def main():
         mf = out / "run_meta.json"
         if mf.exists():
             mm = json.loads(mf.read_text(encoding="utf-8"))
-            if mm.get("exit_code") == 0 and mm.get("git_commit") == head:
-                print("   already recorded at HEAD with exit 0: skipped", flush=True)
+            if mm.get("exit_code") == 0 and mm.get("source_sha256") == digest:
+                print("   already recorded on this src/ with exit 0: skipped", flush=True)
                 skipped += 1
                 continue
         missing = [x for x in reads if not (ROOT / tree / x / "run_meta.json").exists()]
