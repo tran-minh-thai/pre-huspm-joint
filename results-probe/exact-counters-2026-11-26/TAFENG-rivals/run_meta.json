@@ -1,0 +1,16 @@
+{
+  "command": "java -Xmx8g -Xss64m -cp build-ec -Drepeats=1 -Ddataset.only=TAFENG -Dalgo.only=IncUSP-Miner+,Pre-HUSPM-SWUmax,Pre-HUSPM-TSU,Remine-HUSP-SP,Remine-HUSP-ULL,Remine-from-scratch,Remine-from-scratch-rebuild,Remine-own-UUT,Pre-HUSPM-Joint-fixed-threshold -Dresults.dir=results-probe/exact-counters-2026-11-26/TAFENG-rivals/ AutomatedExperimentRunner SC2",
+  "path_substitutions": 0,
+  "build_dir": "build-ec",
+  "git_commit": "dc0543ec2c6dc27bbb430c1305fc29262d47e1d5",
+  "tree": "src clean, other files modified",
+  "source_sha256": "5a5de4603d853ce134228853e06e502f69f9c7781218b752b9d723845a74074c",
+  "source_files": 55,
+  "java": "openjdk version \"25.0.4.1\" 2026-08-18 LTS",
+  "os": "Darwin 27.2.0 (macOS-27.2.1-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "correctness check: counters only, no timings",
+  "start": "2026-11-26T08:20:51",
+  "end": "2026-11-26T08:37:11",
+  "exit_code": 0
+}

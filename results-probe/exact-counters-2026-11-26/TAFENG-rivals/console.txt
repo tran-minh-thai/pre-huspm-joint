@@ -1,0 +1,1825 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 9 | Scenarios: [SC2]
+Heap max: 8192 MB
+Platform: os=Mac OS X 27.2.1 (aarch64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=10 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC2] Incremental sequence (100 batches, EVEN; D_init per Yan et al. Table 16) ---
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INIT#0  (heap free=332MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INIT#0] OK t=889ms cand=2123 pat=6 heapDelta=183MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#1  (heap free=316MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#1] OK t=5ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#2  (heap free=315MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#2] OK t=334ms cand=2109 pat=6 heapDelta=42MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#3  (heap free=314MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#3] OK t=2ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#4  (heap free=314MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#4] OK t=354ms cand=2105 pat=6 heapDelta=40MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#5  (heap free=313MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#5] OK t=1ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#6  (heap free=313MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#6] OK t=177ms cand=2110 pat=6 heapDelta=40MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#7  (heap free=312MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#7] OK t=156ms cand=2111 pat=6 heapDelta=40MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#8  (heap free=312MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#8] OK t=156ms cand=2115 pat=6 heapDelta=42MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#9  (heap free=312MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#9] OK t=169ms cand=2156 pat=6 heapDelta=42MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#10  (heap free=311MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#10] OK t=222ms cand=2158 pat=6 heapDelta=42MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#11  (heap free=311MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#11] OK t=159ms cand=2156 pat=6 heapDelta=42MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#12  (heap free=310MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#12] OK t=2ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#13  (heap free=310MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#13] OK t=211ms cand=2150 pat=6 heapDelta=42MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#14  (heap free=310MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#14] OK t=179ms cand=2151 pat=6 heapDelta=42MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#15  (heap free=310MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#15] OK t=1ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#16  (heap free=310MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#16] OK t=162ms cand=2143 pat=6 heapDelta=42MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#17  (heap free=310MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#17] OK t=1ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#18  (heap free=309MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#18] OK t=236ms cand=2134 pat=6 heapDelta=42MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#19  (heap free=309MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#19] OK t=0ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#20  (heap free=309MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#20] OK t=181ms cand=2124 pat=6 heapDelta=42MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#21  (heap free=309MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#21] OK t=1ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#22  (heap free=309MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#22] OK t=182ms cand=2119 pat=6 heapDelta=44MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#23  (heap free=309MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#23] OK t=1ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#24  (heap free=309MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#24] OK t=188ms cand=2114 pat=6 heapDelta=44MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#25  (heap free=309MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#25] OK t=1ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#26  (heap free=309MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#26] OK t=165ms cand=2105 pat=6 heapDelta=44MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#27  (heap free=309MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#27] OK t=1ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#28  (heap free=308MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#28] OK t=153ms cand=2100 pat=6 heapDelta=44MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#29  (heap free=308MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#29] OK t=1ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#30  (heap free=308MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#30] OK t=194ms cand=2089 pat=6 heapDelta=44MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#31  (heap free=308MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#31] OK t=1ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#32  (heap free=308MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#32] OK t=1ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#33  (heap free=308MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#33] OK t=199ms cand=2083 pat=6 heapDelta=44MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#34  (heap free=308MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#34] OK t=1ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#35  (heap free=308MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#35] OK t=180ms cand=2072 pat=6 heapDelta=44MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#36  (heap free=307MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#36] OK t=238ms cand=2068 pat=6 heapDelta=46MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#37  (heap free=307MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#37] OK t=1ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#38  (heap free=307MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#38] OK t=198ms cand=2077 pat=6 heapDelta=46MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#39  (heap free=307MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#39] OK t=239ms cand=2079 pat=6 heapDelta=46MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#40  (heap free=307MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#40] OK t=265ms cand=2081 pat=6 heapDelta=46MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#41  (heap free=307MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#41] OK t=1ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#42  (heap free=307MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#42] OK t=256ms cand=2070 pat=6 heapDelta=46MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#43  (heap free=306MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#43] OK t=1ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#44  (heap free=306MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#44] OK t=232ms cand=2063 pat=6 heapDelta=46MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#45  (heap free=306MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#45] OK t=9ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#46  (heap free=306MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#46] OK t=1ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#47  (heap free=306MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#47] OK t=296ms cand=2058 pat=6 heapDelta=46MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#48  (heap free=306MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#48] OK t=1ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#49  (heap free=306MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#49] OK t=356ms cand=2056 pat=6 heapDelta=48MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#50  (heap free=306MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#50] OK t=272ms cand=2067 pat=6 heapDelta=48MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#51  (heap free=305MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#51] OK t=2ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#52  (heap free=305MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#52] OK t=1ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#53  (heap free=305MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#53] OK t=330ms cand=2069 pat=6 heapDelta=48MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#54  (heap free=305MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#54] OK t=1ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#55  (heap free=305MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#55] OK t=196ms cand=2073 pat=6 heapDelta=48MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#56  (heap free=305MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#56] OK t=2ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#57  (heap free=305MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#57] OK t=170ms cand=2068 pat=6 heapDelta=48MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#58  (heap free=305MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#58] OK t=1ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#59  (heap free=305MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#59] OK t=193ms cand=2067 pat=6 heapDelta=50MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#60  (heap free=305MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#60] OK t=2ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#61  (heap free=304MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#61] OK t=167ms cand=2063 pat=6 heapDelta=50MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#62  (heap free=304MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#62] OK t=2ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#63  (heap free=304MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#63] OK t=194ms cand=2059 pat=6 heapDelta=50MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#64  (heap free=304MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#64] OK t=1ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#65  (heap free=304MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#65] OK t=426ms cand=2048 pat=6 heapDelta=50MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#66  (heap free=304MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#66] OK t=2ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#67  (heap free=304MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#67] OK t=1ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#68  (heap free=304MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#68] OK t=356ms cand=2043 pat=6 heapDelta=50MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#69  (heap free=304MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#69] OK t=0ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#70  (heap free=304MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#70] OK t=421ms cand=2045 pat=6 heapDelta=50MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#71  (heap free=304MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#71] OK t=1ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#72  (heap free=304MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#72] OK t=2ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#73  (heap free=304MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#73] OK t=337ms cand=2027 pat=6 heapDelta=50MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#74  (heap free=303MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#74] OK t=1ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#75  (heap free=303MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#75] OK t=184ms cand=2082 pat=6 heapDelta=52MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#76  (heap free=303MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#76] OK t=193ms cand=2098 pat=6 heapDelta=52MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#77  (heap free=303MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#77] OK t=1ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#78  (heap free=303MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#78] OK t=412ms cand=2092 pat=6 heapDelta=52MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#79  (heap free=302MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#79] OK t=174ms cand=2086 pat=6 heapDelta=52MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#80  (heap free=302MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#80] OK t=2ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#81  (heap free=302MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#81] OK t=1ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#82  (heap free=302MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#82] OK t=384ms cand=2048 pat=8 heapDelta=52MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#83  (heap free=302MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#83] OK t=702ms cand=2062 pat=8 heapDelta=54MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#84  (heap free=302MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#84] OK t=545ms cand=2061 pat=9 heapDelta=54MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#85  (heap free=302MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#85] OK t=821ms cand=2054 pat=9 heapDelta=54MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#86  (heap free=302MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#86] OK t=1ms cand=0 pat=9 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#87  (heap free=302MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#87] OK t=1ms cand=0 pat=9 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#88  (heap free=302MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#88] OK t=711ms cand=2046 pat=9 heapDelta=54MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#89  (heap free=302MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#89] OK t=2ms cand=0 pat=9 heapDelta=4MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#90  (heap free=302MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#90] OK t=1ms cand=0 pat=9 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#91  (heap free=301MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#91] OK t=568ms cand=2045 pat=9 heapDelta=54MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#92  (heap free=301MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#92] OK t=2ms cand=0 pat=9 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#93  (heap free=301MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#93] OK t=1ms cand=0 pat=9 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#94  (heap free=301MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#94] OK t=370ms cand=2036 pat=9 heapDelta=54MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#95  (heap free=301MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#95] OK t=2ms cand=0 pat=9 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#96  (heap free=301MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#96] OK t=1ms cand=0 pat=9 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#97  (heap free=301MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#97] OK t=2ms cand=0 pat=9 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#98  (heap free=301MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#98] OK t=537ms cand=2027 pat=9 heapDelta=54MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#99  (heap free=300MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#99] OK t=1ms cand=0 pat=9 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#100  (heap free=301MB / total=516MB / max=8192MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC2_INC#100] OK t=532ms cand=2035 pat=9 heapDelta=56MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INIT#0  (heap free=324MB / total=516MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INIT#0] OK t=2856ms cand=1607145 pat=6 heapDelta=622MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#1  (heap free=517MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#1] OK t=578ms cand=50101 pat=6 heapDelta=182MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#2  (heap free=517MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#2] OK t=280ms cand=39422 pat=6 heapDelta=174MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#3  (heap free=517MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#3] OK t=289ms cand=46602 pat=6 heapDelta=176MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#4  (heap free=517MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#4] OK t=290ms cand=50026 pat=6 heapDelta=178MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#5  (heap free=517MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#5] OK t=269ms cand=45619 pat=6 heapDelta=178MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#6  (heap free=516MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#6] OK t=334ms cand=60793 pat=6 heapDelta=194MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#7  (heap free=516MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#7] OK t=299ms cand=63573 pat=6 heapDelta=190MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#8  (heap free=515MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#8] OK t=352ms cand=178611 pat=6 heapDelta=266MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#9  (heap free=514MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#9] OK t=419ms cand=220094 pat=6 heapDelta=296MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#10  (heap free=513MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#10] OK t=364ms cand=69130 pat=6 heapDelta=194MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#11  (heap free=513MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#11] OK t=171ms cand=52675 pat=6 heapDelta=186MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#12  (heap free=512MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#12] OK t=236ms cand=42102 pat=6 heapDelta=182MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#13  (heap free=512MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#13] OK t=228ms cand=43875 pat=6 heapDelta=184MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#14  (heap free=512MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#14] OK t=248ms cand=81775 pat=6 heapDelta=210MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#15  (heap free=511MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#15] OK t=202ms cand=56059 pat=6 heapDelta=190MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#16  (heap free=511MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#16] OK t=296ms cand=50369 pat=6 heapDelta=190MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#17  (heap free=510MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#17] OK t=232ms cand=51229 pat=6 heapDelta=190MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#18  (heap free=510MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#18] OK t=277ms cand=63161 pat=6 heapDelta=202MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#19  (heap free=510MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#19] OK t=257ms cand=50788 pat=6 heapDelta=196MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#20  (heap free=509MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#20] OK t=256ms cand=45533 pat=6 heapDelta=188MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#21  (heap free=509MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#21] OK t=242ms cand=41479 pat=6 heapDelta=186MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#22  (heap free=509MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#22] OK t=267ms cand=52922 pat=6 heapDelta=194MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#23  (heap free=508MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#23] OK t=287ms cand=49236 pat=6 heapDelta=194MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#24  (heap free=508MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#24] OK t=314ms cand=48347 pat=6 heapDelta=192MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#25  (heap free=507MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#25] OK t=263ms cand=42932 pat=6 heapDelta=190MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#26  (heap free=507MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#26] OK t=277ms cand=54427 pat=6 heapDelta=198MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#27  (heap free=507MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#27] OK t=280ms cand=63412 pat=6 heapDelta=208MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#28  (heap free=506MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#28] OK t=317ms cand=53314 pat=6 heapDelta=200MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#29  (heap free=506MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#29] OK t=244ms cand=41171 pat=6 heapDelta=192MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#30  (heap free=506MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#30] OK t=349ms cand=58444 pat=6 heapDelta=204MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#31  (heap free=505MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#31] OK t=307ms cand=50657 pat=6 heapDelta=200MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#32  (heap free=505MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#32] OK t=335ms cand=58314 pat=6 heapDelta=206MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#33  (heap free=505MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#33] OK t=282ms cand=31847 pat=6 heapDelta=178MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#34  (heap free=504MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#34] OK t=371ms cand=55134 pat=6 heapDelta=208MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#35  (heap free=504MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#35] OK t=291ms cand=38971 pat=6 heapDelta=186MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#36  (heap free=504MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#36] OK t=400ms cand=105068 pat=6 heapDelta=244MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#37  (heap free=503MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#37] OK t=395ms cand=59196 pat=6 heapDelta=210MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#38  (heap free=503MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#38] OK t=456ms cand=93095 pat=6 heapDelta=234MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#39  (heap free=502MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#39] OK t=381ms cand=68492 pat=6 heapDelta=214MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#40  (heap free=502MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#40] OK t=512ms cand=53666 pat=6 heapDelta=208MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#41  (heap free=501MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#41] OK t=346ms cand=52553 pat=6 heapDelta=206MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#42  (heap free=501MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#42] OK t=466ms cand=49071 pat=6 heapDelta=206MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#43  (heap free=501MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#43] OK t=324ms cand=46100 pat=6 heapDelta=204MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#44  (heap free=500MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#44] OK t=406ms cand=61753 pat=6 heapDelta=218MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#45  (heap free=500MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#45] OK t=229ms cand=61886 pat=6 heapDelta=218MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#46  (heap free=499MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#46] OK t=387ms cand=53658 pat=6 heapDelta=210MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#47  (heap free=499MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#47] OK t=238ms cand=61741 pat=6 heapDelta=218MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#48  (heap free=499MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#48] OK t=679ms cand=47420 pat=6 heapDelta=206MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#49  (heap free=498MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#49] OK t=632ms cand=65209 pat=6 heapDelta=226MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#50  (heap free=498MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#50] OK t=586ms cand=123231 pat=6 heapDelta=258MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#51  (heap free=497MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#51] OK t=634ms cand=51801 pat=6 heapDelta=212MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#52  (heap free=497MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#52] OK t=459ms cand=60696 pat=6 heapDelta=218MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#53  (heap free=497MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#53] OK t=330ms cand=53733 pat=6 heapDelta=216MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#54  (heap free=496MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#54] OK t=293ms cand=49292 pat=6 heapDelta=212MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#55  (heap free=496MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#55] OK t=296ms cand=66637 pat=6 heapDelta=228MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#56  (heap free=495MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#56] OK t=280ms cand=49784 pat=6 heapDelta=216MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#57  (heap free=495MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#57] OK t=289ms cand=78743 pat=6 heapDelta=240MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#58  (heap free=495MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#58] OK t=244ms cand=42876 pat=6 heapDelta=210MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#59  (heap free=494MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#59] OK t=281ms cand=75639 pat=6 heapDelta=234MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#60  (heap free=494MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#60] OK t=315ms cand=45752 pat=6 heapDelta=208MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#61  (heap free=494MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#61] OK t=301ms cand=72725 pat=6 heapDelta=226MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#62  (heap free=493MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#62] OK t=291ms cand=65942 pat=6 heapDelta=232MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#63  (heap free=493MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#63] OK t=337ms cand=69044 pat=6 heapDelta=230MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#64  (heap free=492MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#64] OK t=315ms cand=43695 pat=6 heapDelta=216MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#65  (heap free=492MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#65] OK t=303ms cand=60795 pat=6 heapDelta=230MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#66  (heap free=492MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#66] OK t=225ms cand=47104 pat=6 heapDelta=212MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#67  (heap free=491MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#67] OK t=223ms cand=54296 pat=6 heapDelta=224MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#68  (heap free=491MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#68] OK t=196ms cand=33050 pat=6 heapDelta=200MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#69  (heap free=491MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#69] OK t=207ms cand=50170 pat=6 heapDelta=216MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#70  (heap free=490MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#70] OK t=263ms cand=52810 pat=6 heapDelta=224MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#71  (heap free=490MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#71] OK t=323ms cand=66404 pat=6 heapDelta=236MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#72  (heap free=489MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#72] OK t=344ms cand=48593 pat=6 heapDelta=224MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#73  (heap free=489MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#73] OK t=433ms cand=71144 pat=6 heapDelta=242MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#74  (heap free=489MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#74] OK t=327ms cand=66800 pat=6 heapDelta=236MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#75  (heap free=488MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#75] OK t=697ms cand=321931 pat=6 heapDelta=262MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#76  (heap free=487MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#76] OK t=382ms cand=139754 pat=6 heapDelta=220MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#77  (heap free=487MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#77] OK t=266ms cand=47580 pat=6 heapDelta=228MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#78  (heap free=487MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#78] OK t=222ms cand=45592 pat=6 heapDelta=214MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#79  (heap free=486MB / total=720MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#79] OK t=311ms cand=75321 pat=6 heapDelta=246MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#80  (heap free=646MB / total=880MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#80] OK t=331ms cand=84967 pat=6 heapDelta=256MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#81  (heap free=645MB / total=880MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#81] OK t=277ms cand=31596 pat=6 heapDelta=208MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#82  (heap free=645MB / total=880MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#82] OK t=226ms cand=39626 pat=8 heapDelta=214MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#83  (heap free=645MB / total=880MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#83] OK t=297ms cand=187075 pat=8 heapDelta=330MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#84  (heap free=644MB / total=880MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#84] OK t=254ms cand=64303 pat=9 heapDelta=246MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#85  (heap free=644MB / total=880MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#85] OK t=270ms cand=61857 pat=9 heapDelta=246MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#86  (heap free=643MB / total=880MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#86] OK t=228ms cand=42204 pat=9 heapDelta=224MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#87  (heap free=643MB / total=880MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#87] OK t=437ms cand=59717 pat=9 heapDelta=246MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#88  (heap free=643MB / total=880MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#88] OK t=363ms cand=58948 pat=9 heapDelta=246MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#89  (heap free=642MB / total=880MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#89] OK t=408ms cand=56796 pat=9 heapDelta=246MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#90  (heap free=642MB / total=880MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#90] OK t=472ms cand=69624 pat=9 heapDelta=256MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#91  (heap free=642MB / total=880MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#91] OK t=267ms cand=46063 pat=9 heapDelta=234MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#92  (heap free=641MB / total=880MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#92] OK t=190ms cand=55970 pat=9 heapDelta=242MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#93  (heap free=641MB / total=880MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#93] OK t=214ms cand=38534 pat=9 heapDelta=226MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#94  (heap free=641MB / total=880MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#94] OK t=195ms cand=39975 pat=9 heapDelta=228MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#95  (heap free=640MB / total=880MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#95] OK t=274ms cand=70060 pat=9 heapDelta=258MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#96  (heap free=640MB / total=880MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#96] OK t=230ms cand=43025 pat=9 heapDelta=234MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#97  (heap free=640MB / total=880MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#97] OK t=282ms cand=45772 pat=9 heapDelta=236MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#98  (heap free=639MB / total=880MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#98] OK t=211ms cand=71355 pat=9 heapDelta=256MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#99  (heap free=639MB / total=880MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#99] OK t=227ms cand=68946 pat=9 heapDelta=250MB
+>> RUNNING IncUSP-Miner+/TAFENG/SC2_INC#100  (heap free=639MB / total=880MB / max=8192MB)
+[IncUSP-Miner+/TAFENG/SC2_INC#100] OK t=255ms cand=136581 pat=9 heapDelta=306MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INIT#0  (heap free=507MB / total=696MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INIT#0] OK t=507ms cand=478215 pat=6 heapDelta=146MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#1  (heap free=289MB / total=428MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#1] OK t=1ms cand=8076 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#2  (heap free=289MB / total=428MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#2] OK t=260ms cand=478645 pat=6 heapDelta=124MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#3  (heap free=288MB / total=428MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#3] OK t=1ms cand=7598 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#4  (heap free=287MB / total=428MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#4] OK t=278ms cand=476453 pat=6 heapDelta=118MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#5  (heap free=287MB / total=428MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#5] OK t=1ms cand=7614 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#6  (heap free=287MB / total=428MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#6] OK t=247ms cand=478621 pat=6 heapDelta=117MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#7  (heap free=406MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#7] OK t=271ms cand=481054 pat=6 heapDelta=144MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#8  (heap free=405MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#8] OK t=193ms cand=489236 pat=6 heapDelta=146MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#9  (heap free=404MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#9] OK t=274ms cand=512854 pat=6 heapDelta=148MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#10  (heap free=403MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#10] OK t=203ms cand=508288 pat=6 heapDelta=148MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#11  (heap free=402MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#11] OK t=203ms cand=507280 pat=6 heapDelta=148MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#12  (heap free=402MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#12] OK t=12ms cand=7096 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#13  (heap free=402MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#13] OK t=166ms cand=507496 pat=6 heapDelta=150MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#14  (heap free=401MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#14] OK t=317ms cand=509759 pat=6 heapDelta=150MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#15  (heap free=401MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#15] OK t=1ms cand=9377 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#16  (heap free=401MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#16] OK t=271ms cand=511180 pat=6 heapDelta=150MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#17  (heap free=400MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#17] OK t=2ms cand=7321 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#18  (heap free=400MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#18] OK t=279ms cand=506478 pat=6 heapDelta=150MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#19  (heap free=400MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#19] OK t=1ms cand=5263 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#20  (heap free=400MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#20] OK t=211ms cand=502853 pat=6 heapDelta=150MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#21  (heap free=399MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#21] OK t=1ms cand=4779 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#22  (heap free=399MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#22] OK t=207ms cand=498636 pat=6 heapDelta=152MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#23  (heap free=398MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#23] OK t=1ms cand=6051 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#24  (heap free=398MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#24] OK t=280ms cand=501872 pat=6 heapDelta=152MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#25  (heap free=398MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#25] OK t=1ms cand=5953 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#26  (heap free=398MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#26] OK t=237ms cand=498918 pat=6 heapDelta=152MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#27  (heap free=398MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#27] OK t=1ms cand=6851 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#28  (heap free=398MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#28] OK t=278ms cand=495973 pat=6 heapDelta=152MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#29  (heap free=397MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#29] OK t=2ms cand=5833 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#30  (heap free=397MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#30] OK t=289ms cand=494616 pat=6 heapDelta=154MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#31  (heap free=397MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#31] OK t=1ms cand=5743 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#32  (heap free=397MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#32] OK t=1ms cand=5584 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#33  (heap free=397MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#33] OK t=236ms cand=490168 pat=6 heapDelta=154MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#34  (heap free=396MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#34] OK t=3ms cand=8210 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#35  (heap free=396MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#35] OK t=380ms cand=489133 pat=6 heapDelta=154MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#36  (heap free=396MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#36] OK t=386ms cand=489833 pat=6 heapDelta=154MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#37  (heap free=395MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#37] OK t=3ms cand=8279 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#38  (heap free=395MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#38] OK t=324ms cand=492141 pat=6 heapDelta=156MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#39  (heap free=395MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#39] OK t=293ms cand=495593 pat=6 heapDelta=156MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#40  (heap free=394MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#40] OK t=286ms cand=497513 pat=6 heapDelta=158MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#41  (heap free=394MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#41] OK t=1ms cand=8042 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#42  (heap free=394MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#42] OK t=378ms cand=492933 pat=6 heapDelta=158MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#43  (heap free=394MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#43] OK t=1ms cand=5698 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#44  (heap free=394MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#44] OK t=404ms cand=490563 pat=6 heapDelta=158MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#45  (heap free=393MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#45] OK t=0ms cand=6593 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#46  (heap free=393MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#46] OK t=2ms cand=7284 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#47  (heap free=393MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#47] OK t=589ms cand=487520 pat=6 heapDelta=158MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#48  (heap free=393MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#48] OK t=3ms cand=7330 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#49  (heap free=393MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#49] OK t=667ms cand=489164 pat=6 heapDelta=160MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#50  (heap free=392MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#50] OK t=360ms cand=493979 pat=6 heapDelta=160MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#51  (heap free=392MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#51] OK t=1ms cand=6452 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#52  (heap free=392MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#52] OK t=448ms cand=493841 pat=6 heapDelta=162MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#53  (heap free=391MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#53] OK t=3ms cand=7465 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#54  (heap free=391MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#54] OK t=528ms cand=492340 pat=6 heapDelta=162MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#55  (heap free=391MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#55] OK t=1ms cand=7360 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#56  (heap free=391MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#56] OK t=416ms cand=498491 pat=6 heapDelta=164MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#57  (heap free=391MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#57] OK t=2ms cand=7695 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#58  (heap free=391MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#58] OK t=374ms cand=494457 pat=6 heapDelta=164MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#59  (heap free=390MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#59] OK t=440ms cand=495403 pat=6 heapDelta=164MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#60  (heap free=390MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#60] OK t=2ms cand=6034 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#61  (heap free=390MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#61] OK t=393ms cand=493066 pat=6 heapDelta=164MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#62  (heap free=390MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#62] OK t=2ms cand=9739 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#63  (heap free=389MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#63] OK t=442ms cand=494102 pat=6 heapDelta=166MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#64  (heap free=389MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#64] OK t=1ms cand=6818 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#65  (heap free=389MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#65] OK t=370ms cand=492383 pat=6 heapDelta=166MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#66  (heap free=389MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#66] OK t=1ms cand=6888 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#67  (heap free=389MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#67] OK t=1ms cand=6322 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#68  (heap free=389MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#68] OK t=353ms cand=489498 pat=6 heapDelta=168MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#69  (heap free=388MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#69] OK t=2ms cand=7652 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#70  (heap free=388MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#70] OK t=529ms cand=492091 pat=6 heapDelta=168MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#71  (heap free=388MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#71] OK t=1ms cand=9468 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#72  (heap free=388MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#72] OK t=475ms cand=487342 pat=6 heapDelta=168MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#73  (heap free=388MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#73] OK t=1ms cand=6380 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#74  (heap free=388MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#74] OK t=472ms cand=486116 pat=6 heapDelta=170MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#75  (heap free=387MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#75] OK t=572ms cand=524362 pat=6 heapDelta=174MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#76  (heap free=387MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#76] OK t=408ms cand=532372 pat=6 heapDelta=176MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#77  (heap free=387MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#77] OK t=0ms cand=6543 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#78  (heap free=386MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#78] OK t=536ms cand=527842 pat=6 heapDelta=176MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#79  (heap free=386MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#79] OK t=384ms cand=527068 pat=6 heapDelta=176MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#80  (heap free=386MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#80] OK t=1ms cand=10038 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#81  (heap free=386MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#81] OK t=413ms cand=525047 pat=6 heapDelta=176MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#82  (heap free=385MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#82] OK t=381ms cand=506995 pat=8 heapDelta=174MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#83  (heap free=385MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#83] OK t=422ms cand=514367 pat=8 heapDelta=176MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#84  (heap free=385MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#84] OK t=501ms cand=515380 pat=9 heapDelta=176MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#85  (heap free=384MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#85] OK t=552ms cand=509892 pat=9 heapDelta=176MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#86  (heap free=384MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#86] OK t=1ms cand=5314 pat=9 heapDelta=4MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#87  (heap free=384MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#87] OK t=397ms cand=509979 pat=9 heapDelta=176MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#88  (heap free=384MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#88] OK t=2ms cand=6424 pat=9 heapDelta=4MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#89  (heap free=384MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#89] OK t=1ms cand=7583 pat=9 heapDelta=4MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#90  (heap free=384MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#90] OK t=524ms cand=505954 pat=9 heapDelta=172MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#91  (heap free=383MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#91] OK t=1ms cand=6816 pat=9 heapDelta=4MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#92  (heap free=383MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#92] OK t=380ms cand=504717 pat=9 heapDelta=162MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#93  (heap free=383MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#93] OK t=0ms cand=4098 pat=9 heapDelta=4MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#94  (heap free=383MB / total=548MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#94] OK t=861ms cand=505344 pat=9 heapDelta=154MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#95  (heap free=410MB / total=576MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#95] OK t=2ms cand=6921 pat=9 heapDelta=4MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#96  (heap free=410MB / total=576MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#96] OK t=4ms cand=4732 pat=9 heapDelta=4MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#97  (heap free=410MB / total=576MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#97] OK t=871ms cand=504896 pat=9 heapDelta=168MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#98  (heap free=410MB / total=576MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#98] OK t=2ms cand=6845 pat=9 heapDelta=4MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#99  (heap free=410MB / total=576MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#99] OK t=399ms cand=503563 pat=9 heapDelta=162MB
+>> RUNNING Pre-HUSPM-SWUmax/TAFENG/SC2_INC#100  (heap free=410MB / total=576MB / max=8192MB)
+[Pre-HUSPM-SWUmax/TAFENG/SC2_INC#100] OK t=2ms cand=21515 pat=9 heapDelta=4MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INIT#0  (heap free=410MB / total=576MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INIT#0] OK t=289ms cand=478215 pat=6 heapDelta=151MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#1  (heap free=289MB / total=428MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#1] OK t=277ms cand=477839 pat=6 heapDelta=121MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#2  (heap free=380MB / total=520MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#2] OK t=219ms cand=478645 pat=6 heapDelta=132MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#3  (heap free=378MB / total=520MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#3] OK t=218ms cand=474717 pat=6 heapDelta=140MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#4  (heap free=378MB / total=520MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#4] OK t=215ms cand=476453 pat=6 heapDelta=142MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#5  (heap free=377MB / total=520MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#5] OK t=232ms cand=478785 pat=6 heapDelta=142MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#6  (heap free=377MB / total=520MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#6] OK t=233ms cand=478621 pat=6 heapDelta=142MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#7  (heap free=376MB / total=520MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#7] OK t=234ms cand=481054 pat=6 heapDelta=142MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#8  (heap free=375MB / total=520MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#8] OK t=232ms cand=489236 pat=6 heapDelta=144MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#9  (heap free=375MB / total=520MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#9] OK t=277ms cand=512854 pat=6 heapDelta=148MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#10  (heap free=374MB / total=520MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#10] OK t=312ms cand=508288 pat=6 heapDelta=148MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#11  (heap free=373MB / total=520MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#11] OK t=298ms cand=507280 pat=6 heapDelta=148MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#12  (heap free=373MB / total=520MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#12] OK t=236ms cand=509290 pat=6 heapDelta=148MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#13  (heap free=373MB / total=520MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#13] OK t=314ms cand=507496 pat=6 heapDelta=148MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#14  (heap free=372MB / total=520MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#14] OK t=438ms cand=509759 pat=6 heapDelta=150MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#15  (heap free=372MB / total=520MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#15] OK t=279ms cand=510079 pat=6 heapDelta=150MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#16  (heap free=371MB / total=520MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#16] OK t=293ms cand=511180 pat=6 heapDelta=150MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#17  (heap free=371MB / total=520MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#17] OK t=316ms cand=509861 pat=6 heapDelta=150MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#18  (heap free=370MB / total=520MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#18] OK t=301ms cand=506478 pat=6 heapDelta=150MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#19  (heap free=370MB / total=520MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#19] OK t=297ms cand=503924 pat=6 heapDelta=150MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#20  (heap free=370MB / total=520MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#20] OK t=240ms cand=502853 pat=6 heapDelta=150MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#21  (heap free=369MB / total=520MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#21] OK t=276ms cand=501047 pat=6 heapDelta=150MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#22  (heap free=369MB / total=520MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#22] OK t=206ms cand=498636 pat=6 heapDelta=150MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#23  (heap free=369MB / total=520MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#23] OK t=198ms cand=501782 pat=6 heapDelta=152MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#24  (heap free=368MB / total=520MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#24] OK t=267ms cand=501872 pat=6 heapDelta=152MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#25  (heap free=368MB / total=520MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#25] OK t=268ms cand=497733 pat=6 heapDelta=152MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#26  (heap free=367MB / total=520MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#26] OK t=310ms cand=498918 pat=6 heapDelta=152MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#27  (heap free=367MB / total=520MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#27] OK t=298ms cand=495138 pat=6 heapDelta=152MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#28  (heap free=367MB / total=520MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#28] OK t=229ms cand=495973 pat=6 heapDelta=152MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#29  (heap free=366MB / total=520MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#29] OK t=291ms cand=494070 pat=6 heapDelta=152MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#30  (heap free=366MB / total=520MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#30] OK t=295ms cand=494616 pat=6 heapDelta=152MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#31  (heap free=366MB / total=520MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#31] OK t=284ms cand=493904 pat=6 heapDelta=152MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#32  (heap free=365MB / total=520MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#32] OK t=428ms cand=491507 pat=6 heapDelta=154MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#33  (heap free=365MB / total=520MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#33] OK t=427ms cand=490168 pat=6 heapDelta=150MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#34  (heap free=365MB / total=520MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#34] OK t=421ms cand=488215 pat=6 heapDelta=154MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#35  (heap free=364MB / total=520MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#35] OK t=448ms cand=489133 pat=6 heapDelta=154MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#36  (heap free=364MB / total=520MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#36] OK t=427ms cand=489833 pat=6 heapDelta=154MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#37  (heap free=364MB / total=520MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#37] OK t=560ms cand=487273 pat=6 heapDelta=152MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#38  (heap free=403MB / total=560MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#38] OK t=395ms cand=492141 pat=6 heapDelta=156MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#39  (heap free=403MB / total=560MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#39] OK t=315ms cand=495593 pat=6 heapDelta=156MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#40  (heap free=403MB / total=560MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#40] OK t=278ms cand=497513 pat=6 heapDelta=156MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#41  (heap free=403MB / total=560MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#41] OK t=255ms cand=494382 pat=6 heapDelta=156MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#42  (heap free=390MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#42] OK t=216ms cand=492933 pat=6 heapDelta=158MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#43  (heap free=390MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#43] OK t=309ms cand=493401 pat=6 heapDelta=158MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#44  (heap free=390MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#44] OK t=219ms cand=490563 pat=6 heapDelta=158MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#45  (heap free=390MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#45] OK t=183ms cand=489359 pat=6 heapDelta=158MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#46  (heap free=389MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#46] OK t=233ms cand=487411 pat=6 heapDelta=158MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#47  (heap free=389MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#47] OK t=255ms cand=487520 pat=6 heapDelta=158MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#48  (heap free=389MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#48] OK t=187ms cand=489373 pat=6 heapDelta=158MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#49  (heap free=389MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#49] OK t=249ms cand=489164 pat=6 heapDelta=160MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#50  (heap free=388MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#50] OK t=304ms cand=493979 pat=6 heapDelta=160MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#51  (heap free=388MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#51] OK t=262ms cand=491642 pat=6 heapDelta=160MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#52  (heap free=388MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#52] OK t=278ms cand=493841 pat=6 heapDelta=162MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#53  (heap free=387MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#53] OK t=284ms cand=493124 pat=6 heapDelta=162MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#54  (heap free=387MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#54] OK t=219ms cand=492340 pat=6 heapDelta=162MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#55  (heap free=387MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#55] OK t=310ms cand=497128 pat=6 heapDelta=162MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#56  (heap free=387MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#56] OK t=236ms cand=498491 pat=6 heapDelta=164MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#57  (heap free=386MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#57] OK t=286ms cand=497299 pat=6 heapDelta=164MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#58  (heap free=386MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#58] OK t=312ms cand=494457 pat=6 heapDelta=164MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#59  (heap free=386MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#59] OK t=223ms cand=495403 pat=6 heapDelta=164MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#60  (heap free=386MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#60] OK t=288ms cand=493928 pat=6 heapDelta=164MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#61  (heap free=385MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#61] OK t=302ms cand=493066 pat=6 heapDelta=164MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#62  (heap free=385MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#62] OK t=292ms cand=493226 pat=6 heapDelta=164MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#63  (heap free=385MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#63] OK t=308ms cand=494102 pat=6 heapDelta=166MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#64  (heap free=384MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#64] OK t=453ms cand=492254 pat=6 heapDelta=166MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#65  (heap free=384MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#65] OK t=176ms cand=492383 pat=6 heapDelta=166MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#66  (heap free=384MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#66] OK t=220ms cand=493108 pat=6 heapDelta=166MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#67  (heap free=384MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#67] OK t=402ms cand=489613 pat=6 heapDelta=166MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#68  (heap free=383MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#68] OK t=214ms cand=489498 pat=6 heapDelta=166MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#69  (heap free=383MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#69] OK t=366ms cand=489880 pat=6 heapDelta=168MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#70  (heap free=383MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#70] OK t=280ms cand=492091 pat=6 heapDelta=168MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#71  (heap free=383MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#71] OK t=323ms cand=490909 pat=6 heapDelta=168MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#72  (heap free=382MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#72] OK t=394ms cand=487342 pat=6 heapDelta=168MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#73  (heap free=382MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#73] OK t=326ms cand=486293 pat=6 heapDelta=168MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#74  (heap free=381MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#74] OK t=326ms cand=486116 pat=6 heapDelta=168MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#75  (heap free=381MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#75] OK t=427ms cand=524362 pat=6 heapDelta=174MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#76  (heap free=381MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#76] OK t=471ms cand=532372 pat=6 heapDelta=174MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#77  (heap free=380MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#77] OK t=413ms cand=529721 pat=6 heapDelta=174MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#78  (heap free=380MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#78] OK t=389ms cand=527842 pat=6 heapDelta=176MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#79  (heap free=380MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#79] OK t=421ms cand=527068 pat=6 heapDelta=176MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#80  (heap free=380MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#80] OK t=470ms cand=526158 pat=6 heapDelta=176MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#81  (heap free=380MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#81] OK t=517ms cand=525047 pat=6 heapDelta=176MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#82  (heap free=380MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#82] OK t=508ms cand=506995 pat=8 heapDelta=174MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#83  (heap free=379MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#83] OK t=874ms cand=514367 pat=8 heapDelta=176MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#84  (heap free=379MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#84] OK t=292ms cand=515380 pat=9 heapDelta=176MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#85  (heap free=378MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#85] OK t=299ms cand=509892 pat=9 heapDelta=176MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#86  (heap free=378MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#86] OK t=256ms cand=508640 pat=9 heapDelta=176MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#87  (heap free=378MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#87] OK t=359ms cand=509979 pat=9 heapDelta=176MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#88  (heap free=378MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#88] OK t=313ms cand=508446 pat=9 heapDelta=176MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#89  (heap free=378MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#89] OK t=293ms cand=506774 pat=9 heapDelta=176MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#90  (heap free=377MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#90] OK t=345ms cand=505954 pat=9 heapDelta=176MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#91  (heap free=378MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#91] OK t=452ms cand=506834 pat=9 heapDelta=178MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#92  (heap free=377MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#92] OK t=388ms cand=504717 pat=9 heapDelta=178MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#93  (heap free=377MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#93] OK t=334ms cand=505099 pat=9 heapDelta=178MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#94  (heap free=377MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#94] OK t=340ms cand=505344 pat=9 heapDelta=178MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#95  (heap free=376MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#95] OK t=359ms cand=505952 pat=9 heapDelta=178MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#96  (heap free=376MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#96] OK t=444ms cand=505969 pat=9 heapDelta=178MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#97  (heap free=376MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#97] OK t=418ms cand=504896 pat=9 heapDelta=178MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#98  (heap free=376MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#98] OK t=340ms cand=503018 pat=9 heapDelta=178MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#99  (heap free=375MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#99] OK t=332ms cand=503563 pat=9 heapDelta=180MB
+>> RUNNING Pre-HUSPM-TSU/TAFENG/SC2_INC#100  (heap free=375MB / total=548MB / max=8192MB)
+[Pre-HUSPM-TSU/TAFENG/SC2_INC#100] OK t=336ms cand=513876 pat=9 heapDelta=182MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INIT#0  (heap free=386MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INIT#0] OK t=303ms cand=2123 pat=6 heapDelta=176MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#1  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#1] OK t=295ms cand=2117 pat=6 heapDelta=52MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#2  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#2] OK t=236ms cand=2109 pat=6 heapDelta=52MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#3  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#3] OK t=188ms cand=2105 pat=6 heapDelta=52MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#4  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#4] OK t=227ms cand=2105 pat=6 heapDelta=52MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#5  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#5] OK t=203ms cand=2110 pat=6 heapDelta=54MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#6  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#6] OK t=227ms cand=2110 pat=6 heapDelta=54MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#7  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#7] OK t=266ms cand=2111 pat=6 heapDelta=54MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#8  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#8] OK t=251ms cand=2115 pat=6 heapDelta=54MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#9  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#9] OK t=242ms cand=2156 pat=6 heapDelta=54MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#10  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#10] OK t=234ms cand=2158 pat=6 heapDelta=54MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#11  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#11] OK t=234ms cand=2156 pat=6 heapDelta=56MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#12  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#12] OK t=278ms cand=2158 pat=6 heapDelta=56MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#13  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#13] OK t=227ms cand=2150 pat=6 heapDelta=56MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#14  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#14] OK t=236ms cand=2151 pat=6 heapDelta=56MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#15  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#15] OK t=244ms cand=2147 pat=6 heapDelta=56MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#16  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#16] OK t=254ms cand=2143 pat=6 heapDelta=56MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#17  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#17] OK t=234ms cand=2140 pat=6 heapDelta=56MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#18  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#18] OK t=214ms cand=2134 pat=6 heapDelta=56MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#19  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#19] OK t=251ms cand=2128 pat=6 heapDelta=56MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#20  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#20] OK t=278ms cand=2124 pat=6 heapDelta=56MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#21  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#21] OK t=256ms cand=2119 pat=6 heapDelta=56MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#22  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#22] OK t=220ms cand=2119 pat=6 heapDelta=56MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#23  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#23] OK t=245ms cand=2117 pat=6 heapDelta=56MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#24  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#24] OK t=246ms cand=2114 pat=6 heapDelta=58MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#25  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#25] OK t=282ms cand=2108 pat=6 heapDelta=58MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#26  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#26] OK t=179ms cand=2105 pat=6 heapDelta=58MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#27  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#27] OK t=203ms cand=2105 pat=6 heapDelta=58MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#28  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#28] OK t=205ms cand=2100 pat=6 heapDelta=58MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#29  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#29] OK t=167ms cand=2090 pat=6 heapDelta=58MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#30  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#30] OK t=292ms cand=2089 pat=6 heapDelta=58MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#31  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#31] OK t=263ms cand=2089 pat=6 heapDelta=58MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#32  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#32] OK t=296ms cand=2088 pat=6 heapDelta=58MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#33  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#33] OK t=218ms cand=2083 pat=6 heapDelta=58MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#34  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#34] OK t=267ms cand=2075 pat=6 heapDelta=58MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#35  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#35] OK t=243ms cand=2072 pat=6 heapDelta=58MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#36  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#36] OK t=288ms cand=2068 pat=6 heapDelta=58MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#37  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#37] OK t=323ms cand=2063 pat=6 heapDelta=58MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#38  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#38] OK t=263ms cand=2077 pat=6 heapDelta=60MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#39  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#39] OK t=267ms cand=2079 pat=6 heapDelta=60MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#40  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#40] OK t=284ms cand=2081 pat=6 heapDelta=60MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#41  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#41] OK t=265ms cand=2077 pat=6 heapDelta=60MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#42  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#42] OK t=268ms cand=2070 pat=6 heapDelta=60MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#43  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#43] OK t=289ms cand=2070 pat=6 heapDelta=60MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#44  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#44] OK t=330ms cand=2063 pat=6 heapDelta=60MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#45  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#45] OK t=329ms cand=2063 pat=6 heapDelta=60MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#46  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#46] OK t=263ms cand=2061 pat=6 heapDelta=60MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#47  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#47] OK t=250ms cand=2058 pat=6 heapDelta=60MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#48  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#48] OK t=284ms cand=2056 pat=6 heapDelta=60MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#49  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#49] OK t=287ms cand=2056 pat=6 heapDelta=62MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#50  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#50] OK t=260ms cand=2067 pat=6 heapDelta=62MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#51  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#51] OK t=332ms cand=2066 pat=6 heapDelta=62MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#52  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#52] OK t=282ms cand=2073 pat=6 heapDelta=62MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#53  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#53] OK t=279ms cand=2069 pat=6 heapDelta=62MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#54  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#54] OK t=330ms cand=2065 pat=6 heapDelta=62MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#55  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#55] OK t=244ms cand=2073 pat=6 heapDelta=62MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#56  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#56] OK t=207ms cand=2068 pat=6 heapDelta=62MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#57  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#57] OK t=206ms cand=2068 pat=6 heapDelta=62MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#58  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#58] OK t=198ms cand=2063 pat=6 heapDelta=62MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#59  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#59] OK t=204ms cand=2067 pat=6 heapDelta=64MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#60  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#60] OK t=298ms cand=2065 pat=6 heapDelta=64MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#61  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#61] OK t=212ms cand=2063 pat=6 heapDelta=64MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#62  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#62] OK t=308ms cand=2059 pat=6 heapDelta=64MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#63  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#63] OK t=235ms cand=2059 pat=6 heapDelta=64MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#64  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#64] OK t=226ms cand=2052 pat=6 heapDelta=64MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#65  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#65] OK t=276ms cand=2048 pat=6 heapDelta=64MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#66  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#66] OK t=300ms cand=2050 pat=6 heapDelta=64MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#67  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#67] OK t=288ms cand=2038 pat=6 heapDelta=64MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#68  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#68] OK t=293ms cand=2043 pat=6 heapDelta=64MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#69  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#69] OK t=323ms cand=2044 pat=6 heapDelta=64MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#70  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#70] OK t=284ms cand=2045 pat=6 heapDelta=66MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#71  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#71] OK t=293ms cand=2040 pat=6 heapDelta=66MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#72  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#72] OK t=211ms cand=2033 pat=6 heapDelta=66MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#73  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#73] OK t=264ms cand=2027 pat=6 heapDelta=66MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#74  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#74] OK t=194ms cand=2032 pat=6 heapDelta=66MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#75  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#75] OK t=221ms cand=2082 pat=6 heapDelta=66MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#76  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#76] OK t=215ms cand=2098 pat=6 heapDelta=66MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#77  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#77] OK t=238ms cand=2093 pat=6 heapDelta=66MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#78  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#78] OK t=231ms cand=2092 pat=6 heapDelta=68MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#79  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#79] OK t=179ms cand=2086 pat=6 heapDelta=68MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#80  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#80] OK t=221ms cand=2084 pat=6 heapDelta=68MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#81  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#81] OK t=221ms cand=2075 pat=6 heapDelta=68MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#82  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#82] OK t=158ms cand=2048 pat=8 heapDelta=68MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#83  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#83] OK t=217ms cand=2062 pat=8 heapDelta=68MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#84  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#84] OK t=240ms cand=2061 pat=9 heapDelta=68MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#85  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#85] OK t=240ms cand=2054 pat=9 heapDelta=68MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#86  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#86] OK t=233ms cand=2051 pat=9 heapDelta=68MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#87  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#87] OK t=239ms cand=2051 pat=9 heapDelta=68MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#88  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#88] OK t=226ms cand=2046 pat=9 heapDelta=68MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#89  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#89] OK t=238ms cand=2045 pat=9 heapDelta=68MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#90  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#90] OK t=216ms cand=2044 pat=9 heapDelta=68MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#91  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#91] OK t=225ms cand=2045 pat=9 heapDelta=68MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#92  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#92] OK t=229ms cand=2037 pat=9 heapDelta=68MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#93  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#93] OK t=252ms cand=2040 pat=9 heapDelta=70MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#94  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#94] OK t=203ms cand=2036 pat=9 heapDelta=70MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#95  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#95] OK t=242ms cand=2036 pat=9 heapDelta=70MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#96  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#96] OK t=240ms cand=2035 pat=9 heapDelta=70MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#97  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#97] OK t=267ms cand=2033 pat=9 heapDelta=70MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#98  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#98] OK t=294ms cand=2027 pat=9 heapDelta=70MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#99  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#99] OK t=261ms cand=2026 pat=9 heapDelta=70MB
+>> RUNNING Remine-from-scratch/TAFENG/SC2_INC#100  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch/TAFENG/SC2_INC#100] OK t=240ms cand=2035 pat=9 heapDelta=70MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INIT#0  (heap free=317MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INIT#0] OK t=441ms cand=1628 pat=6 heapDelta=152MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#1  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#1] OK t=160ms cand=1626 pat=6 heapDelta=48MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#2  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#2] OK t=151ms cand=1624 pat=6 heapDelta=48MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#3  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#3] OK t=147ms cand=1624 pat=6 heapDelta=48MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#4  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#4] OK t=161ms cand=1619 pat=6 heapDelta=48MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#5  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#5] OK t=179ms cand=1617 pat=6 heapDelta=48MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#6  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#6] OK t=162ms cand=1617 pat=6 heapDelta=50MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#7  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#7] OK t=159ms cand=1612 pat=6 heapDelta=50MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#8  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#8] OK t=157ms cand=1630 pat=6 heapDelta=50MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#9  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#9] OK t=158ms cand=1662 pat=6 heapDelta=50MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#10  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#10] OK t=148ms cand=1654 pat=6 heapDelta=50MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#11  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#11] OK t=208ms cand=1648 pat=6 heapDelta=50MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#12  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#12] OK t=184ms cand=1645 pat=6 heapDelta=50MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#13  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#13] OK t=241ms cand=1641 pat=6 heapDelta=50MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#14  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#14] OK t=178ms cand=1643 pat=6 heapDelta=52MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#15  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#15] OK t=166ms cand=1641 pat=6 heapDelta=52MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#16  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#16] OK t=201ms cand=1642 pat=6 heapDelta=52MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#17  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#17] OK t=182ms cand=1646 pat=6 heapDelta=52MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#18  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#18] OK t=216ms cand=1641 pat=6 heapDelta=52MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#19  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#19] OK t=190ms cand=1637 pat=6 heapDelta=52MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#20  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#20] OK t=186ms cand=1637 pat=6 heapDelta=52MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#21  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#21] OK t=154ms cand=1628 pat=6 heapDelta=52MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#22  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#22] OK t=165ms cand=1627 pat=6 heapDelta=52MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#23  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#23] OK t=170ms cand=1625 pat=6 heapDelta=52MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#24  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#24] OK t=180ms cand=1619 pat=6 heapDelta=52MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#25  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#25] OK t=177ms cand=1618 pat=6 heapDelta=52MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#26  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#26] OK t=151ms cand=1618 pat=6 heapDelta=52MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#27  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#27] OK t=182ms cand=1622 pat=6 heapDelta=52MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#28  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#28] OK t=190ms cand=1615 pat=6 heapDelta=52MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#29  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#29] OK t=170ms cand=1606 pat=6 heapDelta=52MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#30  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#30] OK t=183ms cand=1601 pat=6 heapDelta=54MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#31  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#31] OK t=229ms cand=1597 pat=6 heapDelta=54MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#32  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#32] OK t=156ms cand=1593 pat=6 heapDelta=54MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#33  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#33] OK t=131ms cand=1590 pat=6 heapDelta=54MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#34  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#34] OK t=166ms cand=1584 pat=6 heapDelta=54MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#35  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#35] OK t=162ms cand=1584 pat=6 heapDelta=54MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#36  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#36] OK t=132ms cand=1592 pat=6 heapDelta=54MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#37  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#37] OK t=153ms cand=1593 pat=6 heapDelta=54MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#38  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#38] OK t=141ms cand=1596 pat=6 heapDelta=54MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#39  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#39] OK t=190ms cand=1599 pat=6 heapDelta=54MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#40  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#40] OK t=141ms cand=1595 pat=6 heapDelta=54MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#41  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#41] OK t=151ms cand=1594 pat=6 heapDelta=56MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#42  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#42] OK t=187ms cand=1588 pat=6 heapDelta=56MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#43  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#43] OK t=179ms cand=1590 pat=6 heapDelta=56MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#44  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#44] OK t=252ms cand=1587 pat=6 heapDelta=56MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#45  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#45] OK t=179ms cand=1587 pat=6 heapDelta=56MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#46  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#46] OK t=213ms cand=1584 pat=6 heapDelta=56MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#47  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#47] OK t=138ms cand=1587 pat=6 heapDelta=56MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#48  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#48] OK t=186ms cand=1581 pat=6 heapDelta=56MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#49  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#49] OK t=178ms cand=1586 pat=6 heapDelta=56MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#50  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#50] OK t=222ms cand=1591 pat=6 heapDelta=56MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#51  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#51] OK t=174ms cand=1591 pat=6 heapDelta=56MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#52  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#52] OK t=143ms cand=1592 pat=6 heapDelta=56MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#53  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#53] OK t=164ms cand=1593 pat=6 heapDelta=58MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#54  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#54] OK t=258ms cand=1587 pat=6 heapDelta=58MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#55  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#55] OK t=193ms cand=1587 pat=6 heapDelta=58MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#56  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#56] OK t=204ms cand=1584 pat=6 heapDelta=58MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#57  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#57] OK t=238ms cand=1583 pat=6 heapDelta=58MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#58  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#58] OK t=229ms cand=1581 pat=6 heapDelta=58MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#59  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#59] OK t=270ms cand=1585 pat=6 heapDelta=58MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#60  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#60] OK t=236ms cand=1585 pat=6 heapDelta=58MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#61  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#61] OK t=249ms cand=1583 pat=6 heapDelta=58MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#62  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#62] OK t=288ms cand=1585 pat=6 heapDelta=58MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#63  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#63] OK t=221ms cand=1583 pat=6 heapDelta=58MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#64  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#64] OK t=286ms cand=1578 pat=6 heapDelta=58MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#65  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#65] OK t=264ms cand=1573 pat=6 heapDelta=58MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#66  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#66] OK t=221ms cand=1578 pat=6 heapDelta=60MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#67  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#67] OK t=254ms cand=1572 pat=6 heapDelta=60MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#68  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#68] OK t=238ms cand=1572 pat=6 heapDelta=60MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#69  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#69] OK t=240ms cand=1570 pat=6 heapDelta=60MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#70  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#70] OK t=249ms cand=1574 pat=6 heapDelta=60MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#71  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#71] OK t=273ms cand=1572 pat=6 heapDelta=60MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#72  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#72] OK t=238ms cand=1567 pat=6 heapDelta=60MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#73  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#73] OK t=355ms cand=1567 pat=6 heapDelta=60MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#74  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#74] OK t=229ms cand=1563 pat=6 heapDelta=60MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#75  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#75] OK t=271ms cand=1624 pat=6 heapDelta=62MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#76  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#76] OK t=296ms cand=1631 pat=6 heapDelta=62MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#77  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#77] OK t=310ms cand=1625 pat=6 heapDelta=62MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#78  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#78] OK t=204ms cand=1622 pat=6 heapDelta=62MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#79  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#79] OK t=209ms cand=1619 pat=6 heapDelta=62MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#80  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#80] OK t=243ms cand=1619 pat=6 heapDelta=62MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#81  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#81] OK t=207ms cand=1614 pat=6 heapDelta=62MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#82  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#82] OK t=185ms cand=1596 pat=8 heapDelta=62MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#83  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#83] OK t=232ms cand=1609 pat=8 heapDelta=62MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#84  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#84] OK t=205ms cand=1600 pat=9 heapDelta=62MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#85  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#85] OK t=208ms cand=1586 pat=9 heapDelta=62MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#86  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#86] OK t=225ms cand=1587 pat=9 heapDelta=62MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#87  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#87] OK t=254ms cand=1591 pat=9 heapDelta=62MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#88  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#88] OK t=414ms cand=1588 pat=9 heapDelta=62MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#89  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#89] OK t=303ms cand=1587 pat=9 heapDelta=62MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#90  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#90] OK t=291ms cand=1585 pat=9 heapDelta=64MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#91  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#91] OK t=337ms cand=1586 pat=9 heapDelta=64MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#92  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#92] OK t=331ms cand=1586 pat=9 heapDelta=64MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#93  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#93] OK t=329ms cand=1572 pat=9 heapDelta=64MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#94  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#94] OK t=256ms cand=1570 pat=9 heapDelta=64MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#95  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#95] OK t=286ms cand=1567 pat=9 heapDelta=62MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#96  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#96] OK t=264ms cand=1565 pat=9 heapDelta=62MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#97  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#97] OK t=362ms cand=1562 pat=9 heapDelta=62MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#98  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#98] OK t=261ms cand=1564 pat=9 heapDelta=62MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#99  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#99] OK t=262ms cand=1561 pat=9 heapDelta=62MB
+>> RUNNING Remine-own-UUT/TAFENG/SC2_INC#100  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-own-UUT/TAFENG/SC2_INC#100] OK t=230ms cand=1570 pat=9 heapDelta=62MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INIT#0  (heap free=318MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INIT#0] OK t=527ms cand=2123 pat=6 heapDelta=154MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#1  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#1] OK t=154ms cand=2117 pat=6 heapDelta=132MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#2  (heap free=331MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#2] OK t=145ms cand=2109 pat=6 heapDelta=132MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#3  (heap free=330MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#3] OK t=133ms cand=2105 pat=6 heapDelta=132MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#4  (heap free=330MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#4] OK t=162ms cand=2105 pat=6 heapDelta=132MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#5  (heap free=330MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#5] OK t=132ms cand=2110 pat=6 heapDelta=134MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#6  (heap free=330MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#6] OK t=143ms cand=2110 pat=6 heapDelta=134MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#7  (heap free=330MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#7] OK t=138ms cand=2111 pat=6 heapDelta=134MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#8  (heap free=330MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#8] OK t=187ms cand=2115 pat=6 heapDelta=136MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#9  (heap free=329MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#9] OK t=172ms cand=2156 pat=6 heapDelta=136MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#10  (heap free=329MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#10] OK t=182ms cand=2158 pat=6 heapDelta=138MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#11  (heap free=329MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#11] OK t=225ms cand=2156 pat=6 heapDelta=138MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#12  (heap free=329MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#12] OK t=156ms cand=2158 pat=6 heapDelta=138MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#13  (heap free=328MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#13] OK t=150ms cand=2150 pat=6 heapDelta=140MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#14  (heap free=328MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#14] OK t=167ms cand=2151 pat=6 heapDelta=140MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#15  (heap free=328MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#15] OK t=153ms cand=2147 pat=6 heapDelta=140MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#16  (heap free=328MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#16] OK t=190ms cand=2143 pat=6 heapDelta=140MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#17  (heap free=328MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#17] OK t=199ms cand=2140 pat=6 heapDelta=142MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#18  (heap free=328MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#18] OK t=273ms cand=2134 pat=6 heapDelta=142MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#19  (heap free=327MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#19] OK t=263ms cand=2128 pat=6 heapDelta=142MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#20  (heap free=327MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#20] OK t=225ms cand=2124 pat=6 heapDelta=142MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#21  (heap free=327MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#21] OK t=214ms cand=2119 pat=6 heapDelta=142MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#22  (heap free=327MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#22] OK t=202ms cand=2119 pat=6 heapDelta=144MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#23  (heap free=327MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#23] OK t=230ms cand=2117 pat=6 heapDelta=144MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#24  (heap free=327MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#24] OK t=282ms cand=2114 pat=6 heapDelta=144MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#25  (heap free=327MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#25] OK t=243ms cand=2108 pat=6 heapDelta=144MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#26  (heap free=326MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#26] OK t=250ms cand=2105 pat=6 heapDelta=144MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#27  (heap free=326MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#27] OK t=243ms cand=2105 pat=6 heapDelta=146MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#28  (heap free=326MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#28] OK t=340ms cand=2100 pat=6 heapDelta=146MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#29  (heap free=326MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#29] OK t=247ms cand=2090 pat=6 heapDelta=146MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#30  (heap free=326MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#30] OK t=376ms cand=2089 pat=6 heapDelta=146MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#31  (heap free=326MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#31] OK t=245ms cand=2089 pat=6 heapDelta=148MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#32  (heap free=326MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#32] OK t=311ms cand=2088 pat=6 heapDelta=148MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#33  (heap free=325MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#33] OK t=282ms cand=2083 pat=6 heapDelta=148MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#34  (heap free=325MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#34] OK t=292ms cand=2075 pat=6 heapDelta=148MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#35  (heap free=325MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#35] OK t=344ms cand=2072 pat=6 heapDelta=148MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#36  (heap free=325MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#36] OK t=289ms cand=2068 pat=6 heapDelta=150MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#37  (heap free=325MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#37] OK t=428ms cand=2063 pat=6 heapDelta=150MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#38  (heap free=324MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#38] OK t=329ms cand=2077 pat=6 heapDelta=150MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#39  (heap free=324MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#39] OK t=370ms cand=2079 pat=6 heapDelta=152MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#40  (heap free=324MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#40] OK t=279ms cand=2081 pat=6 heapDelta=152MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#41  (heap free=324MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#41] OK t=322ms cand=2077 pat=6 heapDelta=152MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#42  (heap free=324MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#42] OK t=318ms cand=2070 pat=6 heapDelta=152MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#43  (heap free=324MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#43] OK t=297ms cand=2070 pat=6 heapDelta=154MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#44  (heap free=323MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#44] OK t=353ms cand=2063 pat=6 heapDelta=154MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#45  (heap free=323MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#45] OK t=308ms cand=2063 pat=6 heapDelta=154MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#46  (heap free=323MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#46] OK t=368ms cand=2061 pat=6 heapDelta=154MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#47  (heap free=323MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#47] OK t=367ms cand=2058 pat=6 heapDelta=156MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#48  (heap free=323MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#48] OK t=347ms cand=2056 pat=6 heapDelta=156MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#49  (heap free=323MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#49] OK t=264ms cand=2056 pat=6 heapDelta=156MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#50  (heap free=322MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#50] OK t=373ms cand=2067 pat=6 heapDelta=156MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#51  (heap free=322MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#51] OK t=343ms cand=2066 pat=6 heapDelta=158MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#52  (heap free=322MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#52] OK t=314ms cand=2073 pat=6 heapDelta=158MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#53  (heap free=322MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#53] OK t=366ms cand=2069 pat=6 heapDelta=158MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#54  (heap free=322MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#54] OK t=504ms cand=2065 pat=6 heapDelta=160MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#55  (heap free=322MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#55] OK t=393ms cand=2073 pat=6 heapDelta=160MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#56  (heap free=322MB / total=520MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#56] OK t=530ms cand=2068 pat=6 heapDelta=135MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#57  (heap free=509MB / total=708MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#57] OK t=355ms cand=2068 pat=6 heapDelta=160MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#58  (heap free=509MB / total=708MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#58] OK t=175ms cand=2063 pat=6 heapDelta=160MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#59  (heap free=509MB / total=708MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#59] OK t=230ms cand=2067 pat=6 heapDelta=162MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#60  (heap free=509MB / total=708MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#60] OK t=260ms cand=2065 pat=6 heapDelta=162MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#61  (heap free=509MB / total=708MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#61] OK t=200ms cand=2063 pat=6 heapDelta=162MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#62  (heap free=508MB / total=708MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#62] OK t=321ms cand=2059 pat=6 heapDelta=162MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#63  (heap free=508MB / total=708MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#63] OK t=201ms cand=2059 pat=6 heapDelta=164MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#64  (heap free=508MB / total=708MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#64] OK t=245ms cand=2052 pat=6 heapDelta=164MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#65  (heap free=508MB / total=708MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#65] OK t=267ms cand=2048 pat=6 heapDelta=164MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#66  (heap free=508MB / total=708MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#66] OK t=223ms cand=2050 pat=6 heapDelta=164MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#67  (heap free=508MB / total=708MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#67] OK t=230ms cand=2038 pat=6 heapDelta=166MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#68  (heap free=507MB / total=708MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#68] OK t=267ms cand=2043 pat=6 heapDelta=166MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#69  (heap free=507MB / total=708MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#69] OK t=1132ms cand=2044 pat=6 heapDelta=166MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#70  (heap free=507MB / total=708MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#70] OK t=385ms cand=2045 pat=6 heapDelta=166MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#71  (heap free=507MB / total=708MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#71] OK t=201ms cand=2040 pat=6 heapDelta=168MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#72  (heap free=507MB / total=708MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#72] OK t=273ms cand=2033 pat=6 heapDelta=168MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#73  (heap free=507MB / total=708MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#73] OK t=243ms cand=2027 pat=6 heapDelta=168MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#74  (heap free=506MB / total=708MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#74] OK t=245ms cand=2032 pat=6 heapDelta=168MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#75  (heap free=506MB / total=708MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#75] OK t=197ms cand=2082 pat=6 heapDelta=170MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#76  (heap free=506MB / total=708MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#76] OK t=200ms cand=2098 pat=6 heapDelta=170MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#77  (heap free=506MB / total=708MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#77] OK t=195ms cand=2093 pat=6 heapDelta=172MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#78  (heap free=505MB / total=708MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#78] OK t=214ms cand=2092 pat=6 heapDelta=172MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#79  (heap free=505MB / total=708MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#79] OK t=196ms cand=2086 pat=6 heapDelta=172MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#80  (heap free=505MB / total=708MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#80] OK t=231ms cand=2084 pat=6 heapDelta=172MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#81  (heap free=505MB / total=708MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#81] OK t=288ms cand=2075 pat=6 heapDelta=174MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#82  (heap free=505MB / total=708MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#82] OK t=360ms cand=2048 pat=8 heapDelta=174MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#83  (heap free=505MB / total=708MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#83] OK t=293ms cand=2062 pat=8 heapDelta=174MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#84  (heap free=505MB / total=708MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#84] OK t=325ms cand=2061 pat=9 heapDelta=174MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#85  (heap free=505MB / total=708MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#85] OK t=285ms cand=2054 pat=9 heapDelta=174MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#86  (heap free=505MB / total=708MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#86] OK t=1293ms cand=2051 pat=9 heapDelta=176MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#87  (heap free=505MB / total=708MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#87] OK t=330ms cand=2051 pat=9 heapDelta=176MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#88  (heap free=504MB / total=708MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#88] OK t=215ms cand=2046 pat=9 heapDelta=176MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#89  (heap free=504MB / total=708MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#89] OK t=306ms cand=2045 pat=9 heapDelta=176MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#90  (heap free=504MB / total=708MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#90] OK t=210ms cand=2044 pat=9 heapDelta=178MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#91  (heap free=504MB / total=708MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#91] OK t=241ms cand=2045 pat=9 heapDelta=178MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#92  (heap free=504MB / total=708MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#92] OK t=412ms cand=2037 pat=9 heapDelta=178MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#93  (heap free=504MB / total=708MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#93] OK t=478ms cand=2040 pat=9 heapDelta=178MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#94  (heap free=504MB / total=708MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#94] OK t=459ms cand=2036 pat=9 heapDelta=178MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#95  (heap free=503MB / total=708MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#95] OK t=504ms cand=2036 pat=9 heapDelta=180MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#96  (heap free=503MB / total=708MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#96] OK t=230ms cand=2035 pat=9 heapDelta=180MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#97  (heap free=503MB / total=708MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#97] OK t=517ms cand=2033 pat=9 heapDelta=180MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#98  (heap free=503MB / total=708MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#98] OK t=312ms cand=2027 pat=9 heapDelta=180MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#99  (heap free=503MB / total=708MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#99] OK t=538ms cand=2026 pat=9 heapDelta=180MB
+>> RUNNING Remine-from-scratch-rebuild/TAFENG/SC2_INC#100  (heap free=503MB / total=708MB / max=8192MB)
+[Remine-from-scratch-rebuild/TAFENG/SC2_INC#100] OK t=369ms cand=2035 pat=9 heapDelta=182MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INIT#0  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INIT#0] OK t=601ms cand=2611537 pat=6 heapDelta=200MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#1  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#1] OK t=398ms cand=2615995 pat=6 heapDelta=198MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#2  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#2] OK t=295ms cand=2617675 pat=6 heapDelta=180MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#3  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#3] OK t=383ms cand=2623397 pat=6 heapDelta=180MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#4  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#4] OK t=214ms cand=2627743 pat=6 heapDelta=180MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#5  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#5] OK t=299ms cand=2632253 pat=6 heapDelta=180MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#6  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#6] OK t=371ms cand=2637619 pat=6 heapDelta=180MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#7  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#7] OK t=197ms cand=2640962 pat=6 heapDelta=180MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#8  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#8] OK t=351ms cand=2694079 pat=6 heapDelta=184MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#9  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#9] OK t=349ms cand=2766869 pat=6 heapDelta=186MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#10  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#10] OK t=397ms cand=2771792 pat=6 heapDelta=188MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#11  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#11] OK t=240ms cand=2774761 pat=6 heapDelta=188MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#12  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#12] OK t=1219ms cand=2775523 pat=6 heapDelta=188MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#13  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#13] OK t=507ms cand=2777966 pat=6 heapDelta=188MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#14  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#14] OK t=254ms cand=2792646 pat=6 heapDelta=190MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#15  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#15] OK t=276ms cand=2798424 pat=6 heapDelta=190MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#16  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#16] OK t=318ms cand=2804746 pat=6 heapDelta=192MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#17  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#17] OK t=281ms cand=2814720 pat=6 heapDelta=192MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#18  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#18] OK t=399ms cand=2815387 pat=6 heapDelta=192MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#19  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#19] OK t=396ms cand=2816702 pat=6 heapDelta=192MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#20  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#20] OK t=484ms cand=2821658 pat=6 heapDelta=194MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#21  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#21] OK t=319ms cand=2816199 pat=6 heapDelta=194MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#22  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#22] OK t=403ms cand=2821712 pat=6 heapDelta=194MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#23  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#23] OK t=400ms cand=2824788 pat=6 heapDelta=194MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#24  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#24] OK t=421ms cand=2823615 pat=6 heapDelta=196MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#25  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#25] OK t=533ms cand=2826674 pat=6 heapDelta=196MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#26  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#26] OK t=328ms cand=2833132 pat=6 heapDelta=196MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#27  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#27] OK t=434ms cand=2842056 pat=6 heapDelta=196MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#28  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#28] OK t=476ms cand=2839963 pat=6 heapDelta=198MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#29  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#29] OK t=504ms cand=2835516 pat=6 heapDelta=198MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#30  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#30] OK t=379ms cand=2836115 pat=6 heapDelta=198MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#31  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#31] OK t=479ms cand=2836611 pat=6 heapDelta=198MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#32  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#32] OK t=571ms cand=2837610 pat=6 heapDelta=198MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#33  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#33] OK t=379ms cand=2838308 pat=6 heapDelta=200MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#34  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#34] OK t=246ms cand=2839977 pat=6 heapDelta=200MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#35  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#35] OK t=564ms cand=2843200 pat=6 heapDelta=200MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#36  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#36] OK t=367ms cand=2857725 pat=6 heapDelta=202MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#37  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#37] OK t=396ms cand=2865164 pat=6 heapDelta=202MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#38  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#38] OK t=405ms cand=2880806 pat=6 heapDelta=204MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#39  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#39] OK t=271ms cand=2894491 pat=6 heapDelta=204MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#40  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#40] OK t=243ms cand=2898018 pat=6 heapDelta=204MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#41  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#41] OK t=479ms cand=2904447 pat=6 heapDelta=206MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#42  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#42] OK t=428ms cand=2902238 pat=6 heapDelta=206MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#43  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#43] OK t=369ms cand=2906835 pat=6 heapDelta=206MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#44  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#44] OK t=404ms cand=2908553 pat=6 heapDelta=206MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#45  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#45] OK t=423ms cand=2912237 pat=6 heapDelta=208MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#46  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#46] OK t=495ms cand=2914665 pat=6 heapDelta=208MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#47  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#47] OK t=424ms cand=2921647 pat=6 heapDelta=208MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#48  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#48] OK t=461ms cand=2921935 pat=6 heapDelta=208MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#49  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#49] OK t=416ms cand=2935210 pat=6 heapDelta=210MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#50  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#50] OK t=488ms cand=2958088 pat=6 heapDelta=212MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#51  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#51] OK t=521ms cand=2962854 pat=6 heapDelta=212MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#52  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#52] OK t=285ms cand=2969672 pat=6 heapDelta=212MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#53  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#53] OK t=403ms cand=2975431 pat=6 heapDelta=214MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#54  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#54] OK t=523ms cand=2975011 pat=6 heapDelta=214MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#55  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#55] OK t=400ms cand=2980354 pat=6 heapDelta=214MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#56  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#56] OK t=465ms cand=2982081 pat=6 heapDelta=214MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#57  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#57] OK t=432ms cand=2986492 pat=6 heapDelta=216MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#58  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#58] OK t=423ms cand=2987451 pat=6 heapDelta=216MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#59  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#59] OK t=757ms cand=3000479 pat=6 heapDelta=216MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#60  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#60] OK t=600ms cand=3004894 pat=6 heapDelta=218MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#61  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#61] OK t=582ms cand=3007342 pat=6 heapDelta=218MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#62  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#62] OK t=719ms cand=3018112 pat=6 heapDelta=218MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#63  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#63] OK t=793ms cand=3022556 pat=6 heapDelta=220MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#64  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#64] OK t=634ms cand=3024320 pat=6 heapDelta=220MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#65  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#65] OK t=449ms cand=3023068 pat=6 heapDelta=220MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#66  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#66] OK t=416ms cand=3032349 pat=6 heapDelta=220MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#67  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#67] OK t=601ms cand=3029986 pat=6 heapDelta=222MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#68  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#68] OK t=491ms cand=3035830 pat=6 heapDelta=222MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#69  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#69] OK t=325ms cand=3039300 pat=6 heapDelta=222MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#70  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#70] OK t=434ms cand=3050160 pat=6 heapDelta=224MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#71  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#71] OK t=777ms cand=3054666 pat=6 heapDelta=224MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#72  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#72] OK t=604ms cand=3053959 pat=6 heapDelta=224MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#73  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#73] OK t=859ms cand=3057510 pat=6 heapDelta=224MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#74  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#74] OK t=812ms cand=3060865 pat=6 heapDelta=226MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#75  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#75] OK t=427ms cand=3180920 pat=6 heapDelta=220MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#76  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#76] OK t=490ms cand=3210986 pat=6 heapDelta=232MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#77  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#77] OK t=474ms cand=3207728 pat=6 heapDelta=232MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#78  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#78] OK t=564ms cand=3210557 pat=6 heapDelta=232MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#79  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#79] OK t=576ms cand=3212802 pat=6 heapDelta=232MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#80  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#80] OK t=612ms cand=3220679 pat=6 heapDelta=234MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#81  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#81] OK t=539ms cand=3218179 pat=6 heapDelta=234MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#82  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#82] OK t=438ms cand=3199253 pat=8 heapDelta=234MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#83  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#83] OK t=452ms cand=3232842 pat=8 heapDelta=236MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#84  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#84] OK t=539ms cand=3227586 pat=9 heapDelta=236MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#85  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#85] OK t=507ms cand=3215174 pat=9 heapDelta=236MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#86  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#86] OK t=541ms cand=3220696 pat=9 heapDelta=236MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#87  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#87] OK t=544ms cand=3233054 pat=9 heapDelta=236MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#88  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#88] OK t=551ms cand=3232914 pat=9 heapDelta=238MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#89  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#89] OK t=482ms cand=3236447 pat=9 heapDelta=238MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#90  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#90] OK t=677ms cand=3239098 pat=9 heapDelta=238MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#91  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#91] OK t=536ms cand=3245824 pat=9 heapDelta=240MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#92  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#92] OK t=830ms cand=3251283 pat=9 heapDelta=240MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#93  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#93] OK t=1155ms cand=3238757 pat=9 heapDelta=240MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#94  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#94] OK t=617ms cand=3239616 pat=9 heapDelta=240MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#95  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#95] OK t=520ms cand=3240165 pat=9 heapDelta=240MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#96  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#96] OK t=607ms cand=3242321 pat=9 heapDelta=240MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#97  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#97] OK t=653ms cand=3243820 pat=9 heapDelta=242MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#98  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#98] OK t=595ms cand=3251264 pat=9 heapDelta=242MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#99  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#99] OK t=748ms cand=3254457 pat=9 heapDelta=242MB
+>> RUNNING Remine-HUSP-ULL/TAFENG/SC2_INC#100  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-ULL/TAFENG/SC2_INC#100] OK t=646ms cand=3282065 pat=9 heapDelta=244MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INIT#0  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INIT#0] OK t=1775ms cand=272015 pat=6 heapDelta=128MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#1  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#1] OK t=1217ms cand=273125 pat=6 heapDelta=114MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#2  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#2] OK t=1250ms cand=273069 pat=6 heapDelta=94MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#3  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#3] OK t=1154ms cand=273356 pat=6 heapDelta=76MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#4  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#4] OK t=1128ms cand=273864 pat=6 heapDelta=76MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#5  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#5] OK t=1068ms cand=273941 pat=6 heapDelta=76MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#6  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#6] OK t=1026ms cand=272943 pat=6 heapDelta=76MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#7  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#7] OK t=1219ms cand=272326 pat=6 heapDelta=76MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#8  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#8] OK t=1199ms cand=283222 pat=6 heapDelta=78MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#9  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#9] OK t=1040ms cand=291442 pat=6 heapDelta=78MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#10  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#10] OK t=1095ms cand=291408 pat=6 heapDelta=80MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#11  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#11] OK t=1270ms cand=290102 pat=6 heapDelta=80MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#12  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#12] OK t=1453ms cand=289956 pat=6 heapDelta=80MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#13  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#13] OK t=1104ms cand=289601 pat=6 heapDelta=80MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#14  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#14] OK t=1139ms cand=290620 pat=6 heapDelta=80MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#15  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#15] OK t=1174ms cand=290803 pat=6 heapDelta=80MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#16  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#16] OK t=1387ms cand=290227 pat=6 heapDelta=80MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#17  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#17] OK t=1221ms cand=292896 pat=6 heapDelta=82MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#18  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#18] OK t=1257ms cand=289458 pat=6 heapDelta=82MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#19  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#19] OK t=1258ms cand=289246 pat=6 heapDelta=82MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#20  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#20] OK t=1375ms cand=288147 pat=6 heapDelta=82MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#21  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#21] OK t=955ms cand=287109 pat=6 heapDelta=82MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#22  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#22] OK t=1038ms cand=287249 pat=6 heapDelta=82MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#23  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#23] OK t=974ms cand=287482 pat=6 heapDelta=82MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#24  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#24] OK t=1087ms cand=285785 pat=6 heapDelta=82MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#25  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#25] OK t=1012ms cand=284837 pat=6 heapDelta=82MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#26  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#26] OK t=825ms cand=284246 pat=6 heapDelta=84MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#27  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#27] OK t=897ms cand=283896 pat=6 heapDelta=84MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#28  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#28] OK t=920ms cand=284340 pat=6 heapDelta=84MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#29  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#29] OK t=814ms cand=282284 pat=6 heapDelta=84MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#30  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#30] OK t=733ms cand=280722 pat=6 heapDelta=84MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#31  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#31] OK t=716ms cand=279313 pat=6 heapDelta=84MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#32  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#32] OK t=994ms cand=279144 pat=6 heapDelta=84MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#33  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#33] OK t=880ms cand=277132 pat=6 heapDelta=84MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#34  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#34] OK t=912ms cand=276816 pat=6 heapDelta=84MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#35  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#35] OK t=942ms cand=277001 pat=6 heapDelta=86MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#36  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#36] OK t=812ms cand=280489 pat=6 heapDelta=86MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#37  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#37] OK t=758ms cand=280894 pat=6 heapDelta=86MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#38  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#38] OK t=788ms cand=281950 pat=6 heapDelta=86MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#39  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#39] OK t=1141ms cand=283599 pat=6 heapDelta=86MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#40  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#40] OK t=1324ms cand=283302 pat=6 heapDelta=88MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#41  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#41] OK t=1397ms cand=280691 pat=6 heapDelta=88MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#42  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#42] OK t=1300ms cand=281187 pat=6 heapDelta=88MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#43  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#43] OK t=1249ms cand=282560 pat=6 heapDelta=88MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#44  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#44] OK t=1152ms cand=281387 pat=6 heapDelta=88MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#45  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#45] OK t=1262ms cand=281740 pat=6 heapDelta=88MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#46  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#46] OK t=1295ms cand=279619 pat=6 heapDelta=88MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#47  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#47] OK t=1321ms cand=278921 pat=6 heapDelta=88MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#48  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#48] OK t=1484ms cand=278472 pat=6 heapDelta=90MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#49  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#49] OK t=1179ms cand=280294 pat=6 heapDelta=90MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#50  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#50] OK t=903ms cand=283774 pat=6 heapDelta=90MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#51  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#51] OK t=1051ms cand=283941 pat=6 heapDelta=90MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#52  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#52] OK t=784ms cand=284213 pat=6 heapDelta=90MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#53  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#53] OK t=808ms cand=284525 pat=6 heapDelta=90MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#54  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#54] OK t=887ms cand=284026 pat=6 heapDelta=92MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#55  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#55] OK t=1208ms cand=284263 pat=6 heapDelta=92MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#56  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#56] OK t=716ms cand=284082 pat=6 heapDelta=92MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#57  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#57] OK t=809ms cand=284086 pat=6 heapDelta=92MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#58  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#58] OK t=1093ms cand=283959 pat=6 heapDelta=92MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#59  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#59] OK t=1028ms cand=284792 pat=6 heapDelta=92MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#60  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#60] OK t=921ms cand=284985 pat=6 heapDelta=92MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#61  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#61] OK t=1281ms cand=284707 pat=6 heapDelta=94MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#62  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#62] OK t=1170ms cand=285208 pat=6 heapDelta=94MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#63  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#63] OK t=1028ms cand=284988 pat=6 heapDelta=94MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#64  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#64] OK t=1355ms cand=283712 pat=6 heapDelta=94MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#65  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#65] OK t=1111ms cand=283209 pat=6 heapDelta=94MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#66  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#66] OK t=1209ms cand=285119 pat=6 heapDelta=94MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#67  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#67] OK t=1407ms cand=281114 pat=6 heapDelta=96MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#68  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#68] OK t=1398ms cand=280282 pat=6 heapDelta=94MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#69  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#69] OK t=1387ms cand=278985 pat=6 heapDelta=96MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#70  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#70] OK t=1274ms cand=280997 pat=6 heapDelta=96MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#71  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#71] OK t=1459ms cand=281990 pat=6 heapDelta=96MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#72  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#72] OK t=1397ms cand=280537 pat=6 heapDelta=96MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#73  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#73] OK t=1242ms cand=280660 pat=6 heapDelta=96MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#74  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#74] OK t=1551ms cand=280444 pat=6 heapDelta=96MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#75  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#75] OK t=1350ms cand=295640 pat=6 heapDelta=98MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#76  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#76] OK t=1200ms cand=301902 pat=6 heapDelta=98MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#77  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#77] OK t=1229ms cand=301220 pat=6 heapDelta=98MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#78  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#78] OK t=1079ms cand=299858 pat=6 heapDelta=98MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#79  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#79] OK t=1081ms cand=300242 pat=6 heapDelta=98MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#80  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#80] OK t=789ms cand=302900 pat=6 heapDelta=100MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#81  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#81] OK t=805ms cand=302302 pat=6 heapDelta=100MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#82  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#82] OK t=776ms cand=295756 pat=8 heapDelta=100MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#83  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#83] OK t=1017ms cand=303666 pat=8 heapDelta=100MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#84  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#84] OK t=831ms cand=300561 pat=9 heapDelta=100MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#85  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#85] OK t=1190ms cand=297920 pat=9 heapDelta=100MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#86  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#86] OK t=808ms cand=295869 pat=9 heapDelta=100MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#87  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#87] OK t=803ms cand=299548 pat=9 heapDelta=100MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#88  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#88] OK t=892ms cand=298228 pat=9 heapDelta=102MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#89  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#89] OK t=817ms cand=298274 pat=9 heapDelta=102MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#90  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#90] OK t=868ms cand=297143 pat=9 heapDelta=102MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#91  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#91] OK t=1168ms cand=298473 pat=9 heapDelta=102MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#92  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#92] OK t=1426ms cand=298650 pat=9 heapDelta=102MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#93  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#93] OK t=1217ms cand=292939 pat=9 heapDelta=102MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#94  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#94] OK t=1193ms cand=292633 pat=9 heapDelta=102MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#95  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#95] OK t=1361ms cand=291212 pat=9 heapDelta=102MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#96  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#96] OK t=1396ms cand=291168 pat=9 heapDelta=102MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#97  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#97] OK t=1722ms cand=290993 pat=9 heapDelta=104MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#98  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#98] OK t=1291ms cand=292369 pat=9 heapDelta=104MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#99  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#99] OK t=1183ms cand=289039 pat=9 heapDelta=104MB
+>> RUNNING Remine-HUSP-SP/TAFENG/SC2_INC#100  (heap free=491MB / total=680MB / max=8192MB)
+[Remine-HUSP-SP/TAFENG/SC2_INC#100] OK t=1186ms cand=294097 pat=9 heapDelta=104MB
+=== ALL SCENARIOS DONE (980.1s) ===
