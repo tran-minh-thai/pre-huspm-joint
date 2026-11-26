@@ -1,0 +1,16 @@
+{
+  "command": "java -Xmx6g -Xss64m -cp build-sc11v -Dverify.husps=true -Drepeats=1 -Ddataset.only=ONLINERETAIL -Dalgo.only=Pre-HUSPM-Joint-fixed-threshold,Remine-from-scratch,Pre-HUSPM-Joint,Remine-own-UUT,Pre-HUSPM-Joint-w5,Remine-from-scratch-rebuild,Remine-own-UUT-rebuild,Joint-rule+total-counter -Dresults.dir=results/verify-joint/husps-long-sc11/ AutomatedExperimentRunner SC11",
+  "path_substitutions": 0,
+  "build_dir": "build-sc11v",
+  "git_commit": "8b04a8de9d63390252fa4f9d682743504c5eba66",
+  "tree": "src clean, other files modified",
+  "source_sha256": "5a5de4603d853ce134228853e06e502f69f9c7781218b752b9d723845a74074c",
+  "source_files": 55,
+  "java": "openjdk version \"25.0.4.1\" 2026-08-18 LTS",
+  "os": "Darwin 27.2.0 (macOS-27.2.1-arm64-arm-64bit-Mach-O)",
+  "machine": "ThaiTMs-MacBook-Pro.local",
+  "role": "correctness check: counters only, no timings",
+  "start": "2026-11-26T07:49:13",
+  "end": "2026-11-26T08:55:48",
+  "exit_code": 0
+}
