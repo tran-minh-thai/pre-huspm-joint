@@ -11,6 +11,9 @@ through analysis/record_run.py, with three changes and no other:
       so outputs, and the inputs of the check-* records, are the records of the new tree;
     * every class path (-cp DIR) becomes the build directory of this run, compiled from HEAD;
     * a leading ~ becomes the home directory.
+    * every arm of -Dalgo.only that carries an old name of the proposal's arms (docs/arm-names.md)
+      takes its new name for the scenarios of the command (rename_arms.new_name); the runner
+      leaves out an arm it does not know, so an old name would drop the arm without an error.
 The rewritten command is printed before it runs, and record_run stores it in the new record.
 
 --max-hours / --min-hours select by the duration of the old record, so that the short ones can
@@ -76,6 +79,7 @@ def rewrite(command, recs, tree, build):
         return f"{tree}/{by_leaf[x][0]}"
     c = re.sub(re.escape(VERIFY) + r"/([^\s/]+)(?=[/\s]|$)", leaf, c)
     c = re.sub(r"-cp \S+", f"-cp {build}", c)
+    c = rename_algo_only(c)
     if c.startswith("bash -c "):
         return c, [bash(), "-c", c[len("bash -c "):]]
     argv = shlex.split(c)
@@ -83,6 +87,55 @@ def rewrite(command, recs, tree, build):
         argv[0] = sys.executable
         c = " ".join(["python", *argv[1:]])
     return c, argv
+
+
+def rename_algo_only(command):
+    """The command with the old arm names of -Dalgo.only replaced by the new ones of its scenarios."""
+    import rename_arms
+    scenarios = re.findall(r"(?<![\w=/.-])(SC\d+[A-Z]?)(?![\w/.-])", command.split("AutomatedExperimentRunner", 1)[-1])
+    def arms(m):
+        out = []
+        for a in m.group(1).split(","):
+            new = {rename_arms.new_name(s, a) for s in scenarios} - {None}
+            if len(new) > 1:
+                sys.exit(f"arm {a} has different new names in the scenarios {scenarios}: {sorted(new)}")
+            if new:
+                print(f"   arm {a} -> {next(iter(new))} (old name, scenarios {' '.join(scenarios)})", flush=True)
+            out.append(next(iter(new)) if new else a)
+        return "-Dalgo.only=" + ",".join(out)
+    return re.sub(r"-Dalgo\.only=(\S+)", arms, command)
+
+
+def self_test():
+    """The two records that name old arms, through rewrite(), and three cases that must be left or refused."""
+    ok = True
+    def check(name, got, want):
+        nonlocal ok
+        good = got == want
+        ok &= good
+        print(f"  {name}: {'ok' if good else 'WRONG'}\n    got  {got}\n    want {want}")
+    for r, want in (("husps-mixed", "-Dalgo.only=Pre-HUSPM-Joint-fixed-threshold,Remine-from-scratch,Remine-HUSP-ULL,"
+                     "Remine-HUSP-SP,Pre-HUSPM-Joint,Remine-own-UUT,Joint-rule+plain-floor,Joint-rule+min-floor"),
+                    ("husps-sc2", "-Dalgo.only=Pre-HUSPM-Joint-fixed-threshold,Remine-HUSP-ULL,Remine-HUSP-SP,"
+                     "Remine-own-UUT,Pre-HUSPM-Joint,Joint-miner+SWUmax,Joint-miner+TSU,Joint-rule+PreHUSPM-tracking,"
+                     "Joint-miner+SWUmax+PreHUSPM-tracking,Joint-rule+plain-floor,Joint-rule+min-floor")):
+        got = re.search(r"-Dalgo\.only=\S+", rewrite(meta(r)["command"], records(), "t", "b")[0]).group(0)
+        check(r, got, want)
+    keep = "java -cp b -Dalgo.only=Pre-HUSPM-Joint-w5,Remine-own-UUT AutomatedExperimentRunner SC2"
+    check("new names left as they are", rename_algo_only(keep), keep)
+    check("static scenario", rename_algo_only("java -Dalgo.only=Adaptive-Full AutomatedExperimentRunner SC1"),
+          "java -Dalgo.only=Pre-HUSPM-Joint AutomatedExperimentRunner SC1")
+    try:
+        rename_algo_only("java -Dalgo.only=Adaptive-Full AutomatedExperimentRunner SC1 SC2")
+        check("two meanings refused", "accepted", "refused")
+    except SystemExit:
+        check("two meanings refused", "refused", "refused")
+    # no record left with an old arm name after the rewrite
+    left = [r for r in records() if re.search(r"Adaptive-(Full|FloorSelect)|proposed_",
+                                               rewrite(meta(r)["command"], records(), "t", "b")[0])]
+    check(f"records with an old name after the rewrite (of {len(records())})", left, [])
+    print("self-test:", "pass" if ok else "FAIL")
+    return ok
 
 
 def bash():
@@ -100,7 +153,8 @@ def bash():
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--tree", required=True)
+    ap.add_argument("--tree")
+    ap.add_argument("--self-test", action="store_true", help="check the rewrite of old arm names, run nothing")
     ap.add_argument("--max-hours", type=float)
     ap.add_argument("--min-hours", type=float)
     ap.add_argument("--only", help="comma-separated record names")
@@ -109,6 +163,11 @@ def main():
     ap.add_argument("--exclude-checks", action="store_true", help="leave out the check-* records")
     ap.add_argument("--names", action="store_true", help="print the names of the selection in run order, one per line")
     a = ap.parse_args()
+    sys.path.insert(0, str(ROOT / "analysis"))
+    if a.self_test:
+        sys.exit(0 if self_test() else 1)
+    if not a.tree:
+        ap.error("--tree is required")
     tree = a.tree.rstrip("/")
     recs = records()
     sys.path.insert(0, str(ROOT / "analysis"))
