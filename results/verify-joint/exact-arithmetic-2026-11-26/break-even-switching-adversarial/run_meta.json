@@ -1,0 +1,16 @@
+{
+  "command": "java -Dadapt.floorRule=breakEven -Xmx24g -Xss64m -cp build-rerun verify.DirectPathVerifier ALL --adversarial --ops 24 --share-alt 0.5 --out results/verify-joint/exact-arithmetic-2026-11-26/break-even-switching-adversarial",
+  "path_substitutions": 0,
+  "build_dir": "build-rerun",
+  "git_commit": "bf8fb00128d23682b16ccc1a82fc5966cec0eb93",
+  "tree": "src clean, other files modified",
+  "source_sha256": "b85daf2155f9b64952db0d1d9b91f0c05c6ecea835a6806031ec188dee40dcd7",
+  "source_files": 55,
+  "java": "openjdk version \"25.0.4.1\" 2026-08-18 LTS",
+  "os": "Windows 10 (Windows-10-10.0.26300-SP0)",
+  "machine": "PC-THAI",
+  "role": "correctness check: counters only, no timings",
+  "start": "2026-11-28T02:12:56",
+  "end": "2026-11-28T03:46:17",
+  "exit_code": 0
+}
