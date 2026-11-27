@@ -1,0 +1,608 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 9 | Scenarios: [SC10]
+Heap max: 5120 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC10] Long stream, 500 operations ---
+>> [SC10] LEVIATHAN seed=42 opSize=3 plan=500 operations (350 insert, 75 delete, 75 modify)
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INIT#0  (heap free=882MB / total=992MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INIT#0] OK t=542ms cand=15377 pat=107 heapDelta=52MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INS#1  (heap free=171MB / total=228MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INS#1] OK t=4ms cand=0 pat=107 heapDelta=4MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INS#2  (heap free=171MB / total=228MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INS#2] OK t=240ms cand=15517 pat=108 heapDelta=13MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INS#3  (heap free=143MB / total=200MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INS#3] OK t=2ms cand=0 pat=107 heapDelta=3MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_MOD#4  (heap free=143MB / total=200MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_MOD] EXC:IllegalStateException
+[Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_MOD#4] FAILED after 3ms (EXC:IllegalStateException)
+>> RUNNING Pre-HUSPM-Joint/LEVIATHAN/SC6_INIT#0  (heap free=128MB / total=200MB / max=5120MB)
+[Pre-HUSPM-Joint/LEVIATHAN/SC6_INIT#0] OK t=252ms cand=15377 pat=107 heapDelta=41MB
+>> RUNNING Pre-HUSPM-Joint/LEVIATHAN/SC6_INS#1  (heap free=132MB / total=188MB / max=5120MB)
+[Pre-HUSPM-Joint/LEVIATHAN/SC6_INS#1] OK t=1ms cand=0 pat=107 heapDelta=2MB
+>> RUNNING Pre-HUSPM-Joint/LEVIATHAN/SC6_INS#2  (heap free=132MB / total=188MB / max=5120MB)
+[Pre-HUSPM-Joint/LEVIATHAN/SC6_INS#2] OK t=173ms cand=8979 pat=108 heapDelta=10MB
+>> RUNNING Pre-HUSPM-Joint/LEVIATHAN/SC6_INS#3  (heap free=131MB / total=188MB / max=5120MB)
+[Pre-HUSPM-Joint/LEVIATHAN/SC6_INS#3] OK t=236ms cand=15495 pat=107 heapDelta=12MB
+>> RUNNING Pre-HUSPM-Joint/LEVIATHAN/SC6_MOD#4  (heap free=131MB / total=188MB / max=5120MB)
+[Pre-HUSPM-Joint/LEVIATHAN/SC6_MOD] EXC:IllegalStateException
+[Pre-HUSPM-Joint/LEVIATHAN/SC6_MOD#4] FAILED after 2ms (EXC:IllegalStateException)
+>> [SC10] LEVIATHAN seed=1337 opSize=3 plan=500 operations (350 insert, 75 delete, 75 modify)
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INIT#0  (heap free=106MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INIT#0] OK t=246ms cand=15377 pat=107 heapDelta=39MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_DEL#1  (heap free=104MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_DEL#1] OK t=1ms cand=15377 pat=106 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INS#2  (heap free=104MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INS#2] OK t=1ms cand=0 pat=106 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INS#3  (heap free=104MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INS#3] OK t=236ms cand=15540 pat=106 heapDelta=11MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INS#4  (heap free=103MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INS#4] OK t=1ms cand=0 pat=106 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_DEL#5  (heap free=103MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_DEL#5] OK t=0ms cand=0 pat=108 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INS#6  (heap free=103MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INS#6] OK t=1ms cand=0 pat=106 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INS#7  (heap free=103MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INS#7] OK t=1ms cand=0 pat=107 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_DEL#8  (heap free=103MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_DEL#8] OK t=0ms cand=0 pat=107 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_MOD#9  (heap free=103MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_MOD] EXC:IllegalStateException
+[Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_MOD#9] FAILED after 1ms (EXC:IllegalStateException)
+>> RUNNING Pre-HUSPM-Joint/LEVIATHAN/SC6_INIT#0  (heap free=89MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint/LEVIATHAN/SC6_INIT#0] OK t=238ms cand=15377 pat=107 heapDelta=36MB
+>> RUNNING Pre-HUSPM-Joint/LEVIATHAN/SC6_DEL#1  (heap free=104MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint/LEVIATHAN/SC6_DEL#1] OK t=1ms cand=15377 pat=106 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint/LEVIATHAN/SC6_INS#2  (heap free=104MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint/LEVIATHAN/SC6_INS#2] OK t=1ms cand=0 pat=106 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint/LEVIATHAN/SC6_INS#3  (heap free=104MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint/LEVIATHAN/SC6_INS#3] OK t=170ms cand=8990 pat=106 heapDelta=8MB
+>> RUNNING Pre-HUSPM-Joint/LEVIATHAN/SC6_INS#4  (heap free=104MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint/LEVIATHAN/SC6_INS#4] OK t=235ms cand=15524 pat=106 heapDelta=11MB
+>> RUNNING Pre-HUSPM-Joint/LEVIATHAN/SC6_DEL#5  (heap free=103MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint/LEVIATHAN/SC6_DEL#5] OK t=0ms cand=15524 pat=108 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint/LEVIATHAN/SC6_INS#6  (heap free=103MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint/LEVIATHAN/SC6_INS#6] OK t=1ms cand=0 pat=106 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint/LEVIATHAN/SC6_INS#7  (heap free=103MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint/LEVIATHAN/SC6_INS#7] OK t=1ms cand=0 pat=107 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint/LEVIATHAN/SC6_DEL#8  (heap free=103MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint/LEVIATHAN/SC6_DEL#8] OK t=1ms cand=0 pat=107 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint/LEVIATHAN/SC6_MOD#9  (heap free=103MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint/LEVIATHAN/SC6_MOD] EXC:IllegalStateException
+[Pre-HUSPM-Joint/LEVIATHAN/SC6_MOD#9] FAILED after 2ms (EXC:IllegalStateException)
+>> [SC10] LEVIATHAN seed=2024 opSize=3 plan=500 operations (350 insert, 75 delete, 75 modify)
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INIT#0  (heap free=105MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INIT#0] OK t=242ms cand=15377 pat=107 heapDelta=36MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_DEL#1  (heap free=104MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_DEL#1] OK t=1ms cand=15377 pat=106 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INS#2  (heap free=104MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INS#2] OK t=1ms cand=0 pat=106 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INS#3  (heap free=104MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INS#3] OK t=236ms cand=15529 pat=107 heapDelta=11MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INS#4  (heap free=104MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INS#4] OK t=1ms cand=0 pat=108 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_DEL#5  (heap free=104MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_DEL#5] OK t=1ms cand=0 pat=107 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_MOD#6  (heap free=104MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_MOD#6] OK t=1ms cand=0 pat=107 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INS#7  (heap free=104MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INS#7] OK t=0ms cand=0 pat=107 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INS#8  (heap free=104MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INS#8] OK t=228ms cand=15307 pat=107 heapDelta=10MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INS#9  (heap free=104MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INS#9] OK t=0ms cand=0 pat=108 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_DEL#10  (heap free=104MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_DEL#10] OK t=1ms cand=0 pat=108 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_MOD#11  (heap free=104MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_MOD#11] OK t=1ms cand=0 pat=108 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_MOD#12  (heap free=104MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_MOD#12] OK t=233ms cand=15217 pat=108 heapDelta=10MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INS#13  (heap free=103MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INS#13] OK t=1ms cand=0 pat=108 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INS#14  (heap free=103MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INS#14] OK t=1ms cand=0 pat=106 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INS#15  (heap free=103MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INS#15] OK t=1ms cand=0 pat=107 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INS#16  (heap free=103MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INS#16] OK t=226ms cand=15176 pat=106 heapDelta=10MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INS#17  (heap free=103MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INS#17] OK t=1ms cand=0 pat=106 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INS#18  (heap free=103MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INS#18] OK t=1ms cand=0 pat=105 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INS#19  (heap free=103MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INS#19] OK t=1ms cand=0 pat=106 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INS#20  (heap free=103MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_INS#20] OK t=230ms cand=15069 pat=106 heapDelta=10MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_MOD#21  (heap free=103MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_MOD] EXC:IllegalStateException
+[Pre-HUSPM-Joint-fixed-threshold/LEVIATHAN/SC6_MOD#21] FAILED after 1ms (EXC:IllegalStateException)
+>> RUNNING Pre-HUSPM-Joint/LEVIATHAN/SC6_INIT#0  (heap free=88MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint/LEVIATHAN/SC6_INIT#0] OK t=237ms cand=15377 pat=107 heapDelta=36MB
+>> RUNNING Pre-HUSPM-Joint/LEVIATHAN/SC6_DEL#1  (heap free=104MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint/LEVIATHAN/SC6_DEL#1] OK t=1ms cand=15377 pat=106 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint/LEVIATHAN/SC6_INS#2  (heap free=104MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint/LEVIATHAN/SC6_INS#2] OK t=1ms cand=0 pat=106 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint/LEVIATHAN/SC6_INS#3  (heap free=104MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint/LEVIATHAN/SC6_INS#3] OK t=170ms cand=8980 pat=107 heapDelta=8MB
+>> RUNNING Pre-HUSPM-Joint/LEVIATHAN/SC6_INS#4  (heap free=104MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint/LEVIATHAN/SC6_INS#4] OK t=236ms cand=15519 pat=108 heapDelta=11MB
+>> RUNNING Pre-HUSPM-Joint/LEVIATHAN/SC6_DEL#5  (heap free=103MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint/LEVIATHAN/SC6_DEL#5] OK t=1ms cand=15519 pat=107 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint/LEVIATHAN/SC6_MOD#6  (heap free=103MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint/LEVIATHAN/SC6_MOD#6] OK t=1ms cand=0 pat=107 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint/LEVIATHAN/SC6_INS#7  (heap free=103MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint/LEVIATHAN/SC6_INS#7] OK t=1ms cand=0 pat=107 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint/LEVIATHAN/SC6_INS#8  (heap free=103MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint/LEVIATHAN/SC6_INS#8] OK t=232ms cand=15307 pat=107 heapDelta=10MB
+>> RUNNING Pre-HUSPM-Joint/LEVIATHAN/SC6_INS#9  (heap free=103MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint/LEVIATHAN/SC6_INS#9] OK t=1ms cand=0 pat=108 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint/LEVIATHAN/SC6_DEL#10  (heap free=103MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint/LEVIATHAN/SC6_DEL#10] OK t=1ms cand=0 pat=108 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint/LEVIATHAN/SC6_MOD#11  (heap free=103MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint/LEVIATHAN/SC6_MOD#11] OK t=1ms cand=0 pat=108 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint/LEVIATHAN/SC6_MOD#12  (heap free=103MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint/LEVIATHAN/SC6_MOD#12] OK t=233ms cand=15217 pat=108 heapDelta=10MB
+>> RUNNING Pre-HUSPM-Joint/LEVIATHAN/SC6_INS#13  (heap free=103MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint/LEVIATHAN/SC6_INS#13] OK t=1ms cand=0 pat=108 heapDelta=2MB
+>> RUNNING Pre-HUSPM-Joint/LEVIATHAN/SC6_INS#14  (heap free=103MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint/LEVIATHAN/SC6_INS#14] OK t=1ms cand=0 pat=106 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint/LEVIATHAN/SC6_INS#15  (heap free=103MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint/LEVIATHAN/SC6_INS#15] OK t=1ms cand=0 pat=107 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint/LEVIATHAN/SC6_INS#16  (heap free=103MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint/LEVIATHAN/SC6_INS#16] OK t=230ms cand=15176 pat=106 heapDelta=10MB
+>> RUNNING Pre-HUSPM-Joint/LEVIATHAN/SC6_INS#17  (heap free=103MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint/LEVIATHAN/SC6_INS#17] OK t=1ms cand=0 pat=106 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint/LEVIATHAN/SC6_INS#18  (heap free=103MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint/LEVIATHAN/SC6_INS#18] OK t=1ms cand=0 pat=105 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint/LEVIATHAN/SC6_INS#19  (heap free=103MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint/LEVIATHAN/SC6_INS#19] OK t=1ms cand=0 pat=106 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint/LEVIATHAN/SC6_INS#20  (heap free=103MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint/LEVIATHAN/SC6_INS#20] OK t=231ms cand=15069 pat=106 heapDelta=10MB
+>> RUNNING Pre-HUSPM-Joint/LEVIATHAN/SC6_MOD#21  (heap free=103MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint/LEVIATHAN/SC6_MOD] EXC:IllegalStateException
+[Pre-HUSPM-Joint/LEVIATHAN/SC6_MOD#21] FAILED after 2ms (EXC:IllegalStateException)
+>> [SC10] SIGN seed=42 opSize=1 plan=500 operations (350 insert, 75 delete, 75 modify)
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INIT#0  (heap free=87MB / total=160MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INIT#0] OK t=184ms cand=70528 pat=583 heapDelta=8MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_MOD#1  (heap free=40MB / total=56MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_MOD] EXC:IllegalStateException
+[Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_MOD#1] FAILED after 1ms (EXC:IllegalStateException)
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC6_INIT#0  (heap free=36MB / total=56MB / max=5120MB)
+[Pre-HUSPM-Joint/SIGN/SC6_INIT#0] OK t=193ms cand=70528 pat=583 heapDelta=7MB
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC6_MOD#1  (heap free=25MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint/SIGN/SC6_MOD] EXC:IllegalStateException
+[Pre-HUSPM-Joint/SIGN/SC6_MOD#1] FAILED after 1ms (EXC:IllegalStateException)
+>> [SC10] SIGN seed=1337 opSize=1 plan=500 operations (350 insert, 75 delete, 75 modify)
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INIT#0  (heap free=26MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INIT#0] OK t=123ms cand=70528 pat=583 heapDelta=7MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#1  (heap free=25MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#1] OK t=1ms cand=0 pat=594 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#2  (heap free=24MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#2] OK t=1ms cand=0 pat=593 heapDelta=0MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#3  (heap free=24MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#3] OK t=1ms cand=0 pat=597 heapDelta=0MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#4  (heap free=24MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#4] OK t=124ms cand=71321 pat=603 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#5  (heap free=24MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#5] OK t=1ms cand=0 pat=611 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#6  (heap free=24MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#6] OK t=1ms cand=0 pat=601 heapDelta=0MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#7  (heap free=24MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#7] OK t=132ms cand=75468 pat=598 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#8  (heap free=24MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#8] OK t=1ms cand=0 pat=608 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#9  (heap free=24MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#9] OK t=1ms cand=0 pat=689 heapDelta=0MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_MOD#10  (heap free=24MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_MOD] EXC:IllegalStateException
+[Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_MOD#10] FAILED after 1ms (EXC:IllegalStateException)
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC6_INIT#0  (heap free=20MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint/SIGN/SC6_INIT#0] OK t=123ms cand=70528 pat=583 heapDelta=7MB
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC6_INS#1  (heap free=24MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint/SIGN/SC6_INS#1] OK t=2ms cand=0 pat=594 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC6_INS#2  (heap free=24MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint/SIGN/SC6_INS#2] OK t=1ms cand=0 pat=593 heapDelta=0MB
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC6_INS#3  (heap free=24MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint/SIGN/SC6_INS#3] OK t=1ms cand=0 pat=597 heapDelta=0MB
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC6_INS#4  (heap free=24MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint/SIGN/SC6_INS#4] OK t=71ms cand=35723 pat=603 heapDelta=0MB
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC6_INS#5  (heap free=24MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint/SIGN/SC6_INS#5] OK t=129ms cand=74614 pat=611 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC6_INS#6  (heap free=24MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint/SIGN/SC6_INS#6] OK t=2ms cand=0 pat=601 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC6_INS#7  (heap free=24MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint/SIGN/SC6_INS#7] OK t=1ms cand=0 pat=598 heapDelta=0MB
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC6_INS#8  (heap free=24MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint/SIGN/SC6_INS#8] OK t=135ms cand=75967 pat=608 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC6_INS#9  (heap free=23MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint/SIGN/SC6_INS#9] OK t=1ms cand=0 pat=689 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC6_MOD#10  (heap free=23MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint/SIGN/SC6_MOD] EXC:IllegalStateException
+[Pre-HUSPM-Joint/SIGN/SC6_MOD#10] FAILED after 1ms (EXC:IllegalStateException)
+>> [SC10] SIGN seed=2024 opSize=1 plan=500 operations (350 insert, 75 delete, 75 modify)
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INIT#0  (heap free=25MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INIT#0] OK t=125ms cand=70528 pat=583 heapDelta=7MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#1  (heap free=24MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#1] OK t=1ms cand=0 pat=594 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_DEL#2  (heap free=24MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_DEL#2] OK t=1ms cand=0 pat=583 heapDelta=0MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_DEL#3  (heap free=24MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_DEL#3] OK t=1ms cand=0 pat=593 heapDelta=0MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#4  (heap free=24MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#4] OK t=0ms cand=0 pat=590 heapDelta=0MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#5  (heap free=24MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#5] OK t=1ms cand=0 pat=583 heapDelta=0MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#6  (heap free=24MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#6] OK t=124ms cand=71317 pat=595 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#7  (heap free=24MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#7] OK t=2ms cand=0 pat=597 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#8  (heap free=24MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#8] OK t=1ms cand=0 pat=590 heapDelta=0MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_DEL#9  (heap free=24MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_DEL#9] OK t=1ms cand=0 pat=598 heapDelta=0MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#10  (heap free=24MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#10] OK t=131ms cand=76016 pat=598 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_DEL#11  (heap free=23MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_DEL#11] OK t=1ms cand=76016 pat=597 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#12  (heap free=23MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#12] OK t=1ms cand=0 pat=614 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_MOD#13  (heap free=23MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_MOD#13] OK t=1ms cand=0 pat=612 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_MOD#14  (heap free=23MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_MOD#14] OK t=134ms cand=76765 pat=612 heapDelta=2MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#15  (heap free=23MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#15] OK t=1ms cand=0 pat=688 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#16  (heap free=23MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#16] OK t=1ms cand=0 pat=679 heapDelta=0MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#17  (heap free=23MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#17] OK t=142ms cand=80333 pat=684 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_MOD#18  (heap free=23MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_MOD#18] OK t=2ms cand=0 pat=684 heapDelta=2MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#19  (heap free=23MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#19] OK t=1ms cand=0 pat=679 heapDelta=0MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_MOD#20  (heap free=23MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_MOD#20] OK t=2ms cand=0 pat=679 heapDelta=0MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_DEL#21  (heap free=23MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_DEL#21] OK t=1ms cand=0 pat=682 heapDelta=0MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#22  (heap free=23MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#22] OK t=141ms cand=80488 pat=676 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#23  (heap free=22MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#23] OK t=1ms cand=0 pat=673 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#24  (heap free=22MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_INS#24] OK t=0ms cand=0 pat=670 heapDelta=0MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_MOD#25  (heap free=22MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_MOD] EXC:IllegalStateException
+[Pre-HUSPM-Joint-fixed-threshold/SIGN/SC6_MOD#25] FAILED after 1ms (EXC:IllegalStateException)
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC6_INIT#0  (heap free=18MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint/SIGN/SC6_INIT#0] OK t=123ms cand=70528 pat=583 heapDelta=7MB
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC6_INS#1  (heap free=23MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint/SIGN/SC6_INS#1] OK t=2ms cand=0 pat=594 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC6_DEL#2  (heap free=23MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint/SIGN/SC6_DEL#2] OK t=1ms cand=0 pat=583 heapDelta=0MB
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC6_DEL#3  (heap free=23MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint/SIGN/SC6_DEL#3] OK t=1ms cand=0 pat=593 heapDelta=0MB
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC6_INS#4  (heap free=23MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint/SIGN/SC6_INS#4] OK t=0ms cand=0 pat=590 heapDelta=0MB
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC6_INS#5  (heap free=23MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint/SIGN/SC6_INS#5] OK t=0ms cand=0 pat=583 heapDelta=0MB
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC6_INS#6  (heap free=23MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint/SIGN/SC6_INS#6] OK t=70ms cand=35647 pat=595 heapDelta=0MB
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC6_INS#7  (heap free=23MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint/SIGN/SC6_INS#7] OK t=129ms cand=74574 pat=597 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC6_INS#8  (heap free=22MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint/SIGN/SC6_INS#8] OK t=1ms cand=0 pat=590 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC6_DEL#9  (heap free=22MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint/SIGN/SC6_DEL#9] OK t=1ms cand=0 pat=598 heapDelta=0MB
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC6_INS#10  (heap free=22MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint/SIGN/SC6_INS#10] OK t=1ms cand=0 pat=598 heapDelta=0MB
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC6_DEL#11  (heap free=22MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint/SIGN/SC6_DEL#11] OK t=1ms cand=0 pat=597 heapDelta=0MB
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC6_INS#12  (heap free=22MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint/SIGN/SC6_INS#12] OK t=133ms cand=76717 pat=614 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC6_MOD#13  (heap free=22MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint/SIGN/SC6_MOD#13] OK t=1ms cand=0 pat=612 heapDelta=2MB
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC6_MOD#14  (heap free=22MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint/SIGN/SC6_MOD#14] OK t=1ms cand=0 pat=612 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC6_INS#15  (heap free=22MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint/SIGN/SC6_INS#15] OK t=137ms cand=78776 pat=688 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC6_INS#16  (heap free=22MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint/SIGN/SC6_INS#16] OK t=1ms cand=0 pat=679 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC6_INS#17  (heap free=22MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint/SIGN/SC6_INS#17] OK t=1ms cand=0 pat=684 heapDelta=0MB
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC6_MOD#18  (heap free=22MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint/SIGN/SC6_MOD#18] OK t=141ms cand=80248 pat=684 heapDelta=2MB
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC6_INS#19  (heap free=22MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint/SIGN/SC6_INS#19] OK t=1ms cand=0 pat=679 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC6_MOD#20  (heap free=22MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint/SIGN/SC6_MOD#20] OK t=1ms cand=0 pat=679 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC6_DEL#21  (heap free=22MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint/SIGN/SC6_DEL#21] OK t=1ms cand=0 pat=682 heapDelta=0MB
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC6_INS#22  (heap free=22MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint/SIGN/SC6_INS#22] OK t=1ms cand=0 pat=676 heapDelta=0MB
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC6_INS#23  (heap free=22MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint/SIGN/SC6_INS#23] OK t=1ms cand=0 pat=673 heapDelta=0MB
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC6_INS#24  (heap free=22MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint/SIGN/SC6_INS#24] OK t=140ms cand=79088 pat=670 heapDelta=1MB
+>> RUNNING Pre-HUSPM-Joint/SIGN/SC6_MOD#25  (heap free=22MB / total=40MB / max=5120MB)
+[Pre-HUSPM-Joint/SIGN/SC6_MOD] EXC:IllegalStateException
+[Pre-HUSPM-Joint/SIGN/SC6_MOD#25] FAILED after 1ms (EXC:IllegalStateException)
+>> [SC10] TAFENG seed=42 opSize=20 plan=500 operations (350 insert, 75 delete, 75 modify)
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_INIT#0  (heap free=288MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_INIT#0] OK t=165ms cand=2123 pat=6 heapDelta=140MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_DEL#1  (heap free=359MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_DEL#1] OK t=1ms cand=2123 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_INS#2  (heap free=359MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_INS#2] OK t=1ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_INS#3  (heap free=358MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_INS#3] OK t=0ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_DEL#4  (heap free=358MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_DEL#4] OK t=1ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_INS#5  (heap free=358MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_INS#5] OK t=0ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_INS#6  (heap free=358MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_INS#6] OK t=1ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_MOD#7  (heap free=358MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_MOD] EXC:IllegalStateException
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_MOD#7] FAILED after 6ms (EXC:IllegalStateException)
+>> RUNNING Pre-HUSPM-Joint/TAFENG/SC6_INIT#0  (heap free=355MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint/TAFENG/SC6_INIT#0] OK t=158ms cand=2123 pat=6 heapDelta=158MB
+>> RUNNING Pre-HUSPM-Joint/TAFENG/SC6_DEL#1  (heap free=359MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint/TAFENG/SC6_DEL#1] OK t=1ms cand=2123 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-Joint/TAFENG/SC6_INS#2  (heap free=359MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint/TAFENG/SC6_INS#2] OK t=1ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint/TAFENG/SC6_INS#3  (heap free=358MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint/TAFENG/SC6_INS#3] OK t=1ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint/TAFENG/SC6_DEL#4  (heap free=358MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint/TAFENG/SC6_DEL#4] OK t=1ms cand=0 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-Joint/TAFENG/SC6_INS#5  (heap free=358MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint/TAFENG/SC6_INS#5] OK t=1ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint/TAFENG/SC6_INS#6  (heap free=358MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint/TAFENG/SC6_INS#6] OK t=1ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint/TAFENG/SC6_MOD#7  (heap free=358MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint/TAFENG/SC6_MOD] EXC:IllegalStateException
+[Pre-HUSPM-Joint/TAFENG/SC6_MOD#7] FAILED after 5ms (EXC:IllegalStateException)
+>> [SC10] TAFENG seed=1337 opSize=20 plan=500 operations (350 insert, 75 delete, 75 modify)
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_INIT#0  (heap free=326MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_INIT#0] OK t=160ms cand=2123 pat=6 heapDelta=158MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_INS#1  (heap free=359MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_INS#1] OK t=1ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_DEL#2  (heap free=359MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_DEL#2] OK t=0ms cand=0 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_INS#3  (heap free=359MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_INS#3] OK t=1ms cand=0 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_INS#4  (heap free=358MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_INS#4] OK t=1ms cand=0 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_INS#5  (heap free=358MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_INS#5] OK t=1ms cand=0 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_INS#6  (heap free=358MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_INS#6] OK t=0ms cand=0 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_INS#7  (heap free=358MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_INS#7] OK t=1ms cand=0 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_INS#8  (heap free=358MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_INS#8] OK t=1ms cand=0 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_INS#9  (heap free=358MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_INS#9] OK t=0ms cand=0 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_INS#10  (heap free=358MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_INS#10] OK t=1ms cand=0 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_DEL#11  (heap free=358MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_DEL#11] OK t=1ms cand=0 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_INS#12  (heap free=358MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_INS#12] OK t=1ms cand=0 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_MOD#13  (heap free=358MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_MOD] EXC:IllegalStateException
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_MOD#13] FAILED after 3ms (EXC:IllegalStateException)
+>> RUNNING Pre-HUSPM-Joint/TAFENG/SC6_INIT#0  (heap free=190MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint/TAFENG/SC6_INIT#0] OK t=150ms cand=2123 pat=6 heapDelta=140MB
+>> RUNNING Pre-HUSPM-Joint/TAFENG/SC6_INS#1  (heap free=359MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint/TAFENG/SC6_INS#1] OK t=0ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint/TAFENG/SC6_DEL#2  (heap free=359MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint/TAFENG/SC6_DEL#2] OK t=0ms cand=0 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-Joint/TAFENG/SC6_INS#3  (heap free=359MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint/TAFENG/SC6_INS#3] OK t=1ms cand=0 pat=6 heapDelta=6MB
+>> RUNNING Pre-HUSPM-Joint/TAFENG/SC6_INS#4  (heap free=358MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint/TAFENG/SC6_INS#4] OK t=1ms cand=0 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-Joint/TAFENG/SC6_INS#5  (heap free=358MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint/TAFENG/SC6_INS#5] OK t=1ms cand=0 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-Joint/TAFENG/SC6_INS#6  (heap free=358MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint/TAFENG/SC6_INS#6] OK t=1ms cand=0 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-Joint/TAFENG/SC6_INS#7  (heap free=358MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint/TAFENG/SC6_INS#7] OK t=1ms cand=0 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-Joint/TAFENG/SC6_INS#8  (heap free=358MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint/TAFENG/SC6_INS#8] OK t=0ms cand=0 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-Joint/TAFENG/SC6_INS#9  (heap free=358MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint/TAFENG/SC6_INS#9] OK t=1ms cand=0 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-Joint/TAFENG/SC6_INS#10  (heap free=358MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint/TAFENG/SC6_INS#10] OK t=1ms cand=0 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-Joint/TAFENG/SC6_DEL#11  (heap free=359MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint/TAFENG/SC6_DEL#11] OK t=1ms cand=0 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-Joint/TAFENG/SC6_INS#12  (heap free=359MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint/TAFENG/SC6_INS#12] OK t=1ms cand=0 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-Joint/TAFENG/SC6_MOD#13  (heap free=359MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint/TAFENG/SC6_MOD] EXC:IllegalStateException
+[Pre-HUSPM-Joint/TAFENG/SC6_MOD#13] FAILED after 2ms (EXC:IllegalStateException)
+>> [SC10] TAFENG seed=2024 opSize=20 plan=500 operations (350 insert, 75 delete, 75 modify)
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_INIT#0  (heap free=326MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_INIT#0] OK t=162ms cand=2123 pat=6 heapDelta=140MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_DEL#1  (heap free=359MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_DEL#1] OK t=1ms cand=2123 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_MOD#2  (heap free=359MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_MOD] EXC:IllegalStateException
+[Pre-HUSPM-Joint-fixed-threshold/TAFENG/SC6_MOD#2] FAILED after 2ms (EXC:IllegalStateException)
+>> RUNNING Pre-HUSPM-Joint/TAFENG/SC6_INIT#0  (heap free=186MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint/TAFENG/SC6_INIT#0] OK t=147ms cand=2123 pat=6 heapDelta=140MB
+>> RUNNING Pre-HUSPM-Joint/TAFENG/SC6_DEL#1  (heap free=359MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint/TAFENG/SC6_DEL#1] OK t=1ms cand=2123 pat=6 heapDelta=4MB
+>> RUNNING Pre-HUSPM-Joint/TAFENG/SC6_MOD#2  (heap free=359MB / total=564MB / max=5120MB)
+[Pre-HUSPM-Joint/TAFENG/SC6_MOD] EXC:IllegalStateException
+[Pre-HUSPM-Joint/TAFENG/SC6_MOD#2] FAILED after 2ms (EXC:IllegalStateException)
+>> [SC10] C8T1S5I8N5K seed=42 opSize=19 plan=500 operations (350 insert, 75 delete, 75 modify)
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INIT#0  (heap free=886MB / total=1184MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INIT#0] OK t=193ms cand=47013 pat=5067 heapDelta=80MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#1  (heap free=247MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#1] OK t=6ms cand=0 pat=5040 heapDelta=14MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#2  (heap free=245MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#2] OK t=4ms cand=0 pat=5025 heapDelta=10MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#3  (heap free=244MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#3] OK t=3ms cand=0 pat=5006 heapDelta=10MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#4  (heap free=243MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#4] OK t=2ms cand=0 pat=4994 heapDelta=10MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_DEL#5  (heap free=242MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_DEL#5] OK t=7ms cand=0 pat=4991 heapDelta=10MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#6  (heap free=241MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#6] OK t=3ms cand=0 pat=4967 heapDelta=10MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#7  (heap free=241MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#7] OK t=142ms cand=46677 pat=5168 heapDelta=20MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#8  (heap free=239MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#8] OK t=4ms cand=0 pat=5180 heapDelta=10MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#9  (heap free=239MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#9] OK t=3ms cand=0 pat=5157 heapDelta=10MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#10  (heap free=238MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#10] OK t=3ms cand=0 pat=5141 heapDelta=10MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_DEL#11  (heap free=237MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_DEL#11] OK t=6ms cand=0 pat=5158 heapDelta=10MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#12  (heap free=236MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#12] OK t=3ms cand=0 pat=5137 heapDelta=10MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#13  (heap free=235MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#13] OK t=3ms cand=0 pat=5107 heapDelta=10MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#14  (heap free=235MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#14] OK t=3ms cand=0 pat=5113 heapDelta=10MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_MOD#15  (heap free=234MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_MOD] EXC:IllegalStateException
+[Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_MOD#15] FAILED after 7ms (EXC:IllegalStateException)
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INIT#0  (heap free=116MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INIT#0] OK t=119ms cand=47013 pat=5067 heapDelta=80MB
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#1  (heap free=236MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#1] OK t=3ms cand=0 pat=5040 heapDelta=14MB
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#2  (heap free=234MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#2] OK t=3ms cand=0 pat=5025 heapDelta=12MB
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#3  (heap free=234MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#3] OK t=3ms cand=0 pat=5006 heapDelta=12MB
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#4  (heap free=234MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#4] OK t=3ms cand=0 pat=4994 heapDelta=12MB
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_DEL#5  (heap free=234MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_DEL#5] OK t=5ms cand=0 pat=4991 heapDelta=10MB
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#6  (heap free=234MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#6] OK t=3ms cand=0 pat=4967 heapDelta=12MB
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#7  (heap free=234MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#7] OK t=53ms cand=20335 pat=5168 heapDelta=12MB
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#8  (heap free=235MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#8] OK t=94ms cand=46741 pat=5180 heapDelta=22MB
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#9  (heap free=233MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#9] OK t=4ms cand=0 pat=5157 heapDelta=12MB
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#10  (heap free=233MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#10] OK t=3ms cand=0 pat=5141 heapDelta=12MB
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_DEL#11  (heap free=233MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_DEL#11] OK t=6ms cand=0 pat=5158 heapDelta=10MB
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#12  (heap free=233MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#12] OK t=3ms cand=0 pat=5137 heapDelta=12MB
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#13  (heap free=233MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#13] OK t=3ms cand=0 pat=5107 heapDelta=12MB
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#14  (heap free=233MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#14] OK t=3ms cand=0 pat=5113 heapDelta=12MB
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_MOD#15  (heap free=233MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_MOD] EXC:IllegalStateException
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_MOD#15] FAILED after 6ms (EXC:IllegalStateException)
+>> [SC10] C8T1S5I8N5K seed=1337 opSize=19 plan=500 operations (350 insert, 75 delete, 75 modify)
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INIT#0  (heap free=235MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INIT#0] OK t=119ms cand=47013 pat=5067 heapDelta=80MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#1  (heap free=247MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#1] OK t=3ms cand=0 pat=5040 heapDelta=12MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#2  (heap free=245MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#2] OK t=3ms cand=0 pat=5025 heapDelta=10MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#3  (heap free=244MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#3] OK t=3ms cand=0 pat=5006 heapDelta=10MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#4  (heap free=243MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#4] OK t=3ms cand=0 pat=4994 heapDelta=10MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_DEL#5  (heap free=242MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_DEL#5] OK t=6ms cand=0 pat=5005 heapDelta=10MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#6  (heap free=242MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#6] OK t=3ms cand=0 pat=4978 heapDelta=10MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#7  (heap free=241MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#7] OK t=93ms cand=46727 pat=5179 heapDelta=20MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_DEL#8  (heap free=239MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_DEL#8] OK t=6ms cand=46727 pat=4982 heapDelta=10MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#9  (heap free=239MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#9] OK t=3ms cand=0 pat=4995 heapDelta=10MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#10  (heap free=238MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#10] OK t=3ms cand=0 pat=4976 heapDelta=10MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#11  (heap free=237MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#11] OK t=2ms cand=0 pat=4956 heapDelta=10MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_MOD#12  (heap free=236MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_MOD] EXC:IllegalStateException
+[Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_MOD#12] FAILED after 6ms (EXC:IllegalStateException)
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INIT#0  (heap free=118MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INIT#0] OK t=119ms cand=47013 pat=5067 heapDelta=80MB
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#1  (heap free=238MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#1] OK t=2ms cand=0 pat=5040 heapDelta=12MB
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#2  (heap free=237MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#2] OK t=3ms cand=0 pat=5025 heapDelta=12MB
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#3  (heap free=237MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#3] OK t=4ms cand=0 pat=5006 heapDelta=12MB
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#4  (heap free=237MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#4] OK t=3ms cand=0 pat=4994 heapDelta=12MB
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_DEL#5  (heap free=237MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_DEL#5] OK t=5ms cand=0 pat=5005 heapDelta=10MB
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#6  (heap free=237MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#6] OK t=3ms cand=0 pat=4978 heapDelta=12MB
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#7  (heap free=237MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#7] OK t=55ms cand=20338 pat=5179 heapDelta=12MB
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_DEL#8  (heap free=238MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_DEL#8] OK t=92ms cand=67138 pat=4982 heapDelta=20MB
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#9  (heap free=237MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#9] OK t=3ms cand=0 pat=4995 heapDelta=14MB
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#10  (heap free=235MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#10] OK t=3ms cand=0 pat=4976 heapDelta=12MB
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#11  (heap free=235MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#11] OK t=3ms cand=0 pat=4956 heapDelta=12MB
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_MOD#12  (heap free=235MB / total=360MB / max=5120MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_MOD] EXC:IllegalStateException
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_MOD#12] FAILED after 6ms (EXC:IllegalStateException)
+>> [SC10] C8T1S5I8N5K seed=2024 opSize=19 plan=500 operations (350 insert, 75 delete, 75 modify)
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INIT#0  (heap free=225MB / total=348MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INIT#0] OK t=119ms cand=47013 pat=5067 heapDelta=80MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_DEL#1  (heap free=235MB / total=348MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_DEL#1] OK t=6ms cand=47013 pat=5095 heapDelta=10MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_DEL#2  (heap free=234MB / total=348MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_DEL#2] OK t=6ms cand=47013 pat=5117 heapDelta=10MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#3  (heap free=233MB / total=348MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#3] OK t=3ms cand=0 pat=5097 heapDelta=12MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#4  (heap free=231MB / total=348MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#4] OK t=3ms cand=0 pat=5078 heapDelta=10MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#5  (heap free=230MB / total=348MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#5] OK t=3ms cand=0 pat=5051 heapDelta=10MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#6  (heap free=229MB / total=348MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#6] OK t=3ms cand=0 pat=5028 heapDelta=10MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#7  (heap free=228MB / total=348MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#7] OK t=2ms cand=0 pat=5002 heapDelta=10MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#8  (heap free=228MB / total=348MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#8] OK t=93ms cand=46716 pat=5212 heapDelta=20MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#9  (heap free=226MB / total=348MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_INS#9] OK t=3ms cand=0 pat=5221 heapDelta=10MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_MOD#10  (heap free=226MB / total=348MB / max=5120MB)
+[Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_MOD] EXC:IllegalStateException
+[Pre-HUSPM-Joint-fixed-threshold/C8T1S5I8N5K/SC6_MOD#10] FAILED after 6ms (EXC:IllegalStateException)
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INIT#0  (heap free=108MB / total=348MB / max=5120MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INIT#0] OK t=118ms cand=47013 pat=5067 heapDelta=80MB
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_DEL#1  (heap free=227MB / total=348MB / max=5120MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_DEL#1] OK t=6ms cand=47013 pat=5095 heapDelta=10MB
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_DEL#2  (heap free=227MB / total=348MB / max=5120MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_DEL#2] OK t=6ms cand=47013 pat=5117 heapDelta=10MB
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#3  (heap free=227MB / total=348MB / max=5120MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#3] OK t=3ms cand=0 pat=5097 heapDelta=12MB
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#4  (heap free=226MB / total=348MB / max=5120MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#4] OK t=3ms cand=0 pat=5078 heapDelta=12MB
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#5  (heap free=226MB / total=348MB / max=5120MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#5] OK t=3ms cand=0 pat=5051 heapDelta=12MB
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#6  (heap free=226MB / total=348MB / max=5120MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#6] OK t=3ms cand=0 pat=5028 heapDelta=12MB
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#7  (heap free=226MB / total=348MB / max=5120MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#7] OK t=3ms cand=0 pat=5002 heapDelta=12MB
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#8  (heap free=226MB / total=348MB / max=5120MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#8] OK t=54ms cand=20394 pat=5212 heapDelta=12MB
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#9  (heap free=227MB / total=348MB / max=5120MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_INS#9] OK t=93ms cand=46757 pat=5221 heapDelta=22MB
+>> RUNNING Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_MOD#10  (heap free=225MB / total=348MB / max=5120MB)
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_MOD] EXC:IllegalStateException
+[Pre-HUSPM-Joint/C8T1S5I8N5K/SC6_MOD#10] FAILED after 6ms (EXC:IllegalStateException)
+=== ALL SCENARIOS DONE (116.4s) ===
+HUSP check: 129 comparisons with the proposal, 0 mismatching, 0 without a reference (results/verify-joint/exact-arithmetic-2026-11-26/measured-code-2026-11-11/husps-long-sc10-method/verify_husps.csv)
