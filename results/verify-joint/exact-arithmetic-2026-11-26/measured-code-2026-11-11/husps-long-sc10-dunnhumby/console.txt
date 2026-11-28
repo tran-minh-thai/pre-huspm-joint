@@ -1,0 +1,206 @@
+=== HUSPM-Adapt-Prelarge AUTOMATED EXPERIMENT RUNNER ===
+Mode: PRODUCTION | Datasets: 9 | Scenarios: [SC10]
+Heap max: 6144 MB
+Platform: os=Windows 11 10.0 (amd64) | java=25.0.4.1+1-LTS OpenJDK 64-Bit Server VM (Eclipse Adoptium) | cpus=32 | adapt.trigger=joint | adapt.iip=once | block.size=100 | timeout.min=120 | repeats=1 repeat.index=0 | seed.index=0
+
+--- [SC10] Long stream, 500 operations ---
+>> [SC10] DUNNHUMBY seed=42 opSize=20 plan=500 operations (350 insert, 75 delete, 75 modify)
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/DUNNHUMBY/SC6_INIT#0  (heap free=441MB / total=992MB / max=6144MB)
+[Pre-HUSPM-Joint-fixed-threshold/DUNNHUMBY/SC6_INIT#0] OK t=1482ms cand=218555 pat=17 heapDelta=248MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/DUNNHUMBY/SC6_MOD#1  (heap free=463MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint-fixed-threshold/DUNNHUMBY/SC6_MOD] EXC:IllegalStateException
+[Pre-HUSPM-Joint-fixed-threshold/DUNNHUMBY/SC6_MOD#1] FAILED after 7ms (EXC:IllegalStateException)
+>> RUNNING Remine-from-scratch/DUNNHUMBY/SC6_INIT#0  (heap free=373MB / total=696MB / max=6144MB)
+[Remine-from-scratch/DUNNHUMBY/SC6_INIT#0] OK t=1129ms cand=218555 pat=17 heapDelta=246MB
+>> RUNNING Remine-from-scratch/DUNNHUMBY/SC6_MOD#1  (heap free=463MB / total=696MB / max=6144MB)
+[Remine-from-scratch/DUNNHUMBY/SC6_MOD] EXC:IllegalStateException
+[Remine-from-scratch/DUNNHUMBY/SC6_MOD#1] FAILED after 7ms (EXC:IllegalStateException)
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC6_INIT#0  (heap free=377MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC6_INIT#0] OK t=1118ms cand=218555 pat=17 heapDelta=230MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC6_MOD#1  (heap free=463MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC6_MOD] EXC:IllegalStateException
+[Pre-HUSPM-Joint/DUNNHUMBY/SC6_MOD#1] FAILED after 5ms (EXC:IllegalStateException)
+>> RUNNING Remine-own-UUT/DUNNHUMBY/SC6_INIT#0  (heap free=375MB / total=696MB / max=6144MB)
+[Remine-own-UUT/DUNNHUMBY/SC6_INIT#0] OK t=926ms cand=118800 pat=17 heapDelta=220MB
+>> RUNNING Remine-own-UUT/DUNNHUMBY/SC6_MOD#1  (heap free=464MB / total=696MB / max=6144MB)
+[Remine-own-UUT/DUNNHUMBY/SC6_MOD] EXC:IllegalStateException
+[Remine-own-UUT/DUNNHUMBY/SC6_MOD#1] FAILED after 5ms (EXC:IllegalStateException)
+>> RUNNING Pre-HUSPM-Joint-w5/DUNNHUMBY/SC6_INIT#0  (heap free=377MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint-w5/DUNNHUMBY/SC6_INIT#0] OK t=1097ms cand=218555 pat=17 heapDelta=228MB
+>> RUNNING Pre-HUSPM-Joint-w5/DUNNHUMBY/SC6_MOD#1  (heap free=464MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint-w5/DUNNHUMBY/SC6_MOD] EXC:IllegalStateException
+[Pre-HUSPM-Joint-w5/DUNNHUMBY/SC6_MOD#1] FAILED after 4ms (EXC:IllegalStateException)
+>> [SC10] DUNNHUMBY seed=1337 opSize=20 plan=500 operations (350 insert, 75 delete, 75 modify)
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/DUNNHUMBY/SC6_INIT#0  (heap free=446MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint-fixed-threshold/DUNNHUMBY/SC6_INIT#0] OK t=1100ms cand=218555 pat=17 heapDelta=228MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/DUNNHUMBY/SC6_INS#1  (heap free=464MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint-fixed-threshold/DUNNHUMBY/SC6_INS#1] OK t=1055ms cand=218043 pat=17 heapDelta=130MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/DUNNHUMBY/SC6_INS#2  (heap free=458MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint-fixed-threshold/DUNNHUMBY/SC6_INS#2] OK t=1049ms cand=217737 pat=17 heapDelta=122MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/DUNNHUMBY/SC6_DEL#3  (heap free=458MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint-fixed-threshold/DUNNHUMBY/SC6_DEL#3] OK t=1ms cand=217737 pat=17 heapDelta=4MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/DUNNHUMBY/SC6_INS#4  (heap free=458MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint-fixed-threshold/DUNNHUMBY/SC6_INS#4] OK t=1044ms cand=217614 pat=17 heapDelta=122MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/DUNNHUMBY/SC6_INS#5  (heap free=456MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint-fixed-threshold/DUNNHUMBY/SC6_INS#5] OK t=1056ms cand=217408 pat=17 heapDelta=122MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/DUNNHUMBY/SC6_MOD#6  (heap free=455MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint-fixed-threshold/DUNNHUMBY/SC6_MOD] EXC:IllegalStateException
+[Pre-HUSPM-Joint-fixed-threshold/DUNNHUMBY/SC6_MOD#6] FAILED after 3ms (EXC:IllegalStateException)
+>> RUNNING Remine-from-scratch/DUNNHUMBY/SC6_INIT#0  (heap free=367MB / total=696MB / max=6144MB)
+[Remine-from-scratch/DUNNHUMBY/SC6_INIT#0] OK t=1108ms cand=218555 pat=17 heapDelta=228MB
+>> RUNNING Remine-from-scratch/DUNNHUMBY/SC6_INS#1  (heap free=464MB / total=696MB / max=6144MB)
+[Remine-from-scratch/DUNNHUMBY/SC6_INS#1] OK t=1055ms cand=218043 pat=17 heapDelta=152MB
+>> RUNNING Remine-from-scratch/DUNNHUMBY/SC6_INS#2  (heap free=463MB / total=696MB / max=6144MB)
+[Remine-from-scratch/DUNNHUMBY/SC6_INS#2] OK t=1055ms cand=217737 pat=17 heapDelta=152MB
+>> RUNNING Remine-from-scratch/DUNNHUMBY/SC6_DEL#3  (heap free=464MB / total=696MB / max=6144MB)
+[Remine-from-scratch/DUNNHUMBY/SC6_DEL#3] OK t=1045ms cand=217948 pat=17 heapDelta=152MB
+>> RUNNING Remine-from-scratch/DUNNHUMBY/SC6_INS#4  (heap free=463MB / total=696MB / max=6144MB)
+[Remine-from-scratch/DUNNHUMBY/SC6_INS#4] OK t=1061ms cand=217614 pat=17 heapDelta=152MB
+>> RUNNING Remine-from-scratch/DUNNHUMBY/SC6_INS#5  (heap free=463MB / total=696MB / max=6144MB)
+[Remine-from-scratch/DUNNHUMBY/SC6_INS#5] OK t=1056ms cand=217408 pat=17 heapDelta=152MB
+>> RUNNING Remine-from-scratch/DUNNHUMBY/SC6_MOD#6  (heap free=464MB / total=696MB / max=6144MB)
+[Remine-from-scratch/DUNNHUMBY/SC6_MOD] EXC:IllegalStateException
+[Remine-from-scratch/DUNNHUMBY/SC6_MOD#6] FAILED after 4ms (EXC:IllegalStateException)
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC6_INIT#0  (heap free=377MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC6_INIT#0] OK t=1099ms cand=218555 pat=17 heapDelta=228MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC6_INS#1  (heap free=464MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC6_INS#1] OK t=861ms cand=118557 pat=17 heapDelta=122MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC6_INS#2  (heap free=458MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC6_INS#2] OK t=858ms cand=118320 pat=17 heapDelta=120MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC6_DEL#3  (heap free=457MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC6_DEL#3] OK t=852ms cand=236764 pat=17 heapDelta=114MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC6_INS#4  (heap free=456MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC6_INS#4] OK t=854ms cand=118273 pat=17 heapDelta=118MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC6_INS#5  (heap free=454MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC6_INS#5] OK t=867ms cand=118341 pat=17 heapDelta=116MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC6_MOD#6  (heap free=454MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC6_MOD] EXC:IllegalStateException
+[Pre-HUSPM-Joint/DUNNHUMBY/SC6_MOD#6] FAILED after 3ms (EXC:IllegalStateException)
+>> RUNNING Remine-own-UUT/DUNNHUMBY/SC6_INIT#0  (heap free=367MB / total=696MB / max=6144MB)
+[Remine-own-UUT/DUNNHUMBY/SC6_INIT#0] OK t=918ms cand=118800 pat=17 heapDelta=218MB
+>> RUNNING Remine-own-UUT/DUNNHUMBY/SC6_INS#1  (heap free=464MB / total=696MB / max=6144MB)
+[Remine-own-UUT/DUNNHUMBY/SC6_INS#1] OK t=874ms cand=118557 pat=17 heapDelta=142MB
+>> RUNNING Remine-own-UUT/DUNNHUMBY/SC6_INS#2  (heap free=464MB / total=696MB / max=6144MB)
+[Remine-own-UUT/DUNNHUMBY/SC6_INS#2] OK t=872ms cand=118320 pat=17 heapDelta=142MB
+>> RUNNING Remine-own-UUT/DUNNHUMBY/SC6_DEL#3  (heap free=464MB / total=696MB / max=6144MB)
+[Remine-own-UUT/DUNNHUMBY/SC6_DEL#3] OK t=863ms cand=118444 pat=17 heapDelta=142MB
+>> RUNNING Remine-own-UUT/DUNNHUMBY/SC6_INS#4  (heap free=464MB / total=696MB / max=6144MB)
+[Remine-own-UUT/DUNNHUMBY/SC6_INS#4] OK t=865ms cand=118273 pat=17 heapDelta=142MB
+>> RUNNING Remine-own-UUT/DUNNHUMBY/SC6_INS#5  (heap free=464MB / total=696MB / max=6144MB)
+[Remine-own-UUT/DUNNHUMBY/SC6_INS#5] OK t=867ms cand=118341 pat=17 heapDelta=142MB
+>> RUNNING Remine-own-UUT/DUNNHUMBY/SC6_MOD#6  (heap free=464MB / total=696MB / max=6144MB)
+[Remine-own-UUT/DUNNHUMBY/SC6_MOD] EXC:IllegalStateException
+[Remine-own-UUT/DUNNHUMBY/SC6_MOD#6] FAILED after 4ms (EXC:IllegalStateException)
+>> RUNNING Pre-HUSPM-Joint-w5/DUNNHUMBY/SC6_INIT#0  (heap free=378MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint-w5/DUNNHUMBY/SC6_INIT#0] OK t=1104ms cand=218555 pat=17 heapDelta=228MB
+>> RUNNING Pre-HUSPM-Joint-w5/DUNNHUMBY/SC6_INS#1  (heap free=464MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint-w5/DUNNHUMBY/SC6_INS#1] OK t=1049ms cand=218043 pat=17 heapDelta=130MB
+>> RUNNING Pre-HUSPM-Joint-w5/DUNNHUMBY/SC6_INS#2  (heap free=458MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint-w5/DUNNHUMBY/SC6_INS#2] OK t=1043ms cand=217737 pat=17 heapDelta=124MB
+>> RUNNING Pre-HUSPM-Joint-w5/DUNNHUMBY/SC6_DEL#3  (heap free=458MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint-w5/DUNNHUMBY/SC6_DEL#3] OK t=1ms cand=217737 pat=17 heapDelta=4MB
+>> RUNNING Pre-HUSPM-Joint-w5/DUNNHUMBY/SC6_INS#4  (heap free=457MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint-w5/DUNNHUMBY/SC6_INS#4] OK t=1049ms cand=217614 pat=17 heapDelta=124MB
+>> RUNNING Pre-HUSPM-Joint-w5/DUNNHUMBY/SC6_INS#5  (heap free=456MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint-w5/DUNNHUMBY/SC6_INS#5] OK t=1047ms cand=217408 pat=17 heapDelta=122MB
+>> RUNNING Pre-HUSPM-Joint-w5/DUNNHUMBY/SC6_MOD#6  (heap free=455MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint-w5/DUNNHUMBY/SC6_MOD] EXC:IllegalStateException
+[Pre-HUSPM-Joint-w5/DUNNHUMBY/SC6_MOD#6] FAILED after 3ms (EXC:IllegalStateException)
+>> [SC10] DUNNHUMBY seed=2024 opSize=20 plan=500 operations (350 insert, 75 delete, 75 modify)
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/DUNNHUMBY/SC6_INIT#0  (heap free=445MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint-fixed-threshold/DUNNHUMBY/SC6_INIT#0] OK t=1127ms cand=218555 pat=17 heapDelta=228MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/DUNNHUMBY/SC6_INS#1  (heap free=464MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint-fixed-threshold/DUNNHUMBY/SC6_INS#1] OK t=1062ms cand=218043 pat=17 heapDelta=130MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/DUNNHUMBY/SC6_INS#2  (heap free=458MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint-fixed-threshold/DUNNHUMBY/SC6_INS#2] OK t=1058ms cand=217737 pat=17 heapDelta=122MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/DUNNHUMBY/SC6_INS#3  (heap free=458MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint-fixed-threshold/DUNNHUMBY/SC6_INS#3] OK t=1059ms cand=217325 pat=17 heapDelta=122MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/DUNNHUMBY/SC6_DEL#4  (heap free=456MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint-fixed-threshold/DUNNHUMBY/SC6_DEL#4] OK t=1ms cand=217325 pat=17 heapDelta=4MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/DUNNHUMBY/SC6_INS#5  (heap free=456MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint-fixed-threshold/DUNNHUMBY/SC6_INS#5] OK t=1057ms cand=217621 pat=17 heapDelta=122MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/DUNNHUMBY/SC6_INS#6  (heap free=455MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint-fixed-threshold/DUNNHUMBY/SC6_INS#6] OK t=1060ms cand=217312 pat=17 heapDelta=122MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/DUNNHUMBY/SC6_INS#7  (heap free=454MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint-fixed-threshold/DUNNHUMBY/SC6_INS#7] OK t=1ms cand=0 pat=17 heapDelta=4MB
+>> RUNNING Pre-HUSPM-Joint-fixed-threshold/DUNNHUMBY/SC6_MOD#8  (heap free=454MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint-fixed-threshold/DUNNHUMBY/SC6_MOD] EXC:IllegalStateException
+[Pre-HUSPM-Joint-fixed-threshold/DUNNHUMBY/SC6_MOD#8] FAILED after 2ms (EXC:IllegalStateException)
+>> RUNNING Remine-from-scratch/DUNNHUMBY/SC6_INIT#0  (heap free=368MB / total=696MB / max=6144MB)
+[Remine-from-scratch/DUNNHUMBY/SC6_INIT#0] OK t=1126ms cand=218555 pat=17 heapDelta=228MB
+>> RUNNING Remine-from-scratch/DUNNHUMBY/SC6_INS#1  (heap free=464MB / total=696MB / max=6144MB)
+[Remine-from-scratch/DUNNHUMBY/SC6_INS#1] OK t=1062ms cand=218043 pat=17 heapDelta=152MB
+>> RUNNING Remine-from-scratch/DUNNHUMBY/SC6_INS#2  (heap free=464MB / total=696MB / max=6144MB)
+[Remine-from-scratch/DUNNHUMBY/SC6_INS#2] OK t=1061ms cand=217737 pat=17 heapDelta=152MB
+>> RUNNING Remine-from-scratch/DUNNHUMBY/SC6_INS#3  (heap free=464MB / total=696MB / max=6144MB)
+[Remine-from-scratch/DUNNHUMBY/SC6_INS#3] OK t=1074ms cand=217325 pat=17 heapDelta=152MB
+>> RUNNING Remine-from-scratch/DUNNHUMBY/SC6_DEL#4  (heap free=464MB / total=696MB / max=6144MB)
+[Remine-from-scratch/DUNNHUMBY/SC6_DEL#4] OK t=1090ms cand=217812 pat=17 heapDelta=152MB
+>> RUNNING Remine-from-scratch/DUNNHUMBY/SC6_INS#5  (heap free=464MB / total=696MB / max=6144MB)
+[Remine-from-scratch/DUNNHUMBY/SC6_INS#5] OK t=1049ms cand=217621 pat=17 heapDelta=152MB
+>> RUNNING Remine-from-scratch/DUNNHUMBY/SC6_INS#6  (heap free=464MB / total=696MB / max=6144MB)
+[Remine-from-scratch/DUNNHUMBY/SC6_INS#6] OK t=1054ms cand=217312 pat=17 heapDelta=152MB
+>> RUNNING Remine-from-scratch/DUNNHUMBY/SC6_INS#7  (heap free=464MB / total=696MB / max=6144MB)
+[Remine-from-scratch/DUNNHUMBY/SC6_INS#7] OK t=1058ms cand=217141 pat=17 heapDelta=152MB
+>> RUNNING Remine-from-scratch/DUNNHUMBY/SC6_MOD#8  (heap free=464MB / total=696MB / max=6144MB)
+[Remine-from-scratch/DUNNHUMBY/SC6_MOD] EXC:IllegalStateException
+[Remine-from-scratch/DUNNHUMBY/SC6_MOD#8] FAILED after 4ms (EXC:IllegalStateException)
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC6_INIT#0  (heap free=378MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC6_INIT#0] OK t=1106ms cand=218555 pat=17 heapDelta=228MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC6_INS#1  (heap free=464MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC6_INS#1] OK t=864ms cand=118557 pat=17 heapDelta=122MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC6_INS#2  (heap free=458MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC6_INS#2] OK t=863ms cand=118320 pat=17 heapDelta=120MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC6_INS#3  (heap free=457MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC6_INS#3] OK t=863ms cand=118236 pat=17 heapDelta=118MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC6_DEL#4  (heap free=456MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC6_DEL#4] OK t=855ms cand=236681 pat=17 heapDelta=114MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC6_INS#5  (heap free=455MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC6_INS#5] OK t=856ms cand=118520 pat=17 heapDelta=116MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC6_INS#6  (heap free=454MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC6_INS#6] OK t=862ms cand=118380 pat=17 heapDelta=116MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC6_INS#7  (heap free=453MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC6_INS#7] OK t=862ms cand=118332 pat=17 heapDelta=116MB
+>> RUNNING Pre-HUSPM-Joint/DUNNHUMBY/SC6_MOD#8  (heap free=451MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint/DUNNHUMBY/SC6_MOD] EXC:IllegalStateException
+[Pre-HUSPM-Joint/DUNNHUMBY/SC6_MOD#8] FAILED after 4ms (EXC:IllegalStateException)
+>> RUNNING Remine-own-UUT/DUNNHUMBY/SC6_INIT#0  (heap free=365MB / total=696MB / max=6144MB)
+[Remine-own-UUT/DUNNHUMBY/SC6_INIT#0] OK t=914ms cand=118800 pat=17 heapDelta=218MB
+>> RUNNING Remine-own-UUT/DUNNHUMBY/SC6_INS#1  (heap free=464MB / total=696MB / max=6144MB)
+[Remine-own-UUT/DUNNHUMBY/SC6_INS#1] OK t=859ms cand=118557 pat=17 heapDelta=142MB
+>> RUNNING Remine-own-UUT/DUNNHUMBY/SC6_INS#2  (heap free=464MB / total=696MB / max=6144MB)
+[Remine-own-UUT/DUNNHUMBY/SC6_INS#2] OK t=859ms cand=118320 pat=17 heapDelta=142MB
+>> RUNNING Remine-own-UUT/DUNNHUMBY/SC6_INS#3  (heap free=464MB / total=696MB / max=6144MB)
+[Remine-own-UUT/DUNNHUMBY/SC6_INS#3] OK t=873ms cand=118236 pat=17 heapDelta=142MB
+>> RUNNING Remine-own-UUT/DUNNHUMBY/SC6_DEL#4  (heap free=464MB / total=696MB / max=6144MB)
+[Remine-own-UUT/DUNNHUMBY/SC6_DEL#4] OK t=869ms cand=118445 pat=17 heapDelta=142MB
+>> RUNNING Remine-own-UUT/DUNNHUMBY/SC6_INS#5  (heap free=464MB / total=696MB / max=6144MB)
+[Remine-own-UUT/DUNNHUMBY/SC6_INS#5] OK t=872ms cand=118520 pat=17 heapDelta=142MB
+>> RUNNING Remine-own-UUT/DUNNHUMBY/SC6_INS#6  (heap free=464MB / total=696MB / max=6144MB)
+[Remine-own-UUT/DUNNHUMBY/SC6_INS#6] OK t=869ms cand=118380 pat=17 heapDelta=142MB
+>> RUNNING Remine-own-UUT/DUNNHUMBY/SC6_INS#7  (heap free=464MB / total=696MB / max=6144MB)
+[Remine-own-UUT/DUNNHUMBY/SC6_INS#7] OK t=873ms cand=118332 pat=17 heapDelta=142MB
+>> RUNNING Remine-own-UUT/DUNNHUMBY/SC6_MOD#8  (heap free=464MB / total=696MB / max=6144MB)
+[Remine-own-UUT/DUNNHUMBY/SC6_MOD] EXC:IllegalStateException
+[Remine-own-UUT/DUNNHUMBY/SC6_MOD#8] FAILED after 4ms (EXC:IllegalStateException)
+>> RUNNING Pre-HUSPM-Joint-w5/DUNNHUMBY/SC6_INIT#0  (heap free=379MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint-w5/DUNNHUMBY/SC6_INIT#0] OK t=1105ms cand=218555 pat=17 heapDelta=228MB
+>> RUNNING Pre-HUSPM-Joint-w5/DUNNHUMBY/SC6_INS#1  (heap free=464MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint-w5/DUNNHUMBY/SC6_INS#1] OK t=1062ms cand=218043 pat=17 heapDelta=130MB
+>> RUNNING Pre-HUSPM-Joint-w5/DUNNHUMBY/SC6_INS#2  (heap free=458MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint-w5/DUNNHUMBY/SC6_INS#2] OK t=1046ms cand=217737 pat=17 heapDelta=124MB
+>> RUNNING Pre-HUSPM-Joint-w5/DUNNHUMBY/SC6_INS#3  (heap free=457MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint-w5/DUNNHUMBY/SC6_INS#3] OK t=1051ms cand=217325 pat=17 heapDelta=124MB
+>> RUNNING Pre-HUSPM-Joint-w5/DUNNHUMBY/SC6_DEL#4  (heap free=456MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint-w5/DUNNHUMBY/SC6_DEL#4] OK t=1ms cand=217325 pat=17 heapDelta=4MB
+>> RUNNING Pre-HUSPM-Joint-w5/DUNNHUMBY/SC6_INS#5  (heap free=456MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint-w5/DUNNHUMBY/SC6_INS#5] OK t=1057ms cand=217621 pat=17 heapDelta=124MB
+>> RUNNING Pre-HUSPM-Joint-w5/DUNNHUMBY/SC6_INS#6  (heap free=455MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint-w5/DUNNHUMBY/SC6_INS#6] OK t=1051ms cand=217312 pat=17 heapDelta=122MB
+>> RUNNING Pre-HUSPM-Joint-w5/DUNNHUMBY/SC6_INS#7  (heap free=454MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint-w5/DUNNHUMBY/SC6_INS#7] OK t=1ms cand=0 pat=17 heapDelta=4MB
+>> RUNNING Pre-HUSPM-Joint-w5/DUNNHUMBY/SC6_MOD#8  (heap free=454MB / total=696MB / max=6144MB)
+[Pre-HUSPM-Joint-w5/DUNNHUMBY/SC6_MOD] EXC:IllegalStateException
+[Pre-HUSPM-Joint-w5/DUNNHUMBY/SC6_MOD#8] FAILED after 2ms (EXC:IllegalStateException)
+=== ALL SCENARIOS DONE (106.5s) ===
+HUSP check: 60 comparisons with the proposal, 0 mismatching, 0 without a reference (results/verify-joint/exact-arithmetic-2026-11-26/measured-code-2026-11-11/husps-long-sc10-dunnhumby/verify_husps.csv)
