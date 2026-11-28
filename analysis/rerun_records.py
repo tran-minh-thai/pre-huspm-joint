@@ -20,6 +20,11 @@ The rewritten command is printed before it runs, and record_run stores it in the
 run on one machine and the long ones on another. A record that already has a run_meta.json with
 exit code 0 and the source digest of the working tree is skipped (the same src/, whatever the
 commit), so that running the same command again continues, on this machine or another one.
+A record is also audited against the old one (audit): a failed operation the old run did not have
+(a line "] EXC:" or "] FAILED after" in console.txt), or fewer comparisons in the lines
+"... N comparisons ...", writes AUDIT_FAILED.txt in the new record and counts as a failure, since
+the runner records a failed operation and goes on with exit code 0. A record with that file is not
+skipped. --audit audits every record of the tree and runs nothing.
 A check-* record runs after the records it reads, and only when they are in the new tree;
 --exclude-checks leaves them out (they read the other records and run in seconds).
 
@@ -138,6 +143,42 @@ def self_test():
     return ok
 
 
+FAILED_OP = re.compile(r"\] (?:EXC:|FAILED after)")
+COMPARISONS = re.compile(r"\b(\d+) comparisons\b")
+
+
+def console_counts(d):
+    """(failed operations, comparisons) in d/console.txt, or None when there is no console.txt."""
+    f = d / "console.txt"
+    if not f.exists():
+        return None
+    text = f.read_text(encoding="utf-8", errors="replace")
+    return len(FAILED_OP.findall(text)), sum(int(x) for x in COMPARISONS.findall(text))
+
+
+def audit(old, new):
+    """Problems of the new record against the old one, as sentences; empty when none."""
+    o, n = console_counts(old), console_counts(new)
+    if n is None:
+        return [f"{new}/console.txt is missing"]
+    if o is None:
+        return [f"{old}/console.txt is missing: nothing to audit against"]
+    out = []
+    if n[0] > o[0]:
+        out.append(f"{n[0]} failed operations (EXC: or FAILED after) against {o[0]} in the old record")
+    if n[1] < o[1]:
+        out.append(f"{n[1]} comparisons against {o[1]} in the old record")
+    return out
+
+
+def write_audit(out, problems):
+    f = out / "AUDIT_FAILED.txt"
+    if problems:
+        f.write_text("\n".join(problems) + "\n", encoding="utf-8", newline="\n")
+    elif f.exists():
+        f.unlink()
+
+
 def bash():
     if os.name == "nt":
         core = pathlib.Path(subprocess.check_output(["git", "--exec-path"], text=True).strip())
@@ -162,6 +203,7 @@ def main():
     ap.add_argument("--list", action="store_true", help="print the selection and the commands, run nothing")
     ap.add_argument("--exclude-checks", action="store_true", help="leave out the check-* records")
     ap.add_argument("--names", action="store_true", help="print the names of the selection in run order, one per line")
+    ap.add_argument("--audit", action="store_true", help="audit every record of the tree against the old one, run nothing")
     a = ap.parse_args()
     sys.path.insert(0, str(ROOT / "analysis"))
     if a.self_test:
@@ -196,6 +238,20 @@ def main():
         for r, _, _ in chosen:
             print(r)
         return
+    if a.audit:
+        audited = bad = absent = 0
+        for r, _, _ in chosen:
+            out = ROOT / tree / r
+            if not (out / "run_meta.json").exists():
+                absent += 1
+                continue
+            audited += 1
+            problems = audit(ROOT / VERIFY / r, out)
+            if problems:
+                bad += 1
+                print(f"AUDIT {r}: " + "; ".join(problems))
+        print(f"audited {audited} records of the tree ({absent} of the selection not in it yet); {bad} with a problem")
+        sys.exit(1 if bad else 0)
     done = failed = skipped = 0
     for r, h, command in chosen:
         new, argv = rewrite(command, recs, tree, build)
@@ -207,7 +263,7 @@ def main():
         mf = out / "run_meta.json"
         if mf.exists():
             mm = json.loads(mf.read_text(encoding="utf-8"))
-            if mm.get("exit_code") == 0 and mm.get("source_sha256") == digest:
+            if mm.get("exit_code") == 0 and mm.get("source_sha256") == digest and not (out / "AUDIT_FAILED.txt").exists():
                 print("   already recorded on this src/ with exit 0: skipped", flush=True)
                 skipped += 1
                 continue
@@ -218,12 +274,14 @@ def main():
             continue
         p = subprocess.run([sys.executable, "analysis/record_run.py", "--out", f"{tree}/{r}", "--build", build,
                             "--", *argv], cwd=ROOT)
-        if p.returncode == 0:
+        problems = audit(ROOT / VERIFY / r, out)
+        write_audit(out, problems)
+        if p.returncode == 0 and not problems:
             done += 1
         else:
             failed += 1
-            print(f"   exit {p.returncode}", flush=True)
-    print(f"selected {len(chosen)} of {len(recs)} records; ran {done} with exit 0, {failed} with another exit, "
+            print(f"   exit {p.returncode}" + "".join(f"\n   AUDIT {x}" for x in problems), flush=True)
+    print(f"selected {len(chosen)} of {len(recs)} records; ran {done} with exit 0 and a clean audit, {failed} failed, "
           f"{skipped} skipped")
     sys.exit(1 if failed else 0)
 
