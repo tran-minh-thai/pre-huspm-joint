@@ -18,7 +18,7 @@ import java.util.*;
  *   - a deleted or modified sequence is in the current database, a new one has an id not seen before,
  *     every operation takes opSize sequences;
  *   - every new sequence is well formed: non-empty elements, items strictly increasing within an
- *     element, positive finite utilities, sequenceUtility the sum of its utilities;
+ *     element, positive integer utilities, sequenceUtility the sum of its utilities;
  *   - an insertion, and a modification outside SC10, takes the file's next sequences in order;
  *   - SC10: a changed sequence differs from the one it replaces, and some changes and deletions pick
  *     sequences of the recent operations; SC10H: every tenth insertion takes ten times opSize
@@ -179,6 +179,7 @@ public final class StreamPlansCheck {
             for (int j = 0; j < is.items.size(); j++) {
                 QItem q = is.items.get(j);
                 if (!(q.utility > 0) || Double.isInfinite(q.utility)) fail(where + ": sequence " + s.id + " item " + q.id + " utility " + q.utility);
+                else if (q.utility != Math.rint(q.utility)) fail(where + ": sequence " + s.id + " item " + q.id + " utility " + q.utility + " is not an integer");
                 if (j > 0 && q.id <= is.items.get(j - 1).id) fail(where + ": sequence " + s.id + " items not increasing");
                 u += q.utility;
             }

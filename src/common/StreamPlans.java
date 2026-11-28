@@ -167,7 +167,9 @@ public final class StreamPlans {
     /**
      * A changed copy of s, one of three changes drawn from the seed:
      *   0  the quantities of some items change: each item with probability one half, at least one,
-     *      has its utility (quantity times unit price) multiplied by a factor drawn in [0.5, 2];
+     *      has its utility (quantity times unit price) multiplied by a factor drawn in [0.5, 2] and
+     *      rounded to the nearest integer, at least 1, so that every utility stays an integer
+     *      (common.Exact compares integer utilities with thresholds);
      *   1  one item is replaced by an occurrence (item and utility) drawn from the database, an item
      *      the element does not hold already;
      *   2  two elements trade places (a sequence of one element changes its quantities instead).
@@ -177,9 +179,19 @@ public final class StreamPlans {
         int change = rnd.nextInt(3);
         if (change == 2 && els.size() < 2) change = 0;
         change(els, change, occurrences, rnd);
-        // two equal elements traded, or no item to substitute: change the quantities instead
-        if (sameAs(els, s)) change(els, 0, occurrences, rnd);
+        // two equal elements traded, no item to substitute, or quantities rounded back to their
+        // values: change the quantities of a fresh copy instead, until the sequence differs
+        for (int tries = 0; sameAs(els, s); tries++) {
+            if (tries == 1000) throw new IllegalStateException("sequence " + s.id + ": no change found in 1000 tries");
+            els = copy(s);
+            change(els, 0, occurrences, rnd);
+        }
         return build(newId, els);
+    }
+
+    /** An integer utility times a factor drawn in [0.5, 2], rounded to the nearest integer, at least 1. */
+    static double scaled(double utility, Random rnd) {
+        return Math.max(1L, Math.round(utility * (0.5 + 1.5 * rnd.nextDouble())));
     }
 
     private static boolean sameAs(List<List<QItem>> els, Sequence s) {
@@ -196,12 +208,12 @@ public final class StreamPlans {
         if (change == 0) {
             boolean any = false;
             for (List<QItem> el : els) for (int j = 0; j < el.size(); j++) {
-                if (rnd.nextBoolean()) { el.set(j, new QItem(el.get(j).id, el.get(j).utility * (0.5 + 1.5 * rnd.nextDouble()))); any = true; }
+                if (rnd.nextBoolean()) { el.set(j, new QItem(el.get(j).id, scaled(el.get(j).utility, rnd))); any = true; }
             }
             if (!any) {
                 List<QItem> el = els.get(rnd.nextInt(els.size()));
                 int j = rnd.nextInt(el.size());
-                el.set(j, new QItem(el.get(j).id, el.get(j).utility * (0.5 + 1.5 * rnd.nextDouble())));
+                el.set(j, new QItem(el.get(j).id, scaled(el.get(j).utility, rnd)));
             }
         } else if (change == 1) {
             List<QItem> el = els.get(rnd.nextInt(els.size()));
